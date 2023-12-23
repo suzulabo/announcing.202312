@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "gen:ts": "json2ts --additionalProperties=false --cwd=schemas -i 'schemas/*.json' -o dist/typescript"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "^13.1.1"
+  }
+}

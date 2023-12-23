@@ -1,0 +1,9 @@
+{
+  "title": "Date",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "string",
+  "format": "date-time",
+  "minLength": 1,
+  "maxLength": 30,
+  "nullable": false
+}
