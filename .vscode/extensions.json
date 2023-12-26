@@ -5,6 +5,7 @@
     "ms-vscode.vscode-typescript-next",
     "esbenp.prettier-vscode",
     "svelte.svelte-vscode",
-    "kimuson.ts-type-expand"
+    "kimuson.ts-type-expand",
+    "editorconfig.editorconfig"
   ]
 }
