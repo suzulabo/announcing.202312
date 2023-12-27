@@ -1,12 +1,26 @@
+import { dev } from '$app/environment';
+import { error } from '@sveltejs/kit';
+import { isValid } from 'psl';
 import { Fetcher } from '../../lib/fetcher';
 import type { PageLoad } from './$types';
-import { error } from '@sveltejs/kit';
+
+const isValidDomain = (s: string) => {
+  if (dev) {
+    if (s.endsWith('.mock')) {
+      return true;
+    }
+  }
+  return isValid(s);
+};
 
 const normURL = (s: string) => {
   try {
-    return new URL(`https://${s}`).toString();
+    const url = new URL(`https://${s}`);
+    if (!isValidDomain(url.hostname)) {
+      throw error(404);
+    }
+    return url.toString();
   } catch (e) {
-    console.error(e);
     throw error(404);
   }
 };
