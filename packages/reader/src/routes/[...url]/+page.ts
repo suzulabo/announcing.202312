@@ -19,7 +19,15 @@ const normURL = (s: string) => {
     if (!isValidDomain(url.hostname)) {
       throw error(404);
     }
-    return url.toString();
+    const urlStr = url.toString();
+    if (url.pathname.endsWith('.json')) {
+      return urlStr;
+    }
+    if (urlStr.endsWith('/')) {
+      return `${urlStr}announcing.json`;
+    } else {
+      return `${urlStr}/announcing.json`;
+    }
   } catch (e) {
     throw error(404);
   }
@@ -28,5 +36,5 @@ const normURL = (s: string) => {
 export const load: PageLoad = async ({ params, fetch }) => {
   const url = normURL(params.url);
   const res = await new Fetcher(fetch).get(url);
-  console.log(res.body);
+  console.log(res);
 };
