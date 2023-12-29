@@ -1,0 +1,29 @@
+{
+  "name": "@announcing/json",
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "compile": "tsx compile.ts",
+    "bundle": "tsx bundle.ts",
+    "declaration": "tsc -p tsconfig.declaration.json",
+    "build": "pnpm run compile && pnpm run bundle && pnpm run declaration",
+    "clean": "rm -rf dist/*"
+  },
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/*"
+  ],
+  "devDependencies": {
+    "@tsconfig/strictest": "^2.0.2",
+    "ajv": "^8.11.2",
+    "ajv-formats": "^2.1.1",
+    "esbuild": "^0.16.12",
+    "tsx": "^3.12.1",
+    "typescript": "^5.3.3",
+    "vitest": "^0.26.2"
+  }
+}
