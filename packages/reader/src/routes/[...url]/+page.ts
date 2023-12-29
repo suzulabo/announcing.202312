@@ -1,6 +1,8 @@
-import { dev } from '$app/environment';
 import { error } from '@sveltejs/kit';
 import { isValid } from 'psl';
+
+import { dev } from '$app/environment';
+
 import { Fetcher } from '../../lib/fetcher';
 import type { PageLoad } from './$types';
 
