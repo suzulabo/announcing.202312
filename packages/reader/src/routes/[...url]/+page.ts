@@ -1,3 +1,4 @@
+import { validateAnnouncingJSON } from '@announcing/json';
 import { error } from '@sveltejs/kit';
 import { isValid } from 'psl';
 
@@ -38,5 +39,20 @@ const normURL = (s: string) => {
 export const load: PageLoad = async ({ params, fetch }) => {
   const url = normURL(params.url);
   const res = await new Fetcher(fetch).get(url);
-  console.log(res);
+
+  if (!res.ok) {
+    return { data: 'RESPONSE ERROR' };
+  }
+
+  // TODO: checking size
+  const json = await res.json();
+  const validateResult = validateAnnouncingJSON(json);
+  if (!validateResult.ok) {
+    console.log(validateResult.errors);
+    return { data: 'JSON ERROR' };
+  }
+
+  return {
+    data: json,
+  };
 };

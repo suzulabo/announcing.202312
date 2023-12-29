@@ -33,6 +33,7 @@
     "workerDirectory": "static"
   },
   "dependencies": {
+    "@announcing/json": "workspace:^",
     "psl": "^1.9.0"
   }
 }
