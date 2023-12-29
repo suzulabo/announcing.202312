@@ -1,7 +1,7 @@
-import { postSchema } from './Post';
+import type { JSONSchemaType } from 'ajv';
 
 import type { AnnouncingPostsJSON } from '../../../src/AnnouncingJSON/AnnouncingPostsJSON';
-import type { JSONSchemaType } from 'ajv';
+import { postSchema } from './Post';
 
 export const AnnouncingPostsJSONSchema: JSONSchemaType<AnnouncingPostsJSON> = {
   $id: 'AnnouncingPostsJSON',

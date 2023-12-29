@@ -1,8 +1,8 @@
-import { optionalStringProp, optionalUrlProp, stringProp } from '../../utils';
-import { DESC_MAX_LENGTH, NAME_MAX_LENGTH } from './constants';
+import type { JSONSchemaType } from 'ajv';
 
 import type { Info } from '../../../src/AnnouncingJSON/Info';
-import type { JSONSchemaType } from 'ajv';
+import { optionalStringProp, optionalUrlProp, stringProp } from '../../utils';
+import { DESC_MAX_LENGTH, NAME_MAX_LENGTH } from './constants';
 
 export const infoSchema: JSONSchemaType<Info> = {
   type: 'object',

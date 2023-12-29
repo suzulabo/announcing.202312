@@ -1,9 +1,9 @@
+import type { JSONSchemaType } from 'ajv';
+
+import type { AnnouncingJSON } from '../../../src/AnnouncingJSON/AnnouncingJSON';
 import { dateProp } from '../../utils';
 import { infoSchema } from './Info';
 import { postsRefSchema } from './PostsRef';
-
-import type { AnnouncingJSON } from '../../../src/AnnouncingJSON/AnnouncingJSON';
-import type { JSONSchemaType } from 'ajv';
 
 export const AnnouncingJSONSchema: JSONSchemaType<AnnouncingJSON> = {
   $id: 'AnnouncingJSON',

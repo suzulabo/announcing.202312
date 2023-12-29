@@ -1,6 +1,6 @@
-import { AnnouncingJSON, AnnouncingPostsJSON } from './validators.mjs';
-
 import type { ValidateFunction } from 'ajv';
+
+import { AnnouncingJSON, AnnouncingPostsJSON } from './validators.mjs';
 
 const makeValidator = <T extends ValidateFunction>(f: T) => {
   return (d: unknown) => {

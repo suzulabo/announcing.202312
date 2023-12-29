@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-
 import { expect, test } from 'vitest';
 
 import { validateAnnouncingJSON } from '../..';
