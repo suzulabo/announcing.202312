@@ -1,12 +1,7 @@
 import type { JSONSchemaType } from 'ajv';
 
 import type { Post } from '../../../src/AnnouncingJSON/Post';
-import {
-  dateProp,
-  optionalStringProp,
-  optionalUrlProp,
-  urlProp,
-} from '../../utils';
+import { dateProp, optionalStringProp, optionalUrlProp, urlProp } from '../../utils';
 import { BODY_MAX_LENGTH, TITLE_MAX_LENGTH } from './constants';
 
 export const postSchema: JSONSchemaType<Post> = {

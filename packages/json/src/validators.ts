@@ -16,9 +16,5 @@ const makeValidator = <T extends ValidateFunction>(f: T) => {
   };
 };
 
-export const validateAnnouncingJSON = makeValidator(
-  AnnouncingJSON as ValidateFunction
-);
-export const validateAnnouncingPostsJSON = makeValidator(
-  AnnouncingPostsJSON as ValidateFunction
-);
+export const validateAnnouncingJSON = makeValidator(AnnouncingJSON as ValidateFunction);
+export const validateAnnouncingPostsJSON = makeValidator(AnnouncingPostsJSON as ValidateFunction);
