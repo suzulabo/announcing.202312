@@ -1,7 +1,3 @@
-<script>
-  import './BaseStyle.svelte';
-</script>
-
 <button class="Button"><slot /></button>
 
 <style lang="scss">
