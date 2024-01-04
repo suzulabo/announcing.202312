@@ -1,20 +1,21 @@
 import type { ValidateFunction } from 'ajv';
 
-import { AnnouncingJSON, AnnouncingPostsJSON } from './validators.mjs';
+import type { AnnouncingJSON } from './AnnouncingJSON/AnnouncingJSON';
+import type { AnnouncingPostsJSON } from './AnnouncingJSON/AnnouncingPostsJSON';
+import {
+  AnnouncingJSON as AnnouncingJSONValidator,
+  AnnouncingPostsJSON as AnnouncingPostsJSONValidator,
+} from './validators.mjs';
 
-const makeValidator = <T extends ValidateFunction>(f: T) => {
-  return (d: unknown) => {
-    const valid = f(d);
-    if (valid) {
-      return { ok: true } as const;
-    } else {
-      return {
-        ok: false,
-        errors: { ...f.errors },
-      } as const;
-    }
+const makeValidator = <T>(f: ValidateFunction<T>) => {
+  return (d: unknown): d is T => {
+    return f(d);
   };
 };
 
-export const validateAnnouncingJSON = makeValidator(AnnouncingJSON as ValidateFunction);
-export const validateAnnouncingPostsJSON = makeValidator(AnnouncingPostsJSON as ValidateFunction);
+export const validateAnnouncingJSON = makeValidator(
+  AnnouncingJSONValidator as ValidateFunction<AnnouncingJSON>,
+);
+export const validateAnnouncingPostsJSON = makeValidator(
+  AnnouncingPostsJSONValidator as ValidateFunction<AnnouncingPostsJSON>,
+);

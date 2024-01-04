@@ -47,8 +47,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
   // TODO: checking size
   const json = await res.json();
   const validateResult = validateAnnouncingJSON(json);
-  if (!validateResult.ok) {
-    console.log(validateResult.errors);
+  if (!validateResult) {
     return { data: 'JSON ERROR' };
   }
 
