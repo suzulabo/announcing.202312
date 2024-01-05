@@ -1,3 +1,5 @@
+import '@announcing/components/base.scss';
+
 import type { Load } from '@sveltejs/kit';
 
 import { loadTranslations } from '$lib/translations';
