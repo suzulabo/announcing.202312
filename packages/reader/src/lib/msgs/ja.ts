@@ -1,5 +1,5 @@
 const msgs = {
-	welcome: 'ようこそ'
+  welcome: 'ようこそ',
 };
 
 export default msgs;

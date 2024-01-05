@@ -7,8 +7,11 @@
   },
   "packageManager": "pnpm@8.12.1",
   "scripts": {
-    "format": "prettier --write .",
-    "build": "pnpm -r build"
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "pnpm -r lint",
+    "build": "pnpm -r build",
+    "check": "pnpm run format && pnpm run lint && pnpm run build"
   },
   "devDependencies": {
     "prettier": "^3.1.1",
