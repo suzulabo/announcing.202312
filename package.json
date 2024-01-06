@@ -1,0 +1,20 @@
+{
+  "name": "announcing",
+  "private": true,
+  "engines": {
+    "node": "=20.9.0",
+    "pnpm": "=8.12.1"
+  },
+  "packageManager": "pnpm@8.12.1",
+  "scripts": {
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "pnpm -r lint",
+    "build": "pnpm -r build",
+    "check": "pnpm run format && pnpm run lint && pnpm run build"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.1",
+    "prettier-plugin-svelte": "^3.1.2"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@announcing/json",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "compile": "tsx compile.ts",
+    "bundle": "tsx bundle.ts",
+    "declaration": "tsc -p tsconfig.declaration.json",
+    "build": "pnpm run compile && pnpm run bundle && pnpm run declaration",
+    "clean": "rm -rf dist/*"
+  },
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/*"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
+    "esbuild": "^0.19.10",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.0"
+  }
+}
