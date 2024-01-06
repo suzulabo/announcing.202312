@@ -1,4 +1,4 @@
-import { validateAnnouncingJSON } from '@announcing/json';
+import { type AnnouncingJSON, validateAnnouncingJSON } from '@announcing/json';
 import { error } from '@sveltejs/kit';
 import { isValid } from 'psl';
 
@@ -36,22 +36,24 @@ const normURL = (s: string) => {
   }
 };
 
-export const load: PageLoad = async ({ params, fetch }) => {
+type LoadResponse = { error: 'RESPONSE' | 'JSON' } | { json: AnnouncingJSON };
+
+export const load: PageLoad = async ({ params, fetch }): Promise<LoadResponse> => {
   const url = normURL(params.url);
   const res = await new Fetcher(fetch).get(url);
 
   if (!res.ok) {
-    return { data: 'RESPONSE ERROR' };
+    return { error: 'RESPONSE' };
   }
 
   // TODO: checking size
   const json = await res.json();
   const validateResult = validateAnnouncingJSON(json);
   if (!validateResult) {
-    return { data: 'JSON ERROR' };
+    return { error: 'JSON' };
   }
 
   return {
-    data: json,
+    json,
   };
 };
