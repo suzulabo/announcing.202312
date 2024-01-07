@@ -4,6 +4,6 @@ void build({
   bundle: true,
   entryPoints: ['src/index.ts'],
   format: 'esm',
-  outfile: 'dist/index.mjs',
+  outdir: 'dist',
   target: ['esnext'],
 });
