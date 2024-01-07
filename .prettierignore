@@ -3,5 +3,5 @@ dist
 .svelte-kit
 
 pnpm-lock.yaml
-packages/json/src/validators.mjs
+packages/json/src/validators/validators.mjs
 packages/reader/static/mockServiceWorker.js
