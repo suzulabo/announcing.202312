@@ -4,7 +4,7 @@ import type { Post } from '../../types/AnnouncingJSON/Post';
 import { dateProp, optionalStringProp, optionalUrlProp, urlProp } from '../utils';
 import { BODY_MAX_LENGTH, TITLE_MAX_LENGTH } from './constants';
 
-export const postSchema: JSONSchemaType<Post> = {
+const postSchema: JSONSchemaType<Post> = {
   type: 'object',
   required: ['published'],
   properties: {
@@ -22,3 +22,5 @@ export const postSchema: JSONSchemaType<Post> = {
     link: optionalUrlProp(),
   },
 } as const;
+
+export default postSchema;

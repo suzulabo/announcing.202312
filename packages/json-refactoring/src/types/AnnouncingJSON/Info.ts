@@ -1,4 +1,4 @@
-import type { OptionalString } from '../types';
+import type { OptionalString } from '../utils';
 
 export type Info = {
   name: string;

@@ -2,10 +2,10 @@ import type { JSONSchemaType } from 'ajv';
 
 import type { AnnouncingJSON } from '../../types/AnnouncingJSON/AnnouncingJSON';
 import { dateProp } from '../utils';
-import { infoSchema } from './Info';
-import { postsRefSchema } from './PostsRef';
+import infoSchema from './infoSchema';
+import postsRefSchema from './postsRefSchema';
 
-export const AnnouncingJSONSchema: JSONSchemaType<AnnouncingJSON> = {
+const announcingJSONSchema: JSONSchemaType<AnnouncingJSON> = {
   $id: 'AnnouncingJSON',
   $schema: 'http://json-schema.org/draft-07/schema#',
   type: 'object',
@@ -19,3 +19,5 @@ export const AnnouncingJSONSchema: JSONSchemaType<AnnouncingJSON> = {
     updated: dateProp(),
   },
 } as const;
+
+export default announcingJSONSchema;
