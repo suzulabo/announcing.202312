@@ -9,7 +9,7 @@ const tests = (() => {
   const dir = fs.opendirSync(dirPath);
   try {
     const result: [string, unknown, boolean][] = [];
-    const jsonRegex = new RegExp('(^valid|invalid)-(\\w+).json$');
+    const jsonRegex = new RegExp('(^valid|invalid)-(.+).json$');
 
     for (;;) {
       const f = dir.readSync();
