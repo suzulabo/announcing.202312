@@ -1,7 +1,7 @@
 import type { ValidateFunction } from 'ajv';
 
-import type { AnnouncingJSON } from './AnnouncingJSON/AnnouncingJSON';
-import type { AnnouncingPostsJSON } from './AnnouncingJSON/AnnouncingPostsJSON';
+import type { AnnouncingJSON } from './types/AnnouncingJSON/AnnouncingJSON';
+import type { AnnouncingPostsJSON } from './types/AnnouncingJSON/AnnouncingPostsJSON';
 import {
   AnnouncingJSON as AnnouncingJSONValidator,
   AnnouncingPostsJSON as AnnouncingPostsJSONValidator,

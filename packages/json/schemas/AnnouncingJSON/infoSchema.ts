@@ -1,10 +1,10 @@
 import type { JSONSchemaType } from 'ajv';
 
-import type { Info } from '../../../src/AnnouncingJSON/Info';
-import { optionalStringProp, optionalUrlProp, stringProp } from '../../utils';
+import type { Info } from '../../src/types/AnnouncingJSON/Info';
+import { optionalStringProp, optionalUrlProp, stringProp } from '../utils';
 import { DESC_MAX_LENGTH, NAME_MAX_LENGTH } from './constants';
 
-export const infoSchema: JSONSchemaType<Info> = {
+const infoSchema: JSONSchemaType<Info> = {
   type: 'object',
   required: ['name'],
   properties: {
@@ -14,3 +14,5 @@ export const infoSchema: JSONSchemaType<Info> = {
     icon: optionalUrlProp(),
   },
 } as const;
+
+export default infoSchema;

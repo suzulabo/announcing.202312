@@ -1,3 +1,3 @@
-export type { AnnouncingJSON } from './AnnouncingJSON/AnnouncingJSON';
-export type { AnnouncingPostsJSON } from './AnnouncingJSON/AnnouncingPostsJSON';
+export type { AnnouncingJSON } from './types/AnnouncingJSON/AnnouncingJSON';
+export type { AnnouncingPostsJSON } from './types/AnnouncingJSON/AnnouncingPostsJSON';
 export { validateAnnouncingJSON, validateAnnouncingPostsJSON } from './validators';
