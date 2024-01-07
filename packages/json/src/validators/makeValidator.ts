@@ -1,6 +1,6 @@
 import type { ValidateFunction } from 'ajv';
 
-type Errors = ValidateFunction['errors'];
+export type Errors = ValidateFunction['errors'];
 
 const makeValidator = <T>(f: ValidateFunction<T>) => {
   return (d: unknown, errors?: Errors): d is T => {
