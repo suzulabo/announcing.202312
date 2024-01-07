@@ -1,16 +1,18 @@
 {
-  "updated": "2022-12-28T22:33:44",
+  "updated": "2024-01-01T22:33:44",
   "info": {
     "name": "ok"
   },
   "posts": [
     {
-      "href": "posts/1.json",
-      "count": 10
+      "id": "1",
+      "published": "2024-01-01T22:33:44",
+      "title": "post1"
     },
     {
-      "href": "posts/2.json",
-      "count": 5
+      "id": "2",
+      "published": "2024-01-01T22:33:44",
+      "body": "post2"
     }
   ]
 }
