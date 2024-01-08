@@ -16,24 +16,24 @@
 
   {#if data.json}
     {@const { info } = data.json}
-    <div class="info">
+    <div class="name-line">
+      <div class="name">
+        {info.name}
+      </div>
       {#if info.icon}
         <img class="icon" src={info.icon} alt={info.name} />
       {/if}
-      <div>
-        <div class="name">
-          {info.name || ''}
-        </div>
-        <div class="desc">
-          {info.desc || ''}
-        </div>
-        {#if info.link}
-          <div class="link">
-            <a href={info.link} target="_blank" rel="nofollow noreferrer">{info.link}</a>
-          </div>
-        {/if}
-      </div>
     </div>
+    {#if info.desc}
+      <div class="desc">
+        {info.desc}
+      </div>
+    {/if}
+    {#if info.link}
+      <div class="link">
+        <a href={info.link} target="_blank" rel="nofollow noreferrer">{info.link}</a>
+      </div>
+    {/if}
   {/if}
 </div>
 
@@ -43,27 +43,30 @@
     margin: 0 auto;
     padding: 20px 10px;
 
-    .info {
+    .name-line {
+      display: flex;
+      align-items: center;
+      .name {
+        font-weight: bold;
+        font-size: 24px;
+        flex-grow: 1;
+      }
       .icon {
-        float: right;
         width: 64px;
         height: 64px;
         border-radius: 8px;
         object-fit: contain;
-        margin: 0 0 0 5px;
       }
-      .name {
-        font-weight: bold;
-        font-size: 24px;
-        margin: 0 0 10px 0;
-      }
-      .desc {
-        white-space: pre-line;
-      }
-      .link {
-        margin: 10px 5px 0 5px;
-        text-decoration: underline;
-      }
+    }
+
+    .desc {
+      margin: 10px 5px 0;
+      white-space: pre-line;
+    }
+
+    .link {
+      margin: 10px 5px 0;
+      text-decoration: underline;
     }
   }
 </style>
