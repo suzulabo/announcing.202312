@@ -7,16 +7,16 @@
     border-radius: 10px;
     padding: 10px 20px;
     text-align: center;
-    width: max-content;
+    width: var(--width, 'max-content');
 
-    &:active {
+    :active {
       position: relative;
       top: 1px;
       left: 1px;
     }
 
     @media (hover: hover) {
-      &:hover:not(:disabled) {
+      :hover:not(:disabled) {
         background-color: var(--color-hover);
         cursor: pointer;
       }

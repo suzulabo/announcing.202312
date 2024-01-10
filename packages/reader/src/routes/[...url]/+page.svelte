@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { Button } from '@announcing/components';
   import type { PageData } from './$types';
+  import { t } from '$lib/translations';
 
   export let data: PageData;
 </script>
@@ -34,6 +36,11 @@
         <a href={info.link} target="_blank" rel="nofollow noreferrer">{info.link}</a>
       </div>
     {/if}
+
+    <div class="buttons">
+      <Button --width="100%">{$t('follow')}</Button>
+      <Button --width="100%">{$t('getNotifications')}</Button>
+    </div>
   {/if}
 </div>
 
@@ -67,6 +74,13 @@
     .link {
       margin: 10px 5px 0;
       text-decoration: underline;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
   }
 </style>
