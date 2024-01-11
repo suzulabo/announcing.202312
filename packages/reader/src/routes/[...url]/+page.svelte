@@ -3,13 +3,20 @@
   import type { PageData } from './$types';
   import { t } from '$lib/translations';
   import { format, parseISO } from 'date-fns';
+  import linkifyHtml from 'linkify-html';
 
   export let data: PageData;
 
   const formatDate = (s: string) => {
     const d = parseISO(s);
-    console.log(d);
     return format(d, 'yyyy-MM-dd HH:mm');
+  };
+  const toHtml = (s: string) => {
+    return linkifyHtml(s, {
+      defaultProtocol: 'https',
+      target: '_blank',
+      rel: 'nofollow noreferrer',
+    });
   };
 </script>
 
@@ -35,12 +42,12 @@
     </div>
     {#if info.desc}
       <div class="desc">
-        {info.desc}
+        {@html toHtml(info.desc)}
       </div>
     {/if}
     {#if info.link}
       <div class="link">
-        <a href={info.link} target="_blank" rel="nofollow noreferrer">{info.link}</a>
+        {@html toHtml(info.link)}
       </div>
     {/if}
 
@@ -56,7 +63,7 @@
           <div class="title">{post.title}</div>
         {/if}
         {#if post.body}
-          <div class="body">{post.body}</div>
+          <div class="body">{@html toHtml(post.body)}</div>
         {/if}
       </div>
       <hr />
@@ -93,7 +100,6 @@
 
     .link {
       margin: 10px 5px 0;
-      text-decoration: underline;
     }
 
     .buttons {
@@ -104,7 +110,6 @@
     }
 
     hr {
-      border-top: 1px solid var(--color-border-disable);
       margin: 20px 0;
     }
 
