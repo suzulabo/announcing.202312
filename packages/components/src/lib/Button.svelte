@@ -9,14 +9,14 @@
     text-align: center;
     width: var(--width, 'max-content');
 
-    :active {
+    &:active {
       position: relative;
       top: 1px;
       left: 1px;
     }
 
     @media (hover: hover) {
-      :hover:not(:disabled) {
+      &:hover:not(:disabled) {
         background-color: var(--color-hover);
         cursor: pointer;
       }
