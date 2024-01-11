@@ -128,17 +128,13 @@ importers:
         version: 1.1.0(@types/node@20.10.6)
 
   packages/reader:
-    dependencies:
+    devDependencies:
       '@announcing/components':
         specifier: workspace:^
         version: link:../components
       '@announcing/json':
         specifier: workspace:^
         version: link:../json
-      psl:
-        specifier: ^1.9.0
-        version: 1.9.0
-    devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.0.1
         version: 3.0.1(@sveltejs/kit@2.0.6)
@@ -175,6 +171,9 @@ importers:
       msw:
         specifier: ^2.0.11
         version: 2.0.11(typescript@5.3.3)
+      psl:
+        specifier: ^1.9.0
+        version: 1.9.0
       svelte:
         specifier: ^4.2.8
         version: 4.2.8
@@ -2631,7 +2630,7 @@ packages:
 
   /psl@1.9.0:
     resolution: {integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==}
-    dev: false
+    dev: true
 
   /publint@0.1.16:
     resolution: {integrity: sha512-wJgk7HnXDT5Ap0DjFYbGz78kPkN44iQvDiaq8P63IEEyNU9mYXvaMd2cAyIM6OgqXM/IA3CK6XWIsRq+wjNpgw==}
