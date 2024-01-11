@@ -4,7 +4,7 @@ export const handlers = [
   http.get('https://test.mock/announcing.json', () => {
     return HttpResponse.json(
       {
-        updated: '2024-01-01T22:33:44',
+        updated: '2024-01-01T22:33:44Z',
         info: {
           name: 'ヘブンバーンズレッド公式',
           desc: 'ライトフライヤースタジオ× Keyが贈る、麻枝 准 15年ぶりの完全新作ゲーム『ヘブンバーンズレッド（ヘブバン）』の公式Twitterです。App Store/Google Play/Steamで配信中',
@@ -14,12 +14,13 @@ export const handlers = [
         posts: [
           {
             id: '1',
-            published: '2024-01-01T22:33:44',
-            title: 'post1',
+            published: '2024-01-01T22:33:44Z',
+            title: '🎉ヘブンバーンズレッド2nd Anniversary Party!🎉',
+            body: 'あと25日！\n\n【カウントダウンイラスト第2️⃣7️⃣弾】\nすいみゃ \n@suimya\n さんに\n大島二以奈を描いていただきました！\n\n2周年リアルイベントは2024年2月3,4日の2days開催！\n▼詳しくはこちら\nhttps://heaven-burns-red.com/2024party/',
           },
           {
             id: '2',
-            published: '2024-01-01T22:33:44',
+            published: '2024-01-01T22:33:44Z',
             body: 'post2',
           },
         ],

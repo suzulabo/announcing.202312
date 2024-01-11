@@ -2,8 +2,15 @@
   import { Button } from '@announcing/components';
   import type { PageData } from './$types';
   import { t } from '$lib/translations';
+  import { format, parseISO } from 'date-fns';
 
   export let data: PageData;
+
+  const formatDate = (s: string) => {
+    const d = parseISO(s);
+    console.log(d);
+    return format(d, 'yyyy-MM-dd HH:mm');
+  };
 </script>
 
 <div class="main">
@@ -17,7 +24,7 @@
   {/if}
 
   {#if data.json}
-    {@const { info } = data.json}
+    {@const { info, posts } = data.json}
     <div class="name-line">
       <div class="name">
         {info.name}
@@ -41,6 +48,19 @@
       <Button --width="100%">{$t('follow')}</Button>
       <Button --width="100%">{$t('getNotifications')}</Button>
     </div>
+    <hr />
+    {#each posts as post}
+      <div class="post">
+        <div class="published">{formatDate(post.published)}</div>
+        {#if post.title}
+          <div class="title">{post.title}</div>
+        {/if}
+        {#if post.body}
+          <div class="body">{post.body}</div>
+        {/if}
+      </div>
+      <hr />
+    {/each}
   {/if}
 </div>
 
@@ -81,6 +101,25 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
+    }
+
+    hr {
+      border-top: 1px solid var(--color-border-disable);
+      margin: 20px 0;
+    }
+
+    .post {
+      padding: 0 10px;
+      min-height: 100px;
+      .title {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0 0;
+      }
+      .body {
+        white-space: pre-line;
+        margin: 10px 0 0;
+      }
     }
   }
 </style>
