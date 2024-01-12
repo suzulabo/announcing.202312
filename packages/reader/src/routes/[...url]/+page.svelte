@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { Button } from '@announcing/components';
-  import type { PageData } from './$types';
-  import { t } from '$lib/translations';
   import { format, parseISO } from 'date-fns';
   import linkifyHtml from 'linkify-html';
+  import type { PageData } from './$types';
 
   export let data: PageData;
 
@@ -51,10 +49,6 @@
       </div>
     {/if}
 
-    <div class="buttons">
-      <Button --width="100%">{$t('follow')}</Button>
-      <Button --width="100%">{$t('getNotifications')}</Button>
-    </div>
     <hr />
     {#each posts as post}
       <div class="post">
@@ -100,13 +94,6 @@
 
     .link {
       margin: 10px 5px 0;
-    }
-
-    .buttons {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
     }
 
     hr {
