@@ -6,22 +6,41 @@ export const handlers = [
       {
         updated: '2024-01-01T22:33:44Z',
         info: {
-          name: 'ヘブンバーンズレッド公式',
-          desc: 'ライトフライヤースタジオ× Keyが贈る、麻枝 准 15年ぶりの完全新作ゲーム『ヘブンバーンズレッド（ヘブバン）』の公式Twitterです。App Store/Google Play/Steamで配信中',
-          icon: 'https://pbs.twimg.com/profile_images/1664453907198906369/BQWJVvKg_400x400.jpg',
-          link: 'https://heaven-burns-red.com/',
+          name: 'ヴィジョンテック・デジタル',
+          desc: '最新のテクノロジーを駆使し、人々の生活を豊かにする企業の一員です💼✨革新的なソリューションを提供し、世界を変えることを使命としています🌍💡',
+          icon: 'https://gist.githubusercontent.com/suzulabo/f9734844ae1a6557c8c4abc6db429093/raw/69c64522e3ce1c8a8594eb9cb049fbdaa64833f8/announcing-dummy-logo.jpg',
+          link: 'https://VisionTech-Digital.dummy/',
         },
         posts: [
           {
             id: '1',
             published: '2024-01-01T22:33:44Z',
-            title: '🎉ヘブンバーンズレッド2nd Anniversary Party!🎉',
-            body: 'あと25日！\n\n【カウントダウンイラスト第2️⃣7️⃣弾】\nすいみゃ \n@suimya\n さんに\n大島二以奈を描いていただきました！\n\n2周年リアルイベントは2024年2月3,4日の2days開催！\n▼詳しくはこちら\nhttps://heaven-burns-red.com/2024party/',
+            title: '新AIサービスリリース！',
+            body: '弊社、最新のAI搭載サービスをリリースしました！ビジネスの効率化や成長を支援します。詳細はウェブサイトでご確認ください。',
           },
           {
             id: '2',
             published: '2024-01-01T22:33:44Z',
-            body: 'post2',
+            title: 'ウェビナー開催！',
+            body: '次回のウェビナーが決定しました！最新テクノロジートレンドやビジネス戦略について楽しく学びましょう。参加登録は今すぐ！',
+          },
+          {
+            id: '3',
+            published: '2024-01-01T22:33:44Z',
+            title: 'サイトメンテナンスのお知らせ',
+            body: '週末にウェブサイトのメンテナンスを実施予定です！ご迷惑をおかけいたしますが、より快適なサービス提供のため、ご理解とご協力をお願いいたします。',
+          },
+          {
+            id: '4',
+            published: '2024-01-01T22:33:44Z',
+            title: '新規採用情報！',
+            body: '新しい仲間を募集中！クリエイティブでパッションある方、一緒に成長しましょう！詳細はウェブサイトでご確認ください。',
+          },
+          {
+            id: '5',
+            published: '2024-01-01T22:33:44Z',
+            title: '年末セール開催中！',
+            body: '年末大セール開催中！最新テックグッズやソフトウェア、お得な価格で提供中！お見逃しなく！',
           },
         ],
       },
