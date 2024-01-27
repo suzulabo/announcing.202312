@@ -4,12 +4,12 @@ const config: Config = {
   loaders: [
     {
       locale: 'en',
-      key: 'msg',
+      key: '',
       loader: async () => (await import('./msgs/en')).default,
     },
     {
       locale: 'ja',
-      key: 'msg',
+      key: '',
       loader: async () => (await import('./msgs/ja')).default,
     },
   ],

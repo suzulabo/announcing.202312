@@ -3,7 +3,7 @@ import type { JSONSchemaType } from 'ajv';
 import type { AnnouncingJSON } from '../../src/types/AnnouncingJSON/AnnouncingJSON';
 import { dateProp } from '../utils';
 import infoSchema from './infoSchema';
-import postsRefSchema from './postsRefSchema';
+import postSchema from './postSchema';
 
 const announcingJSONSchema: JSONSchemaType<AnnouncingJSON> = {
   $id: 'AnnouncingJSON',
@@ -14,7 +14,7 @@ const announcingJSONSchema: JSONSchemaType<AnnouncingJSON> = {
     info: infoSchema,
     posts: {
       type: 'array',
-      items: postsRefSchema,
+      items: postSchema,
     },
     updated: dateProp(),
   },

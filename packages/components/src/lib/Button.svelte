@@ -7,7 +7,7 @@
     border-radius: 10px;
     padding: 10px 20px;
     text-align: center;
-    width: max-content;
+    width: var(--width, 'max-content');
 
     &:active {
       position: relative;

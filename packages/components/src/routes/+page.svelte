@@ -4,5 +4,6 @@
 </script>
 
 <Button>ボタン</Button>
+<Button --width="200px">width</Button>
 <hr />
 <Box>ボックス</Box>
