@@ -196,6 +196,75 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2(@types/node@20.11.8)
 
+  packages/writer:
+    devDependencies:
+      '@announcing/components':
+        specifier: workspace:^
+        version: link:../components
+      '@announcing/json':
+        specifier: workspace:^
+        version: link:../json
+      '@sveltejs/adapter-auto':
+        specifier: ^3.1.1
+        version: 3.1.1(@sveltejs/kit@2.5.0)
+      '@sveltejs/kit':
+        specifier: ^2.5.0
+        version: 2.5.0(@sveltejs/vite-plugin-svelte@3.0.2)(svelte@4.2.9)(vite@5.0.12)
+      '@sveltejs/vite-plugin-svelte':
+        specifier: ^3.0.2
+        version: 3.0.2(svelte@4.2.9)(vite@5.0.12)
+      '@types/psl':
+        specifier: ^1.1.3
+        version: 1.1.3
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.19.1
+        version: 6.19.1(@typescript-eslint/parser@6.19.1)(eslint@8.56.0)(typescript@5.3.3)
+      '@typescript-eslint/parser':
+        specifier: ^6.19.1
+        version: 6.19.1(eslint@8.56.0)(typescript@5.3.3)
+      date-fns:
+        specifier: ^3.3.1
+        version: 3.3.1
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      eslint-config-prettier:
+        specifier: ^9.1.0
+        version: 9.1.0(eslint@8.56.0)
+      eslint-plugin-simple-import-sort:
+        specifier: ^10.0.0
+        version: 10.0.0(eslint@8.56.0)
+      eslint-plugin-svelte:
+        specifier: ^2.35.1
+        version: 2.35.1(eslint@8.56.0)(svelte@4.2.9)
+      linkify-html:
+        specifier: ^4.1.3
+        version: 4.1.3(linkifyjs@4.1.3)
+      msw:
+        specifier: ^2.1.5
+        version: 2.1.5(typescript@5.3.3)
+      psl:
+        specifier: ^1.9.0
+        version: 1.9.0
+      svelte:
+        specifier: ^4.2.9
+        version: 4.2.9
+      svelte-check:
+        specifier: ^3.6.3
+        version: 3.6.3(postcss@8.4.33)(sass@1.70.0)(svelte@4.2.9)
+      sveltekit-i18n:
+        specifier: ^2.4.2
+        version: 2.4.2(svelte@4.2.9)
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+      vite:
+        specifier: ^5.0.12
+        version: 5.0.12(@types/node@20.11.8)
+      vitest:
+        specifier: ^1.2.2
+        version: 1.2.2(@types/node@20.11.8)
+
 packages:
 
   /@aashutoshrathi/word-wrap@1.2.6:
