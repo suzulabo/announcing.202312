@@ -3,10 +3,11 @@
   "private": true,
   "engines": {
     "node": "=20.9.0",
-    "pnpm": "=8.12.1"
+    "pnpm": "=8.15.0"
   },
-  "packageManager": "pnpm@8.12.1",
+  "packageManager": "pnpm@8.15.0",
   "scripts": {
+    "preinstall": "npx -y only-allow pnpm",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "pnpm -r lint",
