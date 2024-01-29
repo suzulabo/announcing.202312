@@ -11,6 +11,7 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
     "build": "pnpm -r build",
     "check": "pnpm run format && pnpm run lint && pnpm run build"
   },

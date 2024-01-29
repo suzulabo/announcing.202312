@@ -20,6 +20,7 @@ module.exports = {
     node: true,
   },
   rules: {
+    'svelte/no-at-html-tags': 'off',
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
   },

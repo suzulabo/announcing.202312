@@ -1,6 +1,7 @@
 <script lang="ts">
   import { format, parseISO } from 'date-fns';
   import linkifyHtml from 'linkify-html';
+
   import type { PageData } from './$types';
 
   export let data: PageData;

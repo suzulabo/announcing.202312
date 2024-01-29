@@ -1,6 +1,7 @@
 <script>
-  import { t } from '$lib/translations';
   import { Button } from '@announcing/components';
+
+  import { t } from '$lib/translations';
 </script>
 
 <h1>{$t('msg.welcome')}</h1>
