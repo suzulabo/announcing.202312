@@ -8,7 +8,7 @@ module.exports = {
     'prettier',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'simple-import-sort'],
+  plugins: ['@typescript-eslint'],
   parserOptions: {
     sourceType: 'module',
     ecmaVersion: 2020,
@@ -21,8 +21,6 @@ module.exports = {
   },
   rules: {
     'svelte/no-at-html-tags': 'off',
-    'simple-import-sort/imports': 'warn',
-    'simple-import-sort/exports': 'warn',
   },
   overrides: [
     {

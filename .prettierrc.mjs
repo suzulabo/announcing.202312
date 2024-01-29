@@ -4,7 +4,7 @@ const config = {
   tabWidth: 2,
   quoteProps: 'consistent',
   singleQuote: true,
-  plugins: ['prettier-plugin-svelte'],
+  plugins: ['prettier-plugin-organize-imports', 'prettier-plugin-svelte'],
   overrides: [
     {
       files: '*.svelte',

@@ -1,4 +1,4 @@
-import { type AnnouncingJSON, type Errors, validateAnnouncingJSON } from '@announcing/json';
+import { validateAnnouncingJSON, type AnnouncingJSON, type Errors } from '@announcing/json';
 import { error } from '@sveltejs/kit';
 import { isValid } from 'psl';
 
