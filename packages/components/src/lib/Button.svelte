@@ -1,4 +1,4 @@
-<button class="Button"><slot /></button>
+<button class="Button" on:click><slot /></button>
 
 <style lang="scss">
   .Button {
