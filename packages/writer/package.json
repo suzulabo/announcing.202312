@@ -15,6 +15,7 @@
   "devDependencies": {
     "@announcing/components": "workspace:^",
     "@announcing/json": "workspace:^",
+    "@auth/sveltekit": "^0.10.0",
     "@sveltejs/adapter-auto": "^3.1.1",
     "@sveltejs/adapter-cloudflare": "^4.1.0",
     "@sveltejs/kit": "^2.5.0",
