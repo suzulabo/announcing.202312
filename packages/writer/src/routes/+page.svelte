@@ -10,6 +10,7 @@
       signOut();
     }}>Sign Out</Button
   >
+  ID: [{$page.data.session.user?.id}]
 {:else}
   <a href="./signin">SignIn</a>
 {/if}
