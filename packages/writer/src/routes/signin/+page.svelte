@@ -5,7 +5,6 @@
 
 <Button
   on:click={() => {
-    console.log('click');
     signIn('google');
   }}>Google</Button
 >

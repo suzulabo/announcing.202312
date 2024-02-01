@@ -3,11 +3,7 @@
   import Button from '$lib/Button.svelte';
 </script>
 
-<Button
-  on:click={() => {
-    console.log('click');
-  }}>ボタン</Button
->
+<Button on:click={() => {}}>ボタン</Button>
 <Button --width="200px">width</Button>
 <hr />
 <Box>ボックス</Box>
