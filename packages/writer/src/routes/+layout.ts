@@ -4,12 +4,12 @@ import type { Load } from '@sveltejs/kit';
 
 import { loadTranslations } from '$lib/i18n/translations';
 
-export const load: Load = async ({ url }) => {
+export const load: Load = async ({ url, data }) => {
   const { pathname } = url;
 
   const initLocale = 'ja';
 
   await loadTranslations(initLocale, pathname);
 
-  return {};
+  return { ...data };
 };

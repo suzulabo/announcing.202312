@@ -1,9 +1,15 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import { Button } from '@announcing/components';
+  import { signOut } from '@auth/sveltekit/client';
 </script>
 
 {#if $page.data.session}
-  SignedIn
+  <Button
+    on:click={() => {
+      signOut();
+    }}>Sign Out</Button
+  >
 {:else}
   <a href="./signin">SignIn</a>
 {/if}
