@@ -1,9 +1,7 @@
 import type { Msgs } from './types';
 
 const msgs: Msgs = {
-  welcome: 'Welcome',
-  follow: 'Follow',
-  getNotifications: 'Get Notifications',
+  signIn: 'Sign in with {{placeholder}}',
 };
 
 export default msgs;
