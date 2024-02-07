@@ -1,11 +1,15 @@
 <script lang="ts">
-  import { Button } from '@announcing/components';
-  import { signIn } from '@auth/sveltekit/client';
   import googleIcon from '$lib/assets/providers/google.svg?raw';
   import { t } from '$lib/i18n/translations';
+  import { Button, Logo } from '@announcing/components';
+  import { signIn } from '@auth/sveltekit/client';
 </script>
 
 <div class="main">
+  <div class="title">
+    <Logo size="40px" />
+    <div class="label">Announcing Writer</div>
+  </div>
   <div class="buttons">
     <Button
       on:click={() => {
@@ -23,6 +27,18 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px 10px;
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      margin-bottom: 40px;
+
+      .label {
+        font-size: 24px;
+      }
+    }
 
     .buttons {
       max-width: 300px;
