@@ -1,5 +1,5 @@
 <script lang="ts">
-  import googleIcon from '$lib/assets/providers/google.svg?raw';
+  import GoogleIcon from '$lib/components/icon/GoogleIcon.svelte';
   import { t } from '$lib/i18n/translations';
   import Logo from '@announcing/components/Logo.svelte';
   import { signIn } from '@auth/sveltekit/client';
@@ -16,7 +16,7 @@
         signIn('google');
       }}
       ><div class="inner">
-        {@html googleIcon}<span class="label">{$t('signIn', { placeholder: 'Google' })}</span>
+        <GoogleIcon /><span class="label">{$t('signIn', { placeholder: 'Google' })}</span>
       </div></button
     >
   </div>
