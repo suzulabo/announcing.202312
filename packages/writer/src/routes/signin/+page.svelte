@@ -1,7 +1,7 @@
 <script lang="ts">
   import googleIcon from '$lib/assets/providers/google.svg?raw';
   import { t } from '$lib/i18n/translations';
-  import { Button, Logo } from '@announcing/components';
+  import Logo from '@announcing/components/Logo.svelte';
   import { signIn } from '@auth/sveltekit/client';
 </script>
 
@@ -11,13 +11,13 @@
     <div class="label">Announcing Writer</div>
   </div>
   <div class="buttons">
-    <Button
+    <button
       on:click={() => {
         signIn('google');
       }}
       ><div class="inner">
         {@html googleIcon}<span class="label">{$t('signIn', { placeholder: 'Google' })}</span>
-      </div></Button
+      </div></button
     >
   </div>
 </div>
@@ -46,11 +46,15 @@
       margin: 0 auto;
       flex-direction: column;
 
-      .inner {
-        display: inline-flex;
-        align-items: center;
-        .label {
-          margin-left: 10px;
+      button {
+        width: auto;
+
+        .inner {
+          display: inline-flex;
+          align-items: center;
+          .label {
+            margin-left: 10px;
+          }
         }
       }
     }

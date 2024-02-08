@@ -1,12 +1,17 @@
 <script>
-  import Box from '$lib/Box.svelte';
-  import Button from '$lib/Button.svelte';
   import Logo from '$lib/Logo.svelte';
 </script>
 
-<Button on:click={() => {}}>ボタン</Button>
-<Button --width="200px">width</Button>
-<hr />
-<Box>ボックス</Box>
+<button
+  on:click={() => {
+    alert('click');
+  }}>ボタン</button
+>
 <hr />
 <Logo size="100px" />
+
+<style lang="scss">
+  hr {
+    margin: 10px 0;
+  }
+</style>

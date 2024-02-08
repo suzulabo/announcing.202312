@@ -14,11 +14,11 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "svelte": "./dist/index.js"
-    },
-    "./base.scss": "./dist/base.scss"
+    "./base.scss": "./dist/base.scss",
+    "./Logo.svelte": {
+      "types": "./dist/Logo.svelte.d.ts",
+      "svelte": "./dist/Logo.svelte"
+    }
   },
   "files": [
     "dist",
@@ -51,8 +51,6 @@
     "vite": "^5.0.12",
     "vitest": "^1.2.2"
   },
-  "svelte": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "type": "module",
   "dependencies": {
     "the-new-css-reset": "^1.11.2"
