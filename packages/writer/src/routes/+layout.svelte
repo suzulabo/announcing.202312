@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import { t } from '$lib/i18n/translations';
   import Logo from '@announcing/components/Logo.svelte';
   import { signOut } from '@auth/sveltekit/client';
 
@@ -13,7 +14,7 @@
     <button
       on:click={() => {
         signOut();
-      }}>Sign out</button
+      }}>{$t('signOut')}</button
     >
   </header>
 {/if}
@@ -24,5 +25,12 @@
   header {
     display: flex;
     align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid var(--color-border);
+
+    button {
+      margin-left: auto;
+      padding: 4px 8px;
+    }
   }
 </style>
