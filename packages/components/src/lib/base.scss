@@ -43,7 +43,8 @@ hr {
   border-top: 1px solid var(--color-border-light);
 }
 
-button {
+button,
+a.button {
   display: inline-block;
   border: 2px solid var(--color-border);
   border-radius: 8px;
@@ -63,4 +64,8 @@ button {
       cursor: pointer;
     }
   }
+}
+
+a.button {
+  text-decoration: none;
 }

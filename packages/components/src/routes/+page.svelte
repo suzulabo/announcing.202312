@@ -5,8 +5,10 @@
 <button
   on:click={() => {
     alert('click');
-  }}>ボタン</button
+  }}>Button</button
 >
+<hr />
+<a class="button" href="/to">Anchor Button</a>
 <hr />
 <Logo size="100px" />
 

@@ -3,13 +3,14 @@
 </script>
 
 <div class="main">
-  <button
-    class="create-btn"
+  <a
+    href="./create"
+    class="button create-btn"
     on:click={() => {
       //
     }}
     >{$t('createAnnouncement')}
-  </button>
+  </a>
 </div>
 
 <style lang="scss">
