@@ -5,12 +5,17 @@
   import { signOut } from '@auth/sveltekit/client';
 
   const userID = $page.data.session?.user?.id;
+  $: path = $page.url.pathname;
 </script>
 
 {#if userID}
   <header>
-    <Logo size="20px" />
-    <span class="label">Announcing Writer</span>
+    {#if path === '/'}
+      <Logo size="20px" />
+      <span class="label">Announcing Writer</span>
+    {:else}
+      <a href="/">{$t('back')}</a>
+    {/if}
     <button
       on:click={() => {
         signOut();
