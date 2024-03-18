@@ -28,12 +28,8 @@
           "name": "threadOwners_threadID_threads_threadID_fk",
           "tableFrom": "threadOwners",
           "tableTo": "threads",
-          "columnsFrom": [
-            "threadID"
-          ],
-          "columnsTo": [
-            "threadID"
-          ],
+          "columnsFrom": ["threadID"],
+          "columnsTo": ["threadID"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
@@ -41,22 +37,15 @@
           "name": "threadOwners_userID_users_userID_fk",
           "tableFrom": "threadOwners",
           "tableTo": "users",
-          "columnsFrom": [
-            "userID"
-          ],
-          "columnsTo": [
-            "userID"
-          ],
+          "columnsFrom": ["userID"],
+          "columnsTo": ["userID"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {
         "threadOwners_threadID_userID_pk": {
-          "columns": [
-            "threadID",
-            "userID"
-          ],
+          "columns": ["threadID", "userID"],
           "name": "threadOwners_threadID_userID_pk"
         }
       },

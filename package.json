@@ -16,8 +16,8 @@
     "check": "pnpm run format && pnpm run lint && pnpm run build"
   },
   "devDependencies": {
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "prettier-plugin-svelte": "^3.1.2"
+    "prettier-plugin-svelte": "^3.2.2"
   }
 }
