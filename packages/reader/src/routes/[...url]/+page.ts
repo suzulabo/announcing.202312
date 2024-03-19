@@ -51,7 +51,6 @@ export const load: PageLoad = async ({ params, fetch }): Promise<LoadResponse> =
   const errors: Errors = [];
   const validateResult = validateAnnouncingJSON(json, errors);
   if (!validateResult) {
-    console.log({ errors });
     return { error: 'JSON' };
   }
 
