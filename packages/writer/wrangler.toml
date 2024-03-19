@@ -1,0 +1,12 @@
+main = ".svelte-kit/cloudflare/_worker.js"
+
+# [site]
+# bucket = ".svelte-kit/cloudflare/public"
+
+[build]
+command = "npm run build"
+
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "appdb"
+database_id = "71337181-f3e9-45ff-b9af-80cf765f1cb4"

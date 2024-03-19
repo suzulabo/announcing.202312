@@ -1,4 +1,4 @@
-import { type AnnouncingJSON, type Errors, validateAnnouncingJSON } from '@announcing/json';
+import { validateAnnouncingJSON, type AnnouncingJSON, type Errors } from '@announcing/json';
 import { error } from '@sveltejs/kit';
 import { isValid } from 'psl';
 
@@ -51,7 +51,6 @@ export const load: PageLoad = async ({ params, fetch }): Promise<LoadResponse> =
   const errors: Errors = [];
   const validateResult = validateAnnouncingJSON(json, errors);
   if (!validateResult) {
-    console.log({ errors });
     return { error: 'JSON' };
   }
 

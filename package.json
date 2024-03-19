@@ -3,18 +3,21 @@
   "private": true,
   "engines": {
     "node": "=20.9.0",
-    "pnpm": "=8.12.1"
+    "pnpm": "=8.15.0"
   },
-  "packageManager": "pnpm@8.12.1",
+  "packageManager": "pnpm@8.15.0",
   "scripts": {
+    "preinstall": "npx -y only-allow pnpm",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
     "build": "pnpm -r build",
     "check": "pnpm run format && pnpm run lint && pnpm run build"
   },
   "devDependencies": {
-    "prettier": "^3.1.1",
-    "prettier-plugin-svelte": "^3.1.2"
+    "prettier": "^3.2.5",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "prettier-plugin-svelte": "^3.2.2"
   }
 }

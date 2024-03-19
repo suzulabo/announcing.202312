@@ -1,9 +1,19 @@
 <script>
-  import Box from '$lib/Box.svelte';
-  import Button from '$lib/Button.svelte';
+  import Logo from '$lib/Logo.svelte';
 </script>
 
-<Button>ボタン</Button>
-<Button --width="200px">width</Button>
+<button
+  on:click={() => {
+    alert('click');
+  }}>Button</button
+>
 <hr />
-<Box>ボックス</Box>
+<a class="button" href="/to">Anchor Button</a>
+<hr />
+<Logo size="100px" />
+
+<style lang="scss">
+  hr {
+    margin: 10px 0;
+  }
+</style>

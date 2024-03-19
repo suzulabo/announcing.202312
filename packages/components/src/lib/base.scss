@@ -42,3 +42,30 @@ a {
 hr {
   border-top: 1px solid var(--color-border-light);
 }
+
+button,
+a.button {
+  display: inline-block;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-align: center;
+  width: max-content;
+
+  &:active {
+    position: relative;
+    top: 1px;
+    left: 1px;
+  }
+
+  @media (hover: hover) {
+    &:hover:not(:disabled) {
+      background-color: var(--color-hover);
+      cursor: pointer;
+    }
+  }
+}
+
+a.button {
+  text-decoration: none;
+}
