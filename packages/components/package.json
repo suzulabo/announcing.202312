@@ -19,6 +19,10 @@
       "types": "./dist/Input.svelte.d.ts",
       "svelte": "./dist/Input.svelte"
     },
+    "./TextArea.svelte": {
+      "types": "./dist/TextArea.svelte.d.ts",
+      "svelte": "./dist/TextArea.svelte"
+    },
     "./Logo.svelte": {
       "types": "./dist/Logo.svelte.d.ts",
       "svelte": "./dist/Logo.svelte"

@@ -10,6 +10,12 @@
 </label>
 
 <style lang="scss">
+  label:focus-within {
+    span {
+      font-weight: 500;
+    }
+  }
+
   input {
     margin-top: 4px;
   }
