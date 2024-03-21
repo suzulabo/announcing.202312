@@ -7,6 +7,9 @@ const msgs: Msgs = {
   createAnnouncement: 'Create a new announcement',
   create: {
     title: 'Creating a new announcement',
+    input: {
+      name: 'Name',
+    },
   },
 };
 
