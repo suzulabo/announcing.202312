@@ -15,6 +15,10 @@
   },
   "exports": {
     "./base.scss": "./dist/base.scss",
+    "./Input.svelte": {
+      "types": "./dist/Input.svelte.d.ts",
+      "svelte": "./dist/Input.svelte"
+    },
     "./Logo.svelte": {
       "types": "./dist/Logo.svelte.d.ts",
       "svelte": "./dist/Logo.svelte"
