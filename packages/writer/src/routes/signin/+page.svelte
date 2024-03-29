@@ -16,7 +16,7 @@
         signIn('google');
       }}
       ><div class="inner">
-        <GoogleIcon /><span class="label">{$t('signIn', { placeholder: 'Google' })}</span>
+        <GoogleIcon /><span class="label">{$t('signIn', { value: 'Google' })}</span>
       </div></button
     >
   </div>

@@ -2,6 +2,8 @@
   import Input from '$lib/Input.svelte';
   import Logo from '$lib/Logo.svelte';
   import TextArea from '$lib/TextArea.svelte';
+
+  let inputValue = '';
 </script>
 
 <div class="main">
@@ -15,16 +17,28 @@
   <a class="button" href="/to">Anchor Button</a>
 
   <hr />
+  <button disabled>disabled</button>
+
+  <hr />
   <Logo size="100px" />
 
   <hr />
-  <Input label="Label" />
+  <Input
+    name="name"
+    label="Label"
+    placeholder="Enter up to 50 characters"
+    bind:value={inputValue}
+    maxLength={50}
+  />
+  <br />{inputValue}
 
   <hr />
-  <TextArea label="Text area"></TextArea>
+  <TextArea name="name" label="Text area" placeholder="Enter up to 500 characters" maxLength={500}
+  ></TextArea>
 
   <hr />
   <TextArea
+    name="name"
     label="Initial value"
     value="In the beginning God created the heavens and the earth. Now the earth was formless and empty,
   darkness was over the surface of the deep, and the Spirit of God was hovering over the waters.
@@ -40,6 +54,7 @@
 <style lang="scss">
   .main {
     padding: 16px;
+    max-width: 800px;
   }
   hr {
     margin: 10px 0;

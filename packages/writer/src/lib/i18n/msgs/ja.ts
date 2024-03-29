@@ -1,8 +1,11 @@
 const msgs = {
-  signIn: '{{placeholder}}でログイン',
+  signIn: '{{value}}でログイン',
   signOut: 'ログアウト',
   back: '戻る',
   cancel: 'キャンセル',
+  input: {
+    placeholder: '{{num}}文字以内で入力してください',
+  },
   createAnnouncement: '新しいお知らせを作る',
   create: {
     title: 'お知らせの作成',

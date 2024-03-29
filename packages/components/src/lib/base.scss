@@ -3,6 +3,7 @@
 html {
   --color-text: #212121;
   --color-text-disable: #bdbdbd;
+  --color-text-placeholder: #757575;
   --color-background: #ffffff;
   --color-background-light: #e0e0e0;
   --color-border: #212121;
@@ -66,7 +67,12 @@ a.button {
   width: max-content;
   font-weight: 500;
 
-  &:active {
+  &:disabled {
+    color: var(--color-text-disable);
+    border-color: var(--color-border-disable);
+  }
+
+  &:active:not(:disabled) {
     position: relative;
     top: 1px;
     left: 1px;
@@ -98,14 +104,30 @@ textarea {
   border: 1px solid var(--color-border);
   border-radius: 4px;
   padding: 8px;
+
+  &::placeholder {
+    color: var(--color-text-placeholder);
+    text-align: center;
+  }
+
   &:focus {
     border-width: 2px;
     padding: 7px;
+    &::placeholder {
+      visibility: hidden;
+    }
   }
 }
 
 textarea {
   min-height: 5em;
+  &::placeholder {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 div.info {

@@ -2,18 +2,33 @@
   import { t } from '$lib/i18n/translations';
   import Input from '@announcing/components/Input.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
+
+  let formData = { title: '', desc: '' };
+
+  const canSubmit = !!formData.title;
 </script>
 
 <header>
   <div>{$t('create.title')}</div>
 </header>
 <div class="container">
-  <div class="form">
-    <Input label={$t('create.input.title')} />
-    <TextArea label={$t('create.input.desc')} />
-    <button>{$t('create.input.submit')}</button>
+  <form method="POST">
+    <Input
+      name="title"
+      label={$t('create.input.title')}
+      placeholder={$t('input.placeholder', { num: 50 })}
+      maxLength={50}
+      bind:value={formData.title}
+    />
+    <TextArea
+      name="desc"
+      label={$t('create.input.desc')}
+      placeholder={$t('input.placeholder', { num: 500 })}
+      maxLength={500}
+    />
+    <button disabled={!canSubmit}>{$t('create.input.submit')}</button>
     <a href="/">{$t('cancel')}</a>
-  </div>
+  </form>
 </div>
 
 <style lang="scss">
@@ -29,7 +44,7 @@
     display: flex;
     flex-direction: column;
 
-    .form {
+    form {
       display: grid;
       grid-template-columns: auto;
       gap: 16px;
