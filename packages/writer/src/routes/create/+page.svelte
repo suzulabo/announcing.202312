@@ -5,7 +5,7 @@
 
   let formData = { title: '', desc: '' };
 
-  const canSubmit = !!formData.title;
+  $: canSubmit = !!formData.title;
 </script>
 
 <header>
@@ -24,6 +24,7 @@
       name="desc"
       label={$t('create.input.desc')}
       placeholder={$t('input.placeholder', { num: 500 })}
+      bind:value={formData.desc}
       maxLength={500}
     />
     <button disabled={!canSubmit}>{$t('create.input.submit')}</button>
