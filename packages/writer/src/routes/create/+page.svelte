@@ -1,33 +1,46 @@
 <script lang="ts">
+  import { create as formSchema } from '$lib/form/schema';
   import { t } from '$lib/i18n/translations';
   import Input from '@announcing/components/Input.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
+  import { superForm } from 'sveltekit-superforms';
+  import { valibotClient } from 'sveltekit-superforms/adapters';
+  import type { PageData } from './$types';
 
-  let formData = { title: '', desc: '' };
+  export let data: PageData;
 
-  $: canSubmit = !!formData.title;
+  let validated = false;
+
+  const { form, enhance, validateForm } = superForm(data.form, {
+    validators: valibotClient(formSchema),
+    validationMethod: 'oninput',
+    onChange: async () => {
+      const result = await validateForm();
+      validated = result.valid;
+    },
+  });
 </script>
 
 <header>
   <div>{$t('create.title')}</div>
 </header>
 <div class="container">
-  <form method="POST">
+  <form method="POST" use:enhance>
     <Input
       name="title"
       label={$t('create.input.title')}
       placeholder={$t('input.placeholder', { num: 50 })}
       maxLength={50}
-      bind:value={formData.title}
+      bind:value={$form.title}
     />
     <TextArea
       name="desc"
       label={$t('create.input.desc')}
       placeholder={$t('input.placeholder', { num: 500 })}
-      bind:value={formData.desc}
+      bind:value={$form.desc}
       maxLength={500}
     />
-    <button disabled={!canSubmit}>{$t('create.input.submit')}</button>
+    <button disabled={!validated}>{$t('create.input.submit')}</button>
     <a href="/">{$t('cancel')}</a>
   </form>
 </div>

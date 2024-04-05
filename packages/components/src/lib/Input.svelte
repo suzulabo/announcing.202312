@@ -5,8 +5,6 @@
   export let placeholder = '';
   export let value = '';
   export let maxLength = 0;
-
-  console.log({ value });
 </script>
 
 <label>
