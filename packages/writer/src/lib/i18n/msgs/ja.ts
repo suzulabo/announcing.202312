@@ -3,9 +3,8 @@ const msgs = {
   signOut: 'ログアウト',
   back: '戻る',
   cancel: 'キャンセル',
-  input: {
-    placeholder: '{{num}}文字以内で入力してください',
-  },
+  maxLength: '{{num}}文字以内で入力してください',
+  maxLengthOptional: '{{num}}文字以内で入力してください(省略可)',
   createAnnouncement: '新しいお知らせを作る',
   create: {
     title: 'お知らせの作成',

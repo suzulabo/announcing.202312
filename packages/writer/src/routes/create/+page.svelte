@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { THREAD_DESC_MAX_LENGTH, THREAD_TITLE_MAX_LENGTH } from '$lib/constants';
   import { create as formSchema } from '$lib/form/schema';
   import { t } from '$lib/i18n/translations';
   import Input from '@announcing/components/Input.svelte';
@@ -29,16 +30,16 @@
     <Input
       name="title"
       label={$t('create.input.title')}
-      placeholder={$t('input.placeholder', { num: 50 })}
-      maxLength={50}
+      placeholder={$t('maxLength', { num: THREAD_TITLE_MAX_LENGTH })}
+      maxLength={THREAD_TITLE_MAX_LENGTH}
       bind:value={$form.title}
     />
     <TextArea
       name="desc"
       label={$t('create.input.desc')}
-      placeholder={$t('input.placeholder', { num: 500 })}
+      placeholder={$t('maxLengthOptional', { num: THREAD_DESC_MAX_LENGTH })}
       bind:value={$form.desc}
-      maxLength={500}
+      maxLength={THREAD_DESC_MAX_LENGTH}
     />
     <button disabled={!validated}>{$t('create.input.submit')}</button>
     <a href="/">{$t('cancel')}</a>

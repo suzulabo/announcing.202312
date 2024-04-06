@@ -5,6 +5,8 @@ const msgs: Msgs = {
   signOut: 'Sign out',
   back: 'Back',
   cancel: 'Cancel',
+  maxLength: 'Enter up to {{num}} characters',
+  maxLengthOptional: 'Enter up to {{num}} characters(Optional)',
   createAnnouncement: 'Create a new announcement',
   create: {
     title: 'Creating a new announcement',
