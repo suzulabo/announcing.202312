@@ -5,8 +5,6 @@ import { valibot } from 'sveltekit-superforms/adapters';
 
 export const load = async () => {
   const form = await superValidate(valibot(formSchema));
-
-  // Always return { form } in load functions
   return { form };
 };
 
