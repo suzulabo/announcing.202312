@@ -10,7 +10,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "wrangler:dev": "wrangler pages dev .svelte-kit/cloudflare",
-    "db:gen": "drizzle-kit generate:sqlite"
+    "db:push:dev": "drizzle-kit push:sqlite --config drizzie.config.dev.ts",
+    "db:studio": "drizzle-kit studio --config drizzie.config.dev.ts"
   },
   "devDependencies": {
     "@announcing/components": "workspace:^",
@@ -23,6 +24,7 @@
     "@types/psl": "^1.1.3",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
+    "better-sqlite3": "^9.4.5",
     "date-fns": "^3.6.0",
     "drizzle-kit": "^0.20.14",
     "drizzle-orm": "^0.30.2",

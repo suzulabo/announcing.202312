@@ -25,7 +25,6 @@ export const threadOwners = sqliteTable(
       .notNull()
       .references(() => threads.theadID, { onUpdate: 'cascade', onDelete: 'cascade' }),
     userID: text('userID')
-      .primaryKey()
       .notNull()
       .references(() => users.userID, { onUpdate: 'cascade', onDelete: 'cascade' }),
   },
