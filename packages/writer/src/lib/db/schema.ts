@@ -1,9 +1,5 @@
 import { integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-export const users = sqliteTable('users', {
-  userID: text('userID').primaryKey().notNull(),
-});
-
 export const threads = sqliteTable(
   'threads',
   {
@@ -29,12 +25,8 @@ export const threads = sqliteTable(
 export const threadOwners = sqliteTable(
   'threadOwners',
   {
-    threadID: integer('threadID')
-      .notNull()
-      .references(() => threads.threadID, { onUpdate: 'cascade', onDelete: 'cascade' }),
-    userID: text('userID')
-      .notNull()
-      .references(() => users.userID, { onUpdate: 'cascade', onDelete: 'cascade' }),
+    threadID: integer('threadID').notNull(),
+    userID: text('userID').notNull(),
   },
   (table) => {
     return {

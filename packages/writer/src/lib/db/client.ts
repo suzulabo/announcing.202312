@@ -1,4 +1,4 @@
-import Database from 'better-sqlite3';
-import { drizzle } from 'drizzle-orm/better-sqlite3';
-const sqlite = new Database('dev.db');
+import { createClient } from '@libsql/client';
+import { drizzle } from 'drizzle-orm/libsql';
+const sqlite = createClient({ url: 'file:dev.db' });
 export const db = drizzle(sqlite);
