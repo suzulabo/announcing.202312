@@ -1,5 +1,4 @@
 import { AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_SECRET } from '$env/static/private';
-
 import { SvelteKitAuth } from '@auth/sveltekit';
 import Google from '@auth/sveltekit/providers/google';
 
@@ -21,12 +20,14 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
       if (account) {
         token.userID = `${account?.provider}:${token.sub}`;
       }
+
       return token;
     },
     session: async ({ session, token }) => {
       if (session.user && token.userID) {
         session.user.id = token.userID as string;
       }
+
       return session;
     },
   },

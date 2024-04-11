@@ -17,6 +17,7 @@
     validationMethod: 'oninput',
     onChange: async () => {
       const result = await validateForm();
+
       validated = result.valid;
     },
   });

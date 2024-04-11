@@ -19,6 +19,21 @@ module.exports = {
     es2017: true,
     node: true,
   },
+  rules: {
+    'padding-line-between-statements': [
+      'warn',
+      {
+        blankLine: 'always',
+        prev: '*',
+        next: '*',
+      },
+      {
+        blankLine: 'never',
+        prev: 'import',
+        next: 'import',
+      },
+    ],
+  },
   overrides: [
     {
       files: ['*.svelte'],

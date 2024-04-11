@@ -5,6 +5,7 @@ import { handle as authenticationHandle } from './auth';
 const authorizationHandle: Handle = async ({ event, resolve }) => {
   if (!event.url.pathname.startsWith('/signin')) {
     const session = await event.locals.auth();
+
     if (!session?.user?.id) {
       throw redirect(303, '/signin');
     }
