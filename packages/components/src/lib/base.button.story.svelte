@@ -5,8 +5,16 @@
   export let Hst: Hst;
 </script>
 
-<Hst.Story title="button">
-  <button on:click={(event) => logEvent('click', event)}> Click me!</button>
+<Hst.Story title="button" layout={{ type: 'grid' }}>
+  <Hst.Variant title="default">
+    <button on:click={(event) => logEvent('click', event)}> Click me!</button>
+  </Hst.Variant>
+  <Hst.Variant title="anchor">
+    <a class="button" href="https://github.com/" target="_blank">Anchor Button</a>
+  </Hst.Variant>
+  <Hst.Variant title="disabled">
+    <button disabled>Disabled</button>
+  </Hst.Variant>
 </Hst.Story>
 
 <style>
