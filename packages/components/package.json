@@ -11,7 +11,10 @@
     "package:watch": "svelte-package -w",
     "prepublishOnly": "npm run package",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "story:dev": "histoire dev",
+    "story:build": "histoire build",
+    "story:preview": "histoire preview"
   },
   "exports": {
     "./base.scss": "./dist/base.scss",
@@ -37,6 +40,7 @@
     "svelte": "^4.0.0"
   },
   "devDependencies": {
+    "@histoire/plugin-svelte": "^0.17.17",
     "@sveltejs/adapter-auto": "^3.1.1",
     "@sveltejs/kit": "^2.5.4",
     "@sveltejs/package": "^2.3.0",
@@ -47,6 +51,7 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.35.1",
+    "histoire": "^0.17.17",
     "prettier": "^3.2.5",
     "prettier-plugin-svelte": "^3.2.2",
     "publint": "^0.2.7",
