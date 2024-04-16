@@ -16,6 +16,3 @@
     maxLength={50}
   />
 </Hst.Story>
-
-<style>
-</style>

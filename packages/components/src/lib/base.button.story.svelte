@@ -16,10 +16,3 @@
     <button disabled>Disabled</button>
   </Hst.Variant>
 </Hst.Story>
-
-<style>
-  :global(.histoire-generic-render-story) {
-    text-align: center;
-    padding: 4px;
-  }
-</style>
