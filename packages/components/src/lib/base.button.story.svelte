@@ -5,7 +5,7 @@
   export let Hst: Hst;
 </script>
 
-<Hst.Story title="button" layout={{ type: 'grid' }}>
+<Hst.Story title="button">
   <Hst.Variant title="default">
     <button on:click={(event) => logEvent('click', event)}> Click me!</button>
   </Hst.Variant>
