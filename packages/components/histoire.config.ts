@@ -4,6 +4,7 @@ import { defineConfig } from 'histoire';
 export default defineConfig({
   plugins: [HstSvelte()],
   setupFile: 'histoire.setup.ts',
+  storyIgnored: ['**/node_modules/**', '**/dist/**', '**/.svelte-kit/**'],
   tree: {
     groups: [
       {
