@@ -11,10 +11,25 @@
     "package:watch": "svelte-package -w",
     "prepublishOnly": "npm run package",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "story:dev": "histoire dev",
+    "story:build": "histoire build",
+    "story:preview": "histoire preview"
   },
   "exports": {
     "./base.scss": "./dist/base.scss",
+    "./Input.svelte": {
+      "types": "./dist/Input.svelte.d.ts",
+      "svelte": "./dist/Input.svelte"
+    },
+    "./TextArea.svelte": {
+      "types": "./dist/TextArea.svelte.d.ts",
+      "svelte": "./dist/TextArea.svelte"
+    },
+    "./Modal.svelte": {
+      "types": "./dist/Modal.svelte.d.ts",
+      "svelte": "./dist/Modal.svelte"
+    },
     "./Logo.svelte": {
       "types": "./dist/Logo.svelte.d.ts",
       "svelte": "./dist/Logo.svelte"
@@ -29,30 +44,30 @@
     "svelte": "^4.0.0"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^3.1.1",
-    "@sveltejs/kit": "^2.5.4",
-    "@sveltejs/package": "^2.3.0",
-    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@histoire/plugin-svelte": "^0.17.17",
+    "@sveltejs/adapter-auto": "^3.2.0",
+    "@sveltejs/kit": "^2.5.5",
+    "@sveltejs/package": "^2.3.1",
+    "@sveltejs/vite-plugin-svelte": "^3.1.0",
     "@types/eslint": "8.56.5",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
+    "@typescript-eslint/eslint-plugin": "^7.6.0",
+    "@typescript-eslint/parser": "^7.6.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-svelte": "^2.35.1",
+    "eslint-plugin-svelte": "^2.37.0",
+    "histoire": "^0.17.17",
     "prettier": "^3.2.5",
-    "prettier-plugin-svelte": "^3.2.2",
+    "prettier-plugin-svelte": "^3.2.3",
     "publint": "^0.2.7",
-    "sass": "^1.72.0",
-    "svelte": "^4.2.12",
-    "svelte-check": "^3.6.7",
+    "sass": "^1.75.0",
+    "svelte": "^4.2.14",
+    "svelte-check": "^3.6.9",
     "svelte-preprocess": "^5.1.3",
+    "the-new-css-reset": "^1.11.2",
     "tslib": "^2.6.2",
-    "typescript": "^5.4.2",
-    "vite": "^5.1.6",
-    "vitest": "^1.4.0"
+    "typescript": "^5.4.5",
+    "vite": "^5.2.8",
+    "vitest": "^1.5.0"
   },
-  "type": "module",
-  "dependencies": {
-    "the-new-css-reset": "^1.11.2"
-  }
+  "type": "module"
 }

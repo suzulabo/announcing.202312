@@ -5,7 +5,7 @@
   import { signIn } from '@auth/sveltekit/client';
 </script>
 
-<div class="main">
+<div class="container">
   <div class="title">
     <Logo size="40px" />
     <div class="label">Announcing Writer</div>
@@ -16,22 +16,18 @@
         signIn('google');
       }}
       ><div class="inner">
-        <GoogleIcon /><span class="label">{$t('signIn', { placeholder: 'Google' })}</span>
+        <GoogleIcon /><span class="label">{$t('signIn', { value: 'Google' })}</span>
       </div></button
     >
   </div>
 </div>
 
 <style lang="scss">
-  .main {
-    max-width: 600px;
-    margin: 0 auto;
+  .container {
     padding: 20px 10px;
 
     .title {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      text-align: center;
 
       margin-bottom: 40px;
 
@@ -41,13 +37,12 @@
     }
 
     .buttons {
-      max-width: 300px;
-      display: flex;
-      margin: 0 auto;
-      flex-direction: column;
+      text-align: center;
 
       button {
-        width: auto;
+        width: 90%;
+        min-width: 200px;
+        max-width: 300px;
 
         .inner {
           display: inline-flex;
