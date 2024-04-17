@@ -1,6 +1,6 @@
 <script lang="ts">
+  import TextArea from '$lib/TextArea.svelte';
   import type { Hst } from '@histoire/plugin-svelte';
-  import TextArea from './TextArea.svelte';
 
   // eslint-disable-next-line no-import-assign
   export let Hst: Hst;
