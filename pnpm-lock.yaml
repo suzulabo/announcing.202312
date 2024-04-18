@@ -93,12 +93,6 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(sass@1.75.0)
 
-  packages/eslint-config:
-    dependencies:
-      eslint:
-        specifier: ^9.0.0
-        version: 9.0.0
-
   packages/eslint-config/svelte:
     dependencies:
       '@eslint/js':
