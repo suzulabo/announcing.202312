@@ -32,6 +32,16 @@ module.exports = {
         prev: 'import',
         next: 'import',
       },
+      {
+        blankLine: 'never',
+        prev: 'expression',
+        next: 'expression',
+      },
+      {
+        blankLine: 'always',
+        prev: 'multiline-expression',
+        next: 'expression',
+      },
     ],
   },
   overrides: [
