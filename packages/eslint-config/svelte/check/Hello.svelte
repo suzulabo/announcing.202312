@@ -1,9 +1,15 @@
 <script lang="ts">
+  export let prefix = '';
+
   export let suffix = 'World';
+
+  console.log('Hello');
+
+  console.log('World');
 </script>
 
 <div>
-  Hello {suffix}
+  {prefix} Hello {suffix}
 </div>
 
 <style>

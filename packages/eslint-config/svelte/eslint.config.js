@@ -2,17 +2,22 @@
 
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
-import eslintConfigPrettier from 'eslint-config-prettier';
-import eslintPluginSvelte from 'eslint-plugin-svelte';
+import prettier from 'eslint-config-prettier';
+import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import svelteParser from 'svelte-eslint-parser';
 import ts from 'typescript-eslint';
 
-export default [
+export default ts.config(
+  {
+    ignores: ['**/node_modules', '**/dist', '**/.svelte-kit'],
+  },
   js.configs.recommended,
   ...ts.configs.recommended,
-  ...eslintPluginSvelte.configs['flat/recommended'],
-  eslintConfigPrettier,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  ...svelte.configs['flat/recommended'],
+  prettier,
   {
     files: ['**/*.svelte'],
     languageOptions: {
@@ -21,7 +26,7 @@ export default [
       globals: { ...globals.node, ...globals.browser },
       parser: svelteParser,
       parserOptions: {
-        parser: ts.parser,
+        parser: { ts: ts.parser },
         extraFileExtensions: ['.svelte'],
       },
     },
@@ -56,7 +61,4 @@ export default [
       ],
     },
   },
-  {
-    ignores: ['**/node_modules', '**/dist', '**/.svelte-kit'],
-  },
-];
+);
