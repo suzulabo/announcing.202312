@@ -36,6 +36,7 @@ export default ts.config(
       '@stylistic': stylistic,
     },
     rules: {
+      'svelte/no-at-html-tags': 'off',
       '@stylistic/padding-line-between-statements': [
         'warn',
         {

@@ -8,6 +8,7 @@
 
   const formatDate = (s: string) => {
     const d = parseISO(s);
+
     return format(d, 'yyyy-MM-dd HH:mm');
   };
   const toHtml = (s: string) => {

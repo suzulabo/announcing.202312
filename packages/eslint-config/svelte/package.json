@@ -2,6 +2,8 @@
   "name": "@announcing/eslint-config-svelte",
   "private": true,
   "type": "module",
+  "main": "eslint.config.js",
+  "types": "eslint.config.d.ts",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
