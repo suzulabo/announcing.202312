@@ -10,7 +10,12 @@
 
 <Hst.Story title="Modal">
   <button on:click={() => (show = true)}>Show</button>
-  <Modal bind:show>
+  <Modal
+    bind:show
+    on:close={() => {
+      show = false;
+    }}
+  >
     <div class="modal-body">
       <div>This is a modal window.</div>
       <button on:click={() => (show = false)}>Close</button>

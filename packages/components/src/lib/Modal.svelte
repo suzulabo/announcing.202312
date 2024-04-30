@@ -1,11 +1,18 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+
   export let show = false;
+
+  const closeDispatch = createEventDispatcher();
+  const handleClose = () => {
+    closeDispatch('close');
+  };
 </script>
 
 {#if show}
   <!-- svelte-ignore a11y-click-events-have-key-events  -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="modal" on:click|self={() => (show = false)}>
+  <div class="modal" on:click|self={handleClose}>
     <div class="modal-content"><slot /></div>
   </div>
 {/if}
@@ -13,7 +20,7 @@
 <svelte:window
   on:keydown={(event) => {
     if (event.key === 'Escape') {
-      show = false;
+      handleClose();
     }
   }}
 />
