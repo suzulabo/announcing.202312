@@ -3,6 +3,7 @@
   import { create as formSchema } from '$lib/form/schema';
   import { t } from '$lib/i18n/translations';
   import Input from '@announcing/components/Input.svelte';
+  import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
   import { superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
@@ -12,7 +13,7 @@
 
   let validated = false;
 
-  const { form, enhance, validateForm } = superForm(data.form, {
+  const { form, enhance, validateForm, submitting } = superForm(data.form, {
     validators: valibotClient(formSchema),
     validationMethod: 'oninput',
     onChange: async () => {
@@ -46,6 +47,8 @@
     <a href="/">{$t('cancel')}</a>
   </form>
 </div>
+
+<Loading show={$submitting} />
 
 <style lang="scss">
   header {
