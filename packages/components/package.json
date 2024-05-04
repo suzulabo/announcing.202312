@@ -22,17 +22,25 @@
       "types": "./dist/Input.svelte.d.ts",
       "svelte": "./dist/Input.svelte"
     },
-    "./TextArea.svelte": {
-      "types": "./dist/TextArea.svelte.d.ts",
-      "svelte": "./dist/TextArea.svelte"
+    "./Loading.svelte": {
+      "types": "./dist/Loading.svelte.d.ts",
+      "svelte": "./dist/Loading.svelte"
+    },
+    "./Logo.svelte": {
+      "types": "./dist/Logo.svelte.d.ts",
+      "svelte": "./dist/Logo.svelte"
     },
     "./Modal.svelte": {
       "types": "./dist/Modal.svelte.d.ts",
       "svelte": "./dist/Modal.svelte"
     },
-    "./Logo.svelte": {
-      "types": "./dist/Logo.svelte.d.ts",
-      "svelte": "./dist/Logo.svelte"
+    "./Spinner.svelte": {
+      "types": "./dist/Spinner.svelte.d.ts",
+      "svelte": "./dist/Spinner.svelte"
+    },
+    "./TextArea.svelte": {
+      "types": "./dist/TextArea.svelte.d.ts",
+      "svelte": "./dist/TextArea.svelte"
     }
   },
   "files": [
@@ -44,20 +52,13 @@
     "svelte": "^4.0.0"
   },
   "devDependencies": {
+    "@announcing/eslint-config-svelte": "workspace:^",
     "@histoire/plugin-svelte": "^0.17.17",
     "@sveltejs/adapter-auto": "^3.2.0",
     "@sveltejs/kit": "^2.5.5",
     "@sveltejs/package": "^2.3.1",
     "@sveltejs/vite-plugin-svelte": "^3.1.0",
-    "@types/eslint": "8.56.5",
-    "@typescript-eslint/eslint-plugin": "^7.6.0",
-    "@typescript-eslint/parser": "^7.6.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-svelte": "^2.37.0",
     "histoire": "^0.17.17",
-    "prettier": "^3.2.5",
-    "prettier-plugin-svelte": "^3.2.3",
     "publint": "^0.2.7",
     "sass": "^1.75.0",
     "svelte": "^4.2.14",

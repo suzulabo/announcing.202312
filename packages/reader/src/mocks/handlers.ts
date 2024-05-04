@@ -74,6 +74,7 @@ export const handlers = [
   }),
   http.get('https://test.mock/timeout.json', async () => {
     await delay(11 * 1000);
+
     return HttpResponse.json({});
   }),
 ];

@@ -1,0 +1,30 @@
+{
+  "name": "@announcing/eslint-config-svelte",
+  "private": true,
+  "type": "module",
+  "main": "eslint.config.js",
+  "types": "eslint.config.d.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.0.0",
+    "@stylistic/eslint-plugin": "^1.7.2",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-svelte": "^2.37.0",
+    "globals": "^15.0.0",
+    "svelte": "^4.2.15",
+    "svelte-eslint-parser": "^0.34.1",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.7.0"
+  },
+  "devDependencies": {
+    "@types/eslint": "8.56.5",
+    "@types/eslint-config-prettier": "^6.11.3",
+    "@types/eslint__js": "^8.42.3"
+  }
+}
