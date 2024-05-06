@@ -5,7 +5,7 @@
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
-  import { superForm } from 'sveltekit-superforms';
+  import { fileProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
   import type { PageData } from './$types';
 
@@ -19,9 +19,14 @@
     onChange: async () => {
       const result = await validateForm();
 
+      console.log({ result });
       validated = result.valid;
+
+      return;
     },
   });
+
+  const file = fileProxy(form, 'icon');
 </script>
 
 <header>
@@ -29,6 +34,7 @@
 </header>
 <div class="container">
   <form method="POST" use:enhance>
+    <input type="file" name="icon" bind:files={$file} />
     <Input
       name="title"
       label={$t('create.input.title')}
