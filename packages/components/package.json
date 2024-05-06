@@ -18,6 +18,10 @@
   },
   "exports": {
     "./base.scss": "./dist/base.scss",
+    "./FileInput.svelte": {
+      "types": "./dist/FileInput.svelte.d.ts",
+      "svelte": "./dist/FileInput.svelte"
+    },
     "./Input.svelte": {
       "types": "./dist/Input.svelte.d.ts",
       "svelte": "./dist/Input.svelte"
