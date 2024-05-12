@@ -33,13 +33,13 @@
   <div>{$t('create.title')}</div>
 </header>
 <div class="container">
-  <form method="POST" use:enhance>
+  <form method="POST" enctype="multipart/form-data" use:enhance>
     <button
       on:click={() => {
         fileInput?.open();
       }}>アイコンを選択</button
     >
-    <FileInput bind:this={fileInput} bind:value={$form.icon} />
+    <FileInput name="icon" bind:this={fileInput} bind:value={$form.icon} />
     {$form.icon?.name}
     <Input
       name="title"
