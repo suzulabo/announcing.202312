@@ -39,7 +39,8 @@
         fileInput?.open();
       }}>アイコンを選択</button
     >
-    <FileInput bind:this={fileInput} name="icon" bind:value={$form.icon} />
+    <FileInput bind:this={fileInput} bind:value={$form.icon} />
+    {$form.icon?.name}
     <Input
       name="title"
       label={$t('create.input.title')}

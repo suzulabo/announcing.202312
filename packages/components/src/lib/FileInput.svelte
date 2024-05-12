@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let value: File;
+  export let value: File | undefined = undefined;
   export let accept: string | undefined = undefined;
 
   let fileInput: HTMLInputElement;
