@@ -1,17 +1,14 @@
 <script lang="ts">
-  export let name: string;
-  export let value: string;
-  export let accept: string = '';
+  export let value: File;
+  export let accept: string | undefined = undefined;
 
   let fileInput: HTMLInputElement;
-  let hiddenInput: HTMLInputElement;
 
   export const open = () => {
     fileInput.click();
   };
 </script>
 
-<input type="hidden" bind:this={hiddenInput} {name} {value} />
 <input
   type="file"
   {accept}
@@ -28,16 +25,6 @@
       return;
     }
 
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      const result = reader.result;
-
-      if (typeof result === 'string') {
-        value = result;
-      }
-    };
-
-    reader.readAsDataURL(file);
+    value = file;
   }}
 />
