@@ -3,6 +3,7 @@
   import { create as formSchema } from '$lib/form/schema';
   import { t } from '$lib/i18n/translations';
   import FileInput from '@announcing/components/FileInput.svelte';
+  import Image from '@announcing/components/Image.svelte';
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
@@ -34,13 +35,13 @@
 </header>
 <div class="container">
   <form method="POST" enctype="multipart/form-data" use:enhance>
+    <Image src={$form.icon} styles={{ width: '64px', height: '64px' }} />
     <button
       on:click={() => {
         fileInput?.open();
       }}>アイコンを選択</button
     >
     <FileInput name="icon" bind:this={fileInput} bind:value={$form.icon} />
-    {$form.icon?.name}
     <Input
       name="title"
       label={$t('create.input.title')}

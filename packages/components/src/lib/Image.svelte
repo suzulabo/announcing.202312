@@ -1,8 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+  import makeStyle from './makeStyle.js';
 
   export let src: string | File | undefined = undefined;
   export let alt = '';
+  export let styles: { width?: string; height?: string; borderRadius?: string } | undefined =
+    undefined;
 
   let imgSrc: string;
 
@@ -28,15 +31,15 @@
   };
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<img src={imgSrc} {alt} on:click={handleClick} />
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<img src={imgSrc} {alt} on:click={handleClick} style={makeStyle(styles)} />
 
 <style lang="scss">
   img {
     width: var(--width, auto);
     height: var(--height, auto);
-    border-radius: var(--border-radius, 8px);
+    border-radius: var(--borderRadius, 8px);
     border: 1px solid var(--color-border);
     object-fit: contain;
     cursor: pointer;

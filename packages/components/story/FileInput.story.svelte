@@ -25,8 +25,7 @@
     {#if value}
       <Image
         src={value}
-        --width="200px"
-        --height="200px"
+        styles={{ width: '200px', height: '200px' }}
         on:click={() => {
           fileInput.open();
         }}

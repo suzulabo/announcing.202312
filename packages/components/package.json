@@ -22,6 +22,10 @@
       "types": "./dist/FileInput.svelte.d.ts",
       "svelte": "./dist/FileInput.svelte"
     },
+    "./Image.svelte": {
+      "types": "./dist/Image.svelte.d.ts",
+      "svelte": "./dist/Image.svelte"
+    },
     "./Input.svelte": {
       "types": "./dist/Input.svelte.d.ts",
       "svelte": "./dist/Input.svelte"
