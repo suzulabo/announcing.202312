@@ -10,6 +10,8 @@ const msgs = {
     title: 'お知らせの作成',
     input: {
       title: 'タイトル',
+      addIcon: 'アイコンを選択',
+      delIcon: 'アイコンを削除',
       desc: '説明文',
       submit: '作成する',
     },

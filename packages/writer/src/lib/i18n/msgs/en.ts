@@ -12,6 +12,8 @@ const msgs: Msgs = {
     title: 'Creating a new announcement',
     input: {
       title: 'Title',
+      addIcon: 'Select icon',
+      delIcon: 'Remove icon',
       desc: 'Description',
       submit: 'Create',
     },

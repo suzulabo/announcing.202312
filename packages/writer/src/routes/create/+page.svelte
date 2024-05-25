@@ -47,11 +47,20 @@
         }}
       />
     {/if}
-    <button
-      on:click={() => {
-        fileInput?.open();
-      }}>アイコンを選択</button
-    >
+    <div>
+      <button
+        on:click={() => {
+          fileInput?.open();
+        }}>アイコンを選択</button
+      >
+      {#if $form.icon}
+        <button
+          on:click={() => {
+            $form.icon = undefined;
+          }}>アイコンを削除</button
+        >
+      {/if}
+    </div>
     <FileInput name="icon" bind:this={fileInput} bind:value={$form.icon} />
     <Input
       name="title"
