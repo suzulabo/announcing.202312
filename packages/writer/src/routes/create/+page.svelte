@@ -3,10 +3,10 @@
   import { create as formSchema } from '$lib/form/schema';
   import { t } from '$lib/i18n/translations';
   import FileInput from '@announcing/components/FileInput.svelte';
-  import Image from '@announcing/components/Image.svelte';
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
+  import loadImage from '@announcing/components/actions/loadImage';
   import { superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
   import type { PageData } from './$types';
@@ -35,7 +35,18 @@
 </header>
 <div class="container">
   <form method="POST" enctype="multipart/form-data" use:enhance>
-    <Image src={$form.icon} styles={{ width: '64px', height: '64px' }} />
+    {#if $form.icon}
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+      <img
+        class="icon"
+        alt="icon preview"
+        use:loadImage={$form.icon}
+        on:click={() => {
+          fileInput?.open();
+        }}
+      />
+    {/if}
     <button
       on:click={() => {
         fileInput?.open();
@@ -82,6 +93,15 @@
       gap: 16px;
       * {
         margin: 0 auto;
+      }
+
+      img.icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        border: 1px solid var(--color-border);
+        object-fit: contain;
+        cursor: pointer;
       }
     }
   }
