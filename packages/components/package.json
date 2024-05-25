@@ -22,10 +22,6 @@
       "types": "./dist/FileInput.svelte.d.ts",
       "svelte": "./dist/FileInput.svelte"
     },
-    "./Image.svelte": {
-      "types": "./dist/Image.svelte.d.ts",
-      "svelte": "./dist/Image.svelte"
-    },
     "./Input.svelte": {
       "types": "./dist/Input.svelte.d.ts",
       "svelte": "./dist/Input.svelte"
@@ -49,6 +45,10 @@
     "./TextArea.svelte": {
       "types": "./dist/TextArea.svelte.d.ts",
       "svelte": "./dist/TextArea.svelte"
+    },
+    "./actions/loadImage": {
+      "types": "./dist/actions/loadImage.d.ts",
+      "import": "./dist/actions/loadImage.js"
     }
   },
   "files": [

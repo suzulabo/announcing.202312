@@ -3,33 +3,23 @@
 
 <script lang="ts">
   import FileInput from '$lib/FileInput.svelte';
-  import Image from '$lib/Image.svelte';
+  import loadImage from '$lib/actions/loadImage.js';
   import type { Hst } from '@histoire/plugin-svelte';
 
   // eslint-disable-next-line no-import-assign
   export let Hst: Hst;
 
   let fileInput: FileInput;
-  let value: File;
+  let value: File | undefined;
 </script>
 
 <Hst.Story title="FileInput">
   <button
     on:click={() => {
       fileInput.open();
-    }}>Choose File</button
+    }}>Choose Image File</button
   >
   <FileInput name="file" accept="image/*" bind:this={fileInput} bind:value />
 
-  <div style="margin-top: 20px">
-    {#if value}
-      <Image
-        src={value}
-        styles={{ width: '200px', height: '200px' }}
-        on:click={() => {
-          fileInput.open();
-        }}
-      />
-    {/if}
-  </div>
+  <img alt="" use:loadImage={value} />
 </Hst.Story>
