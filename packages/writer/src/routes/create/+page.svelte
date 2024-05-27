@@ -61,7 +61,13 @@
         >
       {/if}
     </div>
-    <FileInput name="icon" bind:this={fileInput} bind:value={$form.icon} />
+    <FileInput
+      name="icon"
+      accept="image/*"
+      maxImageSize={256}
+      bind:this={fileInput}
+      bind:value={$form.icon}
+    />
     <Input
       name="title"
       label={$t('create.input.title')}

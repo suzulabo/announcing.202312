@@ -19,7 +19,7 @@
       fileInput.open();
     }}>Choose Image File</button
   >
-  <FileInput name="file" accept="image/*" bind:this={fileInput} bind:value />
+  <FileInput name="file" accept="image/*" maxImageSize={200} bind:this={fileInput} bind:value />
 
   <img alt="" use:loadImage={value} />
 </Hst.Story>
