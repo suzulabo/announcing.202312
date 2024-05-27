@@ -219,6 +219,10 @@ importers:
         version: 1.6.0(@types/node@20.12.8)(jsdom@24.0.0)(sass@1.76.0)
 
   packages/writer:
+    dependencies:
+      base-x:
+        specifier: ^4.0.0
+        version: 4.0.0
     devDependencies:
       '@announcing/components':
         specifier: workspace:^
@@ -1733,6 +1737,9 @@ packages:
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  base-x@4.0.0:
+    resolution: {integrity: sha512-FuwxlW4H5kh37X/oW59pwTzzTKRzfrrQwhmyspRM7swOEZcHtDZSCt45U6oKgtuFE+WYPblePMVIPR4RZrh/hw==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -5292,6 +5299,8 @@ snapshots:
       dequal: 2.0.3
 
   balanced-match@1.0.2: {}
+
+  base-x@4.0.0: {}
 
   binary-extensions@2.3.0: {}
 
