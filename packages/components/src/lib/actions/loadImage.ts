@@ -1,7 +1,11 @@
 import type { Action } from 'svelte/action';
 
 const load = (img: HTMLImageElement, file: File | undefined) => {
-  if (!file) return;
+  if (!file) {
+    img.src = '';
+
+    return;
+  }
 
   const reader = new FileReader();
 

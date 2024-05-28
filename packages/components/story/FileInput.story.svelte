@@ -17,9 +17,17 @@
   <button
     on:click={() => {
       fileInput.open();
-    }}>Choose Image File</button
+    }}>Choose image file</button
   >
   <FileInput name="file" accept="image/*" maxImageSize={200} bind:this={fileInput} bind:value />
 
   <img alt="" use:loadImage={value} />
+
+  {#if value}
+    <button
+      on:click={() => {
+        value = undefined;
+      }}>Remove image</button
+    >
+  {/if}
 </Hst.Story>

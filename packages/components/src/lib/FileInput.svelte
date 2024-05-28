@@ -34,6 +34,8 @@
       return;
     }
 
+    fileInput.value = '';
+
     if (!maxImageSize) {
       value = file;
 
