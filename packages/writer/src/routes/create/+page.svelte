@@ -22,7 +22,6 @@
     onChange: async () => {
       const result = await validateForm();
 
-      console.log({ result });
       validated = result.valid;
 
       return;
