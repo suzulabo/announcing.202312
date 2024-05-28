@@ -58,6 +58,11 @@
       })
       .then((v) => {
         value = new File([v], file.name, { type: v.type });
+
+        const dt = new DataTransfer();
+
+        dt.items.add(value);
+        valueInput.files = dt.files;
       })
       .finally(() => {
         loading = false;
