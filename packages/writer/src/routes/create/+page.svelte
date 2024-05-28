@@ -62,7 +62,7 @@
     </div>
     <FileInput
       name="icon"
-      accept="image/*"
+      accept="image/jpeg,image/png,image/webp"
       maxImageSize={256}
       bind:this={fileInput}
       bind:value={$form.icon}

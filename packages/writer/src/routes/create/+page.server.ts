@@ -1,5 +1,6 @@
 import { db } from '$lib/db/client';
 import { threadOwners, threads } from '$lib/db/schema';
+import storeFile from '$lib/file/storeFile.js';
 import { create as formSchema } from '$lib/form/schema';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
@@ -32,7 +33,7 @@ export const actions = {
       return fail(400, { form });
     }
 
-    const { title, desc } = form.data;
+    const { title, desc, icon } = form.data;
 
     const session = await locals.auth();
 
@@ -44,8 +45,10 @@ export const actions = {
 
     const threadID = genThreadID();
 
+    const iconHash = icon && (await storeFile(icon));
+
     await db.batch([
-      db.insert(threads).values({ threadID, title, desc }),
+      db.insert(threads).values({ threadID, title, desc, icon: iconHash }),
       db.insert(threadOwners).values({ userID, threadID }),
     ]);
 
