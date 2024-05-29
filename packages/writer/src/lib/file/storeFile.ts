@@ -1,16 +1,14 @@
 import { dev } from '$app/environment';
-import bsx from 'base-x';
+import base62 from '$lib/utils/base62';
 import { createHash } from 'crypto';
 import { writeFile } from 'fs/promises';
-
-export const bs62 = bsx('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
 const getHash = async (file: File) => {
   const ab = new Uint8Array(await file.arrayBuffer());
 
   const digest = createHash('sha256').update(ab).digest();
 
-  const hash = bs62.encode(digest);
+  const hash = base62.encode(digest);
 
   return [hash, ab] as const;
 };

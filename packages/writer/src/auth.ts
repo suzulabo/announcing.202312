@@ -1,4 +1,5 @@
 import { AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_SECRET } from '$env/static/private';
+import base62 from '$lib/utils/base62';
 import { SvelteKitAuth } from '@auth/sveltekit';
 import Google from '@auth/sveltekit/providers/google';
 
@@ -18,7 +19,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   callbacks: {
     jwt: async ({ token, account }) => {
       if (account) {
-        token.userID = `${account?.provider}:${token.sub}`;
+        token.userID = base62.encode(Buffer.from(`${account?.provider}:${token.sub}`));
       }
 
       return token;
@@ -32,5 +33,4 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     },
   },
   secret: AUTH_SECRET,
-  trustHost: true,
 });
