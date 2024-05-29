@@ -1,6 +1,6 @@
-import { integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { index, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-export const threads = sqliteTable(
+export const threadsTable = sqliteTable(
   'threads',
   {
     threadID: integer('threadID').notNull(),
@@ -22,7 +22,7 @@ export const threads = sqliteTable(
   },
 );
 
-export const threadOwners = sqliteTable(
+export const threadOwnersTable = sqliteTable(
   'threadOwners',
   {
     threadID: integer('threadID').notNull(),
@@ -31,6 +31,7 @@ export const threadOwners = sqliteTable(
   (table) => {
     return {
       pk: primaryKey({ columns: [table.threadID, table.userID] }),
+      userID: index('userID').on(table.userID),
     };
   },
 );

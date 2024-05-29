@@ -1,5 +1,5 @@
 import { db } from '$lib/db/client';
-import { threadOwners, threads } from '$lib/db/schema';
+import { threadOwnersTable, threadsTable } from '$lib/db/schema';
 import storeFile from '$lib/file/storeFile.js';
 import { create as formSchema } from '$lib/form/schema';
 import { fail, redirect } from '@sveltejs/kit';
@@ -48,8 +48,8 @@ export const actions = {
     const iconHash = icon && (await storeFile(icon));
 
     await db.batch([
-      db.insert(threads).values({ threadID, title, desc, icon: iconHash }),
-      db.insert(threadOwners).values({ userID, threadID }),
+      db.insert(threadsTable).values({ threadID, title, desc, icon: iconHash }),
+      db.insert(threadOwnersTable).values({ userID, threadID }),
     ]);
 
     redirect(303, '/');
