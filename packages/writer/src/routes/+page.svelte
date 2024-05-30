@@ -18,7 +18,7 @@
   {#if data.threads}
     <div class="threads">
       {#each data.threads as thread}
-        <a href={`/thread/${thread.threadID}`} class="thread">
+        <a href={`/t/${thread.threadID}`} class="thread">
           <div class="head">
             <span class="title">
               {thread.title}
