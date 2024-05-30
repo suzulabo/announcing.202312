@@ -10,8 +10,6 @@
   data.threads;
 </script>
 
-<SuperDebug {data} />
-
 <header>
   <Logo size="20px" />
   <span class="label">Announcing Writer</span>
@@ -21,10 +19,14 @@
     <div class="threads">
       {#each data.threads as thread}
         <a href={`/thread/${thread.threadID}`} class="thread">
-          {thread.title}
-          {#if thread.icon}
-            <img src={`/s/${thread.icon}`} alt="icon" />
-          {/if}
+          <div class="head">
+            <span class="title">
+              {thread.title}
+            </span>
+            {#if thread.icon}
+              <img src={`/s/${thread.icon}`} alt="icon" />
+            {/if}
+          </div>
         </a>
       {/each}
     </div>
@@ -46,6 +48,8 @@
   >
 </div>
 
+<SuperDebug {data} />
+
 <style lang="scss">
   header {
     display: flex;
@@ -58,6 +62,37 @@
     display: flex;
     flex-direction: column;
     margin: 20px 0;
+
+    .threads {
+      margin: 0 0 20px;
+      display: grid;
+      gap: 15px;
+      justify-content: center;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+
+      .thread {
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: 8px;
+        min-height: 100px;
+
+        .head {
+          display: flex;
+          align-items: center;
+
+          .title {
+            flex-grow: 1;
+          }
+
+          img {
+            width: 64px;
+            height: 64px;
+            border-radius: 8px;
+            object-fit: contain;
+          }
+        }
+      }
+    }
 
     .create-btn {
       margin: 0 auto;
