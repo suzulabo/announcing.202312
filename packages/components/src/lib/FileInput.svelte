@@ -3,7 +3,7 @@
   import Loading from './Loading.svelte';
 
   export let name: string;
-  export let value: File | undefined = undefined;
+  export let value: File | null | undefined = undefined;
   export let accept: string | undefined = undefined;
   export let maxImageSize: number | undefined = undefined;
 

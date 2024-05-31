@@ -3,7 +3,7 @@
   export let label: string;
   export let type = 'text';
   export let placeholder = '';
-  export let value = '';
+  export let value: string | null | undefined = undefined;
   export let maxLength = 0;
 </script>
 
@@ -11,7 +11,7 @@
   <div class="label-box">
     <span class="label">{label}</span>
     {#if maxLength > 0}
-      <span class="counter">({value.length}/{maxLength})</span>
+      <span class="counter">({value?.length || '0'}/{maxLength})</span>
     {/if}
   </div>
   <input

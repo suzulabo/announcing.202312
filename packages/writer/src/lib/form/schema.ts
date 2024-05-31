@@ -5,15 +5,15 @@ import {
   maxSize,
   mimeType,
   minLength,
+  nullish,
   object,
-  optional,
   string,
 } from 'valibot';
 
 export const create = object({
   title: string([minLength(1), maxLength(THREAD_TITLE_MAX_LENGTH)]),
-  desc: optional(string([maxLength(THREAD_DESC_MAX_LENGTH)])),
-  icon: optional(
+  desc: nullish(string([maxLength(THREAD_DESC_MAX_LENGTH)])),
+  icon: nullish(
     instance(File, [maxSize(1024 * 1024), mimeType(['image/jpeg', 'image/png', 'image/webp'])]),
   ),
 });

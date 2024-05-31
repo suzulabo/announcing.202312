@@ -32,7 +32,7 @@
       {@html toHtml(thread.desc)}
     </div>
   {/if}
-  <a class="button edit" href={`/edit/${$page.params.id}`}>{$t('thread.edit')}</a>
+  <a class="button edit" href={`/t/${$page.params.id}/w`}>{$t('thread.edit')}</a>
 </div>
 <hr />
 <SuperDebug {data} />

@@ -6,8 +6,8 @@ export const createThread = async (
   userID: string,
   threadID: number,
   title: string,
-  desc?: string,
-  icon?: File,
+  desc?: string | null,
+  icon?: File | null,
 ) => {
   const iconHash = icon && (await storeFile(icon));
 

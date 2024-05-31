@@ -3,11 +3,9 @@
   import Logo from '@announcing/components/Logo.svelte';
   import { signOut } from '@auth/sveltekit/client';
   import SuperDebug from 'sveltekit-superforms';
-  import type { PageData } from './$types';
+  import type { PageServerData } from './$types';
 
-  export let data: PageData;
-
-  data.threads;
+  export let data: PageServerData;
 </script>
 
 <header>
@@ -34,7 +32,7 @@
 
   <a
     class="button create-btn"
-    href="./create"
+    href="/t/new/w"
     on:click={() => {
       //
     }}

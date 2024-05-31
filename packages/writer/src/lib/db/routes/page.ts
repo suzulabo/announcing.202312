@@ -20,5 +20,5 @@ export const getThreads = async (userID: string | undefined) => {
     .from(threadsTable)
     .where(inArray(threadsTable.threadID, threadIDs));
 
-  return { threads };
+  return threads;
 };

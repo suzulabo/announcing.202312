@@ -1,4 +1,4 @@
-import { getThread } from '$lib/db/routes/t/page';
+import { getThread } from '$lib/db/routes/t';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
