@@ -1,4 +1,4 @@
-import { getThreads } from '$lib/db/routes/page';
+import { getThreads } from '$lib/db/routes';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
