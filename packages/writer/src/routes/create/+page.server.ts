@@ -1,6 +1,4 @@
-import { db } from '$lib/db/client';
-import { threadOwnersTable, threadsTable } from '$lib/db/schema';
-import storeFile from '$lib/file/storeFile.js';
+import { createThread } from '$lib/db/routes/create/page.js';
 import { create as formSchema } from '$lib/form/schema';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
@@ -45,13 +43,7 @@ export const actions = {
 
     const threadID = genThreadID();
 
-    const iconHash = icon && (await storeFile(icon));
-
-    await db.batch([
-      db.insert(threadsTable).values({ threadID, title, desc, icon: iconHash }),
-      db.insert(threadOwnersTable).values({ userID, threadID }),
-    ]);
-
+    await createThread(userID, threadID, title, desc, icon);
     redirect(303, '/');
   },
 };
