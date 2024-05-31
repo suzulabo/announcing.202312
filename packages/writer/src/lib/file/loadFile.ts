@@ -1,7 +1,8 @@
+import { dev } from '$app/environment';
 import { createReadableStream } from '@sveltejs/kit/node';
 import { readFile, stat } from 'fs/promises';
 
-const loadFile = async (hash: string) => {
+const loadFileLocal = async (hash: string) => {
   try {
     const [metaBuf, stats] = await Promise.all([
       readFile(`storage/${hash}.meta`),
@@ -25,5 +26,11 @@ const loadFile = async (hash: string) => {
     throw err;
   }
 };
+
+const loadFileR2: typeof loadFileLocal = () => {
+  throw 'Not yet implemented';
+};
+
+const loadFile = dev ? loadFileLocal : loadFileR2;
 
 export default loadFile;

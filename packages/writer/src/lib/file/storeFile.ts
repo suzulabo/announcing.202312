@@ -36,12 +36,10 @@ const storeFileLocal = async (file: File) => {
   return hash;
 };
 
-const storeFileD1 = async (file: File) => {
-  console.log(file);
-
-  return '';
+const storeFileR2: typeof storeFileLocal = async () => {
+  throw 'Not yet implemented';
 };
 
-const storeFile = dev ? storeFileLocal : storeFileD1;
+const storeFile = dev ? storeFileLocal : storeFileR2;
 
 export default storeFile;
