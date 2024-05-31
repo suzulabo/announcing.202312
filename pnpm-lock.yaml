@@ -219,10 +219,6 @@ importers:
         version: 1.6.0(@types/node@20.12.8)(jsdom@24.0.0)(sass@1.76.0)
 
   packages/writer:
-    dependencies:
-      base-x:
-        specifier: ^4.0.0
-        version: 4.0.0
     devDependencies:
       '@announcing/components':
         specifier: workspace:^
@@ -254,6 +250,9 @@ importers:
       '@types/psl':
         specifier: ^1.1.3
         version: 1.1.3
+      base-x:
+        specifier: ^4.0.0
+        version: 4.0.0
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
