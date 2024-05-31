@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { page } from '$app/stores';
+  import { t } from '$lib/i18n/translations';
   import linkifyHtml from 'linkify-html';
   import SuperDebug from 'sveltekit-superforms';
   import type { PageServerData } from './$types';
@@ -30,6 +32,7 @@
       {@html toHtml(thread.desc)}
     </div>
   {/if}
+  <a class="button edit" href={`/edit/${$page.params.id}`}>{$t('thread.edit')}</a>
 </div>
 <hr />
 <SuperDebug {data} />
@@ -39,6 +42,8 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
 
     .head {
       display: flex;
@@ -59,6 +64,10 @@
     .desc {
       margin: 10px 5px 0;
       white-space: pre-line;
+    }
+
+    a.edit {
+      margin: 20px auto 0;
     }
   }
 </style>

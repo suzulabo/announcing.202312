@@ -18,6 +18,9 @@ const msgs: Msgs = {
       submit: 'Create',
     },
   },
+  thread: {
+    edit: 'Edit',
+  },
 };
 
 export default msgs;

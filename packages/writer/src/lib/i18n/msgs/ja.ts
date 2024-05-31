@@ -16,6 +16,9 @@ const msgs = {
       submit: '作成する',
     },
   },
+  thread: {
+    edit: '編集する',
+  },
 };
 
 export default msgs;
