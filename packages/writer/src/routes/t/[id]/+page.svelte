@@ -33,6 +33,7 @@
     </div>
   {/if}
   <a class="button edit" href={`/t/${$page.params.id}/w`}>{$t('thread.edit')}</a>
+  <a href="/">{$t('back')}</a>
 </div>
 <hr />
 <SuperDebug {data} />
@@ -66,7 +67,7 @@
       white-space: pre-line;
     }
 
-    a.edit {
+    a {
       margin: 20px auto 0;
     }
   }
