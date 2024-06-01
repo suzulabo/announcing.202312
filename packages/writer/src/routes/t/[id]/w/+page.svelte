@@ -52,12 +52,14 @@
     {/if}
     <div>
       <button
+        type="button"
         on:click={() => {
           fileInput?.open();
         }}>アイコンを選択</button
       >
       {#if $form.icon}
         <button
+          type="button"
           on:click={() => {
             $form.icon = undefined;
           }}>アイコンを削除</button
