@@ -1,5 +1,5 @@
-import { createThread } from '$lib/db/routes/create/page.js';
-import { getThread } from '$lib/db/routes/t/index.js';
+import { getThread } from '$lib/db/routes/t';
+import { createThread, updateThread } from '$lib/db/routes/t/w';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
 import { superValidate } from 'sveltekit-superforms';
@@ -20,9 +20,12 @@ export const load: PageServerLoad = async ({ params }) => {
     throw redirect(303, '/');
   }
 
-  const { title, desc, icon } = t;
+  const { title, desc, icon, updatedAt } = t;
 
-  return { form: await superValidate({ title, desc }, valibot(formSchema)), icon };
+  return {
+    form: await superValidate({ title, desc, updatedAt: updatedAt.getTime() }, valibot(formSchema)),
+    icon,
+  };
 };
 
 const invalidThreadIDPattern = /(.)\1\1/;
@@ -38,14 +41,14 @@ const genThreadID = () => {
 };
 
 export const actions = {
-  default: async ({ request, locals }) => {
+  default: async ({ request, locals, params }) => {
     const form = await superValidate(request, valibot(formSchema));
 
     if (!form.valid) {
       return fail(400, { form });
     }
 
-    const { title, desc, icon } = form.data;
+    const { title, desc, icon, updatedAt } = form.data;
 
     const session = await locals.auth();
 
@@ -55,9 +58,16 @@ export const actions = {
       return fail(400, { form });
     }
 
-    const threadID = genThreadID();
+    if (params.id === 'new') {
+      const threadID = genThreadID();
 
-    await createThread(userID, threadID, title, desc, icon);
-    redirect(303, '/');
+      await createThread(userID, threadID, title, desc, icon);
+      redirect(303, '/');
+
+      return;
+    }
+
+    await updateThread(userID, new Date(updatedAt || 0), +params.id, title, desc, icon);
+    redirect(303, `/t/${params.id}`);
   },
 };

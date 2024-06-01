@@ -8,12 +8,16 @@ export const threadsTable = sqliteTable(
     desc: text('desc'),
     icon: text('icon'),
     links: text('links', { mode: 'json' }).$type<{ name: string; url: string }[]>(),
-    updatedAt: integer('updatedAt', { mode: 'timestamp' }).$default(() => {
-      return new Date();
-    }),
-    createdAt: integer('createdAt', { mode: 'timestamp' }).$default(() => {
-      return new Date();
-    }),
+    updatedAt: integer('updatedAt', { mode: 'timestamp' })
+      .$default(() => {
+        return new Date();
+      })
+      .notNull(),
+    createdAt: integer('createdAt', { mode: 'timestamp' })
+      .$default(() => {
+        return new Date();
+      })
+      .notNull(),
   },
   (table) => {
     return {

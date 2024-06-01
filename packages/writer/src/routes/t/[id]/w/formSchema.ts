@@ -6,6 +6,7 @@ import {
   mimeType,
   minLength,
   nullish,
+  number,
   object,
   string,
 } from 'valibot';
@@ -16,6 +17,7 @@ const formSchema = object({
   icon: nullish(
     instance(File, [maxSize(1024 * 1024), mimeType(['image/jpeg', 'image/png', 'image/webp'])]),
   ),
+  updatedAt: nullish(number()),
 });
 
 export default formSchema;

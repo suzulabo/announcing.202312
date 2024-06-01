@@ -6,7 +6,7 @@
   import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
   import loadImage from '@announcing/components/actions/loadImage';
-  import { superForm } from 'sveltekit-superforms';
+  import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
   import type { PageServerData } from './$types';
   import formSchema from './formSchema';
@@ -16,17 +16,17 @@
   let validated = false;
   let fileInput: FileInput | undefined;
 
-  const { form, enhance, validateForm, submitting } = superForm(data.form, {
+  const { form, enhance, validateForm, submitting, errors, isTainted } = superForm(data.form, {
     validators: valibotClient(formSchema),
     validationMethod: 'oninput',
     onChange: async () => {
       const result = await validateForm();
 
-      validated = result.valid;
-
-      return;
+      validated = result.valid && isTainted();
     },
   });
+
+  const updatedAtProxy = numberProxy(form, 'updatedAt');
 </script>
 
 <header>
@@ -83,10 +83,13 @@
     />
     <button disabled={!validated}>{$t('create.input.submit')}</button>
     <a href="/">{$t('cancel')}</a>
+    <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>
 
 <Loading show={$submitting} />
+
+<SuperDebug data={$errors.updatedAt} />
 
 <style lang="scss">
   header {
