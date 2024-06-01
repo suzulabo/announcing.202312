@@ -1,6 +1,5 @@
 <script lang="ts">
   import { THREAD_DESC_MAX_LENGTH, THREAD_TITLE_MAX_LENGTH } from '$lib/constants';
-  import { create as formSchema } from '$lib/form/schema';
   import { t } from '$lib/i18n/translations';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
@@ -10,6 +9,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
   import type { PageServerData } from './$types';
+  import formSchema from './formSchema';
 
   export let data: PageServerData;
 

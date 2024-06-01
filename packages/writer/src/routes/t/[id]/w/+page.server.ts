@@ -1,11 +1,11 @@
 import { createThread } from '$lib/db/routes/create/page.js';
 import { getThread } from '$lib/db/routes/t/index.js';
-import { create as formSchema } from '$lib/form/schema';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types.js';
+import formSchema from './formSchema.js';
 
 export const load: PageServerLoad = async ({ params }) => {
   const id = params.id;
