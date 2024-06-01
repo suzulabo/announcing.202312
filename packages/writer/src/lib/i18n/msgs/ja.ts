@@ -14,6 +14,7 @@ const msgs = {
       delIcon: 'アイコンを削除',
       desc: '説明文',
       submit: '作成する',
+      submitUpdate: '更新する',
     },
   },
   thread: {

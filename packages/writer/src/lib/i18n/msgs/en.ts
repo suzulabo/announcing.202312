@@ -16,6 +16,7 @@ const msgs: Msgs = {
       delIcon: 'Remove icon',
       desc: 'Description',
       submit: 'Create',
+      submitUpdate: 'Update',
     },
   },
   thread: {
