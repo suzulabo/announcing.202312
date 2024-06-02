@@ -8,8 +8,10 @@ declare global {
     // interface Error {}
     // interface Locals {}
     // interface PageData {}
-    // interface PageState {}
-    // interface Platform {}
+    interface PageState {
+      fromPage?: string;
+    }
+
     interface Platform {
       env: {
         DB: D1Database;

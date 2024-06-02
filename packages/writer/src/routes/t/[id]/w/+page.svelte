@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import { setupBack } from '$lib/actions/back';
   import { THREAD_DESC_MAX_LENGTH, THREAD_TITLE_MAX_LENGTH } from '$lib/constants';
   import { t } from '$lib/i18n/translations';
   import FileInput from '@announcing/components/FileInput.svelte';
@@ -28,6 +29,7 @@
   });
 
   const updatedAtProxy = numberProxy(form, 'updatedAt');
+  const back = setupBack($page.state.fromPage);
 
   $: threadID = $page.params.id;
   $: isNew = threadID === 'new';
@@ -88,7 +90,7 @@
       maxLength={THREAD_DESC_MAX_LENGTH}
     />
     <button disabled={!validated}>{$t(`create.input.${isNew ? 'submit' : 'submitUpdate'}`)}</button>
-    <a href={isNew ? '/' : `/t/${threadID}`}>{$t('cancel')}</a>
+    <a href={isNew ? '/' : `/t/${threadID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>
