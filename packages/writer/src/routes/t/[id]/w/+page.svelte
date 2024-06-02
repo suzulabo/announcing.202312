@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { setupBack } from '$lib/actions/back';
+  import setupBack from '$lib/actions/back';
   import { THREAD_DESC_MAX_LENGTH, THREAD_TITLE_MAX_LENGTH } from '$lib/constants';
   import { t } from '$lib/i18n/translations';
   import FileInput from '@announcing/components/FileInput.svelte';

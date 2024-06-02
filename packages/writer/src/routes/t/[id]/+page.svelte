@@ -1,7 +1,7 @@
 <script lang="ts">
   import { afterNavigate, replaceState } from '$app/navigation';
   import { page } from '$app/stores';
-  import { setupBack } from '$lib/actions/back';
+  import setupBack from '$lib/actions/back';
   import { t } from '$lib/i18n/translations';
   import linkifyHtml from 'linkify-html';
   import SuperDebug from 'sveltekit-superforms';
