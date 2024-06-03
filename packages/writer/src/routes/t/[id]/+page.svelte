@@ -44,8 +44,9 @@
   {/if}
   <a class="button edit" href={`/t/${$page.params.id}/w`}>{$t('thread.edit')}</a>
   <a href="/" use:back>{$t('back')}</a>
+  <hr />
+  <a class="button add-post" href={`/t/${$page.params.id}/p/new`}>{$t('thread.newPost')}</a>
 </div>
-<hr />
 <SuperDebug {data} />
 
 <style lang="scss">
@@ -79,6 +80,10 @@
 
     a {
       margin: 20px auto 0;
+    }
+
+    hr {
+      margin: 20px 0 0;
     }
   }
 </style>

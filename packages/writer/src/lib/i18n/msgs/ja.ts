@@ -19,6 +19,7 @@ const msgs = {
   },
   thread: {
     edit: '編集する',
+    newPost: '新しいお知らせを書く',
   },
 };
 

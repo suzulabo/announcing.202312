@@ -21,6 +21,7 @@ const msgs: Msgs = {
   },
   thread: {
     edit: 'Edit',
+    newPost: 'New post',
   },
 };
 
