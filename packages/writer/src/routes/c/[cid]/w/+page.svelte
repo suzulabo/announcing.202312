@@ -31,7 +31,7 @@
   const updatedAtProxy = numberProxy(form, 'updatedAt');
   const back = setupBack($page.state.fromPage);
 
-  $: channelID = $page.params.id;
+  $: channelID = $page.params.cid;
   $: isNew = channelID === 'new';
   $: msgSuffix = isNew ? 'new' : 'edit';
 </script>

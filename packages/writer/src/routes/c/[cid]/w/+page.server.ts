@@ -8,13 +8,13 @@ import type { PageServerLoad } from './$types.js';
 import formSchema from './formSchema.js';
 
 export const load: PageServerLoad = async ({ params }) => {
-  const id = params.id;
+  const cid = params.cid;
 
-  if (id === 'new') {
+  if (cid === 'new') {
     return { form: await superValidate(valibot(formSchema)) };
   }
 
-  const t = await getChannel(+id);
+  const t = await getChannel(+cid);
 
   if (!t) {
     throw redirect(303, '/');
@@ -58,7 +58,7 @@ export const actions = {
       return fail(400, { form });
     }
 
-    if (params.id === 'new') {
+    if (params.cid === 'new') {
       const channelID = genChannelID();
 
       await createChannel(userID, channelID, title, desc, icon);
@@ -67,7 +67,7 @@ export const actions = {
       return;
     }
 
-    await updateChannel(userID, new Date(updatedAt || 0), +params.id, title, desc, icon);
-    redirect(303, `/c/${params.id}`);
+    await updateChannel(userID, new Date(updatedAt || 0), +params.cid, title, desc, icon);
+    redirect(303, `/c/${params.cid}`);
   },
 };
