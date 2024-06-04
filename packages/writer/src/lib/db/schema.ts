@@ -1,9 +1,9 @@
 import { index, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-export const threadsTable = sqliteTable(
-  'threads',
+export const channelsTable = sqliteTable(
+  'channels',
   {
-    threadID: integer('threadID').notNull(),
+    channelID: integer('channelID').notNull(),
     title: text('title').notNull(),
     desc: text('desc'),
     icon: text('icon'),
@@ -21,20 +21,20 @@ export const threadsTable = sqliteTable(
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.threadID] }),
+      pk: primaryKey({ columns: [table.channelID] }),
     };
   },
 );
 
-export const threadOwnersTable = sqliteTable(
-  'threadOwners',
+export const channelOwnersTable = sqliteTable(
+  'channelOwners',
   {
-    threadID: integer('threadID').notNull(),
+    channelID: integer('channelID').notNull(),
     userID: text('userID').notNull(),
   },
   (table) => {
     return {
-      pk: primaryKey({ columns: [table.threadID, table.userID] }),
+      pk: primaryKey({ columns: [table.channelID, table.userID] }),
       userID: index('userID').on(table.userID),
     };
   },

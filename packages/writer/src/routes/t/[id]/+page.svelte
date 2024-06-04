@@ -9,7 +9,7 @@
 
   export let data: PageServerData;
 
-  $: thread = data.thread;
+  $: channel = data.channel;
 
   afterNavigate(({ from, to }) => {
     if (from && to) {
@@ -31,21 +31,21 @@
 <div class="container">
   <div class="head">
     <div class="title">
-      {thread.title}
+      {channel.title}
     </div>
-    {#if thread.icon}
-      <img class="icon" src={`/s/${thread.icon}`} alt={thread.title} />
+    {#if channel.icon}
+      <img class="icon" src={`/s/${channel.icon}`} alt={channel.title} />
     {/if}
   </div>
-  {#if thread.desc}
+  {#if channel.desc}
     <div class="desc">
-      {@html toHtml(thread.desc)}
+      {@html toHtml(channel.desc)}
     </div>
   {/if}
-  <a class="button edit" href={`/t/${$page.params.id}/w`}>{$t('thread.edit')}</a>
+  <a class="button edit" href={`/t/${$page.params.id}/w`}>{$t('channel.edit')}</a>
   <a href="/" use:back>{$t('back')}</a>
   <hr />
-  <a class="button add-post" href={`/t/${$page.params.id}/p/new`}>{$t('thread.newPost')}</a>
+  <a class="button add-post" href={`/t/${$page.params.id}/p/new`}>{$t('channel.newPost')}</a>
 </div>
 <SuperDebug {data} />
 

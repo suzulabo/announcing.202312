@@ -1,11 +1,11 @@
 import { db } from '$lib/db/client';
-import { threadOwnersTable, threadsTable } from '$lib/db/schema';
+import { channelOwnersTable, channelsTable } from '$lib/db/schema';
 import storeFile from '$lib/file/storeFile';
 import { and, eq, inArray } from 'drizzle-orm';
 
-export const createThread = async (
+export const createChannel = async (
   userID: string,
-  threadID: number,
+  channelID: number,
   title: string,
   desc?: string | null,
   icon?: File | null,
@@ -13,28 +13,28 @@ export const createThread = async (
   const iconHash = icon && (await storeFile(icon));
 
   await db.batch([
-    db.insert(threadsTable).values({ threadID, title, desc, icon: iconHash }),
-    db.insert(threadOwnersTable).values({ userID, threadID }),
+    db.insert(channelsTable).values({ channelID, title, desc, icon: iconHash }),
+    db.insert(channelOwnersTable).values({ userID, channelID }),
   ]);
 };
 
-export const updateThread = async (
+export const updateChannel = async (
   userID: string,
   updatedAt: Date,
-  threadID: number,
+  channelID: number,
   title: string,
   desc?: string | null,
   icon?: File | null,
 ) => {
   const iconHash = (icon && (await storeFile(icon))) || undefined;
 
-  const threadIDs = db
-    .select({ threadID: threadOwnersTable.threadID })
-    .from(threadOwnersTable)
-    .where(eq(threadOwnersTable.userID, userID));
+  const channelIDs = db
+    .select({ channelID: channelOwnersTable.channelID })
+    .from(channelOwnersTable)
+    .where(eq(channelOwnersTable.userID, userID));
 
   const result = await db
-    .update(threadsTable)
+    .update(channelsTable)
     .set({
       title,
       desc,
@@ -43,9 +43,9 @@ export const updateThread = async (
     })
     .where(
       and(
-        eq(threadsTable.threadID, threadID),
-        inArray(threadsTable.threadID, threadIDs),
-        eq(threadsTable.updatedAt, updatedAt),
+        eq(channelsTable.channelID, channelID),
+        inArray(channelsTable.channelID, channelIDs),
+        eq(channelsTable.updatedAt, updatedAt),
       ),
     );
 

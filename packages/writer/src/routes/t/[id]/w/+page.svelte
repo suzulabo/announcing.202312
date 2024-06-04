@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import setupBack from '$lib/actions/back';
-  import { THREAD_DESC_MAX_LENGTH, THREAD_TITLE_MAX_LENGTH } from '$lib/constants';
+  import { CHANNEL_DESC_MAX_LENGTH, CHANNEL_TITLE_MAX_LENGTH } from '$lib/constants';
   import { t } from '$lib/i18n/translations';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
@@ -31,8 +31,8 @@
   const updatedAtProxy = numberProxy(form, 'updatedAt');
   const back = setupBack($page.state.fromPage);
 
-  $: threadID = $page.params.id;
-  $: isNew = threadID === 'new';
+  $: channelID = $page.params.id;
+  $: isNew = channelID === 'new';
 </script>
 
 <header>
@@ -78,19 +78,19 @@
     <Input
       name="title"
       label={$t('create.input.title')}
-      placeholder={$t('maxLength', { num: THREAD_TITLE_MAX_LENGTH })}
-      maxLength={THREAD_TITLE_MAX_LENGTH}
+      placeholder={$t('maxLength', { num: CHANNEL_TITLE_MAX_LENGTH })}
+      maxLength={CHANNEL_TITLE_MAX_LENGTH}
       bind:value={$form.title}
     />
     <TextArea
       name="desc"
       label={$t('create.input.desc')}
-      placeholder={$t('maxLengthOptional', { num: THREAD_DESC_MAX_LENGTH })}
+      placeholder={$t('maxLengthOptional', { num: CHANNEL_DESC_MAX_LENGTH })}
       bind:value={$form.desc}
-      maxLength={THREAD_DESC_MAX_LENGTH}
+      maxLength={CHANNEL_DESC_MAX_LENGTH}
     />
     <button disabled={!validated}>{$t(`create.input.${isNew ? 'submit' : 'submitUpdate'}`)}</button>
-    <a href={isNew ? '/' : `/t/${threadID}`} use:back>{$t('cancel')}</a>
+    <a href={isNew ? '/' : `/t/${channelID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

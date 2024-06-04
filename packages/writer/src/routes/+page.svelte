@@ -13,16 +13,16 @@
   <span class="label">Announcing Writer</span>
 </header>
 <div class="container">
-  {#if data.threads}
-    <div class="threads">
-      {#each data.threads as thread}
-        <a href={`/t/${thread.threadID}`} class="thread">
+  {#if data.channels}
+    <div class="channels">
+      {#each data.channels as channel}
+        <a href={`/t/${channel.channelID}`} class="channel">
           <div class="head">
             <span class="title">
-              {thread.title}
+              {channel.title}
             </span>
-            {#if thread.icon}
-              <img src={`/s/${thread.icon}`} alt="icon" />
+            {#if channel.icon}
+              <img src={`/s/${channel.icon}`} alt="icon" />
             {/if}
           </div>
         </a>
@@ -61,14 +61,14 @@
     flex-direction: column;
     margin: 20px 0;
 
-    .threads {
+    .channels {
       margin: 0 0 20px;
       display: grid;
       gap: 15px;
       justify-content: center;
       grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
 
-      .thread {
+      .channel {
         border: 1px solid var(--color-border);
         border-radius: 8px;
         padding: 8px;

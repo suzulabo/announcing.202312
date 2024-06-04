@@ -1,5 +1,5 @@
-import { getThread } from '$lib/db/routes/t';
-import { createThread, updateThread } from '$lib/db/routes/t/w';
+import { getChannel } from '$lib/db/routes/t';
+import { createChannel, updateChannel } from '$lib/db/routes/t/w';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
 import { superValidate } from 'sveltekit-superforms';
@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ params }) => {
     return { form: await superValidate(valibot(formSchema)) };
   }
 
-  const t = await getThread(+id);
+  const t = await getChannel(+id);
 
   if (!t) {
     throw redirect(303, '/');
@@ -28,13 +28,13 @@ export const load: PageServerLoad = async ({ params }) => {
   };
 };
 
-const invalidThreadIDPattern = /(.)\1\1/;
+const invalidChannelIDPattern = /(.)\1\1/;
 
-const genThreadID = () => {
+const genChannelID = () => {
   for (;;) {
     const id = crypto.randomInt(100000, 999999);
 
-    if (!invalidThreadIDPattern.test(id.toString())) {
+    if (!invalidChannelIDPattern.test(id.toString())) {
       return id;
     }
   }
@@ -59,15 +59,15 @@ export const actions = {
     }
 
     if (params.id === 'new') {
-      const threadID = genThreadID();
+      const channelID = genChannelID();
 
-      await createThread(userID, threadID, title, desc, icon);
+      await createChannel(userID, channelID, title, desc, icon);
       redirect(303, '/');
 
       return;
     }
 
-    await updateThread(userID, new Date(updatedAt || 0), +params.id, title, desc, icon);
+    await updateChannel(userID, new Date(updatedAt || 0), +params.id, title, desc, icon);
     redirect(303, `/t/${params.id}`);
   },
 };

@@ -17,7 +17,7 @@ const msgs = {
       submitUpdate: '更新する',
     },
   },
-  thread: {
+  channel: {
     edit: '編集する',
     newPost: '新しいお知らせを書く',
   },

@@ -1,15 +1,15 @@
-import { getThread } from '$lib/db/routes/t';
+import { getChannel } from '$lib/db/routes/t';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
-  const thread = await getThread(+params.id);
+  const channel = await getChannel(+params.id);
 
-  if (!thread) {
+  if (!channel) {
     throw redirect(303, '/');
   }
 
   return {
-    thread,
+    channel,
   };
 };

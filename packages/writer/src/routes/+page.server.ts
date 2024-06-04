@@ -1,4 +1,4 @@
-import { getThreads } from '$lib/db/routes';
+import { getChannels } from '$lib/db/routes';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -6,7 +6,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
   const userID = session?.user?.id;
 
-  const threads = await getThreads(userID);
+  const channels = await getChannels(userID);
 
-  return { threads };
+  return { channels };
 };

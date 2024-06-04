@@ -25,8 +25,8 @@
   const updatedAtProxy = numberProxy(form, 'updatedAt');
   const back = setupBack($page.state.fromPage);
 
-  $: threadID = $page.params.id;
-  $: isNew = threadID === 'new';
+  $: channelID = $page.params.id;
+  $: isNew = channelID === 'new';
 </script>
 
 <header>
@@ -35,7 +35,7 @@
 <div class="container">
   <form method="POST" enctype="multipart/form-data" use:enhance>
     <button disabled={!validated}>{$t(`create.input.${isNew ? 'submit' : 'submitUpdate'}`)}</button>
-    <a href={isNew ? '/' : `/t/${threadID}`} use:back>{$t('cancel')}</a>
+    <a href={isNew ? '/' : `/t/${channelID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

@@ -19,7 +19,7 @@ const msgs: Msgs = {
       submitUpdate: 'Update',
     },
   },
-  thread: {
+  channel: {
     edit: 'Edit',
     newPost: 'New post',
   },

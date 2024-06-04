@@ -1,4 +1,4 @@
-import { THREAD_DESC_MAX_LENGTH, THREAD_TITLE_MAX_LENGTH } from '$lib/constants';
+import { CHANNEL_DESC_MAX_LENGTH, CHANNEL_TITLE_MAX_LENGTH } from '$lib/constants';
 import {
   instance,
   maxLength,
@@ -12,8 +12,8 @@ import {
 } from 'valibot';
 
 const formSchema = object({
-  title: string([minLength(1), maxLength(THREAD_TITLE_MAX_LENGTH)]),
-  desc: nullish(string([maxLength(THREAD_DESC_MAX_LENGTH)])),
+  title: string([minLength(1), maxLength(CHANNEL_TITLE_MAX_LENGTH)]),
+  desc: nullish(string([maxLength(CHANNEL_DESC_MAX_LENGTH)])),
   icon: nullish(
     instance(File, [maxSize(1024 * 1024), mimeType(['image/jpeg', 'image/png', 'image/webp'])]),
   ),
