@@ -33,10 +33,11 @@
 
   $: channelID = $page.params.id;
   $: isNew = channelID === 'new';
+  $: msgSuffix = isNew ? 'new' : 'edit';
 </script>
 
 <header>
-  <div>{$t('create.title')}</div>
+  <div>{$t(`channel.write.title.${msgSuffix}`)}</div>
 </header>
 <div class="container">
   <form method="POST" enctype="multipart/form-data" use:enhance>
@@ -57,14 +58,14 @@
         type="button"
         on:click={() => {
           fileInput?.open();
-        }}>アイコンを選択</button
+        }}>{$t('channel.write.input.icon.select')}</button
       >
       {#if $form.icon}
         <button
           type="button"
           on:click={() => {
             $form.icon = undefined;
-          }}>アイコンを削除</button
+          }}>{$t('channel.write.input.icon.remove')}</button
         >
       {/if}
     </div>
@@ -77,20 +78,20 @@
     />
     <Input
       name="title"
-      label={$t('create.input.title')}
+      label={$t('channel.write.input.title')}
       placeholder={$t('maxLength', { num: CHANNEL_TITLE_MAX_LENGTH })}
       maxLength={CHANNEL_TITLE_MAX_LENGTH}
       bind:value={$form.title}
     />
     <TextArea
       name="desc"
-      label={$t('create.input.desc')}
+      label={$t('channel.write.input.desc')}
       placeholder={$t('maxLengthOptional', { num: CHANNEL_DESC_MAX_LENGTH })}
       bind:value={$form.desc}
       maxLength={CHANNEL_DESC_MAX_LENGTH}
     />
-    <button disabled={!validated}>{$t(`create.input.${isNew ? 'submit' : 'submitUpdate'}`)}</button>
-    <a href={isNew ? '/' : `/t/${channelID}`} use:back>{$t('cancel')}</a>
+    <button disabled={!validated}>{$t(`channel.write.input.submit.${msgSuffix}`)}</button>
+    <a href={isNew ? '/' : `/c/${channelID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

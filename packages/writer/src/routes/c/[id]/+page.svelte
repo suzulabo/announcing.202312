@@ -42,10 +42,10 @@
       {@html toHtml(channel.desc)}
     </div>
   {/if}
-  <a class="button edit" href={`/t/${$page.params.id}/w`}>{$t('channel.edit')}</a>
+  <a class="button edit" href={`/c/${$page.params.id}/w`}>{$t('channel.edit')}</a>
   <a href="/" use:back>{$t('back')}</a>
   <hr />
-  <a class="button add-post" href={`/t/${$page.params.id}/p/new`}>{$t('channel.newPost')}</a>
+  <a class="button add-post" href={`/c/${$page.params.id}/p/new`}>{$t('channel.newPost')}</a>
 </div>
 <SuperDebug {data} />
 

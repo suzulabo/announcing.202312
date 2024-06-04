@@ -16,7 +16,7 @@
   {#if data.channels}
     <div class="channels">
       {#each data.channels as channel}
-        <a href={`/t/${channel.channelID}`} class="channel">
+        <a href={`/c/${channel.channelID}`} class="channel">
           <div class="head">
             <span class="title">
               {channel.title}
@@ -32,11 +32,11 @@
 
   <a
     class="button create-btn"
-    href="/t/new/w"
+    href="/c/new/w"
     on:click={() => {
       //
     }}
-    >{$t('createAnnouncement')}
+    >{$t('top.createChannel')}
   </a>
   <button
     class="sign-out-btn text"

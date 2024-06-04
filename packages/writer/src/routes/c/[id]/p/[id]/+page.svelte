@@ -35,7 +35,7 @@
 <div class="container">
   <form method="POST" enctype="multipart/form-data" use:enhance>
     <button disabled={!validated}>{$t(`create.input.${isNew ? 'submit' : 'submitUpdate'}`)}</button>
-    <a href={isNew ? '/' : `/t/${channelID}`} use:back>{$t('cancel')}</a>
+    <a href={isNew ? '/' : `/c/${channelID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

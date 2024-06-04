@@ -7,21 +7,27 @@ const msgs: Msgs = {
   cancel: 'Cancel',
   maxLength: 'Enter up to {{num}} characters',
   maxLengthOptional: 'Enter up to {{num}} characters(Optional)',
-  createAnnouncement: 'Create a new announcement',
-  create: {
-    title: 'Creating a new announcement',
-    input: {
-      title: 'Title',
-      addIcon: 'Select icon',
-      delIcon: 'Remove icon',
-      desc: 'Description',
-      submit: 'Create',
-      submitUpdate: 'Update',
-    },
+  top: {
+    createChannel: 'Create a new channel',
   },
   channel: {
+    write: {
+      title: {
+        new: 'Create new channel',
+        edit: 'Edit the channel',
+      },
+      input: {
+        title: 'Title',
+        icon: {
+          select: 'Add icon',
+          remove: 'Remove icon',
+        },
+        desc: 'Description',
+        submit: { new: 'Create', edit: 'Edit' },
+      },
+    },
     edit: 'Edit',
-    newPost: 'New post',
+    newPost: 'Post new announcement',
   },
 };
 
