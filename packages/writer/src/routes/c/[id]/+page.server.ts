@@ -1,4 +1,4 @@
-import { getChannel } from '$lib/db/routes/t';
+import { getChannel } from '$lib/db/routes/c';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
