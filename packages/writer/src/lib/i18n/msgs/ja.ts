@@ -9,6 +9,8 @@ const msgs = {
     createChannel: '新しいチャンネルを作る',
   },
   channel: {
+    edit: '編集する',
+    newPost: '新しいお知らせを書く',
     write: {
       title: {
         new: '新しいチャンネルの作成',
@@ -24,8 +26,17 @@ const msgs = {
         submit: { new: '作成する', edit: '更新する' },
       },
     },
-    edit: '編集する',
-    newPost: '新しいお知らせを書く',
+    announcement: {
+      write: {
+        title: {
+          new: '新しいお知らせを書く',
+          edit: 'お知らせの編集',
+        },
+        input: {
+          submit: { new: '作成する', edit: '更新する' },
+        },
+      },
+    },
   },
 };
 

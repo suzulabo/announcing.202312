@@ -27,15 +27,16 @@
 
   $: channelID = $page.params.id;
   $: isNew = channelID === 'new';
+  $: msgSuffix = isNew ? 'new' : 'edit';
 </script>
 
 <header>
-  <div>{$t('create.title')}</div>
+  <div>{$t(`channel.announcement.write.title.${msgSuffix}`)}</div>
 </header>
 <div class="container">
   <form method="POST" enctype="multipart/form-data" use:enhance>
-    <button disabled={!validated}>{$t(`create.input.${isNew ? 'submit' : 'submitUpdate'}`)}</button>
-    <a href={isNew ? '/' : `/c/${channelID}`} use:back>{$t('cancel')}</a>
+    <button disabled={!validated}>{$t(`channel.write.input.submit.${msgSuffix}`)}</button>
+    <a href={`/c/${channelID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>
