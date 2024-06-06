@@ -33,6 +33,8 @@ const msgs = {
           edit: 'お知らせの編集',
         },
         input: {
+          title: 'タイトル',
+          body: '本文',
           submit: { new: '作成する', edit: '更新する' },
         },
       },

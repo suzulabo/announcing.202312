@@ -1,8 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import setupBack from '$lib/actions/back';
+  import { POST_BODY_MAX_LENGTH, POST_TITLE_MAX_LENGTH } from '$lib/constants';
   import { t } from '$lib/i18n/translations';
+  import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
+  import TextArea from '@announcing/components/TextArea.svelte';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
   import type { PageServerData } from './$types';
@@ -18,6 +21,7 @@
     onChange: async () => {
       const result = await validateForm();
 
+      console.log('valid', result.valid);
       validated = result.valid && isTainted();
     },
   });
@@ -36,6 +40,20 @@
 </header>
 <div class="container">
   <form method="POST" enctype="multipart/form-data" use:enhance>
+    <Input
+      name="title"
+      label={$t('channel.announcement.write.input.title')}
+      placeholder={$t('maxLengthOptional', { num: POST_TITLE_MAX_LENGTH })}
+      maxLength={POST_TITLE_MAX_LENGTH}
+      bind:value={$form.title}
+    />
+    <TextArea
+      name="body"
+      label={$t('channel.announcement.write.input.body')}
+      placeholder={$t('maxLength', { num: POST_BODY_MAX_LENGTH })}
+      bind:value={$form.body}
+      maxLength={POST_BODY_MAX_LENGTH}
+    />
     <button disabled={!validated}>{$t(`channel.write.input.submit.${msgSuffix}`)}</button>
     <a href={`/c/${cID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
