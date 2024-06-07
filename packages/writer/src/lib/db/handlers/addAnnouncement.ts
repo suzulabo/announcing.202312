@@ -7,7 +7,7 @@ import { channelsTable, type Announcements } from '../schema';
 const getHash = (...args: (string | null | undefined)[]) => {
   const hash = createHash('sha256');
 
-  for (const a in args) {
+  for (const a of args) {
     if (typeof a === 'string') {
       hash.update(a);
     } else {
@@ -37,8 +37,6 @@ export const addAnnouncement = async (
   body: string,
   title?: string | null,
 ) => {
-  console.log({ channelID, updatedAt });
-
   const updatedAtDate = new Date(updatedAt);
 
   const channel = (
@@ -54,22 +52,22 @@ export const addAnnouncement = async (
     return;
   }
 
-  const key = getHash(body, title);
+  const id = getHash(body, title);
 
   const size = getSize(body, title);
 
   const now = new Date();
 
-  const announcements: Announcements = {
-    ...channel.announcements,
-    [key]: {
-      size,
-      title,
-      body,
-      updatedAt: now.getTime(),
-      createdAt: now.getTime(),
-    },
-  };
+  const announcements: Announcements = channel.announcements || [];
+
+  announcements.push({
+    id,
+    size,
+    title,
+    body,
+    updatedAt: now.getTime(),
+    createdAt: now.getTime(),
+  });
 
   await db
     .update(channelsTable)
