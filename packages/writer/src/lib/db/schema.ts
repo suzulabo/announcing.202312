@@ -8,6 +8,18 @@ export const channelsTable = sqliteTable(
     desc: text('desc'),
     icon: text('icon'),
     links: text('links', { mode: 'json' }).$type<{ name: string; url: string }[]>(),
+    announcements: text('announcements', { mode: 'json' }).$type<{
+      [id: string]: {
+        size: number;
+        title?: string | null;
+        body: string;
+        mainImage?: string;
+        images?: string[];
+        links?: string[];
+        updatedAt: number;
+        createdAt: number;
+      };
+    }>(),
     updatedAt: integer('updatedAt', { mode: 'timestamp' })
       .$default(() => {
         return new Date();
@@ -25,6 +37,12 @@ export const channelsTable = sqliteTable(
     };
   },
 );
+
+type ChannelsTable = typeof channelsTable.$inferInsert;
+
+export type Announcements = Exclude<ChannelsTable['announcements'], null | undefined>;
+
+export type Announcement = Announcements[string];
 
 export const channelOwnersTable = sqliteTable(
   'channelOwners',

@@ -1,4 +1,3 @@
-import { getChannel } from '$lib/db/routes/c';
 import { createChannel, updateChannel } from '$lib/db/routes/c/w';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
@@ -7,20 +6,16 @@ import { valibot } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types.js';
 import formSchema from './formSchema.js';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, parent }) => {
   const cid = params.cid;
 
   if (cid === 'new') {
     return { form: await superValidate(valibot(formSchema)) };
   }
 
-  const t = await getChannel(+cid);
+  const { channel } = await parent();
 
-  if (!t) {
-    throw redirect(303, '/');
-  }
-
-  const { title, desc, icon, updatedAt } = t;
+  const { title, desc, icon, updatedAt } = channel;
 
   return {
     form: await superValidate({ title, desc, updatedAt: updatedAt.getTime() }, valibot(formSchema)),

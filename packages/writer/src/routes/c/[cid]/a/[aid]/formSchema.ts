@@ -24,7 +24,7 @@ const formSchema = object({
       [maxLength(4)],
     ),
   ),
-  updatedAt: nullish(number()),
+  updatedAt: number(),
 });
 
 export default formSchema;

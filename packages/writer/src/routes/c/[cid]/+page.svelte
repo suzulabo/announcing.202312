@@ -1,21 +1,14 @@
 <script lang="ts">
-  import { afterNavigate, replaceState } from '$app/navigation';
   import { page } from '$app/stores';
   import setupBack from '$lib/actions/back';
   import { t } from '$lib/i18n/translations';
   import linkifyHtml from 'linkify-html';
   import SuperDebug from 'sveltekit-superforms';
-  import type { PageServerData } from './$types';
+  import type { PageData } from './$types';
 
-  export let data: PageServerData;
+  export let data: PageData;
 
   $: channel = data.channel;
-
-  afterNavigate(({ from, to }) => {
-    if (from && to) {
-      replaceState(to.url, { fromPage: from.url.href });
-    }
-  });
 
   const toHtml = (s: string) => {
     return linkifyHtml(s, {
