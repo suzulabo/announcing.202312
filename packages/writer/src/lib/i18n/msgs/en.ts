@@ -1,6 +1,6 @@
 import type { Msgs } from './types';
 
-const msgs: Msgs = {
+export const msgs: Msgs = {
   signIn: 'Sign in with {{placeholder}}',
   signOut: 'Sign out',
   back: 'Back',
@@ -30,5 +30,3 @@ const msgs: Msgs = {
     newPost: 'Post new announcement',
   },
 };
-
-export default msgs;

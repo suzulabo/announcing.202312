@@ -16,7 +16,7 @@ const load = (img: HTMLImageElement, file: File | undefined) => {
   reader.readAsDataURL(file);
 };
 
-const loadImage: Action<HTMLImageElement, File | undefined> = (img, file) => {
+export const loadImage: Action<HTMLImageElement, File | undefined> = (img, file) => {
   load(img, file);
 
   return {
@@ -25,5 +25,3 @@ const loadImage: Action<HTMLImageElement, File | undefined> = (img, file) => {
     },
   };
 };
-
-export default loadImage;

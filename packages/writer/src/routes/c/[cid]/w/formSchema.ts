@@ -11,7 +11,7 @@ import {
   string,
 } from 'valibot';
 
-const formSchema = object({
+export const formSchema = object({
   title: string([minLength(1), maxLength(CHANNEL_TITLE_MAX_LENGTH)]),
   desc: nullish(string([maxLength(CHANNEL_DESC_MAX_LENGTH)])),
   icon: nullish(
@@ -19,5 +19,3 @@ const formSchema = object({
   ),
   updatedAt: nullish(number()),
 });
-
-export default formSchema;

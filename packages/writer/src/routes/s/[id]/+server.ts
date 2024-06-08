@@ -1,4 +1,4 @@
-import loadFile from '$lib/file/loadFile';
+import { loadFile } from '$lib/file/loadFile';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 

@@ -5,7 +5,7 @@ import crypto from 'crypto';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types.js';
-import formSchema from './formSchema.js';
+import { formSchema } from './formSchema.js';
 
 export const load: PageServerLoad = async ({ params, parent }) => {
   const cid = params.cid;

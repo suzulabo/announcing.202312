@@ -31,6 +31,4 @@ const loadFileR2: typeof loadFileLocal = () => {
   throw 'Not yet implemented';
 };
 
-const loadFile = dev ? loadFileLocal : loadFileR2;
-
-export default loadFile;
+export const loadFile = dev ? loadFileLocal : loadFileR2;

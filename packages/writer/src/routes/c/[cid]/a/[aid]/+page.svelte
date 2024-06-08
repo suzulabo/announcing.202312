@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import setupBack from '$lib/actions/back';
+  import { setupBack } from '$lib/actions/back';
   import { POST_BODY_MAX_LENGTH, POST_TITLE_MAX_LENGTH } from '$lib/constants';
   import { t } from '$lib/i18n/translations';
   import Input from '@announcing/components/Input.svelte';
@@ -9,7 +9,7 @@
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
   import type { PageServerData } from './$types';
-  import formSchema from './formSchema';
+  import { formSchema } from './formSchema';
 
   export let data: PageServerData;
 

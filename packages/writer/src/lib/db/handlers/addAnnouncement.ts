@@ -1,4 +1,4 @@
-import base62 from '$lib/utils/base62';
+import { base62 } from '$lib/utils/base62';
 import { createHash } from 'crypto';
 import { and, eq } from 'drizzle-orm';
 import { db } from '../client';

@@ -1,7 +1,7 @@
 import { afterNavigate, replaceState } from '$app/navigation';
 import type { Action } from 'svelte/action';
 
-const setupBack = (fromPage: string | undefined) => {
+export const setupBack = (fromPage: string | undefined) => {
   if (!fromPage) {
     afterNavigate(({ from, to }) => {
       if (from && to) {
@@ -30,5 +30,3 @@ const setupBack = (fromPage: string | undefined) => {
 
   return back;
 };
-
-export default setupBack;

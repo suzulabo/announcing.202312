@@ -1,4 +1,4 @@
-const msgs = {
+export const msgs = {
   signIn: '{{value}}でログイン',
   signOut: 'ログアウト',
   back: '戻る',
@@ -41,5 +41,3 @@ const msgs = {
     },
   },
 };
-
-export default msgs;

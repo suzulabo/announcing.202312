@@ -3,7 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import formSchema from './formSchema';
+import { formSchema } from './formSchema';
 
 export const load: PageServerLoad = async ({ params, parent }) => {
   const aid = params.aid;

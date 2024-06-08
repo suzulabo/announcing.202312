@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import base62 from '$lib/utils/base62';
+import { base62 } from '$lib/utils/base62';
 import { createHash } from 'crypto';
 import { writeFile } from 'fs/promises';
 
@@ -40,6 +40,4 @@ const storeFileR2: typeof storeFileLocal = async () => {
   throw 'Not yet implemented';
 };
 
-const storeFile = dev ? storeFileLocal : storeFileR2;
-
-export default storeFile;
+export const storeFile = dev ? storeFileLocal : storeFileR2;

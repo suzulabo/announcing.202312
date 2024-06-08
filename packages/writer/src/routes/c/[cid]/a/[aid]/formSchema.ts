@@ -12,7 +12,7 @@ import {
   string,
 } from 'valibot';
 
-const formSchema = object({
+export const formSchema = object({
   title: nullish(string([maxLength(POST_TITLE_MAX_LENGTH)])),
   body: string([minLength(1), maxLength(POST_BODY_MAX_LENGTH)]),
   mainImage: nullish(
@@ -26,5 +26,3 @@ const formSchema = object({
   ),
   updatedAt: number(),
 });
-
-export default formSchema;

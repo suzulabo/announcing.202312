@@ -1,6 +1,6 @@
 import { db } from '$lib/db/client';
 import { channelOwnersTable, channelsTable } from '$lib/db/schema';
-import storeFile from '$lib/file/storeFile';
+import { storeFile } from '$lib/file/storeFile';
 
 export const createChannel = async (
   userID: string,
