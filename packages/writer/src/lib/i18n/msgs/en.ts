@@ -11,6 +11,8 @@ export const msgs: Msgs = {
     createChannel: 'Create a new channel',
   },
   channel: {
+    edit: 'Edit',
+    newPost: 'Write new announcement',
     write: {
       title: {
         new: 'Create new channel',
@@ -26,7 +28,18 @@ export const msgs: Msgs = {
         submit: { new: 'Create', edit: 'Edit' },
       },
     },
-    edit: 'Edit',
-    newPost: 'Post new announcement',
+    announcement: {
+      write: {
+        title: {
+          new: 'Write new announcement',
+          edit: 'Edit this announcement',
+        },
+        input: {
+          title: 'Title',
+          body: 'Body',
+          submit: { new: 'Post', edit: 'Update' },
+        },
+      },
+    },
   },
 };
