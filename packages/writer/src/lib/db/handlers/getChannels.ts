@@ -5,7 +5,7 @@ import { eq, inArray } from 'drizzle-orm';
 export const getChannels = async (userID: string | undefined) => {
   if (!userID) return [];
 
-  const channelIDs = db
+  const ownedChannels = db
     .select({ channelID: channelOwnersTable.channelID })
     .from(channelOwnersTable)
     .where(eq(channelOwnersTable.userID, userID));
@@ -18,7 +18,7 @@ export const getChannels = async (userID: string | undefined) => {
       updatedAt: channelsTable.updatedAt,
     })
     .from(channelsTable)
-    .where(inArray(channelsTable.channelID, channelIDs));
+    .where(inArray(channelsTable.channelID, ownedChannels));
 
   return channels;
 };

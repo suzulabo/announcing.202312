@@ -1,4 +1,5 @@
-import { createChannel, updateChannel } from '$lib/db/routes/c/w';
+import { createChannel } from '$lib/db/handlers/createChannel.js';
+import { updateChannel } from '$lib/db/handlers/updateChannel.js';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
 import { superValidate } from 'sveltekit-superforms';

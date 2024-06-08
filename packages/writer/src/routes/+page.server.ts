@@ -1,4 +1,4 @@
-import { getChannels } from '$lib/db/routes';
+import { getChannels } from '$lib/db/handlers/getChannels';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {

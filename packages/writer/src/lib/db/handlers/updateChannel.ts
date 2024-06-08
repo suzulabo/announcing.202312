@@ -3,21 +3,6 @@ import { channelOwnersTable, channelsTable } from '$lib/db/schema';
 import storeFile from '$lib/file/storeFile';
 import { and, eq, inArray } from 'drizzle-orm';
 
-export const createChannel = async (
-  userID: string,
-  channelID: number,
-  title: string,
-  desc?: string | null,
-  icon?: File | null,
-) => {
-  const iconHash = icon && (await storeFile(icon));
-
-  await db.batch([
-    db.insert(channelsTable).values({ channelID, title, desc, icon: iconHash }),
-    db.insert(channelOwnersTable).values({ userID, channelID }),
-  ]);
-};
-
 export const updateChannel = async (
   userID: string,
   updatedAt: Date,
