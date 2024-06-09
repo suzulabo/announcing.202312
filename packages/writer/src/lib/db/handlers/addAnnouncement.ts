@@ -1,8 +1,8 @@
 import { base62 } from '$lib/utils/base62';
 import { createHash } from 'crypto';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import { db } from '../client';
-import { channelsTable, type Announcements } from '../schema';
+import { channelOwnersTable, channelsTable, type Announcements } from '../schema';
 
 const getHash = (...args: (string | null | undefined)[]) => {
   const hash = createHash('sha256');
@@ -69,10 +69,19 @@ export const addAnnouncement = async (
     createdAt: now.getTime(),
   });
 
+  const ownedChannels = db
+    .select({ channelID: channelOwnersTable.channelID })
+    .from(channelOwnersTable)
+    .where(eq(channelOwnersTable.userID, userID));
+
   await db
     .update(channelsTable)
     .set({ announcements, updatedAt: now })
     .where(
-      and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, new Date(updatedAt))),
+      and(
+        eq(channelsTable.channelID, channelID),
+        eq(channelsTable.updatedAt, new Date(updatedAt)),
+        inArray(channelsTable.channelID, ownedChannels),
+      ),
     );
 };

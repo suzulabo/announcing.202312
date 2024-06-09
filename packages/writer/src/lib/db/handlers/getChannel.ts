@@ -7,7 +7,7 @@ export const getChannel = async (userID: string | undefined, channelID: number) 
 
   if (isNaN(channelID)) return;
 
-  const channelIDs = db
+  const ownedChannels = db
     .select({ channelID: channelOwnersTable.channelID })
     .from(channelOwnersTable)
     .where(eq(channelOwnersTable.userID, userID));
@@ -17,7 +17,10 @@ export const getChannel = async (userID: string | undefined, channelID: number) 
       .select()
       .from(channelsTable)
       .where(
-        and(eq(channelsTable.channelID, channelID), inArray(channelsTable.channelID, channelIDs)),
+        and(
+          eq(channelsTable.channelID, channelID),
+          inArray(channelsTable.channelID, ownedChannels),
+        ),
       )
   ).shift();
 };
