@@ -1,8 +1,8 @@
 import { base62 } from '$lib/utils/base62';
 import { createHash } from 'crypto';
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 import { db } from '../client';
-import { channelOwnersTable, channelsTable, type Announcements } from '../schema';
+import { channelsTable, type Announcements } from '../schema';
 
 const getHash = (...args: (string | null | undefined)[]) => {
   const hash = createHash('sha256');
@@ -32,7 +32,7 @@ const getSize = (...args: (string | null | undefined)[]) => {
 
 export const addAnnouncement = async (
   userID: string,
-  channelID: number,
+  channelID: string,
   updatedAt: number,
   body: string,
   title?: string | null,
@@ -69,11 +69,6 @@ export const addAnnouncement = async (
     createdAt: now.getTime(),
   });
 
-  const ownedChannels = db
-    .select({ channelID: channelOwnersTable.channelID })
-    .from(channelOwnersTable)
-    .where(eq(channelOwnersTable.userID, userID));
-
   await db
     .update(channelsTable)
     .set({ announcements, updatedAt: now })
@@ -81,7 +76,7 @@ export const addAnnouncement = async (
       and(
         eq(channelsTable.channelID, channelID),
         eq(channelsTable.updatedAt, new Date(updatedAt)),
-        inArray(channelsTable.channelID, ownedChannels),
+        sql`EXISTS(SELECT 1 FROM json_each(owners) WHERE value = ${userID})`,
       ),
     );
 };

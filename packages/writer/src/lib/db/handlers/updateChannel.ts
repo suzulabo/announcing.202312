@@ -1,22 +1,17 @@
 import { db } from '$lib/db/client';
-import { channelOwnersTable, channelsTable } from '$lib/db/schema';
+import { channelsTable } from '$lib/db/schema';
 import { storeFile } from '$lib/file/storeFile';
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 
 export const updateChannel = async (
   userID: string,
   updatedAt: Date,
-  channelID: number,
+  channelID: string,
   title: string,
   desc?: string | null,
   icon?: File | null,
 ) => {
   const iconHash = (icon && (await storeFile(icon))) || undefined;
-
-  const channelIDs = db
-    .select({ channelID: channelOwnersTable.channelID })
-    .from(channelOwnersTable)
-    .where(eq(channelOwnersTable.userID, userID));
 
   const result = await db
     .update(channelsTable)
@@ -29,8 +24,8 @@ export const updateChannel = async (
     .where(
       and(
         eq(channelsTable.channelID, channelID),
-        inArray(channelsTable.channelID, channelIDs),
         eq(channelsTable.updatedAt, updatedAt),
+        sql`EXISTS(SELECT 1 FROM json_each(owners) WHERE value = ${userID})`,
       ),
     );
 

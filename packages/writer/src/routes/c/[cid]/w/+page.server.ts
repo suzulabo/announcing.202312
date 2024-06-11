@@ -7,14 +7,12 @@ import { valibot } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types.js';
 import { formSchema } from './formSchema.js';
 
-export const load: PageServerLoad = async ({ params, parent }) => {
-  const cid = params.cid;
+export const load: PageServerLoad = async ({ parent }) => {
+  const { channel } = await parent();
 
-  if (cid === 'new') {
+  if (!channel) {
     return { form: await superValidate(valibot(formSchema)) };
   }
-
-  const { channel } = await parent();
 
   const { title, desc, icon, updatedAt } = channel;
 
@@ -28,9 +26,9 @@ const invalidChannelIDPattern = /(.)\1\1/;
 
 const genChannelID = () => {
   for (;;) {
-    const id = crypto.randomInt(100000, 999999);
+    const id = crypto.randomInt(100000, 999999).toString();
 
-    if (!invalidChannelIDPattern.test(id.toString())) {
+    if (!invalidChannelIDPattern.test(id)) {
       return id;
     }
   }
@@ -63,7 +61,7 @@ export const actions = {
       return;
     }
 
-    await updateChannel(userID, new Date(updatedAt || 0), +params.cid, title, desc, icon);
+    await updateChannel(userID, new Date(updatedAt || 0), params.cid, title, desc, icon);
     redirect(303, `/c/${params.cid}`);
   },
 };

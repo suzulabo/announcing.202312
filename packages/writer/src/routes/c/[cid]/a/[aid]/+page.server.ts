@@ -40,7 +40,7 @@ export const actions = {
     }
 
     if (params.aid === 'new') {
-      await addAnnouncement(userID, +params.cid, updatedAt, body, title);
+      await addAnnouncement(userID, params.cid, updatedAt, body, title);
       redirect(303, `/c/${params.cid}`);
 
       return;

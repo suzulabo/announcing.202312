@@ -1,14 +1,17 @@
 import { db } from '$lib/db/client';
-import { channelOwnersTable, channelsTable } from '$lib/db/schema';
-import { eq, inArray } from 'drizzle-orm';
+import { channelsTable, usersTable } from '$lib/db/schema';
+import { eq, inArray, sql } from 'drizzle-orm';
 
 export const getChannels = async (userID: string | undefined) => {
   if (!userID) return [];
 
   const ownedChannels = db
-    .select({ channelID: channelOwnersTable.channelID })
-    .from(channelOwnersTable)
-    .where(eq(channelOwnersTable.userID, userID));
+    .select({ value: sql`json_each.value` })
+    .from(
+      sql`
+  ${usersTable}, json_each(${usersTable.channels})`,
+    )
+    .where(eq(usersTable.userID, userID));
 
   const channels = await db
     .select({
