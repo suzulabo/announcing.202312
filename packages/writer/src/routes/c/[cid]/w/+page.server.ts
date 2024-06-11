@@ -1,4 +1,5 @@
 import { createChannel } from '$lib/db/handlers/createChannel.js';
+import { getChannel } from '$lib/db/handlers/getChannel.js';
 import { updateChannel } from '$lib/db/handlers/updateChannel.js';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
@@ -7,11 +8,17 @@ import { valibot } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types.js';
 import { formSchema } from './formSchema.js';
 
-export const load: PageServerLoad = async ({ parent }) => {
-  const { channel } = await parent();
+export const load: PageServerLoad = async ({ parent, params }) => {
+  if (params.cid === 'new') {
+    return { form: await superValidate(valibot(formSchema)) };
+  }
+
+  const userID = (await parent()).session?.user?.id;
+
+  const channel = await getChannel(userID, params.cid);
 
   if (!channel) {
-    return { form: await superValidate(valibot(formSchema)) };
+    throw redirect(303, '/');
   }
 
   const { title, desc, icon, updatedAt } = channel;

@@ -1,4 +1,5 @@
 import { addAnnouncement } from '$lib/db/handlers/addAnnouncement';
+import { getChannel } from '$lib/db/handlers/getChannel';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
@@ -6,9 +7,15 @@ import type { PageServerLoad } from './$types';
 import { formSchema } from './formSchema';
 
 export const load: PageServerLoad = async ({ params, parent }) => {
-  const aid = params.aid;
+  const userID = (await parent()).session?.user?.id;
 
-  const { channel } = await parent();
+  const channel = await getChannel(userID, params.cid);
+
+  if (!channel) {
+    throw redirect(303, '/');
+  }
+
+  const aid = params.aid;
 
   if (aid === 'new') {
     return {

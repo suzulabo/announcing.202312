@@ -1,8 +1,8 @@
 import { getChannel } from '$lib/db/handlers/getChannel';
 import { redirect } from '@sveltejs/kit';
-import type { LayoutServerLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ params, parent }) => {
+export const load: PageServerLoad = async ({ params, parent }) => {
   const userID = (await parent()).session?.user?.id;
 
   const channel = await getChannel(userID, params.cid);
