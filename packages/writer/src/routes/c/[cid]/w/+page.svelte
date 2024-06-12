@@ -7,7 +7,7 @@
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
-  import loadImage from '@announcing/components/actions/loadImage';
+  import { loadImage } from '@announcing/components/actions/loadImage';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
   import type { PageServerData } from './$types';
