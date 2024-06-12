@@ -8,14 +8,15 @@ import {
   nullish,
   number,
   object,
+  pipe,
   string,
 } from 'valibot';
 
 export const formSchema = object({
-  title: string([minLength(1), maxLength(CHANNEL_TITLE_MAX_LENGTH)]),
-  desc: nullish(string([maxLength(CHANNEL_DESC_MAX_LENGTH)])),
+  title: pipe(string(), minLength(1), maxLength(CHANNEL_TITLE_MAX_LENGTH)),
+  desc: nullish(pipe(string(), maxLength(CHANNEL_DESC_MAX_LENGTH))),
   icon: nullish(
-    instance(File, [maxSize(1024 * 1024), mimeType(['image/jpeg', 'image/png', 'image/webp'])]),
+    pipe(instance(File), maxSize(1024 * 1024), mimeType(['image/jpeg', 'image/png', 'image/webp'])),
   ),
   updatedAt: nullish(number()),
 });
