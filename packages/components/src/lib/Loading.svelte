@@ -32,11 +32,22 @@
       height: 10px;
       background-size: 200% auto;
       background-position: 0 100%;
-      animation: gradient 3s infinite;
+      animation:
+        showdelay 0.5s,
+        gradient 3s infinite;
       animation-fill-mode: forwards;
       animation-timing-function: linear;
     }
 
+    @keyframes showdelay {
+      0%,
+      50% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
     @keyframes gradient {
       0% {
         background-position: 0 0;

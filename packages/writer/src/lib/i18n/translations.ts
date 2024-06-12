@@ -5,12 +5,12 @@ const config: Config<{ value?: string; num?: number }> = {
     {
       locale: 'en',
       key: '',
-      loader: async () => (await import('./msgs/en')).default,
+      loader: async () => (await import('./msgs/en')).msgs,
     },
     {
       locale: 'ja',
       key: '',
-      loader: async () => (await import('./msgs/ja')).default,
+      loader: async () => (await import('./msgs/ja')).msgs,
     },
   ],
 };
