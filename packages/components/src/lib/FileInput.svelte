@@ -37,7 +37,11 @@
     loading = true;
 
     try {
-      for (const f of selectedFiles) {
+      for (let i = 0; i < filesCount; i++) {
+        const f = selectedFiles.item(i);
+
+        if (!f) break;
+
         if (!maxImageSize) {
           newFiles.push(f);
 
