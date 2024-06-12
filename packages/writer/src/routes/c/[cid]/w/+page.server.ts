@@ -63,12 +63,12 @@ export const actions = {
       const channelID = genChannelID();
 
       await createChannel(userID, channelID, title, desc, icon);
-      redirect(303, '/');
 
-      return;
+      throw redirect(303, '/');
     }
 
     await updateChannel(userID, new Date(updatedAt || 0), params.cid, title, desc, icon);
-    redirect(303, `/c/${params.cid}`);
+
+    throw redirect(303, `/c/${params.cid}`);
   },
 };
