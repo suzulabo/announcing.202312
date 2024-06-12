@@ -10,7 +10,7 @@
   export let Hst: Hst;
 
   let fileInput: FileInput;
-  let value: File | undefined;
+  let file: File | undefined;
 </script>
 
 <Hst.Story title="FileInput">
@@ -19,14 +19,14 @@
       fileInput.open();
     }}>Choose image file</button
   >
-  <FileInput name="file" accept="image/*" maxImageSize={200} bind:this={fileInput} bind:value />
+  <FileInput name="file" accept="image/*" maxImageSize={200} bind:this={fileInput} bind:file />
 
-  <img alt="" use:loadImage={value} />
+  <img alt="" use:loadImage={file} />
 
-  {#if value}
+  {#if file}
     <button
       on:click={() => {
-        value = undefined;
+        fileInput.remove();
       }}>Remove image</button
     >
   {/if}
