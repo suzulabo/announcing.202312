@@ -1,3 +1,4 @@
+import { storeFile } from '$lib/file/storeFile';
 import { base62 } from '$lib/utils/base62';
 import { createHash } from 'crypto';
 import { and, eq, sql } from 'drizzle-orm';
@@ -34,8 +35,9 @@ export const addAnnouncement = async (
   userID: string,
   channelID: string,
   updatedAt: number,
+  headerImage: File | undefined | null,
+  title: string | undefined | null,
   body: string,
-  title?: string | null,
 ) => {
   const updatedAtDate = new Date(updatedAt);
 
@@ -56,6 +58,8 @@ export const addAnnouncement = async (
 
   const size = getSize(body, title);
 
+  const headerImageHash = (headerImage && (await storeFile(headerImage))) || undefined;
+
   const now = new Date();
 
   const announcements: Announcements = channel.announcements || [];
@@ -65,6 +69,7 @@ export const addAnnouncement = async (
     size,
     title,
     body,
+    headerImage: headerImageHash,
     updatedAt: now.getTime(),
     createdAt: now.getTime(),
   });

@@ -3,9 +3,11 @@
   import { setupBack } from '$lib/actions/back';
   import { POST_BODY_MAX_LENGTH, POST_TITLE_MAX_LENGTH } from '$lib/constants';
   import { t } from '$lib/i18n/translations';
+  import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
+  import { loadImage } from '@announcing/components/actions/loadImage';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
   import type { PageServerData } from './$types';
@@ -14,6 +16,7 @@
   export let data: PageServerData;
 
   let validated = false;
+  let headerImageInput: FileInput;
 
   const { form, enhance, validateForm, submitting, errors, isTainted } = superForm(data.form, {
     validators: valibotClient(formSchema),
@@ -40,6 +43,42 @@
 </header>
 <div class="container">
   <form method="POST" enctype="multipart/form-data" use:enhance>
+    {#if $form.headerImage}
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+      <!-- svelte-ignore a11y-img-redundant-alt -->
+      <img
+        class="header-image"
+        alt="header image preview"
+        use:loadImage={$form.headerImage}
+        on:click={() => {
+          headerImageInput.open();
+        }}
+      />
+    {/if}
+    <div>
+      <button
+        type="button"
+        on:click={() => {
+          headerImageInput.open();
+        }}>{$t('channel.announcement.write.input.headerImage.select')}</button
+      >
+      {#if $form.headerImage}
+        <button
+          type="button"
+          on:click={() => {
+            $form.headerImage = undefined;
+          }}>{$t('channel.announcement.write.input.headerImage.remove')}</button
+        >
+      {/if}
+    </div>
+    <FileInput
+      name="headerImage"
+      accept="image/jpeg,image/png,image/webp"
+      maxImageSize={1024}
+      bind:this={headerImageInput}
+      bind:value={$form.headerImage}
+    />
     <Input
       name="title"
       label={$t('channel.announcement.write.input.title')}

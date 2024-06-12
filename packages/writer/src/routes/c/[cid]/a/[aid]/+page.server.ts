@@ -36,7 +36,13 @@ export const actions = {
       return fail(400, { form });
     }
 
-    const { title, body, updatedAt } = form.data;
+    const { updatedAt, headerImage, title, body } = form.data;
+
+    console.log({ headerImage });
+
+    if (!headerImage) {
+      return;
+    }
 
     const session = await locals.auth();
 
@@ -47,7 +53,7 @@ export const actions = {
     }
 
     if (params.aid === 'new') {
-      await addAnnouncement(userID, params.cid, updatedAt, body, title);
+      await addAnnouncement(userID, params.cid, updatedAt, headerImage, title, body);
       redirect(303, `/c/${params.cid}`);
 
       return;

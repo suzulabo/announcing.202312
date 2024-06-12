@@ -10,9 +10,9 @@ export const channelsTable = sqliteTable('channels', {
     {
       id: string;
       size: number;
+      headerImage?: string;
       title?: string | null;
       body: string;
-      mainImage?: string;
       images?: string[];
       links?: string[];
       updatedAt: number;

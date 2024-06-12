@@ -14,11 +14,11 @@ import {
 } from 'valibot';
 
 export const formSchema = object({
-  title: nullish(pipe(string(), maxLength(POST_TITLE_MAX_LENGTH))),
-  body: pipe(string(), minLength(1), maxLength(POST_BODY_MAX_LENGTH)),
-  mainImage: nullish(
+  headerImage: nullish(
     pipe(instance(File), maxSize(1024 * 1024), mimeType(['image/jpeg', 'image/png', 'image/webp'])),
   ),
+  title: nullish(pipe(string(), maxLength(POST_TITLE_MAX_LENGTH))),
+  body: pipe(string(), minLength(1), maxLength(POST_BODY_MAX_LENGTH)),
   images: nullish(
     pipe(
       array(

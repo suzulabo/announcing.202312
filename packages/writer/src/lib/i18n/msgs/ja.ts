@@ -33,6 +33,10 @@ export const msgs = {
           edit: 'お知らせの編集',
         },
         input: {
+          headerImage: {
+            select: '見出し画像を選択',
+            remove: '見出し画像を削除',
+          },
           title: 'タイトル',
           body: '本文',
           submit: { new: '作成する', edit: '更新する' },
