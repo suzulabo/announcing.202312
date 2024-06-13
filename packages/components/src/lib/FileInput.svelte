@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
   import reduce from 'image-blob-reduce';
   import Loading from './Loading.svelte';
 
@@ -15,7 +14,7 @@
   let loading = false;
 
   $: {
-    if (browser && valueInput) {
+    if (DataTransfer && valueInput) {
       const a = file ? [file] : files ?? [];
 
       if (a.length === 0) {
