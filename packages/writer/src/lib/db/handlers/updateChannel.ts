@@ -11,7 +11,7 @@ export const updateChannel = async (
   desc?: string | null,
   icon?: File | null,
 ) => {
-  const iconHash = (icon && (await storeFile(icon))) || undefined;
+  const iconHash = (icon && (await storeFile(icon))) || null;
 
   const result = await db
     .update(channelsTable)

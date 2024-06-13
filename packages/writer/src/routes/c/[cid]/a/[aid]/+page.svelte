@@ -77,7 +77,7 @@
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={1024}
       bind:this={headerImageInput}
-      bind:value={$form.headerImage}
+      bind:file={$form.headerImage}
     />
     <Input
       name="title"

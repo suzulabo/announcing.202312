@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from '$app/environment';
   import reduce from 'image-blob-reduce';
   import Loading from './Loading.svelte';
 
@@ -13,14 +14,20 @@
   let valueInput: HTMLInputElement;
   let loading = false;
 
-  $: syncInputFiles = () => {
-    const a = file ? [file] : files ?? [];
+  $: {
+    if (browser && valueInput) {
+      const a = file ? [file] : files ?? [];
 
-    const dt = new DataTransfer();
+      if (a.length === 0) {
+        valueInput.value = '';
+      } else {
+        const dt = new DataTransfer();
 
-    a.forEach((v) => dt.items.add(v));
-    valueInput.files = dt.files;
-  };
+        a.forEach((v) => dt.items.add(v));
+        valueInput.files = dt.files;
+      }
+    }
+  }
 
   export const open = () => {
     fileInput.click();
@@ -67,7 +74,6 @@
         file = newFiles[0];
       }
 
-      syncInputFiles();
       fileInput.value = '';
     } finally {
       loading = false;
