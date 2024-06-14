@@ -17,6 +17,7 @@
 
   let validated = false;
   let headerImageInput: FileInput;
+  let imagesInput: FileInput;
 
   const { form, enhance, validateForm, submitting, errors, isTainted } = superForm(data.form, {
     validators: valibotClient(formSchema),
@@ -93,7 +94,38 @@
       bind:value={$form.body}
       maxLength={POST_BODY_MAX_LENGTH}
     />
-    <button disabled={!validated}>{$t(`channel.write.input.submit.${msgSuffix}`)}</button>
+    {#if $form.images}
+      <div class="images">
+        {#each $form.images as image}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+          <img
+            alt="images preview"
+            use:loadImage={image}
+            on:click={() => {
+              $form.images = $form.images?.filter((v) => v !== image);
+            }}
+          />
+        {/each}
+      </div>
+    {/if}
+    <button
+      type="button"
+      on:click={() => {
+        imagesInput.open();
+      }}>{$t('channel.announcement.write.input.images.select')}</button
+    >
+    <FileInput
+      name="images"
+      accept="image/jpeg,image/png,image/webp"
+      maxImageSize={1024}
+      filesCount={4}
+      bind:this={imagesInput}
+      bind:files={$form.images}
+    />
+    <button disabled={!validated}
+      >{$t(`channel.announcement.write.input.submit.${msgSuffix}`)}</button
+    >
     <a href={`/c/${cID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
@@ -127,6 +159,17 @@
       .header-image {
         max-width: 400px;
         max-height: 200px;
+        object-fit: cover;
+      }
+
+      .images {
+        display: flex;
+        gap: 10px;
+        img {
+          max-width: 200px;
+          max-height: 200px;
+          object-fit: contain;
+        }
       }
     }
   }

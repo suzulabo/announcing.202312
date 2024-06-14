@@ -38,6 +38,7 @@ export const addAnnouncement = async (
   headerImage: File | undefined | null,
   title: string | undefined | null,
   body: string,
+  images: File[] | undefined | null,
 ) => {
   const updatedAtDate = new Date(updatedAt);
 
@@ -54,11 +55,13 @@ export const addAnnouncement = async (
     return;
   }
 
-  const id = getHash(body, title);
+  const headerImageHash = (headerImage && (await storeFile(headerImage))) || undefined;
+
+  const imagesHashList = images ? await Promise.all(images.map((v) => storeFile(v))) : undefined;
+
+  const id = getHash(body, title, headerImageHash, ...(imagesHashList ?? []));
 
   const size = getSize(body, title);
-
-  const headerImageHash = (headerImage && (await storeFile(headerImage))) || undefined;
 
   const now = new Date();
 
@@ -67,9 +70,10 @@ export const addAnnouncement = async (
   announcements.push({
     id,
     size,
+    headerImage: headerImageHash,
     title,
     body,
-    headerImage: headerImageHash,
+    images: imagesHashList,
     updatedAt: now.getTime(),
     createdAt: now.getTime(),
   });

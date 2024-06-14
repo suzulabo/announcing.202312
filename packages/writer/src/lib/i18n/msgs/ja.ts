@@ -39,7 +39,10 @@ export const msgs = {
           },
           title: 'タイトル',
           body: '本文',
-          submit: { new: '作成する', edit: '更新する' },
+          images: {
+            select: '画像を追加',
+          },
+          submit: { new: '追加する', edit: '更新する' },
         },
       },
     },
