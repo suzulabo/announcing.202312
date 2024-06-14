@@ -14,7 +14,7 @@
   let loading = false;
 
   $: {
-    if (DataTransfer && valueInput) {
+    if (valueInput && 'DataTransfer' in window) {
       const a = file ? [file] : files ?? [];
 
       if (a.length === 0) {
