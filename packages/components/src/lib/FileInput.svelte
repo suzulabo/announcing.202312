@@ -32,6 +32,24 @@
     fileInput.click();
   };
 
+  const fileHashMap = new Map<File, string>();
+
+  const getFileHash = async (file: File) => {
+    const c = fileHashMap.get(file);
+
+    if (c) return c;
+
+    const arrayBuffer = await file.arrayBuffer();
+
+    const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+
+    const h = btoa(String.fromCharCode(...new Uint8Array(hashBuffer)));
+
+    fileHashMap.set(file, h);
+
+    return h;
+  };
+
   const fileInputChange = async () => {
     const selectedFiles = fileInput.files;
 
@@ -39,7 +57,7 @@
       return;
     }
 
-    const newFiles: File[] = [];
+    const newFiles: File[] = files ? [...files] : [];
 
     loading = true;
 
@@ -68,7 +86,17 @@
       }
 
       if (filesCount > 1) {
-        files = newFiles;
+        const m = new Map<string, File>();
+
+        for (const f of newFiles) {
+          const h = await getFileHash(f);
+
+          if (!m.has(h)) {
+            m.set(h, f);
+          }
+        }
+
+        files = [...m.values()];
       } else {
         file = newFiles[0];
       }

@@ -60,7 +60,7 @@
       maxImageSize={200}
       bind:this={filesInput}
       bind:files
-      filesCount={2}
+      filesCount={4}
     />
 
     {#each files || [] as f}
