@@ -123,6 +123,11 @@
       * {
         margin: 0 auto;
       }
+
+      .header-image {
+        max-width: 400px;
+        max-height: 200px;
+      }
     }
   }
 </style>
