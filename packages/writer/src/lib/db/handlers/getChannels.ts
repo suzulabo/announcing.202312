@@ -7,10 +7,7 @@ export const getChannels = async (userID: string | undefined) => {
 
   const ownedChannels = db
     .select({ value: sql`json_each.value` })
-    .from(
-      sql`
-  ${usersTable}, json_each(${usersTable.channels})`,
-    )
+    .from(sql`${usersTable}, json_each(${usersTable.channels})`)
     .where(eq(usersTable.userID, userID));
 
   const channels = await db

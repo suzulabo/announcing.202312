@@ -8,17 +8,17 @@ export const updateChannel = async (
   updatedAt: Date,
   channelID: string,
   title: string,
-  desc?: string | null,
-  icon?: File | null,
+  desc: string | null | undefined,
+  iconFile: File | null | undefined,
 ) => {
-  const iconHash = (icon && (await storeFile(icon))) || null;
+  const icon = (iconFile && (await storeFile(iconFile))) || null;
 
   const result = await db
     .update(channelsTable)
     .set({
       title,
       desc,
-      icon: iconHash,
+      icon,
       updatedAt: new Date(),
     })
     .where(

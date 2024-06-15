@@ -7,13 +7,13 @@ export const createChannel = async (
   userID: string,
   channelID: string,
   title: string,
-  desc?: string | null,
-  icon?: File | null,
+  desc: string | null | undefined,
+  iconFile: File | null | undefined,
 ) => {
-  const iconHash = icon && (await storeFile(icon));
+  const icon = (iconFile && (await storeFile(iconFile))) || null;
 
   await db.batch([
-    db.insert(channelsTable).values({ channelID, title, desc, icon: iconHash, owners: [userID] }),
+    db.insert(channelsTable).values({ channelID, title, desc, icon, owners: [userID] }),
     db
       .insert(usersTable)
       .values({ userID, channels: [channelID] })
