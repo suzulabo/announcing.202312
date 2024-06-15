@@ -21,16 +21,6 @@ const getHash = (...args: (string | null | undefined)[]) => {
   return base62.encode(digest).substring(0, 8);
 };
 
-const getSize = (...args: (string | null | undefined)[]) => {
-  return args.reduce((p, v) => {
-    if (v) {
-      return p + v.length;
-    }
-
-    return p;
-  }, 0);
-};
-
 const removeUndefined = <T extends object>(o: T): T => {
   const n: Partial<T> = {};
 
@@ -46,13 +36,13 @@ const removeUndefined = <T extends object>(o: T): T => {
 export const addAnnouncement = async (
   userID: string,
   channelID: string,
-  updatedAt: number,
-  headerImage: File | undefined | null,
+  channelUpdatedAt: number,
+  headerImageFile: File | undefined | null,
   title: string | undefined | null,
   body: string,
-  images: File[] | undefined | null,
+  imagesFiles: File[] | undefined | null,
 ) => {
-  const updatedAtDate = new Date(updatedAt);
+  const updatedAtDate = new Date(channelUpdatedAt);
 
   const channel = (
     await db
@@ -67,38 +57,42 @@ export const addAnnouncement = async (
     return;
   }
 
-  const headerImageHash = (headerImage && (await storeFile(headerImage))) || undefined;
+  const headerImage = (headerImageFile && (await storeFile(headerImageFile))) || undefined;
 
-  const imagesHashList = images ? await Promise.all(images.map((v) => storeFile(v))) : undefined;
+  console.log({ imagesFiles });
 
-  const id = getHash(body, title, headerImageHash, ...(imagesHashList ?? []));
+  const images =
+    imagesFiles && imagesFiles.length > 0
+      ? await Promise.all(imagesFiles.map((v) => storeFile(v)))
+      : undefined;
 
-  const size = getSize(body, title);
+  const nowDate = new Date();
 
-  const now = new Date();
+  const now = nowDate.getTime();
+
+  const id = getHash(`${now}`, body, title, headerImage, ...(images ?? []));
 
   const announcements: Announcements = channel.announcements || [];
 
   announcements.push(
     removeUndefined({
       id,
-      size,
-      headerImage: headerImageHash,
+      headerImage,
       title,
       body,
-      images: imagesHashList,
-      updatedAt: now.getTime(),
-      createdAt: now.getTime(),
+      images,
+      updatedAt: now,
+      createdAt: now,
     }),
   );
 
   await db
     .update(channelsTable)
-    .set({ announcements, updatedAt: now })
+    .set({ announcements, updatedAt: nowDate })
     .where(
       and(
         eq(channelsTable.channelID, channelID),
-        eq(channelsTable.updatedAt, new Date(updatedAt)),
+        eq(channelsTable.updatedAt, updatedAtDate),
         sql`EXISTS(SELECT 1 FROM json_each(owners) WHERE value = ${userID})`,
       ),
     );

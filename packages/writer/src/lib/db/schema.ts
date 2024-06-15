@@ -9,7 +9,6 @@ export const channelsTable = sqliteTable('channels', {
   announcements: text('announcements', { mode: 'json' }).$type<
     {
       id: string;
-      size: number;
       headerImage?: string;
       title?: string | null;
       body: string;
