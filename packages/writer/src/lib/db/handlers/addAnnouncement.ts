@@ -31,6 +31,18 @@ const getSize = (...args: (string | null | undefined)[]) => {
   }, 0);
 };
 
+const removeUndefined = <T extends object>(o: T): T => {
+  const n: Partial<T> = {};
+
+  Object.entries(o).forEach(([k, v]) => {
+    if (v !== undefined && v !== null) {
+      n[k as keyof T] = v;
+    }
+  });
+
+  return n as T;
+};
+
 export const addAnnouncement = async (
   userID: string,
   channelID: string,
@@ -67,16 +79,18 @@ export const addAnnouncement = async (
 
   const announcements: Announcements = channel.announcements || [];
 
-  announcements.push({
-    id,
-    size,
-    headerImage: headerImageHash,
-    title,
-    body,
-    images: imagesHashList,
-    updatedAt: now.getTime(),
-    createdAt: now.getTime(),
-  });
+  announcements.push(
+    removeUndefined({
+      id,
+      size,
+      headerImage: headerImageHash,
+      title,
+      body,
+      images: imagesHashList,
+      updatedAt: now.getTime(),
+      createdAt: now.getTime(),
+    }),
+  );
 
   await db
     .update(channelsTable)
