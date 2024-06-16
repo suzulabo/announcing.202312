@@ -23,13 +23,26 @@ export const load: PageServerLoad = async ({ params, parent }) => {
     };
   }
 
+  const announcement = channel.announcements?.find((v) => v.id === aid);
+
+  if (!announcement) {
+    throw redirect(303, `/c/${params.cid}`);
+  }
+
+  const { title, body, headerImage, images } = announcement;
+
   return {
-    form: await superValidate(valibot(formSchema)),
+    form: await superValidate(
+      { title: title ?? '', body: body ?? '', updatedAt: channel.updatedAt.getTime() },
+      valibot(formSchema),
+    ),
+    headerImage,
+    images,
   };
 };
 
 export const actions = {
-  default: async ({ request, locals, params }) => {
+  write: async ({ request, locals, params }) => {
     const form = await superValidate(request, valibot(formSchema));
 
     if (!form.valid) {
@@ -48,9 +61,13 @@ export const actions = {
 
     if (params.aid === 'new') {
       await addAnnouncement(userID, params.cid, updatedAt, headerImage, title, body, images);
-      redirect(303, `/c/${params.cid}`);
 
-      return;
+      throw redirect(303, `/c/${params.cid}`);
     }
+  },
+  remove: async ({ params }) => {
+    console.log('remove action');
+
+    throw redirect(303, `/c/${params.cid}`);
   },
 };

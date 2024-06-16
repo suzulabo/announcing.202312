@@ -41,9 +41,15 @@
 
 <header>
   <div>{$t(`channel.announcement.write.title.${msgSuffix}`)}</div>
+  {#if !isNew}
+    <form method="POST" action="?/remove">
+      <input type="hidden" value={$form.updatedAt} />
+      <button>{$t('channel.announcement.write.input.delete')}</button>
+    </form>
+  {/if}
 </header>
 <div class="container">
-  <form method="POST" enctype="multipart/form-data" use:enhance>
+  <form method="POST" action="?/write" enctype="multipart/form-data" use:enhance>
     {#if $form.headerImage}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->

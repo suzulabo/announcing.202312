@@ -33,6 +33,7 @@ export const msgs = {
           edit: 'お知らせの編集',
         },
         input: {
+          delete: '削除する',
           headerImage: {
             select: '見出し画像を選択',
             remove: '見出し画像を削除',
