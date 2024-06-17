@@ -1,13 +1,14 @@
 import { addAnnouncement } from '$lib/db/handlers/addAnnouncement';
 import { getChannel } from '$lib/db/handlers/getChannel';
+import { getUserID } from '$lib/utils/getUserID';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
 import { formSchema } from './formSchema';
 
-export const load: PageServerLoad = async ({ params, parent }) => {
-  const userID = (await parent()).session?.user?.id;
+export const load: PageServerLoad = async ({ params, locals }) => {
+  const userID = await getUserID(locals);
 
   const channel = await getChannel(userID, params.cid);
 
