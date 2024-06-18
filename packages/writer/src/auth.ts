@@ -20,7 +20,9 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   callbacks: {
     jwt: async ({ token, account }) => {
       if (account) {
-        const digest = createHash('sha256').update(`${account.provider}:${token.sub}`).digest();
+        const digest = createHash('sha256')
+          .update(`${account.provider}:${account.providerAccountId}`)
+          .digest();
 
         token.userID = base62.encode(digest);
       }
