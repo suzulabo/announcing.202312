@@ -1,4 +1,4 @@
-import { addAnnouncement } from '$lib/db/handlers/addAnnouncement';
+import { addAnnouncement, updateAnnouncement } from '$lib/db/handlers/announcement';
 import { getChannel } from '$lib/db/handlers/getChannel';
 import { getUserID } from '$lib/utils/getUserID';
 import { fail, redirect } from '@sveltejs/kit';
@@ -43,7 +43,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 };
 
 export const actions = {
-  write: async ({ request, locals, params }) => {
+  write: async ({ request, locals, params: { cid, aid } }) => {
     const form = await superValidate(request, valibot(formSchema));
 
     if (!form.valid) {
@@ -60,10 +60,12 @@ export const actions = {
       return fail(400, { form });
     }
 
-    if (params.aid === 'new') {
-      await addAnnouncement(userID, params.cid, updatedAt, headerImage, title, body, images);
+    if (aid === 'new') {
+      await addAnnouncement(userID, cid, updatedAt, headerImage, title, body, images);
 
-      throw redirect(303, `/c/${params.cid}`);
+      throw redirect(303, `/c/${cid}`);
+    } else {
+      await updateAnnouncement(userID, cid, updatedAt, headerImage, title, body, images, aid);
     }
   },
   remove: async ({ params }) => {

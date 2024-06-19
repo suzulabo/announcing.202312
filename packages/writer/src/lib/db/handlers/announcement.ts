@@ -33,7 +33,7 @@ const removeUndefined = <T extends object>(o: T): T => {
   return n as T;
 };
 
-export const addAnnouncement = async (
+const writeAnnouncement = async (
   userID: string,
   channelID: string,
   channelUpdatedAt: number,
@@ -41,6 +41,7 @@ export const addAnnouncement = async (
   title: string | undefined | null,
   body: string,
   imagesFiles: File[] | undefined | null,
+  updateAnnouncementId: string | undefined,
 ) => {
   const updatedAtDate = new Date(channelUpdatedAt);
 
@@ -59,8 +60,6 @@ export const addAnnouncement = async (
 
   const headerImage = (headerImageFile && (await storeFile(headerImageFile))) || undefined;
 
-  console.log({ imagesFiles });
-
   const images =
     imagesFiles && imagesFiles.length > 0
       ? await Promise.all(imagesFiles.map((v) => storeFile(v)))
@@ -74,17 +73,35 @@ export const addAnnouncement = async (
 
   const announcements: Announcements = channel.announcements || [];
 
-  announcements.push(
-    removeUndefined({
-      id,
-      headerImage,
-      title,
-      body,
-      images,
-      updatedAt: now,
-      createdAt: now,
-    }),
-  );
+  if (!updateAnnouncementId) {
+    announcements.push(
+      removeUndefined({
+        id,
+        headerImage,
+        title,
+        body,
+        images,
+        updatedAt: now,
+        createdAt: now,
+      }),
+    );
+  } else {
+    const index = announcements.findIndex((v) => v.id === updateAnnouncementId);
+
+    if (index >= 0) {
+      const cur = announcements[index];
+
+      announcements[index] = removeUndefined({
+        id,
+        headerImage,
+        title,
+        body,
+        images,
+        updatedAt: now,
+        createdAt: cur.createdAt,
+      });
+    }
+  }
 
   await db
     .update(channelsTable)
@@ -96,4 +113,47 @@ export const addAnnouncement = async (
         sql`EXISTS(SELECT 1 FROM json_each(owners) WHERE value = ${userID})`,
       ),
     );
+};
+
+export const addAnnouncement = async (
+  userID: string,
+  channelID: string,
+  channelUpdatedAt: number,
+  headerImageFile: File | undefined | null,
+  title: string | undefined | null,
+  body: string,
+  imagesFiles: File[] | undefined | null,
+) => {
+  return writeAnnouncement(
+    userID,
+    channelID,
+    channelUpdatedAt,
+    headerImageFile,
+    title,
+    body,
+    imagesFiles,
+    undefined,
+  );
+};
+
+export const updateAnnouncement = async (
+  userID: string,
+  channelID: string,
+  channelUpdatedAt: number,
+  headerImageFile: File | undefined | null,
+  title: string | undefined | null,
+  body: string,
+  imagesFiles: File[] | undefined | null,
+  updateAnnouncementId: string,
+) => {
+  return writeAnnouncement(
+    userID,
+    channelID,
+    channelUpdatedAt,
+    headerImageFile,
+    title,
+    body,
+    imagesFiles,
+    updateAnnouncementId,
+  );
 };
