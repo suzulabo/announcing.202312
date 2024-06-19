@@ -73,8 +73,6 @@ export const actions = {
     }
   },
   remove: async ({ locals, params: { cid, aid }, request }) => {
-    console.log('remove');
-
     const session = await locals.auth();
 
     const userID = session?.user?.id;
