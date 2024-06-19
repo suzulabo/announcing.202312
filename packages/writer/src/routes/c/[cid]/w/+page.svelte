@@ -38,7 +38,9 @@
 
 <header>
   <div>{$t(`channel.write.title.${msgSuffix}`)}</div>
-  <a href="./d">{$t('channel.write.delete')}</a>
+  {#if !isNew}
+    <a href="./d">{$t('channel.write.delete')}</a>
+  {/if}
 </header>
 <div class="container">
   <form method="POST" enctype="multipart/form-data" use:enhance>
