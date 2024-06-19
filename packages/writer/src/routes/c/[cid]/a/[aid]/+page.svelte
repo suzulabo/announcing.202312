@@ -43,7 +43,7 @@
   <div>{$t(`channel.announcement.write.title.${msgSuffix}`)}</div>
   {#if !isNew}
     <form method="POST" action="?/remove">
-      <input type="hidden" value={$form.updatedAt} />
+      <input type="hidden" name="updatedAt" value={$form.updatedAt} />
       <button>{$t('channel.announcement.write.input.delete')}</button>
     </form>
   {/if}

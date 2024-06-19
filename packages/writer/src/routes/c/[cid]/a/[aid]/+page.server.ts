@@ -1,4 +1,8 @@
-import { addAnnouncement, updateAnnouncement } from '$lib/db/handlers/announcement';
+import {
+  addAnnouncement,
+  removeAnnouncement,
+  updateAnnouncement,
+} from '$lib/db/handlers/announcement';
 import { getChannel } from '$lib/db/handlers/getChannel';
 import { getUserID } from '$lib/utils/getUserID';
 import { fail, redirect } from '@sveltejs/kit';
@@ -68,9 +72,25 @@ export const actions = {
       await updateAnnouncement(userID, cid, updatedAt, headerImage, title, body, images, aid);
     }
   },
-  remove: async ({ params }) => {
-    console.log('remove action');
+  remove: async ({ locals, params: { cid, aid }, request }) => {
+    console.log('remove');
 
-    throw redirect(303, `/c/${params.cid}`);
+    const session = await locals.auth();
+
+    const userID = session?.user?.id;
+
+    if (!userID) {
+      return fail(400);
+    }
+
+    const updatedAt = (await request.formData()).get('updatedAt');
+
+    if (!updatedAt) {
+      return fail(400);
+    }
+
+    await removeAnnouncement(userID, cid, +updatedAt, aid);
+
+    throw redirect(303, `/c/${cid}`);
   },
 };
