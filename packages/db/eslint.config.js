@@ -3,7 +3,6 @@
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import prettier from 'eslint-config-prettier';
-import svelte from 'eslint-plugin-svelte';
 import ts from 'typescript-eslint';
 
 export default ts.config(
@@ -12,9 +11,6 @@ export default ts.config(
   },
   js.configs.recommended,
   ...ts.configs.recommended,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  ...svelte.configs['flat/recommended'],
   prettier,
   {
     plugins: {
