@@ -1,10 +1,12 @@
 <script lang="ts">
+  import Spinner from './Spinner.svelte';
+
   export let show = false;
 </script>
 
 {#if show}
   <div class="loading">
-    <div class="bar" />
+    <Spinner />
   </div>
 {/if}
 
@@ -19,41 +21,18 @@
     background-color: var(--color-background-loading);
     z-index: var(--z-index, 999);
     cursor: wait;
-
-    // https://codepen.io/dowding/pen/wJWpoY
-    .bar {
-      background: repeating-linear-gradient(
-        to right,
-        var(--color-background) 0%,
-        var(--color-text) 50%,
-        var(--color-background) 100%
-      );
-      width: 100%;
-      height: 10px;
-      background-size: 200% auto;
-      background-position: 0 100%;
-      animation:
-        showdelay 0.5s,
-        gradient 3s infinite;
-      animation-fill-mode: forwards;
-      animation-timing-function: linear;
-    }
+    animation: showdelay 2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     @keyframes showdelay {
       0%,
-      50% {
+      25% {
         opacity: 0;
       }
       100% {
         opacity: 1;
-      }
-    }
-    @keyframes gradient {
-      0% {
-        background-position: 0 0;
-      }
-      100% {
-        background-position: -200% 0;
       }
     }
   }

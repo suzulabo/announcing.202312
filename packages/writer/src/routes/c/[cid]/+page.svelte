@@ -9,6 +9,7 @@
   export let data: PageData;
 
   $: channel = data.channel;
+  $: announcements = channel.announcements ?? [];
 
   const toHtml = (s: string) => {
     return linkifyHtml(s, {
@@ -39,6 +40,23 @@
   <a href="/" use:back>{$t('back')}</a>
   <hr />
   <a class="button add-post" href={`/c/${$page.params.cid}/a/new`}>{$t('channel.newPost')}</a>
+  <div class="announcements">
+    {#each announcements as announcement}
+      <div class="announcement">
+        {#if announcement.headerImage}
+          <img src={`/s/${announcement.headerImage}`} alt={announcement.title} />
+        {/if}
+        {#if announcement.title}
+          {announcement.title}
+        {/if}
+        {announcement.body}
+
+        <div>
+          <a href={`/c/${$page.params.cid}/a/${announcement.id}`}>{$t('channel.edit')}</a>
+        </div>
+      </div>
+    {/each}
+  </div>
 </div>
 <SuperDebug {data} />
 
@@ -77,6 +95,17 @@
 
     hr {
       margin: 20px 0 0;
+    }
+
+    .announcements {
+      margin: 20px 0 0;
+      display: grid;
+      gap: 8px;
+      .announcement {
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: 10px;
+      }
     }
   }
 </style>

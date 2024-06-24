@@ -12,6 +12,7 @@ export const msgs = {
     edit: '編集する',
     newPost: '新しいお知らせを書く',
     write: {
+      delete: '削除',
       title: {
         new: '新しいチャンネルの作成',
         edit: 'チャンネルの編集',
@@ -26,6 +27,13 @@ export const msgs = {
         submit: { new: '作成する', edit: '更新する' },
       },
     },
+    delete: {
+      title: 'チャンネルの削除',
+      desc: 'チャンネルを削除します。この操作は元に戻せません。',
+      input: {
+        submit: '削除',
+      },
+    },
     announcement: {
       write: {
         title: {
@@ -33,9 +41,17 @@ export const msgs = {
           edit: 'お知らせの編集',
         },
         input: {
+          delete: '削除する',
+          headerImage: {
+            select: '見出し画像を選択',
+            remove: '見出し画像を削除',
+          },
           title: 'タイトル',
           body: '本文',
-          submit: { new: '作成する', edit: '更新する' },
+          images: {
+            select: '画像を追加',
+          },
+          submit: { new: '追加する', edit: '更新する' },
         },
       },
     },

@@ -38,6 +38,9 @@
 
 <header>
   <div>{$t(`channel.write.title.${msgSuffix}`)}</div>
+  {#if !isNew}
+    <a href="./d">{$t('channel.write.delete')}</a>
+  {/if}
 </header>
 <div class="container">
   <form method="POST" enctype="multipart/form-data" use:enhance>
@@ -74,7 +77,7 @@
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={256}
       bind:this={fileInput}
-      bind:value={$form.icon}
+      bind:file={$form.icon}
     />
     <Input
       name="title"

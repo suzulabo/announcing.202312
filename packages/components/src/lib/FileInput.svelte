@@ -3,73 +3,120 @@
   import Loading from './Loading.svelte';
 
   export let name: string;
-  export let value: File | null | undefined = undefined;
+  export let file: File | null | undefined = undefined;
+  export let files: File[] | null | undefined = undefined;
   export let accept: string | undefined = undefined;
   export let maxImageSize: number | undefined = undefined;
+  export let filesCount: number = 1;
 
   let fileInput: HTMLInputElement;
   let valueInput: HTMLInputElement;
   let loading = false;
 
+  $: {
+    if (valueInput && 'DataTransfer' in window) {
+      const a = file ? [file] : files ?? [];
+
+      if (a.length === 0) {
+        valueInput.value = '';
+      } else {
+        const dt = new DataTransfer();
+
+        a.forEach((v) => dt.items.add(v));
+        valueInput.files = dt.files;
+      }
+    }
+  }
+
   export const open = () => {
     fileInput.click();
   };
+
+  const fileHashMap = new Map<File, string>();
+
+  const getFileHash = async (file: File) => {
+    const c = fileHashMap.get(file);
+
+    if (c) return c;
+
+    const arrayBuffer = await file.arrayBuffer();
+
+    const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+
+    const h = btoa(String.fromCharCode(...new Uint8Array(hashBuffer)));
+
+    fileHashMap.set(file, h);
+
+    return h;
+  };
+
+  const fileInputChange = async () => {
+    const selectedFiles = fileInput.files;
+
+    if (!selectedFiles || selectedFiles.length === 0) {
+      return;
+    }
+
+    const newFiles: File[] = files ? [...files] : [];
+
+    loading = true;
+
+    try {
+      for (let i = 0; i < filesCount; i++) {
+        const f = selectedFiles.item(i);
+
+        if (!f) break;
+
+        if (!maxImageSize) {
+          newFiles.push(f);
+
+          continue;
+        }
+
+        const reducer = reduce();
+
+        const reduced = await reducer.toBlob(f, {
+          max: maxImageSize,
+          unsharpAmount: 160,
+          unsharpRadius: 0.6,
+          unsharpThreshold: 1,
+        });
+
+        newFiles.push(new File([reduced], f.name, { type: reduced.type }));
+      }
+
+      if (filesCount > 1) {
+        const m = new Map<string, File>();
+
+        for (const f of newFiles) {
+          const h = await getFileHash(f);
+
+          if (!m.has(h)) {
+            m.set(h, f);
+          }
+        }
+
+        files = [...m.values()];
+      } else {
+        file = newFiles[0];
+      }
+
+      fileInput.value = '';
+    } finally {
+      loading = false;
+    }
+  };
 </script>
 
-<input type="file" style="display:none" {name} bind:this={valueInput} />
+<input type="file" style="display:none" {name} bind:this={valueInput} multiple={filesCount > 1} />
 
 <input
   type="file"
   {accept}
+  multiple={filesCount > 1}
   style="display:none"
   bind:this={fileInput}
-  on:change={() => {
-    if (!fileInput.files) {
-      return;
-    }
-
-    const file = fileInput.files[0];
-
-    if (!file) {
-      return;
-    }
-
-    fileInput.value = '';
-
-    if (!maxImageSize) {
-      value = file;
-
-      const dt = new DataTransfer();
-
-      dt.items.add(file);
-      valueInput.files = dt.files;
-
-      return;
-    }
-
-    loading = true;
-
-    const reducer = reduce();
-
-    reducer
-      .toBlob(file, {
-        max: maxImageSize,
-        unsharpAmount: 160,
-        unsharpRadius: 0.6,
-        unsharpThreshold: 1,
-      })
-      .then((v) => {
-        value = new File([v], file.name, { type: v.type });
-
-        const dt = new DataTransfer();
-
-        dt.items.add(value);
-        valueInput.files = dt.files;
-      })
-      .finally(() => {
-        loading = false;
-      });
-  }}
+  on:change={fileInputChange}
 />
 
 {#if loading}

@@ -5,3 +5,4 @@ dist
 pnpm-lock.yaml
 packages/json/src/validators/validators.mjs
 packages/reader/static/mockServiceWorker.js
+packages/db/drizzle/**/*
