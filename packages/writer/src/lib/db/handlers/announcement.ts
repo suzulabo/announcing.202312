@@ -119,7 +119,7 @@ const writeAnnouncement = async (
     );
 };
 
-export const addAnnouncement = async (
+export const addAnnouncement = (
   userID: string,
   channelID: string,
   channelUpdatedAt: number,
@@ -140,7 +140,7 @@ export const addAnnouncement = async (
   );
 };
 
-export const updateAnnouncement = async (
+export const updateAnnouncement = (
   userID: string,
   channelID: string,
   channelUpdatedAt: number,

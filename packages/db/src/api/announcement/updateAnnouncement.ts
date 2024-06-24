@@ -1,6 +1,6 @@
 import { _writeAnnouncement } from './_writeAnnouncement';
 
-export const updateAnnouncement = async (
+export const updateAnnouncement = (
   userID: string,
   channelID: string,
   channelUpdatedAt: number,

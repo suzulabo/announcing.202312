@@ -36,7 +36,7 @@ const storeFileLocal = async (file: File) => {
   return hash;
 };
 
-const storeFileR2: typeof storeFileLocal = async () => {
+const storeFileR2: typeof storeFileLocal = () => {
   throw 'Not yet implemented';
 };
 

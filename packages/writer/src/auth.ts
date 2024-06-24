@@ -18,7 +18,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     }),
   ],
   callbacks: {
-    jwt: async ({ token, account }) => {
+    jwt: ({ token, account }) => {
       if (account) {
         const digest = createHash('sha256')
           .update(`${account.provider}:${account.providerAccountId}`)
@@ -29,7 +29,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 
       return token;
     },
-    session: async ({ session, token }) => {
+    session: ({ session, token }) => {
       if (session.user && token.userID) {
         session.user.id = token.userID as string;
       }
