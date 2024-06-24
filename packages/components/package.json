@@ -2,8 +2,6 @@
   "name": "@announcing/components",
   "version": "0.0.1",
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "dev": "vite dev",
     "build": "vite build && npm run package",
     "preview": "vite preview",

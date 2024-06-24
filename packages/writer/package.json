@@ -2,8 +2,6 @@
   "private": true,
   "name": "announcing-writer",
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
