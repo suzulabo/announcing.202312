@@ -14,6 +14,14 @@ export default ts.config(
   },
   js.configs.recommended,
   ...ts.configs.recommended,
+  {
+    files: ['**/*.ts'],
+    languageOptions: {
+      parserOptions: {
+        project: true,
+      },
+    },
+  },
   // @ts-expect-error https://github.com/sveltejs/eslint-plugin-svelte?tab=readme-ov-file#configuration
   ...svelte.configs['flat/recommended'],
   prettier,
