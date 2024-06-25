@@ -52,7 +52,6 @@ export default ts.config(
       '@stylistic': stylistic,
     },
     rules: {
-      'require-await': 'warn',
       '@stylistic/padding-line-between-statements': [
         'warn',
         {

@@ -5,6 +5,6 @@ import * as schema from '../schema';
 
 const sqlite = createClient({ url: ':memory:' });
 
-export const db = drizzle(sqlite, { logger: true, schema });
+export const db = drizzle(sqlite, { schema });
 
 await migrate(db, { migrationsFolder: './drizzle' });
