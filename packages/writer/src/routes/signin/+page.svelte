@@ -13,7 +13,7 @@
   <div class="buttons">
     <button
       on:click={() => {
-        signIn('google');
+        void signIn('google');
       }}
       ><div class="inner">
         <GoogleIcon /><span class="label">{$t('signIn', { value: 'Google' })}</span>

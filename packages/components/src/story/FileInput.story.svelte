@@ -31,6 +31,7 @@
     <button
       type="button"
       on:click={() => {
+        console.log({ fileInput });
         fileInput.open();
       }}>Choose image file</button
     >
@@ -63,7 +64,7 @@
       filesCount={4}
     />
 
-    {#each files || [] as f}
+    {#each files ?? [] as f}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
       <img

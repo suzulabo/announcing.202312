@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
   const channel = await getChannel(userID, params.cid);
 
   if (!channel) {
-    throw redirect(303, '/');
+    redirect(303, '/');
   }
 
   return {

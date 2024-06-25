@@ -30,7 +30,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
       return token;
     },
     session: ({ session, token }) => {
-      if (session.user && token.userID) {
+      if (token.userID) {
         session.user.id = token.userID as string;
       }
 

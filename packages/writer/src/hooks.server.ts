@@ -7,7 +7,7 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
     const session = await event.locals.auth();
 
     if (!session?.user?.id) {
-      throw redirect(303, '/signin');
+      redirect(303, '/signin');
     }
   }
 

@@ -8,6 +8,7 @@
   import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
   import { loadImage } from '@announcing/components/actions/loadImage';
+  import { onMount } from 'svelte';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
   import type { PageServerData } from './$types';
@@ -18,15 +19,24 @@
   let validated = false;
   let fileInput: FileInput | undefined;
 
-  const { form, enhance, validateForm, submitting, errors, isTainted } = superForm(data.form, {
-    validators: valibotClient(formSchema),
-    validationMethod: 'oninput',
-    onChange: async () => {
-      const result = await validateForm();
-
-      validated = result.valid && isTainted();
+  const { form, enhance, validateForm, submitting, errors, isTainted, allErrors } = superForm(
+    data.form,
+    {
+      validators: valibotClient(formSchema),
+      validationMethod: 'oninput',
     },
+  );
+
+  onMount(async () => {
+    await validateForm({ update: true });
   });
+
+  $: {
+    const tainted = isTainted();
+
+    console.log({ $allErrors, tainted });
+    validated = $allErrors.length === 0 && isTainted();
+  }
 
   const updatedAtProxy = numberProxy(form, 'updatedAt');
   const back = setupBack($page.state.fromPage);

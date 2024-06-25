@@ -10,7 +10,7 @@ const loadFileLocal = async (hash: string) => {
       stat(`storage/${hash}`),
     ]);
 
-    const meta = JSON.parse(metaBuf.toString());
+    const meta = JSON.parse(metaBuf.toString()) as Record<string, unknown>;
 
     const contentType = meta['type'] as string;
 
@@ -29,7 +29,7 @@ const loadFileLocal = async (hash: string) => {
 };
 
 const loadFileR2: typeof loadFileLocal = () => {
-  throw 'Not yet implemented';
+  throw new Error('Not yet implemented');
 };
 
 export const loadFile = dev ? loadFileLocal : loadFileR2;

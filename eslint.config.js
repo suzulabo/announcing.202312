@@ -13,14 +13,19 @@ export default ts.config(
     ignores: ['**/node_modules', '**/dist', '**/.svelte-kit', 'packages/db/drizzle/**/*'],
   },
   js.configs.recommended,
-  ...ts.configs.recommended,
+  ...ts.configs.strictTypeChecked,
+  ...ts.configs.stylisticTypeChecked,
   {
-    files: ['**/*.ts'],
     languageOptions: {
       parserOptions: {
         project: true,
+        extraFileExtensions: ['.svelte'],
       },
     },
+  },
+  {
+    files: ['**/*.*js', '**/*.config.ts'],
+    ...ts.configs.disableTypeChecked,
   },
   // @ts-expect-error https://github.com/sveltejs/eslint-plugin-svelte?tab=readme-ov-file#configuration
   ...svelte.configs['flat/recommended'],
@@ -36,6 +41,10 @@ export default ts.config(
         parser: { ts: ts.parser },
         extraFileExtensions: ['.svelte'],
       },
+    },
+    rules: {
+      // https://github.com/sveltejs/eslint-plugin-svelte/issues/298
+      '@typescript-eslint/no-unsafe-call': 'off',
     },
   },
   {

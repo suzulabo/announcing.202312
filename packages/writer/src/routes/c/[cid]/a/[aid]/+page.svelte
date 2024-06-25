@@ -22,11 +22,15 @@
   const { form, enhance, validateForm, submitting, errors, isTainted } = superForm(data.form, {
     validators: valibotClient(formSchema),
     validationMethod: 'oninput',
-    onChange: async () => {
-      const result = await validateForm();
-
-      console.log('valid', result.valid);
-      validated = result.valid && isTainted();
+    onChange: () => {
+      validateForm()
+        .then((result) => {
+          console.log('valid', result.valid);
+          validated = result.valid && isTainted();
+        })
+        .catch((err: unknown) => {
+          throw err;
+        });
     },
   });
 

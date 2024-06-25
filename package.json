@@ -30,6 +30,6 @@
     "prettier-plugin-svelte": "^3.2.4",
     "svelte-eslint-parser": "^0.39.2",
     "typescript": "^5.5.2",
-    "typescript-eslint": "^7.13.1"
+    "typescript-eslint": "7.14.1"
   }
 }

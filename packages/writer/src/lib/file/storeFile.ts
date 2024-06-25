@@ -37,7 +37,7 @@ const storeFileLocal = async (file: File) => {
 };
 
 const storeFileR2: typeof storeFileLocal = () => {
-  throw 'Not yet implemented';
+  throw new Error('Not yet implemented');
 };
 
 export const storeFile = dev ? storeFileLocal : storeFileR2;

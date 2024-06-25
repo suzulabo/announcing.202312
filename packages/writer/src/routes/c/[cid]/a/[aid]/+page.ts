@@ -11,7 +11,7 @@ export const load: PageLoad = async ({ data, fetch }) => {
 
       cb(
         new File([b], 'icon.image', {
-          type: res.headers.get('Content-Type') || '',
+          type: res.headers.get('Content-Type') ?? '',
         }),
       );
     }

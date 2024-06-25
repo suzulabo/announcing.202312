@@ -34,7 +34,7 @@ export const _writeAnnouncement = async (
     return;
   }
 
-  const headerImage = (headerImageFile && (await storeFile(headerImageFile))) || undefined;
+  const headerImage = (headerImageFile && (await storeFile(headerImageFile))) ?? undefined;
 
   const images =
     imagesFiles && imagesFiles.length > 0
@@ -45,9 +45,9 @@ export const _writeAnnouncement = async (
 
   const now = nowDate.getTime();
 
-  const id = genHash([`${now}`, body, title, headerImage, ...(images ?? [])]);
+  const id = genHash([now.toString(), body, title, headerImage, ...(images ?? [])]);
 
-  const announcements: Announcements = channel.announcements || [];
+  const announcements: Announcements = channel.announcements ?? [];
 
   if (!updateAnnouncementId) {
     const v = stripNullish<Announcement>({
@@ -64,9 +64,9 @@ export const _writeAnnouncement = async (
   } else {
     const index = announcements.findIndex((v) => v.id === updateAnnouncementId);
 
-    if (index >= 0) {
-      const cur = announcements[index]!;
+    const cur = announcements[index];
 
+    if (cur) {
       announcements[index] = stripNullish<Announcement>({
         id,
         headerImage,

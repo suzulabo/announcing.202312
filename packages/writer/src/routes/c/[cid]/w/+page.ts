@@ -10,7 +10,7 @@ export const load: PageLoad = async ({ data, fetch }) => {
       const b = await res.blob();
 
       data.form.data.icon = new File([b], 'icon.image', {
-        type: res.headers.get('Content-Type') || '',
+        type: res.headers.get('Content-Type') ?? '',
       });
     }
   }

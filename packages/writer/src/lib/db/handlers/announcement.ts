@@ -3,7 +3,7 @@ import { base62 } from '$lib/utils/base62';
 import { createHash } from 'crypto';
 import { and, eq, sql } from 'drizzle-orm';
 import { db } from '../client';
-import { channelsTable, type Announcements } from '../schema';
+import { channelsTable, type Announcement, type Announcements } from '../schema';
 
 const getHash = (...args: (string | null | undefined)[]) => {
   const hash = createHash('sha256');
@@ -21,10 +21,14 @@ const getHash = (...args: (string | null | undefined)[]) => {
   return base62.encode(digest).substring(0, 8);
 };
 
-const removeUndefined = <T extends object>(o: T): T => {
-  const n: Partial<T> = {};
+type OptionalWithNullish<T> = {
+  [P in keyof T]?: unknown;
+};
 
-  Object.entries(o).forEach(([k, v]) => {
+export const stripNullish = <T extends Record<string, unknown>>(o: OptionalWithNullish<T>): T => {
+  const n: OptionalWithNullish<T> = {};
+
+  Object.entries<unknown>(o).forEach(([k, v]) => {
     if (v !== undefined && v !== null) {
       n[k as keyof T] = v;
     }
@@ -62,7 +66,7 @@ const writeAnnouncement = async (
     return;
   }
 
-  const headerImage = (headerImageFile && (await storeFile(headerImageFile))) || undefined;
+  const headerImage = (headerImageFile && (await storeFile(headerImageFile))) ?? undefined;
 
   const images =
     imagesFiles && imagesFiles.length > 0
@@ -73,13 +77,13 @@ const writeAnnouncement = async (
 
   const now = nowDate.getTime();
 
-  const id = getHash(`${now}`, body, title, headerImage, ...(images ?? []));
+  const id = getHash(now.toString(), body, title, headerImage, ...(images ?? []));
 
-  const announcements: Announcements = channel.announcements || [];
+  const announcements: Announcements = channel.announcements ?? [];
 
   if (!updateAnnouncementId) {
     announcements.push(
-      removeUndefined({
+      stripNullish<Announcement>({
         id,
         headerImage,
         title,
@@ -95,7 +99,7 @@ const writeAnnouncement = async (
     if (index >= 0) {
       const cur = announcements[index];
 
-      announcements[index] = removeUndefined({
+      announcements[index] = stripNullish<Announcement>({
         id,
         headerImage,
         title,

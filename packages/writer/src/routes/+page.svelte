@@ -41,7 +41,7 @@
   <button
     class="sign-out-btn text"
     on:click={() => {
-      signOut();
+      void signOut();
     }}>{$t('signOut')}</button
   >
 </div>

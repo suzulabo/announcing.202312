@@ -7,14 +7,14 @@
   export let files: File[] | null | undefined = undefined;
   export let accept: string | undefined = undefined;
   export let maxImageSize: number | undefined = undefined;
-  export let filesCount: number = 1;
+  export let filesCount = 1;
 
   let fileInput: HTMLInputElement;
   let valueInput: HTMLInputElement;
   let loading = false;
 
   $: {
-    if (valueInput && 'DataTransfer' in window) {
+    if ('DataTransfer' in window) {
       const a = file ? [file] : files ?? [];
 
       if (a.length === 0) {
