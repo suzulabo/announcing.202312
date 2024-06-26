@@ -4,13 +4,19 @@ import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import prettier from 'eslint-config-prettier';
 import svelte from 'eslint-plugin-svelte';
+import { readFileSync } from 'fs';
 import globals from 'globals';
 import svelteParser from 'svelte-eslint-parser';
 import ts from 'typescript-eslint';
 
+const ignores = readFileSync('.prettierignore', 'utf-8')
+  .split('\n')
+  .map((l) => l.trim())
+  .filter((l) => l.length > 0 && !l.startsWith('#'));
+
 export default ts.config(
   {
-    ignores: ['**/node_modules', '**/dist', '**/.svelte-kit', 'packages/db/drizzle/**/*'],
+    ignores,
   },
   js.configs.recommended,
   ...ts.configs.strictTypeChecked,
