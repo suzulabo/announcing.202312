@@ -1,1 +1,1 @@
-export const dev = process.env['DEPLOY'] ? false : true;
+export const dev = process.env['RELEASE'] ? false : true;
