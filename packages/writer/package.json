@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@announcing/components": "workspace:^",
+    "@announcing/db": "workspace:^",
     "@auth/sveltekit": "^1.2.0",
     "@libsql/client": "^0.6.2",
     "@sveltejs/adapter-auto": "^3.2.1",

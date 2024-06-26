@@ -1,21 +1,26 @@
 {
   "name": "@announcing/db",
   "version": "0.0.1",
+  "private": true,
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist",
-    "!dist/**/*.test.*",
-    "!dist/**/*.spec.*"
+    "dist"
   ],
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest watch"
+    "test:watch": "vitest watch",
+    "bundle": "node bundle.js",
+    "declaration": "tsc -p tsconfig.declaration.json",
+    "build": "pnpm run bundle && pnpm run declaration"
   },
   "devDependencies": {
     "@libsql/client": "^0.6.2",
     "base-x": "^4.0.0",
     "drizzle-kit": "^0.22.7",
     "drizzle-orm": "^0.31.2",
+    "esbuild": "^0.21.5",
     "vitest": "^1.6.0"
   }
 }
