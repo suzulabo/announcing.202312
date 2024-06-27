@@ -121,9 +121,6 @@ importers:
       '@libsql/client':
         specifier: ^0.7.0
         version: 0.7.0
-      esbuild:
-        specifier: ^0.21.5
-        version: 0.21.5
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.2)(jsdom@24.1.0)(sass@1.77.5)
@@ -5366,6 +5363,7 @@ snapshots:
       '@esbuild/win32-arm64': 0.21.5
       '@esbuild/win32-ia32': 0.21.5
       '@esbuild/win32-x64': 0.21.5
+    optional: true
 
   escalade@3.1.2: {}
 
