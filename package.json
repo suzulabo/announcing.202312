@@ -12,7 +12,7 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint",
-    "lint:fix": "pnpm -r lint:fix",
+    "lint:fix": "pnpm eslint --fix",
     "build": "pnpm -r build",
     "check": "pnpm run format && pnpm run lint && pnpm run build"
   },

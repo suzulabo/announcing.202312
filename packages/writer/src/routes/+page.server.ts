@@ -1,4 +1,4 @@
-import { getChannels } from '$lib/db/handlers/getChannels';
+import { getChannels } from '@announcing/db';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {

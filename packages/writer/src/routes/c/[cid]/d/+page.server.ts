@@ -1,6 +1,5 @@
-import { deleteChannel } from '$lib/db/handlers/deleteChannel.js';
-import { getChannel } from '$lib/db/handlers/getChannel.js';
 import { getUserID } from '$lib/utils/getUserID.js';
+import { deleteChannel, getChannel } from '@announcing/db';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';

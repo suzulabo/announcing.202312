@@ -1,7 +1,5 @@
-import { createChannel } from '$lib/db/handlers/createChannel';
-import { getChannel } from '$lib/db/handlers/getChannel';
-import { updateChannel } from '$lib/db/handlers/updateChannel';
 import { getUserID } from '$lib/utils/getUserID';
+import { createChannel, getChannel, updateChannel } from '@announcing/db';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
 import { superValidate } from 'sveltekit-superforms';

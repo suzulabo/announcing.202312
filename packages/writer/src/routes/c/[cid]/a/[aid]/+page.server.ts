@@ -1,10 +1,10 @@
+import { getUserID } from '$lib/utils/getUserID';
 import {
   addAnnouncement,
+  getChannel,
   removeAnnouncement,
   updateAnnouncement,
-} from '$lib/db/handlers/announcement';
-import { getChannel } from '$lib/db/handlers/getChannel';
-import { getUserID } from '$lib/utils/getUserID';
+} from '@announcing/db';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';

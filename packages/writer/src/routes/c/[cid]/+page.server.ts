@@ -1,5 +1,5 @@
-import { getChannel } from '$lib/db/handlers/getChannel';
 import { getUserID } from '$lib/utils/getUserID';
+import { getChannel } from '@announcing/db';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

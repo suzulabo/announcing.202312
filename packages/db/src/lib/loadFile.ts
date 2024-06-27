@@ -1,5 +1,5 @@
-import { readFile, stat } from 'fs/promises';
 import { createReadStream } from 'node:fs';
+import { readFile, stat } from 'node:fs/promises';
 import { Readable } from 'node:stream';
 import { dev } from './env';
 
