@@ -11,6 +11,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest watch",
+    "migrate": "drizzle-kit migrate",
     "build": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {
