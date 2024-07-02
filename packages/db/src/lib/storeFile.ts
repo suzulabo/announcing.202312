@@ -18,10 +18,14 @@ const storeFileLocal = async (file: File) => {
 
   try {
     await Promise.all([
-      writeFile(`storage/${hash}`, ab, { flag: 'wx' }),
-      writeFile(`storage/${hash}.meta`, JSON.stringify({ name: file.name, type: file.type }), {
-        flag: 'wx',
-      }),
+      writeFile(`../db-dev/storage/${hash}`, ab, { flag: 'wx' }),
+      writeFile(
+        `../db-dev/storage/${hash}.meta`,
+        JSON.stringify({ name: file.name, type: file.type }),
+        {
+          flag: 'wx',
+        },
+      ),
     ]);
   } catch (err) {
     if (err instanceof Error && 'code' in err) {

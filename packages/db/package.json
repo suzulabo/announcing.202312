@@ -11,8 +11,9 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "migrate": "drizzle-kit migrate",
-    "build": "tsc -p tsconfig.build.json"
+    "migrate": "mkdir -p ../db-dev/storage && drizzle-kit migrate",
+    "build": "tsc -p tsconfig.build.json",
+    "build:watch": "tsc -w -p tsconfig.build.json"
   },
   "devDependencies": {
     "@libsql/client": "^0.7.0",

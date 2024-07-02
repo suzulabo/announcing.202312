@@ -77,7 +77,7 @@
         <button
           type="button"
           on:click={() => {
-            $form.icon = undefined;
+            $form.icon = null;
           }}>{$t('channel.write.input.icon.remove')}</button
         >
       {/if}

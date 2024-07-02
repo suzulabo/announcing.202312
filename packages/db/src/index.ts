@@ -13,3 +13,5 @@ export { getChannel } from './api/channel/getChannel';
 export { getChannels } from './api/channel/getChannels';
 
 export { updateChannel } from './api/channel/updateChannel';
+
+export { loadFile } from './lib/loadFile';

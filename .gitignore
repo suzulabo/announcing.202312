@@ -1,4 +1,4 @@
 node_modules
 dist
 
-packages/dev.db
+packages/db-dev

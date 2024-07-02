@@ -6,8 +6,8 @@ import { dev } from './env';
 const loadFileLocal = async (hash: string) => {
   try {
     const [metaBuf, stats] = await Promise.all([
-      readFile(`storage/${hash}.meta`),
-      stat(`storage/${hash}`),
+      readFile(`../db-dev/storage/${hash}.meta`),
+      stat(`../db-dev/storage/${hash}`),
     ]);
 
     const meta = JSON.parse(metaBuf.toString()) as Record<string, unknown>;
@@ -16,10 +16,13 @@ const loadFileLocal = async (hash: string) => {
 
     const contentLength = stats.size;
 
-    const content = Readable.toWeb(createReadStream(`storage/${hash}`));
+    const content = Readable.toWeb(
+      createReadStream(`../db-dev/storage/${hash}`),
+    ) as ReadableStream<any>;
 
     return { contentType, contentLength, content } as const;
   } catch (err) {
+    console.log({ err });
     if (err instanceof Error && 'code' in err && err.code === 'ENOENT') {
       return;
     }
