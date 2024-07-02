@@ -1,10 +1,5 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "eslint.workingDirectories": [
-    {
-      "mode": "auto"
-    }
-  ],
   "eslint.validate": ["javascript", "javascriptreact", "svelte"],
   "eslint.useFlatConfig": true,
   "svelte.enable-ts-plugin": true,

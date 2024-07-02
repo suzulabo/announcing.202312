@@ -25,7 +25,6 @@
     onChange: () => {
       validateForm()
         .then((result) => {
-          console.log('valid', result.valid);
           validated = result.valid && isTainted();
         })
         .catch((err: unknown) => {

@@ -32,9 +32,6 @@
   });
 
   $: {
-    const tainted = isTainted();
-
-    console.log({ $allErrors, tainted });
     validated = $allErrors.length === 0 && isTainted();
   }
 
