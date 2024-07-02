@@ -1,5 +1,6 @@
 <script lang="ts">
   import reduce from 'image-blob-reduce';
+  import { onMount } from 'svelte';
   import Loading from './Loading.svelte';
 
   export let name: string;
@@ -9,12 +10,17 @@
   export let maxImageSize: number | undefined = undefined;
   export let filesCount = 1;
 
+  let mounted = false;
   let fileInput: HTMLInputElement;
   let valueInput: HTMLInputElement;
   let loading = false;
 
+  onMount(() => {
+    mounted = true;
+  });
+
   $: {
-    if ('DataTransfer' in window) {
+    if (mounted && 'DataTransfer' in window) {
       const a = file ? [file] : files ?? [];
 
       if (a.length === 0) {
