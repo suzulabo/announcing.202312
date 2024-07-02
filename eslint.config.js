@@ -28,6 +28,9 @@ export default ts.config(
         extraFileExtensions: ['.svelte'],
       },
     },
+    rules: {
+      '@typescript-eslint/no-unnecessary-condition': 'error',
+    },
   },
   {
     files: ['**/*.*js', '**/*.config.ts'],
