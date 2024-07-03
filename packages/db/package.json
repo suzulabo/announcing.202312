@@ -20,8 +20,8 @@
     "vitest": "^1.6.0"
   },
   "dependencies": {
-    "base-x": "^4.0.0",
-    "drizzle-kit": "^0.22.7",
+    "base-x": "^5.0.0",
+    "drizzle-kit": "^0.22.8",
     "drizzle-orm": "^0.31.2"
   },
   "peerDependencies": {
