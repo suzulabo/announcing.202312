@@ -11,10 +11,10 @@
   import { onMount } from 'svelte';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
-  import type { PageServerData } from './$types';
+  import type { PageData } from './$types';
   import { formSchema } from './formSchema';
 
-  export let data: PageServerData;
+  export let data: PageData;
 
   let validated = false;
   let fileInput: FileInput | undefined;
@@ -38,8 +38,8 @@
   const updatedAtProxy = numberProxy(form, 'updatedAt');
   const back = setupBack($page.state.fromPage);
 
-  $: channelID = $page.params.cid;
-  $: isNew = channelID === 'new';
+  $: cid = data.cid;
+  $: isNew = cid === 'new';
   $: msgSuffix = isNew ? 'new' : 'edit';
 </script>
 
@@ -101,7 +101,7 @@
       maxLength={CHANNEL_DESC_MAX_LENGTH}
     />
     <button disabled={!validated}>{$t(`channel.write.input.submit.${msgSuffix}`)}</button>
-    <a href={isNew ? '/' : `/c/${channelID}`} use:back>{$t('cancel')}</a>
+    <a href={isNew ? '/' : `/c/${cid}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

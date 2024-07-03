@@ -5,10 +5,12 @@
   import Loading from '@announcing/components/Loading.svelte';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
-  import type { PageServerData } from './$types';
+  import type { PageData } from './$types';
   import { formSchema } from './formSchema';
 
-  export let data: PageServerData;
+  export let data: PageData;
+
+  $: cid = data.cid;
 
   const { form, enhance, submitting, errors } = superForm(data.form, {
     validators: valibotClient(formSchema),
@@ -25,7 +27,7 @@
   <form method="POST" enctype="multipart/form-data" use:enhance>
     <div class="info">{$t(`channel.delete.desc`)}</div>
     <button>{$t(`channel.delete.input.submit`)}</button>
-    <a href={`/c/${$page.params.cid}`} use:back>{$t('cancel')}</a>
+    <a href={`/c/${cid}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

@@ -20,7 +20,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
 
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "noEmit": true,
 
     "target": "ESNext",

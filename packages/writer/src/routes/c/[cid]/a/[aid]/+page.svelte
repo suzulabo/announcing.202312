@@ -10,10 +10,10 @@
   import { loadImage } from '@announcing/components/actions/loadImage';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
-  import type { PageServerData } from './$types';
+  import type { PageData } from './$types';
   import { formSchema } from './formSchema';
 
-  export let data: PageServerData;
+  export let data: PageData;
 
   let validated = false;
   let headerImageInput: FileInput;
@@ -36,9 +36,8 @@
   const updatedAtProxy = numberProxy(form, 'updatedAt');
   const back = setupBack($page.state.fromPage);
 
-  $: cID = $page.params.cid;
-  $: aID = $page.params.aid;
-  $: isNew = aID === 'new';
+  $: cid = data.cid;
+  $: isNew = cid === 'new';
   $: msgSuffix = isNew ? 'new' : 'edit';
 </script>
 
@@ -135,7 +134,7 @@
     <button disabled={!validated}
       >{$t(`channel.announcement.write.input.submit.${msgSuffix}`)}</button
     >
-    <a href={`/c/${cID}`} use:back>{$t('cancel')}</a>
+    <a href={`/c/${cid}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

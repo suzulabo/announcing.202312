@@ -2,7 +2,7 @@ import type { PageLoad } from './$types';
 
 export const ssr = false;
 
-export const load: PageLoad = async ({ data, fetch }) => {
+export const load: PageLoad = async ({ data, fetch, params }) => {
   if (data.icon) {
     const res = await fetch(`/s/${data.icon}`);
 
@@ -15,5 +15,5 @@ export const load: PageLoad = async ({ data, fetch }) => {
     }
   }
 
-  return { ...data };
+  return { ...data, cid: params.cid };
 };
