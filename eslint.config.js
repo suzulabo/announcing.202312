@@ -24,7 +24,7 @@ export default ts.config(
   {
     languageOptions: {
       parserOptions: {
-        project: true,
+        project: './packages/**/tsconfig.json',
         extraFileExtensions: ['.svelte'],
       },
     },
@@ -36,7 +36,6 @@ export default ts.config(
     files: ['**/*.*js', '**/*.config.ts'],
     ...ts.configs.disableTypeChecked,
   },
-  // @ts-expect-error https://github.com/sveltejs/eslint-plugin-svelte?tab=readme-ov-file#configuration
   ...svelte.configs['flat/recommended'],
   prettier,
   {
