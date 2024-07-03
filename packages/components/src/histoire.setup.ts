@@ -1,4 +1,4 @@
-import './src/lib/base.scss';
+import './lib/base.scss';
 
 // https://github.com/histoire-dev/histoire/issues/339
 const isIframe = window.self !== window.top;
