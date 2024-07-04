@@ -1,6 +1,2 @@
 packages:
   - 'packages/**/*'
-dependencies:
-  '@announcing/writer':
-    - '@announcing/components'
-    - '@announcing/db'
