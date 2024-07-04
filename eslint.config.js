@@ -1,33 +1,24 @@
 // @ts-check
 
 import js from '@eslint/js';
-import stylistic from '@stylistic/eslint-plugin';
+import prettier from 'eslint-config-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import svelte from 'eslint-plugin-svelte';
-import { readFileSync } from 'fs';
 import globals from 'globals';
 import svelteParser from 'svelte-eslint-parser';
 import ts from 'typescript-eslint';
 
-const ignores = readFileSync(
-  '.prettierignore',
-  'utf-8',
-)
-  .split('\n')
-  .map(l => l.trim())
-  .filter(l => l.length > 0 && !l.startsWith('#'));
-
 export default ts.config(
   {
-    ignores,
+    ignores: [
+      '**/node_modules',
+      '**/dist',
+      '**/.svelte-kit',
+      'packages/db-dev',
+      'pnpm-lock.yaml',
+      'packages/db/drizzle/**/*',
+    ],
   },
-  // @ts-ignore
-  stylistic.configs.customize({
-    indent: 2,
-    quotes: 'single',
-    quoteProps: 'consistent',
-    semi: true,
-  }),
   js.configs.recommended,
   {
     plugins: {
@@ -40,10 +31,7 @@ export default ts.config(
   },
   {
     files: ['**/*.ts'],
-    extends: [
-      ...ts.configs.strictTypeChecked,
-      ...ts.configs.stylisticTypeChecked,
-    ],
+    extends: [...ts.configs.strictTypeChecked, ...ts.configs.stylisticTypeChecked],
     languageOptions: {
       parserOptions: {
         project: './packages/**/tsconfig.json',
@@ -60,8 +48,7 @@ export default ts.config(
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      globals: { ...globals.node,
-        ...globals.browser },
+      globals: { ...globals.node, ...globals.browser },
       parser: svelteParser,
       parserOptions: {
         parser: { ts: ts.parser },
@@ -74,4 +61,5 @@ export default ts.config(
       '@typescript-eslint/no-unsafe-call': 'off',
     },
   },
+  prettier,
 );

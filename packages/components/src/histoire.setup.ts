@@ -4,7 +4,7 @@ import './lib/base.scss';
 const isIframe = window.self !== window.top;
 
 document.head
-  .querySelectorAll('style[type=\'text/css\']:not([data-vite-dev-id*=\'histoire\'])')
+  .querySelectorAll("style[type='text/css']:not([data-vite-dev-id*='histoire'])")
   .forEach((style) => {
     isIframe || style.remove();
   });

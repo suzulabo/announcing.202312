@@ -1,7 +1,2 @@
-**/node_modules
-**/dist
-**/.svelte-kit
-
 pnpm-lock.yaml
 packages/db/drizzle/**/*
-packages/db/dev.db

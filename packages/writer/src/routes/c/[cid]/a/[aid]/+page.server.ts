@@ -30,7 +30,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     };
   }
 
-  const announcement = channel.announcements?.find(v => v.id === aid);
+  const announcement = channel.announcements?.find((v) => v.id === aid);
 
   if (!announcement) {
     redirect(303, `/c/${params.cid}`);
@@ -69,8 +69,7 @@ export const actions: Actions = {
     if (aid === 'new') {
       await addAnnouncement(userID, cid, updatedAt, headerImage, title, body, images);
       redirect(303, `/c/${cid}`);
-    }
-    else {
+    } else {
       await updateAnnouncement(userID, cid, updatedAt, headerImage, title, body, images, aid);
     }
   },

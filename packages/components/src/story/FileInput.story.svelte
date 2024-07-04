@@ -72,7 +72,7 @@
         alt=""
         use:loadImage={f}
         on:click={() => {
-          files = files?.filter(v => v !== f);
+          files = files?.filter((v) => v !== f);
         }}
       />
     {/each}

@@ -20,8 +20,7 @@ const loadFileLocal = async (hash: string) => {
     const content = Readable.toWeb(createReadStream(`../db-dev/storage/${hash}`)) as ReadableStream;
 
     return { contentType, contentLength, content } as const;
-  }
-  catch (err) {
+  } catch (err) {
     console.log({ err });
 
     if (err instanceof Error && 'code' in err && err.code === 'ENOENT') {

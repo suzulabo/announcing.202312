@@ -113,7 +113,7 @@
             alt="images preview"
             use:loadImage={image}
             on:click={() => {
-              $form.images = $form.images?.filter(v => v !== image);
+              $form.images = $form.images?.filter((v) => v !== image);
             }}
           />
         {/each}

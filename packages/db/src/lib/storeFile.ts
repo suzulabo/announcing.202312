@@ -28,8 +28,7 @@ const storeFileLocal = async (file: File) => {
         },
       ),
     ]);
-  }
-  catch (err) {
+  } catch (err) {
     if (err instanceof Error && 'code' in err) {
       if (err.code === 'EEXIST') {
         return hash;

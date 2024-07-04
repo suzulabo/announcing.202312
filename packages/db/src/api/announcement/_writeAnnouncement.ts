@@ -37,9 +37,9 @@ export const _writeAnnouncement = async (
 
   const headerImage = (headerImageFile && (await storeFile(headerImageFile))) ?? undefined;
 
-  const images
-    = imagesFiles && imagesFiles.length > 0
-      ? await Promise.all(imagesFiles.map(v => storeFile(v)))
+  const images =
+    imagesFiles && imagesFiles.length > 0
+      ? await Promise.all(imagesFiles.map((v) => storeFile(v)))
       : undefined;
 
   const nowDate = new Date();
@@ -62,9 +62,8 @@ export const _writeAnnouncement = async (
     });
 
     announcements.push(v);
-  }
-  else {
-    const index = announcements.findIndex(v => v.id === updateAnnouncementId);
+  } else {
+    const index = announcements.findIndex((v) => v.id === updateAnnouncementId);
 
     const cur = announcements[index];
 
