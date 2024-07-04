@@ -14,7 +14,7 @@
     "lint": "eslint",
     "lint:fix": "pnpm eslint --fix",
     "build": "pnpm -r build",
-    "check": "pnpm run format && pnpm run lint && pnpm run build"
+    "check": "pnpm run lint && pnpm run build"
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
