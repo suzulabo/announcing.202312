@@ -25,14 +25,14 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
           .update(`${account.provider}:${account.providerAccountId}`)
           .digest();
 
-        token.userID = base62.encode(digest);
+        token['userID'] = base62.encode(digest);
       }
 
       return token;
     },
     session: ({ session, token }) => {
-      if (token.userID) {
-        session.user.id = token.userID as string;
+      if (token['userID']) {
+        session.user.id = token['userID'] as string;
       }
 
       return session;

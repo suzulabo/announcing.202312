@@ -68,10 +68,10 @@ export const actions: Actions = {
 
     if (aid === 'new') {
       await addAnnouncement(userID, cid, updatedAt, headerImage, title, body, images);
-      redirect(303, `/c/${cid}`);
     } else {
       await updateAnnouncement(userID, cid, updatedAt, headerImage, title, body, images, aid);
     }
+    redirect(303, `/c/${cid}`);
   },
   remove: async ({ locals, params: { cid, aid }, request }) => {
     const session = await locals.auth();
