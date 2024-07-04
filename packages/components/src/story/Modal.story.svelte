@@ -1,6 +1,7 @@
 <script lang="ts">
-  import Modal from '$lib/Modal.svelte';
   import type { Hst } from '@histoire/plugin-svelte';
+
+  import Modal from '$lib/Modal.svelte';
 
   // eslint-disable-next-line no-import-assign
   export let Hst: Hst;

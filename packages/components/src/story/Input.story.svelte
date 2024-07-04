@@ -1,6 +1,7 @@
 <script lang="ts">
-  import Input from '$lib/Input.svelte';
   import type { Hst } from '@histoire/plugin-svelte';
+
+  import Input from '$lib/Input.svelte';
   // eslint-disable-next-line no-import-assign
   export let Hst: Hst;
 

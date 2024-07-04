@@ -1,9 +1,11 @@
 <script lang="ts">
+  import linkifyHtml from 'linkify-html';
+  import SuperDebug from 'sveltekit-superforms';
+
   import { page } from '$app/stores';
   import { setupBack } from '$lib/actions/back';
   import { t } from '$lib/i18n/translations';
-  import linkifyHtml from 'linkify-html';
-  import SuperDebug from 'sveltekit-superforms';
+
   import type { PageData } from './$types';
 
   export let data: PageData;

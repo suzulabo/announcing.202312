@@ -2,26 +2,48 @@
 
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
-import prettier from 'eslint-config-prettier';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import svelte from 'eslint-plugin-svelte';
 import { readFileSync } from 'fs';
 import globals from 'globals';
 import svelteParser from 'svelte-eslint-parser';
 import ts from 'typescript-eslint';
 
-const ignores = readFileSync('.prettierignore', 'utf-8')
+const ignores = readFileSync(
+  '.prettierignore',
+  'utf-8',
+)
   .split('\n')
-  .map((l) => l.trim())
-  .filter((l) => l.length > 0 && !l.startsWith('#'));
+  .map(l => l.trim())
+  .filter(l => l.length > 0 && !l.startsWith('#'));
 
 export default ts.config(
   {
     ignores,
   },
+  // @ts-ignore
+  stylistic.configs.customize({
+    indent: 2,
+    quotes: 'single',
+    quoteProps: 'consistent',
+    semi: true,
+  }),
   js.configs.recommended,
-  ...ts.configs.strictTypeChecked,
-  ...ts.configs.stylisticTypeChecked,
   {
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
+    rules: {
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+    },
+  },
+  {
+    files: ['**/*.ts'],
+    extends: [
+      ...ts.configs.strictTypeChecked,
+      ...ts.configs.stylisticTypeChecked,
+    ],
     languageOptions: {
       parserOptions: {
         project: './packages/**/tsconfig.json',
@@ -32,18 +54,14 @@ export default ts.config(
       '@typescript-eslint/no-unnecessary-condition': 'error',
     },
   },
-  {
-    files: ['**/*.*js', '**/*.config.ts'],
-    ...ts.configs.disableTypeChecked,
-  },
   ...svelte.configs['flat/recommended'],
-  prettier,
   {
     files: ['**/*.svelte'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      globals: { ...globals.node, ...globals.browser },
+      globals: { ...globals.node,
+        ...globals.browser },
       parser: svelteParser,
       parserOptions: {
         parser: { ts: ts.parser },
@@ -51,39 +69,9 @@ export default ts.config(
       },
     },
     rules: {
+      'svelte/no-at-html-tags': 'off',
       // https://github.com/sveltejs/eslint-plugin-svelte/issues/298
       '@typescript-eslint/no-unsafe-call': 'off',
-    },
-  },
-  {
-    plugins: {
-      '@stylistic': stylistic,
-    },
-    rules: {
-      '@stylistic/padding-line-between-statements': [
-        'warn',
-        {
-          blankLine: 'always',
-          prev: '*',
-          next: '*',
-        },
-        {
-          blankLine: 'never',
-          prev: 'import',
-          next: 'import',
-        },
-        {
-          blankLine: 'never',
-          prev: 'expression',
-          next: 'expression',
-        },
-        {
-          blankLine: 'always',
-          prev: 'multiline-expression',
-          next: 'expression',
-        },
-      ],
-      'svelte/no-at-html-tags': 'off',
     },
   },
 );

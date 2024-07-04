@@ -1,4 +1,5 @@
 import { and, eq, sql } from 'drizzle-orm';
+
 import { db } from '../../client';
 import { channelsTable } from '../../schema';
 
@@ -35,7 +36,7 @@ export const removeAnnouncement = async (
     return;
   }
 
-  const index = announcements.findIndex((v) => v.id === announcementID);
+  const index = announcements.findIndex(v => v.id === announcementID);
 
   if (index < 0) {
     return;

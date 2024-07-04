@@ -20,14 +20,14 @@ export const load: PageLoad = async ({ data, params, fetch }) => {
   const fetchers: Promise<void>[] = [];
 
   if (data.headerImage) {
-    fetchers.push(fetchFile(data.headerImage, (f) => (data.form.data.headerImage = f)));
+    fetchers.push(fetchFile(data.headerImage, f => (data.form.data.headerImage = f)));
   }
 
   if (data.images) {
     const files: File[] = [];
 
     data.form.data.images = files;
-    fetchers.push(...data.images.map((v, i) => fetchFile(v, (f) => (files[i] = f))));
+    fetchers.push(...data.images.map((v, i) => fetchFile(v, f => (files[i] = f))));
   }
 
   await Promise.all(fetchers);

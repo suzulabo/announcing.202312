@@ -1,5 +1,6 @@
 import { createHash } from 'crypto';
 import { writeFile } from 'fs/promises';
+
 import { base62 } from './base62';
 import { dev } from './env';
 
@@ -27,7 +28,8 @@ const storeFileLocal = async (file: File) => {
         },
       ),
     ]);
-  } catch (err) {
+  }
+  catch (err) {
     if (err instanceof Error && 'code' in err) {
       if (err.code === 'EEXIST') {
         return hash;

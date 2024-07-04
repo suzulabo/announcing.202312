@@ -1,9 +1,10 @@
 import { and, eq, sql } from 'drizzle-orm';
+
 import { db } from '../../client';
 import { genHash } from '../../lib/genHash';
 import { storeFile } from '../../lib/storeFile';
 import { stripNullish } from '../../lib/stripNullish';
-import { channelsTable, type Announcement, type Announcements } from '../../schema';
+import { type Announcement, type Announcements, channelsTable } from '../../schema';
 
 export const _writeAnnouncement = async (
   userID: string,
@@ -36,9 +37,9 @@ export const _writeAnnouncement = async (
 
   const headerImage = (headerImageFile && (await storeFile(headerImageFile))) ?? undefined;
 
-  const images =
-    imagesFiles && imagesFiles.length > 0
-      ? await Promise.all(imagesFiles.map((v) => storeFile(v)))
+  const images
+    = imagesFiles && imagesFiles.length > 0
+      ? await Promise.all(imagesFiles.map(v => storeFile(v)))
       : undefined;
 
   const nowDate = new Date();
@@ -61,8 +62,9 @@ export const _writeAnnouncement = async (
     });
 
     announcements.push(v);
-  } else {
-    const index = announcements.findIndex((v) => v.id === updateAnnouncementId);
+  }
+  else {
+    const index = announcements.findIndex(v => v.id === updateAnnouncementId);
 
     const cur = announcements[index];
 

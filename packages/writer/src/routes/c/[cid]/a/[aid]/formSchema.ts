@@ -1,4 +1,3 @@
-import { POST_BODY_MAX_LENGTH, POST_TITLE_MAX_LENGTH } from '$lib/constants';
 import {
   array,
   instance,
@@ -12,6 +11,8 @@ import {
   pipe,
   string,
 } from 'valibot';
+
+import { POST_BODY_MAX_LENGTH, POST_TITLE_MAX_LENGTH } from '$lib/constants';
 
 export const formSchema = object({
   headerImage: nullish(

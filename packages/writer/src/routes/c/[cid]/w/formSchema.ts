@@ -1,4 +1,3 @@
-import { CHANNEL_DESC_MAX_LENGTH, CHANNEL_TITLE_MAX_LENGTH } from '$lib/constants';
 import {
   instance,
   maxLength,
@@ -11,6 +10,8 @@ import {
   pipe,
   string,
 } from 'valibot';
+
+import { CHANNEL_DESC_MAX_LENGTH, CHANNEL_TITLE_MAX_LENGTH } from '$lib/constants';
 
 export const formSchema = object({
   title: pipe(string(), minLength(1), maxLength(CHANNEL_TITLE_MAX_LENGTH)),

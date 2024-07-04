@@ -1,9 +1,11 @@
-import { getUserID } from '$lib/utils/getUserID';
 import { createChannel, getChannel, updateChannel } from '@announcing/db';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
+
+import { getUserID } from '$lib/utils/getUserID';
+
 import type { Actions, PageServerLoad } from './$types';
 import { formSchema } from './formSchema';
 

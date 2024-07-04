@@ -1,4 +1,3 @@
-import { getUserID } from '$lib/utils/getUserID';
 import {
   addAnnouncement,
   getChannel,
@@ -8,6 +7,9 @@ import {
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
+
+import { getUserID } from '$lib/utils/getUserID';
+
 import type { Actions, PageServerLoad } from './$types';
 import { formSchema } from './formSchema';
 
@@ -28,7 +30,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     };
   }
 
-  const announcement = channel.announcements?.find((v) => v.id === aid);
+  const announcement = channel.announcements?.find(v => v.id === aid);
 
   if (!announcement) {
     redirect(303, `/c/${params.cid}`);
@@ -67,7 +69,8 @@ export const actions: Actions = {
     if (aid === 'new') {
       await addAnnouncement(userID, cid, updatedAt, headerImage, title, body, images);
       redirect(303, `/c/${cid}`);
-    } else {
+    }
+    else {
       await updateAnnouncement(userID, cid, updatedAt, headerImage, title, body, images, aid);
     }
   },

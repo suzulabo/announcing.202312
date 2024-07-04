@@ -1,6 +1,7 @@
 <script lang="ts">
-  import Loading from '$lib/Loading.svelte';
   import type { Hst } from '@histoire/plugin-svelte';
+
+  import Loading from '$lib/Loading.svelte';
 
   // eslint-disable-next-line no-import-assign
   export let Hst: Hst;

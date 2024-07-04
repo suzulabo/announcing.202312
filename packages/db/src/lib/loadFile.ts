@@ -1,6 +1,7 @@
 import { createReadStream } from 'node:fs';
 import { readFile, stat } from 'node:fs/promises';
 import { Readable } from 'node:stream';
+
 import { dev } from './env';
 
 const loadFileLocal = async (hash: string) => {
@@ -19,7 +20,8 @@ const loadFileLocal = async (hash: string) => {
     const content = Readable.toWeb(createReadStream(`../db-dev/storage/${hash}`)) as ReadableStream;
 
     return { contentType, contentLength, content } as const;
-  } catch (err) {
+  }
+  catch (err) {
     console.log({ err });
 
     if (err instanceof Error && 'code' in err && err.code === 'ENOENT') {

@@ -1,6 +1,7 @@
 <script lang="ts">
   import reduce from 'image-blob-reduce';
   import { onMount } from 'svelte';
+
   import Loading from './Loading.svelte';
 
   export let name: string;
@@ -25,10 +26,11 @@
 
       if (a.length === 0) {
         valueInput.value = '';
-      } else {
+      }
+      else {
         const dt = new DataTransfer();
 
-        a.forEach((v) => dt.items.add(v));
+        a.forEach(v => dt.items.add(v));
         valueInput.files = dt.files;
       }
     }
@@ -103,12 +105,14 @@
         }
 
         files = [...m.values()];
-      } else {
+      }
+      else {
         file = newFiles[0];
       }
 
       fileInput.value = '';
-    } finally {
+    }
+    finally {
       loading = false;
     }
   };

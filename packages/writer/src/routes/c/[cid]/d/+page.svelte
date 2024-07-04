@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { setupBack } from '$lib/actions/back';
-  import { t } from '$lib/i18n/translations';
   import Loading from '@announcing/components/Loading.svelte';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
+
+  import { page } from '$app/stores';
+  import { setupBack } from '$lib/actions/back';
+  import { t } from '$lib/i18n/translations';
+
   import type { PageData } from './$types';
   import { formSchema } from './formSchema';
 

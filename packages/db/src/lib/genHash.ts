@@ -1,4 +1,5 @@
 import { createHash } from 'crypto';
+
 import { base62 } from '../lib/base62';
 
 export const genHash = (args: (string | null | undefined)[], digits = 8) => {
@@ -7,7 +8,8 @@ export const genHash = (args: (string | null | undefined)[], digits = 8) => {
   for (const a of args) {
     if (typeof a === 'string') {
       hash.update(a);
-    } else {
+    }
+    else {
       hash.update('\0');
     }
   }

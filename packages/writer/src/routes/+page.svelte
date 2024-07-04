@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { t } from '$lib/i18n/translations';
   import Logo from '@announcing/components/Logo.svelte';
   import { signOut } from '@auth/sveltekit/client';
   import SuperDebug from 'sveltekit-superforms';
+
+  import { t } from '$lib/i18n/translations';
+
   import type { PageServerData } from './$types';
 
   export let data: PageServerData;

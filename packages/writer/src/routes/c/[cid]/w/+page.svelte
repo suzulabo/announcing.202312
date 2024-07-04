@@ -1,16 +1,18 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { setupBack } from '$lib/actions/back';
-  import { CHANNEL_DESC_MAX_LENGTH, CHANNEL_TITLE_MAX_LENGTH } from '$lib/constants';
-  import { t } from '$lib/i18n/translations';
+  import { loadImage } from '@announcing/components/actions/loadImage';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
-  import { loadImage } from '@announcing/components/actions/loadImage';
   import { onMount } from 'svelte';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
+
+  import { page } from '$app/stores';
+  import { setupBack } from '$lib/actions/back';
+  import { CHANNEL_DESC_MAX_LENGTH, CHANNEL_TITLE_MAX_LENGTH } from '$lib/constants';
+  import { t } from '$lib/i18n/translations';
+
   import type { PageData } from './$types';
   import { formSchema } from './formSchema';
 

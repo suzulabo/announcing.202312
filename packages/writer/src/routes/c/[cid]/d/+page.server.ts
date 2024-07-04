@@ -1,8 +1,10 @@
-import { getUserID } from '$lib/utils/getUserID.js';
 import { deleteChannel, getChannel } from '@announcing/db';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
+
+import { getUserID } from '$lib/utils/getUserID.js';
+
 import type { Actions, PageServerLoad } from './$types.js';
 import { formSchema } from './formSchema.js';
 

@@ -1,5 +1,6 @@
-import { afterNavigate, replaceState } from '$app/navigation';
 import type { Action } from 'svelte/action';
+
+import { afterNavigate, replaceState } from '$app/navigation';
 
 export const setupBack = (fromPage: string | undefined) => {
   if (!fromPage) {
