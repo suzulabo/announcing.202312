@@ -1,13 +1,13 @@
-import { createChannel } from '$lib/db/handlers/createChannel.js';
-import { getChannel } from '$lib/db/handlers/getChannel.js';
-import { updateChannel } from '$lib/db/handlers/updateChannel.js';
-import { getUserID } from '$lib/utils/getUserID.js';
+import { createChannel, getChannel, updateChannel } from '@announcing/db';
 import { fail, redirect } from '@sveltejs/kit';
 import crypto from 'crypto';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
-import type { PageServerLoad } from './$types.js';
-import { formSchema } from './formSchema.js';
+
+import { getUserID } from '$lib/utils/getUserID';
+
+import type { Actions, PageServerLoad } from './$types';
+import { formSchema } from './formSchema';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
   if (params.cid === 'new') {
@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
   const channel = await getChannel(userID, params.cid);
 
   if (!channel) {
-    throw redirect(303, '/');
+    redirect(303, '/');
   }
 
   const { title, desc, icon, updatedAt } = channel;
@@ -42,7 +42,7 @@ const genChannelID = () => {
   }
 };
 
-export const actions = {
+export const actions: Actions = {
   default: async ({ request, locals, params }) => {
     const form = await superValidate(request, valibot(formSchema));
 
@@ -64,12 +64,10 @@ export const actions = {
       const channelID = genChannelID();
 
       await createChannel(userID, channelID, title, desc, icon);
-
-      throw redirect(303, '/');
+      redirect(303, '/');
     }
 
-    await updateChannel(userID, new Date(updatedAt || 0), params.cid, title, desc, icon);
-
-    throw redirect(303, `/c/${params.cid}`);
+    await updateChannel(userID, new Date(updatedAt ?? 0), params.cid, title, desc, icon);
+    redirect(303, `/c/${params.cid}`);
   },
 };

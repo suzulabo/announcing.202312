@@ -1,5 +1,6 @@
-import { loadFile } from '$lib/file/loadFile';
+import { loadFile } from '@announcing/db';
 import { error } from '@sveltejs/kit';
+
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ params, setHeaders }) => {

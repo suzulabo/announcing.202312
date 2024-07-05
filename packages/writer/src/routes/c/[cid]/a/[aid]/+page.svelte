@@ -1,19 +1,21 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { setupBack } from '$lib/actions/back';
-  import { POST_BODY_MAX_LENGTH, POST_TITLE_MAX_LENGTH } from '$lib/constants';
-  import { t } from '$lib/i18n/translations';
+  import { loadImage } from '@announcing/components/actions/loadImage';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
-  import { loadImage } from '@announcing/components/actions/loadImage';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
-  import type { PageServerData } from './$types';
+
+  import { page } from '$app/stores';
+  import { setupBack } from '$lib/actions/back';
+  import { POST_BODY_MAX_LENGTH, POST_TITLE_MAX_LENGTH } from '$lib/constants';
+  import { t } from '$lib/i18n/translations';
+
+  import type { PageData } from './$types';
   import { formSchema } from './formSchema';
 
-  export let data: PageServerData;
+  export let data: PageData;
 
   let validated = false;
   let headerImageInput: FileInput;
@@ -22,20 +24,22 @@
   const { form, enhance, validateForm, submitting, errors, isTainted } = superForm(data.form, {
     validators: valibotClient(formSchema),
     validationMethod: 'oninput',
-    onChange: async () => {
-      const result = await validateForm();
-
-      console.log('valid', result.valid);
-      validated = result.valid && isTainted();
+    onChange: () => {
+      validateForm()
+        .then((result) => {
+          validated = result.valid && isTainted();
+        })
+        .catch((err: unknown) => {
+          throw err;
+        });
     },
   });
 
   const updatedAtProxy = numberProxy(form, 'updatedAt');
   const back = setupBack($page.state.fromPage);
 
-  $: cID = $page.params.cid;
-  $: aID = $page.params.aid;
-  $: isNew = aID === 'new';
+  $: cid = data.cid;
+  $: isNew = cid === 'new';
   $: msgSuffix = isNew ? 'new' : 'edit';
 </script>
 
@@ -132,7 +136,7 @@
     <button disabled={!validated}
       >{$t(`channel.announcement.write.input.submit.${msgSuffix}`)}</button
     >
-    <a href={`/c/${cID}`} use:back>{$t('cancel')}</a>
+    <a href={`/c/${cid}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

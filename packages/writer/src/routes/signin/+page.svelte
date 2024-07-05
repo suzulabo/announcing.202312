@@ -1,8 +1,9 @@
 <script lang="ts">
-  import GoogleIcon from '$lib/components/icon/GoogleIcon.svelte';
-  import { t } from '$lib/i18n/translations';
   import Logo from '@announcing/components/Logo.svelte';
   import { signIn } from '@auth/sveltekit/client';
+
+  import GoogleIcon from '$lib/components/icon/GoogleIcon.svelte';
+  import { t } from '$lib/i18n/translations';
 </script>
 
 <div class="container">
@@ -13,7 +14,7 @@
   <div class="buttons">
     <button
       on:click={() => {
-        signIn('google');
+        void signIn('google');
       }}
       ><div class="inner">
         <GoogleIcon /><span class="label">{$t('signIn', { value: 'Google' })}</span>

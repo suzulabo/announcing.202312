@@ -1,4 +1,5 @@
 import { sql } from 'drizzle-orm';
+
 import { db } from '../../client';
 import { storeFile } from '../../lib/storeFile';
 import { channelsTable, usersTable } from '../../schema';
@@ -10,7 +11,7 @@ export const createChannel = async (
   desc: string | null,
   iconFile: File | null | undefined,
 ) => {
-  const icon = (iconFile && (await storeFile(iconFile))) || null;
+  const icon = (iconFile && (await storeFile(iconFile))) ?? null;
 
   await db.batch([
     db.insert(channelsTable).values({ channelID, title, desc, icon, owners: [userID] }),

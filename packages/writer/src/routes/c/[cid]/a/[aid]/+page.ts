@@ -2,7 +2,7 @@ import type { PageLoad } from './$types';
 
 export const ssr = false;
 
-export const load: PageLoad = async ({ data, fetch }) => {
+export const load: PageLoad = async ({ data, params, fetch }) => {
   const fetchFile = async (id: string, cb: (f: File) => void) => {
     const res = await fetch(`/s/${id}`);
 
@@ -11,7 +11,7 @@ export const load: PageLoad = async ({ data, fetch }) => {
 
       cb(
         new File([b], 'icon.image', {
-          type: res.headers.get('Content-Type') || '',
+          type: res.headers.get('Content-Type') ?? '',
         }),
       );
     }
@@ -32,5 +32,5 @@ export const load: PageLoad = async ({ data, fetch }) => {
 
   await Promise.all(fetchers);
 
-  return { ...data };
+  return { ...data, cid: params.cid };
 };

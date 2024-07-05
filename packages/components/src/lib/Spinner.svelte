@@ -1,4 +1,5 @@
 <!-- https://codepen.io/adrianmg/pen/Omedpo -->
+<script lang="ts"></script>
 
 <div class="spinner">
   <div></div>

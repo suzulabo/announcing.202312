@@ -1,6 +1,8 @@
-import { getChannel } from '$lib/db/handlers/getChannel';
-import { getUserID } from '$lib/utils/getUserID';
+import { getChannel } from '@announcing/db';
 import { redirect } from '@sveltejs/kit';
+
+import { getUserID } from '$lib/utils/getUserID';
+
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
@@ -9,7 +11,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
   const channel = await getChannel(userID, params.cid);
 
   if (!channel) {
-    throw redirect(303, '/');
+    redirect(303, '/');
   }
 
   return {

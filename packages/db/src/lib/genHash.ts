@@ -1,4 +1,5 @@
 import { createHash } from 'crypto';
+
 import { base62 } from '../lib/base62';
 
 export const genHash = (args: (string | null | undefined)[], digits = 8) => {

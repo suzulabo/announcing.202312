@@ -1,5 +1,6 @@
-import { redirect, type Handle } from '@sveltejs/kit';
+import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
+
 import { handle as authenticationHandle } from './auth';
 
 const authorizationHandle: Handle = async ({ event, resolve }) => {
@@ -7,7 +8,7 @@ const authorizationHandle: Handle = async ({ event, resolve }) => {
     const session = await event.locals.auth();
 
     if (!session?.user?.id) {
-      throw redirect(303, '/signin');
+      redirect(303, '/signin');
     }
   }
 

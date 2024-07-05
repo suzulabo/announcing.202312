@@ -14,6 +14,7 @@ export const msgs: Msgs = {
     edit: 'Edit',
     newPost: 'Write new announcement',
     write: {
+      delete: 'Delete',
       title: {
         new: 'Create new channel',
         edit: 'Edit the channel',
@@ -28,6 +29,13 @@ export const msgs: Msgs = {
         submit: { new: 'Create', edit: 'Edit' },
       },
     },
+    delete: {
+      title: 'Delete channel',
+      desc: 'Delete channel. This operation cannot be undone.',
+      input: {
+        submit: 'Delete',
+      },
+    },
     announcement: {
       write: {
         title: {
@@ -35,8 +43,16 @@ export const msgs: Msgs = {
           edit: 'Edit this announcement',
         },
         input: {
+          delete: 'Delete',
+          headerImage: {
+            select: 'Select header image',
+            remove: 'Remove header image',
+          },
           title: 'Title',
           body: 'Body',
+          images: {
+            select: 'Add images',
+          },
           submit: { new: 'Post', edit: 'Update' },
         },
       },

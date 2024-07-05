@@ -1,38 +1,47 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import { setupBack } from '$lib/actions/back';
-  import { CHANNEL_DESC_MAX_LENGTH, CHANNEL_TITLE_MAX_LENGTH } from '$lib/constants';
-  import { t } from '$lib/i18n/translations';
+  import { loadImage } from '@announcing/components/actions/loadImage';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
-  import { loadImage } from '@announcing/components/actions/loadImage';
+  import { onMount } from 'svelte';
   import SuperDebug, { numberProxy, superForm } from 'sveltekit-superforms';
   import { valibotClient } from 'sveltekit-superforms/adapters';
-  import type { PageServerData } from './$types';
+
+  import { page } from '$app/stores';
+  import { setupBack } from '$lib/actions/back';
+  import { CHANNEL_DESC_MAX_LENGTH, CHANNEL_TITLE_MAX_LENGTH } from '$lib/constants';
+  import { t } from '$lib/i18n/translations';
+
+  import type { PageData } from './$types';
   import { formSchema } from './formSchema';
 
-  export let data: PageServerData;
+  export let data: PageData;
 
   let validated = false;
   let fileInput: FileInput | undefined;
 
-  const { form, enhance, validateForm, submitting, errors, isTainted } = superForm(data.form, {
-    validators: valibotClient(formSchema),
-    validationMethod: 'oninput',
-    onChange: async () => {
-      const result = await validateForm();
-
-      validated = result.valid && isTainted();
+  const { form, enhance, validateForm, submitting, errors, isTainted, allErrors } = superForm(
+    data.form,
+    {
+      validators: valibotClient(formSchema),
+      validationMethod: 'oninput',
     },
+  );
+
+  onMount(async () => {
+    await validateForm({ update: true });
   });
+
+  $: {
+    validated = $allErrors.length === 0 && isTainted();
+  }
 
   const updatedAtProxy = numberProxy(form, 'updatedAt');
   const back = setupBack($page.state.fromPage);
 
-  $: channelID = $page.params.cid;
-  $: isNew = channelID === 'new';
+  $: cid = data.cid;
+  $: isNew = cid === 'new';
   $: msgSuffix = isNew ? 'new' : 'edit';
 </script>
 
@@ -67,7 +76,7 @@
         <button
           type="button"
           on:click={() => {
-            $form.icon = undefined;
+            $form.icon = null;
           }}>{$t('channel.write.input.icon.remove')}</button
         >
       {/if}
@@ -94,7 +103,7 @@
       maxLength={CHANNEL_DESC_MAX_LENGTH}
     />
     <button disabled={!validated}>{$t(`channel.write.input.submit.${msgSuffix}`)}</button>
-    <a href={isNew ? '/' : `/c/${channelID}`} use:back>{$t('cancel')}</a>
+    <a href={isNew ? '/' : `/c/${cid}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

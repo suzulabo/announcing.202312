@@ -1,10 +1,11 @@
-import { deleteChannel } from '$lib/db/handlers/deleteChannel.js';
-import { getChannel } from '$lib/db/handlers/getChannel.js';
-import { getUserID } from '$lib/utils/getUserID.js';
+import { deleteChannel, getChannel } from '@announcing/db';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
-import type { PageServerLoad } from './$types.js';
+
+import { getUserID } from '$lib/utils/getUserID.js';
+
+import type { Actions, PageServerLoad } from './$types.js';
 import { formSchema } from './formSchema.js';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
@@ -17,7 +18,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
   const channel = await getChannel(userID, params.cid);
 
   if (!channel) {
-    throw redirect(303, '/');
+    redirect(303, '/');
   }
 
   const { updatedAt } = channel;
@@ -27,7 +28,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
   };
 };
 
-export const actions = {
+export const actions: Actions = {
   default: async ({ request, locals, params: { cid } }) => {
     const form = await superValidate(request, valibot(formSchema));
 
@@ -46,7 +47,6 @@ export const actions = {
     }
 
     await deleteChannel(userID, cid, new Date(updatedAt));
-
-    throw redirect(303, `/`);
+    redirect(303, `/`);
   },
 };

@@ -11,7 +11,7 @@
   <div class="label-box">
     <span class="label">{label}</span>
     {#if maxLength > 0}
-      <span class="counter">({value?.length || '0'}/{maxLength})</span>
+      <span class="counter">({value?.length ?? '0'}/{maxLength})</span>
     {/if}
   </div>
   <input

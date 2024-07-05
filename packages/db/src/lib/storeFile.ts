@@ -1,5 +1,6 @@
 import { createHash } from 'crypto';
 import { writeFile } from 'fs/promises';
+
 import { base62 } from './base62';
 import { dev } from './env';
 
@@ -18,10 +19,14 @@ const storeFileLocal = async (file: File) => {
 
   try {
     await Promise.all([
-      writeFile(`storage/${hash}`, ab, { flag: 'wx' }),
-      writeFile(`storage/${hash}.meta`, JSON.stringify({ name: file.name, type: file.type }), {
-        flag: 'wx',
-      }),
+      writeFile(`../db-dev/storage/${hash}`, ab, { flag: 'wx' }),
+      writeFile(
+        `../db-dev/storage/${hash}.meta`,
+        JSON.stringify({ name: file.name, type: file.type }),
+        {
+          flag: 'wx',
+        },
+      ),
     ]);
   } catch (err) {
     if (err instanceof Error && 'code' in err) {
@@ -36,8 +41,8 @@ const storeFileLocal = async (file: File) => {
   return hash;
 };
 
-const storeFileR2: typeof storeFileLocal = async () => {
-  throw 'Not yet implemented';
+const storeFileR2: typeof storeFileLocal = () => {
+  throw new Error('Not yet implemented');
 };
 
 export const storeFile = dev ? storeFileLocal : storeFileR2;

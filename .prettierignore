@@ -1,8 +1,2 @@
-node_modules
-dist
-.svelte-kit
-
 pnpm-lock.yaml
-packages/json/src/validators/validators.mjs
-packages/reader/static/mockServiceWorker.js
 packages/db/drizzle/**/*

@@ -1,4 +1,5 @@
 import { test, vi } from 'vitest';
+
 import { addAnnouncement } from '../src/api/announcement/addAnnouncement';
 
 test('add', async () => {

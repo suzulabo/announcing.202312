@@ -1,15 +1,18 @@
 <script lang="ts">
+  import linkifyHtml from 'linkify-html';
+  import SuperDebug from 'sveltekit-superforms';
+
   import { page } from '$app/stores';
   import { setupBack } from '$lib/actions/back';
   import { t } from '$lib/i18n/translations';
-  import linkifyHtml from 'linkify-html';
-  import SuperDebug from 'sveltekit-superforms';
+
   import type { PageData } from './$types';
 
   export let data: PageData;
 
   $: channel = data.channel;
   $: announcements = channel.announcements ?? [];
+  $: cid = data.cid;
 
   const toHtml = (s: string) => {
     return linkifyHtml(s, {
@@ -36,10 +39,10 @@
       {@html toHtml(channel.desc)}
     </div>
   {/if}
-  <a class="button edit" href={`/c/${$page.params.cid}/w`}>{$t('channel.edit')}</a>
+  <a class="button edit" href={`/c/${cid}/w`}>{$t('channel.edit')}</a>
   <a href="/" use:back>{$t('back')}</a>
   <hr />
-  <a class="button add-post" href={`/c/${$page.params.cid}/a/new`}>{$t('channel.newPost')}</a>
+  <a class="button add-post" href={`/c/${cid}/a/new`}>{$t('channel.newPost')}</a>
   <div class="announcements">
     {#each announcements as announcement}
       <div class="announcement">
@@ -52,7 +55,7 @@
         {announcement.body}
 
         <div>
-          <a href={`/c/${$page.params.cid}/a/${announcement.id}`}>{$t('channel.edit')}</a>
+          <a href={`/c/${cid}/a/${announcement.id}`}>{$t('channel.edit')}</a>
         </div>
       </div>
     {/each}
