@@ -1,5 +1,4 @@
 /// <reference types="@sveltejs/kit" />
-/// <reference types="@sveltejs/adapter-cloudflare-workers" />
 
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
@@ -10,12 +9,6 @@ declare global {
     // interface PageData {}
     interface PageState {
       fromPage?: string;
-    }
-
-    interface Platform {
-      env: {
-        DB: D1Database;
-      };
     }
   }
 }

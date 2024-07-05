@@ -6,10 +6,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "wrangler:dev": "wrangler pages dev .svelte-kit/cloudflare",
-    "db:push:dev": "drizzle-kit push --config drizzie.config.dev.ts",
-    "db:studio": "drizzle-kit studio --config drizzie.config.dev.ts"
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "devDependencies": {
     "@announcing/components": "workspace:^",
