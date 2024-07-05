@@ -128,6 +128,75 @@ importers:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@20.14.9)(jsdom@24.1.0)(sass@1.77.6)
 
+  packages/reader:
+    devDependencies:
+      '@announcing/components':
+        specifier: workspace:^
+        version: link:../components
+      '@announcing/db':
+        specifier: workspace:^
+        version: link:../db
+      '@auth/sveltekit':
+        specifier: ^1.4.1
+        version: 1.4.1(@sveltejs/kit@2.5.18(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)))(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)))(svelte@4.2.18)
+      '@libsql/client':
+        specifier: ^0.7.0
+        version: 0.7.0
+      '@sveltejs/adapter-auto':
+        specifier: ^3.2.2
+        version: 3.2.2(@sveltejs/kit@2.5.18(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)))(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)))
+      '@sveltejs/adapter-cloudflare':
+        specifier: ^4.6.0
+        version: 4.6.0(@sveltejs/kit@2.5.18(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)))(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)))(wrangler@3.62.0(@cloudflare/workers-types@4.20240620.0))
+      '@sveltejs/kit':
+        specifier: ^2.5.18
+        version: 2.5.18(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)))(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6))
+      '@sveltejs/vite-plugin-svelte':
+        specifier: ^3.1.1
+        version: 3.1.1(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6))
+      '@types/psl':
+        specifier: ^1.1.3
+        version: 1.1.3
+      base-x:
+        specifier: ^5.0.0
+        version: 5.0.0
+      date-fns:
+        specifier: ^3.6.0
+        version: 3.6.0
+      linkify-html:
+        specifier: ^4.1.3
+        version: 4.1.3(linkifyjs@4.1.3)
+      msw:
+        specifier: ^2.3.1
+        version: 2.3.1(typescript@5.5.3)
+      psl:
+        specifier: ^1.9.0
+        version: 1.9.0
+      svelte:
+        specifier: ^4.2.18
+        version: 4.2.18
+      svelte-check:
+        specifier: ^3.8.4
+        version: 3.8.4(postcss-load-config@3.1.4(postcss@8.4.39))(postcss@8.4.39)(sass@1.77.6)(svelte@4.2.18)
+      sveltekit-i18n:
+        specifier: ^2.4.2
+        version: 2.4.2(svelte@4.2.18)
+      sveltekit-superforms:
+        specifier: ^2.15.2
+        version: 2.15.2(@sveltejs/kit@2.5.18(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)))(svelte@4.2.18)(vite@5.3.2(@types/node@20.14.9)(sass@1.77.6)))(svelte@4.2.18)
+      valibot:
+        specifier: ^0.35.0
+        version: 0.35.0
+      vite:
+        specifier: ^5.3.2
+        version: 5.3.2(@types/node@20.14.9)(sass@1.77.6)
+      vitest:
+        specifier: ^1.6.0
+        version: 1.6.0(@types/node@20.14.9)(jsdom@24.1.0)(sass@1.77.6)
+      wrangler:
+        specifier: ^3.62.0
+        version: 3.62.0(@cloudflare/workers-types@4.20240620.0)
+
   packages/writer:
     devDependencies:
       '@announcing/components':

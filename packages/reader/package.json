@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@announcing/writer",
+  "name": "@announcing/reader",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
