@@ -3,7 +3,9 @@ import { eq } from 'drizzle-orm';
 import { db } from '../../client';
 import { channelsTable } from '../../schema';
 
-export const getChannel = async (userID: string | undefined, channelID: string) => {
+export const READER = Symbol('READER');
+
+export const getChannel = async (userID: typeof READER | string | undefined, channelID: string) => {
   if (!userID) return;
 
   const channel = (
@@ -12,7 +14,9 @@ export const getChannel = async (userID: string | undefined, channelID: string) 
 
   if (!channel) return;
 
-  if (!channel.owners.includes(userID)) return;
+  if (userID !== READER) {
+    if (!channel.owners.includes(userID)) return;
+  }
 
   return channel;
 };
