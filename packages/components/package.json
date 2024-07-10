@@ -59,6 +59,7 @@
     "svelte": "^4.0.0"
   },
   "devDependencies": {
+    "@announcing/db": "workspace:^",
     "@histoire/plugin-svelte": "^0.17.17",
     "@sveltejs/adapter-auto": "^3.2.2",
     "@sveltejs/kit": "^2.5.18",
@@ -77,6 +78,8 @@
     "vitest": "^1.6.0"
   },
   "dependencies": {
-    "image-blob-reduce": "^4.1.0"
+    "date-fns": "^3.6.0",
+    "image-blob-reduce": "^4.1.0",
+    "linkify-html": "^4.1.3"
   }
 }
