@@ -22,7 +22,7 @@
       {channel.title}
     </div>
     {#if channel.icon}
-      <img class="icon" src={`/s/${channel.icon}`} alt={channel.title} />
+      <img class="icon" src={channel.icon} alt={channel.title} />
     {/if}
   </div>
   {#if channel.desc}
@@ -70,6 +70,10 @@
 
     .link {
       margin: 10px 5px 0;
+    }
+
+    hr {
+      margin: 20px 0;
     }
   }
 </style>

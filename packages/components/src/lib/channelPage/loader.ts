@@ -13,7 +13,6 @@ export interface ChannelPageData {
         }[]
       | null;
     count: number;
-    createdAt: Date;
   };
 }
 
