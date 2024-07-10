@@ -45,4 +45,8 @@
       margin: 10px 0 0;
     }
   }
+
+  hr {
+    margin: 20px 0;
+  }
 </style>
