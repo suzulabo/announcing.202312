@@ -2,15 +2,20 @@
   import { format } from 'date-fns';
   import linkifyHtml from 'linkify-html';
 
+  import Modal from '$lib/Modal.svelte';
+
   import type { AnnouncementViewData } from '../loader';
 
   export let data: AnnouncementViewData;
+
+  let modalImage: string | undefined = undefined;
 
   $: announcement = data.announcement;
 
   const formatDate = (n: Date) => {
     return format(n, 'yyyy-MM-dd HH:mm');
   };
+
   const toHtml = (s: string) => {
     return linkifyHtml(s, {
       defaultProtocol: 'https',
@@ -18,13 +23,21 @@
       rel: 'nofollow noreferrer',
     });
   };
+
+  const imgClick = (src: string) => {
+    return () => {
+      modalImage = src;
+    };
+  };
 </script>
 
 <div class="announcement">
   <div class="published">{formatDate(announcement.updatedAt)}</div>
   {#if announcement.headerImage}
     <div class="header-image">
-      <img src={announcement.headerImage} alt={announcement.title} />
+      <button class="unstyled" on:click={imgClick(announcement.headerImage)}>
+        <img src={announcement.headerImage} alt={announcement.title} />
+      </button>
     </div>
   {/if}
   {#if announcement.title}
@@ -36,12 +49,24 @@
   {#if announcement.images}
     <div class={`images size-${announcement.images.length}`}>
       {#each announcement.images as image}
-        <img src={image} alt={announcement.title} />
+        <button class="unstyled" on:click={imgClick(image)}>
+          <img src={image} alt={announcement.title} />
+        </button>
       {/each}
     </div>
   {/if}
 </div>
 <hr />
+
+<Modal
+  show={!!modalImage}
+  closeAnywhere={true}
+  on:close={() => {
+    modalImage = undefined;
+  }}
+>
+  <div class="zoom-image"><img src={modalImage} alt="" /></div>
+</Modal>
 
 <style lang="scss">
   .announcement {
@@ -90,5 +115,18 @@
 
   hr {
     margin: 20px 0;
+  }
+
+  .zoom-image {
+    display: flex;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    img {
+      object-fit: contain;
+    }
   }
 </style>

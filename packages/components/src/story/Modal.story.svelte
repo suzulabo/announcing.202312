@@ -26,6 +26,9 @@
 
 <style lang="scss">
   .modal-body {
+    background-color: var(--color-background);
+    border-radius: 8px;
+    margin: auto;
     padding: 8px;
     display: flex;
     flex-direction: column;

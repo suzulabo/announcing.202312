@@ -2,6 +2,7 @@
   import { createEventDispatcher } from 'svelte';
 
   export let show = false;
+  export let closeAnywhere = false;
 
   const closeDispatch = createEventDispatcher();
   const handleClose = () => {
@@ -10,11 +11,17 @@
 </script>
 
 {#if show}
-  <!-- svelte-ignore a11y-click-events-have-key-events  -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="modal" on:click|self={handleClose}>
-    <div class="modal-content"><slot /></div>
-  </div>
+  <button
+    class="unstyled modal"
+    on:click={() => {
+      if (closeAnywhere) handleClose();
+    }}
+    on:click|self={() => {
+      if (!closeAnywhere) handleClose();
+    }}
+  >
+    <slot />
+  </button>
 {/if}
 
 <svelte:window
@@ -27,6 +34,7 @@
 
 <style lang="scss">
   .modal {
+    display: flex;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -36,14 +44,5 @@
     background-color: var(--color-background-modal);
     backdrop-filter: blur(1px);
     z-index: var(--modal-z-index, 999);
-
-    padding: 8px;
-    display: flex;
-
-    .modal-content {
-      background-color: var(--color-background);
-      border-radius: 4px;
-      margin: auto;
-    }
   }
 </style>
