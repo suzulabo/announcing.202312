@@ -9,8 +9,6 @@ const isIframe = window.self !== window.top;
 
 const isNewTab = location.search.includes('&newtab');
 
-console.log({ isIframe, isNewTab });
-
 document.head
   .querySelectorAll("style[type='text/css']:not([data-vite-dev-id*='histoire'])")
   .forEach((style) => {
