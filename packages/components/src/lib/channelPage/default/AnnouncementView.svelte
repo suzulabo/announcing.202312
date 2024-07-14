@@ -61,7 +61,6 @@
 <Modal
   show={!!modalImage}
   closeAnywhere={true}
-  closeOnBack={true}
   on:close={() => {
     modalImage = undefined;
   }}
