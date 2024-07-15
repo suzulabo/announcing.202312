@@ -1,9 +1,9 @@
+import { base62 } from '@announcing/db';
 import { SvelteKitAuth } from '@auth/sveltekit';
 import Google from '@auth/sveltekit/providers/google';
 import { createHash } from 'crypto';
 
 import { AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_SECRET } from '$env/static/private';
-import { base62 } from '$lib/utils/base62';
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
   providers: [

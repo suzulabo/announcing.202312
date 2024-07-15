@@ -5,7 +5,6 @@ import { defineConfig } from 'histoire';
 
 export default defineConfig({
   plugins: [HstSvelte()],
-  setupFile: 'src/histoire.setup.ts',
   storyIgnored: ['**/node_modules/**', '**/dist/**', '**/.svelte-kit/**'],
   tree: {
     groups: [
@@ -14,5 +13,10 @@ export default defineConfig({
         title: '',
       },
     ],
+  },
+  vite: {
+    server: {
+      host: '0.0.0.0',
+    },
   },
 });
