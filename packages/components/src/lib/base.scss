@@ -53,8 +53,8 @@ html {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-dialog {
-  color: var(--color-text);
+body:has(.__modal__) {
+  overflow: hidden;
 }
 
 a {
