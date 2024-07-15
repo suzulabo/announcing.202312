@@ -19,11 +19,11 @@ export interface ChannelPageData {
 export interface AnnouncementViewData {
   announcement: {
     id: string;
-    headerImage?: string;
-    title?: string;
+    headerImage?: string | undefined;
+    title?: string | undefined;
     body: string;
-    images?: string[];
-    links?: string[];
+    images?: string[] | undefined;
+    links?: string[] | undefined;
     updatedAt: Date;
     createdAt: Date;
   };

@@ -1,111 +1,57 @@
 <script lang="ts">
-  import { format } from 'date-fns';
-  import linkifyHtml from 'linkify-html';
+  import {
+    type AnnouncementViewData,
+    type ChannelPageData,
+    loadChannelPageComponents,
+  } from '@announcing/components/channelPage/loader';
+  import Loading from '@announcing/components/Loading.svelte';
 
-  import type { PageData } from './$types';
+  import type { PageServerData } from './$types';
 
-  export let data: PageData;
+  export let data: PageServerData;
 
-  $: channel = data.channel;
+  const toDispData = () => {
+    const channel = data.channel;
+    const channelPageData: ChannelPageData = {
+      channel: {
+        title: channel.title,
+        desc: channel.desc,
+        icon: channel.icon && `/s/${channel.icon}`,
+        links: channel.links,
+        count: channel.announcements?.length ?? 0,
+      },
+    };
+    const announcementViewData: AnnouncementViewData[] =
+      channel.announcements?.map<AnnouncementViewData>((v) => {
+        return {
+          announcement: {
+            id: v.id,
+            headerImage: v.headerImage && `/s/${v.headerImage}`,
+            title: v.title,
+            body: v.body,
+            images: v.images?.map((v) => `/s/${v}`),
+            links: v.links,
+            updatedAt: new Date(v.updatedAt),
+            createdAt: new Date(v.createdAt),
+          },
+        };
+      }) ?? [];
 
-  const formatDate = (n: number) => {
-    return format(n, 'yyyy-MM-dd HH:mm');
+    return { channelPageData, announcementViewData };
   };
-  const toHtml = (s: string) => {
-    return linkifyHtml(s, {
-      defaultProtocol: 'https',
-      target: '_blank',
-      rel: 'nofollow noreferrer',
-    });
-  };
+
+  $: dispData = toDispData();
 </script>
 
-<div class="main">
-  <div class="name-line">
-    <div class="name">
-      {channel.title}
-    </div>
-    {#if channel.icon}
-      <img class="icon" src={`/s/${channel.icon}`} alt={channel.title} />
-    {/if}
-  </div>
-  {#if channel.desc}
-    <div class="desc">
-      {@html toHtml(channel.desc)}
-    </div>
-  {/if}
-  {#if channel.links}
-    {#each channel.links as link}
-      <div class="link">
-        <a href={link.url}>{link.name}</a>
-      </div>
+{#await loadChannelPageComponents()}
+  <Loading show={true} />
+{:then { Page, AnnouncementView }}
+  <Page data={dispData.channelPageData}>
+    {#each dispData.announcementViewData as announcement}
+      <AnnouncementView data={announcement} />
     {/each}
-  {/if}
-
-  {#if channel.announcements}
-    <hr />
-    {#each channel.announcements as announcement}
-      <div class="post">
-        <div class="published">{formatDate(announcement.updatedAt)}</div>
-        {#if announcement.title}
-          <div class="title">{announcement.title}</div>
-        {/if}
-        {#if announcement.body}
-          <div class="body">{@html toHtml(announcement.body)}</div>
-        {/if}
-      </div>
-      <hr />
-    {/each}
-  {/if}
-</div>
+  </Page>
+{/await}
 
 <style lang="scss">
-  .main {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px 10px;
-
-    .name-line {
-      display: flex;
-      align-items: center;
-      .name {
-        font-weight: bold;
-        font-size: 24px;
-        flex-grow: 1;
-      }
-      .icon {
-        width: 64px;
-        height: 64px;
-        border-radius: 8px;
-        object-fit: contain;
-      }
-    }
-
-    .desc {
-      margin: 10px 5px 0;
-      white-space: pre-line;
-    }
-
-    .link {
-      margin: 10px 5px 0;
-    }
-
-    hr {
-      margin: 20px 0;
-    }
-
-    .post {
-      padding: 0 10px;
-      min-height: 100px;
-      .title {
-        font-size: 18px;
-        font-weight: bold;
-        margin: 10px 0 0;
-      }
-      .body {
-        white-space: pre-line;
-        margin: 10px 0 0;
-      }
-    }
-  }
 </style>

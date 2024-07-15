@@ -16,6 +16,14 @@
   },
   "type": "module",
   "exports": {
+    "./actions/loadImage": {
+      "types": "./dist/actions/loadImage.d.ts",
+      "import": "./dist/actions/loadImage.js"
+    },
+    "./channelPage/loader": {
+      "types": "./dist/channelPage/loader.d.ts",
+      "import": "./dist/channelPage/loader.js"
+    },
     "./base.scss": "./dist/base.scss",
     "./FileInput.svelte": {
       "types": "./dist/FileInput.svelte.d.ts",
@@ -44,10 +52,6 @@
     "./TextArea.svelte": {
       "types": "./dist/TextArea.svelte.d.ts",
       "svelte": "./dist/TextArea.svelte"
-    },
-    "./actions/loadImage": {
-      "types": "./dist/actions/loadImage.d.ts",
-      "import": "./dist/actions/loadImage.js"
     }
   },
   "files": [

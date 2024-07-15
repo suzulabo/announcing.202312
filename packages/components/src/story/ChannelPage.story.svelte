@@ -2,7 +2,6 @@
   import type { Hst } from '@histoire/plugin-svelte';
   import { parseISO } from 'date-fns';
 
-  import AnnouncementView from '$lib/channelPage/default/AnnouncementView.svelte';
   import { loadChannelPageComponents } from '$lib/channelPage/loader';
   import Loading from '$lib/Loading.svelte';
 
@@ -68,7 +67,7 @@
 <Hst.Story title="Channel Page">
   {#await loadChannelPageComponents()}
     <Loading show={true} />
-  {:then { Page }}
+  {:then { Page, AnnouncementView }}
     <Page data={pageData}>
       {#each announcements as announcement}
         <AnnouncementView data={{ announcement }} />
