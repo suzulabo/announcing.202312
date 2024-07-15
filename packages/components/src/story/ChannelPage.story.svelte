@@ -56,6 +56,7 @@
     },
     {
       id: '5',
+      headerImage: '/assets/background-7000157_1920.jpg',
       title: 'Special Announcement',
       body: 'Aether Dynamics Corporation is excited to introduce a new product line that redefines efficiency and performance. Stay connected for more details.',
       updatedAt: parseISO('2024-01-05T00:11:22'),
