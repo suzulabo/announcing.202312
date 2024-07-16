@@ -1,56 +1,52 @@
 <script lang="ts">
   import {
-    type AnnouncementViewData,
-    type ChannelPageData,
+    type AnnouncementProp,
+    type ChannelProp,
     loadChannelPageComponents,
-  } from '@announcing/components/channelPage/loader';
+  } from '@announcing/components/ChannelView/loader';
   import Loading from '@announcing/components/Loading.svelte';
 
   import type { PageServerData } from './$types';
 
   export let data: PageServerData;
 
-  const toDispData = () => {
+  const toViewProps = () => {
     const channel = data.channel;
-    const channelPageData: ChannelPageData = {
-      channel: {
-        title: channel.title,
-        desc: channel.desc,
-        icon: channel.icon && `/s/${channel.icon}`,
-        links: channel.links,
-        count: channel.announcements?.length ?? 0,
-      },
+    const channelProp: ChannelProp = {
+      title: channel.title,
+      desc: channel.desc,
+      icon: channel.icon && `/s/${channel.icon}`,
+      links: channel.links,
+      count: channel.announcements?.length ?? 0,
     };
-    const announcementViewData: AnnouncementViewData[] =
-      channel.announcements?.map<AnnouncementViewData>((v) => {
+    const announcementPropList: AnnouncementProp[] =
+      channel.announcements?.map<AnnouncementProp>((v) => {
         return {
-          announcement: {
-            id: v.id,
-            headerImage: v.headerImage && `/s/${v.headerImage}`,
-            title: v.title,
-            body: v.body,
-            images: v.images?.map((v) => `/s/${v}`),
-            links: v.links,
-            updatedAt: new Date(v.updatedAt),
-            createdAt: new Date(v.createdAt),
-          },
+          id: v.id,
+          headerImage: v.headerImage && `/s/${v.headerImage}`,
+          title: v.title,
+          body: v.body,
+          images: v.images?.map((v) => `/s/${v}`),
+          links: v.links,
+          updatedAt: new Date(v.updatedAt),
+          createdAt: new Date(v.createdAt),
         };
       }) ?? [];
 
-    return { channelPageData, announcementViewData };
+    return { channelProp, announcementPropList };
   };
 
-  $: dispData = toDispData();
+  $: viewProps = toViewProps();
 </script>
 
 {#await loadChannelPageComponents()}
   <Loading show={true} />
-{:then { Page, AnnouncementView }}
-  <Page data={dispData.channelPageData}>
-    {#each dispData.announcementViewData as announcement}
-      <AnnouncementView data={announcement} />
+{:then { ChannelView, AnnouncementView }}
+  <ChannelView channel={viewProps.channelProp}>
+    {#each viewProps.announcementPropList as announcement}
+      <AnnouncementView {announcement} />
     {/each}
-  </Page>
+  </ChannelView>
 {/await}
 
 <style lang="scss">

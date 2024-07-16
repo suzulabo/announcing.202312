@@ -10,9 +10,6 @@
     "prepublishOnly": "npm run package",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "story:dev": "histoire dev",
-    "story:build": "histoire build",
-    "story:preview": "histoire preview",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build"
   },
@@ -22,9 +19,9 @@
       "types": "./dist/actions/loadImage.d.ts",
       "import": "./dist/actions/loadImage.js"
     },
-    "./channelPage/loader": {
-      "types": "./dist/channelPage/loader.d.ts",
-      "import": "./dist/channelPage/loader.js"
+    "./ChannelView/loader": {
+      "types": "./dist/ChannelView/loader.d.ts",
+      "import": "./dist/ChannelView/loader.js"
     },
     "./base.scss": "./dist/base.scss",
     "./FileInput.svelte": {
@@ -67,7 +64,6 @@
   "devDependencies": {
     "@announcing/db": "workspace:^",
     "@chromatic-com/storybook": "^1.6.1",
-    "@histoire/plugin-svelte": "^0.17.17",
     "@storybook/addon-essentials": "^8.2.3",
     "@storybook/addon-interactions": "^8.2.3",
     "@storybook/addon-links": "^8.2.3",
@@ -81,7 +77,6 @@
     "@sveltejs/package": "^2.3.2",
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "@types/image-blob-reduce": "^4.1.4",
-    "histoire": "^0.17.17",
     "publint": "^0.2.8",
     "sass": "^1.77.6",
     "storybook": "^8.2.3",
