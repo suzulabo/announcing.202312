@@ -1,12 +1,10 @@
 <script context="module">
+  import { Story } from '@storybook/addon-svelte-csf';
+
   export const meta = {
     title: 'base/button',
     tags: ['autodocs'],
   };
-</script>
-
-<script lang="ts">
-  import { Story } from '@storybook/addon-svelte-csf';
 </script>
 
 <Story name="Normal">
