@@ -40,6 +40,7 @@ export default ts.config(
     },
     rules: {
       '@typescript-eslint/no-unnecessary-condition': 'error',
+      '@typescript-eslint/consistent-type-definitions': 'off',
     },
   },
   ...svelte.configs['flat/recommended'],

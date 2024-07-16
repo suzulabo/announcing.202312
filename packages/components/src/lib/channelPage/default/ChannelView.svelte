@@ -1,11 +1,9 @@
 <script lang="ts">
   import linkifyHtml from 'linkify-html';
 
-  import type { ChannelPageData } from '../loader';
+  import type { ChannelProp } from '../loader';
 
-  export let data: ChannelPageData;
-
-  $: channel = data.channel;
+  export let channel: ChannelProp;
 
   const toHtml = (s: string) => {
     return linkifyHtml(s, {

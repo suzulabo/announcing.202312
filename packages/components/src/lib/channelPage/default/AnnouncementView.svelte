@@ -4,13 +4,11 @@
 
   import Modal from '$lib/Modal.svelte';
 
-  import type { AnnouncementViewData } from '../loader';
+  import type { AnnouncementProp } from '../loader';
 
-  export let data: AnnouncementViewData;
+  export let announcement: AnnouncementProp;
 
   let modalImage: string | undefined = undefined;
-
-  $: announcement = data.announcement;
 
   const formatDate = (n: Date) => {
     return format(n, 'yyyy-MM-dd HH:mm');
