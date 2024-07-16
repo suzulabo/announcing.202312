@@ -1,8 +1,7 @@
-import '$lib/base.scss';
+import '../src/lib/base.scss';
 
-import type { Preview } from '@storybook/svelte';
-
-const preview: Preview = {
+/** @type {import('@storybook/svelte').Preview} */
+const preview = {
   parameters: {
     controls: {
       matchers: {

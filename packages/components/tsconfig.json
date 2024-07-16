@@ -1,5 +1,3 @@
 {
-  "extends": ["../../tsconfig.json", "./.svelte-kit/tsconfig.json"],
-
-  "include": ["src/**/*.ts", ".storybook/**/*.ts", "src/stories/base.button.stories.tsx"]
+  "extends": ["../../tsconfig.json", "./.svelte-kit/tsconfig.json"]
 }
