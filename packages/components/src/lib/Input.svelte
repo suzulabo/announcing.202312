@@ -18,7 +18,7 @@
     {name}
     {type}
     {placeholder}
-    {value}
+    value={value ?? ''}
     maxLength={maxLength || undefined}
     on:input={(e) => {
       value = e.currentTarget.value;
