@@ -5,3 +5,5 @@ dist
 .env.local
 
 packages/db-dev
+
+*storybook.log
