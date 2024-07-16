@@ -37,6 +37,11 @@ html {
     --color-hover: var(--color-hover-dark);
   }
 
+  color: var(--color-text);
+  background-color: var(--color-background);
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
   @media (prefers-color-scheme: dark) {
     & {
       @include dark-mode;
@@ -46,11 +51,6 @@ html {
   &.dark {
     @include dark-mode;
   }
-
-  color: var(--color-text);
-  background-color: var(--color-background);
-  font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body:has(.__modal__) {
@@ -79,14 +79,15 @@ button.unstyled {
 button:not(.unstyled),
 a.button {
   display: inline-block;
-  &:not(.text) {
-    border: 1px solid var(--color-border);
-  }
   border-radius: 4px;
   padding: 8px 16px;
   text-align: center;
   width: max-content;
   font-weight: 500;
+
+  &:not(.text) {
+    border: 1px solid var(--color-border);
+  }
 
   &:disabled {
     color: var(--color-text-disable);
