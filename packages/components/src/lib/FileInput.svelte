@@ -22,7 +22,7 @@
 
   $: {
     if (mounted && 'DataTransfer' in window) {
-      const a = file ? [file] : files ?? [];
+      const a = file ? [file] : (files ?? []);
 
       if (a.length === 0) {
         valueInput.value = '';
