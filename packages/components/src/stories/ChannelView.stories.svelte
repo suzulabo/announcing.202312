@@ -17,9 +17,10 @@
   {#await loadChannelPageComponents()}
     <Loading show={true} />
   {:then { ChannelView, AnnouncementView }}
-    <ChannelView {channel} />
-    {#each announcements as announcement}
-      <AnnouncementView {announcement} />
-    {/each}
+    <ChannelView {channel}>
+      {#each announcements as announcement}
+        <AnnouncementView {announcement} />
+      {/each}
+    </ChannelView>
   {/await}
 </Story>
