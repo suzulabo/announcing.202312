@@ -45,7 +45,7 @@
     <div class="body">{@html toHtml(announcement.body)}</div>
   {/if}
   {#if announcement.images}
-    <div class={`images size-${announcement.images.length}`}>
+    <div class={`images size-${announcement.images.length.toString()}`}>
       {#each announcement.images as image}
         <button class="unstyled" on:click={imgClick(image)}>
           <img src={image} alt={announcement.title} />
