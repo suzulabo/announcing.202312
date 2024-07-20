@@ -9,6 +9,8 @@
     announcementLoader: (key: string) => Promise<AnnouncementProp[]>;
   };
 
+  const ITEMS_CHUNK_SIZE = 10;
+
   class ItemsMap extends Map<
     string,
     {
@@ -24,16 +26,32 @@
       if (!k) return;
 
       const { key, count } = k;
-      this.set(key, [{ pos: 0, count: Math.min(10, count), visible: false }]);
+      this.set(key, [{ pos: 0, count: Math.min(ITEMS_CHUNK_SIZE, count), visible: false }]);
 
       return key;
+    }
+
+    expand(channel: ChannelProp) {
+      for (const { key, count } of channel.announcementKeys) {
+        for (let i = 0; i < count; i = i + ITEMS_CHUNK_SIZE) {
+          const v = this.get(key);
+          if (!v) {
+            this.set(key, [{ pos: 0, count: Math.min(ITEMS_CHUNK_SIZE, count), visible: false }]);
+            return;
+          }
+          if (!v.find((x) => x.pos === i)) {
+            v.push({ pos: i, count: Math.min(ITEMS_CHUNK_SIZE, count - i), visible: false });
+            return;
+          }
+        }
+      }
     }
   }
 </script>
 
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { writable } from 'svelte/store';
+  import type { Action } from 'svelte/action';
+  import { type Writable, writable } from 'svelte/store';
 
   import { loadChannelPageComponents } from './ChannelView/loader';
   import Loading from './Loading.svelte';
@@ -43,12 +61,12 @@
   const announcementsMap = writable(new Map<string, AnnouncementProp[]>());
   const loadingSet = new Set<string>();
 
-  const itemsMap = writable(new ItemsMap());
+  let itemsMap: Writable<ItemsMap>;
 
   $: {
     const m = new ItemsMap();
     const key = m.init(channel);
-    itemsMap.set(m);
+    itemsMap = writable(m);
     loadingSet.clear();
     if (key) loadAnnouncements(key);
   }
@@ -63,7 +81,6 @@
     void channel
       .announcementLoader(key)
       .then((items) => {
-        console.log({ items });
         announcementsMap.update((m) => {
           m.set(key, items);
           // Simple limiter
@@ -80,21 +97,30 @@
     return;
   };
 
-  let observer: IntersectionObserver | undefined = undefined;
-
-  onMount(() => {
-    const callback: IntersectionObserverCallback = () => {
-      //
+  const bottomIntersectionAction: Action = (el) => {
+    const callback: IntersectionObserverCallback = (entries) => {
+      for (const entry of entries) {
+        if (entry.target === el && entry.isIntersecting) {
+          itemsMap.update((m) => {
+            m.expand(channel);
+            return new ItemsMap(m);
+          });
+          return;
+        }
+      }
     };
 
-    observer = new IntersectionObserver(callback, {
-      rootMargin: '100px 0px 100px 0px',
+    const observer = new IntersectionObserver(callback, {
+      rootMargin: '0px 0px 100px 0px',
     });
+    observer.observe(el);
 
-    return () => {
-      observer?.disconnect();
+    return {
+      destroy: () => {
+        observer.disconnect();
+      },
     };
-  });
+  };
 </script>
 
 {#await loadChannelPageComponents()}
@@ -113,5 +139,6 @@
         </div>
       {/each}
     {/each}
+    <div class="__bottom__" use:bottomIntersectionAction></div>
   </ChannelView>
 {/await}
