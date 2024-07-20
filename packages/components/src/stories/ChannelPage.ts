@@ -11,10 +11,11 @@ const genData = () => {
   const startDate = parseISO('2023-09-20T00:11:22');
 
   for (let i = 0; i < 100; i++) {
-    const title = faker.lorem.sentence();
+    const id = (i + 100).toString();
+    const title = `[${id}] ${faker.lorem.sentence()}`;
     const body = faker.lorem.text();
     const d = addDays(startDate, i * -1);
-    result.push({ id: (i + 100).toString(), title, body, createdAt: d, updatedAt: d });
+    result.push({ id, title, body, createdAt: d, updatedAt: d });
   }
 
   return result;
