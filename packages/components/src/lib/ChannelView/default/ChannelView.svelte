@@ -1,7 +1,7 @@
 <script lang="ts">
   import linkifyHtml from 'linkify-html';
 
-  import type { ChannelProp } from '../loader';
+  import type { ChannelProp } from '../types';
 
   export let channel: ChannelProp;
 

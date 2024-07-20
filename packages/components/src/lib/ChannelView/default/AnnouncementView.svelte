@@ -3,10 +3,11 @@
   import linkifyHtml from 'linkify-html';
 
   import Modal from '$lib/Modal.svelte';
+  import Spinner from '$lib/Spinner.svelte';
 
-  import type { AnnouncementProp } from '../loader';
+  import type { AnnouncementProp } from '../types';
 
-  export let announcement: AnnouncementProp;
+  export let announcement: AnnouncementProp | undefined;
 
   let modalImage: string | undefined = undefined;
 
@@ -30,28 +31,34 @@
 </script>
 
 <div class="announcement">
-  <div class="published">{formatDate(announcement.updatedAt)}</div>
-  {#if announcement.headerImage}
-    <div class="header-image">
-      <button class="unstyled" on:click={imgClick(announcement.headerImage)}>
-        <img src={announcement.headerImage} alt={announcement.title} />
-      </button>
+  {#if !announcement}
+    <div class="loading">
+      <Spinner />
     </div>
-  {/if}
-  {#if announcement.title}
-    <div class="title">{announcement.title}</div>
-  {/if}
-  {#if announcement.body}
-    <div class="body">{@html toHtml(announcement.body)}</div>
-  {/if}
-  {#if announcement.images}
-    <div class={`images size-${announcement.images.length.toString()}`}>
-      {#each announcement.images as image}
-        <button class="unstyled" on:click={imgClick(image)}>
-          <img src={image} alt={announcement.title} />
+  {:else}
+    <div class="published">{formatDate(announcement.updatedAt)}</div>
+    {#if announcement.headerImage}
+      <div class="header-image">
+        <button class="unstyled" on:click={imgClick(announcement.headerImage)}>
+          <img src={announcement.headerImage} alt={announcement.title} />
         </button>
-      {/each}
-    </div>
+      </div>
+    {/if}
+    {#if announcement.title}
+      <div class="title">{announcement.title}</div>
+    {/if}
+    {#if announcement.body}
+      <div class="body">{@html toHtml(announcement.body)}</div>
+    {/if}
+    {#if announcement.images}
+      <div class={`images size-${announcement.images.length.toString()}`}>
+        {#each announcement.images as image}
+          <button class="unstyled" on:click={imgClick(image)}>
+            <img src={image} alt={announcement.title} />
+          </button>
+        {/each}
+      </div>
+    {/if}
   {/if}
 </div>
 <hr />
@@ -70,6 +77,13 @@
   .announcement {
     padding: 0 10px;
     min-height: 100px;
+    display: flex;
+    flex-direction: column;
+
+    .loading {
+      margin: auto;
+    }
+
     .header-image {
       margin: 16px 0 0;
       text-align: center;
