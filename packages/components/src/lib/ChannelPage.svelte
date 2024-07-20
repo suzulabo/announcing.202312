@@ -11,15 +11,14 @@
 
   const ITEMS_CHUNK_SIZE = 10;
 
-  class ItemsMap extends Map<
-    string,
-    {
-      pos: number;
-      count: number;
-      visible: boolean;
-      height?: number;
-    }[]
-  > {
+  type ItemMapValue = {
+    pos: number;
+    count: number;
+    visible: boolean;
+    height?: string;
+  };
+
+  class ItemsMap extends Map<string, ItemMapValue[]> {
     init(channel: ChannelProp) {
       this.clear();
       const k = channel.announcementKeys[0];
@@ -121,6 +120,37 @@
       },
     };
   };
+
+  const listIntersectionAction = (() => {
+    const elMap = new Map<Element, ItemMapValue>();
+    const callback: IntersectionObserverCallback = (entries) => {
+      for (const entry of entries) {
+        const v = elMap.get(entry.target);
+        if (!v) continue;
+
+        v.visible = entry.isIntersecting;
+        v.height = v.visible ? 'auto' : entry.boundingClientRect.height.toString() + 'px';
+      }
+      itemsMap.update((m) => new ItemsMap(m));
+    };
+
+    const observer = new IntersectionObserver(callback, {
+      rootMargin: '100px 0px 100px 0px',
+    });
+
+    const result: Action<HTMLElement, ItemMapValue> = (el, value) => {
+      elMap.set(el, value);
+      observer.observe(el);
+
+      return {
+        destroy: () => {
+          observer.disconnect();
+        },
+      };
+    };
+
+    return result;
+  })();
 </script>
 
 {#await loadChannelPageComponents()}
@@ -129,16 +159,28 @@
   <ChannelView {channel}>
     {#each $itemsMap.entries() as [key, a]}
       {#each a as v}
-        <div class="observed">
-          <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars } -->
-          {#each Array(v.count) as _, i}
-            <div>
-              <AnnouncementView announcement={$announcementsMap.get(key)?.[v.pos + i]} />
-            </div>
-          {/each}
+        <div
+          class="items-chunk"
+          use:listIntersectionAction={v}
+          style={`--height:${v.height ?? 'auto'}`}
+        >
+          {#if v.visible}
+            <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars } -->
+            {#each Array(v.count) as _, i}
+              <div>
+                <AnnouncementView announcement={$announcementsMap.get(key)?.[v.pos + i]} />
+              </div>
+            {/each}
+          {/if}
         </div>
       {/each}
     {/each}
     <div class="__bottom__" use:bottomIntersectionAction></div>
   </ChannelView>
 {/await}
+
+<style lang="scss">
+  .items-chunk {
+    height: var(--height);
+  }
+</style>
