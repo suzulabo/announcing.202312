@@ -81,21 +81,33 @@ export const channel: ChannelProp = {
 
   announcementKeys: [
     {
-      key: 'first',
+      key: '1',
       count: announcements.length,
     },
     {
-      key: 'second',
+      key: '2',
       count: GEN_DATA_LENGTH,
     },
     {
-      key: 'third',
+      key: '3',
+      count: GEN_DATA_LENGTH,
+    },
+    {
+      key: '4',
+      count: GEN_DATA_LENGTH,
+    },
+    {
+      key: '5',
+      count: GEN_DATA_LENGTH,
+    },
+    {
+      key: '6',
       count: GEN_DATA_LENGTH,
     },
   ],
 
   announcementLoader: (key: string) => {
-    if (key === 'first') {
+    if (key === '1') {
       return Promise.resolve(announcements);
     }
 

@@ -85,7 +85,8 @@
           // Simple limiter
           if (m.size > 5) {
             // Remove the oldest item
-            m.delete(m.keys().next().value as string);
+            const k = m.keys().next().value as string;
+            m.delete(k);
           }
           return new Map(m);
         });
