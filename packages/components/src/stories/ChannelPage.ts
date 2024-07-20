@@ -4,18 +4,22 @@ import { addDays, parseISO } from 'date-fns';
 import type { ChannelProp } from '$lib/ChannelPage.svelte';
 import type { AnnouncementProp } from '$lib/ChannelView/types';
 
+faker.seed(1192);
+
+let num = 100;
+let date = parseISO('2023-12-31T00:11:22');
+
+const GEN_DATA_LENGTH = 10;
+
 const genData = () => {
-  faker.seed(1192);
   const result: AnnouncementProp[] = [];
 
-  const startDate = parseISO('2023-09-20T00:11:22');
-
-  for (let i = 0; i < 100; i++) {
-    const id = (i + 100).toString();
+  for (let i = 0; i < GEN_DATA_LENGTH; i++) {
+    const id = (num++).toString();
     const title = `[${id}] ${faker.lorem.sentence()}`;
     const body = faker.lorem.text();
-    const d = addDays(startDate, i * -1);
-    result.push({ id, title, body, createdAt: d, updatedAt: d });
+    result.push({ id, title, body, createdAt: date, updatedAt: date });
+    date = addDays(date, -1);
   }
 
   return result;
@@ -80,9 +84,25 @@ export const channel: ChannelProp = {
       key: 'first',
       count: announcements.length,
     },
+    {
+      key: 'second',
+      count: GEN_DATA_LENGTH,
+    },
+    {
+      key: 'third',
+      count: GEN_DATA_LENGTH,
+    },
   ],
 
-  announcementLoader: () => {
-    return Promise.resolve(announcements);
+  announcementLoader: (key: string) => {
+    if (key === 'first') {
+      return Promise.resolve(announcements);
+    }
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(genData());
+      }, 1000);
+    });
   },
 };

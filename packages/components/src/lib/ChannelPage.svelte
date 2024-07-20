@@ -122,14 +122,20 @@
   };
 
   const listIntersectionAction = (() => {
-    const elMap = new Map<Element, ItemMapValue>();
+    const elMap = new Map<Element, { key: string; value: ItemMapValue }>();
     const callback: IntersectionObserverCallback = (entries) => {
       for (const entry of entries) {
         const v = elMap.get(entry.target);
         if (!v) continue;
 
-        v.visible = entry.isIntersecting;
-        v.height = v.visible ? 'auto' : entry.boundingClientRect.height.toString() + 'px';
+        const { key, value } = v;
+        value.visible = entry.isIntersecting;
+        if (value.visible) {
+          value.height = 'auto';
+          loadAnnouncements(key);
+        } else {
+          value.height = entry.boundingClientRect.height.toString() + 'px';
+        }
       }
       itemsMap.update((m) => new ItemsMap(m));
     };
@@ -138,7 +144,7 @@
       rootMargin: '100px 0px 100px 0px',
     });
 
-    const result: Action<HTMLElement, ItemMapValue> = (el, value) => {
+    const result: Action<HTMLElement, { key: string; value: ItemMapValue }> = (el, value) => {
       elMap.set(el, value);
       observer.observe(el);
 
@@ -161,7 +167,7 @@
       {#each a as v}
         <div
           class="items-chunk"
-          use:listIntersectionAction={v}
+          use:listIntersectionAction={{ key, value: v }}
           style={`--height:${v.height ?? 'auto'}`}
         >
           {#if v.visible}
