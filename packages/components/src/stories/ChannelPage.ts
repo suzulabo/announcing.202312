@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { addDays, parseISO } from 'date-fns';
 
-import type { ChannelProp } from '$lib/ChannelPage.svelte';
+import type { ChannelProp } from '$lib/ChannelPage';
 import type { AnnouncementProp } from '$lib/ChannelView/types';
 
 faker.seed(1192);
@@ -79,7 +79,7 @@ export const channel: ChannelProp = {
   icon: '/assets/logo.jpg',
   links: null,
 
-  announcementKeys: [
+  keys: [
     {
       key: '1',
       count: announcements.length,
@@ -106,7 +106,7 @@ export const channel: ChannelProp = {
     },
   ],
 
-  announcementLoader: (key: string) => {
+  loader: (key: string) => {
     if (key === '1') {
       return Promise.resolve(announcements);
     }
