@@ -1,7 +1,7 @@
 import type AnnouncementView from './default/AnnouncementView.svelte';
 import type ChannelView from './default/ChannelView.svelte';
 
-export const loadChannelPageComponents = async (): Promise<{
+export const loadChannelViewComponents = async (): Promise<{
   ChannelView: typeof ChannelView;
   AnnouncementView: typeof AnnouncementView;
 }> => {

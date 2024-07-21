@@ -2,7 +2,7 @@
   import { Story } from '@storybook/addon-svelte-csf';
   import type { Meta } from '@storybook/svelte';
 
-  import { loadChannelPageComponents } from '$lib/ChannelView/loader';
+  import { loadChannelViewComponents } from '$lib/ChannelView/loader';
   import Loading from '$lib/Loading.svelte';
 
   import { announcements, channel } from './ChannelView';
@@ -14,7 +14,7 @@
 </script>
 
 <Story name="Basic">
-  {#await loadChannelPageComponents()}
+  {#await loadChannelViewComponents()}
     <Loading show={true} />
   {:then { ChannelView, AnnouncementView }}
     <ChannelView {channel}>

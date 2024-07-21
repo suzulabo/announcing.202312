@@ -1,6 +1,6 @@
 <script lang="ts">
   import { type ChannelProp, setup } from './ChannelPage';
-  import { loadChannelPageComponents } from './ChannelView/loader';
+  import { loadChannelViewComponents } from './ChannelView/loader';
   import Loading from './Loading.svelte';
 
   export let channel: ChannelProp;
@@ -8,7 +8,7 @@
   $: ({ store, bottomIntersectionAction, listIntersectionAction } = setup(channel));
 </script>
 
-{#await loadChannelPageComponents()}
+{#await loadChannelViewComponents()}
   <Loading show={true} />
 {:then { ChannelView, AnnouncementView }}
   <ChannelView {channel}>
