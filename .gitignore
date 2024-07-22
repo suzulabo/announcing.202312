@@ -7,3 +7,4 @@ dist
 packages/db-dev
 
 *storybook.log
+storybook-static

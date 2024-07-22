@@ -71,6 +71,7 @@ export default ts.config(
       '**/node_modules',
       '**/dist',
       '**/.svelte-kit',
+      '**/storybook-static',
       'packages/db-dev',
       'packages/db/drizzle/**/*',
     ],
