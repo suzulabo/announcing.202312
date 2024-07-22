@@ -1,8 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { addDays, parseISO } from 'date-fns';
 
-import type { ChannelProp } from '$lib/ChannelPage';
-import type { AnnouncementProp } from '$lib/ChannelView/types';
+import type { ChannelPageParams } from '$lib/ChannelPage';
+import type { AnnouncementViewParams } from '$lib/ChannelView/types';
+
+type Announcement = Exclude<AnnouncementViewParams['announcement'], undefined>;
 
 faker.seed(1192);
 
@@ -12,7 +14,7 @@ let date = parseISO('2023-12-31T00:11:22');
 const GEN_DATA_LENGTH = 10;
 
 const genData = () => {
-  const result: AnnouncementProp[] = [];
+  const result: Announcement[] = [];
 
   for (let i = 0; i < GEN_DATA_LENGTH; i++) {
     const id = (num++).toString();
@@ -70,14 +72,16 @@ const announcements = (
       updatedAt: parseISO('2024-01-05T00:11:22'),
       createdAt: parseISO('2024-01-05T00:11:22'),
     },
-  ] as AnnouncementProp[]
+  ] as Announcement[]
 ).concat(...genData());
 
-export const channel: ChannelProp = {
-  title: 'Aether Dynamics Corporation',
-  desc: 'Aether Dynamics Corporation is at the forefront of cutting-edge technology, pioneering advancements in energy solutions and sustainable innovation.\nJoin us as we transform the future with dynamic, visionary science.',
-  icon: '/assets/logo.jpg',
-  links: null,
+export const params: ChannelPageParams = {
+  channel: {
+    title: 'Aether Dynamics Corporation',
+    desc: 'Aether Dynamics Corporation is at the forefront of cutting-edge technology, pioneering advancements in energy solutions and sustainable innovation.\nJoin us as we transform the future with dynamic, visionary science.',
+    icon: '/assets/logo.jpg',
+    links: null,
+  },
 
   keys: [
     {
@@ -116,5 +120,9 @@ export const channel: ChannelProp = {
         resolve(genData());
       }, 1000);
     });
+  },
+
+  msgs: {
+    noAnnouncements: 'No announcement yet.',
   },
 };

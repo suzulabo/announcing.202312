@@ -1,9 +1,11 @@
 <script lang="ts">
   import linkifyHtml from 'linkify-html';
 
-  import type { ChannelProp } from '../types';
+  import type { ChannelViewParams } from '../types';
 
-  export let channel: ChannelProp;
+  export let params: ChannelViewParams;
+
+  $: ({ channel, noAnnouncements, msgs } = params);
 
   const toHtml = (s: string) => {
     return linkifyHtml(s, {
@@ -36,7 +38,13 @@
     {/each}
   {/if}
   <hr />
-  <slot />
+  {#if noAnnouncements}
+    <div class="no-announcements">
+      {msgs.noAnnouncements}
+    </div>
+  {:else}
+    <slot />
+  {/if}
 </div>
 
 <style lang="scss">
@@ -72,6 +80,10 @@
 
     hr {
       margin: 20px 0;
+    }
+
+    .no-announcements {
+      text-align: center;
     }
   }
 </style>

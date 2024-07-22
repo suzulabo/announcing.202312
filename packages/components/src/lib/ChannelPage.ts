@@ -1,14 +1,16 @@
 import type { Action } from 'svelte/action';
 import { writable } from 'svelte/store';
 
-import type { AnnouncementProp, ChannelProp as ViewChannelProp } from './ChannelView/types';
+import type { AnnouncementViewParams, ChannelViewParams } from './ChannelView/types';
 
-export type ChannelProp = ViewChannelProp & {
+type Announcement = Exclude<AnnouncementViewParams['announcement'], undefined>;
+
+export type ChannelPageParams = Omit<ChannelViewParams, 'noAnnouncements'> & {
   keys: {
     key: string;
     count: number;
   }[];
-  loader: (key: string) => Promise<AnnouncementProp[]>;
+  loader: (key: string) => Promise<Announcement[]>;
 };
 
 const ITEMS_CHUNK_SIZE = 10;
@@ -20,8 +22,8 @@ type Item = {
   height?: string;
 };
 
-export const setup = (channel: ChannelProp) => {
-  const announcementsMap = new Map<string, AnnouncementProp[]>();
+export const setup = (params: ChannelPageParams) => {
+  const announcementsMap = new Map<string, Announcement[]>();
   const loadingSet = new Set<string>();
 
   const loadAnnouncements = (key: string) => {
@@ -31,7 +33,7 @@ export const setup = (channel: ChannelProp) => {
     if (loadingSet.has(key)) return;
 
     loadingSet.add(key);
-    void channel
+    void params
       .loader(key)
       .then((items) => {
         announcementsMap.set(key, items);
@@ -52,7 +54,7 @@ export const setup = (channel: ChannelProp) => {
   const itemsMap = new Map<string, Item[]>();
 
   {
-    const k = channel.keys[0];
+    const k = params.keys[0];
     if (k) {
       const { key, count } = k;
       itemsMap.set(key, [{ pos: 0, count: Math.min(ITEMS_CHUNK_SIZE, count), visible: false }]);
@@ -61,7 +63,7 @@ export const setup = (channel: ChannelProp) => {
   }
 
   const expandItems = () => {
-    for (const { key, count } of channel.keys) {
+    for (const { key, count } of params.keys) {
       for (let i = 0; i < count; i = i + ITEMS_CHUNK_SIZE) {
         const v = itemsMap.get(key);
         if (!v) {
@@ -76,7 +78,17 @@ export const setup = (channel: ChannelProp) => {
     }
   };
 
-  const store = writable({ announcementsMap, itemsMap });
+  const entries = () => {
+    return itemsMap.entries();
+  };
+
+  const getAnnouncementViewParams = (key: string, index: number): AnnouncementViewParams => {
+    return {
+      announcement: announcementsMap.get(key)?.[index],
+    };
+  };
+
+  const store = writable({ entries, getAnnouncementViewParams });
 
   const updateStore = () => {
     store.update((v) => {
@@ -144,5 +156,11 @@ export const setup = (channel: ChannelProp) => {
     return result;
   })();
 
-  return { store, bottomIntersectionAction, listIntersectionAction };
+  const channelViewParams: ChannelViewParams = {
+    channel: params.channel,
+    msgs: params.msgs,
+    noAnnouncements: params.keys.length === 0,
+  };
+
+  return { store, bottomIntersectionAction, listIntersectionAction, channelViewParams };
 };

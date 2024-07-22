@@ -1,18 +1,19 @@
 <script lang="ts">
-  import { type ChannelProp, setup } from './ChannelPage';
+  import { type ChannelPageParams, setup } from './ChannelPage';
   import { loadChannelViewComponents } from './ChannelView/loader';
   import Loading from './Loading.svelte';
 
-  export let channel: ChannelProp;
+  export let params: ChannelPageParams;
 
-  $: ({ store, bottomIntersectionAction, listIntersectionAction } = setup(channel));
+  $: ({ store, bottomIntersectionAction, listIntersectionAction, channelViewParams } =
+    setup(params));
 </script>
 
 {#await loadChannelViewComponents()}
   <Loading show={true} />
 {:then { ChannelView, AnnouncementView }}
-  <ChannelView {channel}>
-    {#each $store.itemsMap.entries() as [key, a]}
+  <ChannelView params={channelViewParams}>
+    {#each $store.entries() as [key, a]}
       {#each a as v}
         <div
           class="items-chunk"
@@ -23,7 +24,7 @@
             <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars } -->
             {#each Array(v.count) as _, i}
               <div>
-                <AnnouncementView announcement={$store.announcementsMap.get(key)?.[v.pos + i]} />
+                <AnnouncementView params={$store.getAnnouncementViewParams(key, v.pos + i)} />
               </div>
             {/each}
           {/if}

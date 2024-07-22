@@ -5,9 +5,11 @@
   import Modal from '$lib/Modal.svelte';
   import Spinner from '$lib/Spinner.svelte';
 
-  import type { AnnouncementProp } from '../types';
+  import type { AnnouncementViewParams } from '../types';
 
-  export let announcement: AnnouncementProp | undefined;
+  export let params: AnnouncementViewParams;
+
+  $: announcement = params.announcement;
 
   let modalImage: string | undefined = undefined;
 
