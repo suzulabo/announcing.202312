@@ -1,53 +1,56 @@
 <script lang="ts">
-  import {
-    type AnnouncementProp,
-    type ChannelProp,
-    loadChannelPageComponents,
-  } from '@announcing/components/ChannelView/loader';
-  import Loading from '@announcing/components/Loading.svelte';
+  import ChannelPage, { type ChannelPageParams } from '@announcing/components/ChannelPage.svelte';
+
+  import { t } from '$lib/i18n/translations';
 
   import type { PageServerData } from './$types';
 
   export let data: PageServerData;
 
-  const toViewProps = () => {
-    const channel = data.channel;
-    const channelProp: ChannelProp = {
-      title: channel.title,
-      desc: channel.desc,
-      icon: channel.icon && `/s/${channel.icon}`,
-      links: channel.links,
-      count: channel.announcements?.length ?? 0,
+  const toPageParams = (): ChannelPageParams => {
+    const c = data.channel;
+    const channel: ChannelPageParams['channel'] = {
+      title: c.title,
+      desc: c.desc,
+      icon: c.icon && `/s/${c.icon}`,
+      links: c.links,
     };
-    const announcementPropList: AnnouncementProp[] =
-      channel.announcements?.map<AnnouncementProp>((v) => {
-        return {
-          id: v.id,
-          headerImage: v.headerImage && `/s/${v.headerImage}`,
-          title: v.title,
-          body: v.body,
-          images: v.images?.map((v) => `/s/${v}`),
-          links: v.links,
-          updatedAt: new Date(v.updatedAt),
-          createdAt: new Date(v.createdAt),
-        };
-      }) ?? [];
 
-    return { channelProp, announcementPropList };
+    const keys: ChannelPageParams['keys'] = c.announcements
+      ? [{ key: 'newest', count: c.announcements.length }]
+      : [];
+
+    const loader: ChannelPageParams['loader'] = (key: string) => {
+      if (key === 'newest') {
+        const a = c.announcements ?? [];
+
+        const result = a.map((v) => {
+          return {
+            id: v.id,
+            headerImage: v.headerImage && `/s/${v.headerImage}`,
+            title: v.title,
+            body: v.body,
+            images: v.images?.map((v) => `/s/${v}`),
+            links: v.links,
+            updatedAt: new Date(v.updatedAt),
+            createdAt: new Date(v.createdAt),
+          };
+        });
+
+        return Promise.resolve(result);
+      }
+
+      throw new Error(`Unexpected key: ${key}`);
+    };
+
+    const msgs: ChannelPageParams['msgs'] = {
+      noAnnouncements: $t('channel.noAnnouncements') as string,
+    };
+
+    return { channel, keys, loader, msgs };
   };
 
-  $: viewProps = toViewProps();
+  $: params = toPageParams();
 </script>
 
-{#await loadChannelPageComponents()}
-  <Loading show={true} />
-{:then { ChannelView, AnnouncementView }}
-  <ChannelView channel={viewProps.channelProp}>
-    {#each viewProps.announcementPropList as announcement}
-      <AnnouncementView {announcement} />
-    {/each}
-  </ChannelView>
-{/await}
-
-<style lang="scss">
-</style>
+<ChannelPage {params} />

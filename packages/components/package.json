@@ -19,11 +19,11 @@
       "types": "./dist/actions/loadImage.d.ts",
       "import": "./dist/actions/loadImage.js"
     },
-    "./ChannelView/loader": {
-      "types": "./dist/ChannelView/loader.d.ts",
-      "import": "./dist/ChannelView/loader.js"
-    },
     "./base.scss": "./dist/base.scss",
+    "./ChannelPage.svelte": {
+      "types": "./dist/ChannelPage.svelte.d.ts",
+      "svelte": "./dist/ChannelPage.svelte"
+    },
     "./FileInput.svelte": {
       "types": "./dist/FileInput.svelte.d.ts",
       "svelte": "./dist/FileInput.svelte"

@@ -1,3 +1,8 @@
+<script lang="ts" context="module">
+  // Re-export
+  export type { ChannelPageParams } from './ChannelPage';
+</script>
+
 <script lang="ts">
   import { type ChannelPageParams, setup } from './ChannelPage';
   import { loadChannelViewComponents } from './ChannelView/loader';
