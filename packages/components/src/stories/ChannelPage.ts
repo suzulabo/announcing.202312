@@ -75,6 +75,11 @@ const announcements = (
   ] as Announcement[]
 ).concat(...genData());
 
+const dataMap = new Map<string, Announcement[]>();
+for (let i = 2; i <= 6; i++) {
+  dataMap.set(i.toString(), genData());
+}
+
 export const params: ChannelPageParams = {
   channel: {
     title: 'Aether Dynamics Corporation',
@@ -117,7 +122,7 @@ export const params: ChannelPageParams = {
 
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(genData());
+        resolve(dataMap.get(key) ?? []);
       }, 1000);
     });
   },
