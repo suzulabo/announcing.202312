@@ -1,3 +1,4 @@
+import { onMount } from 'svelte';
 import type { Action } from 'svelte/action';
 import { writable } from 'svelte/store';
 
@@ -96,64 +97,81 @@ export const setup = (params: ChannelPageParams) => {
     });
   };
 
-  const bottomIntersectionAction: Action = (el) => {
-    const callback: IntersectionObserverCallback = (entries) => {
-      for (const entry of entries) {
-        if (entry.target === el && entry.isIntersecting) {
-          expandItems();
-          updateStore();
-          return;
+  const bottomIntersectionAction = (() => {
+    let observe: (el: Element) => void;
+
+    onMount(() => {
+      const callback: IntersectionObserverCallback = (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            expandItems();
+            updateStore();
+            return;
+          }
         }
-      }
-    };
+      };
+      const observer = new IntersectionObserver(callback, {
+        rootMargin: '0px 0px 100px 0px',
+      });
 
-    const observer = new IntersectionObserver(callback, {
-      rootMargin: '0px 0px 100px 0px',
-    });
-    observer.observe(el);
+      observe = (el) => {
+        observer.observe(el);
+      };
 
-    return {
-      destroy: () => {
+      return () => {
         observer.disconnect();
-      },
+      };
+    });
+
+    const action: Action = (el) => {
+      observe(el);
     };
-  };
+
+    return action;
+  })();
 
   const listIntersectionAction = (() => {
     const elMap = new Map<Element, { key: string; value: Item }>();
-    const callback: IntersectionObserverCallback = (entries) => {
-      for (const entry of entries) {
-        const v = elMap.get(entry.target);
-        if (!v) continue;
 
-        const { key, value } = v;
-        value.visible = entry.isIntersecting;
-        if (value.visible) {
-          value.height = 'auto';
-          loadAnnouncements(key);
-        } else {
-          value.height = entry.boundingClientRect.height.toString() + 'px';
+    let observe: (el: Element) => void;
+
+    onMount(() => {
+      const callback: IntersectionObserverCallback = (entries) => {
+        for (const entry of entries) {
+          const v = elMap.get(entry.target);
+          if (!v) continue;
+
+          const { key, value } = v;
+          value.visible = entry.isIntersecting;
+          if (value.visible) {
+            value.height = 'auto';
+            loadAnnouncements(key);
+          } else {
+            value.height = entry.boundingClientRect.height.toString() + 'px';
+          }
         }
-      }
-      updateStore();
-    };
+        updateStore();
+      };
 
-    const observer = new IntersectionObserver(callback, {
-      rootMargin: '100px 0px 100px 0px',
+      const observer = new IntersectionObserver(callback, {
+        rootMargin: '100px 0px 100px 0px',
+      });
+
+      observe = (el) => {
+        observer.observe(el);
+      };
+
+      return () => {
+        observer.disconnect();
+      };
     });
 
-    const result: Action<HTMLElement, { key: string; value: Item }> = (el, value) => {
+    const action: Action<HTMLElement, { key: string; value: Item }> = (el, value) => {
       elMap.set(el, value);
-      observer.observe(el);
-
-      return {
-        destroy: () => {
-          observer.disconnect();
-        },
-      };
+      observe(el);
     };
 
-    return result;
+    return action;
   })();
 
   const channelViewParams: ChannelViewParams = {
