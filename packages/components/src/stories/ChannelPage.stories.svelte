@@ -13,7 +13,7 @@
   } satisfies Meta;
 
   const noAnnouncementsParams = (): ChannelPageParams => {
-    return { ...params, keys: [] };
+    return { ...params, segments: [] };
   };
 </script>
 

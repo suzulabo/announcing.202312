@@ -11,7 +11,7 @@ faker.seed(1192);
 let num = 100;
 let date = parseISO('2023-12-31T00:11:22');
 
-const GEN_DATA_LENGTH = 10;
+const GEN_DATA_LENGTH = 100;
 
 const genData = () => {
   const result: Announcement[] = [];
@@ -88,7 +88,7 @@ export const params: ChannelPageParams = {
     links: null,
   },
 
-  keys: [
+  segments: [
     {
       key: '1',
       count: announcements.length,
