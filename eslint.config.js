@@ -31,7 +31,6 @@ const tsConfig = ts.config({
   rules: {
     '@typescript-eslint/no-unnecessary-condition': 'error',
     '@typescript-eslint/consistent-type-definitions': 'off',
-    '@typescript-eslint/prefer-promise-reject-errors': 'off',
   },
 });
 

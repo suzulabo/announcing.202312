@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { addDays, parseISO } from 'date-fns';
 
-import type { ChannelPageParams } from '$lib/ChannelPage2';
+import type { ChannelPageParams } from '$lib/ChannelPage';
 import type { AnnouncementViewParams } from '$lib/ChannelView/types';
 
 type Announcement = Exclude<AnnouncementViewParams['announcement'], undefined>;
@@ -88,7 +88,7 @@ export const params: ChannelPageParams = {
     links: null,
   },
 
-  segments: [
+  keys: [
     {
       key: '1',
       count: announcements.length,
