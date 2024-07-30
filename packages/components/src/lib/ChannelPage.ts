@@ -86,14 +86,13 @@ export const setup = (params: ChannelPageParams) => {
       const callback: IntersectionObserverCallback = (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            console.log('load');
             load();
             return;
           }
         }
       };
       const observer = new IntersectionObserver(callback, {
-        rootMargin: '0px 0px 100% 0px',
+        rootMargin: '0px 0px 0px 0px',
       });
 
       observe = (el) => {
