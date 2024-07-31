@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { format } from 'date-fns';
-  import linkifyHtml from 'linkify-html';
   import { getContext } from 'svelte';
 
   import Spinner from '$lib/Spinner.svelte';
+  import { formatDate } from '$lib/utils/formatDate';
+  import { toHtml } from '$lib/utils/toHtml';
 
   import type { AnnouncementViewParams } from '../types';
   import { type ShowImageModalContext, showImageModalContextKey } from './lib';
@@ -11,18 +11,6 @@
   export let params: AnnouncementViewParams;
 
   $: announcement = params.announcement;
-
-  const formatDate = (n: Date) => {
-    return format(n, 'yyyy-MM-dd HH:mm');
-  };
-
-  const toHtml = (s: string) => {
-    return linkifyHtml(s, {
-      defaultProtocol: 'https',
-      target: '_blank',
-      rel: 'nofollow noreferrer',
-    });
-  };
 
   const showImageModal = getContext<ShowImageModalContext>(showImageModalContextKey);
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import linkifyHtml from 'linkify-html';
   import { setContext } from 'svelte';
 
   import Modal from '$lib/Modal.svelte';
+  import { toHtml } from '$lib/utils/toHtml';
 
   import type { ChannelViewParams } from '../types';
   import { type ShowImageModalContext, showImageModalContextKey } from './lib';
@@ -12,14 +12,6 @@
   $: ({ channel, noAnnouncements, msgs } = params);
 
   let imageModalSrc: string | undefined = undefined;
-
-  const toHtml = (s: string) => {
-    return linkifyHtml(s, {
-      defaultProtocol: 'https',
-      target: '_blank',
-      rel: 'nofollow noreferrer',
-    });
-  };
 
   const showImageModal = (src: string) => {
     imageModalSrc = src;
