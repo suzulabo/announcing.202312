@@ -1,11 +1,17 @@
 <script lang="ts">
   import linkifyHtml from 'linkify-html';
+  import { setContext } from 'svelte';
+
+  import Modal from '$lib/Modal.svelte';
 
   import type { ChannelViewParams } from '../types';
+  import { type ShowImageModalContext, showImageModalContextKey } from './lib';
 
   export let params: ChannelViewParams;
 
   $: ({ channel, noAnnouncements, msgs } = params);
+
+  let imageModalSrc: string | undefined = undefined;
 
   const toHtml = (s: string) => {
     return linkifyHtml(s, {
@@ -14,6 +20,12 @@
       rel: 'nofollow noreferrer',
     });
   };
+
+  const showImageModal = (src: string) => {
+    imageModalSrc = src;
+  };
+
+  setContext<ShowImageModalContext>(showImageModalContextKey, showImageModal);
 </script>
 
 <div class="main">
@@ -46,6 +58,16 @@
     <slot />
   {/if}
 </div>
+
+<Modal
+  show={!!imageModalSrc}
+  closeAnywhere={true}
+  on:close={() => {
+    imageModalSrc = undefined;
+  }}
+>
+  <div class="zoom-image"><img src={imageModalSrc} alt="" /></div>
+</Modal>
 
 <style lang="scss">
   .main {
@@ -84,6 +106,19 @@
 
     .no-announcements {
       text-align: center;
+    }
+  }
+
+  .zoom-image {
+    display: flex;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    img {
+      object-fit: contain;
     }
   }
 </style>

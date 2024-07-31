@@ -1,17 +1,16 @@
 <script lang="ts">
   import { format } from 'date-fns';
   import linkifyHtml from 'linkify-html';
+  import { getContext } from 'svelte';
 
-  import Modal from '$lib/Modal.svelte';
   import Spinner from '$lib/Spinner.svelte';
 
   import type { AnnouncementViewParams } from '../types';
+  import { type ShowImageModalContext, showImageModalContextKey } from './lib';
 
   export let params: AnnouncementViewParams;
 
   $: announcement = params.announcement;
-
-  let modalImage: string | undefined = undefined;
 
   const formatDate = (n: Date) => {
     return format(n, 'yyyy-MM-dd HH:mm');
@@ -25,10 +24,13 @@
     });
   };
 
-  const imgClick = (src: string) => {
-    return () => {
-      modalImage = src;
-    };
+  const showImageModal = getContext<ShowImageModalContext>(showImageModalContextKey);
+
+  const imgClick = (event: MouseEvent) => {
+    const src = (event.currentTarget as HTMLButtonElement).getAttribute('data-src');
+    if (src) {
+      showImageModal(src);
+    }
   };
 </script>
 
@@ -41,7 +43,7 @@
     <div class="published">{formatDate(announcement.updatedAt)}</div>
     {#if announcement.headerImage}
       <div class="header-image">
-        <button class="unstyled" on:click={imgClick(announcement.headerImage)}>
+        <button class="unstyled" data-src={announcement.headerImage} on:click={imgClick}>
           <img src={announcement.headerImage} alt={announcement.title} />
         </button>
       </div>
@@ -55,7 +57,7 @@
     {#if announcement.images}
       <div class={`images size-${announcement.images.length.toString()}`}>
         {#each announcement.images as image}
-          <button class="unstyled" on:click={imgClick(image)}>
+          <button class="unstyled" data-src={image} on:click={imgClick}>
             <img src={image} alt={announcement.title} />
           </button>
         {/each}
@@ -64,16 +66,6 @@
   {/if}
 </div>
 <hr />
-
-<Modal
-  show={!!modalImage}
-  closeAnywhere={true}
-  on:close={() => {
-    modalImage = undefined;
-  }}
->
-  <div class="zoom-image"><img src={modalImage} alt="" /></div>
-</Modal>
 
 <style lang="scss">
   .announcement {
@@ -129,18 +121,5 @@
 
   hr {
     margin: 20px 0;
-  }
-
-  .zoom-image {
-    display: flex;
-    margin: auto;
-    width: fit-content;
-    height: fit-content;
-    max-width: 100%;
-    max-height: 100%;
-    overflow: hidden;
-    img {
-      object-fit: contain;
-    }
   }
 </style>
