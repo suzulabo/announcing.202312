@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
-  import baseCss from '$lib/base.scss?inline';
+  import resetCss from '$lib/reset.scss?inline';
 
   const baseCssAction: Action = (el) => {
     const style = document.createElement('style');
-    style.innerHTML = baseCss;
+    style.innerHTML = resetCss;
     el.insertAdjacentElement('beforebegin', style);
   };
 </script>
