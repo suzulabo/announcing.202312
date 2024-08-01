@@ -16,7 +16,7 @@
       links: c.links,
     };
 
-    const keys: ChannelPageParams['keys'] = c.announcements
+    const segments: ChannelPageParams['segments'] = c.announcements
       ? [{ key: 'newest', count: c.announcements.length }]
       : [];
 
@@ -47,7 +47,7 @@
       noAnnouncements: $t('channel.noAnnouncements') as string,
     };
 
-    return { channel, keys, loader, msgs };
+    return { channel, segments, loader, msgs };
   };
 
   $: params = toPageParams();
