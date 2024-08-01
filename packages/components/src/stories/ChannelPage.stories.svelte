@@ -1,9 +1,10 @@
 <script lang="ts" context="module">
+  import '$lib/ChannelPage.svelte';
+
   import { Story } from '@storybook/addon-svelte-csf';
   import type { Meta } from '@storybook/svelte';
 
   import type { ChannelPageParams } from '$lib/ChannelPage';
-  import ChannelPage from '$lib/ChannelPage.svelte';
 
   import { params } from './ChannelPage';
 
@@ -18,9 +19,9 @@
 </script>
 
 <Story name="Basic">
-  <ChannelPage {params} />
+  <channel-page {params} />
 </Story>
 
 <Story name="No announcements">
-  <ChannelPage params={noAnnouncementsParams()} />
+  <channel-page params={noAnnouncementsParams()} />
 </Story>

@@ -1,5 +1,16 @@
+<script lang="ts" context="module">
+  import baseCss from '$lib/base.scss?inline';
+
+  const baseCssAction: Action = (el) => {
+    const style = document.createElement('style');
+    style.innerHTML = baseCss;
+    el.insertAdjacentElement('beforebegin', style);
+  };
+</script>
+
 <script lang="ts">
   import { setContext } from 'svelte';
+  import type { Action } from 'svelte/action';
 
   import Modal from '$lib/Modal.svelte';
   import { toHtml } from '$lib/utils/toHtml';
@@ -20,7 +31,7 @@
   setContext<ShowImageModalContext>(showImageModalContextKey, showImageModal);
 </script>
 
-<div class="main">
+<div class="main" use:baseCssAction>
   <div class="name-line">
     <div class="name">
       {channel.title}

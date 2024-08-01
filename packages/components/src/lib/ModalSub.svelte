@@ -1,12 +1,10 @@
 <script lang="ts" context="module">
   import { writable } from 'svelte/store';
 
-  const MODAL_MARKER = '__modal__';
-
   export const modalHashWatcher = writable(undefined, () => {
     const popstateListener = () => {
       // Block going to URL with #modal on forward
-      if (location.hash === '#modal' && !document.querySelector(MODAL_MARKER)) {
+      if (location.hash === '#modal' && !document.querySelector('.modal')) {
         history.back();
       }
     };
@@ -20,7 +18,7 @@
 </script>
 
 <script lang="ts">
-  import { createEventDispatcher, onDestroy } from 'svelte';
+  import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
   export let closeAnywhere = false;
 
@@ -31,7 +29,16 @@
 
   history.pushState(undefined, '', '#modal');
 
+  let bodyOverflow: string;
+
+  onMount(() => {
+    bodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  });
+
   onDestroy(() => {
+    document.body.style.overflow = bodyOverflow;
+
     if (location.hash === '#modal') {
       history.back();
     }
@@ -39,7 +46,7 @@
 </script>
 
 <button
-  class={`unstyled modal ${MODAL_MARKER}`}
+  class={`unstyled modal`}
   on:click={() => {
     if (closeAnywhere) handleClose();
   }}

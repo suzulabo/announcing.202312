@@ -1,3 +1,5 @@
+<svelte:options customElement={{ tag: 'channel-page' }} />
+
 <script lang="ts" context="module">
   // Re-export
   export type { ChannelPageParams } from './ChannelPage';
