@@ -74,6 +74,8 @@
 
 <style lang="scss">
   .main {
+    animation: showDelay 0.5s;
+
     max-width: 600px;
     margin: 0 auto;
     padding: 20px 10px;
@@ -122,6 +124,15 @@
     overflow: hidden;
     img {
       object-fit: contain;
+    }
+  }
+
+  @keyframes showDelay {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
     }
   }
 </style>
