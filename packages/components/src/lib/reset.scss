@@ -1,5 +1,9 @@
 @use 'the-new-css-reset/css/reset.css';
 
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+
 a {
   text-decoration: underline;
 }
