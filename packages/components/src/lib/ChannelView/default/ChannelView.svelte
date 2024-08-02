@@ -74,11 +74,11 @@
 
 <style lang="scss">
   .main {
-    animation: showDelay 0.5s;
-
     max-width: 600px;
     margin: 0 auto;
     padding: 20px 10px;
+
+    animation: fadeIn 0.5s;
 
     .name-line {
       display: flex;
@@ -127,7 +127,7 @@
     }
   }
 
-  @keyframes showDelay {
+  @keyframes fadeIn {
     0% {
       opacity: 0;
     }
