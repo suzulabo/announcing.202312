@@ -1,111 +1,56 @@
 <script lang="ts">
-  import { format } from 'date-fns';
-  import linkifyHtml from 'linkify-html';
+  import ChannelPage, { type ChannelPageParams } from '@announcing/components/ChannelPage.svelte';
 
-  import type { PageData } from './$types';
+  import { t } from '$lib/i18n/translations';
 
-  export let data: PageData;
+  import type { PageServerData } from './$types';
 
-  $: channel = data.channel;
+  export let data: PageServerData;
 
-  const formatDate = (n: number) => {
-    return format(n, 'yyyy-MM-dd HH:mm');
+  const toPageParams = (): ChannelPageParams => {
+    const c = data.channel;
+    const channel: ChannelPageParams['channel'] = {
+      title: c.title,
+      desc: c.desc,
+      icon: c.icon && `/s/${c.icon}`,
+      links: c.links,
+    };
+
+    const segments: ChannelPageParams['segments'] = c.announcements
+      ? [{ key: 'newest', count: c.announcements.length }]
+      : [];
+
+    const loader: ChannelPageParams['loader'] = (key: string) => {
+      if (key === 'newest') {
+        const a = c.announcements ?? [];
+
+        const result = a.map((v) => {
+          return {
+            id: v.id,
+            headerImage: v.headerImage && `/s/${v.headerImage}`,
+            title: v.title,
+            body: v.body,
+            images: v.images?.map((v) => `/s/${v}`),
+            links: v.links,
+            updatedAt: new Date(v.updatedAt),
+            createdAt: new Date(v.createdAt),
+          };
+        });
+
+        return Promise.resolve(result);
+      }
+
+      throw new Error(`Unexpected key: ${key}`);
+    };
+
+    const msgs: ChannelPageParams['msgs'] = {
+      noAnnouncements: $t('channel.noAnnouncements') as string,
+    };
+
+    return { channel, segments, loader, msgs };
   };
-  const toHtml = (s: string) => {
-    return linkifyHtml(s, {
-      defaultProtocol: 'https',
-      target: '_blank',
-      rel: 'nofollow noreferrer',
-    });
-  };
+
+  $: params = toPageParams();
 </script>
 
-<div class="main">
-  <div class="name-line">
-    <div class="name">
-      {channel.title}
-    </div>
-    {#if channel.icon}
-      <img class="icon" src={`/s/${channel.icon}`} alt={channel.title} />
-    {/if}
-  </div>
-  {#if channel.desc}
-    <div class="desc">
-      {@html toHtml(channel.desc)}
-    </div>
-  {/if}
-  {#if channel.links}
-    {#each channel.links as link}
-      <div class="link">
-        <a href={link.url}>{link.name}</a>
-      </div>
-    {/each}
-  {/if}
-
-  {#if channel.announcements}
-    <hr />
-    {#each channel.announcements as announcement}
-      <div class="post">
-        <div class="published">{formatDate(announcement.updatedAt)}</div>
-        {#if announcement.title}
-          <div class="title">{announcement.title}</div>
-        {/if}
-        {#if announcement.body}
-          <div class="body">{@html toHtml(announcement.body)}</div>
-        {/if}
-      </div>
-      <hr />
-    {/each}
-  {/if}
-</div>
-
-<style lang="scss">
-  .main {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px 10px;
-
-    .name-line {
-      display: flex;
-      align-items: center;
-      .name {
-        font-weight: bold;
-        font-size: 24px;
-        flex-grow: 1;
-      }
-      .icon {
-        width: 64px;
-        height: 64px;
-        border-radius: 8px;
-        object-fit: contain;
-      }
-    }
-
-    .desc {
-      margin: 10px 5px 0;
-      white-space: pre-line;
-    }
-
-    .link {
-      margin: 10px 5px 0;
-    }
-
-    hr {
-      margin: 20px 0;
-    }
-
-    .post {
-      padding: 0 10px;
-      min-height: 100px;
-      .title {
-        font-size: 18px;
-        font-weight: bold;
-        margin: 10px 0 0;
-      }
-      .body {
-        white-space: pre-line;
-        margin: 10px 0 0;
-      }
-    }
-  }
-</style>
+<ChannelPage {params} />

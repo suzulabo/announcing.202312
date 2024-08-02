@@ -1,15 +1,21 @@
-<script lang="ts">
-  import type { Hst } from '@histoire/plugin-svelte';
+<script lang="ts" context="module">
+  import { Story } from '@storybook/addon-svelte-csf';
+  import type { Meta } from '@storybook/svelte';
 
   import Modal from '$lib/Modal.svelte';
 
-  // eslint-disable-next-line no-import-assign
-  export let Hst: Hst;
+  export const meta = {
+    title: 'Modal',
+    component: Modal,
+    tags: ['autodocs'],
+  } satisfies Meta<Modal>;
+</script>
 
+<script lang="ts">
   let show = false;
 </script>
 
-<Hst.Story title="Modal">
+<Story name="Basic">
   <button on:click={() => (show = true)}>Show</button>
   <Modal
     bind:show
@@ -22,7 +28,7 @@
       <button on:click={() => (show = false)}>Close</button>
     </div>
   </Modal>
-</Hst.Story>
+</Story>
 
 <style lang="scss">
   .modal-body {

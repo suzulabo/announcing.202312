@@ -10,13 +10,20 @@
     "prepublishOnly": "npm run package",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "story:dev": "histoire dev",
-    "story:build": "histoire build",
-    "story:preview": "histoire preview"
+    "storybook": "storybook dev -p 6006 --no-open",
+    "build-storybook": "storybook build"
   },
   "type": "module",
   "exports": {
+    "./actions/loadImage": {
+      "types": "./dist/actions/loadImage.d.ts",
+      "import": "./dist/actions/loadImage.js"
+    },
     "./base.scss": "./dist/base.scss",
+    "./ChannelPage.svelte": {
+      "types": "./dist/ChannelPage.svelte.d.ts",
+      "svelte": "./dist/ChannelPage.svelte"
+    },
     "./FileInput.svelte": {
       "types": "./dist/FileInput.svelte.d.ts",
       "svelte": "./dist/FileInput.svelte"
@@ -44,10 +51,6 @@
     "./TextArea.svelte": {
       "types": "./dist/TextArea.svelte.d.ts",
       "svelte": "./dist/TextArea.svelte"
-    },
-    "./actions/loadImage": {
-      "types": "./dist/actions/loadImage.d.ts",
-      "import": "./dist/actions/loadImage.js"
     }
   },
   "files": [
@@ -60,22 +63,31 @@
   },
   "devDependencies": {
     "@announcing/db": "workspace:^",
-    "@histoire/plugin-svelte": "^0.17.17",
+    "@chromatic-com/storybook": "^1.6.1",
+    "@faker-js/faker": "^8.4.1",
+    "@storybook/addon-essentials": "^8.2.4",
+    "@storybook/addon-interactions": "^8.2.4",
+    "@storybook/addon-links": "^8.2.4",
+    "@storybook/addon-svelte-csf": "^4.1.4",
+    "@storybook/blocks": "^8.2.4",
+    "@storybook/svelte": "^8.2.4",
+    "@storybook/sveltekit": "^8.2.4",
+    "@storybook/test": "^8.2.4",
     "@sveltejs/adapter-auto": "^3.2.2",
     "@sveltejs/kit": "^2.5.18",
     "@sveltejs/package": "^2.3.2",
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "@types/image-blob-reduce": "^4.1.4",
-    "histoire": "^0.17.17",
     "publint": "^0.2.8",
-    "sass": "^1.77.6",
+    "sass": "^1.77.8",
+    "storybook": "^8.2.4",
     "svelte": "^4.2.18",
     "svelte-check": "^3.8.4",
-    "svelte-preprocess": "^6.0.1",
+    "svelte-preprocess": "^6.0.2",
     "the-new-css-reset": "^1.11.2",
     "tslib": "^2.6.3",
-    "vite": "^5.3.2",
-    "vitest": "^1.6.0"
+    "vite": "^5.3.4",
+    "vitest": "^2.0.3"
   },
   "dependencies": {
     "date-fns": "^3.6.0",

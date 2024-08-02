@@ -1,1 +1,5 @@
-export const msgs = {};
+export const msgs = {
+  channel: {
+    noAnnouncements: 'アナウンスはまだありません',
+  },
+};

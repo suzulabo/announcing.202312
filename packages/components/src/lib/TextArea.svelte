@@ -11,7 +11,7 @@
 
   afterUpdate(() => {
     textAreaRef.style.height = 'auto';
-    textAreaRef.style.height = `${textAreaRef.scrollHeight.toString()})px`;
+    textAreaRef.style.height = `${textAreaRef.scrollHeight.toString()}px`;
   });
 </script>
 
