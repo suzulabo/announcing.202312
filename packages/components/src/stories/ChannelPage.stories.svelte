@@ -16,10 +16,14 @@
   <channel-page {params} />
 </Story>
 
+<Story name="No announcements">
+  <channel-page params={{ ...params, segments: [] }} />
+</Story>
+
 <Story name="Dark">
   <channel-page params={{ ...params, viewName: 'default_dark' }} />
 </Story>
 
-<Story name="No announcements">
-  <channel-page params={{ ...params, segments: [] }} />
+<Story name="Light">
+  <channel-page params={{ ...params, viewName: 'default_light' }} />
 </Story>
