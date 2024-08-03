@@ -7,27 +7,29 @@
 
 <script lang="ts">
   import { type ChannelPageParams, setup } from './ChannelPage';
-  import { loadChannelViewComponents } from './ChannelView/loader';
   import Loading from './Loading.svelte';
 
   export let params: ChannelPageParams;
 
-  $: ({ loading, announcements, channelViewParams, bottomIntersectionAction } = setup(params));
+  $: ({
+    loading,
+    announcements,
+    ChannelView,
+    AnnouncementView,
+    channelViewParams,
+    bottomIntersectionAction,
+  } = setup(params));
 </script>
 
-{#await loadChannelViewComponents()}
-  <Loading show={true} />
-{:then { ChannelView, AnnouncementView }}
-  <ChannelView params={channelViewParams}>
-    <div class="announcement">
-      {#each $announcements as announcement (announcement.id)}
-        <AnnouncementView params={{ announcement }} />
-      {/each}
-      <div use:bottomIntersectionAction></div>
-    </div>
-  </ChannelView>
-  <Loading show={$loading} />
-{/await}
+<ChannelView params={channelViewParams}>
+  <div class="announcement">
+    {#each $announcements as announcement (announcement.id)}
+      <AnnouncementView params={{ announcement }} />
+    {/each}
+    <div use:bottomIntersectionAction></div>
+  </div>
+</ChannelView>
+<Loading show={$loading} />
 
 <style lang="scss">
   .announcement {

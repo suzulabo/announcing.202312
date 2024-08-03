@@ -1,7 +1,7 @@
-import { onMount } from 'svelte';
 import type { Action } from 'svelte/action';
 import { get, writable } from 'svelte/store';
 
+import { loadChannelViewComponents } from './ChannelView/loader';
 import type { AnnouncementViewParams, ChannelViewParams } from './ChannelView/types';
 
 type Announcement = Exclude<AnnouncementViewParams['announcement'], undefined>;
@@ -14,6 +14,7 @@ export type ChannelPageParams = Omit<ChannelViewParams, 'noAnnouncements'> & {
     count: number;
   }[];
   loader: (key: string) => Promise<Announcement[]>;
+  viewName: string;
 };
 
 export const setup = (params: ChannelPageParams) => {
@@ -79,37 +80,29 @@ export const setup = (params: ChannelPageParams) => {
 
   load();
 
-  const bottomIntersectionAction = (() => {
-    let observe: (el: Element) => void;
-
-    onMount(() => {
-      const callback: IntersectionObserverCallback = (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            load();
-            return;
-          }
+  const bottomIntersectionAction: Action = (el) => {
+    const callback: IntersectionObserverCallback = (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          load();
+          return;
         }
-      };
-      const observer = new IntersectionObserver(callback, {
-        rootMargin: '0px 0px 0px 0px',
-      });
-
-      observe = (el) => {
-        observer.observe(el);
-      };
-
-      return () => {
-        observer.disconnect();
-      };
+      }
+    };
+    const observer = new IntersectionObserver(callback, {
+      rootMargin: '0px 0px 0px 0px',
     });
 
-    const action: Action = (el) => {
-      observe(el);
-    };
+    observer.observe(el);
 
-    return action;
-  })();
+    return {
+      destroy: () => {
+        observer.disconnect();
+      },
+    };
+  };
+
+  const { ChannelView, AnnouncementView } = loadChannelViewComponents(params.viewName);
 
   const channelViewParams: ChannelViewParams = {
     channel: params.channel,
@@ -117,5 +110,13 @@ export const setup = (params: ChannelPageParams) => {
     noAnnouncements: params.segments.length === 0,
   };
 
-  return { loading, error, announcements, channelViewParams, bottomIntersectionAction };
+  return {
+    loading,
+    error,
+    announcements,
+    ChannelView,
+    AnnouncementView,
+    channelViewParams,
+    bottomIntersectionAction,
+  };
 };

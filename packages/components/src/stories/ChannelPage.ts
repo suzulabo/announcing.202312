@@ -127,6 +127,8 @@ export const params: ChannelPageParams = {
     });
   },
 
+  viewName: 'default',
+
   msgs: {
     noAnnouncements: 'No announcement yet.',
   },
