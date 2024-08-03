@@ -13,28 +13,17 @@ html {
   --color-border-light: #bdbdbd;
   --color-hover: #f5f5f5;
 
-  --color-text-dark: #fafafa;
-  --color-text-disable-dark: #9e9e9e;
-  --color-background-dark: #000000;
-  --color-background-light-dark: #616161;
-  --color-background-modal-dark: rgba(255, 255, 255, 0.7);
-  --color-background-loading-dark: rgba(0, 0, 0, 0.5);
-  --color-border-dark: #fafafa;
-  --color-border-disable-dark: #9e9e9e;
-  --color-border-light-dark: #757575;
-  --color-hover-dark: #424242;
-
   @mixin dark-mode {
-    --color-text: var(--color-text-dark);
-    --color-text-disable: var(--color-text-disable-dark);
-    --color-background: var(--color-background-dark);
-    --color-background-light: var(--color-background-light-dark);
-    --color-background-modal: var(--color-background-modal-dark);
-    --color-background-loading: var(--color-background-loading-dark);
-    --color-border: var(--color-border-dark);
-    --color-border-disable: var(--color-border-disable-dark);
-    --color-border-light: var(--color-border-light-dark);
-    --color-hover: var(--color-hover-dark);
+    --color-text: #fafafa;
+    --color-text-disable: #9e9e9e;
+    --color-background: #000000;
+    --color-background-light: #616161;
+    --color-background-modal: rgba(0, 0, 0, 0.7);
+    --color-background-loading: rgba(0, 0, 0, 0.5);
+    --color-border: #fafafa;
+    --color-border-disable: #9e9e9e;
+    --color-border-light: #757575;
+    --color-hover: #424242;
   }
 
   color: var(--color-text);
