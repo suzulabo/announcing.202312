@@ -1,0 +1,34 @@
+<script>
+  /* =================================================
+  Manually apply dark/light mode class to target element if not already applied.
+  Workaround for bug of storybook-dark-mode (stylePreview: true in isolated view).
+  @see https://github.com/hipstersmoothie/storybook-dark-mode/issues/173
+  =================================================== */
+  window.addEventListener('DOMContentLoaded', () => {
+    const getStore = () => {
+      const storeJson = localStorage.getItem('sb-addon-themes-3');
+      return storeJson ? JSON.parse(storeJson) : undefined;
+    };
+
+    const store = getStore();
+    const target = document.querySelector(store.classTarget);
+
+    // Check if required dark/light class has NOT been applied to the target.
+    if (
+      target &&
+      !target.classList.contains(store.current === 'light' ? store.lightClass : store.darkClass)
+    ) {
+      // If absent, bug is occurring, so update classList and respond to local storage changes.
+      const updateTheme = () => {
+        const newStore = getStore();
+        if (newStore) {
+          target.classList.toggle(newStore.lightClass, newStore.current === 'light');
+          target.classList.toggle(newStore.darkClass, newStore.current === 'dark');
+        }
+      };
+
+      window.addEventListener('storage', updateTheme);
+      updateTheme();
+    }
+  });
+</script>
