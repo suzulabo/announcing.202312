@@ -1,3 +1,3 @@
-import { msgs } from './ja';
+import { type msgs } from './ja';
 
 export type Msgs = typeof msgs;

@@ -1,22 +1,3 @@
-<script lang="ts" context="module">
-  import { writable } from 'svelte/store';
-
-  export const modalHashWatcher = writable(undefined, () => {
-    const popstateListener = () => {
-      // Block going to URL with #modal on forward
-      if (location.hash === '#modal' && !document.querySelector('.modal')) {
-        history.back();
-      }
-    };
-
-    window.addEventListener('popstate', popstateListener);
-
-    return () => {
-      window.removeEventListener('popstate', popstateListener);
-    };
-  });
-</script>
-
 <script lang="ts">
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
