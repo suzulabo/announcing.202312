@@ -43,11 +43,16 @@
       throw new Error(`Unexpected key: ${key}`);
     };
 
-    const msgs: ChannelPageParams['msgs'] = {
-      noAnnouncements: $t('channel.noAnnouncements') as string,
+    const settingsClick = () => {
+      // TODO
     };
 
-    return { channel, segments, loader, msgs };
+    const msgs: ChannelPageParams['msgs'] = {
+      noAnnouncements: $t('channel.noAnnouncements') as string,
+      settings: $t('channel.settings') as string,
+    };
+
+    return { viewName: 'default', channel, segments, loader, settingsClick, msgs };
   };
 
   $: params = toPageParams();
