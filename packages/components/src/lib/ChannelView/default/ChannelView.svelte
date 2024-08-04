@@ -31,6 +31,9 @@
   setContext<ShowImageModalContext>(showImageModalContextKey, showImageModal);
 </script>
 
+<div class="settings">
+  <button on:click={params.settingsClick}>{msgs.settings}</button>
+</div>
 <div class="main" use:baseCssAction>
   <div class="name-line">
     <div class="name">
@@ -73,7 +76,11 @@
 </Modal>
 
 <style lang="scss">
+  .settings {
+    text-align: right;
+  }
   .main {
+    min-height: 100vh;
     max-width: 600px;
     margin: 0 auto;
     padding: 20px 10px;
@@ -81,6 +88,7 @@
     animation: fadeIn 0.5s;
 
     .name-line {
+      margin: 10px 0 0;
       display: flex;
       align-items: center;
       .name {
