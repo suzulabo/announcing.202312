@@ -1,12 +1,24 @@
-import type AnnouncementView from './default/AnnouncementView.svelte';
-import type ChannelView from './default/ChannelView.svelte';
+import DefaultAnnouncementView from './default/AnnouncementView.svelte';
+import DefaultChannelView from './default/ChannelView.svelte';
+import DefaultDarkChannelView from './default_dark/ChannelView.svelte';
+import DefaultLightChannelView from './default_light/ChannelView.svelte';
 
-export const loadChannelViewComponents = async (): Promise<{
-  ChannelView: typeof ChannelView;
-  AnnouncementView: typeof AnnouncementView;
-}> => {
+export const loadChannelViewComponents = (name: string) => {
+  switch (name) {
+    case 'default_dark':
+      return {
+        ChannelView: DefaultDarkChannelView,
+        AnnouncementView: DefaultAnnouncementView,
+      };
+    case 'default_light':
+      return {
+        ChannelView: DefaultLightChannelView,
+        AnnouncementView: DefaultAnnouncementView,
+      };
+  }
+
   return {
-    ChannelView: (await import('./default/ChannelView.svelte')).default,
-    AnnouncementView: (await import('./default/AnnouncementView.svelte')).default,
+    ChannelView: DefaultChannelView,
+    AnnouncementView: DefaultAnnouncementView,
   };
 };

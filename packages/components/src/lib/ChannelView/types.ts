@@ -11,7 +11,9 @@ export type ChannelViewParams = {
       | null;
   };
   noAnnouncements: boolean;
+  settingsClick: () => void;
   msgs: {
+    settings: string;
     noAnnouncements: string;
   };
 };

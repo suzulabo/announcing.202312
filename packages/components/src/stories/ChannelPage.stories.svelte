@@ -4,18 +4,12 @@
   import { Story } from '@storybook/addon-svelte-csf';
   import type { Meta } from '@storybook/svelte';
 
-  import type { ChannelPageParams } from '$lib/ChannelPage';
-
   import { params } from './ChannelPage';
 
   export const meta = {
     title: 'ChannelPage/default',
     tags: ['autodocs'],
   } satisfies Meta;
-
-  const noAnnouncementsParams = (): ChannelPageParams => {
-    return { ...params, segments: [] };
-  };
 </script>
 
 <Story name="Basic">
@@ -23,5 +17,13 @@
 </Story>
 
 <Story name="No announcements">
-  <channel-page params={noAnnouncementsParams()} />
+  <channel-page params={{ ...params, segments: [] }} />
+</Story>
+
+<Story name="Dark">
+  <channel-page params={{ ...params, viewName: 'default_dark' }} />
+</Story>
+
+<Story name="Light">
+  <channel-page params={{ ...params, viewName: 'default_light' }} />
 </Story>

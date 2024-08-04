@@ -127,7 +127,14 @@ export const params: ChannelPageParams = {
     });
   },
 
+  viewName: 'default',
+
+  settingsClick: () => {
+    alert('Settings clicked');
+  },
+
   msgs: {
     noAnnouncements: 'No announcement yet.',
+    settings: 'Settings',
   },
 };
