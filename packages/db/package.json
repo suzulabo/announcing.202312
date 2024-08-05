@@ -16,7 +16,10 @@
     "build:watch": "tsc -w -p tsconfig.build.json"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@libsql/client": "^0.8.1",
+    "date-fns": "^3.6.0",
+    "tsx": "^4.16.5",
     "vitest": "^2.0.5"
   },
   "dependencies": {

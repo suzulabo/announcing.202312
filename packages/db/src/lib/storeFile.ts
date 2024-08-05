@@ -4,7 +4,7 @@ import { writeFile } from 'fs/promises';
 import { base62 } from './base62';
 import { dev } from './env';
 
-const getHash = async (file: File) => {
+const getHash = async (file: Blob) => {
   const ab = new Uint8Array(await file.arrayBuffer());
 
   const digest = createHash('sha256').update(ab).digest();
@@ -14,19 +14,15 @@ const getHash = async (file: File) => {
   return [hash, ab] as const;
 };
 
-const storeFileLocal = async (file: File) => {
+const storeFileLocal = async (file: Blob) => {
   const [hash, ab] = await getHash(file);
 
   try {
     await Promise.all([
       writeFile(`../db-dev/storage/${hash}`, ab, { flag: 'wx' }),
-      writeFile(
-        `../db-dev/storage/${hash}.meta`,
-        JSON.stringify({ name: file.name, type: file.type }),
-        {
-          flag: 'wx',
-        },
-      ),
+      writeFile(`../db-dev/storage/${hash}.meta`, JSON.stringify({ type: file.type }), {
+        flag: 'wx',
+      }),
     ]);
   } catch (err) {
     if (err instanceof Error && 'code' in err) {
