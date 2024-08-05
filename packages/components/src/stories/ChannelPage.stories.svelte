@@ -9,6 +9,9 @@
   export const meta = {
     title: 'ChannelPage/default',
     tags: ['autodocs'],
+    parameters: {
+      layout: 'fullscreen',
+    },
   } satisfies Meta;
 </script>
 
