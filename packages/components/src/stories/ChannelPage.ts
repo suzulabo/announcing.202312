@@ -84,7 +84,7 @@ export const params: ChannelPageParams = {
   channel: {
     title: 'Aether Dynamics Corporation',
     desc: 'Aether Dynamics Corporation is at the forefront of cutting-edge technology, pioneering advancements in energy solutions and sustainable innovation.\nJoin us as we transform the future with dynamic, visionary science.',
-    icon: '/assets/logo.jpg',
+    icon: '/assets/logo.png',
     links: null,
   },
 
