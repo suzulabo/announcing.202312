@@ -1,12 +1,14 @@
 <script lang="ts" context="module">
-  const popstateListener = () => {
-    // Block going to URL with #modal on forward
-    if (location.hash === '#modal' && !document.querySelector('.modal')) {
-      history.back();
-    }
-  };
+  if (typeof window === 'object') {
+    const popstateListener = () => {
+      // Block going to URL with #modal on forward
+      if (location.hash === '#modal' && !document.querySelector('.modal')) {
+        history.back();
+      }
+    };
 
-  window.addEventListener('popstate', popstateListener);
+    window.addEventListener('popstate', popstateListener);
+  }
 </script>
 
 <script lang="ts">
