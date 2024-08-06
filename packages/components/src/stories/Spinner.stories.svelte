@@ -7,7 +7,7 @@
   export const meta = {
     title: 'Spinner',
     component: Spinner,
-    tags: ['autodocs', 'no-snapshot'],
+    tags: ['autodocs'],
   } satisfies Meta<Spinner>;
 </script>
 

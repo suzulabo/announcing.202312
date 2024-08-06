@@ -7,7 +7,7 @@
   export const meta = {
     title: 'Loading',
     component: Loading,
-    tags: ['autodocs', 'no-snapshot'],
+    tags: ['autodocs'],
   } satisfies Meta<Loading>;
 </script>
 
