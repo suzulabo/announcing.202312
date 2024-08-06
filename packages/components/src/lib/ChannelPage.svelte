@@ -21,14 +21,14 @@
   } = setup(params));
 </script>
 
-<ChannelView params={channelViewParams}>
+<svelte:component this={ChannelView} params={channelViewParams}>
   <div class="announcement">
     {#each $announcements as announcement (announcement.id)}
-      <AnnouncementView params={{ announcement }} />
+      <svelte:component this={AnnouncementView} params={{ announcement }} />
     {/each}
     <div use:bottomIntersectionAction></div>
   </div>
-</ChannelView>
+</svelte:component>
 <Loading show={$loading} />
 
 <style lang="scss">
