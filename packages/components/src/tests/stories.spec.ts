@@ -23,13 +23,21 @@ const stories = await (async () => {
       continue;
     }
 
-    const skipSnapshot = entry.tags?.find((v) => {
-      return v === 'skip-snapshot';
-    });
+    const tags = entry.tags ?? [];
+
+    const waitSelector = (() => {
+      for (const tag of tags) {
+        if (tag.startsWith('wait-')) {
+          return tag.replace('wait-', '');
+        }
+      }
+
+      return '#storybook-root';
+    })();
 
     result.push({
       id: entry.id,
-      skipSnapshot,
+      waitSelector,
     });
   }
 
@@ -39,10 +47,8 @@ const stories = await (async () => {
 stories.forEach((v) => {
   test(v.id, async ({ page }) => {
     await page.goto(`/iframe.html?args=&id=${v.id}&viewMode=story`);
-    await page.locator('#storybook-root').waitFor({ state: 'attached' });
+    await page.locator(v.waitSelector).last().waitFor();
 
-    if (!v.skipSnapshot) {
-      await expect(page).toHaveScreenshot();
-    }
+    await expect(page).toHaveScreenshot();
   });
 });

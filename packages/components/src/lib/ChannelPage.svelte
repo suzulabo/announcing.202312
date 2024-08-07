@@ -22,7 +22,7 @@
 </script>
 
 <svelte:component this={ChannelView} params={channelViewParams}>
-  <div class="announcement">
+  <div class="announcements">
     {#each $announcements as announcement (announcement.id)}
       <svelte:component this={AnnouncementView} params={{ announcement }} />
     {/each}
@@ -32,7 +32,7 @@
 <Loading show={$loading} />
 
 <style lang="scss">
-  .announcement {
+  .announcements {
     content-visibility: auto;
   }
 </style>
