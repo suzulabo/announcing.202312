@@ -23,5 +23,7 @@ jobs:
       - run: pnpm exec playwright install --with-deps
         working-directory: ./packages/components
 
+      - run: pnpm run build
+
       - run: pnpm run playwright --update-snapshots
         working-directory: ./packages/components
