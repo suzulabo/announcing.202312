@@ -4,6 +4,8 @@ on:
 jobs:
   snapshot:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.46.0-jammy
     timeout-minutes: 10
 
     steps:
@@ -20,8 +22,8 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm exec playwright install --with-deps
-        working-directory: ./packages/components
+      #- run: pnpm exec playwright install --with-deps
+      #  working-directory: ./packages/components
 
       - run: pnpm run build
 
