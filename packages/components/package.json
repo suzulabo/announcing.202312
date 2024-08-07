@@ -11,7 +11,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "playwright": "playwright test"
   },
   "type": "module",
   "exports": {
@@ -65,6 +66,7 @@
     "@announcing/db": "workspace:^",
     "@chromatic-com/storybook": "^1.6.1",
     "@faker-js/faker": "^8.4.1",
+    "@playwright/test": "^1.46.0",
     "@storybook/addon-essentials": "^8.2.7",
     "@storybook/addon-interactions": "^8.2.7",
     "@storybook/addon-links": "^8.2.7",
@@ -73,11 +75,13 @@
     "@storybook/svelte": "^8.2.7",
     "@storybook/sveltekit": "^8.2.7",
     "@storybook/test": "^8.2.7",
+    "@storybook/types": "^8.2.7",
     "@sveltejs/adapter-auto": "^3.2.2",
     "@sveltejs/kit": "^2.5.20",
     "@sveltejs/package": "^2.3.2",
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "@types/image-blob-reduce": "^4.1.4",
+    "@types/node": "^22.1.0",
     "publint": "^0.2.9",
     "sass": "^1.77.8",
     "storybook": "^8.2.7",
