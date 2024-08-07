@@ -9,8 +9,10 @@ runs:
       working-directory: './packages/${{ inputs.target }}'
       env:
         HOME: /root
+      shell: bash
 
     - run: git config --global --add safe.directory $PWD
+      shell: bash
 
     - run: |
         set -x
@@ -19,3 +21,4 @@ runs:
         git add .
         git commit -m 'Update snapshots for ${{ inputs.target }}'
         git push
+      shell: bash
