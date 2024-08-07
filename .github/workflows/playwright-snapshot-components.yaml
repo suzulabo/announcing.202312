@@ -29,3 +29,5 @@ jobs:
 
       - run: pnpm run playwright --update-snapshots
         working-directory: ./packages/components
+        env:
+          HOME: /root
