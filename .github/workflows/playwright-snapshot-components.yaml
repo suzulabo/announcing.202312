@@ -9,6 +9,8 @@ jobs:
     timeout-minutes: 10
 
     steps:
+      - run: git config --global --add safe.directory $PWD
+
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v3
