@@ -28,8 +28,15 @@ jobs:
         working-directory: ./packages/components
         env:
           HOME: /root
-
-      - uses: actions-js/push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: 'Update snapshot'
+      - id: diff
+        run: |
+          git add -N .
+          git diff --name-only --exit-code
+        continue-on-error: true
+      - run: |
+          set -x
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git commit -m 'Update snapshots'
+          git push
+        if: steps.diff.outcome == 'failure'
