@@ -1,9 +1,8 @@
 on:
-  push:
   workflow_dispatch:
 
 jobs:
-  check:
+  snapshot:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -22,4 +21,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm exec playwright install --with-deps
+        working-directory: ./packages/components
+
+      - run: pnpm run playwright --update-snapshots
         working-directory: ./packages/components
