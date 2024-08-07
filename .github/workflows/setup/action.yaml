@@ -4,11 +4,13 @@ runs:
     - uses: pnpm/action-setup@v3
       with:
         version: 9.6.0
+      shell: bash
 
     - uses: actions/setup-node@v4
       with:
         node-version: '20.16.0'
         cache: 'pnpm'
+      shell: bash
 
     - run: pnpm install --frozen-lockfile
       shell: bash
