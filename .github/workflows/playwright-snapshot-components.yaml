@@ -34,11 +34,6 @@ jobs:
 
       - run: git config --global --add safe.directory $PWD
 
-      - id: diff
-        run: |
-          git add -N .
-          git diff --name-only --exit-code
-        continue-on-error: true
       - run: |
           set -x
           git config user.name github-actions[bot]
@@ -46,4 +41,3 @@ jobs:
           git add .
           git commit -m 'Update snapshots'
           git push
-        if: steps.diff.outcome == 'failure'
