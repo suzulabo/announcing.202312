@@ -22,12 +22,14 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      #- run: pnpm exec playwright install --with-deps
-      #  working-directory: ./packages/components
-
       - run: pnpm run build
 
       - run: pnpm run playwright --update-snapshots
         working-directory: ./packages/components
         env:
           HOME: /root
+
+      - uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: 'Update snapshot'
