@@ -1,0 +1,21 @@
+inputs:
+  target:
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - run: pnpm run playwright --update-snapshots --project=chromium
+      working-directory: './packages/${{ inputs.target }}'
+      env:
+        HOME: /root
+
+    - run: git config --global --add safe.directory $PWD
+
+    - run: |
+        set -x
+        git config user.name github-actions[bot]
+        git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+        git add .
+        git commit -m 'Update snapshots for ${{ inputs.target }}'
+        git push
