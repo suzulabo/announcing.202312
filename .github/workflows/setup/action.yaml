@@ -1,7 +1,6 @@
 runs:
   using: 'composite'
   steps:
-    - name: setup-node
     - uses: pnpm/action-setup@v3
       with:
         version: 9.6.0
