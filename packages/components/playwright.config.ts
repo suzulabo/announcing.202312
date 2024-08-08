@@ -80,7 +80,7 @@ export default defineConfig({
     reuseExistingServer: !process.env['CI'],
   },
 
-  snapshotPathTemplate: 'snapshots/{testFileName}/{arg}{-projectName}{ext}',
+  snapshotPathTemplate: 'snapshots/{testFileName}/{arg}/{projectName}{ext}',
 
   expect: {
     timeout: 100000,
