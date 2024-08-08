@@ -35,8 +35,5 @@ jobs:
       - run: pnpm run sync
         working-directory: ./packages/components
 
-      - uses: ./.github/workflows/snapshots
-        with:
-          target: components
       - run: pnpm run playwright
         working-directory: ./packages/components
