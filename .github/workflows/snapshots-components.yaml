@@ -1,7 +1,6 @@
 name: snapshots/components
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:
