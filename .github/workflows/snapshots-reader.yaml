@@ -1,7 +1,6 @@
 name: snapshots/reader
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:
