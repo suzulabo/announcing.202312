@@ -20,3 +20,23 @@ jobs:
       - uses: ./.github/workflows/setup
 
       - run: pnpm run check
+
+  playwright-components:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.46.0-jammy
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/workflows/setup
+
+      - run: pnpm run sync
+        working-directory: ./packages/components
+
+      - uses: ./.github/workflows/snapshots
+        with:
+          target: components
+      - run: pnpm run playwright
+        working-directory: ./packages/components
