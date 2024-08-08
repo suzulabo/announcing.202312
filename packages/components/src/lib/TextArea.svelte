@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { afterUpdate } from 'svelte';
+  import { afterUpdate, onMount } from 'svelte';
 
   export let name: string;
   export let label: string;
@@ -9,9 +9,17 @@
 
   let textAreaRef: HTMLTextAreaElement;
 
-  afterUpdate(() => {
+  const adjustHeight = () => {
     textAreaRef.style.height = 'auto';
     textAreaRef.style.height = `${textAreaRef.scrollHeight.toString()}px`;
+  };
+
+  onMount(() => {
+    adjustHeight();
+  });
+
+  afterUpdate(() => {
+    adjustHeight();
   });
 </script>
 
