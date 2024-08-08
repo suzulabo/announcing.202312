@@ -5,6 +5,8 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - run: echo '${{  github.ref_name }}-update-snapshots'
+      shell: bash
     - run: pnpm run playwright --update-snapshots
       working-directory: './packages/${{ inputs.target }}'
       env:
@@ -18,7 +20,8 @@ runs:
         set -x
         git config user.name github-actions[bot]
         git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+        git switch -c '${{  github.ref_name }}-update-snapshots'
         git add .
         git commit -m 'Update snapshots for ${{ inputs.target }}'
-        git push
+        git push origin '${{  github.ref_name }}-update-snapshots'
       shell: bash
