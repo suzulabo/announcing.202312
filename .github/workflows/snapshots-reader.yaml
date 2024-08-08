@@ -27,6 +27,6 @@ jobs:
       - run: pnpm tsx tools/genTestData.ts
         working-directory: ./packages/db
 
-      - uses: ./.github/workflows/reader
+      - uses: ./.github/workflows/snapshots
         with:
-          target: components
+          target: reader
