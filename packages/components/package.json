@@ -13,7 +13,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "playwright": "playwright test"
+    "test": "playwright test"
   },
   "type": "module",
   "exports": {
