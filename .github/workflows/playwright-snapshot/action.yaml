@@ -5,7 +5,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: pnpm run playwright --update-snapshots --project=chromium
+    - run: pnpm run playwright --update-snapshots
       working-directory: './packages/${{ inputs.target }}'
       env:
         HOME: /root
