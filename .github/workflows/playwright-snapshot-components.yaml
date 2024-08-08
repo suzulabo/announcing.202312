@@ -15,6 +15,9 @@ jobs:
 
       - uses: ./.github/workflows/setup
 
+      - run: pnpm run sync
+        working-directory: ./packages/components
+
       - uses: ./.github/workflows/playwright-snapshot
         with:
           target: components
