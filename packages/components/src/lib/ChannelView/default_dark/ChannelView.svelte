@@ -7,10 +7,9 @@
   export let params: ChannelViewParams;
 
   onMount(() => {
-    document.documentElement.classList.add('dark');
-
+    document.documentElement.setAttribute('data-color-scheme', 'dark');
     return () => {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.removeAttribute('data-color-scheme');
     };
   });
 </script>

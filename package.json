@@ -2,10 +2,10 @@
   "name": "announcing",
   "private": true,
   "engines": {
-    "node": "=20.15.1",
-    "pnpm": "=9.5.0"
+    "node": "=20.16.0",
+    "pnpm": "=9.6.0"
   },
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "pnpm@9.6.0",
   "type": "module",
   "scripts": {
     "preinstall": "npx -y only-allow pnpm",
@@ -14,23 +14,23 @@
     "lint": "eslint",
     "lint:fix": "pnpm eslint --fix",
     "build": "pnpm -r build",
-    "check": "pnpm run build && pnpm run format && pnpm run lint && pnpm -r run check"
+    "check": "pnpm run build && pnpm run format && pnpm run lint && pnpm -r run test && pnpm -r run check"
   },
   "devDependencies": {
-    "@eslint/js": "^9.7.0",
-    "@stylistic/eslint-plugin": "^2.3.0",
+    "@eslint/js": "^9.8.0",
+    "@stylistic/eslint-plugin": "^2.6.1",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/eslint__js": "^8.42.3",
-    "eslint": "^9.7.0",
+    "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-svelte": "^2.42.0",
-    "globals": "^15.8.0",
+    "eslint-plugin-svelte": "^2.43.0",
+    "globals": "^15.9.0",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.0.0",
-    "prettier-plugin-svelte": "^3.2.5",
-    "svelte-eslint-parser": "^0.39.2",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "7.15.0"
+    "prettier-plugin-svelte": "^3.2.6",
+    "svelte-eslint-parser": "^0.41.0",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "8.0.0"
   }
 }

@@ -1,14 +1,25 @@
+<script lang="ts" context="module">
+  if (typeof window === 'object') {
+    const popstateListener = () => {
+      // Block going to URL with #modal on forward
+      if (location.hash === '#modal' && !document.querySelector('.modal')) {
+        history.back();
+      }
+    };
+
+    window.addEventListener('popstate', popstateListener);
+  }
+</script>
+
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import ModalSub, { modalHashWatcher } from './ModalSub.svelte';
+  import ModalSub from './ModalSub.svelte';
 
   export let show = false;
   export let closeAnywhere = false;
 
   const closeDispatch = createEventDispatcher();
-
-  $modalHashWatcher;
 </script>
 
 <!--

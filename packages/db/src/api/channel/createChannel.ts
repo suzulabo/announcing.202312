@@ -9,7 +9,7 @@ export const createChannel = async (
   channelID: string,
   title: string,
   desc: string | null,
-  iconFile: File | null | undefined,
+  iconFile: Blob | null | undefined,
 ) => {
   const icon = (iconFile && (await storeFile(iconFile))) ?? null;
 

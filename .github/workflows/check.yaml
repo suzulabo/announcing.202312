@@ -1,3 +1,5 @@
+name: check
+
 on:
   push:
     branches:
@@ -15,17 +17,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9.5.0
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.15.1'
-          cache: 'pnpm'
-
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/workflows/setup
 
       - run: pnpm run check
+
+  playwright-components:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.46.0-jammy
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/workflows/setup
+
+      - run: pnpm run sync
+        working-directory: ./packages/components
+
+      - run: pnpm run playwright
+        working-directory: ./packages/components
         env:
-          NODE_OPTIONS: --max-old-space-size=4096
+          HOME: /root

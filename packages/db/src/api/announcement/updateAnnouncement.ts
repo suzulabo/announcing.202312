@@ -4,10 +4,10 @@ export const updateAnnouncement = (
   userID: string,
   channelID: string,
   channelUpdatedAt: number,
-  headerImageFile: File | undefined | null,
+  headerImageFile: Blob | undefined | null,
   title: string | undefined | null,
   body: string,
-  imagesFiles: File[] | undefined | null,
+  imagesFiles: Blob[] | undefined | null,
   updateAnnouncementId: string,
 ) => {
   return _writeAnnouncement(
