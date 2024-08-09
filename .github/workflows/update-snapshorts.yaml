@@ -62,7 +62,12 @@ jobs:
       - run: |
           pnpm --filter "@announcing/components"  --filter "@announcing/db" run build
           pnpm --filter "@announcing/db" run genTestData
-        if: matrix.target == 'reader' || matrix.target == 'writer'
+        if: matrix.target == 'reader'
+
+      - run: |
+          pnpm --filter "@announcing/components"  --filter "@announcing/db" run build
+          echo "AUTH_SECRET=$(openssl rand -hex 32)" > packages/writer/.env.local
+        if: matrix.target == 'writer'
 
       - run: pnpm run playwright --update-snapshots
         working-directory: './packages/${{ matrix.target }}'
@@ -77,8 +82,8 @@ jobs:
           set -x
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git switch -c '${{  github.ref_name }}-update-snapshots'
+          git switch -c '${{  github.ref_name }}-update-snapshots-${{ matrix.target }}'
           git add .
           git commit -m 'Update snapshots for ${{ matrix.target }}'
-          git push origin '${{  github.ref_name }}-update-snapshots'
+          git push origin '${{  github.ref_name }}-update-snapshots-${{ matrix.target }}'
         shell: bash
