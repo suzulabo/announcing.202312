@@ -24,15 +24,15 @@ jobs:
         run: |
           A=()
 
-          if [ "${{ github.event.inputs.components }}" = "true" ]; then
+          if [ "${{ github.event.inputs.components }}" = 'true' ]; then
             A+=('"components"')
           fi
 
-          if [ "${{ github.event.inputs.reader }}" = "true" ]; then
+          if [ "${{ github.event.inputs.reader }}" = 'true' ]; then
             A+=('"reader"')
           fi
 
-          if [ "${{ github.event.inputs.writer }}" = "true" ]; then
+          if [ "${{ github.event.inputs.writer }}" = 'true' ]; then
             A+=('"writer"')
           fi
 
@@ -54,6 +54,14 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: ./.github/workflows/setup
+
+      - run: pnpm run build
+        working-directory: ./packages/components
+        if: ${{ matrix.target }} == 'reader' || ${{ matrix.target }} == 'writer'
+
+      - run: pnpm run build
+        working-directory: ./packages/db
+        if: ${{ matrix.target }} == 'reader' || ${{ matrix.target }} == 'writer'
 
       - run: pnpm run sync
         working-directory: ./packages/${{ matrix.target }}
