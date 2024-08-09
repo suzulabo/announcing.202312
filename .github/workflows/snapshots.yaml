@@ -1,0 +1,39 @@
+name: snapshots
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      components:
+        type: boolean
+        default: true
+      reader:
+        type: boolean
+        default: true
+      writer:
+        type: boolean
+        default: false
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          A=()
+
+          if [ "${{ github.event.inputs.components }}" = "true" ]; then
+            A+=components
+          fi
+
+          if [ "${{ github.event.inputs.reader }}" = "true" ]; then
+            A+=reader
+          fi
+
+          if [ "${{ github.event.inputs.writer }}" = "true" ]; then
+            A+=writer
+          fi
+
+          echo "matrix=[$(IFS=,; echo "${A[*]}")]"
