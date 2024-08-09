@@ -5,13 +5,13 @@ on:
     inputs:
       components:
         type: boolean
-        default: true
+        default: false
       reader:
         type: boolean
-        default: true
+        default: false
       writer:
         type: boolean
-        default: true
+        default: false
 
 jobs:
   # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-a-matrix-for-your-jobs#example-using-an-output-to-define-two-matrices
@@ -41,8 +41,38 @@ jobs:
   update-snapshorts:
     needs: define-matrix
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.46.0-jammy
+    timeout-minutes: 10
+    permissions:
+      contents: write
     strategy:
       matrix:
         target: ${{ fromJson(needs.define-matrix.outputs.targets) }}
     steps:
       - run: echo "Running ${{ matrix.target }} job"
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/workflows/setup
+
+      - run: pnpm run sync
+        working-directory: ./packages/${{ matrix.target }}
+
+      - run: pnpm run playwright --update-snapshots
+        working-directory: './packages/${{ matrix.target }}'
+        env:
+          HOME: /root
+        shell: bash
+
+      - run: git config --global --add safe.directory $PWD
+        shell: bash
+
+      - run: |
+          set -x
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git switch -c '${{  github.ref_name }}-update-snapshots'
+          git add .
+          git commit -m 'Update snapshots for ${{ matrix.target }}'
+          git push origin '${{  github.ref_name }}-update-snapshots'
+        shell: bash
