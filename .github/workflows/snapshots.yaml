@@ -1,15 +1,14 @@
-name: snapshots
+name: update-snapshots
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       components:
         type: boolean
-        default: true
+        default: false
       reader:
         type: boolean
-        default: true
+        default: false
       writer:
         type: boolean
         default: false
@@ -25,15 +24,15 @@ jobs:
           A=()
 
           if [ "${{ github.event.inputs.components }}" = "true" ]; then
-            A+=components
+            A+="components"
           fi
 
           if [ "${{ github.event.inputs.reader }}" = "true" ]; then
-            A+=reader
+            A+="reader"
           fi
 
           if [ "${{ github.event.inputs.writer }}" = "true" ]; then
-            A+=writer
+            A+="writer"
           fi
 
           echo "matrix=[$(IFS=,; echo "${A[*]}")]"
