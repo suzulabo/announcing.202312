@@ -96,7 +96,7 @@ const generate = async (userID: string, channelID: string, count: number) => {
 
 const main = async () => {
   const printUsage = () => {
-    console.log(`pnpm tsx tools/genTestData.ts`);
+    console.log('pnpm run genTestData');
   };
 
   const parsed = parseArgs({
