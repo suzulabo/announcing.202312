@@ -56,12 +56,13 @@ jobs:
       - uses: ./.github/workflows/setup
 
       - run: |
+          pnpm --filter "@announcing/components" run sync
+        if: matrix.target == 'components'
+
+      - run: |
           pnpm --filter "@announcing/components"  --filter "@announcing/db" run build
           pnpm --filter "@announcing/db" run genTestData
-        if: ${{ matrix.target }} == 'reader' || ${{ matrix.target }} == 'writer'
-
-      - run: --filter "@announcing/components" pnpm run sync
-        if: ${{ matrix.target }} == 'components'
+        if: matrix.target == 'reader' || matrix.target == 'writer'
 
       - run: pnpm run playwright --update-snapshots
         working-directory: './packages/${{ matrix.target }}'
