@@ -1,7 +1,6 @@
 name: update-snapshots
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       components:
@@ -18,7 +17,7 @@ jobs:
   generate-matrix:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.gen.outputs.matrix }}
+      targets: ${{ steps.gen.outputs.targets }}
     steps:
       - id: gen
         run: |
@@ -36,13 +35,13 @@ jobs:
             A+=("writer")
           fi
 
-          echo "matrix=[$(IFS=,; echo "${A[*]}")]" >> "$GITHUB_OUTPUT"
+          echo "targets=[$(IFS=,; echo "${A[*]}")]" >> "$GITHUB_OUTPUT"
 
   update-snapshorts:
     needs: generate-matrix
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+        target: ${{ fromJson(needs.generate-matrix.outputs.targets) }}
     steps:
       - run: echo "Running ${{ matrix.target }} job"
