@@ -5,21 +5,21 @@ on:
     inputs:
       components:
         type: boolean
-        default: false
+        default: true
       reader:
         type: boolean
-        default: false
+        default: true
       writer:
         type: boolean
-        default: false
+        default: true
 
 jobs:
   generate-matrix:
     runs-on: ubuntu-latest
     outputs:
-      targets: ${{ steps.gen.outputs.targets }}
+      targets: ${{ steps.targets.outputs.targets }}
     steps:
-      - id: gen
+      - id: targets
         run: |
           A=()
 
@@ -40,8 +40,9 @@ jobs:
   update-snapshorts:
     needs: generate-matrix
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        target: ${{ fromJson(needs.generate-matrix.outputs.targets) }}
+    #    strategy:
+    #      matrix:
+    #        target: ${{ fromJson(needs.generate-matrix.outputs.targets) }}
     steps:
-      - run: echo "Running ${{ matrix.target }} job"
+      - run: echo ${{ needs.generate-matrix.outputs.targets }}
+#      - run: echo "Running ${{ matrix.target }} job"
