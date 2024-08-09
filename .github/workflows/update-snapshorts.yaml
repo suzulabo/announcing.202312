@@ -14,7 +14,8 @@ on:
         default: true
 
 jobs:
-  generate-matrix:
+  # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/using-a-matrix-for-your-jobs#example-using-an-output-to-define-two-matrices
+  define-matrix:
     runs-on: ubuntu-latest
     outputs:
       targets: ${{ steps.targets.outputs.targets }}
@@ -24,25 +25,24 @@ jobs:
           A=()
 
           if [ "${{ github.event.inputs.components }}" = "true" ]; then
-            A+=("components")
+            A+=('"components"')
           fi
 
           if [ "${{ github.event.inputs.reader }}" = "true" ]; then
-            A+=("reader")
+            A+=('"reader"')
           fi
 
           if [ "${{ github.event.inputs.writer }}" = "true" ]; then
-            A+=("writer")
+            A+=('"writer"')
           fi
 
           echo "targets=[$(IFS=,; echo "${A[*]}")]" >> "$GITHUB_OUTPUT"
 
   update-snapshorts:
-    needs: generate-matrix
+    needs: define-matrix
     runs-on: ubuntu-latest
-    #    strategy:
-    #      matrix:
-    #        target: ${{ fromJson(needs.generate-matrix.outputs.targets) }}
+    strategy:
+      matrix:
+        target: ${{ fromJson(needs.define-matrix.outputs.targets) }}
     steps:
-      - run: echo ${{ needs.generate-matrix.outputs.targets }}
-#      - run: echo "Running ${{ matrix.target }} job"
+      - run: echo "Running ${{ matrix.target }} job"
