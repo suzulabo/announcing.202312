@@ -69,14 +69,11 @@ jobs:
           echo "AUTH_SECRET=$(openssl rand -hex 32)" > packages/writer/.env.local
         if: matrix.target == 'writer'
 
-      - run: pnpm run playwright --update-snapshots
-        working-directory: './packages/${{ matrix.target }}'
-        env:
-          HOME: /root
-        shell: bash
-
       - run: |
           set -x
+
+          pnpm run playwright --update-snapshots
+
           git config --global --add safe.directory $PWD
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
@@ -84,8 +81,12 @@ jobs:
           git add .
           git commit -m 'Update snapshots for ${{ matrix.target }}'
           git push origin '${{  github.ref_name }}-update-snapshots-${{ matrix.target }}'
+
           git switch ${{  github.ref_name }}
           pnpm run playwright || true
+        working-directory: './packages/${{ matrix.target }}'
+        env:
+          HOME: /root
         shell: bash
 
       - uses: actions/upload-artifact@v4
