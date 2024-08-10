@@ -21,7 +21,7 @@ jobs:
 
       - run: pnpm run check
 
-  playwright-components:
+  playwright:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.46.0-jammy
