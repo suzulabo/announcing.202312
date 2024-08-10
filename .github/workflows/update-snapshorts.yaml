@@ -51,7 +51,6 @@ jobs:
         target: ${{ fromJson(needs.define-matrix.outputs.targets) }}
       fail-fast: false
     steps:
-      - run: echo "Running ${{ matrix.target }} job"
       - uses: actions/checkout@v4
 
       - uses: ./.github/workflows/setup
@@ -70,17 +69,15 @@ jobs:
           echo "AUTH_SECRET=$(openssl rand -hex 32)" > packages/writer/.env.local
         if: matrix.target == 'writer'
 
-      - run: pnpm run playwright --update-snapshots
+      - run: pnpm run playwright
         working-directory: './packages/${{ matrix.target }}'
         env:
           HOME: /root
         shell: bash
 
-      - run: git config --global --add safe.directory $PWD
-        shell: bash
-
       - run: |
           set -x
+          git config --global --add safe.directory $PWD
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git switch -c '${{  github.ref_name }}-update-snapshots-${{ matrix.target }}'
@@ -88,9 +85,9 @@ jobs:
           git commit -m 'Update snapshots for ${{ matrix.target }}'
           git push origin '${{  github.ref_name }}-update-snapshots-${{ matrix.target }}'
         shell: bash
+        if: failure()
 
       - uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.target }}
           path: packages/${{ matrix.target }}/playwright-report
-        if: success()
