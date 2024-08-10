@@ -80,7 +80,7 @@ jobs:
           git switch -c '${{  github.ref_name }}-update-snapshots-${{ matrix.target }}'
           git add .
           git commit -m 'Update snapshots for ${{ matrix.target }}'
-          git push origin '${{  github.ref_name }}-update-snapshots-${{ matrix.target }}'
+          git push -f origin '${{  github.ref_name }}-update-snapshots-${{ matrix.target }}'
 
           git switch ${{  github.ref_name }}
           pnpm run playwright || true
