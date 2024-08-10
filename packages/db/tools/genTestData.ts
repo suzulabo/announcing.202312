@@ -2,6 +2,7 @@ import { openAsBlob } from 'node:fs';
 import { parseArgs } from 'node:util';
 
 import { faker } from '@faker-js/faker';
+import MockDate from 'mockdate';
 
 import { addAnnouncement } from '../src/api/announcement/addAnnouncement';
 import { createChannel } from '../src/api/channel/createChannel';
@@ -14,6 +15,8 @@ const channelData = {
 };
 
 faker.seed(1192);
+
+MockDate.set('2024-08-08T11:59:00Z');
 
 const genAnnouncement = () => {
   const title = faker.lorem.sentence();
