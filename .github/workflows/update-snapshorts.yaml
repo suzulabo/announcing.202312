@@ -49,6 +49,7 @@ jobs:
     strategy:
       matrix:
         target: ${{ fromJson(needs.define-matrix.outputs.targets) }}
+      fail-fast: false
     steps:
       - run: echo "Running ${{ matrix.target }} job"
       - uses: actions/checkout@v4
@@ -87,3 +88,9 @@ jobs:
           git commit -m 'Update snapshots for ${{ matrix.target }}'
           git push origin '${{  github.ref_name }}-update-snapshots-${{ matrix.target }}'
         shell: bash
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: packages/${{ matrix.target }}/playwright-report
+        if: success()
