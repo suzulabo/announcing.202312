@@ -53,21 +53,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ./.github/workflows/setup
-
-      - run: |
-          pnpm --filter "@announcing/components" run sync
-        if: matrix.target == 'components'
-
-      - run: |
-          pnpm --filter "@announcing/components"  --filter "@announcing/db" run build
-          pnpm --filter "@announcing/db" run genTestData
-        if: matrix.target == 'reader'
-
-      - run: |
-          pnpm --filter "@announcing/components"  --filter "@announcing/db" run build
-          echo "AUTH_SECRET=$(openssl rand -hex 32)" > packages/writer/.env.local
-        if: matrix.target == 'writer'
+      - uses: ./.github/workflows/setup-snapshots
+        with:
+          target: ${{ matrix.target }}
 
       - run: |
           set -x
