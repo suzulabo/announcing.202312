@@ -54,8 +54,6 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
         session.user.id = token['userID'] as string;
       }
 
-      console.log('session.user.id', session.user.id);
-
       return session;
     },
   },
