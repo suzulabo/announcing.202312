@@ -68,6 +68,6 @@ export const actions: Actions = {
     }
 
     await updateChannel(userID, new Date(updatedAt ?? 0), params.channelID, title, desc, icon);
-    redirect(303, `/c/${params.channelID}`);
+    redirect(303, `/channel/${params.channelID}`);
   },
 };

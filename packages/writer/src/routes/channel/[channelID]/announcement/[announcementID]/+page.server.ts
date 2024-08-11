@@ -33,7 +33,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
   const announcement = channel.announcements?.find((v) => v.id === announcementID);
 
   if (!announcement) {
-    redirect(303, `/c/${params.channelID}`);
+    redirect(303, `/channel/${params.channelID}`);
   }
 
   const { title, body, headerImage, images } = announcement;
@@ -80,7 +80,7 @@ export const actions: Actions = {
         announcementID,
       );
     }
-    redirect(303, `/c/$channelID}`);
+    redirect(303, `/channel/$channelID}`);
   },
   remove: async ({ locals, params: { channelID, announcementID }, request }) => {
     const session = await locals.auth();
@@ -98,6 +98,6 @@ export const actions: Actions = {
     }
 
     await removeAnnouncement(userID, channelID, +updatedAt, announcementID);
-    redirect(303, `/c/${channelID}`);
+    redirect(303, `/channel/${channelID}`);
   },
 };

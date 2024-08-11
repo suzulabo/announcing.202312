@@ -32,5 +32,5 @@ export const load: PageLoad = async ({ data, params, fetch }) => {
 
   await Promise.all(fetchers);
 
-  return { ...data, channelID: params.channelID };
+  return { ...data, channelID: params.channelID, announcementID: params.announcementID };
 };

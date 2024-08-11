@@ -103,7 +103,7 @@
       maxLength={CHANNEL_DESC_MAX_LENGTH}
     />
     <button disabled={!validated}>{$t(`channel.write.input.submit.${msgSuffix}`)}</button>
-    <a href={isNew ? '/' : `/c/${channelID}`} use:back>{$t('cancel')}</a>
+    <a href={isNew ? '/' : `/channel/${channelID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>
