@@ -22,11 +22,9 @@
       </div></button
     >
     {#if env.PUBLIC_TEST}
-      <input type="hidden" id="credentials-id" />
       <button
         on:click={() => {
-          const id = document.querySelector<HTMLInputElement>('#credentials-id')?.value ?? "test_user";
-          void signIn('credentials', { id });
+          void signIn('credentials', { id: 'test_user' });
         }}>Credentials</button
       >
     {/if}
