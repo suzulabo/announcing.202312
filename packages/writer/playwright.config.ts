@@ -86,7 +86,5 @@ export default defineConfig({
 
   snapshotPathTemplate: 'snapshots/{testFileName}/{arg}/{projectName}{ext}',
 
-  expect: {
-    timeout: 100000,
-  },
+  timeout: 10000,
 });
