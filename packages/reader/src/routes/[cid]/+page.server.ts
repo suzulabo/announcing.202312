@@ -5,9 +5,9 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
-  const { cid } = params;
+  const { channelID} = params;
 
-  const channel = await getChannel(READER, cid);
+  const channel = await getChannel(READER, channelID);
 
   console.log({ channel });
 

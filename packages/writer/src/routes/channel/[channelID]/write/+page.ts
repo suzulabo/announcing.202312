@@ -15,5 +15,5 @@ export const load: PageLoad = async ({ data, fetch, params }) => {
     }
   }
 
-  return { ...data, cid: params.cid };
+  return { ...data, channelID: params.channelID };
 };

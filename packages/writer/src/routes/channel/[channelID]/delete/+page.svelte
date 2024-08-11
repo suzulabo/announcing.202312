@@ -12,7 +12,7 @@
 
   export let data: PageData;
 
-  $: cid = data.cid;
+  $: channelID = data.channelID;
 
   const { form, enhance, submitting, errors } = superForm(data.form, {
     validators: valibotClient(formSchema),
@@ -29,7 +29,7 @@
   <form method="POST" enctype="multipart/form-data" use:enhance>
     <div class="info">{$t(`channel.delete.desc`)}</div>
     <button>{$t(`channel.delete.input.submit`)}</button>
-    <a href={`/c/${cid}`} use:back>{$t('cancel')}</a>
+    <a href={`/c/${channelID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

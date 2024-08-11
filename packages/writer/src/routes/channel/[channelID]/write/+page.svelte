@@ -40,8 +40,8 @@
   const updatedAtProxy = numberProxy(form, 'updatedAt');
   const back = setupBack($page.state.fromPage);
 
-  $: cid = data.cid;
-  $: isNew = cid === 'new';
+  $: channelID = data.channelID;
+  $: isNew = channelID === 'new';
   $: msgSuffix = isNew ? 'new' : 'edit';
 </script>
 
@@ -103,7 +103,7 @@
       maxLength={CHANNEL_DESC_MAX_LENGTH}
     />
     <button disabled={!validated}>{$t(`channel.write.input.submit.${msgSuffix}`)}</button>
-    <a href={isNew ? '/' : `/c/${cid}`} use:back>{$t('cancel')}</a>
+    <a href={isNew ? '/' : `/c/${channelID}`} use:back>{$t('cancel')}</a>
     <input type="hidden" name="updatedAt" value={$updatedAtProxy} />
   </form>
 </div>

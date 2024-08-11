@@ -10,13 +10,13 @@ import type { Actions, PageServerLoad } from './$types';
 import { formSchema } from './formSchema';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
-  if (params.cid === 'new') {
+  if (params.channelID === 'new') {
     return { form: await superValidate(valibot(formSchema)) };
   }
 
   const userID = await getUserID(locals);
 
-  const channel = await getChannel(userID, params.cid);
+  const channel = await getChannel(userID, params.channelID);
 
   if (!channel) {
     redirect(303, '/');
@@ -60,14 +60,14 @@ export const actions: Actions = {
       return fail(400, { form });
     }
 
-    if (params.cid === 'new') {
+    if (params.channelID === 'new') {
       const channelID = genChannelID();
 
       await createChannel(userID, channelID, title, desc, icon);
       redirect(303, '/');
     }
 
-    await updateChannel(userID, new Date(updatedAt ?? 0), params.cid, title, desc, icon);
-    redirect(303, `/c/${params.cid}`);
+    await updateChannel(userID, new Date(updatedAt ?? 0), params.channelID, title, desc, icon);
+    redirect(303, `/c/${params.channelID}`);
   },
 };
