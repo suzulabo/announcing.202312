@@ -37,8 +37,6 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   providers,
   callbacks: {
     jwt: ({ token, account }) => {
-      console.log('callback', { token, account });
-
       if (account) {
         const digest = createHash('sha256')
           .update(`${account.provider}:${account.providerAccountId}`)
@@ -52,7 +50,6 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
       return token;
     },
     session: ({ session, token }) => {
-      console.log('session', { session, token });
       if (token['userID']) {
         session.user.id = token['userID'] as string;
       }
