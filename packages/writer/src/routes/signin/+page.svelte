@@ -24,7 +24,7 @@
     {#if env.PUBLIC_TEST}
       <button
         on:click={() => {
-          void signIn('credentials', { id: 'test_user' });
+          void signIn('credentials', { id: `test_user-${Math.random().toString()}` });
         }}>Credentials</button
       >
     {/if}
