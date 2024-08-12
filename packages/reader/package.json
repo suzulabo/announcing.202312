@@ -6,13 +6,15 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "playwright": "playwright test"
   },
   "devDependencies": {
     "@announcing/components": "workspace:^",
     "@announcing/db": "workspace:^",
     "@auth/sveltekit": "^1.4.2",
     "@libsql/client": "^0.8.1",
+    "@playwright/test": "^1.46.0",
     "@sveltejs/adapter-auto": "^3.2.2",
     "@sveltejs/kit": "^2.5.20",
     "@sveltejs/vite-plugin-svelte": "^3.1.1",

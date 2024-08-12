@@ -21,21 +21,28 @@ jobs:
 
       - run: pnpm run check
 
-  playwright-components:
+  playwright:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.46.0-jammy
     timeout-minutes: 10
+    permissions:
+      contents: write
+    strategy:
+      matrix:
+        target: ['components', 'reader', 'writer']
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: ./.github/workflows/setup
 
-      - run: pnpm run sync
-        working-directory: ./packages/components
+      - uses: ./.github/workflows/setup-snapshots
+        with:
+          target: ${{ matrix.target }}
 
       - run: pnpm run playwright
-        working-directory: ./packages/components
+        working-directory: ./packages/${{ matrix.target }}
         env:
           HOME: /root

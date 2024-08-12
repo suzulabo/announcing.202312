@@ -16,24 +16,24 @@ import { formSchema } from './formSchema';
 export const load: PageServerLoad = async ({ params, locals }) => {
   const userID = await getUserID(locals);
 
-  const channel = await getChannel(userID, params.cid);
+  const channel = await getChannel(userID, params.channelID);
 
   if (!channel) {
     redirect(303, '/');
   }
 
-  const aid = params.aid;
+  const announcementID = params.announcementID;
 
-  if (aid === 'new') {
+  if (announcementID === 'new') {
     return {
       form: await superValidate({ updatedAt: channel.updatedAt.getTime() }, valibot(formSchema)),
     };
   }
 
-  const announcement = channel.announcements?.find((v) => v.id === aid);
+  const announcement = channel.announcements?.find((v) => v.id === announcementID);
 
   if (!announcement) {
-    redirect(303, `/c/${params.cid}`);
+    redirect(303, `/channel/${params.channelID}`);
   }
 
   const { title, body, headerImage, images } = announcement;
@@ -49,7 +49,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 };
 
 export const actions: Actions = {
-  write: async ({ request, locals, params: { cid, aid } }) => {
+  write: async ({ request, locals, params: { channelID, announcementID } }) => {
     const form = await superValidate(request, valibot(formSchema));
 
     if (!form.valid) {
@@ -66,14 +66,23 @@ export const actions: Actions = {
       return fail(400, { form });
     }
 
-    if (aid === 'new') {
-      await addAnnouncement(userID, cid, updatedAt, headerImage, title, body, images);
+    if (announcementID === 'new') {
+      await addAnnouncement(userID, channelID, updatedAt, headerImage, title, body, images);
     } else {
-      await updateAnnouncement(userID, cid, updatedAt, headerImage, title, body, images, aid);
+      await updateAnnouncement(
+        userID,
+        channelID,
+        updatedAt,
+        headerImage,
+        title,
+        body,
+        images,
+        announcementID,
+      );
     }
-    redirect(303, `/c/${cid}`);
+    redirect(303, `/channel/$channelID}`);
   },
-  remove: async ({ locals, params: { cid, aid }, request }) => {
+  remove: async ({ locals, params: { channelID, announcementID }, request }) => {
     const session = await locals.auth();
 
     const userID = session?.user?.id;
@@ -88,7 +97,7 @@ export const actions: Actions = {
       return fail(400);
     }
 
-    await removeAnnouncement(userID, cid, +updatedAt, aid);
-    redirect(303, `/c/${cid}`);
+    await removeAnnouncement(userID, channelID, +updatedAt, announcementID);
+    redirect(303, `/channel/${channelID}`);
   },
 };

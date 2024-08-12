@@ -13,12 +13,14 @@
     "test:watch": "vitest watch",
     "migrate": "mkdir -p ../db-dev/storage && drizzle-kit migrate",
     "build": "pnpm run migrate && tsc -p tsconfig.build.json",
-    "build:watch": "tsc -w -p tsconfig.build.json"
+    "build:watch": "tsc -w -p tsconfig.build.json",
+    "genTestData": "tsx tools/genTestData.ts"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@libsql/client": "^0.8.1",
     "date-fns": "^3.6.0",
+    "mockdate": "^3.0.5",
     "tsx": "^4.16.5",
     "vitest": "^2.0.5"
   },

@@ -9,13 +9,13 @@ import type { Actions, PageServerLoad } from './$types.js';
 import { formSchema } from './formSchema.js';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
-  if (params.cid === 'new') {
+  if (params.channelID === 'new') {
     return { form: await superValidate(valibot(formSchema)) };
   }
 
   const userID = await getUserID(locals);
 
-  const channel = await getChannel(userID, params.cid);
+  const channel = await getChannel(userID, params.channelID);
 
   if (!channel) {
     redirect(303, '/');
@@ -29,7 +29,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 };
 
 export const actions: Actions = {
-  default: async ({ request, locals, params: { cid } }) => {
+  default: async ({ request, locals, params: { channelID } }) => {
     const form = await superValidate(request, valibot(formSchema));
 
     if (!form.valid) {
@@ -46,7 +46,7 @@ export const actions: Actions = {
       return fail(400, { form });
     }
 
-    await deleteChannel(userID, cid, new Date(updatedAt));
+    await deleteChannel(userID, channelID, new Date(updatedAt));
     redirect(303, `/`);
   },
 };
