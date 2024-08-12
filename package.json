@@ -17,11 +17,11 @@
     "check": "pnpm run build && pnpm run format && pnpm run lint && pnpm -r run test && pnpm -r run check"
   },
   "devDependencies": {
-    "@eslint/js": "^9.8.0",
-    "@stylistic/eslint-plugin": "^2.6.1",
+    "@eslint/js": "^9.9.0",
+    "@stylistic/eslint-plugin": "^2.6.2",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/eslint__js": "^8.42.3",
-    "eslint": "^9.8.0",
+    "eslint": "^9.9.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-svelte": "^2.43.0",
@@ -31,6 +31,6 @@
     "prettier-plugin-svelte": "^3.2.6",
     "svelte-eslint-parser": "^0.41.0",
     "typescript": "^5.5.4",
-    "typescript-eslint": "8.0.0"
+    "typescript-eslint": "8.0.1"
   }
 }
