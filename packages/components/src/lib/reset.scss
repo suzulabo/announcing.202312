@@ -47,6 +47,12 @@ a.button {
     left: 1px;
   }
 
+  &.small {
+    padding: 4px 8px;
+    font-size: 90%;
+    border-radius: 4px;
+  }
+
   @media (hover: hover) {
     &:hover:not(:disabled) {
       background-color: var(--color-hover);
