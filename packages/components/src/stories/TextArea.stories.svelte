@@ -16,8 +16,7 @@
 
 <Story name="Basic">
   <div class="container">
-    <TextArea name="name" label="Text area" placeholder="Enter up to 500 characters" maxLength={500}
-    ></TextArea>
+    <TextArea name="name" label="Text area" maxBytes={100}></TextArea>
   </div>
 </Story>
 
@@ -26,6 +25,7 @@
     <TextArea
       name="long-value"
       label="Long value"
+      maxBytes={380}
       value="In the beginning God created the heavens and the earth. Now the earth was formless and empty,
   darkness was over the surface of the deep, and the Spirit of God was hovering over the waters.
   And God said, 'Let there be light,' and there was light. God saw that the light was good, and he
