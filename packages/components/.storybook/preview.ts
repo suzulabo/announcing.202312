@@ -1,7 +1,10 @@
 import '../src/lib/base.scss';
 
-/** @type {import('@storybook/svelte').Preview} */
-const preview = {
+import type { Preview } from '@storybook/svelte';
+
+import MyDecorator from './MyDecorator.svelte';
+
+const preview: Preview = {
   parameters: {
     controls: {
       matchers: {
@@ -16,6 +19,13 @@ const preview = {
       stylePreview: true,
     },
   },
+  decorators: [
+    () => {
+      return {
+        Component: MyDecorator,
+      };
+    },
+  ],
 };
 
 export default preview;

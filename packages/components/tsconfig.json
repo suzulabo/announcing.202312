@@ -1,4 +1,4 @@
 {
   "extends": ["../../tsconfig.json", "./.svelte-kit/tsconfig.json"],
-  "files": ["playwright.config.ts"]
+  "files": ["playwright.config.ts", ".storybook/preview.ts", ".storybook/MyDecorator.svelte"]
 }
