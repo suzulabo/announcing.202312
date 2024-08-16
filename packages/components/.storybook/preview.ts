@@ -20,12 +20,29 @@ const preview: Preview = {
     },
   },
   decorators: [
-    () => {
+    (_, context) => {
       return {
         Component: MyDecorator,
+        props: {
+          context,
+        },
       };
     },
   ],
+  globalTypes: {
+    locale: {
+      name: 'Locale',
+      description: 'Internationalization locale',
+      defaultValue: 'en',
+      toolbar: {
+        icon: 'globe',
+        items: [
+          { value: 'en', right: '🇺🇸', title: 'English' },
+          { value: 'ja', right: '🇯🇵', title: '日本語' },
+        ],
+      },
+    },
+  },
 };
 
 export default preview;
