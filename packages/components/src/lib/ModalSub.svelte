@@ -6,6 +6,9 @@
   const closeDispatch = createEventDispatcher();
   const handleClose = () => {
     closeDispatch('close');
+    if (location.hash === '#modal') {
+      history.back();
+    }
   };
 
   history.pushState(undefined, '', '#modal');
@@ -19,10 +22,6 @@
 
   onDestroy(() => {
     document.body.style.overflow = bodyOverflow;
-
-    if (location.hash === '#modal') {
-      history.back();
-    }
   });
 </script>
 
