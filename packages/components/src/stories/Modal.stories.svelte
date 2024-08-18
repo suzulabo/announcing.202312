@@ -17,12 +17,7 @@
 
 <Story name="Basic">
   <button on:click={() => (show = true)}>Show</button>
-  <Modal
-    bind:show
-    on:close={() => {
-      show = false;
-    }}
-  >
+  <Modal bind:show>
     <div class="modal-body">
       <div>This is a modal window.</div>
       <button on:click={() => (show = false)}>Close</button>

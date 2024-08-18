@@ -2,16 +2,12 @@
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
   export let closeAnywhere = false;
+  export let padding = '0';
 
   const closeDispatch = createEventDispatcher();
   const handleClose = () => {
     closeDispatch('close');
-    if (location.hash === '#modal') {
-      history.back();
-    }
   };
-
-  history.pushState(undefined, '', '#modal');
 
   let bodyOverflow: string;
 
@@ -27,6 +23,7 @@
 
 <button
   class={`unstyled modal`}
+  style={`--padding: ${padding}`}
   on:click={() => {
     if (closeAnywhere) handleClose();
   }}
@@ -57,6 +54,7 @@
     left: 0;
     right: 0;
     margin: 0;
+    padding: var(--padding);
     background-color: var(--color-background-modal);
     backdrop-filter: blur(1px);
     z-index: var(--modal-z-index, 999);
