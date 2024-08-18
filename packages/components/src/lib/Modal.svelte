@@ -18,6 +18,7 @@
 
   export let show = false;
   export let closeAnywhere = false;
+  export let padding = '0';
 
   $: {
     if (!isIframe) {
@@ -38,6 +39,7 @@ a sub component is used because svelte:window can only be added at the root leve
 {#if show}
   <ModalSub
     {closeAnywhere}
+    {padding}
     on:close={() => {
       show = false;
     }}><slot /></ModalSub
