@@ -1,12 +1,12 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
-  export let closeAnywhere = false;
+  export let dismissMode: 'backdrop' | 'anywhere' | 'none' = 'backdrop';
   export let padding = '0';
 
-  const closeDispatch = createEventDispatcher();
+  const dismissDispatch = createEventDispatcher();
   const handleClose = () => {
-    closeDispatch('close');
+    dismissDispatch('dismiss');
   };
 
   let bodyOverflow: string;
@@ -25,10 +25,10 @@
   class={`unstyled modal`}
   style={`--padding: ${padding}`}
   on:click={() => {
-    if (closeAnywhere) handleClose();
+    if (dismissMode === 'anywhere') handleClose();
   }}
   on:click|self={() => {
-    if (!closeAnywhere) handleClose();
+    if (dismissMode === 'backdrop') handleClose();
   }}
 >
   <slot />
@@ -47,6 +47,7 @@
 
 <style lang="scss">
   .modal {
+    cursor: default;
     display: flex;
     position: fixed;
     top: 0;

@@ -17,7 +17,7 @@
   import ModalSub from './ModalSub.svelte';
 
   export let show = false;
-  export let closeAnywhere = false;
+  export let dismissMode: 'backdrop' | 'anywhere' | 'none' = 'backdrop';
   export let padding = '0';
 
   $: {
@@ -38,9 +38,9 @@ a sub component is used because svelte:window can only be added at the root leve
 -->
 {#if show}
   <ModalSub
-    {closeAnywhere}
+    {dismissMode}
     {padding}
-    on:close={() => {
+    on:dismiss={() => {
       show = false;
     }}><slot /></ModalSub
   >
