@@ -23,51 +23,63 @@
   $: validated = !!form.title;
 </script>
 
-<Modal bind:show={showModal} padding="8px">
+<Modal bind:show={showModal} dismissMode="none" padding="8px">
   <div class="modal-body">
-    {#if form.icon}
-      <button
-        class="unstyled"
-        on:click={() => {
-          fileInput.open();
-        }}
-      >
-        <img class="icon" alt="icon preview" use:loadImage={form.icon} />
-      </button>
-    {/if}
-    <div>
-      <button
-        type="button"
-        on:click={() => {
-          fileInput.open();
-        }}>{$LL.iconSelect()}</button
-      >
+    <div class="icon-box">
       {#if form.icon}
         <button
-          type="button"
+          class="unstyled"
           on:click={() => {
-            form.icon = null;
-          }}>{$LL.iconRemove()}</button
+            fileInput.open();
+          }}
         >
+          <img class="icon" alt="icon preview" use:loadImage={form.icon} />
+        </button>
       {/if}
+      <div>
+        <button
+          type="button"
+          class="small"
+          on:click={() => {
+            fileInput.open();
+          }}>{$LL.iconSelect()}</button
+        >
+        {#if form.icon}
+          <button
+            type="button"
+            class="small"
+            on:click={() => {
+              form.icon = null;
+            }}>{$LL.iconRemove()}</button
+          >
+        {/if}
+      </div>
+      <FileInput
+        name="icon"
+        accept="image/jpeg,image/png,image/webp"
+        maxImageSize={256}
+        bind:this={fileInput}
+        bind:file={form.icon}
+      />
     </div>
-    <FileInput
-      name="icon"
-      accept="image/jpeg,image/png,image/webp"
-      maxImageSize={256}
-      bind:this={fileInput}
-      bind:file={form.icon}
-    />
     <Input name="title" label={$LL.title()} bind:value={form.title} maxBytes={100} />
-    <TextArea name="desc" label={$LL.desc()} bind:value={form.desc} maxBytes={1000} />
+    <TextArea
+      name="desc"
+      label={$LL.desc()}
+      bind:value={form.desc}
+      maxBytes={1000}
+      maxHeight="40vh"
+    />
     <button
       disabled={!validated}
+      class="preview-btn"
       on:click={() => {
         channel = { ...form };
         showModal = false;
       }}>{$LL.preview()}</button
     >
     <button
+      class="small cancel-btn"
       on:click={() => {
         showModal = false;
       }}>{$LL.cancel()}</button
@@ -104,11 +116,23 @@
     flex-direction: column;
     gap: 16px;
 
-    .icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 8px;
-      object-fit: contain;
+    .icon-box {
+      text-align: center;
+
+      .icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        object-fit: contain;
+      }
+    }
+
+    .preview-btn {
+      align-self: center;
+    }
+
+    .cancel-btn {
+      align-self: center;
     }
   }
 </style>
