@@ -1,5 +1,23 @@
+<script lang="ts" context="module">
+  const loadFile = async (file: File | null) => {
+    if (!file) {
+      return '';
+    }
+    return new Promise<string>((resolve) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        resolve(event.target?.result as string);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+</script>
+
 <script lang="ts">
   import { loadImage } from './actions/loadImage';
+  import { loadChannelViewComponents } from './ChannelView/loader';
   import FileInput from './FileInput.svelte';
   import LL from './i18n/i18n-svelte';
   import Input from './Input.svelte';
@@ -16,12 +34,23 @@
     backUrl: string;
   };
 
+  const { ChannelView } = loadChannelViewComponents('default');
+
   let showModal = true;
   let fileInput: FileInput;
-  let form = { ...channel };
+  const form = { ...channel };
 
   $: validated = !!form.title;
 </script>
+
+<div class="preview">
+  {#await loadFile(channel.icon) then iconUrl}
+    <ChannelView params={{ channel: { ...channel, icon: iconUrl }, preview: true }} />
+  {/await}
+  <div>
+    <a href={params.backUrl}>{$LL.back()}</a>
+  </div>
+</div>
 
 <Modal bind:show={showModal} dismissMode="none" padding="8px">
   <div class="modal-body">
@@ -86,20 +115,6 @@
     >
   </div>
 </Modal>
-
-<div class="preview">
-  <div>{channel.title}</div>
-  <div>{channel.desc}</div>
-  <div><a href={params.backUrl}>{$LL.cancel()}</a></div>
-  <div>
-    <button
-      on:click={() => {
-        form = { ...channel };
-        showModal = true;
-      }}>{$LL.edit()}</button
-    >
-  </div>
-</div>
 
 <style lang="scss">
   .preview {

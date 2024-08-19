@@ -23,6 +23,10 @@ type RootTranslation = {
 	 */
 	cancel: string
 	/**
+	 * B​a​c​k
+	 */
+	back: string
+	/**
 	 * P​r​e​v​i​e​w
 	 */
 	preview: string
@@ -65,6 +69,10 @@ export type TranslationFunctions = {
 	 * Cancel
 	 */
 	cancel: () => LocalizedString
+	/**
+	 * Back
+	 */
+	back: () => LocalizedString
 	/**
 	 * Preview
 	 */
