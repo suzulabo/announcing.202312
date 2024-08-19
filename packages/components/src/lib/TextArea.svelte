@@ -9,6 +9,7 @@
   export let value = '';
   export let maxBytes = 0;
   export let error = false;
+  export let maxHeight = 'none';
 
   let textAreaRef: HTMLTextAreaElement;
 
@@ -40,7 +41,13 @@
       </div>
     {/if}
   </div>
-  <textarea {name} {placeholder} bind:value bind:this={textAreaRef}></textarea>
+  <textarea
+    {name}
+    {placeholder}
+    bind:value
+    bind:this={textAreaRef}
+    style={`--max-height:${maxHeight}`}
+  ></textarea>
   {#if error}
     <div class="error">
       {$LL.textTooLong()}
@@ -70,6 +77,7 @@
 
   textarea {
     margin-top: 4px;
+    max-height: var(--max-height);
   }
 
   label:focus-within {

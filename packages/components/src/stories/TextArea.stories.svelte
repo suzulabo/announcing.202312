@@ -35,6 +35,12 @@
   </div>
 </Story>
 
+<Story name="maxHeight 50vh">
+  <div class="container">
+    <TextArea name="name" label="Text area" maxHeight="50vh"></TextArea>
+  </div>
+</Story>
+
 <style lang="scss">
   .container {
     max-width: 400px;
