@@ -27,9 +27,9 @@ type RootTranslation = {
 	 */
 	preview: string
 	/**
-	 * Y​o​u​r​ ​i​n​p​u​t​ ​e​x​c​e​e​d​s​ ​t​h​e​ ​c​h​a​r​a​c​t​e​r​ ​l​i​m​i​t​.
+	 * S​e​t​t​i​n​g​s
 	 */
-	textTooLong: string
+	settings: string
 	/**
 	 * T​i​t​l​e
 	 */
@@ -46,6 +46,14 @@ type RootTranslation = {
 	 * R​e​m​o​v​e​ ​i​c​o​n
 	 */
 	iconRemove: string
+	/**
+	 * Y​o​u​r​ ​i​n​p​u​t​ ​e​x​c​e​e​d​s​ ​t​h​e​ ​c​h​a​r​a​c​t​e​r​ ​l​i​m​i​t​.
+	 */
+	textTooLong: string
+	/**
+	 * N​o​ ​a​n​n​o​u​n​c​e​m​e​n​t​s​ ​y​e​t​.
+	 */
+	noAnnouncements: string
 }
 
 export type TranslationFunctions = {
@@ -62,9 +70,9 @@ export type TranslationFunctions = {
 	 */
 	preview: () => LocalizedString
 	/**
-	 * Your input exceeds the character limit.
+	 * Settings
 	 */
-	textTooLong: () => LocalizedString
+	settings: () => LocalizedString
 	/**
 	 * Title
 	 */
@@ -81,6 +89,14 @@ export type TranslationFunctions = {
 	 * Remove icon
 	 */
 	iconRemove: () => LocalizedString
+	/**
+	 * Your input exceeds the character limit.
+	 */
+	textTooLong: () => LocalizedString
+	/**
+	 * No announcements yet.
+	 */
+	noAnnouncements: () => LocalizedString
 }
 
 export type Formatters = {}

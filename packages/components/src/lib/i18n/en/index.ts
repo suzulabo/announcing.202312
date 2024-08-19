@@ -4,11 +4,13 @@ const en = {
   edit: 'Edit',
   cancel: 'Cancel',
   preview: 'Preview',
-  textTooLong: 'Your input exceeds the character limit.',
+  settings: 'Settings',
   title: 'Title',
   desc: 'Description',
   iconSelect: 'Select icon',
   iconRemove: 'Remove icon',
+  textTooLong: 'Your input exceeds the character limit.',
+  noAnnouncements: 'No announcements yet.',
 } satisfies BaseTranslation;
 
 export default en;

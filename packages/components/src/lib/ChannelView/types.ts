@@ -3,19 +3,16 @@ export type ChannelViewParams = {
     title: string;
     desc: string | null;
     icon: string | null;
-    links:
+    links?:
       | {
           name: string;
           url: string;
         }[]
       | null;
   };
-  noAnnouncements: boolean;
-  settingsClick: () => void;
-  msgs: {
-    settings: string;
-    noAnnouncements: string;
-  };
+  noAnnouncements?: boolean;
+  settingsClick?: () => void;
+  preview?: boolean;
 };
 
 export type AnnouncementViewParams = {
