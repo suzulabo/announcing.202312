@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+  const isIframe = window.self !== window.top;
+</script>
+
 <script lang="ts">
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
@@ -12,11 +16,17 @@
   let bodyOverflow: string;
 
   onMount(() => {
+    if (!isIframe && location.hash !== '#modal') {
+      history.pushState(undefined, '', '#modal');
+    }
     bodyOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
   });
 
   onDestroy(() => {
+    if (!isIframe && location.hash === '#modal') {
+      history.back();
+    }
     document.body.style.overflow = bodyOverflow;
   });
 </script>

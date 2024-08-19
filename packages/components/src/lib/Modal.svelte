@@ -19,17 +19,6 @@
   export let show = false;
   export let dismissMode: 'backdrop' | 'anywhere' | 'none' = 'backdrop';
   export let padding = '0';
-
-  $: {
-    if (!isIframe) {
-      if (show && location.hash !== '#modal') {
-        history.pushState(undefined, '', '#modal');
-      }
-      if (!show && location.hash === '#modal') {
-        history.back();
-      }
-    }
-  }
 </script>
 
 <!--
