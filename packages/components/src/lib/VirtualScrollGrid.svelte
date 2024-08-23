@@ -11,7 +11,7 @@
 
   let cols = 0;
   let totalHeight: number;
-  let visibleItems: T[];
+  let visibleItems: T[] = [];
   let topHeight = 0;
 
   let itemsElement: HTMLDivElement;
@@ -33,11 +33,12 @@
     const startRow = Math.max(0, Math.floor((y - renderMargin + gap) / (itemHeight + gap)));
     const endRow = Math.ceil(startRow + (h + renderMargin) / (itemHeight + gap));
 
-    visibleItems = items.slice(startRow * cols, (endRow + 1) * cols);
+    const newVisibleItems = items.slice(startRow * cols, (endRow + 1) * cols);
+    if (visibleItems[0] !== newVisibleItems[0] || visibleItems.length !== newVisibleItems.length) {
+      visibleItems = newVisibleItems;
+    }
     totalHeight = rows * itemHeight + (rows - 1) * gap;
     topHeight = startRow * itemHeight + (startRow - 1) * gap;
-
-    console.log({ cols, rows, startRow, endRow, length: visibleItems.length, totalHeight });
   };
 
   let resizeObserver: ResizeObserver;
