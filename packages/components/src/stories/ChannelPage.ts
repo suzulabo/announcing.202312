@@ -132,9 +132,4 @@ export const params: ChannelPageParams = {
   settingsClick: () => {
     alert('Settings clicked');
   },
-
-  msgs: {
-    noAnnouncements: 'No announcement yet.',
-    settings: 'Settings',
-  },
 };
