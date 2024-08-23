@@ -1,7 +1,12 @@
 <!-- https://codepen.io/adrianmg/pen/Omedpo -->
-<script lang="ts"></script>
+<script lang="ts">
+  import { toStyle } from './utils/toStyle';
 
-<div class="spinner">
+  export let size = 12;
+  export let delay = '1s';
+</script>
+
+<div class="spinner" style={toStyle({ 'font-size': `${size}px`, '--delay': delay })}>
   <div></div>
   <div></div>
   <div></div>
@@ -9,9 +14,9 @@
 
 <style lang="scss">
   .spinner {
-    animation: showdelay 2s;
+    animation: showDelay var(--delay) ease-in;
 
-    @keyframes showdelay {
+    @keyframes showDelay {
       0%,
       50% {
         opacity: 0;
@@ -22,24 +27,24 @@
     }
 
     & > div {
-      width: 12px;
-      height: 12px;
+      width: 1em;
+      height: 1em;
       background-color: var(--color-text);
       border-radius: 100%;
       display: inline-block;
-      animation: bouncedelay 1.3s infinite ease-in-out both;
+      animation: bounceDelay 1.3s infinite ease-in-out both;
     }
     & > div:nth-child(1) {
-      animation-delay: 1s;
+      animation-delay: 0s;
     }
     & > div:nth-child(2) {
-      animation-delay: 1.16s;
-      margin: 0 8px;
+      animation-delay: 0.16s;
+      margin: 0 0.25em;
     }
     & > div:nth-child(3) {
-      animation-delay: 1.32s;
+      animation-delay: 0.32s;
     }
-    @keyframes bouncedelay {
+    @keyframes bounceDelay {
       0%,
       80%,
       100% {
