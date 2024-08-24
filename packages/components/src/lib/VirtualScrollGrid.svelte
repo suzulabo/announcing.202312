@@ -74,9 +74,7 @@
 >
   {#if visibleItems}
     {#each visibleItems as item}
-      <div class="item">
-        <slot name="item" {item} />
-      </div>
+      <slot name="item" {item} />
     {/each}
   {/if}
 </div>
@@ -85,9 +83,5 @@
   .items {
     width: 100%;
     display: grid;
-
-    .item {
-      overflow: hidden;
-    }
   }
 </style>
