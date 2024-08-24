@@ -7,7 +7,7 @@
   export let itemHeight: number;
   export let itemMinWidth: number;
   export let gap = 0;
-  export let renderMargin = 50;
+  export let overScanCount = 2;
 
   let cols = 0;
   let totalHeight: number;
@@ -30,13 +30,15 @@
 
     const rows = Math.ceil(items.length / cols);
 
-    const startRow = Math.max(0, Math.floor((y - renderMargin + gap) / (itemHeight + gap)));
-    const endRow = Math.ceil(startRow + (h + renderMargin) / (itemHeight + gap));
+    const _startRow = Math.floor(y / (itemHeight + gap));
+    const endRow = Math.ceil(_startRow + h / (itemHeight + gap)) + overScanCount;
+    const startRow = Math.max(0, _startRow - overScanCount);
 
     const newVisibleItems = items.slice(startRow * cols, (endRow + 1) * cols);
     if (visibleItems[0] !== newVisibleItems[0] || visibleItems.length !== newVisibleItems.length) {
       visibleItems = newVisibleItems;
     }
+
     totalHeight = rows * itemHeight + (rows - 1) * gap;
     topHeight = startRow * itemHeight + (startRow - 1) * gap;
   };
