@@ -11,7 +11,7 @@
 
 <Story name="Basic">
   <div class="basic-box">
-    <div class={`body`} use:overflow>
+    <div class="body overflowing-y" use:overflow>
       In the beginning God created the heavens and the earth. Now the earth was formless and empty,
       darkness was over the surface of the deep, and the Spirit of God was hovering over the waters.
       And God said, 'Let there be light,' and there was light. God saw that the light was good, and
