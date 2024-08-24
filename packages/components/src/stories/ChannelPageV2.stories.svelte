@@ -5,7 +5,7 @@
   import { addDays } from 'date-fns';
 
   import ChannelPage from '$lib/ChannelPage/ChannelPage.svelte';
-  import type { AnnouncementLoaderFunction, Channel } from '$lib/ChannelPage/types';
+  import type { Announcement, AnnouncementLoaderFunction, Channel } from '$lib/ChannelPage/types';
 
   export const meta = {
     title: 'ChannelPageV2/default',
@@ -25,16 +25,22 @@
 
   const announcementLoader: AnnouncementLoaderFunction = (key: string) => {
     const keyNum = +key;
-    faker.seed(keyNum);
+    faker.seed(keyNum + 100);
     const date = addDays('2023-12-31T00:11:22', keyNum * -1);
 
-    const result = {
+    const result: Announcement = {
       id: key,
       title: `[${key}] ${faker.lorem.sentence()}`,
       body: faker.lorem.text(),
       updatedAt: date,
       createdAt: date,
     };
+
+    switch (keyNum) {
+      case 1:
+        result.headerImage = '/assets/1.webp';
+        break;
+    }
 
     return new Promise((resolve) => {
       setTimeout(() => {

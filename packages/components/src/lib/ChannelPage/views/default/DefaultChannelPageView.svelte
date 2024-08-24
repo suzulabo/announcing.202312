@@ -60,7 +60,7 @@
           {$LL.noAnnouncements()}
         </div>
       {:else if !!announcementLoader}
-        <VirtualScrollGrid items={announcementKeys} itemHeight={200} itemMinWidth={320} gap={8}>
+        <VirtualScrollGrid items={announcementKeys} itemHeight={300} itemMinWidth={300} gap={8}>
           <div class="item" slot="item" let:item>
             <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
             {@const announcement = getAnnouncement(item)}
@@ -90,11 +90,10 @@
     .settings {
       text-align: right;
     }
-    .main {
-      max-width: 800px;
-      margin: 20px auto;
 
-      animation: fadeIn 0.5s;
+    .main {
+      max-width: 1000px;
+      margin: 20px auto;
 
       .name-line {
         margin: 10px 0 0;
@@ -102,7 +101,7 @@
         align-items: center;
         .name {
           font-weight: bold;
-          font-size: 24px;
+          font-size: 20px;
           flex-grow: 1;
         }
         .icon {
@@ -130,22 +129,13 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        border: 1px solid var(--color-border);
-        border-radius: 8px;
-        padding: 8px;
+        border: 1px solid var(--color-border-light);
+        border-radius: 4px;
+        overflow: hidden;
         .loading {
           margin: auto;
         }
       }
-    }
-  }
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
     }
   }
 </style>
