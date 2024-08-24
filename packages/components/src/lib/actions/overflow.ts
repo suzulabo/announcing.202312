@@ -29,7 +29,11 @@ const resizeObserver = readable<ResizeObserver>(undefined, (set) => {
   };
 });
 
-export const overflow: Action = (el) => {
+// When the display size of the target element is fixed with `overflow: hidden`,
+// ResizeObserver cannot detect changes in overflow state if the content changes.
+// In such cases, pass an arbitrary value that syncs with content changes to create
+// a timing to check the overflow state.
+export const overflow: Action<Element, unknown> = (el) => {
   let observer: ResizeObserver | undefined;
   const unsubscribe = resizeObserver.subscribe((v) => {
     observer = v;
@@ -37,6 +41,9 @@ export const overflow: Action = (el) => {
   });
 
   return {
+    update: () => {
+      checkOverflow(el);
+    },
     destroy: () => {
       observer?.unobserve(el);
       unsubscribe();
