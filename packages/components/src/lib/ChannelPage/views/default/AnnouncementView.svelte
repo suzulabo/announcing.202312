@@ -2,6 +2,7 @@
   import { overflow } from '$lib/actions/overflow';
   import type { Announcement } from '$lib/ChannelPage/types';
   import { formatDate } from '$lib/utils/formatDate';
+  import { parseImageSrc } from '$lib/utils/parseImageSrc';
 
   export let announcement: Announcement;
 </script>
@@ -9,7 +10,11 @@
 <div class="container overflowing-y" use:overflow>
   <div class="date">{formatDate(announcement.createdAt)}</div>
   {#if announcement.headerImage}
-    <img class="header-image" src={announcement.headerImage} alt="" />
+    <img
+      class="header-image"
+      alt=""
+      {...parseImageSrc(announcement.headerImage, { height: 100 })}
+    />
   {/if}
   {#if announcement.title}
     <div class="title">{announcement.title}</div>
@@ -43,7 +48,6 @@
     }
 
     .header-image {
-      max-height: 100px;
       object-fit: contain;
       border-radius: 4px;
       align-self: center;

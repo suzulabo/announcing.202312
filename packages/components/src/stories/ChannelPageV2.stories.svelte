@@ -38,7 +38,10 @@
 
     switch (keyNum) {
       case 1:
-        result.headerImage = '/assets/1.webp';
+        result.headerImage = '/assets/1_550x368.webp';
+        break;
+      case 2:
+        result.headerImage = '/assets/cat-8575641_427x640.jpg';
         break;
     }
 
