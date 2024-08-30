@@ -54,5 +54,13 @@
 </script>
 
 <Story name="Basic">
-  <ChannelPage viewName="default" {channel} {announcementKeys} {announcementLoader} />
+  <ChannelPage
+    viewName="default"
+    {channel}
+    {announcementKeys}
+    {announcementLoader}
+    on:announcementClick={(ev) => {
+      console.log(ev.detail);
+    }}
+  />
 </Story>

@@ -16,6 +16,8 @@
 </script>
 
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+
   import type { AnnouncementLoaderFunction, Channel, SettingsClickFunction } from './types';
 
   export let viewName: string;
@@ -25,6 +27,12 @@
   export let settingsClick: SettingsClickFunction | undefined = undefined;
   export let channelPreview: boolean | undefined = undefined;
 
+  const eventDispatch = createEventDispatcher<{ announcementClick: string }>();
+
+  const announcementClick = (key: string) => {
+    eventDispatch('announcementClick', key);
+  };
+
   $: PageView = getPageView(viewName);
 </script>
 
@@ -33,6 +41,7 @@
   {channel}
   announcementKeys={announcementKeys ?? []}
   {announcementLoader}
+  {announcementClick}
   {settingsClick}
   {channelPreview}
 />

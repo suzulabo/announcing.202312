@@ -18,4 +18,6 @@ export type AnnouncementKey = string;
 
 export type AnnouncementLoaderFunction = (key: AnnouncementKey) => Promise<Announcement>;
 
+export type AnnouncementClickFunction = (key: AnnouncementKey) => void;
+
 export type SettingsClickFunction = () => void;

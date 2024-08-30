@@ -8,6 +8,7 @@
 
   import type {
     Announcement,
+    AnnouncementClickFunction,
     AnnouncementKey,
     AnnouncementLoaderFunction,
     Channel,
@@ -18,10 +19,19 @@
   export let channel: Channel;
   export let announcementKeys: AnnouncementKey[];
   export let announcementLoader: AnnouncementLoaderFunction | undefined;
+  export let announcementClick: AnnouncementClickFunction;
   export let settingsClick: SettingsClickFunction | undefined;
   export let channelPreview: boolean | undefined;
 
   const cache = new LRUCache<AnnouncementKey, Announcement>({ max: 100 });
+
+  const announcementClickHandler = (event: Event) => {
+    const el = event.currentTarget as HTMLElement;
+    const key = el.getAttribute('data-key');
+    if (key) {
+      announcementClick(key);
+    }
+  };
 
   const getAnnouncement = (key: AnnouncementKey) => {
     return cache.get(key);
@@ -61,7 +71,13 @@
         </div>
       {:else if !!announcementLoader}
         <VirtualScrollGrid items={announcementKeys} itemHeight={300} itemMinWidth={300} gap={8}>
-          <div class="item" slot="item" let:item>
+          <button
+            class="unstyled item"
+            slot="item"
+            let:item
+            data-key={item}
+            on:click={announcementClickHandler}
+          >
             <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
             {@const announcement = getAnnouncement(item)}
             {#if announcement}
@@ -76,7 +92,7 @@
                 <AnnouncementView {announcement} />
               {/await}
             {/if}
-          </div>
+          </button>
         </VirtualScrollGrid>
       {/if}
     {/if}
@@ -132,6 +148,7 @@
         border: 1px solid var(--color-border-light);
         border-radius: 4px;
         overflow: hidden;
+        cursor: pointer;
         .loading {
           margin: auto;
         }
