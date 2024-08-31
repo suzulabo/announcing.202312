@@ -14,10 +14,8 @@ export type Announcement = {
   createdAt: Date;
 };
 
-export type AnnouncementKey = string;
+export type AnnouncementLoaderFunction = (key: string) => Promise<Announcement>;
 
-export type AnnouncementLoaderFunction = (key: AnnouncementKey) => Promise<Announcement>;
-
-export type AnnouncementClickFunction = (key: AnnouncementKey) => void;
+export type AnnouncementClickFunction = (key: string) => void;
 
 export type SettingsClickFunction = () => void;

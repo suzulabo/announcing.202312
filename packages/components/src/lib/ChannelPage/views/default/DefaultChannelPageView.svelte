@@ -9,7 +9,6 @@
   import type {
     Announcement,
     AnnouncementClickFunction,
-    AnnouncementKey,
     AnnouncementLoaderFunction,
     Channel,
     SettingsClickFunction,
@@ -17,13 +16,13 @@
   import AnnouncementView from './AnnouncementView.svelte';
 
   export let channel: Channel;
-  export let announcementKeys: AnnouncementKey[];
+  export let announcementKeys: string[];
   export let announcementLoader: AnnouncementLoaderFunction | undefined;
   export let announcementClick: AnnouncementClickFunction;
   export let settingsClick: SettingsClickFunction | undefined;
   export let channelPreview: boolean | undefined;
 
-  const cache = new LRUCache<AnnouncementKey, Announcement>({ max: 100 });
+  const cache = new LRUCache<string, Announcement>({ max: 100 });
 
   const announcementClickHandler = (event: Event) => {
     const el = event.currentTarget as HTMLElement;
@@ -33,10 +32,10 @@
     }
   };
 
-  const getAnnouncement = (key: AnnouncementKey) => {
+  const getAnnouncement = (key: string) => {
     return cache.get(key);
   };
-  const loadAnnouncement = async (key: AnnouncementKey, loader: AnnouncementLoaderFunction) => {
+  const loadAnnouncement = async (key: string, loader: AnnouncementLoaderFunction) => {
     const a = await loader(key);
     cache.set(key, a);
     return a;
