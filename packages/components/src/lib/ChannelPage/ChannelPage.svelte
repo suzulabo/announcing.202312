@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
-  import DefaultChannelPageView from './themes/default/DefaultChannelPageView.svelte';
+  import DefaultChannelPage from './themes/default/DefaultChannelPage.svelte';
 
-  const getPageView = (viewName: string) => {
-    switch (viewName) {
+  const getPage = (theme: string) => {
+    switch (theme) {
       case 'default_dark':
         // TODO
         break;
@@ -11,7 +11,7 @@
         break;
     }
 
-    return DefaultChannelPageView;
+    return DefaultChannelPage;
   };
 </script>
 
@@ -20,7 +20,7 @@
 
   import type { AnnouncementLoaderFunction, Channel, SettingsClickFunction } from './types';
 
-  export let viewName: string;
+  export let theme: string;
   export let channel: Channel;
   export let announcementKeys: string[] | undefined = undefined;
   export let announcementLoader: AnnouncementLoaderFunction | undefined = undefined;
@@ -33,11 +33,11 @@
     eventDispatch('announcementClick', key);
   };
 
-  $: PageView = getPageView(viewName);
+  $: Page = getPage(theme);
 </script>
 
 <svelte:component
-  this={PageView}
+  this={Page}
   {channel}
   announcementKeys={announcementKeys ?? []}
   {announcementLoader}

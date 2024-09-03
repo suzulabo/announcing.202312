@@ -55,7 +55,7 @@
 
 <Story name="Basic">
   <ChannelPage
-    viewName="default"
+    theme="default"
     {channel}
     {announcementKeys}
     {announcementLoader}
