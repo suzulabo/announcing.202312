@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import DefaultChannelPageView from './views/default/DefaultChannelPageView.svelte';
+  import DefaultChannelPageView from './themes/default/DefaultChannelPageView.svelte';
 
   const getPageView = (viewName: string) => {
     switch (viewName) {

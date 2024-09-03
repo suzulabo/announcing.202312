@@ -13,7 +13,7 @@
     Channel,
     SettingsClickFunction,
   } from '../../types';
-  import AnnouncementView from './AnnouncementView.svelte';
+  import GridItem from './GridItem.svelte';
 
   export let channel: Channel;
   export let announcementKeys: string[];
@@ -80,7 +80,7 @@
             <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
             {@const announcement = getAnnouncement(item)}
             {#if announcement}
-              <AnnouncementView {announcement} />
+              <GridItem {announcement} />
             {:else}
               <!-- eslint-disable-next-line @typescript-eslint/no-unsafe-argument -->
               {#await loadAnnouncement(item, announcementLoader)}
@@ -88,7 +88,7 @@
                   <Spinner delay="0" />
                 </div>
               {:then announcement}
-                <AnnouncementView {announcement} />
+                <GridItem {announcement} />
               {/await}
             {/if}
           </button>
