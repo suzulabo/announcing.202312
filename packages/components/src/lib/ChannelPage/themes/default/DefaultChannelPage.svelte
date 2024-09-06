@@ -49,8 +49,8 @@
     </div>
   {/if}
   <div class="main">
-    <div class="name-line">
-      <div class="name">
+    <div class="title-line">
+      <div class="title">
         {channel.title}
       </div>
       {#if channel.icon}
@@ -110,11 +110,11 @@
       max-width: 1000px;
       margin: 20px auto;
 
-      .name-line {
+      .title-line {
         margin: 10px 0 0;
         display: flex;
         align-items: center;
-        .name {
+        .title {
           font-weight: bold;
           font-size: 20px;
           flex-grow: 1;
