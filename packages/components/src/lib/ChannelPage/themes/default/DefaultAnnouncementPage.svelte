@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Announcement, Channel } from '$lib/ChannelPage/types';
   import { formatDate } from '$lib/utils/formatDate';
-  import { parseImageSize } from '$lib/utils/parseImageSrc';
+  import { parseImageSize } from '$lib/utils/parseImageSize';
   import { toStyle } from '$lib/utils/toStyle';
 
   export let channel: Channel;

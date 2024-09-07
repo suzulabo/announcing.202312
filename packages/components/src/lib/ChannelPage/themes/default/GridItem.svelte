@@ -2,19 +2,27 @@
   import { overflow } from '$lib/actions/overflow';
   import type { Announcement } from '$lib/ChannelPage/types';
   import { formatDate } from '$lib/utils/formatDate';
-  import { parseImageSrc } from '$lib/utils/parseImageSrc';
+  import { parseImageSize } from '$lib/utils/parseImageSize';
+  import { toStyle } from '$lib/utils/toStyle';
 
   export let announcement: Announcement;
+
+  const getAspectRatio = (src: string) => {
+    const size = parseImageSize(src);
+    if (!size) {
+      return;
+    }
+
+    return { 'aspect-ratio': `${size.width}/${size.height}` };
+  };
 </script>
 
 <div class="container overflowing-y" use:overflow>
   <div class="date">{formatDate(announcement.createdAt)}</div>
   {#if announcement.headerImage}
-    <img
-      class="header-image"
-      alt=""
-      {...parseImageSrc(announcement.headerImage, { height: 100 })}
-    />
+    <div class="header-image-box" style={toStyle(getAspectRatio(announcement.headerImage))}>
+      <img src={announcement.headerImage} alt="" />
+    </div>
   {/if}
   {#if announcement.title}
     <div class="title">{announcement.title}</div>
@@ -47,11 +55,16 @@
       pointer-events: none;
     }
 
-    .header-image {
-      object-fit: contain;
-      border-radius: 4px;
-      align-self: center;
+    .header-image-box {
+      width: 100%;
+      max-height: 100px;
+      text-align: center;
+      img {
+        object-fit: contain;
+        border-radius: 4px;
+      }
     }
+
     .title {
       font-size: 1.1em;
       font-weight: bold;
