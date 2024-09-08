@@ -25,7 +25,10 @@ export const load: PageServerLoad = async ({ locals, params }) => {
   const { title, desc, icon, updatedAt } = channel;
 
   return {
-    form: await superValidate({ title, desc, updatedAt: updatedAt.getTime() }, valibot(formSchema)),
+    form: await superValidate(
+      { title, desc: desc ?? '', updatedAt: updatedAt.getTime() },
+      valibot(formSchema),
+    ),
     icon,
   };
 };
