@@ -8,7 +8,7 @@
   export const meta = {
     title: 'VirtualScrollGrid',
     component: VirtualScrollGrid,
-    tags: ['autodocs', 'wait-.loading'],
+    tags: ['autodocs', 'wait-.items'],
     parameters: {
       //layout: 'fullscreen',
     },

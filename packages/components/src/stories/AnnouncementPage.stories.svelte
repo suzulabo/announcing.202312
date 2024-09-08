@@ -8,7 +8,7 @@
 
   export const meta = {
     title: 'AnnouncementPage/default',
-    tags: ['autodocs', 'wait-.main'],
+    tags: ['autodocs', 'wait-.container'],
     parameters: {
       layout: 'fullscreen',
     },
