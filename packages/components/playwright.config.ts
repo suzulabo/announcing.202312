@@ -22,7 +22,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   // ### Github runner is not poor.
   // https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
-  // ...(process.env['CI'] ? { workers: 2 } : {}),
+  ...(process.env['CI'] ? { workers: 1 } : {}),
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
