@@ -18,3 +18,7 @@
 <Story name="Disabled">
   <button disabled>Disabled</button>
 </Story>
+
+<Story name="Small">
+  <button class="small">Small</button>
+</Story>

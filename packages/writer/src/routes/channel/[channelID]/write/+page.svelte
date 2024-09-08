@@ -92,7 +92,7 @@
       name="title"
       label={$t('channel.write.input.title')}
       placeholder={$t('maxLength', { num: CHANNEL_TITLE_MAX_LENGTH })}
-      maxLength={CHANNEL_TITLE_MAX_LENGTH}
+      maxBytes={CHANNEL_TITLE_MAX_LENGTH}
       bind:value={$form.title}
     />
     <TextArea
@@ -100,7 +100,7 @@
       label={$t('channel.write.input.desc')}
       placeholder={$t('maxLengthOptional', { num: CHANNEL_DESC_MAX_LENGTH })}
       bind:value={$form.desc}
-      maxLength={CHANNEL_DESC_MAX_LENGTH}
+      maxBytes={CHANNEL_DESC_MAX_LENGTH}
     />
     <button disabled={!validated}>{$t(`channel.write.input.submit.${msgSuffix}`)}</button>
     <a href={isNew ? '/' : `/channel/${channelID}`} use:back>{$t('cancel')}</a>

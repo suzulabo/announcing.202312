@@ -1,37 +1,54 @@
 <script lang="ts">
+  import LL from './i18n/i18n-svelte';
+
   export let name: string;
   export let label: string;
-  export let type = 'text';
   export let placeholder = '';
-  export let value: string | null | undefined = undefined;
-  export let maxLength = 0;
+  export let value = '';
+  export let maxBytes = 0;
+  export let error = false;
+
+  const encoder = new TextEncoder();
+
+  $: bytes = encoder.encode(value).length;
+  $: error = maxBytes > 0 && bytes > maxBytes;
 </script>
 
 <label>
   <div class="label-box">
     <span class="label">{label}</span>
-    {#if maxLength > 0}
-      <span class="counter">({value?.length ?? '0'}/{maxLength})</span>
+    {#if maxBytes > 0 && bytes > 0}
+      <div class="progress">
+        <div class="bar" style={`width: ${((bytes / maxBytes) * 100).toString()}%`} />
+      </div>
     {/if}
   </div>
-  <input
-    {name}
-    {type}
-    {placeholder}
-    value={value ?? ''}
-    maxLength={maxLength || undefined}
-    on:input={(e) => {
-      value = e.currentTarget.value;
-    }}
-  />
+  <input {name} {placeholder} bind:value />
+
+  {#if error}
+    <div class="error">
+      {$LL.textTooLong()}
+    </div>
+  {/if}
 </label>
 
 <style lang="scss">
   .label-box {
     display: flex;
-    .counter {
-      visibility: hidden;
+    align-items: center;
+
+    .progress {
       margin-left: auto;
+      height: 8px;
+      width: 60px;
+      border-radius: 2px;
+      background-color: var(--color-background-light);
+      overflow: hidden;
+
+      .bar {
+        height: 100%;
+        background-color: var(--color-text);
+      }
     }
   }
 
@@ -43,8 +60,9 @@
     .label {
       font-weight: 500;
     }
-    .counter {
-      visibility: visible;
-    }
+  }
+
+  .error {
+    margin: 4px 0 0 4px;
   }
 </style>

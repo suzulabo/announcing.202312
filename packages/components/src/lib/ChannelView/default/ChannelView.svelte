@@ -12,6 +12,7 @@
   import { setContext } from 'svelte';
   import type { Action } from 'svelte/action';
 
+  import LL from '$lib/i18n/i18n-svelte';
   import Modal from '$lib/Modal.svelte';
   import { toHtml } from '$lib/utils/toHtml';
 
@@ -20,7 +21,7 @@
 
   export let params: ChannelViewParams;
 
-  $: ({ channel, noAnnouncements, msgs } = params);
+  $: ({ channel, noAnnouncements } = params);
 
   let imageModalSrc: string | undefined = undefined;
 
@@ -33,7 +34,7 @@
 
 <div class="container">
   <div class="settings">
-    <button on:click={params.settingsClick}>{msgs.settings}</button>
+    <button on:click={params.settingsClick}>{$LL.settings()}</button>
   </div>
   <div class="main" use:baseCssAction>
     <div class="name-line">
@@ -59,7 +60,7 @@
     <hr />
     {#if noAnnouncements}
       <div class="no-announcements">
-        {msgs.noAnnouncements}
+        {$LL.noAnnouncements()}
       </div>
     {:else}
       <slot />
@@ -69,7 +70,7 @@
 
 <Modal
   show={!!imageModalSrc}
-  closeAnywhere={true}
+  dismissMode="anywhere"
   on:close={() => {
     imageModalSrc = undefined;
   }}

@@ -107,8 +107,7 @@ export const setup = (params: ChannelPageParams) => {
   const channelViewParams: ChannelViewParams = {
     channel: params.channel,
     noAnnouncements: params.segments.length === 0,
-    settingsClick: params.settingsClick,
-    msgs: params.msgs,
+    ...(params.settingsClick && { settingsClick: params.settingsClick }),
   };
 
   return {

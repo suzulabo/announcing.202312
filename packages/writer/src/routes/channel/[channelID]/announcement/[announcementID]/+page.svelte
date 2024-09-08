@@ -95,7 +95,7 @@
       name="title"
       label={$t('channel.announcement.write.input.title')}
       placeholder={$t('maxLengthOptional', { num: POST_TITLE_MAX_LENGTH })}
-      maxLength={POST_TITLE_MAX_LENGTH}
+      maxBytes={POST_TITLE_MAX_LENGTH}
       bind:value={$form.title}
     />
     <TextArea
@@ -103,7 +103,7 @@
       label={$t('channel.announcement.write.input.body')}
       placeholder={$t('maxLength', { num: POST_BODY_MAX_LENGTH })}
       bind:value={$form.body}
-      maxLength={POST_BODY_MAX_LENGTH}
+      maxBytes={POST_BODY_MAX_LENGTH}
     />
     {#if $form.images}
       <div class="images">

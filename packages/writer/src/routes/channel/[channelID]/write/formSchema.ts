@@ -15,7 +15,7 @@ import { CHANNEL_DESC_MAX_LENGTH, CHANNEL_TITLE_MAX_LENGTH } from '$lib/constant
 
 export const formSchema = object({
   title: pipe(string(), minLength(1), maxLength(CHANNEL_TITLE_MAX_LENGTH)),
-  desc: nullable(pipe(string(), maxLength(CHANNEL_DESC_MAX_LENGTH))),
+  desc: pipe(string(), maxLength(CHANNEL_DESC_MAX_LENGTH)),
   icon: nullable(
     pipe(instance(File), maxSize(1024 * 1024), mimeType(['image/jpeg', 'image/png', 'image/webp'])),
   ),

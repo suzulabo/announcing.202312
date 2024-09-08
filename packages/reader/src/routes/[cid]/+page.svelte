@@ -1,8 +1,6 @@
 <script lang="ts">
   import ChannelPage, { type ChannelPageParams } from '@announcing/components/ChannelPage.svelte';
 
-  import { t } from '$lib/i18n/translations';
-
   import type { PageServerData } from './$types';
 
   export let data: PageServerData;
@@ -47,12 +45,7 @@
       // TODO
     };
 
-    const msgs: ChannelPageParams['msgs'] = {
-      noAnnouncements: $t('channel.noAnnouncements') as string,
-      settings: $t('channel.settings') as string,
-    };
-
-    return { viewName: 'default', channel, segments, loader, settingsClick, msgs };
+    return { viewName: 'default', channel, segments, loader, settingsClick };
   };
 
   $: params = toPageParams();

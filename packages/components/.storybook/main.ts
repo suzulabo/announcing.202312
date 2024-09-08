@@ -1,5 +1,6 @@
-/** @type {import('@storybook/sveltekit').StorybookConfig} */
-const config = {
+import { type StorybookConfig } from '@storybook/sveltekit';
+
+const config: StorybookConfig = {
   stories: ['../src/**/*.stories.svelte'],
   addons: [
     '@storybook/addon-svelte-csf',
@@ -15,4 +16,5 @@ const config = {
   },
   staticDirs: ['../public'],
 };
+
 export default config;

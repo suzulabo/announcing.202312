@@ -1,5 +1,7 @@
 <script lang="ts" context="module">
-  if (typeof window === 'object') {
+  const isIframe = typeof window === 'object' && window.self !== window.top;
+
+  if (!isIframe && typeof window === 'object') {
     const popstateListener = () => {
       // Block going to URL with #modal on forward
       if (location.hash === '#modal' && !document.querySelector('.modal')) {
@@ -12,14 +14,11 @@
 </script>
 
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   import ModalSub from './ModalSub.svelte';
 
   export let show = false;
-  export let closeAnywhere = false;
-
-  const closeDispatch = createEventDispatcher();
+  export let dismissMode: 'backdrop' | 'anywhere' | 'none' = 'backdrop';
+  export let padding = '0';
 </script>
 
 <!--
@@ -28,9 +27,10 @@ a sub component is used because svelte:window can only be added at the root leve
 -->
 {#if show}
   <ModalSub
-    {closeAnywhere}
-    on:close={() => {
-      closeDispatch('close');
+    {dismissMode}
+    {padding}
+    on:dismiss={() => {
+      show = false;
     }}><slot /></ModalSub
   >
 {/if}

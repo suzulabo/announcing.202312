@@ -16,7 +16,18 @@
 
 <Story name="Basic">
   <div class="container">
-    <Input name="name" label="Label" placeholder="Enter up to 50 characters" maxLength={50} />
+    <Input name="name" label="Label" maxBytes={50} />
+  </div>
+</Story>
+
+<Story name="Text too long">
+  <div class="container">
+    <Input
+      name="name"
+      label="Label"
+      maxBytes={150}
+      value="The vibrant colors of the autumn leaves create a picturesque landscape that invites peaceful reflection and awe-inspiring appreciation of nature’s beauty."
+    />
   </div>
 </Story>
 
