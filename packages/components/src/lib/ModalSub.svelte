@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  const isIframe = window.self !== window.top;
+  const isIframe = typeof window === 'object' && window.self !== window.top;
 </script>
 
 <script lang="ts">
