@@ -3,6 +3,7 @@
   import Modal from '$lib/Modal.svelte';
   import { formatDate } from '$lib/utils/formatDate';
   import { parseImageSize } from '$lib/utils/parseImageSize';
+  import { toClass } from '$lib/utils/toClass';
   import { toStyle } from '$lib/utils/toStyle';
 
   export let channel: Channel;
@@ -50,6 +51,22 @@
       <div class="title">{announcement.title}</div>
     {/if}
     <div class="body">{announcement.body}</div>
+    {#if announcement.images}
+      <div class={toClass({ 'images': true, 'size-1': announcement.images.length === 1 })}>
+        {#each announcement.images as image}
+          <button
+            class="unstyled"
+            data-src={image}
+            on:click={() => {
+              imageModalSrc = image;
+              showImageModal = true;
+            }}
+          >
+            <img src={image} alt={announcement.title} />
+          </button>
+        {/each}
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -61,7 +78,7 @@
   .container {
     padding: 8px;
     max-width: 600px;
-    margin: 10px auto;
+    margin: 10px auto 100px;
 
     .header {
       display: flex;
@@ -104,9 +121,32 @@
           border-radius: 4px;
         }
       }
+
       .title {
         font-size: 20px;
         font-weight: bold;
+      }
+
+      .images {
+        display: grid;
+        gap: 4px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        img {
+          height: 200px;
+          width: 100%;
+          object-fit: cover;
+          border-radius: 4px;
+        }
+
+        &.size-1 {
+          img {
+            margin: auto;
+            width: auto;
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
+          }
+        }
       }
     }
   }
