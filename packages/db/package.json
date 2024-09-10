@@ -11,6 +11,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest watch",
+    "generate": "drizzle-kit generate",
     "migrate": "mkdir -p ../db-dev/storage && drizzle-kit migrate",
     "build": "pnpm run migrate && tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",

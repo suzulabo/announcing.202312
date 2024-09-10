@@ -1,23 +1,74 @@
-import { _writeAnnouncement } from './_writeAnnouncement';
+import { and, eq } from 'drizzle-orm';
 
-export const updateAnnouncement = (
+import { db } from '../../client';
+import { announcementsTable, channelsTable } from '../../schema';
+import { getChannel } from '../channel/getChannel';
+import { getAnnouncement } from './getAnnouncement';
+import { makeInsertAnnouncement } from './makeInsertAnnouncement';
+
+export const updateAnnouncement = async (
   userID: string,
   channelID: string,
-  channelUpdatedAt: number,
-  headerImageFile: Blob | undefined | null,
-  title: string | undefined | null,
+  targetAnnouncementID: string,
+  targetUpdatedAt: Date,
+  headerImageFile: Blob | undefined,
+  title: string | undefined,
   body: string,
-  imagesFiles: Blob[] | undefined | null,
-  updateAnnouncementId: string,
+  imagesFiles: Blob[] | undefined,
 ) => {
-  return _writeAnnouncement(
+  const channel = await getChannel(userID, channelID);
+  if (!channel) {
+    return;
+  }
+  const announcementIDs = channel.announcementIDs;
+  if (!announcementIDs) {
+    return;
+  }
+  const index = announcementIDs.indexOf(targetAnnouncementID);
+  if (index < 0) {
+    return;
+  }
+
+  const announcement = await getAnnouncement(channelID, targetAnnouncementID);
+  if (!announcement || announcement.updatedAt !== targetUpdatedAt) {
+    return;
+  }
+
+  const { announcementID, announcementQueries } = await makeInsertAnnouncement(
     userID,
     channelID,
-    channelUpdatedAt,
     headerImageFile,
     title,
     body,
     imagesFiles,
-    updateAnnouncementId,
+    new Date(),
+    announcement.createdAt,
   );
+
+  announcementIDs[index] = announcementID;
+
+  const queries = [
+    db
+      .update(channelsTable)
+      .set({
+        announcementIDs,
+        updatedAt: new Date(),
+      })
+      .where(
+        and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
+      ),
+    ...announcementQueries,
+  ] as const;
+
+  const batchResults = await db.batch(queries);
+  if (batchResults[0].rowsAffected === 1) {
+    await db
+      .delete(announcementsTable)
+      .where(
+        and(
+          eq(announcementsTable.channelID, channelID),
+          eq(announcementsTable.announcementID, targetAnnouncementID),
+        ),
+      );
+  }
 };
