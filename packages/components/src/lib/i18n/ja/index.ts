@@ -12,6 +12,7 @@ const ja = {
   iconRemove: 'アイコンを削除',
   textTooLong: '入力が文字数制限を超えています',
   noAnnouncements: 'アナウンスはまだありません',
+  createChannel: 'チャンネル作成',
 } satisfies Translation;
 
 export default ja;

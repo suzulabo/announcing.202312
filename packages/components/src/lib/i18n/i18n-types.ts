@@ -58,6 +58,10 @@ type RootTranslation = {
 	 * N​o​ ​a​n​n​o​u​n​c​e​m​e​n​t​s​ ​y​e​t​.
 	 */
 	noAnnouncements: string
+	/**
+	 * C​r​e​a​t​e​ ​C​h​a​n​n​e​l
+	 */
+	createChannel: string
 }
 
 export type TranslationFunctions = {
@@ -105,6 +109,10 @@ export type TranslationFunctions = {
 	 * No announcements yet.
 	 */
 	noAnnouncements: () => LocalizedString
+	/**
+	 * Create Channel
+	 */
+	createChannel: () => LocalizedString
 }
 
 export type Formatters = {}

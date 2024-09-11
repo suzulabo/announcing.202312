@@ -4,7 +4,7 @@
   export let name: string;
   export let label: string;
   export let placeholder = '';
-  export let value = '';
+  export let value: string | undefined = undefined;
   export let maxBytes = 0;
   export let error = false;
 

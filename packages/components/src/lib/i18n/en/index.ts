@@ -12,6 +12,7 @@ const en = {
   iconRemove: 'Remove icon',
   textTooLong: 'Your input exceeds the character limit.',
   noAnnouncements: 'No announcements yet.',
+  createChannel: 'Create Channel',
 } satisfies BaseTranslation;
 
 export default en;

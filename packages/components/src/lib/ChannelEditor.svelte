@@ -1,68 +1,46 @@
 <script lang="ts" context="module">
-  const loadFile = async (file: File | null) => {
-    if (!file) {
-      return '';
-    }
-    return new Promise<string>((resolve) => {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        resolve(event.target?.result as string);
-      };
-
-      reader.readAsDataURL(file);
-    });
+  type Channel = {
+    iconFile?: File | undefined;
+    title?: string | undefined;
+    desc?: string | undefined;
   };
 </script>
 
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+
   import { loadImage } from './actions/loadImage';
-  import { loadChannelViewComponents } from './ChannelView/loader';
+  import {
+    CHANNEL_DESC_MAX_BYTES,
+    CHANNEL_ICON_MAX_SIZE,
+    CHANNEL_TITLE_MAX_BYTES,
+  } from './constants';
   import FileInput from './FileInput.svelte';
   import LL from './i18n/i18n-svelte';
   import Input from './Input.svelte';
   import Modal from './Modal.svelte';
   import TextArea from './TextArea.svelte';
 
-  export let channel: {
-    icon: File | null;
-    title: string;
-    desc: string;
-  };
+  export let channel: Channel | undefined = undefined;
 
-  export let params: {
-    backUrl: string;
-  };
-
-  const { ChannelView } = loadChannelViewComponents('default');
-
-  let showModal = true;
+  const dispatcher = createEventDispatcher<{ dismiss: undefined; submit: Channel }>();
   let fileInput: FileInput;
-  const form = { ...channel };
 
+  $: form = { ...channel } as Channel;
   $: validated = !!form.title;
 </script>
 
-<div class="preview">
-  {#await loadFile(channel.icon) then iconUrl}
-    <ChannelView params={{ channel: { ...channel, icon: iconUrl }, preview: true }} />
-  {/await}
-  <div>
-    <a href={params.backUrl}>{$LL.back()}</a>
-  </div>
-</div>
-
-<Modal bind:show={showModal} dismissMode="none" padding="8px">
+<Modal show={true} dismissMode="none" padding="8px">
   <div class="modal-body">
     <div class="icon-box">
-      {#if form.icon}
+      {#if form.iconFile}
         <button
           class="unstyled"
           on:click={() => {
             fileInput.open();
           }}
         >
-          <img class="icon" alt="icon preview" use:loadImage={form.icon} />
+          <img class="icon" alt="icon preview" use:loadImage={form.iconFile} />
         </button>
       {/if}
       <div>
@@ -73,12 +51,12 @@
             fileInput.open();
           }}>{$LL.iconSelect()}</button
         >
-        {#if form.icon}
+        {#if form.iconFile}
           <button
             type="button"
             class="small"
             on:click={() => {
-              form.icon = null;
+              form.iconFile = undefined;
             }}>{$LL.iconRemove()}</button
           >
         {/if}
@@ -86,40 +64,41 @@
       <FileInput
         name="icon"
         accept="image/jpeg,image/png,image/webp"
-        maxImageSize={256}
+        maxImageSize={CHANNEL_ICON_MAX_SIZE}
         bind:this={fileInput}
-        bind:file={form.icon}
+        bind:file={form.iconFile}
       />
     </div>
-    <Input name="title" label={$LL.title()} bind:value={form.title} maxBytes={100} />
+    <Input
+      name="title"
+      label={$LL.title()}
+      bind:value={form.title}
+      maxBytes={CHANNEL_TITLE_MAX_BYTES}
+    />
     <TextArea
       name="desc"
       label={$LL.desc()}
       bind:value={form.desc}
-      maxBytes={1000}
+      maxBytes={CHANNEL_DESC_MAX_BYTES}
       maxHeight="40vh"
     />
     <button
       disabled={!validated}
-      class="preview-btn"
+      class="submit-btn"
       on:click={() => {
-        channel = { ...form };
-        showModal = false;
-      }}>{$LL.preview()}</button
+        dispatcher('submit', form);
+      }}>{$LL.createChannel()}</button
     >
     <button
       class="small cancel-btn"
       on:click={() => {
-        showModal = false;
+        dispatcher('dismiss');
       }}>{$LL.cancel()}</button
     >
   </div>
 </Modal>
 
 <style lang="scss">
-  .preview {
-    min-height: 200px;
-  }
   .modal-body {
     background-color: var(--color-background);
     border-radius: 8px;
@@ -142,7 +121,7 @@
       }
     }
 
-    .preview-btn {
+    .submit-btn {
       align-self: center;
     }
 
