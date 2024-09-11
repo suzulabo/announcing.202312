@@ -1,7 +1,9 @@
 export { createChannel } from './api//channel/createChannel';
 export { addAnnouncement } from './api/announcement/addAnnouncement';
+export { getAnnouncement } from './api/announcement/getAnnouncement';
 export { removeAnnouncement } from './api/announcement/removeAnnouncement';
 export { updateAnnouncement } from './api/announcement/updateAnnouncement';
+export { getBlob } from './api/blob/getBlob';
 export { deleteChannel } from './api/channel/deleteChannel';
 export { getChannel } from './api/channel/getChannel';
 export { getChannels } from './api/channel/getChannels';

@@ -21,7 +21,7 @@ export const makeInsertBlob = async (blob: Blob) => {
     blobID,
     db
       .insert(blobsTable)
-      .values({ blobID, contentType: blob.type, blob: ab })
+      .values({ blobID, contentType: blob.type, data: Buffer.from(ab) })
       .onConflictDoNothing(),
   ] as const;
 };

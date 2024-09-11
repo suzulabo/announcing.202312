@@ -21,8 +21,6 @@ describe('Channel', () => {
 
     assert(c);
 
-    console.log({ c });
-
     expect(c).toMatchObject({
       channelID: '1',
       title: 'test channel',
