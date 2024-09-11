@@ -49,7 +49,7 @@ const generate = async (userID: string, channelID: string, count: number) => {
         case 1:
           return await openAsBlob('./tools/assets/cat-8575641_640.jpg');
       }
-      return null;
+      return;
     };
 
     const getImages = async (i: number) => {
@@ -75,7 +75,7 @@ const generate = async (userID: string, channelID: string, count: number) => {
             openAsBlob('./tools/assets/music-8559592_640.jpg'),
           ]);
       }
-      return null;
+      return;
     };
 
     for (let i = 0; i < count; i++) {
@@ -87,11 +87,11 @@ const generate = async (userID: string, channelID: string, count: number) => {
       await addAnnouncement(
         userID,
         channelID,
-        channel.updatedAt.getTime(),
         await getHeaderImage(i),
         a.title,
         a.body,
         await getImages(i),
+        new Date(),
       );
     }
   }
