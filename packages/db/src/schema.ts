@@ -57,7 +57,7 @@ export const announcementsTable = sqliteTable(
 export const blobsTable = sqliteTable('blobs', {
   blobID: text('blobID').notNull().primaryKey(),
   contentType: text('contentType').notNull(),
-  data: blob('blob', { mode: 'buffer' }),
+  data: blob('blob', { mode: 'buffer' }).notNull(),
   createdAt: integer('createdAt', { mode: 'timestamp' })
     .notNull()
     .$default(() => new Date()),

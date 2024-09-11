@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "9a052ee5-b524-43e9-8f80-348fd3e20c3d",
+  "id": "2d5802a5-a0d3-444c-8e7d-cec0e7d993ce",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "announcements": {
@@ -119,7 +119,7 @@
           "name": "blob",
           "type": "blob",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "createdAt": {

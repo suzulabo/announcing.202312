@@ -15,7 +15,7 @@ CREATE TABLE `announcements` (
 CREATE TABLE `blobs` (
 	`blobID` text PRIMARY KEY NOT NULL,
 	`contentType` text NOT NULL,
-	`blob` blob,
+	`blob` blob NOT NULL,
 	`createdAt` integer NOT NULL
 );
 --> statement-breakpoint
