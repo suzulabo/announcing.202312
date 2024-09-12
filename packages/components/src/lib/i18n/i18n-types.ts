@@ -45,11 +45,11 @@ type RootTranslation = {
 	/**
 	 * S​e​l​e​c​t​ ​i​c​o​n
 	 */
-	iconSelect: string
+	selectIcon: string
 	/**
-	 * R​e​m​o​v​e​ ​i​c​o​n
+	 * R​e​m​o​v​e
 	 */
-	iconRemove: string
+	removeIcon: string
 	/**
 	 * Y​o​u​r​ ​i​n​p​u​t​ ​e​x​c​e​e​d​s​ ​t​h​e​ ​c​h​a​r​a​c​t​e​r​ ​l​i​m​i​t​.
 	 */
@@ -96,11 +96,11 @@ export type TranslationFunctions = {
 	/**
 	 * Select icon
 	 */
-	iconSelect: () => LocalizedString
+	selectIcon: () => LocalizedString
 	/**
-	 * Remove icon
+	 * Remove
 	 */
-	iconRemove: () => LocalizedString
+	removeIcon: () => LocalizedString
 	/**
 	 * Your input exceeds the character limit.
 	 */

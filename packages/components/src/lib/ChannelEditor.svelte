@@ -16,7 +16,7 @@
     CHANNEL_TITLE_MAX_BYTES,
   } from './constants';
   import FileInput from './FileInput.svelte';
-  import LL from './i18n/i18n-svelte';
+  import LL, { locale } from './i18n/i18n-svelte';
   import Input from './Input.svelte';
   import Modal from './Modal.svelte';
   import TextArea from './TextArea.svelte';
@@ -32,12 +32,53 @@
 
 <Modal show={true} dismissMode="none" padding="8px">
   <div class="modal-body">
-    <Input
-      name="title"
-      label={$LL.title()}
-      bind:value={form.title}
-      maxBytes={CHANNEL_TITLE_MAX_BYTES}
-    />
+    <div class="title-box">
+      <div class="input-box">
+        <Input
+          name="title"
+          label={$LL.title()}
+          bind:value={form.title}
+          maxBytes={CHANNEL_TITLE_MAX_BYTES}
+        />
+      </div>
+      <div class="icon-box">
+        {#if form.iconFile}
+          <button
+            class="unstyled"
+            on:click={() => {
+              fileInput.open();
+            }}
+          >
+            <img class="icon" alt="icon preview" use:loadImage={form.iconFile} />
+          </button>
+        {/if}
+        {#if !form.iconFile}
+          <button
+            type="button"
+            class={`icon-select small ${$locale}`}
+            on:click={() => {
+              fileInput.open();
+            }}>{$LL.selectIcon()}</button
+          >
+        {/if}
+        {#if form.iconFile}
+          <button
+            type="button"
+            class="icon-remove"
+            on:click={() => {
+              form.iconFile = undefined;
+            }}>{$LL.removeIcon()}</button
+          >
+        {/if}
+        <FileInput
+          name="icon"
+          accept="image/jpeg,image/png,image/webp"
+          maxImageSize={CHANNEL_ICON_MAX_SIZE}
+          bind:this={fileInput}
+          bind:file={form.iconFile}
+        />
+      </div>
+    </div>
     <TextArea
       name="desc"
       label={$LL.desc()}
@@ -45,43 +86,6 @@
       maxBytes={CHANNEL_DESC_MAX_BYTES}
       maxHeight="40vh"
     />
-    <div class="icon-box">
-      {#if form.iconFile}
-        <button
-          class="unstyled"
-          on:click={() => {
-            fileInput.open();
-          }}
-        >
-          <img class="icon" alt="icon preview" use:loadImage={form.iconFile} />
-        </button>
-      {/if}
-      {#if !form.iconFile}
-        <button
-          type="button"
-          class="small"
-          on:click={() => {
-            fileInput.open();
-          }}>{$LL.iconSelect()}</button
-        >
-      {/if}
-      {#if form.iconFile}
-        <button
-          type="button"
-          class="small"
-          on:click={() => {
-            form.iconFile = undefined;
-          }}>{$LL.iconRemove()}</button
-        >
-      {/if}
-      <FileInput
-        name="icon"
-        accept="image/jpeg,image/png,image/webp"
-        maxImageSize={CHANNEL_ICON_MAX_SIZE}
-        bind:this={fileInput}
-        bind:file={form.iconFile}
-      />
-    </div>
     <button
       disabled={!validated}
       class="submit-btn"
@@ -110,16 +114,41 @@
     flex-direction: column;
     gap: 16px;
 
-    .icon-box {
+    .title-box {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 8px;
-      .icon {
-        width: 64px;
-        height: 64px;
-        border-radius: 8px;
-        object-fit: contain;
+
+      .input-box {
+        flex-grow: 1;
+        margin: 0 8px 0 0;
+      }
+
+      .icon-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        button.icon-select {
+          width: 64px;
+          height: 64px;
+          &.ja {
+            font-size: 12px;
+          }
+        }
+        button.icon-remove {
+          font-size: 12px;
+          padding: 4px;
+          width: 64px;
+          &.ja {
+            font-size: 11px;
+          }
+        }
+        .icon {
+          width: 64px;
+          height: 64px;
+          border-radius: 8px;
+          object-fit: contain;
+        }
       }
     }
 
