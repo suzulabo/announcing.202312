@@ -32,43 +32,6 @@
 
 <Modal show={true} dismissMode="none" padding="8px">
   <div class="modal-body">
-    <div class="icon-box">
-      {#if form.iconFile}
-        <button
-          class="unstyled"
-          on:click={() => {
-            fileInput.open();
-          }}
-        >
-          <img class="icon" alt="icon preview" use:loadImage={form.iconFile} />
-        </button>
-      {/if}
-      <div>
-        <button
-          type="button"
-          class="small"
-          on:click={() => {
-            fileInput.open();
-          }}>{$LL.iconSelect()}</button
-        >
-        {#if form.iconFile}
-          <button
-            type="button"
-            class="small"
-            on:click={() => {
-              form.iconFile = undefined;
-            }}>{$LL.iconRemove()}</button
-          >
-        {/if}
-      </div>
-      <FileInput
-        name="icon"
-        accept="image/jpeg,image/png,image/webp"
-        maxImageSize={CHANNEL_ICON_MAX_SIZE}
-        bind:this={fileInput}
-        bind:file={form.iconFile}
-      />
-    </div>
     <Input
       name="title"
       label={$LL.title()}
@@ -82,6 +45,43 @@
       maxBytes={CHANNEL_DESC_MAX_BYTES}
       maxHeight="40vh"
     />
+    <div class="icon-box">
+      {#if form.iconFile}
+        <button
+          class="unstyled"
+          on:click={() => {
+            fileInput.open();
+          }}
+        >
+          <img class="icon" alt="icon preview" use:loadImage={form.iconFile} />
+        </button>
+      {/if}
+      {#if !form.iconFile}
+        <button
+          type="button"
+          class="small"
+          on:click={() => {
+            fileInput.open();
+          }}>{$LL.iconSelect()}</button
+        >
+      {/if}
+      {#if form.iconFile}
+        <button
+          type="button"
+          class="small"
+          on:click={() => {
+            form.iconFile = undefined;
+          }}>{$LL.iconRemove()}</button
+        >
+      {/if}
+      <FileInput
+        name="icon"
+        accept="image/jpeg,image/png,image/webp"
+        maxImageSize={CHANNEL_ICON_MAX_SIZE}
+        bind:this={fileInput}
+        bind:file={form.iconFile}
+      />
+    </div>
     <button
       disabled={!validated}
       class="submit-btn"
@@ -90,7 +90,7 @@
       }}>{$LL.createChannel()}</button
     >
     <button
-      class="small cancel-btn"
+      class="small text cancel-btn"
       on:click={() => {
         dispatcher('dismiss');
       }}>{$LL.cancel()}</button
@@ -111,8 +111,10 @@
     gap: 16px;
 
     .icon-box {
-      text-align: center;
-
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
       .icon {
         width: 64px;
         height: 64px;
