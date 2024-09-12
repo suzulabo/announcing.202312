@@ -6,6 +6,7 @@ const en = {
   back: 'Back',
   preview: 'Preview',
   settings: 'Settings',
+  required: '(Required)',
   title: 'Title',
   desc: 'Description',
   selectIcon: 'Select icon',

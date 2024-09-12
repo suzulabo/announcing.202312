@@ -6,6 +6,7 @@ const ja = {
   back: '戻る',
   preview: '確認',
   settings: '設定',
+  required: '(必須)',
   title: 'タイトル',
   desc: '説明文',
   selectIcon: 'アイコンを選択',

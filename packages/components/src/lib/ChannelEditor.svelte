@@ -25,9 +25,11 @@
 
   const dispatcher = createEventDispatcher<{ dismiss: undefined; submit: Channel }>();
   let fileInput: FileInput;
+  let titleError = false;
+  let descError = false;
 
   $: form = { ...channel } as Channel;
-  $: validated = !!form.title;
+  $: validated = !!form.title && !titleError && !descError;
 </script>
 
 <Modal show={true} dismissMode="none" padding="8px">
@@ -39,6 +41,8 @@
           label={$LL.title()}
           bind:value={form.title}
           maxBytes={CHANNEL_TITLE_MAX_BYTES}
+          required
+          bind:error={titleError}
         />
       </div>
       <div class="icon-box">
@@ -85,6 +89,7 @@
       bind:value={form.desc}
       maxBytes={CHANNEL_DESC_MAX_BYTES}
       maxHeight="40vh"
+      bind:error={descError}
     />
     <button
       disabled={!validated}

@@ -31,6 +31,12 @@
   </div>
 </Story>
 
+<Story name="Required">
+  <div class="container">
+    <Input name="name" label="Label" maxBytes={50} required />
+  </div>
+</Story>
+
 <style lang="scss">
   .container {
     max-width: 400px;

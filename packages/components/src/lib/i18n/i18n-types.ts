@@ -35,6 +35,10 @@ type RootTranslation = {
 	 */
 	settings: string
 	/**
+	 * (​R​e​q​u​i​r​e​d​)
+	 */
+	required: string
+	/**
 	 * T​i​t​l​e
 	 */
 	title: string
@@ -85,6 +89,10 @@ export type TranslationFunctions = {
 	 * Settings
 	 */
 	settings: () => LocalizedString
+	/**
+	 * (Required)
+	 */
+	required: () => LocalizedString
 	/**
 	 * Title
 	 */
