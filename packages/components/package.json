@@ -18,6 +18,10 @@
   },
   "type": "module",
   "exports": {
+    "./setupLocale": {
+      "types": "./dist/setupLocale.d.ts",
+      "import": "./dist/setupLocale.js"
+    },
     "./actions/loadImage": {
       "types": "./dist/actions/loadImage.d.ts",
       "import": "./dist/actions/loadImage.js"
@@ -26,6 +30,10 @@
     "./ChannelPage.svelte": {
       "types": "./dist/ChannelPage.svelte.d.ts",
       "svelte": "./dist/ChannelPage.svelte"
+    },
+    "./ChannelEditor.svelte": {
+      "types": "./dist/ChannelEditor.svelte.d.ts",
+      "svelte": "./dist/ChannelEditor.svelte"
     },
     "./FileInput.svelte": {
       "types": "./dist/FileInput.svelte.d.ts",

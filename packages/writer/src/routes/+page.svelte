@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ChannelEditor from '@announcing/components/ChannelEditor.svelte';
   import Logo from '@announcing/components/Logo.svelte';
   import { signOut } from '@auth/sveltekit/client';
   import SuperDebug from 'sveltekit-superforms';
@@ -8,6 +9,8 @@
   import type { PageServerData } from './$types';
 
   export let data: PageServerData;
+
+  let showCreateChannel = false;
 </script>
 
 <header>
@@ -32,14 +35,13 @@
     </div>
   {/if}
 
-  <a
-    class="button create-btn"
-    href="/channel/new/write"
+  <button
+    class="create-btn"
     on:click={() => {
-      //
+      showCreateChannel = true;
     }}
     >{$t('top.createChannel')}
-  </a>
+  </button>
   <button
     class="sign-out-btn text"
     on:click={() => {
@@ -47,6 +49,10 @@
     }}>{$t('signOut')}</button
   >
 </div>
+
+{#if showCreateChannel}
+  <ChannelEditor />
+{/if}
 
 <SuperDebug {data} />
 
