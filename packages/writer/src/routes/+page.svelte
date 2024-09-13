@@ -1,16 +1,38 @@
 <script lang="ts">
-  import ChannelEditor from '@announcing/components/ChannelEditor.svelte';
+  import ChannelEditor, { type Channel } from '@announcing/components/ChannelEditor.svelte';
+  import Loading from '@announcing/components/Loading.svelte';
   import Logo from '@announcing/components/Logo.svelte';
   import { signOut } from '@auth/sveltekit/client';
   import SuperDebug from 'sveltekit-superforms';
 
+  import { invalidateAll } from '$app/navigation';
   import { t } from '$lib/i18n/translations';
 
   import type { PageServerData } from './$types';
 
   export let data: PageServerData;
 
-  let showCreateChannel = false;
+  let editor: ChannelEditor;
+  let loading = false;
+
+  const post = async (channel: Channel) => {
+    const form = new FormData();
+    if (channel.title) form.append('title', channel.title);
+    if (channel.desc) form.append('desc', channel.desc);
+    if (channel.iconFile) form.append('iconFile', channel.iconFile);
+
+    loading = true;
+    try {
+      await fetch('/api/channels', {
+        method: 'POST',
+        body: form,
+      });
+      await invalidateAll();
+    } finally {
+      loading = false;
+      editor.closeModal();
+    }
+  };
 </script>
 
 <header>
@@ -38,7 +60,7 @@
   <button
     class="create-btn"
     on:click={() => {
-      showCreateChannel = true;
+      editor.showModal();
     }}
     >{$t('top.createChannel')}
   </button>
@@ -50,9 +72,14 @@
   >
 </div>
 
-{#if showCreateChannel}
-  <ChannelEditor />
-{/if}
+<ChannelEditor
+  bind:this={editor}
+  on:submit={({ detail }) => {
+    void post(detail);
+  }}
+/>
+
+<Loading show={loading} />
 
 <SuperDebug {data} />
 

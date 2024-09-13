@@ -16,9 +16,6 @@
   on:submit={({ detail }) => {
     console.log(detail);
   }}
-  on:dismiss={() => {
-    editor.closeModal();
-  }}
 >
   <div class="modal-body">
     <div>This is a modal window.</div>

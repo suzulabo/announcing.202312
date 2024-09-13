@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  type Channel = {
+  export type Channel = {
     iconFile?: File | undefined;
     title?: string | undefined;
     desc?: string | undefined;
@@ -24,20 +24,21 @@
   export let channel: Channel | undefined = undefined;
 
   export const showModal = () => {
+    form = { ...channel };
     modal.showModal();
   };
   export const closeModal = () => {
     modal.closeModal();
   };
 
-  const dispatcher = createEventDispatcher<{ dismiss: undefined; submit: Channel }>();
+  const dispatcher = createEventDispatcher<{ submit: Channel }>();
 
   let modal: Modal;
+  let form: Channel = {};
   let fileInput: FileInput;
   let titleError = false;
   let descError = false;
 
-  $: form = { ...channel } as Channel;
   $: validated = !!form.title && !titleError && !descError;
 </script>
 
@@ -110,7 +111,7 @@
     <button
       class="small text cancel-btn"
       on:click={() => {
-        dispatcher('dismiss');
+        closeModal();
       }}>{$LL.cancel()}</button
     >
   </div>
