@@ -32,7 +32,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
     error(400);
   }
   const desc = getFormString(formData, 'desc');
-  const iconFile = getFormFile(formData, 'icon');
+  const iconFile = getFormFile(formData, 'iconFile');
 
   const channelID = genChannelID();
 
