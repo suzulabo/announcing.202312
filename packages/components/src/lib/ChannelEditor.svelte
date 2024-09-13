@@ -23,7 +23,16 @@
 
   export let channel: Channel | undefined = undefined;
 
+  export const showModal = () => {
+    modal.showModal();
+  };
+  export const closeModal = () => {
+    modal.closeModal();
+  };
+
   const dispatcher = createEventDispatcher<{ dismiss: undefined; submit: Channel }>();
+
+  let modal: Modal;
   let fileInput: FileInput;
   let titleError = false;
   let descError = false;
@@ -32,7 +41,7 @@
   $: validated = !!form.title && !titleError && !descError;
 </script>
 
-<Modal show={true} dismissMode="none" padding="8px">
+<Modal modalID="ChannelEditor" bind:this={modal} dismissMode="none">
   <div class="modal-body">
     <div class="title-box">
       <div class="input-box">
