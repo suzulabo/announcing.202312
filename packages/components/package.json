@@ -18,9 +18,9 @@
   },
   "type": "module",
   "exports": {
-    "./setupLocale": {
-      "types": "./dist/setupLocale.d.ts",
-      "import": "./dist/setupLocale.js"
+    "./i18n": {
+      "types": "./dist/i18n.d.ts",
+      "import": "./dist/i18n.js"
     },
     "./actions/loadImage": {
       "types": "./dist/actions/loadImage.d.ts",

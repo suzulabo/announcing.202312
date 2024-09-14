@@ -14,6 +14,7 @@ const ja = {
   textTooLong: '入力が文字数制限を超えています',
   noAnnouncements: 'アナウンスはまだありません',
   createChannel: 'チャンネル作成',
+  channelsCanBeCreated: 'チャンネルは5つまで作れます',
 } satisfies Translation;
 
 export default ja;

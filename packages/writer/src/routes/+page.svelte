@@ -1,5 +1,6 @@
 <script lang="ts">
   import ChannelEditor, { type Channel } from '@announcing/components/ChannelEditor.svelte';
+  import { LL } from '@announcing/components/i18n';
   import Loading from '@announcing/components/Loading.svelte';
   import Logo from '@announcing/components/Logo.svelte';
   import { signOut } from '@auth/sveltekit/client';
@@ -33,6 +34,8 @@
       loading = false;
     }
   };
+
+  $: createDisabled = data.channels.length >= 5;
 </script>
 
 <header>
@@ -59,11 +62,13 @@
 
   <button
     class="create-btn"
+    disabled={createDisabled}
     on:click={() => {
       editor.showModal();
     }}
     >{$t('top.createChannel')}
   </button>
+  <span class="create-btn-desc">{$LL.channelsCanBeCreated()}</span>
   <button
     class="sign-out-btn text"
     on:click={() => {
@@ -129,6 +134,11 @@
 
     .create-btn {
       margin: 0 auto;
+    }
+    .create-btn-desc {
+      margin: 8px auto;
+      font-size: 13px;
+      font-style: italic;
     }
     .sign-out-btn {
       margin: 30px auto;

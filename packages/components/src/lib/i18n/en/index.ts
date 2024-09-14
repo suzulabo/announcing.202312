@@ -14,6 +14,7 @@ const en = {
   textTooLong: 'Your input exceeds the character limit.',
   noAnnouncements: 'No announcements yet.',
   createChannel: 'Create Channel',
+  channelsCanBeCreated: 'Up to five channels can be created.',
 } satisfies BaseTranslation;
 
 export default en;

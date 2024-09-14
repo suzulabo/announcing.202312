@@ -1,6 +1,6 @@
 import '@announcing/components/base.scss';
 
-import { setupLocale } from '@announcing/components/setupLocale';
+import { setupLocale } from '@announcing/components/i18n';
 import type { Load } from '@sveltejs/kit';
 
 import { loadTranslations } from '$lib/i18n/translations';
