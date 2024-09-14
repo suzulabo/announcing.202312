@@ -27,10 +27,10 @@
         method: 'POST',
         body: form,
       });
-      await invalidateAll();
+      editor.closeModal();
+      void invalidateAll();
     } finally {
       loading = false;
-      editor.closeModal();
     }
   };
 </script>
