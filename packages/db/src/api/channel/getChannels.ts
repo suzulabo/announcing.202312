@@ -10,6 +10,7 @@ export const getChannels = async (userID: string) => {
       title: channelsTable.title,
       desc: channelsTable.desc,
       icon: channelsTable.icon,
+      announcementIDs: channelsTable.icon,
       updatedAt: channelsTable.updatedAt,
       createdAt: channelsTable.createdAt,
     })
@@ -18,6 +19,11 @@ export const getChannels = async (userID: string) => {
     .where(eq(ownersTable.userID, userID));
 
   return channels.map((channel) => {
-    return { ...channel, desc: channel.desc ?? undefined, icon: channel.icon ?? undefined };
+    return {
+      ...channel,
+      desc: channel.desc ?? undefined,
+      icon: channel.icon ?? undefined,
+      announcementIDs: channel.announcementIDs ?? undefined,
+    };
   });
 };

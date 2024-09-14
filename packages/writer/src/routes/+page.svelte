@@ -46,7 +46,7 @@
   {#if data.channels}
     <div class="channels">
       {#each data.channels as channel}
-        <a href={`/channel/${channel.channelID}`} class="channel">
+        <a href={`/channels/${channel.channelID}`} class="channel">
           <div class="head">
             <span class="title">
               {channel.title}

@@ -28,8 +28,8 @@
     },
     "./base.scss": "./dist/base.scss",
     "./ChannelPage.svelte": {
-      "types": "./dist/ChannelPage.svelte.d.ts",
-      "svelte": "./dist/ChannelPage.svelte"
+      "types": "./dist/ChannelPage/ChannelPage.svelte.d.ts",
+      "svelte": "./dist/ChannelPage/ChannelPage.svelte"
     },
     "./ChannelEditor.svelte": {
       "types": "./dist/ChannelEditor.svelte.d.ts",

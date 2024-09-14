@@ -27,5 +27,10 @@ export const getChannel = async (userID: typeof READER | string, channelID: stri
 
   if (!channel) return;
 
-  return { ...channel, desc: channel.desc ?? undefined, icon: channel.icon ?? undefined };
+  return {
+    ...channel,
+    desc: channel.desc ?? undefined,
+    icon: channel.icon ?? undefined,
+    announcementIDs: channel.announcementIDs ?? undefined,
+  };
 };
