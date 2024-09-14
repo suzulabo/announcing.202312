@@ -1,5 +1,6 @@
 import { assert, describe, expect, test, vi } from 'vitest';
 
+import { getChannels } from '../src';
 import { createChannel } from '../src/api/channel/createChannel';
 import { deleteChannel } from '../src/api/channel/deleteChannel';
 import { getChannel } from '../src/api/channel/getChannel';
@@ -57,5 +58,16 @@ describe('Channel', () => {
 
     await deleteChannel('u1', '1', c.updatedAt);
     expect(await getChannel('u1', '1')).toBeUndefined();
+  });
+
+  test('Too many channels', async () => {
+    vi.mock('../src/client');
+
+    for (let i = 1; i <= 6; i++) {
+      await createChannel('u1', i.toString(), `channel${i}`, undefined, undefined);
+    }
+
+    const channels = await getChannels('u1');
+    expect(channels.length).toEqual(5);
   });
 });
