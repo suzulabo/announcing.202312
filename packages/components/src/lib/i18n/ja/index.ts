@@ -2,6 +2,7 @@ import type { Translation } from '../i18n-types';
 
 const ja = {
   edit: '編集',
+  delete: '削除',
   cancel: 'キャンセル',
   back: '戻る',
   preview: '確認',
@@ -15,6 +16,10 @@ const ja = {
   noAnnouncements: 'アナウンスはまだありません',
   createChannel: 'チャンネル作成',
   channelsCanBeCreated: 'チャンネルは5つまで作れます',
+  deleteChannel: 'チャンネルの削除',
+  deleteChannelDescription: 'チャンネル「{name}」を削除します。この操作は元に戻せません。',
+  deleteChannelUnderstand: '問題ありません',
+  deleteChannelConfirmation: 'チャンネルを削除します。よろしいですか？',
 } satisfies Translation;
 
 export default ja;
