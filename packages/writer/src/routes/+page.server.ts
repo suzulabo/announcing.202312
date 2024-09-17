@@ -1,13 +1,13 @@
 import { getChannels } from '@announcing/db';
 
+import { getUserID } from '$lib/utils/getUserID';
+
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
-  const session = await locals.auth();
+  const userID = await getUserID(locals);
 
-  const userID = session?.user?.id;
-
-  const channels = userID ? await getChannels(userID) : [];
+  const channels = await getChannels(userID);
 
   return { channels };
 };
