@@ -1,7 +1,10 @@
 <script lang="ts">
   import ChannelPage from '@announcing/components/ChannelPage.svelte';
   import { LL } from '@announcing/components/i18n';
+  import Loading from '@announcing/components/Loading.svelte';
   import Modal from '@announcing/components/Modal.svelte';
+
+  import { goto } from '$app/navigation';
 
   import type { PageData } from './$types';
 
@@ -9,6 +12,23 @@
 
   let deleteModal: Modal;
   let deleteUnderstand = false;
+  let loading = false;
+
+  const deleteChannel = async () => {
+    loading = true;
+    try {
+      await fetch(`/api/channels/${data.channel.channelID}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ updatedAt: data.channel.updatedAt.getTime() }),
+      });
+      await goto('/');
+    } finally {
+      loading = false;
+    }
+  };
 </script>
 
 <div class="container">
@@ -32,13 +52,7 @@
     <hr />
     <div class="warning">{$LL.deleteChannelDescription({ name: data.channel.title })}</div>
     <label class="understand-box">
-      <input
-        type="checkbox"
-        bind:checked={deleteUnderstand}
-        on:change={() => {
-          console.log({ deleteUnderstand });
-        }}
-      />
+      <input type="checkbox" bind:checked={deleteUnderstand} />
       {$LL.deleteChannelUnderstand()}
     </label>
 
@@ -46,9 +60,8 @@
       class="delete-btn"
       disabled={!deleteUnderstand}
       on:click={() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         if (confirm($LL.deleteChannelConfirmation())) {
-          console.log('do delete');
+          void deleteChannel();
         }
       }}
     >
@@ -63,6 +76,8 @@
     >
   </div>
 </Modal>
+
+<Loading show={loading} />
 
 <style lang="scss">
   .container {
