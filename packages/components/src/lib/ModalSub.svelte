@@ -2,6 +2,7 @@
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
   export let dismissMode: 'backdrop' | 'anywhere' | 'none';
+  export let padding: string;
 
   const dismissDispatch = createEventDispatcher();
   const handleClose = () => {
@@ -22,6 +23,7 @@
 
 <button
   class={`unstyled modal`}
+  style={`--padding: ${padding}`}
   on:click={() => {
     if (dismissMode === 'anywhere') handleClose();
   }}

@@ -6,6 +6,7 @@
 
   export let modalID: string | undefined = undefined;
   export let dismissMode: 'backdrop' | 'anywhere' | 'none' = 'backdrop';
+  export let padding = '0';
 
   let visible = false;
 
@@ -35,6 +36,7 @@
 {#if visible}
   <ModalSub
     {dismissMode}
+    {padding}
     on:dismiss={() => {
       closeModal();
     }}><slot /></ModalSub
