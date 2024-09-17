@@ -33,9 +33,9 @@
 
 <div class="container">
   <div class="header">
-    <button class="edit-btn">{$LL.edit()}</button>
+    <button class="edit-btn small">{$LL.edit()}</button>
     <button
-      class="delete-btn"
+      class="delete-btn small"
       on:click={() => {
         deleteUnderstand = false;
         deleteModal.showModal();
