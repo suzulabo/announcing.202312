@@ -52,7 +52,7 @@
               {channel.title}
             </span>
             {#if channel.icon}
-              <img src={`/s/${channel.icon}`} alt="icon" />
+              <img src={channel.icon} alt="icon" />
             {/if}
           </div>
         </a>
