@@ -106,7 +106,7 @@
       class="submit-btn"
       on:click={() => {
         dispatcher('submit', form);
-      }}>{$LL.createChannel()}</button
+      }}>{channel ? $LL.updateChannel() : $LL.createChannel()}</button
     >
     <button
       class="small text cancel-btn"

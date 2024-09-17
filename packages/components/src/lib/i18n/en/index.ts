@@ -15,6 +15,7 @@ const en = {
   textTooLong: 'Your input exceeds the character limit.',
   noAnnouncements: 'No announcements yet.',
   createChannel: 'Create Channel',
+  updateChannel: 'Update Channel',
   channelsCanBeCreated: 'Up to five channels can be created.',
   deleteChannel: 'Delete Channel',
   deleteChannelDescription:

@@ -71,6 +71,10 @@ type RootTranslation = {
 	 */
 	createChannel: string
 	/**
+	 * U​p​d​a​t​e​ ​C​h​a​n​n​e​l
+	 */
+	updateChannel: string
+	/**
 	 * U​p​ ​t​o​ ​f​i​v​e​ ​c​h​a​n​n​e​l​s​ ​c​a​n​ ​b​e​ ​c​r​e​a​t​e​d​.
 	 */
 	channelsCanBeCreated: string
@@ -150,6 +154,10 @@ export type TranslationFunctions = {
 	 * Create Channel
 	 */
 	createChannel: () => LocalizedString
+	/**
+	 * Update Channel
+	 */
+	updateChannel: () => LocalizedString
 	/**
 	 * Up to five channels can be created.
 	 */
