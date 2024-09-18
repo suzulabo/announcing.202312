@@ -32,21 +32,44 @@
 </script>
 
 <div class="container">
-  <div class="header">
-    <button class="edit-btn small">{$LL.edit()}</button>
-    <button
-      class="delete-btn small"
-      on:click={() => {
-        deleteUnderstand = false;
-        deleteModal.showModal();
-      }}>{$LL.delete()}</button
-    >
-  </div>
+  <div class="header"></div>
+
+  <ChannelPage theme="default" channel={data.channel} channelPreview={true} />
+
+  <hr />
+
+  <div class="actions-instruction">{$LL.channelActions.instruction()}</div>
+
+  <ul class="actions">
+    <li>
+      <a href="/">{$LL.channelActions.viewChannel()}</a>
+    </li>
+    <li>
+      <button class="text">{$LL.channelActions.copyURL()}</button>
+    </li>
+    <li>
+      <button class="text">{$LL.channelActions.createAnnouncement()}</button>
+    </li>
+    <li>
+      <button class="text">{$LL.channelActions.editAnnouncement()}</button>
+    </li>
+    <li>
+      <button class="text">{$LL.channelActions.editChannel()}</button>
+    </li>
+    <hr />
+    <li>
+      <button
+        class="text"
+        on:click={() => {
+          deleteUnderstand = false;
+          deleteModal.showModal();
+        }}>{$LL.channelActions.deleteChannel()}</button
+      >
+    </li>
+  </ul>
 </div>
 
-<ChannelPage theme="default" channel={data.channel} channelPreview={true} />
-
-<Modal bind:this={deleteModal} dismissMode="none">
+<Modal bind:this={deleteModal} dismissMode="none" padding="8px">
   <div class="delete-modal">
     <span>{$LL.deleteChannel()}</span>
     <hr />
@@ -82,12 +105,23 @@
 <style lang="scss">
   .container {
     padding: 8px;
-    max-width: 1000px;
+    max-width: 600px;
+    margin: 0 auto;
 
     .header {
       display: flex;
-      .edit-btn {
-        margin: 0 16px 0 auto;
+    }
+
+    .actions-instruction {
+      margin: 16px;
+    }
+    .actions {
+      list-style: inside;
+      li {
+        margin: 8px 24px;
+      }
+      hr {
+        margin: 12px 0;
       }
     }
   }

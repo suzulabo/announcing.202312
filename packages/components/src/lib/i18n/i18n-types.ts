@@ -78,6 +78,36 @@ type RootTranslation = {
 	 * U​p​ ​t​o​ ​f​i​v​e​ ​c​h​a​n​n​e​l​s​ ​c​a​n​ ​b​e​ ​c​r​e​a​t​e​d​.
 	 */
 	channelsCanBeCreated: string
+	channelActions: {
+		/**
+		 * W​h​a​t​ ​w​o​u​l​d​ ​y​o​u​ ​l​i​k​e​ ​t​o​ ​d​o​ ​t​o​d​a​y​?​ ​P​l​e​a​s​e​ ​c​h​o​o​s​e​ ​f​r​o​m​ ​t​h​e​ ​o​p​t​i​o​n​s​ ​b​e​l​o​w​:
+		 */
+		instruction: string
+		/**
+		 * V​i​e​w​ ​t​h​i​s​ ​c​h​a​n​n​e​l
+		 */
+		viewChannel: string
+		/**
+		 * C​o​p​y​ ​c​h​a​n​n​e​l​ ​U​R​L
+		 */
+		copyURL: string
+		/**
+		 * C​r​e​a​t​e​ ​a​ ​n​e​w​ ​a​n​n​o​u​n​c​e​m​e​n​t
+		 */
+		createAnnouncement: string
+		/**
+		 * E​d​i​t​ ​o​r​ ​d​e​l​e​t​e​ ​p​a​s​t​ ​a​n​n​o​u​n​c​e​m​e​n​t​s
+		 */
+		editAnnouncement: string
+		/**
+		 * E​d​i​t​ ​c​h​a​n​n​e​l​ ​n​a​m​e​,​ ​e​t​c​.
+		 */
+		editChannel: string
+		/**
+		 * D​e​l​e​t​e​ ​t​h​i​s​ ​c​h​a​n​n​e​l
+		 */
+		deleteChannel: string
+	}
 	/**
 	 * D​e​l​e​t​e​ ​C​h​a​n​n​e​l
 	 */
@@ -162,6 +192,36 @@ export type TranslationFunctions = {
 	 * Up to five channels can be created.
 	 */
 	channelsCanBeCreated: () => LocalizedString
+	channelActions: {
+		/**
+		 * What would you like to do today? Please choose from the options below:
+		 */
+		instruction: () => LocalizedString
+		/**
+		 * View this channel
+		 */
+		viewChannel: () => LocalizedString
+		/**
+		 * Copy channel URL
+		 */
+		copyURL: () => LocalizedString
+		/**
+		 * Create a new announcement
+		 */
+		createAnnouncement: () => LocalizedString
+		/**
+		 * Edit or delete past announcements
+		 */
+		editAnnouncement: () => LocalizedString
+		/**
+		 * Edit channel name, etc.
+		 */
+		editChannel: () => LocalizedString
+		/**
+		 * Delete this channel
+		 */
+		deleteChannel: () => LocalizedString
+	}
 	/**
 	 * Delete Channel
 	 */

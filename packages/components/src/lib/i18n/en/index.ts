@@ -17,6 +17,15 @@ const en = {
   createChannel: 'Create Channel',
   updateChannel: 'Update Channel',
   channelsCanBeCreated: 'Up to five channels can be created.',
+  channelActions: {
+    instruction: 'What would you like to do today? Please choose from the options below:',
+    viewChannel: 'View this channel',
+    copyURL: 'Copy channel URL',
+    createAnnouncement: 'Create a new announcement',
+    editAnnouncement: 'Edit or delete past announcements',
+    editChannel: 'Edit channel name, etc.',
+    deleteChannel: 'Delete this channel',
+  },
   deleteChannel: 'Delete Channel',
   deleteChannelDescription:
     'You are about to delete the channel "{name}". This action cannot be undone.',
