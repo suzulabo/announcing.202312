@@ -73,7 +73,7 @@
   <div class="delete-modal">
     <span>{$LL.deleteChannel()}</span>
     <hr />
-    <div class="warning">{$LL.deleteChannelDescription({ name: data.channel.title })}</div>
+    <div class="warning">{$LL.deleteChannelDescription({ name: data.channel.name })}</div>
     <label class="understand-box">
       <input type="checkbox" bind:checked={deleteUnderstand} />
       {$LL.deleteChannelUnderstand()}

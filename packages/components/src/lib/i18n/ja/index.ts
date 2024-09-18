@@ -8,6 +8,7 @@ const ja = {
   preview: '確認',
   settings: '設定',
   required: '(必須)',
+  channelName: 'チャンネル名',
   title: 'タイトル',
   desc: '説明文',
   selectIcon: 'アイコンを選択',

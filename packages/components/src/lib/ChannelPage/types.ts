@@ -1,5 +1,5 @@
 export type Channel = {
-  title: string;
+  name: string;
   desc: string | undefined;
   icon: string | undefined;
 };

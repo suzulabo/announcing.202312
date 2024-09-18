@@ -16,9 +16,9 @@
   let editor: ChannelEditor;
   let loading = false;
 
-  const post = async (channel: Channel) => {
+  const createChannel = async (channel: Channel) => {
     const form = new FormData();
-    if (channel.title) form.append('title', channel.title);
+    if (channel.name) form.append('name', channel.name);
     if (channel.desc) form.append('desc', channel.desc);
     if (channel.iconFile) form.append('iconFile', channel.iconFile);
 
@@ -48,8 +48,8 @@
       {#each data.channels as channel}
         <a href={`/channels/${channel.channelID}`} class="channel">
           <div class="head">
-            <span class="title">
-              {channel.title}
+            <span class="name">
+              {channel.name}
             </span>
             {#if channel.icon}
               <img src={channel.icon} alt="icon" />
@@ -80,7 +80,7 @@
 <ChannelEditor
   bind:this={editor}
   on:submit={({ detail }) => {
-    void post(detail);
+    void createChannel(detail);
   }}
 />
 
@@ -118,7 +118,7 @@
           display: flex;
           align-items: center;
 
-          .title {
+          .name {
             flex-grow: 1;
           }
 

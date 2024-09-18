@@ -22,21 +22,21 @@ export const POST: RequestHandler = async ({ locals, request }) => {
   const session = await locals.auth();
   const userID = session?.user?.id;
   if (!userID) {
-    error(400);
+    error(400, 'Missing userID');
   }
 
   const formData = await request.formData();
 
-  const title = getFormString(formData, 'title');
-  if (!title) {
-    error(400);
+  const name = getFormString(formData, 'name');
+  if (!name) {
+    error(400, 'Missing name');
   }
   const desc = getFormString(formData, 'desc');
   const iconFile = getFormFile(formData, 'iconFile');
 
   const channelID = genChannelID();
 
-  await createChannel(userID, channelID, title, desc, iconFile);
+  await createChannel(userID, channelID, name, desc, iconFile);
 
   return json({});
 };

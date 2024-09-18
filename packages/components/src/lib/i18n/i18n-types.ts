@@ -43,6 +43,10 @@ type RootTranslation = {
 	 */
 	required: string
 	/**
+	 * C​h​a​n​n​e​l​ ​n​a​m​e
+	 */
+	channelName: string
+	/**
 	 * T​i​t​l​e
 	 */
 	title: string
@@ -156,6 +160,10 @@ export type TranslationFunctions = {
 	 * (Required)
 	 */
 	required: () => LocalizedString
+	/**
+	 * Channel name
+	 */
+	channelName: () => LocalizedString
 	/**
 	 * Title
 	 */

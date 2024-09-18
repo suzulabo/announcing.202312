@@ -1,4 +1,4 @@
-export const CHANNEL_TITLE_MAX_BYTES = 150;
+export const CHANNEL_NAME_MAX_BYTES = 150;
 export const CHANNEL_DESC_MAX_BYTES = 1000;
 export const CHANNEL_ICON_MAX_SIZE = 256;
 export const CHANNEL_ICON_MAX_BYTES = 1024 * 256;

@@ -8,6 +8,7 @@ const en = {
   preview: 'Preview',
   settings: 'Settings',
   required: '(Required)',
+  channelName: 'Channel name',
   title: 'Title',
   desc: 'Description',
   selectIcon: 'Select icon',

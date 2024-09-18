@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
   export type Channel = {
     iconFile?: File | undefined;
-    title?: string | undefined;
+    name?: string | undefined;
     desc?: string | undefined;
   };
 </script>
@@ -13,7 +13,7 @@
   import {
     CHANNEL_DESC_MAX_BYTES,
     CHANNEL_ICON_MAX_SIZE,
-    CHANNEL_TITLE_MAX_BYTES,
+    CHANNEL_NAME_MAX_BYTES,
   } from './constants';
   import FileInput from './FileInput.svelte';
   import LL, { locale } from './i18n/i18n-svelte';
@@ -36,23 +36,23 @@
   let modal: Modal;
   let form: Channel = {};
   let fileInput: FileInput;
-  let titleError = false;
+  let nameError = false;
   let descError = false;
 
-  $: validated = !!form.title && !titleError && !descError;
+  $: validated = !!form.name && !nameError && !descError;
 </script>
 
 <Modal bind:this={modal} dismissMode="none" padding="8px">
   <div class="modal-body">
-    <div class="title-box">
+    <div class="name-box">
       <div class="input-box">
         <Input
-          name="title"
-          label={$LL.title()}
-          bind:value={form.title}
-          maxBytes={CHANNEL_TITLE_MAX_BYTES}
+          name="name"
+          label={$LL.channelName()}
+          bind:value={form.name}
+          maxBytes={CHANNEL_NAME_MAX_BYTES}
           required
-          bind:error={titleError}
+          bind:error={nameError}
         />
       </div>
       <div class="icon-box">
@@ -129,7 +129,7 @@
     flex-direction: column;
     gap: 16px;
 
-    .title-box {
+    .name-box {
       display: flex;
       align-items: center;
 
