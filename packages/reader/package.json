@@ -2,7 +2,7 @@
   "private": true,
   "name": "@announcing/reader",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite dev --port 5175",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",

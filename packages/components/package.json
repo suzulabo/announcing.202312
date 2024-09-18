@@ -2,7 +2,7 @@
   "name": "@announcing/components",
   "version": "0.0.1",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite dev --port 5173",
     "build": "vite build && pnpm run package",
     "preview": "vite preview",
     "package": "svelte-kit sync && svelte-package && publint",
