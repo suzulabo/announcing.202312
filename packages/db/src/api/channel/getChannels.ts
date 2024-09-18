@@ -8,7 +8,7 @@ export const getChannels = async (userID: string) => {
   const channels = await db
     .select({
       channelID: channelsTable.channelID,
-      title: channelsTable.title,
+      name: channelsTable.name,
       desc: channelsTable.desc,
       icon: channelsTable.icon,
       announcementIDs: channelsTable.icon,

@@ -21,7 +21,7 @@ CREATE TABLE `blobs` (
 --> statement-breakpoint
 CREATE TABLE `channels` (
 	`channelID` text PRIMARY KEY NOT NULL,
-	`title` text NOT NULL,
+	`name` text NOT NULL,
 	`desc` text,
 	`icon` text,
 	`announcementIDs` text,

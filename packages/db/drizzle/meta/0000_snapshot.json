@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "2d5802a5-a0d3-444c-8e7d-cec0e7d993ce",
+  "id": "f94be3f7-0681-469e-9446-b49e2f0e5962",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "announcements": {
@@ -145,8 +145,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "title": {
-          "name": "title",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

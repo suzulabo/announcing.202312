@@ -7,7 +7,7 @@ import { makeInsertBlob } from '../blob/makeInsertBlob';
 export const createChannel = async (
   userID: string,
   channelID: string,
-  title: string,
+  name: string,
   desc: string | undefined,
   iconFile: Blob | undefined,
 ) => {
@@ -24,7 +24,7 @@ export const createChannel = async (
   }
 
   const queries = [
-    db.insert(channelsTable).values({ channelID, title, desc: desc ?? null, icon }),
+    db.insert(channelsTable).values({ channelID, name, desc: desc ?? null, icon }),
     db.insert(ownersTable).values({ channelID, userID }),
     ...(iconInsert ? [iconInsert] : []),
   ] as const;

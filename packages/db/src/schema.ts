@@ -2,7 +2,7 @@ import { blob, integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite
 
 export const channelsTable = sqliteTable('channels', {
   channelID: text('channelID').notNull().primaryKey(),
-  title: text('title').notNull(),
+  name: text('name').notNull(),
   desc: text('desc'),
   icon: text('icon'),
   announcementIDs: text('announcementIDs', { mode: 'json' }).$type<string[]>(),

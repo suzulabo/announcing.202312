@@ -8,7 +8,7 @@ export const updateChannel = async (
   userID: string,
   updatedAt: Date,
   channelID: string,
-  title: string,
+  name: string,
   desc: string | undefined,
   iconFile: Blob | undefined,
 ) => {
@@ -18,7 +18,7 @@ export const updateChannel = async (
     db
       .update(channelsTable)
       .set({
-        title,
+        name,
         desc: desc ?? null,
         icon,
         updatedAt: new Date(),
