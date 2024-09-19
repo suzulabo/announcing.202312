@@ -36,7 +36,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 
   const channelID = genChannelID();
 
-  await createChannel(userID, channelID, name, desc, iconFile);
+  await createChannel({ userID, channelID, name, desc, iconFile });
 
   return json({});
 };

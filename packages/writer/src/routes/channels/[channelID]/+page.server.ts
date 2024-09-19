@@ -8,7 +8,7 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ params, locals }) => {
   const userID = await getUserID(locals);
 
-  const channel = await getChannel(userID, params.channelID);
+  const channel = await getChannel({ userID, channelID: params.channelID });
 
   if (!channel) {
     redirect(303, '/');

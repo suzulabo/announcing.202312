@@ -24,7 +24,7 @@ export const DELETE: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
-  await deleteChannel(userID, channelID, new Date(data.updatedAt));
+  await deleteChannel({ userID, channelID, updatedAt: new Date(data.updatedAt) });
 
   return json({});
 };
