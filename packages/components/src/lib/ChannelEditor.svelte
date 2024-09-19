@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
   export type Channel = {
     iconFile?: File | undefined;
+    icon?: string | undefined;
     name?: string | undefined;
     desc?: string | undefined;
   };
@@ -56,32 +57,34 @@
         />
       </div>
       <div class="icon-box">
-        {#if form.iconFile}
+        {#if form.iconFile ?? form.icon}
           <button
             class="unstyled"
             on:click={() => {
               fileInput.open();
             }}
           >
-            <img class="icon" alt="icon preview" use:loadImage={form.iconFile} />
+            {#if form.iconFile}
+              <img class="icon" alt="icon preview" use:loadImage={form.iconFile} />
+            {:else}
+              <img class="icon" alt="icon preview" src={form.icon} />
+            {/if}
           </button>
-        {/if}
-        {#if !form.iconFile}
+          <button
+            type="button"
+            class="icon-remove"
+            on:click={() => {
+              form.iconFile = undefined;
+              form.icon = undefined;
+            }}>{$LL.removeIcon()}</button
+          >
+        {:else}
           <button
             type="button"
             class={`icon-select small ${$locale}`}
             on:click={() => {
               fileInput.open();
             }}>{$LL.selectIcon()}</button
-          >
-        {/if}
-        {#if form.iconFile}
-          <button
-            type="button"
-            class="icon-remove"
-            on:click={() => {
-              form.iconFile = undefined;
-            }}>{$LL.removeIcon()}</button
           >
         {/if}
         <FileInput
@@ -105,6 +108,9 @@
       disabled={!validated}
       class="submit-btn"
       on:click={() => {
+        if (form.iconFile) {
+          form.icon = undefined;
+        }
         dispatcher('submit', form);
       }}>{channel ? $LL.updateChannel() : $LL.createChannel()}</button
     >

@@ -1,11 +1,13 @@
 <script lang="ts">
   import ChannelEditor from '$lib/ChannelEditor.svelte';
 
-  import type { PageData } from './$types';
-
-  export let data: PageData;
-
   let editor: ChannelEditor;
+
+  const channel = {
+    name: 'Aether Dynamics Corporation',
+    desc: 'Aether Dynamics Corporation is at the forefront of cutting-edge technology, pioneering advancements in energy solutions and sustainable innovation.\nJoin us as we transform the future with dynamic, visionary science.',
+    icon: '/assets/logo.png',
+  };
 </script>
 
 <div class="container">
@@ -16,7 +18,7 @@
   >
 </div>
 <ChannelEditor
-  channel={data.channel}
+  {channel}
   bind:this={editor}
   on:submit={({ detail }) => {
     console.log(detail);
