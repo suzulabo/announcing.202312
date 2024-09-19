@@ -4,22 +4,25 @@ import { addAnnouncement, createChannel, getAnnouncement, getBlob, getChannel } 
 
 test('add', async () => {
   vi.mock('../src/client');
-  await createChannel('u1', 'a1', 'announcement test channel', undefined, undefined);
+  await createChannel({ userID: 'u1', channelID: 'a1', name: 'announcement test channel' });
 
-  await addAnnouncement(
-    'u1',
-    'a1',
-    new Blob(['headerImage'], { type: 'image/test' }),
-    'test',
-    'This is test',
-    [new Blob(['images1'], { type: 'image/test' })],
-    new Date(),
-  );
+  await addAnnouncement({
+    userID: 'u1',
+    channelID: 'a1',
+    headerImageFile: new Blob(['headerImage'], { type: 'image/test' }),
+    title: 'test',
+    body: 'This is test',
+    imagesFiles: [new Blob(['images1'], { type: 'image/test' })],
+    createdAt: new Date(),
+  });
 
-  const c = await getChannel('u1', 'a1');
+  const c = await getChannel({ userID: 'u1', channelID: 'a1' });
   assert(c);
 
-  const a = await getAnnouncement('a1', c.announcementIDs?.shift() ?? '');
+  const a = await getAnnouncement({
+    channelID: 'a1',
+    announcementID: c.announcementIDs?.shift() ?? '',
+  });
   assert(a);
 
   expect(a).toMatchObject({

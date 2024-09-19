@@ -4,13 +4,19 @@ import { db } from '../../client';
 import { channelsTable, ownersTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
 
-export const createChannel = async (
-  userID: string,
-  channelID: string,
-  name: string,
-  desc: string | undefined,
-  iconFile: Blob | undefined,
-) => {
+export const createChannel = async ({
+  userID,
+  channelID,
+  name,
+  desc,
+  iconFile,
+}: {
+  userID: string;
+  channelID: string;
+  name: string;
+  desc?: string | undefined;
+  iconFile?: Blob | undefined;
+}) => {
   const [icon, iconInsert] = iconFile ? await makeInsertBlob(iconFile) : [null, undefined];
 
   {

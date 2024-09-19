@@ -4,12 +4,16 @@ import { db } from '../../client';
 import { announcementsTable, channelsTable } from '../../schema';
 import { getChannel } from '../channel/getChannel';
 
-export const removeAnnouncement = async (
-  userID: string,
-  channelID: string,
-  targetAnnouncementID: string,
-) => {
-  const channel = await getChannel(userID, channelID);
+export const removeAnnouncement = async ({
+  userID,
+  channelID,
+  targetAnnouncementID,
+}: {
+  userID: string;
+  channelID: string;
+  targetAnnouncementID: string;
+}) => {
+  const channel = await getChannel({ userID, channelID });
   if (!channel) {
     return;
   }

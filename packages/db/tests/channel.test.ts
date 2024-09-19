@@ -9,16 +9,16 @@ import { updateChannel } from '../src/api/channel/updateChannel';
 describe('Channel', () => {
   test('create, update and delete', async () => {
     vi.mock('../src/client');
-    await createChannel(
-      'u1',
-      '1',
-      'test channel',
-      'This is test',
-      new Blob(['aaa'], { type: 'image/test' }),
-    );
-    expect(await getChannel('u2', '1')).toBeUndefined();
+    await createChannel({
+      userID: 'u1',
+      channelID: '1',
+      name: 'test channel',
+      desc: 'This is test',
+      iconFile: new Blob(['aaa'], { type: 'image/test' }),
+    });
+    expect(await getChannel({ userID: 'u2', channelID: '1' })).toBeUndefined();
 
-    const c = await getChannel('u1', '1');
+    const c = await getChannel({ userID: 'u1', channelID: '1' });
 
     assert(c);
 
@@ -28,46 +28,51 @@ describe('Channel', () => {
       desc: 'This is test',
     });
 
-    await updateChannel('u2', c.updatedAt, '1', 'should not update', undefined, undefined);
-    expect(await getChannel('u1', '1')).toMatchObject({
+    await updateChannel({
+      userID: 'u2',
+      updatedAt: c.updatedAt,
+      channelID: '1',
+      name: 'should not update',
+    });
+    expect(await getChannel({ userID: 'u1', channelID: '1' })).toMatchObject({
       channelID: '1',
       name: 'test channel',
       desc: 'This is test',
     });
 
-    await updateChannel(
-      'u1',
-      c.updatedAt,
-      '1',
-      'update channel',
-      'updated',
-      new Blob(['aaa'], { type: 'image/test' }),
-    );
-    expect(await getChannel('u1', '1')).toMatchObject({
+    await updateChannel({
+      userID: 'u1',
+      updatedAt: c.updatedAt,
+      channelID: '1',
+      name: 'update channel',
+      desc: 'updated',
+      iconFile: new Blob(['aaa'], { type: 'image/test' }),
+    });
+    expect(await getChannel({ userID: 'u1', channelID: '1' })).toMatchObject({
       channelID: '1',
       name: 'update channel',
       desc: 'updated',
     });
 
-    await deleteChannel('u2', '1', c.updatedAt);
-    expect(await getChannel('u1', '1')).toMatchObject({
+    await deleteChannel({ userID: 'u2', channelID: '1', updatedAt: c.updatedAt });
+    expect(await getChannel({ userID: 'u1', channelID: '1' })).toMatchObject({
       channelID: '1',
       name: 'update channel',
       desc: 'updated',
     });
 
-    await deleteChannel('u1', '1', c.updatedAt);
-    expect(await getChannel('u1', '1')).toBeUndefined();
+    await deleteChannel({ userID: 'u1', channelID: '1', updatedAt: c.updatedAt });
+    expect(await getChannel({ userID: 'u1', channelID: '1' })).toBeUndefined();
   });
 
   test('Too many channels', async () => {
     vi.mock('../src/client');
 
     for (let i = 1; i <= 6; i++) {
-      await createChannel('u1', i.toString(), `channel${i}`, undefined, undefined);
+      await createChannel({ userID: 'u1', channelID: i.toString(), name: `channel${i}` });
     }
 
-    const channels = await getChannels('u1');
+    const channels = await getChannels({ userID: 'u1' });
     expect(channels.length).toEqual(5);
   });
 });

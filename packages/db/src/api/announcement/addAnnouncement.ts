@@ -5,30 +5,38 @@ import { channelsTable } from '../../schema';
 import { getChannel } from '../channel/getChannel';
 import { makeInsertAnnouncement } from './makeInsertAnnouncement';
 
-export const addAnnouncement = async (
-  userID: string,
-  channelID: string,
-  headerImageFile: Blob | undefined,
-  title: string | undefined,
-  body: string,
-  imagesFiles: Blob[] | undefined,
-  createdAt: Date,
-) => {
-  const channel = await getChannel(userID, channelID);
+export const addAnnouncement = async ({
+  userID,
+  channelID,
+  headerImageFile,
+  title,
+  body,
+  imagesFiles,
+  createdAt,
+}: {
+  userID: string;
+  channelID: string;
+  headerImageFile: Blob | undefined;
+  title: string | undefined;
+  body: string;
+  imagesFiles: Blob[] | undefined;
+  createdAt: Date;
+}) => {
+  const channel = await getChannel({ userID, channelID });
   if (!channel) {
     return;
   }
 
-  const { announcementID, announcementQueries } = await makeInsertAnnouncement(
+  const { announcementID, announcementQueries } = await makeInsertAnnouncement({
     userID,
     channelID,
     headerImageFile,
     title,
     body,
     imagesFiles,
+    updatedAt: createdAt,
     createdAt,
-    createdAt,
-  );
+  });
 
   const announcementIDs = channel.announcementIDs ?? [];
   announcementIDs.push(announcementID);

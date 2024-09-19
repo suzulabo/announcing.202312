@@ -6,7 +6,13 @@ import { channelsTable, ownersTable } from '../../schema';
 
 export const READER = Symbol('READER');
 
-export const getChannel = async (userID: typeof READER | string, channelID: string) => {
+export const getChannel = async ({
+  userID,
+  channelID,
+}: {
+  userID: typeof READER | string;
+  channelID: string;
+}) => {
   const conditions = [eq(channelsTable.channelID, channelID)];
   if (userID !== READER) {
     conditions.push(

@@ -6,17 +6,26 @@ import { getChannel } from '../channel/getChannel';
 import { getAnnouncement } from './getAnnouncement';
 import { makeInsertAnnouncement } from './makeInsertAnnouncement';
 
-export const updateAnnouncement = async (
-  userID: string,
-  channelID: string,
-  targetAnnouncementID: string,
-  targetUpdatedAt: Date,
-  headerImageFile: Blob | undefined,
-  title: string | undefined,
-  body: string,
-  imagesFiles: Blob[] | undefined,
-) => {
-  const channel = await getChannel(userID, channelID);
+export const updateAnnouncement = async ({
+  userID,
+  channelID,
+  targetAnnouncementID,
+  targetUpdatedAt,
+  headerImageFile,
+  title,
+  body,
+  imagesFiles,
+}: {
+  userID: string;
+  channelID: string;
+  targetAnnouncementID: string;
+  targetUpdatedAt: Date;
+  headerImageFile: Blob | undefined;
+  title: string | undefined;
+  body: string;
+  imagesFiles: Blob[] | undefined;
+}) => {
+  const channel = await getChannel({ userID, channelID });
   if (!channel) {
     return;
   }
@@ -29,21 +38,21 @@ export const updateAnnouncement = async (
     return;
   }
 
-  const announcement = await getAnnouncement(channelID, targetAnnouncementID);
+  const announcement = await getAnnouncement({ channelID, announcementID: targetAnnouncementID });
   if (!announcement || announcement.updatedAt !== targetUpdatedAt) {
     return;
   }
 
-  const { announcementID, announcementQueries } = await makeInsertAnnouncement(
+  const { announcementID, announcementQueries } = await makeInsertAnnouncement({
     userID,
     channelID,
     headerImageFile,
     title,
     body,
     imagesFiles,
-    new Date(),
-    announcement.createdAt,
-  );
+    updatedAt: new Date(),
+    createdAt: announcement.createdAt,
+  });
 
   announcementIDs[index] = announcementID;
 

@@ -4,7 +4,7 @@ import { db } from '../../client';
 import { getEnv } from '../../lib/env';
 import { channelsTable, ownersTable } from '../../schema';
 
-export const getChannels = async (userID: string) => {
+export const getChannels = async ({ userID }: { userID: string }) => {
   const channels = await db
     .select({
       channelID: channelsTable.channelID,

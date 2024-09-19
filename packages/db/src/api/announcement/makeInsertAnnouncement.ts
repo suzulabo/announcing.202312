@@ -5,20 +5,26 @@ import { base62 } from '../../lib/base62';
 import { announcementsTable } from '../../schema';
 import { type BlobInsertQuery, makeInsertBlob } from '../blob/makeInsertBlob';
 
-const genID = (
-  headerImage: string | null | undefined,
-  title: string | undefined,
-  body: string,
-  imagesFiles: string[] | undefined,
-  createdAt: Date,
-) => {
+const genID = ({
+  headerImage,
+  title,
+  body,
+  images,
+  createdAt,
+}: {
+  headerImage: string | null | undefined;
+  title: string | undefined;
+  body: string;
+  images: string[] | undefined;
+  createdAt: Date;
+}) => {
   const hash = createHash('sha256');
 
   const list = [
     headerImage,
     title,
     body,
-    ...(imagesFiles ?? []),
+    ...(images ?? []),
     new Date(createdAt.getFullYear(), createdAt.getMonth(), createdAt.getDate())
       .getTime()
       .toString(),
@@ -37,16 +43,25 @@ const genID = (
   return base62.encode(digest).substring(0, 6);
 };
 
-export const makeInsertAnnouncement = async (
-  userID: string,
-  channelID: string,
-  headerImageFile: Blob | undefined,
-  title: string | undefined,
-  body: string,
-  imagesFiles: Blob[] | undefined,
-  updatedAt: Date,
-  createdAt: Date,
-) => {
+export const makeInsertAnnouncement = async ({
+  userID,
+  channelID,
+  headerImageFile,
+  title,
+  body,
+  imagesFiles,
+  updatedAt,
+  createdAt,
+}: {
+  userID: string;
+  channelID: string;
+  headerImageFile?: Blob | undefined;
+  title?: string | undefined;
+  body: string;
+  imagesFiles?: Blob[] | undefined;
+  updatedAt: Date;
+  createdAt: Date;
+}) => {
   const [headerImage, headerImageInsert] = headerImageFile
     ? await makeInsertBlob(headerImageFile)
     : [null, undefined];
@@ -66,7 +81,7 @@ export const makeInsertAnnouncement = async (
     [[], []],
   );
 
-  const announcementID = genID(headerImage, title, body, images, createdAt);
+  const announcementID = genID({ headerImage, title, body, images, createdAt });
 
   return {
     announcementID,
