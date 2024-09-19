@@ -41,10 +41,6 @@ html {
   font-size: 16px;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /*
-  .dark and .light are classes for storybook-dark-mode.
-  see .storybook/preview.js
-  */
   @media (prefers-color-scheme: dark) {
     &:not([data-color-scheme='light']):not(.light) {
       @include dark-mode;
