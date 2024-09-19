@@ -24,14 +24,14 @@ describe('Channel', () => {
 
     expect(c).toMatchObject({
       channelID: '1',
-      title: 'test channel',
+      name: 'test channel',
       desc: 'This is test',
     });
 
     await updateChannel('u2', c.updatedAt, '1', 'should not update', undefined, undefined);
     expect(await getChannel('u1', '1')).toMatchObject({
       channelID: '1',
-      title: 'test channel',
+      name: 'test channel',
       desc: 'This is test',
     });
 
@@ -45,14 +45,14 @@ describe('Channel', () => {
     );
     expect(await getChannel('u1', '1')).toMatchObject({
       channelID: '1',
-      title: 'update channel',
+      name: 'update channel',
       desc: 'updated',
     });
 
     await deleteChannel('u2', '1', c.updatedAt);
     expect(await getChannel('u1', '1')).toMatchObject({
       channelID: '1',
-      title: 'update channel',
+      name: 'update channel',
       desc: 'updated',
     });
 
