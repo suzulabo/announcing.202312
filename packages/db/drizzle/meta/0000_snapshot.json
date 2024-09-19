@@ -1,9 +1,140 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "2c2c95cd-4e73-4583-8202-f22706120b56",
+  "id": "f94be3f7-0681-469e-9446-b49e2f0e5962",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
+    "announcements": {
+      "name": "announcements",
+      "columns": {
+        "channelID": {
+          "name": "channelID",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "userID": {
+          "name": "userID",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "announcementID": {
+          "name": "announcementID",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "headerImage": {
+          "name": "headerImage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "body": {
+          "name": "body",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "images": {
+          "name": "images",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "announcements_channelID_channels_channelID_fk": {
+          "name": "announcements_channelID_channels_channelID_fk",
+          "tableFrom": "announcements",
+          "tableTo": "channels",
+          "columnsFrom": [
+            "channelID"
+          ],
+          "columnsTo": [
+            "channelID"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "announcements_channelID_announcementID_pk": {
+          "columns": [
+            "channelID",
+            "announcementID"
+          ],
+          "name": "announcements_channelID_announcementID_pk"
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "blobs": {
+      "name": "blobs",
+      "columns": {
+        "blobID": {
+          "name": "blobID",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "contentType": {
+          "name": "contentType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "blob": {
+          "name": "blob",
+          "type": "blob",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "channels": {
       "name": "channels",
       "columns": {
@@ -14,8 +145,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "title": {
-          "name": "title",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -35,25 +166,11 @@
           "notNull": false,
           "autoincrement": false
         },
-        "links": {
-          "name": "links",
+        "announcementIDs": {
+          "name": "announcementIDs",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
-        },
-        "announcements": {
-          "name": "announcements",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "owners": {
-          "name": "owners",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
           "autoincrement": false
         },
         "updatedAt": {
@@ -76,27 +193,56 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "users": {
-      "name": "users",
+    "owners": {
+      "name": "owners",
       "columns": {
-        "userID": {
-          "name": "userID",
+        "channelID": {
+          "name": "channelID",
           "type": "text",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "channels": {
-          "name": "channels",
+        "userID": {
+          "name": "userID",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
           "autoincrement": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "foreignKeys": {
+        "owners_channelID_channels_channelID_fk": {
+          "name": "owners_channelID_channels_channelID_fk",
+          "tableFrom": "owners",
+          "tableTo": "channels",
+          "columnsFrom": [
+            "channelID"
+          ],
+          "columnsTo": [
+            "channelID"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "owners_channelID_userID_pk": {
+          "columns": [
+            "channelID",
+            "userID"
+          ],
+          "name": "owners_channelID_userID_pk"
+        }
+      },
       "uniqueConstraints": {}
     }
   },

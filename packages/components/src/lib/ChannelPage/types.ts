@@ -1,7 +1,7 @@
 export type Channel = {
-  title: string;
-  desc: string | null;
-  icon: string | null;
+  name: string;
+  desc: string | undefined;
+  icon: string | undefined;
 };
 
 export type Announcement = {

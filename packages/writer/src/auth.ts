@@ -43,8 +43,6 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
           .digest();
 
         token['userID'] = base62.encode(digest);
-
-        console.log('userID', token['userID']);
       }
 
       return token;
@@ -58,4 +56,5 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     },
   },
   secret: AUTH_SECRET,
+  trustHost: true,
 });

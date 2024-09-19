@@ -1,7 +1,10 @@
+import { setDBEnv } from '@announcing/db';
 import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 import { handle as authenticationHandle } from './auth';
+
+setDBEnv({ imagePrefix: '/s/' });
 
 const authorizationHandle: Handle = async (input) => {
   const event = input.event;

@@ -1,28 +1,33 @@
-import { sql } from 'drizzle-orm';
+import { count, eq } from 'drizzle-orm';
 
 import { db } from '../../client';
-import { storeFile } from '../../lib/storeFile';
-import { channelsTable, usersTable } from '../../schema';
+import { channelsTable, ownersTable } from '../../schema';
+import { makeInsertBlob } from '../blob/makeInsertBlob';
 
 export const createChannel = async (
   userID: string,
   channelID: string,
-  title: string,
-  desc: string | null,
-  iconFile: Blob | null | undefined,
+  name: string,
+  desc: string | undefined,
+  iconFile: Blob | undefined,
 ) => {
-  const icon = (iconFile && (await storeFile(iconFile))) ?? null;
+  const [icon, iconInsert] = iconFile ? await makeInsertBlob(iconFile) : [null, undefined];
 
-  await db.batch([
-    db.insert(channelsTable).values({ channelID, title, desc, icon, owners: [userID] }),
-    db
-      .insert(usersTable)
-      .values({ userID, channels: [channelID] })
-      .onConflictDoUpdate({
-        target: usersTable.userID,
-        set: {
-          channels: sql`json_insert(channels, '$[#]', ${channelID})`,
-        },
-      }),
-  ]);
+  {
+    // This should ideally be enforced by a database trigger.
+    const c = (
+      await db.select({ count: count() }).from(ownersTable).where(eq(ownersTable.userID, userID))
+    ).shift();
+    if (c && c.count >= 5) {
+      return;
+    }
+  }
+
+  const queries = [
+    db.insert(channelsTable).values({ channelID, name, desc: desc ?? null, icon }),
+    db.insert(ownersTable).values({ channelID, userID }),
+    ...(iconInsert ? [iconInsert] : []),
+  ] as const;
+
+  await db.batch(queries);
 };

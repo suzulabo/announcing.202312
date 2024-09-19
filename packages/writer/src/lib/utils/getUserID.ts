@@ -7,3 +7,7 @@ export const getUserID = async (locals: App.Locals) => {
 
   return userID;
 };
+
+export const getUserIDNoRedirect = async (locals: App.Locals) => {
+  return (await locals.auth())?.user?.id;
+};

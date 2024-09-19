@@ -1,25 +1,32 @@
-import { eq, inArray, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 import { db } from '../../client';
-import { channelsTable, usersTable } from '../../schema';
+import { getEnv } from '../../lib/env';
+import { channelsTable, ownersTable } from '../../schema';
 
-export const getChannels = async (userID: string | undefined) => {
-  if (!userID) return [];
-
-  const ownedChannels = db
-    .select({ value: sql`json_each.value` })
-    .from(sql`${usersTable}, json_each(${usersTable.channels})`)
-    .where(eq(usersTable.userID, userID));
-
+export const getChannels = async (userID: string) => {
   const channels = await db
     .select({
       channelID: channelsTable.channelID,
-      title: channelsTable.title,
+      name: channelsTable.name,
+      desc: channelsTable.desc,
       icon: channelsTable.icon,
+      announcementIDs: channelsTable.icon,
       updatedAt: channelsTable.updatedAt,
+      createdAt: channelsTable.createdAt,
     })
     .from(channelsTable)
-    .where(inArray(channelsTable.channelID, ownedChannels));
+    .innerJoin(ownersTable, eq(channelsTable.channelID, ownersTable.channelID))
+    .where(eq(ownersTable.userID, userID));
 
-  return channels;
+  const { imagePrefix } = getEnv();
+
+  return channels.map((channel) => {
+    return {
+      ...channel,
+      desc: channel.desc ?? undefined,
+      icon: channel.icon ? `${imagePrefix}${channel.icon}` : undefined,
+      announcementIDs: channel.announcementIDs ?? undefined,
+    };
+  });
 };

@@ -1,1 +1,11 @@
-export const dev = process.env['RELEASE'] ? false : true;
+let env = {
+  imagePrefix: '',
+};
+
+export const setDBEnv = (newEnv: typeof env) => {
+  env = newEnv;
+};
+
+export const getEnv = () => {
+  return env;
+};

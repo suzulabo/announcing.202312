@@ -1,125 +1,129 @@
 <script lang="ts" context="module">
-  const loadFile = async (file: File | null) => {
-    if (!file) {
-      return '';
-    }
-    return new Promise<string>((resolve) => {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        resolve(event.target?.result as string);
-      };
-
-      reader.readAsDataURL(file);
-    });
+  export type Channel = {
+    iconFile?: File | undefined;
+    icon?: string | undefined;
+    name?: string | undefined;
+    desc?: string | undefined;
   };
 </script>
 
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+
   import { loadImage } from './actions/loadImage';
-  import { loadChannelViewComponents } from './ChannelView/loader';
+  import {
+    CHANNEL_DESC_MAX_BYTES,
+    CHANNEL_ICON_MAX_SIZE,
+    CHANNEL_NAME_MAX_BYTES,
+  } from './constants';
   import FileInput from './FileInput.svelte';
-  import LL from './i18n/i18n-svelte';
+  import LL, { locale } from './i18n/i18n-svelte';
   import Input from './Input.svelte';
   import Modal from './Modal.svelte';
   import TextArea from './TextArea.svelte';
 
-  export let channel: {
-    icon: File | null;
-    title: string;
-    desc: string;
+  export let channel: Channel | undefined = undefined;
+
+  export const showModal = () => {
+    form = { ...channel };
+    modal.showModal();
+  };
+  export const closeModal = () => {
+    modal.closeModal();
   };
 
-  export let params: {
-    backUrl: string;
-  };
+  const dispatcher = createEventDispatcher<{ submit: Channel }>();
 
-  const { ChannelView } = loadChannelViewComponents('default');
-
-  let showModal = true;
+  let modal: Modal;
+  let form: Channel = {};
   let fileInput: FileInput;
-  const form = { ...channel };
+  let nameError = false;
+  let descError = false;
 
-  $: validated = !!form.title;
+  $: validated = !!form.name && !nameError && !descError;
 </script>
 
-<div class="preview">
-  {#await loadFile(channel.icon) then iconUrl}
-    <ChannelView params={{ channel: { ...channel, icon: iconUrl }, preview: true }} />
-  {/await}
-  <div>
-    <a href={params.backUrl}>{$LL.back()}</a>
-  </div>
-</div>
-
-<Modal bind:show={showModal} dismissMode="none" padding="8px">
+<Modal bind:this={modal} dismissMode="none" padding="8px">
   <div class="modal-body">
-    <div class="icon-box">
-      {#if form.icon}
-        <button
-          class="unstyled"
-          on:click={() => {
-            fileInput.open();
-          }}
-        >
-          <img class="icon" alt="icon preview" use:loadImage={form.icon} />
-        </button>
-      {/if}
-      <div>
-        <button
-          type="button"
-          class="small"
-          on:click={() => {
-            fileInput.open();
-          }}>{$LL.iconSelect()}</button
-        >
-        {#if form.icon}
+    <div class="name-box">
+      <div class="input-box">
+        <Input
+          name="name"
+          label={$LL.channelName()}
+          bind:value={form.name}
+          maxBytes={CHANNEL_NAME_MAX_BYTES}
+          required
+          bind:error={nameError}
+        />
+      </div>
+      <div class="icon-box">
+        {#if form.iconFile ?? form.icon}
+          <button
+            class="unstyled"
+            on:click={() => {
+              fileInput.open();
+            }}
+          >
+            {#if form.iconFile}
+              <img class="icon" alt="icon preview" use:loadImage={form.iconFile} />
+            {:else}
+              <img class="icon" alt="icon preview" src={form.icon} />
+            {/if}
+          </button>
           <button
             type="button"
-            class="small"
+            class="icon-remove"
             on:click={() => {
-              form.icon = null;
-            }}>{$LL.iconRemove()}</button
+              form.iconFile = undefined;
+              form.icon = undefined;
+            }}>{$LL.removeIcon()}</button
+          >
+        {:else}
+          <button
+            type="button"
+            class={`icon-select small ${$locale}`}
+            on:click={() => {
+              fileInput.open();
+            }}>{$LL.selectIcon()}</button
           >
         {/if}
+        <FileInput
+          name="icon"
+          accept="image/jpeg,image/png,image/webp"
+          maxImageSize={CHANNEL_ICON_MAX_SIZE}
+          bind:this={fileInput}
+          bind:file={form.iconFile}
+        />
       </div>
-      <FileInput
-        name="icon"
-        accept="image/jpeg,image/png,image/webp"
-        maxImageSize={256}
-        bind:this={fileInput}
-        bind:file={form.icon}
-      />
     </div>
-    <Input name="title" label={$LL.title()} bind:value={form.title} maxBytes={100} />
     <TextArea
       name="desc"
       label={$LL.desc()}
       bind:value={form.desc}
-      maxBytes={1000}
+      maxBytes={CHANNEL_DESC_MAX_BYTES}
       maxHeight="40vh"
+      bind:error={descError}
     />
     <button
       disabled={!validated}
-      class="preview-btn"
+      class="submit-btn"
       on:click={() => {
-        channel = { ...form };
-        showModal = false;
-      }}>{$LL.preview()}</button
+        if (form.iconFile) {
+          form.icon = undefined;
+        }
+        dispatcher('submit', form);
+      }}>{channel ? $LL.updateChannel() : $LL.createChannel()}</button
     >
     <button
-      class="small cancel-btn"
+      class="small text cancel-btn"
       on:click={() => {
-        showModal = false;
+        closeModal();
       }}>{$LL.cancel()}</button
     >
   </div>
 </Modal>
 
 <style lang="scss">
-  .preview {
-    min-height: 200px;
-  }
   .modal-body {
     background-color: var(--color-background);
     border-radius: 8px;
@@ -131,18 +135,45 @@
     flex-direction: column;
     gap: 16px;
 
-    .icon-box {
-      text-align: center;
+    .name-box {
+      display: flex;
+      align-items: center;
 
-      .icon {
-        width: 64px;
-        height: 64px;
-        border-radius: 8px;
-        object-fit: contain;
+      .input-box {
+        flex-grow: 1;
+        margin: 0 8px 0 0;
+      }
+
+      .icon-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        button.icon-select {
+          width: 64px;
+          height: 64px;
+          &.ja {
+            font-size: 12px;
+          }
+        }
+        button.icon-remove {
+          font-size: 12px;
+          padding: 4px;
+          width: 64px;
+          &.ja {
+            font-size: 11px;
+          }
+        }
+        .icon {
+          width: 64px;
+          height: 64px;
+          border-radius: 8px;
+          object-fit: contain;
+        }
       }
     }
 
-    .preview-btn {
+    .submit-btn {
       align-self: center;
     }
 

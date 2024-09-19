@@ -1,12 +1,8 @@
-<script lang="ts" context="module">
-  const isIframe = typeof window === 'object' && window.self !== window.top;
-</script>
-
 <script lang="ts">
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
 
-  export let dismissMode: 'backdrop' | 'anywhere' | 'none' = 'backdrop';
-  export let padding = '0';
+  export let dismissMode: 'backdrop' | 'anywhere' | 'none';
+  export let padding: string;
 
   const dismissDispatch = createEventDispatcher();
   const handleClose = () => {
@@ -16,17 +12,11 @@
   let bodyOverflow: string;
 
   onMount(() => {
-    if (!isIframe && location.hash !== '#modal') {
-      history.pushState(undefined, '', '#modal');
-    }
     bodyOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
   });
 
   onDestroy(() => {
-    if (!isIframe && location.hash === '#modal') {
-      history.back();
-    }
     document.body.style.overflow = bodyOverflow;
   });
 </script>

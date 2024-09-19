@@ -10,7 +10,7 @@
   export let announcement: Announcement;
   export let backURL: string | undefined;
 
-  let showImageModal = false;
+  let imageModal: Modal;
   let imageModalSrc: string | undefined;
 
   const getAspectRatio = (src: string) => {
@@ -26,9 +26,9 @@
 <div class="container">
   <a class="header" href={backURL}>
     <span class="arrow">←</span>
-    <span class="title">{channel.title}</span>
+    <span class="name">{channel.name}</span>
     {#if channel.icon}
-      <img class="icon" src={channel.icon} alt={channel.title} />
+      <img class="icon" src={channel.icon} alt={channel.name} />
     {/if}
   </a>
   <hr />
@@ -40,7 +40,7 @@
           class="unstyled"
           on:click={() => {
             imageModalSrc = announcement.headerImage;
-            showImageModal = true;
+            imageModal.showModal();
           }}
         >
           <img src={announcement.headerImage} alt="" />
@@ -59,7 +59,7 @@
             data-src={image}
             on:click={() => {
               imageModalSrc = image;
-              showImageModal = true;
+              imageModal.showModal();
             }}
           >
             <img src={image} alt={announcement.title} />
@@ -70,7 +70,7 @@
   </div>
 </div>
 
-<Modal bind:show={showImageModal} dismissMode="anywhere">
+<Modal bind:this={imageModal} modalID="AnnouncementImage" dismissMode="anywhere">
   <div class="zoom-image"><img src={imageModalSrc} alt="" /></div>
 </Modal>
 

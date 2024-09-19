@@ -1,13 +1,41 @@
 <script lang="ts">
+  import ChannelEditor, { type Channel } from '@announcing/components/ChannelEditor.svelte';
+  import { LL } from '@announcing/components/i18n';
+  import Loading from '@announcing/components/Loading.svelte';
   import Logo from '@announcing/components/Logo.svelte';
   import { signOut } from '@auth/sveltekit/client';
   import SuperDebug from 'sveltekit-superforms';
 
+  import { invalidateAll } from '$app/navigation';
   import { t } from '$lib/i18n/translations';
 
   import type { PageServerData } from './$types';
 
   export let data: PageServerData;
+
+  let editor: ChannelEditor;
+  let loading = false;
+
+  const createChannel = async (channel: Channel) => {
+    const form = new FormData();
+    if (channel.name) form.append('name', channel.name);
+    if (channel.desc) form.append('desc', channel.desc);
+    if (channel.iconFile) form.append('iconFile', channel.iconFile);
+
+    loading = true;
+    try {
+      await fetch('/api/channels', {
+        method: 'POST',
+        body: form,
+      });
+      editor.closeModal();
+      void invalidateAll();
+    } finally {
+      loading = false;
+    }
+  };
+
+  $: createDisabled = data.channels.length >= 5;
 </script>
 
 <header>
@@ -18,13 +46,13 @@
   {#if data.channels}
     <div class="channels">
       {#each data.channels as channel}
-        <a href={`/channel/${channel.channelID}`} class="channel">
+        <a href={`/channels/${channel.channelID}`} class="channel">
           <div class="head">
-            <span class="title">
-              {channel.title}
+            <span class="name">
+              {channel.name}
             </span>
             {#if channel.icon}
-              <img src={`/s/${channel.icon}`} alt="icon" />
+              <img src={channel.icon} alt="icon" />
             {/if}
           </div>
         </a>
@@ -32,14 +60,15 @@
     </div>
   {/if}
 
-  <a
-    class="button create-btn"
-    href="/channel/new/write"
+  <button
+    class="create-btn"
+    disabled={createDisabled}
     on:click={() => {
-      //
+      editor.showModal();
     }}
     >{$t('top.createChannel')}
-  </a>
+  </button>
+  <span class="create-btn-desc">{$LL.channelsCanBeCreated()}</span>
   <button
     class="sign-out-btn text"
     on:click={() => {
@@ -47,6 +76,15 @@
     }}>{$t('signOut')}</button
   >
 </div>
+
+<ChannelEditor
+  bind:this={editor}
+  on:submit={({ detail }) => {
+    void createChannel(detail);
+  }}
+/>
+
+<Loading show={loading} />
 
 <SuperDebug {data} />
 
@@ -80,7 +118,7 @@
           display: flex;
           align-items: center;
 
-          .title {
+          .name {
             flex-grow: 1;
           }
 
@@ -96,6 +134,11 @@
 
     .create-btn {
       margin: 0 auto;
+    }
+    .create-btn-desc {
+      margin: 8px auto;
+      font-size: 13px;
+      font-style: italic;
     }
     .sign-out-btn {
       margin: 30px auto;

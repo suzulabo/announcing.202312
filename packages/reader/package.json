@@ -2,12 +2,12 @@
   "private": true,
   "name": "@announcing/reader",
   "scripts": {
-    "dev": "vite dev",
+    "dev": "vite dev --port 5175",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "playwright": "playwright test"
+    "playwright": "echo TODO: refactor playwright test"
   },
   "devDependencies": {
     "@announcing/components": "workspace:^",

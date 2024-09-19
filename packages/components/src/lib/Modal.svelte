@@ -1,36 +1,44 @@
-<script lang="ts" context="module">
-  const isIframe = typeof window === 'object' && window.self !== window.top;
-
-  if (!isIframe && typeof window === 'object') {
-    const popstateListener = () => {
-      // Block going to URL with #modal on forward
-      if (location.hash === '#modal' && !document.querySelector('.modal')) {
-        history.back();
-      }
-    };
-
-    window.addEventListener('popstate', popstateListener);
-  }
-</script>
-
 <script lang="ts">
+  import { pushState } from '$app/navigation';
+  import { page } from '$app/stores';
+
   import ModalSub from './ModalSub.svelte';
 
-  export let show = false;
+  export let modalID: string | undefined = undefined;
   export let dismissMode: 'backdrop' | 'anywhere' | 'none' = 'backdrop';
   export let padding = '0';
+
+  let visible = false;
+
+  export const showModal = () => {
+    visible = true;
+    if (modalID) {
+      const pageState = $page.state;
+      if (!pageState.modal?.[modalID]) {
+        const modal = pageState.modal ?? {};
+        modal[modalID] = true;
+        pushState('', { ...pageState, modal });
+      }
+    }
+  };
+
+  export const closeModal = () => {
+    visible = false;
+    if (modalID) {
+      const pageState = $page.state;
+      if (pageState.modal?.[modalID]) {
+        history.back();
+      }
+    }
+  };
 </script>
 
-<!--
-To monitor keydown and popstate events only while the modal is displayed,
-a sub component is used because svelte:window can only be added at the root level.
--->
-{#if show}
+{#if visible}
   <ModalSub
     {dismissMode}
     {padding}
     on:dismiss={() => {
-      show = false;
+      closeModal();
     }}><slot /></ModalSub
   >
 {/if}

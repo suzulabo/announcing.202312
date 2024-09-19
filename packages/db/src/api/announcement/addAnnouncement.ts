@@ -1,22 +1,50 @@
-import { _writeAnnouncement } from './_writeAnnouncement';
+import { and, eq } from 'drizzle-orm';
 
-export const addAnnouncement = (
+import { db } from '../../client';
+import { channelsTable } from '../../schema';
+import { getChannel } from '../channel/getChannel';
+import { makeInsertAnnouncement } from './makeInsertAnnouncement';
+
+export const addAnnouncement = async (
   userID: string,
   channelID: string,
-  channelUpdatedAt: number,
-  headerImageFile: Blob | undefined | null,
-  title: string | undefined | null,
+  headerImageFile: Blob | undefined,
+  title: string | undefined,
   body: string,
-  imagesFiles: Blob[] | undefined | null,
+  imagesFiles: Blob[] | undefined,
+  createdAt: Date,
 ) => {
-  return _writeAnnouncement(
+  const channel = await getChannel(userID, channelID);
+  if (!channel) {
+    return;
+  }
+
+  const { announcementID, announcementQueries } = await makeInsertAnnouncement(
     userID,
     channelID,
-    channelUpdatedAt,
     headerImageFile,
     title,
     body,
     imagesFiles,
-    undefined,
+    createdAt,
+    createdAt,
   );
+
+  const announcementIDs = channel.announcementIDs ?? [];
+  announcementIDs.push(announcementID);
+
+  const queries = [
+    ...announcementQueries,
+    db
+      .update(channelsTable)
+      .set({
+        announcementIDs,
+        updatedAt: new Date(),
+      })
+      .where(
+        and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
+      ),
+  ] as const;
+
+  await db.batch(queries);
 };

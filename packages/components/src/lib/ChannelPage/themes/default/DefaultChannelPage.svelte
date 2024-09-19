@@ -49,12 +49,12 @@
     </div>
   {/if}
   <div class="main">
-    <div class="title-line">
-      <div class="title">
-        {channel.title}
+    <div class="name-line">
+      <div class="name">
+        {channel.name}
       </div>
       {#if channel.icon}
-        <img class="icon" src={channel.icon} alt={channel.title} />
+        <img class="icon" src={channel.icon} alt={channel.name} />
       {/if}
     </div>
     {#if channel.desc}
@@ -110,11 +110,11 @@
       max-width: 1000px;
       margin: 20px auto;
 
-      .title-line {
+      .name-line {
         margin: 10px 0 0;
         display: flex;
         align-items: center;
-        .title {
+        .name {
           font-weight: bold;
           font-size: 20px;
           flex-grow: 1;

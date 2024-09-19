@@ -4,12 +4,9 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-a {
-  text-decoration: underline;
-}
-
 hr {
   border-top: 1px solid var(--color-border-light);
+  width: 100%;
 }
 
 button {
@@ -23,7 +20,7 @@ button.unstyled {
   display: contents;
 }
 
-button:not(.unstyled),
+button:not(.unstyled, .text),
 a.button {
   display: inline-block;
   border-radius: 4px;
@@ -60,7 +57,8 @@ a.button {
   }
 }
 
-a {
+a,
+button.text {
   text-decoration: none;
   padding: 2px 4px;
   border-radius: 4px;
@@ -72,7 +70,7 @@ a {
   }
 }
 
-input,
+input:not([type='checkbox']),
 textarea {
   width: 100%;
   border: 1px solid var(--color-border);
@@ -98,6 +96,10 @@ textarea {
   &::placeholder {
     line-height: 3.5em;
   }
+}
+
+input[type='checkbox'] {
+  all: revert;
 }
 
 div.info {

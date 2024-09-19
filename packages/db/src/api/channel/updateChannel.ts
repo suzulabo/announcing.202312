@@ -1,34 +1,40 @@
-import { and, eq, sql } from 'drizzle-orm';
+import { and, eq, exists } from 'drizzle-orm';
 
 import { db } from '../../client';
-import { storeFile } from '../../lib/storeFile';
-import { channelsTable } from '../../schema';
+import { channelsTable, ownersTable } from '../../schema';
+import { makeInsertBlob } from '../blob/makeInsertBlob';
 
 export const updateChannel = async (
   userID: string,
   updatedAt: Date,
   channelID: string,
-  title: string,
-  desc: string | null,
-  iconFile: File | null | undefined,
+  name: string,
+  desc: string | undefined,
+  iconFile: Blob | undefined,
 ) => {
-  const icon = (iconFile && (await storeFile(iconFile))) ?? null;
+  const [icon, iconInsert] = iconFile ? await makeInsertBlob(iconFile) : [null, undefined];
 
-  const result = await db
-    .update(channelsTable)
-    .set({
-      title,
-      desc,
-      icon,
-      updatedAt: new Date(),
-    })
-    .where(
-      and(
-        eq(channelsTable.channelID, channelID),
-        eq(channelsTable.updatedAt, updatedAt),
-        sql`EXISTS(SELECT 1 FROM json_each(owners) WHERE value = ${userID})`,
+  await db.batch([
+    db
+      .update(channelsTable)
+      .set({
+        name,
+        desc: desc ?? null,
+        icon,
+        updatedAt: new Date(),
+      })
+      .where(
+        and(
+          eq(channelsTable.channelID, channelID),
+          eq(channelsTable.updatedAt, updatedAt),
+          exists(
+            db
+              .select()
+              .from(ownersTable)
+              .where(and(eq(ownersTable.channelID, channelID), eq(ownersTable.userID, userID))),
+          ),
+        ),
       ),
-    );
-
-  return result.rowsAffected;
+    ...(iconInsert ? [iconInsert] : []),
+  ]);
 };
