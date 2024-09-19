@@ -55,6 +55,10 @@
       "types": "./dist/Modal.svelte.d.ts",
       "svelte": "./dist/Modal.svelte"
     },
+    "./NavigationSupport.svelte": {
+      "types": "./dist/NavigationSupport.svelte.d.ts",
+      "svelte": "./dist/NavigationSupport.svelte"
+    },
     "./Spinner.svelte": {
       "types": "./dist/Spinner.svelte.d.ts",
       "svelte": "./dist/Spinner.svelte"

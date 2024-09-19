@@ -32,7 +32,9 @@
 </script>
 
 <div class="container">
-  <div class="header"></div>
+  <div class="header">
+    <a href="/">{$LL.back()}</a>
+  </div>
 
   <ChannelPage theme="default" channel={data.channel} channelPreview={true} />
 
@@ -144,5 +146,9 @@
       font-weight: bold;
       color: var(--color-error);
     }
+  }
+
+  a {
+    text-decoration: underline;
   }
 </style>
