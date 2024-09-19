@@ -7,6 +7,7 @@ declare global {
     // interface PageData {}
     interface PageState {
       modal?: Record<string, boolean>;
+      fromHref?: string;
     }
     // interface Platform {}
   }

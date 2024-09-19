@@ -1,5 +1,3 @@
-<script lang="ts"></script>
-
 <div class="title">Announcing components</div>
 <hr />
 
@@ -7,6 +5,7 @@
   <li><a href="./modal">Modal</a></li>
   <li><a href="./channelEditor/create">ChannelEditor - create</a></li>
   <li><a href="./channelEditor/edit">ChannelEditor - edit</a></li>
+  <li><a href="./nav/10">Navigation</a></li>
 </ul>
 
 <style lang="scss">
