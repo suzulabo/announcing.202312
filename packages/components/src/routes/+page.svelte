@@ -6,6 +6,7 @@
   <li><a href="./channelEditor/create">ChannelEditor - create</a></li>
   <li><a href="./channelEditor/edit">ChannelEditor - edit</a></li>
   <li><a href="./nav/10">Navigation</a></li>
+  <li><a href="./pages/writer/ChannelMenuPage">ChannelMenuPage</a></li>
 </ul>
 
 <style lang="scss">
@@ -21,5 +22,8 @@
     max-width: 600px;
     margin: 0 auto;
     list-style: inside;
+    li {
+      margin: 12px 0;
+    }
   }
 </style>

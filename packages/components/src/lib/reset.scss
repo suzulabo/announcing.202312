@@ -60,12 +60,14 @@ a.button {
 a,
 button.text {
   text-decoration: none;
+  font-weight: 600;
   padding: 2px 4px;
   border-radius: 4px;
   @media (hover: hover) {
     &:hover:not(:disabled) {
       background-color: var(--color-hover);
       cursor: pointer;
+      text-decoration: underline;
     }
   }
 }
