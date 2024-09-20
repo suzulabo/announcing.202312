@@ -28,6 +28,7 @@ a.button {
   text-align: center;
   width: max-content;
   font-weight: 500;
+  white-space: nowrap;
 
   &:not(.text) {
     border: 1px solid var(--color-border);

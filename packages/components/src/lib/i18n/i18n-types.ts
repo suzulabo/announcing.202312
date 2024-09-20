@@ -39,6 +39,18 @@ type RootTranslation = {
 	 */
 	settings: string
 	/**
+	 * C​o​p​y
+	 */
+	copy: string
+	/**
+	 * C​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d​.
+	 */
+	copied: string
+	/**
+	 * U​n​a​b​l​e​ ​t​o​ ​c​o​p​y​ ​t​o​ ​c​l​i​p​b​o​a​r​d​.
+	 */
+	copyError: string
+	/**
 	 * (​R​e​q​u​i​r​e​d​)
 	 */
 	required: string
@@ -156,6 +168,18 @@ export type TranslationFunctions = {
 	 * Settings
 	 */
 	settings: () => LocalizedString
+	/**
+	 * Copy
+	 */
+	copy: () => LocalizedString
+	/**
+	 * Copied to clipboard.
+	 */
+	copied: () => LocalizedString
+	/**
+	 * Unable to copy to clipboard.
+	 */
+	copyError: () => LocalizedString
 	/**
 	 * (Required)
 	 */

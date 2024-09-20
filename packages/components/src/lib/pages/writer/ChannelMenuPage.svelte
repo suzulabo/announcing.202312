@@ -11,9 +11,12 @@
   import Loading from '$lib/Loading.svelte';
   import Modal from '$lib/Modal.svelte';
 
+  import UrlCopyModal from './UrlCopyModal.svelte';
+
   export let channel: Channel;
   export let readerPrefix: string;
 
+  let urlCopyModal: UrlCopyModal;
   let deleteModal: Modal;
   let deleteUnderstand = false;
   let loading = false;
@@ -49,7 +52,12 @@
       <a href={`${readerPrefix}${channel.id}`}>{$LL.channelActions.viewChannel()}</a>
     </li>
     <li>
-      <button class="text">{$LL.channelActions.copyURL()}</button>
+      <button
+        class="text"
+        on:click={() => {
+          urlCopyModal.showModal();
+        }}>{$LL.channelActions.copyURL()}</button
+      >
     </li>
     <li>
       <button class="text">{$LL.channelActions.createAnnouncement()}</button>
@@ -103,6 +111,8 @@
     >
   </div>
 </Modal>
+
+<UrlCopyModal bind:this={urlCopyModal} url={`${readerPrefix}${channel.id}`} />
 
 <Loading show={loading} />
 
