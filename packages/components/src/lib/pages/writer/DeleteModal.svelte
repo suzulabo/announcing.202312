@@ -64,6 +64,7 @@
     .warning {
       font-weight: bold;
       color: var(--color-error);
+      padding: 0 8px;
     }
   }
 </style>
