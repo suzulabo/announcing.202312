@@ -43,7 +43,7 @@
   $: validated = !!form.name && !nameError && !descError;
 </script>
 
-<Modal bind:this={modal} dismissMode="none" padding="8px">
+<Modal bind:this={modal} dismissMode="none">
   <div class="modal-body">
     <div class="name-box">
       <div class="input-box">

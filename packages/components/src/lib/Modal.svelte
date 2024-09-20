@@ -6,7 +6,7 @@
 
   export let modalID: string | undefined = undefined;
   export let dismissMode: 'backdrop' | 'anywhere' | 'none' = 'backdrop';
-  export let padding = '0';
+  export let padding = '8px';
 
   let visible = false;
 

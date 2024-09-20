@@ -71,7 +71,7 @@
   </ul>
 </div>
 
-<Modal bind:this={deleteModal} dismissMode="none" padding="8px">
+<Modal bind:this={deleteModal} dismissMode="none">
   <div class="delete-modal">
     <span>{$LL.deleteChannel()}</span>
     <hr />
