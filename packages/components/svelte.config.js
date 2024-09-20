@@ -16,9 +16,6 @@ const config = {
       assets: 'public',
     },
   },
-  compilerOptions: {
-    customElement: true,
-  },
 };
 
 export default config;
