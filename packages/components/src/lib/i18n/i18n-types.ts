@@ -59,13 +59,17 @@ type RootTranslation = {
 	 */
 	channelName: string
 	/**
+	 * D​e​s​c​r​i​p​t​i​o​n
+	 */
+	desc: string
+	/**
 	 * T​i​t​l​e
 	 */
 	title: string
 	/**
-	 * D​e​s​c​r​i​p​t​i​o​n
+	 * B​o​d​y
 	 */
-	desc: string
+	body: string
 	/**
 	 * S​e​l​e​c​t​ ​i​c​o​n
 	 */
@@ -141,6 +145,14 @@ type RootTranslation = {
 	 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​c​h​a​n​n​e​l​?
 	 */
 	deleteChannelConfirmation: string
+	/**
+	 * P​o​s​t​ ​a​n​n​o​u​n​c​e​m​e​n​t
+	 */
+	postAnnouncement: string
+	/**
+	 * E​d​i​t​ ​a​n​n​o​u​n​c​e​m​e​n​t
+	 */
+	updateAnnouncement: string
 }
 
 export type TranslationFunctions = {
@@ -189,13 +201,17 @@ export type TranslationFunctions = {
 	 */
 	channelName: () => LocalizedString
 	/**
+	 * Description
+	 */
+	desc: () => LocalizedString
+	/**
 	 * Title
 	 */
 	title: () => LocalizedString
 	/**
-	 * Description
+	 * Body
 	 */
-	desc: () => LocalizedString
+	body: () => LocalizedString
 	/**
 	 * Select icon
 	 */
@@ -270,6 +286,14 @@ export type TranslationFunctions = {
 	 * Are you sure you want to delete the channel?
 	 */
 	deleteChannelConfirmation: () => LocalizedString
+	/**
+	 * Post announcement
+	 */
+	postAnnouncement: () => LocalizedString
+	/**
+	 * Edit announcement
+	 */
+	updateAnnouncement: () => LocalizedString
 }
 
 export type Formatters = {}

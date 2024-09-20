@@ -12,8 +12,9 @@ const ja = {
   copyError: 'コピーできませんでした',
   required: '(必須)',
   channelName: 'チャンネル名',
-  title: 'タイトル',
   desc: '説明文',
+  title: 'タイトル',
+  body: '本文',
   selectIcon: 'アイコンを選択',
   removeIcon: '選択解除',
   textTooLong: '入力が文字数制限を超えています',
@@ -34,6 +35,8 @@ const ja = {
   deleteChannelDescription: 'チャンネル「{name}」を削除します。この操作は元に戻せません。',
   deleteChannelUnderstand: '問題ありません',
   deleteChannelConfirmation: 'チャンネルを削除します。よろしいですか？',
+  postAnnouncement: 'お知らせを投稿',
+  updateAnnouncement: 'お知らせを編集',
 } satisfies Translation;
 
 export default ja;

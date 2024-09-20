@@ -12,8 +12,9 @@ const en = {
   copyError: 'Unable to copy to clipboard.',
   required: '(Required)',
   channelName: 'Channel name',
-  title: 'Title',
   desc: 'Description',
+  title: 'Title',
+  body: 'Body',
   selectIcon: 'Select icon',
   removeIcon: 'Remove',
   textTooLong: 'Your input exceeds the character limit.',
@@ -35,6 +36,8 @@ const en = {
     'You are about to delete the channel "{name}". This action cannot be undone.',
   deleteChannelUnderstand: 'I understand.',
   deleteChannelConfirmation: 'Are you sure you want to delete the channel?',
+  postAnnouncement: 'Post announcement',
+  updateAnnouncement: 'Edit announcement',
 } satisfies BaseTranslation;
 
 export default en;
