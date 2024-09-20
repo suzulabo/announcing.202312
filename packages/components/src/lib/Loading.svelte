@@ -2,10 +2,11 @@
   import Spinner from './Spinner.svelte';
 
   export let show = false;
+  export let showDelay = '0';
 </script>
 
 {#if show}
-  <div class="loading">
+  <div class="loading" style={`--showDelay: ${showDelay}`}>
     <Spinner />
   </div>
 {/if}
@@ -21,12 +22,12 @@
     background-color: var(--color-background-loading);
     z-index: var(--z-index, 999);
     cursor: wait;
-    animation: showdelay 2s;
+    animation: showDelay var(--showDelay);
     display: flex;
     align-items: center;
     justify-content: center;
 
-    @keyframes showdelay {
+    @keyframes showDelay {
       0%,
       25% {
         opacity: 0;

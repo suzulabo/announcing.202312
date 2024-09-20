@@ -9,22 +9,22 @@
 <script lang="ts">
   import { LL } from '$lib/i18n';
   import Loading from '$lib/Loading.svelte';
-  import Modal from '$lib/Modal.svelte';
 
+  import DeleteModal from './DeleteModal.svelte';
   import UrlCopyModal from './UrlCopyModal.svelte';
 
   export let channel: Channel;
   export let readerPrefix: string;
+  export let deleteClick: () => Promise<void>;
 
   let urlCopyModal: UrlCopyModal;
-  let deleteModal: Modal;
-  let deleteUnderstand = false;
+  let deleteModal: DeleteModal;
   let loading = false;
 
-  const deleteChannel = () => {
+  const handleDeleteClick = async () => {
     loading = true;
     try {
-      //
+      await deleteClick();
     } finally {
       loading = false;
     }
@@ -73,7 +73,6 @@
       <button
         class="text"
         on:click={() => {
-          deleteUnderstand = false;
           deleteModal.showModal();
         }}>{$LL.channelActions.deleteChannel()}</button
       >
@@ -81,38 +80,8 @@
   </ul>
 </div>
 
-<Modal bind:this={deleteModal} dismissMode="none">
-  <div class="delete-modal">
-    <span>{$LL.deleteChannel()}</span>
-    <hr />
-    <div class="warning">{$LL.deleteChannelDescription({ name: channel.name })}</div>
-    <label class="understand-box">
-      <input type="checkbox" bind:checked={deleteUnderstand} />
-      {$LL.deleteChannelUnderstand()}
-    </label>
-
-    <button
-      class="delete-btn"
-      disabled={!deleteUnderstand}
-      on:click={() => {
-        if (confirm($LL.deleteChannelConfirmation())) {
-          deleteChannel();
-        }
-      }}
-    >
-      {$LL.deleteChannel()}
-    </button>
-
-    <button
-      class="text small"
-      on:click={() => {
-        deleteModal.closeModal();
-      }}>{$LL.cancel()}</button
-    >
-  </div>
-</Modal>
-
 <UrlCopyModal bind:this={urlCopyModal} url={`${readerPrefix}${channel.id}`} />
+<DeleteModal bind:this={deleteModal} name={channel.name} deleteClick={handleDeleteClick} />
 
 <Loading show={loading} />
 
@@ -151,26 +120,6 @@
       hr {
         margin: 12px 0;
       }
-    }
-  }
-
-  .delete-modal {
-    background-color: var(--color-background);
-    border-radius: 8px;
-    margin: auto;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-
-    hr {
-      margin: -8px 0 0;
-    }
-
-    .warning {
-      font-weight: bold;
-      color: var(--color-error);
     }
   }
 </style>

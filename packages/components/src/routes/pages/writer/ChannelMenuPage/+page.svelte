@@ -8,4 +8,14 @@
   };
 </script>
 
-<ChannelMenuPage {channel} readerPrefix="http://localhost:5175/" />
+<ChannelMenuPage
+  {channel}
+  readerPrefix="http://localhost:5175/"
+  deleteClick={() => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1000);
+    });
+  }}
+/>
