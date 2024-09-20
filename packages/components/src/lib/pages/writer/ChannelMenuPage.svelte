@@ -2,11 +2,14 @@
   export type Channel = {
     id: string;
     name: string;
+    desc: string | undefined;
     icon: string | undefined;
   };
 </script>
 
 <script lang="ts">
+  import type { Channel as EditorChannel } from '$lib/ChannelEditor.svelte';
+  import ChannelEditor from '$lib/ChannelEditor.svelte';
   import { LL } from '$lib/i18n';
   import Loading from '$lib/Loading.svelte';
 
@@ -15,16 +18,26 @@
 
   export let channel: Channel;
   export let readerPrefix: string;
-  export let deleteClick: () => Promise<void>;
+  export let updateChannelSubmit: (channel: EditorChannel) => Promise<void>;
+  export let deleteChannelClick: () => Promise<void>;
 
   let urlCopyModal: UrlCopyModal;
+  let channelEditor: ChannelEditor;
   let deleteModal: DeleteModal;
   let loading = false;
 
+  const handleUpdateSubmit = async (event: CustomEvent<EditorChannel>) => {
+    loading = true;
+    try {
+      await updateChannelSubmit(event.detail);
+    } finally {
+      loading = false;
+    }
+  };
   const handleDeleteClick = async () => {
     loading = true;
     try {
-      await deleteClick();
+      await deleteChannelClick();
     } finally {
       loading = false;
     }
@@ -66,7 +79,12 @@
       <button class="text">{$LL.channelActions.editAnnouncement()}</button>
     </li>
     <li>
-      <button class="text">{$LL.channelActions.editChannel()}</button>
+      <button
+        class="text"
+        on:click={() => {
+          channelEditor.showModal();
+        }}>{$LL.channelActions.editChannel()}</button
+      >
     </li>
     <hr />
     <li>
@@ -81,6 +99,7 @@
 </div>
 
 <UrlCopyModal bind:this={urlCopyModal} url={`${readerPrefix}${channel.id}`} />
+<ChannelEditor bind:this={channelEditor} {channel} on:submit={handleUpdateSubmit} />
 <DeleteModal bind:this={deleteModal} name={channel.name} deleteClick={handleDeleteClick} />
 
 <Loading show={loading} />

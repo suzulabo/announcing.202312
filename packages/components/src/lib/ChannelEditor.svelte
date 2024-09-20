@@ -111,6 +111,7 @@
         if (form.iconFile) {
           form.icon = undefined;
         }
+        closeModal();
         dispatcher('submit', form);
       }}>{channel ? $LL.updateChannel() : $LL.createChannel()}</button
     >
