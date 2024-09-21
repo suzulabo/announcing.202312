@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Modal from '$lib/Modal.svelte';
+  import Modal from '$lib/atoms/Modal.svelte';
 
   let modal: Modal;
 </script>

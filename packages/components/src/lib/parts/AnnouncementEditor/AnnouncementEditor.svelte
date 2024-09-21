@@ -14,11 +14,11 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
+  import Input from '$lib/atoms/Input.svelte';
+  import Modal from '$lib/atoms/Modal.svelte';
+  import TextArea from '$lib/atoms/TextArea.svelte';
   import { ANNOUNCEMENT_BODY_MAX_BYTES, ANNOUNCEMENT_TITLE_MAX_BYTES } from '$lib/constants';
   import { LL } from '$lib/i18n';
-  import Input from '$lib/Input.svelte';
-  import Modal from '$lib/Modal.svelte';
-  import TextArea from '$lib/TextArea.svelte';
 
   export let announcement: Announcement | undefined = undefined;
 

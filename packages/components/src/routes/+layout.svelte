@@ -1,5 +1,5 @@
 <script>
-  import NavigationSupport from '$lib/NavigationSupport.svelte';
+  import NavigationSupport from '$lib/atoms/NavigationSupport.svelte';
 </script>
 
 <NavigationSupport />

@@ -1,7 +1,7 @@
 <script lang="ts" generics="T">
   import { onDestroy, onMount } from 'svelte';
 
-  import { toStyle } from './utils/toStyle';
+  import { toStyle } from '$lib/utils/toStyle';
 
   export let items: T[];
   export let itemHeight: number;

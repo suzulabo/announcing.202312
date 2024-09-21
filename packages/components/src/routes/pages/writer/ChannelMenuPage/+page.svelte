@@ -1,5 +1,5 @@
 <script>
-  import ChannelMenuPage from '$lib/pages/writer/ChannelMenuPage.svelte';
+  import ChannelMenuPage from '$lib/pages/writer/ChannelMenuPage/ChannelMenuPage.svelte';
 
   let channel = {
     id: '9901',

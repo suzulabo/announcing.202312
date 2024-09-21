@@ -8,12 +8,12 @@
 </script>
 
 <script lang="ts">
-  import type { Channel as EditorChannel } from '$lib/ChannelEditor.svelte';
-  import ChannelEditor from '$lib/ChannelEditor.svelte';
+  import Loading from '$lib/atoms/Loading.svelte';
   import { LL } from '$lib/i18n';
-  import Loading from '$lib/Loading.svelte';
+  import AnnouncementEditor from '$lib/parts/AnnouncementEditor/AnnouncementEditor.svelte';
+  import type { Channel as EditorChannel } from '$lib/parts/ChannelEditor.svelte';
+  import ChannelEditor from '$lib/parts/ChannelEditor.svelte';
 
-  import AnnouncementEditor from './AnnouncementEditor/AnnouncementEditor.svelte';
   import DeleteModal from './DeleteModal.svelte';
   import UrlCopyModal from './UrlCopyModal.svelte';
 

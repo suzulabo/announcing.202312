@@ -1,7 +1,7 @@
 <script lang="ts">
   import { afterUpdate, onMount } from 'svelte';
 
-  import LL from './i18n/i18n-svelte';
+  import LL from '$lib/i18n/i18n-svelte';
 
   export let name: string;
   export let label: string;

@@ -1,6 +1,6 @@
 <script lang="ts">
+  import Modal from '$lib/atoms/Modal.svelte';
   import { LL } from '$lib/i18n';
-  import Modal from '$lib/Modal.svelte';
 
   export let name: string;
   export let deleteClick: () => void;

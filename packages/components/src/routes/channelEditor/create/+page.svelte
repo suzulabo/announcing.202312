@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ChannelEditor from '$lib/ChannelEditor.svelte';
+  import ChannelEditor from '$lib/parts/ChannelEditor.svelte';
 
   let editor: ChannelEditor;
 </script>

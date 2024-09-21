@@ -10,17 +10,17 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import { loadImage } from './actions/loadImage';
+  import { loadImage } from '$lib/actions/loadImage';
+  import FileInput from '$lib/atoms/FileInput.svelte';
+  import Input from '$lib/atoms/Input.svelte';
+  import Modal from '$lib/atoms/Modal.svelte';
+  import TextArea from '$lib/atoms/TextArea.svelte';
   import {
     CHANNEL_DESC_MAX_BYTES,
     CHANNEL_ICON_MAX_SIZE,
     CHANNEL_NAME_MAX_BYTES,
-  } from './constants';
-  import FileInput from './FileInput.svelte';
-  import LL, { locale } from './i18n/i18n-svelte';
-  import Input from './Input.svelte';
-  import Modal from './Modal.svelte';
-  import TextArea from './TextArea.svelte';
+  } from '$lib/constants';
+  import LL, { locale } from '$lib/i18n/i18n-svelte';
 
   export let channel: Channel | undefined = undefined;
 

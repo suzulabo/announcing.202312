@@ -1,6 +1,6 @@
 <!-- https://codepen.io/adrianmg/pen/Omedpo -->
 <script lang="ts">
-  import { toStyle } from './utils/toStyle';
+  import { toStyle } from '$lib/utils/toStyle';
 
   export let size = 12;
   export let delay = '1s';
