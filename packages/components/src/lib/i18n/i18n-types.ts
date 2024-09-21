@@ -153,6 +153,14 @@ type RootTranslation = {
 	 * E​d​i​t​ ​a​n​n​o​u​n​c​e​m​e​n​t
 	 */
 	updateAnnouncement: string
+	/**
+	 * C​h​o​o​s​e​ ​H​e​a​d​e​r​ ​I​m​a​g​e
+	 */
+	chooseHeaderImage: string
+	/**
+	 * R​e​m​o​v​e
+	 */
+	removeHeaderImage: string
 }
 
 export type TranslationFunctions = {
@@ -294,6 +302,14 @@ export type TranslationFunctions = {
 	 * Edit announcement
 	 */
 	updateAnnouncement: () => LocalizedString
+	/**
+	 * Choose Header Image
+	 */
+	chooseHeaderImage: () => LocalizedString
+	/**
+	 * Remove
+	 */
+	removeHeaderImage: () => LocalizedString
 }
 
 export type Formatters = {}

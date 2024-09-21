@@ -38,6 +38,8 @@ const en = {
   deleteChannelConfirmation: 'Are you sure you want to delete the channel?',
   postAnnouncement: 'Post announcement',
   updateAnnouncement: 'Edit announcement',
+  chooseHeaderImage: 'Choose Header Image',
+  removeHeaderImage: 'Remove',
 } satisfies BaseTranslation;
 
 export default en;

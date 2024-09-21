@@ -37,6 +37,8 @@ const ja = {
   deleteChannelConfirmation: 'チャンネルを削除します。よろしいですか？',
   postAnnouncement: 'お知らせを投稿',
   updateAnnouncement: 'お知らせを編集',
+  chooseHeaderImage: '見出し画像を選択',
+  removeHeaderImage: '選択解除',
 } satisfies Translation;
 
 export default ja;
