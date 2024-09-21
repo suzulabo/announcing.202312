@@ -13,7 +13,7 @@
   import { LL } from '$lib/i18n';
   import Loading from '$lib/Loading.svelte';
 
-  import AnnouncementEditor from './AnnouncementEditor.svelte';
+  import AnnouncementEditor from './AnnouncementEditor/AnnouncementEditor.svelte';
   import DeleteModal from './DeleteModal.svelte';
   import UrlCopyModal from './UrlCopyModal.svelte';
 
