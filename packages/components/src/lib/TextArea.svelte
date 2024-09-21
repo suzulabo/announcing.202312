@@ -10,6 +10,7 @@
   export let maxBytes = 0;
   export let error = false;
   export let maxHeight = 'none';
+  export let required = false;
 
   let textAreaRef: HTMLTextAreaElement;
 
@@ -35,6 +36,9 @@
 <label>
   <div class="label-box">
     <span class="label">{label}</span>
+    {#if required}
+      <span class="required">{$LL.required()}</span>
+    {/if}
     {#if maxBytes > 0 && bytes > 0}
       <div class="progress">
         <div class="bar" style={`width: ${((bytes / maxBytes) * 100).toString()}%`} />
@@ -60,6 +64,12 @@
     display: flex;
     align-items: center;
 
+    .required {
+      font-size: 12px;
+      color: var(--color-text-light);
+      margin: 0 0 0 4px;
+    }
+
     .progress {
       margin-left: auto;
       height: 8px;
@@ -81,7 +91,8 @@
   }
 
   label:focus-within {
-    .label {
+    .label,
+    .required {
       font-weight: 500;
     }
   }

@@ -47,7 +47,6 @@
       label={$LL.title()}
       bind:value={form.title}
       maxBytes={ANNOUNCEMENT_TITLE_MAX_BYTES}
-      required
       bind:error={titleError}
     />
     <TextArea
@@ -56,6 +55,7 @@
       bind:value={form.body}
       maxBytes={ANNOUNCEMENT_BODY_MAX_BYTES}
       maxHeight="40vh"
+      required
       bind:error={bodyError}
     />
     <button
