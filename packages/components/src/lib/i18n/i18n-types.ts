@@ -161,6 +161,14 @@ type RootTranslation = {
 	 * R​e​m​o​v​e
 	 */
 	removeHeaderImage: string
+	/**
+	 * A​d​d​ ​I​m​a​g​e
+	 */
+	addImage: string
+	/**
+	 * Y​o​u​ ​c​a​n​ ​a​d​d​ ​u​p​ ​t​o​ ​4​ ​i​m​a​g​e​s​.
+	 */
+	addImageDescription: string
 }
 
 export type TranslationFunctions = {
@@ -310,6 +318,14 @@ export type TranslationFunctions = {
 	 * Remove
 	 */
 	removeHeaderImage: () => LocalizedString
+	/**
+	 * Add Image
+	 */
+	addImage: () => LocalizedString
+	/**
+	 * You can add up to 4 images.
+	 */
+	addImageDescription: () => LocalizedString
 }
 
 export type Formatters = {}

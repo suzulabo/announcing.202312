@@ -39,6 +39,8 @@ const ja = {
   updateAnnouncement: 'お知らせを編集',
   chooseHeaderImage: '見出し画像を選択',
   removeHeaderImage: '選択解除',
+  addImage: '画像を追加',
+  addImageDescription: '画像は4枚まで追加できます',
 } satisfies Translation;
 
 export default ja;

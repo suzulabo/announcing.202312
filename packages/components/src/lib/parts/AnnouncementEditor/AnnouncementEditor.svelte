@@ -21,7 +21,7 @@
   import TextArea from '$lib/atoms/TextArea.svelte';
   import {
     ANNOUNCEMENT_BODY_MAX_BYTES,
-    ANNOUNCEMENT_HEADER_IMAGE_MAX_SIZE,
+    ANNOUNCEMENT_IMAGE_MAX_SIZE,
     ANNOUNCEMENT_TITLE_MAX_BYTES,
   } from '$lib/constants';
   import { LL } from '$lib/i18n';
@@ -43,6 +43,7 @@
   let titleError = false;
   let bodyError = false;
   let headerImageFileInput: FileInput;
+  let imagesFileInput: FileInput;
 
   $: validated = !!form.body && !titleError && !bodyError;
 </script>
@@ -81,7 +82,7 @@
       <FileInput
         name="headerImage"
         accept="image/jpeg,image/png,image/webp"
-        maxImageSize={ANNOUNCEMENT_HEADER_IMAGE_MAX_SIZE}
+        maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
         bind:this={headerImageFileInput}
         bind:file={form.headerImageFile}
       />
@@ -102,6 +103,36 @@
       required
       bind:error={bodyError}
     />
+    <div class="images-box">
+      <div class="images">
+        {#if form.imagesFiles}
+          {#each form.imagesFiles as image}
+            <img alt="" use:loadImage={image} />
+          {/each}
+        {:else if form.images}
+          {#each form.images as image}
+            <img alt="" src={image} />
+          {/each}
+        {/if}
+      </div>
+      <button
+        on:click={() => {
+          imagesFileInput.open();
+        }}>{$LL.addImage()}</button
+      >
+      <div class="desc">{$LL.addImageDescription()}</div>
+      <FileInput
+        bind:this={imagesFileInput}
+        bind:files={form.imagesFiles}
+        name="images"
+        accept="image/jpeg,image/png,image/webp"
+        maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
+        filesCount={4}
+      />
+    </div>
+
+    <hr />
+
     <button
       disabled={!validated}
       class="submit-btn"
@@ -145,6 +176,25 @@
       img {
         max-height: 20vh;
         border-radius: 4px;
+      }
+    }
+
+    .images-box {
+      .images {
+        display: flex;
+        gap: 10px;
+        img {
+          max-width: 100px;
+          max-height: 100px;
+          object-fit: contain;
+        }
+      }
+
+      text-align: center;
+      .desc {
+        font-size: 13px;
+        font-style: italic;
+        margin: 4px 0 0 0;
       }
     }
 

@@ -40,6 +40,8 @@ const en = {
   updateAnnouncement: 'Edit announcement',
   chooseHeaderImage: 'Choose Header Image',
   removeHeaderImage: 'Remove',
+  addImage: 'Add Image',
+  addImageDescription: 'You can add up to 4 images.',
 } satisfies BaseTranslation;
 
 export default en;
