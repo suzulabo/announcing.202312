@@ -4,6 +4,7 @@ const ja = {
   edit: '編集',
   delete: '削除',
   cancel: 'キャンセル',
+  remove: '削除',
   back: '戻る',
   preview: '確認',
   settings: '設定',
