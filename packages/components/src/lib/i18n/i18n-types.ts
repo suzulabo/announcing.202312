@@ -173,6 +173,16 @@ type RootTranslation = {
 	 * Y​o​u​ ​c​a​n​ ​a​d​d​ ​u​p​ ​t​o​ ​4​ ​i​m​a​g​e​s​.
 	 */
 	addImageDescription: string
+	announcementView: {
+		/**
+		 * C​r​e​a​t​e​d​:​ 
+		 */
+		created: string
+		/**
+		 * U​p​d​a​t​e​d​:​ 
+		 */
+		updated: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -334,6 +344,16 @@ export type TranslationFunctions = {
 	 * You can add up to 4 images.
 	 */
 	addImageDescription: () => LocalizedString
+	announcementView: {
+		/**
+		 * Created: 
+		 */
+		created: () => LocalizedString
+		/**
+		 * Updated: 
+		 */
+		updated: () => LocalizedString
+	}
 }
 
 export type Formatters = {}

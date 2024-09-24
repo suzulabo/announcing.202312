@@ -6,6 +6,7 @@
   <li><a href="./channelEditor/create">ChannelEditor - create</a></li>
   <li><a href="./channelEditor/edit">ChannelEditor - edit</a></li>
   <li><a href="./parts/AnnouncementEditor/create">AnnouncementEditor - create</a></li>
+  <li><a href="./parts/AnnouncementView/default">AnnouncementView - default</a></li>
   <li><a href="./nav/10">Navigation</a></li>
   <li><a href="./pages/writer/ChannelMenuPage">ChannelMenuPage</a></li>
 </ul>
@@ -17,9 +18,10 @@
     font-size: 20px;
   }
   hr {
-    margin: 20px;
+    margin: 20px 0;
   }
   .links {
+    width: fit-content;
     max-width: 600px;
     margin: 0 auto;
     list-style: inside;
