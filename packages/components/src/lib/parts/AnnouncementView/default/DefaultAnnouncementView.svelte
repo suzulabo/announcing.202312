@@ -50,19 +50,32 @@
     {@html toHtml(announcement.body)}
   </div>
   {#if announcement.images}
-    <div class="images-grid">
-      {#each announcement.images as image}
-        <button
-          class="unstyled"
-          on:click={() => {
-            imageModalSrc = image;
-            imageModal.showModal();
-          }}
-        >
-          <img src={image} alt="" />
-        </button>
-      {/each}
-    </div>
+    {#if announcement.images.length === 1}
+      {@const image = announcement.images[0]}
+      <button
+        class="unstyled"
+        on:click={() => {
+          imageModalSrc = image;
+          imageModal.showModal();
+        }}
+      >
+        <img class="single-image" src={image} alt="" />
+      </button>
+    {:else}
+      <div class="images-grid">
+        {#each announcement.images as image}
+          <button
+            class="unstyled"
+            on:click={() => {
+              imageModalSrc = image;
+              imageModal.showModal();
+            }}
+          >
+            <img src={image} alt="" />
+          </button>
+        {/each}
+      </div>
+    {/if}
   {/if}
 </div>
 
@@ -73,7 +86,7 @@
 <style lang="scss">
   .container {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 100px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -101,6 +114,12 @@
         font-weight: normal;
         text-decoration: underline;
       }
+    }
+    .single-image {
+      object-fit: cover;
+      margin: 8px auto;
+      border-radius: 8px;
+      max-height: 50vh;
     }
     .images-grid {
       display: grid;

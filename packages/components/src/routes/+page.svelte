@@ -7,6 +7,9 @@
   <li><a href="./channelEditor/edit">ChannelEditor - edit</a></li>
   <li><a href="./parts/AnnouncementEditor/create">AnnouncementEditor - create</a></li>
   <li><a href="./parts/AnnouncementView/default">AnnouncementView - default</a></li>
+  <li>
+    <a href="./parts/AnnouncementView/default/singleImage">AnnouncementView - single image</a>
+  </li>
   <li><a href="./nav/10">Navigation</a></li>
   <li><a href="./pages/writer/ChannelMenuPage">ChannelMenuPage</a></li>
 </ul>
