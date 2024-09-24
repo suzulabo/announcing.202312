@@ -10,16 +10,28 @@
 </script>
 
 <script lang="ts">
+  import Modal from '$lib/atoms/Modal.svelte';
   import { LL } from '$lib/i18n';
   import { formatDate } from '$lib/utils/formatDate';
   import { toHtml } from '$lib/utils/toHtml';
 
   export let announcement: Announcement;
+
+  let imageModal: Modal;
+  let imageModalSrc: string | undefined;
 </script>
 
 <div class="container">
   {#if announcement.headerImage}
-    <img class="header-image" alt="" src={announcement.headerImage} />
+    <button
+      class="unstyled"
+      on:click={() => {
+        imageModalSrc = announcement.headerImage;
+        imageModal.showModal();
+      }}
+    >
+      <img class="header-image" alt="" src={announcement.headerImage} />
+    </button>
   {/if}
   <div class="date">
     {#if announcement.createdAt.getTime() === announcement.updatedAt.getTime()}
@@ -40,11 +52,23 @@
   {#if announcement.images}
     <div class="images-grid">
       {#each announcement.images as image}
-        <img src={image} alt="" />
+        <button
+          class="unstyled"
+          on:click={() => {
+            imageModalSrc = image;
+            imageModal.showModal();
+          }}
+        >
+          <img src={image} alt="" />
+        </button>
       {/each}
     </div>
   {/if}
 </div>
+
+<Modal bind:this={imageModal} modalID="AnnouncementImage" dismissMode="anywhere">
+  <div class="zoom-image"><img src={imageModalSrc} alt="" /></div>
+</Modal>
 
 <style lang="scss">
   .container {
@@ -89,6 +113,19 @@
         margin: auto;
         border-radius: 8px;
       }
+    }
+  }
+
+  .zoom-image {
+    display: flex;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    img {
+      object-fit: contain;
     }
   }
 </style>
