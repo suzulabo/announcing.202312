@@ -183,7 +183,6 @@
         }
       }
 
-      text-align: center;
       .desc {
         font-size: 13px;
         font-style: italic;
