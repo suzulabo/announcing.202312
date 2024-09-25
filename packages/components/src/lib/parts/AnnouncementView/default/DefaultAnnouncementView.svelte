@@ -10,6 +10,8 @@
 </script>
 
 <script lang="ts">
+  import { pushState } from '$app/navigation';
+  import { page } from '$app/stores';
   import Modal from '$lib/atoms/Modal.svelte';
   import { LL } from '$lib/i18n';
   import { formatDate } from '$lib/utils/formatDate';
@@ -17,8 +19,13 @@
 
   export let announcement: Announcement;
 
-  let imageModal: Modal;
   let imageModalSrc: string | undefined;
+
+  const showImageModal = (src: string) => {
+    pushState('', { ...$page.state, announcementViewZoomImage: { src } });
+  };
+
+  $: imageModalSrc = $page.state.announcementViewZoomImage?.src;
 </script>
 
 <div class="container">
@@ -26,8 +33,9 @@
     <button
       class="unstyled"
       on:click={() => {
-        imageModalSrc = announcement.headerImage;
-        imageModal.showModal();
+        if (announcement.headerImage) {
+          showImageModal(announcement.headerImage);
+        }
       }}
     >
       <img class="header-image" alt="" src={announcement.headerImage} />
@@ -55,8 +63,9 @@
       <button
         class="unstyled"
         on:click={() => {
-          imageModalSrc = image;
-          imageModal.showModal();
+          if (image) {
+            showImageModal(image);
+          }
         }}
       >
         <img class="single-image" src={image} alt="" />
@@ -67,8 +76,7 @@
           <button
             class="unstyled"
             on:click={() => {
-              imageModalSrc = image;
-              imageModal.showModal();
+              showImageModal(image);
             }}
           >
             <img src={image} alt="" />
@@ -79,7 +87,16 @@
   {/if}
 </div>
 
-<Modal bind:this={imageModal} modalID="AnnouncementImage" dismissMode="anywhere">
+<Modal
+  open={!!imageModalSrc}
+  dismissMode="anywhere"
+  on:dismiss={() => {
+    const src = $page.state.announcementViewZoomImage?.src;
+    if (src) {
+      history.back();
+    }
+  }}
+>
   <div class="zoom-image"><img src={imageModalSrc} alt="" /></div>
 </Modal>
 

@@ -6,7 +6,9 @@ declare global {
     // interface Locals {}
     // interface PageData {}
     interface PageState {
-      modal?: Record<string, boolean>;
+      announcementViewZoomImage?: {
+        src: string;
+      };
       fromHref?: string;
     }
     // interface Platform {}
