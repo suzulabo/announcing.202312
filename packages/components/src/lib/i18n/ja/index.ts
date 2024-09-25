@@ -6,7 +6,7 @@ const ja = {
   cancel: 'キャンセル',
   remove: '削除',
   back: '戻る',
-  preview: '確認',
+  preview: '表示を確認',
   settings: '設定',
   copy: 'コピー',
   copied: 'コピーしました',

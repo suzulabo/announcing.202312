@@ -24,9 +24,8 @@
   import { LL } from '$lib/i18n';
 
   export let announcement: Announcement | undefined = undefined;
-  export let backURL: string;
 
-  const dispatcher = createEventDispatcher<{ submit: Partial<Announcement>; cancel: undefined }>();
+  const dispatcher = createEventDispatcher<{ preview: Partial<Announcement>; cancel: undefined }>();
 
   let form: Partial<Announcement>;
   let titleError = false;
@@ -39,9 +38,6 @@
 </script>
 
 <div class="container">
-  <div class="header">
-    <a href={backURL}>{$LL.back()}</a>
-  </div>
   <div class="header-image">
     {#if form.headerImageFile}
       <button
@@ -131,10 +127,10 @@
 
   <button
     disabled={!validated}
-    class="submit-btn"
+    class="preview-btn"
     on:click={() => {
-      dispatcher('submit', form);
-    }}>{announcement ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
+      dispatcher('preview', form);
+    }}>{$LL.preview()}</button
   >
 </div>
 
@@ -162,6 +158,7 @@
     }
 
     .images-box {
+      text-align: center;
       .images {
         display: grid;
         gap: 8px;
@@ -190,7 +187,7 @@
       }
     }
 
-    .submit-btn {
+    .preview-btn {
       align-self: center;
     }
   }
