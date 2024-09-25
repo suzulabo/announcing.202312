@@ -1,22 +1,25 @@
 <script lang="ts">
   import Modal from '$lib/atoms/Modal.svelte';
 
-  let modal: Modal;
+  let open = false;
 </script>
 
 <div class="container">
   <button
     on:click={() => {
-      modal.showModal();
-    }}>Show</button
+      open = true;
+    }}>Open</button
   >
 </div>
-<Modal modalID="basic" bind:this={modal}>
+<Modal bind:open>
   <div class="modal-body">
-    <div>This is a modal window.</div>
+    <div>
+      This is a test modal for verifying the component’s functionality. Please review the layout and
+      interactions. Close the modal when you’re done.
+    </div>
     <button
       on:click={() => {
-        modal.closeModal();
+        open = false;
       }}>Close</button
     >
   </div>
