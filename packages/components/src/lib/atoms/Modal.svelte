@@ -24,6 +24,8 @@
     } else {
       if (bodyOverflow) {
         document.body.style.overflow = bodyOverflow;
+      } else {
+        document.body.style.removeProperty('overflow');
       }
       eventDispatcher('dismiss');
     }
