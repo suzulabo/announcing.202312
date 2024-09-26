@@ -12,6 +12,7 @@
 <script lang="ts">
   import { pushState } from '$app/navigation';
   import { page } from '$app/stores';
+  import { imgSrc } from '$lib/actions/imgSrc';
   import Modal from '$lib/atoms/Modal.svelte';
   import { LL } from '$lib/i18n';
   import { formatDate } from '$lib/utils/formatDate';
@@ -38,7 +39,7 @@
         }
       }}
     >
-      <img class="header-image" alt="" src={announcement.headerImage} />
+      <img class="header-image" alt="" use:imgSrc={announcement.headerImage} />
     </button>
   {/if}
   <div class="date">
@@ -58,7 +59,7 @@
     {@html toHtml(announcement.body)}
   </div>
   {#if announcement.images}
-    {#if announcement.images.length === 1}
+    {#if announcement.images.length === 1 && announcement.images[0]}
       {@const image = announcement.images[0]}
       <button
         class="unstyled"
@@ -68,7 +69,7 @@
           }
         }}
       >
-        <img class="single-image" src={image} alt="" />
+        <img class="single-image" use:imgSrc={image} alt="" />
       </button>
     {:else}
       <div class="images-grid">
@@ -79,7 +80,7 @@
               showImageModal(image);
             }}
           >
-            <img src={image} alt="" />
+            <img use:imgSrc={image} alt="" />
           </button>
         {/each}
       </div>
