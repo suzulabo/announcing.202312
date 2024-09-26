@@ -1,6 +1,5 @@
 <script lang="ts" context="module">
   export type Channel = {
-    iconFile?: File | undefined;
     icon?: string | undefined;
     name?: string | undefined;
     desc?: string | undefined;
@@ -10,7 +9,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import { loadImage } from '$lib/actions/loadImage';
+  import { imgSrc } from '$lib/actions/imgSrc';
   import FileInput from '$lib/atoms/FileInput.svelte';
   import Input from '$lib/atoms/Input.svelte';
   import Modal from '$lib/atoms/Modal.svelte';
@@ -24,17 +23,18 @@
 
   export let channel: Channel | undefined = undefined;
 
+  let open = false;
+
   export const showModal = () => {
     form = { ...channel };
-    modal.showModal();
+    open = true;
   };
   export const closeModal = () => {
-    modal.closeModal();
+    open = false;
   };
 
   const dispatcher = createEventDispatcher<{ submit: Channel }>();
 
-  let modal: Modal;
   let form: Channel = {};
   let fileInput: FileInput;
   let nameError = false;
@@ -43,7 +43,7 @@
   $: validated = !!form.name && !nameError && !descError;
 </script>
 
-<Modal bind:this={modal} dismissMode="none">
+<Modal {open} dismissMode="none">
   <div class="modal-body">
     <div class="name-box">
       <div class="input-box">
@@ -57,24 +57,21 @@
         />
       </div>
       <div class="icon-box">
-        {#if form.iconFile ?? form.icon}
+        {#if form.icon}
           <button
             class="unstyled"
             on:click={() => {
               fileInput.open();
             }}
           >
-            {#if form.iconFile}
-              <img class="icon" alt="icon preview" use:loadImage={form.iconFile} />
-            {:else}
-              <img class="icon" alt="icon preview" src={form.icon} />
+            {#if form.icon}
+              <img class="icon" alt="icon preview" use:imgSrc={form.icon} />
             {/if}
           </button>
           <button
             type="button"
             class="icon-remove"
             on:click={() => {
-              form.iconFile = undefined;
               form.icon = undefined;
             }}>{$LL.removeIcon()}</button
           >
@@ -88,11 +85,10 @@
           >
         {/if}
         <FileInput
-          name="icon"
           accept="image/jpeg,image/png,image/webp"
           maxImageSize={CHANNEL_ICON_MAX_SIZE}
           bind:this={fileInput}
-          bind:file={form.iconFile}
+          bind:value={form.icon}
         />
       </div>
     </div>
@@ -108,9 +104,6 @@
       disabled={!validated}
       class="submit-btn"
       on:click={() => {
-        if (form.iconFile) {
-          form.icon = undefined;
-        }
         closeModal();
         dispatcher('submit', form);
       }}>{channel ? $LL.updateChannel() : $LL.createChannel()}</button
