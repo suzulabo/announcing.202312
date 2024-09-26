@@ -52,6 +52,16 @@ const svelteConfig = ts.config({
       parser: ts.parser,
     },
   },
+  settings: {
+    svelte: {
+      // https://github.com/sveltejs/eslint-plugin-svelte/issues/442
+      // https://sveltejs.github.io/eslint-plugin-svelte/user-guide/#settings-svelte-ignore-warnings
+      ignoreWarnings: [
+        '@typescript-eslint/no-unsafe-assignment',
+        '@typescript-eslint/no-unsafe-member-access',
+      ],
+    },
+  },
   rules: {
     'svelte/no-at-html-tags': 'off',
     // https://github.com/sveltejs/eslint-plugin-svelte/issues/298
