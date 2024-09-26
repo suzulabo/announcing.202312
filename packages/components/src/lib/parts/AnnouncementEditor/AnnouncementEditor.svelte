@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
   export type Announcement = {
-    headerImageFile?: File | undefined;
+    headerImage?: string | undefined;
     title?: string | undefined;
     body: string;
-    imagesFiles?: File[] | undefined;
+    images?: string[] | undefined;
     updatedAt: Date;
     createdAt: Date;
   };
@@ -31,7 +31,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  import { loadImage } from '$lib/actions/loadImage';
+  import { imgSrc } from '$lib/actions/imgSrc';
   import FileInput from '$lib/atoms/FileInput.svelte';
   import Input from '$lib/atoms/Input.svelte';
   import TextArea from '$lib/atoms/TextArea.svelte';
@@ -57,22 +57,20 @@
 
 <div class="container">
   <div class="header-image">
-    {#if form.headerImageFile}
+    {#if form.headerImage}
       <button
         class="unstyled"
         on:click={() => {
           headerImageFileInput.open();
         }}
       >
-        {#if form.headerImageFile}
-          <img class="icon" alt="icon preview" use:loadImage={form.headerImageFile} />
-        {/if}
+        <img class="icon" alt="icon preview" use:imgSrc={form.headerImage} />
       </button>
       <button
         type="button"
         class="small"
         on:click={() => {
-          form.headerImageFile = undefined;
+          form.headerImage = undefined;
         }}>{$LL.removeHeaderImage()}</button
       >
     {:else}
@@ -84,11 +82,10 @@
       >
     {/if}
     <FileInput
-      name="headerImage"
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       bind:this={headerImageFileInput}
-      bind:file={form.headerImageFile}
+      bind:value={form.headerImage}
     />
   </div>
   <Input
@@ -109,14 +106,14 @@
   />
   <div class="images-box">
     <div class="images">
-      {#if form.imagesFiles}
-        {#each form.imagesFiles as image}
+      {#if form.images}
+        {#each form.images as image}
           <div class="img-box">
-            <img alt="" use:loadImage={image} />
+            <img alt="" use:imgSrc={image} />
             <button
               class="text"
               on:click={() => {
-                form.imagesFiles = form.imagesFiles?.filter((v) => {
+                form.images = form.images?.filter((v) => {
                   return v !== image;
                 });
               }}>{$LL.remove()}</button
@@ -130,13 +127,12 @@
       on:click={() => {
         imagesFileInput.open();
       }}
-      disabled={form.imagesFiles?.length === 4}>{$LL.addImage()}</button
+      disabled={form.images?.length === 4}>{$LL.addImage()}</button
     >
     <div class="desc">{$LL.addImageDescription()}</div>
     <FileInput
       bind:this={imagesFileInput}
-      bind:files={form.imagesFiles}
-      name="images"
+      bind:values={form.images}
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       filesCount={4}
