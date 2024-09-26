@@ -1,21 +1,12 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  onMount(async () => {
-    console.log('beforeUpdate');
-    await new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 1000);
-    });
-    console.log('endUpdate');
-  });
 </script>
 
 <div class="title">Announcing components</div>
 <hr />
 
 <ul class="links">
+  <li><a href="./atoms/FileInput">FileInput</a></li>
+  <li><a href="./atoms/FileInput/multiple">FileInput - multiple</a></li>
   <li><a href="./modal">Modal</a></li>
   <li><a href="./channelEditor/create">ChannelEditor - create</a></li>
   <li><a href="./channelEditor/edit">ChannelEditor - edit</a></li>

@@ -96,6 +96,8 @@
     "vitest": "^2.0.5"
   },
   "dependencies": {
+    "@kvs/indexeddb": "^2.1.4",
+    "base-x": "^5.0.0",
     "date-fns": "^3.6.0",
     "image-blob-reduce": "^4.1.0",
     "linkify-html": "^4.1.3",
