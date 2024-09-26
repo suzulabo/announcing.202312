@@ -12,8 +12,12 @@ class SrcSetter {
     });
   }
 
-  set(src: string) {
+  set(src: string | undefined) {
     this.revoke();
+    if (!src) {
+      this.img.src = '';
+      return;
+    }
     if (!src.startsWith('idb://')) {
       this.img.src = src;
       return;
@@ -40,13 +44,16 @@ class SrcSetter {
   }
 }
 
-export const imgSrc: Action<HTMLImageElement, string> = (img: HTMLImageElement, src: string) => {
+export const imgSrc: Action<HTMLImageElement, string | undefined> = (
+  img,
+  src: string | undefined,
+) => {
   const setter = new SrcSetter(img);
 
   setter.set(src);
 
   return {
-    update: (src: string) => {
+    update: (src) => {
       setter.set(src);
     },
     destroy: () => {

@@ -59,7 +59,7 @@
     {@html toHtml(announcement.body)}
   </div>
   {#if announcement.images}
-    {#if announcement.images.length === 1 && announcement.images[0]}
+    {#if announcement.images.length === 1}
       {@const image = announcement.images[0]}
       <button
         class="unstyled"
@@ -98,7 +98,7 @@
     }
   }}
 >
-  <div class="zoom-image"><img src={imageModalSrc} alt="" /></div>
+  <div class="zoom-image"><img use:imgSrc={imageModalSrc} alt="" /></div>
 </Modal>
 
 <style lang="scss">
