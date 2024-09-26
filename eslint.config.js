@@ -66,6 +66,8 @@ const svelteConfig = ts.config({
     'svelte/no-at-html-tags': 'off',
     // https://github.com/sveltejs/eslint-plugin-svelte/issues/298
     '@typescript-eslint/no-unsafe-call': 'off',
+    // TODO: It does not seem to be working well.
+    '@typescript-eslint/no-unsafe-assignment': 'off',
   },
 });
 
