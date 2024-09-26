@@ -1,3 +1,17 @@
+<script lang="ts">
+  import { onMount } from 'svelte';
+
+  onMount(async () => {
+    console.log('beforeUpdate');
+    await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1000);
+    });
+    console.log('endUpdate');
+  });
+</script>
+
 <div class="title">Announcing components</div>
 <hr />
 
@@ -12,6 +26,7 @@
   </li>
   <li><a href="./nav/10">Navigation</a></li>
   <li><a href="./pages/writer/ChannelMenuPage">ChannelMenuPage</a></li>
+  <li><a href="./pages/writer/AnnouncementEditorPage">AnnouncementEditorPage</a></li>
 </ul>
 
 <style lang="scss">

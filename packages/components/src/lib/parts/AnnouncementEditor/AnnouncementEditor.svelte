@@ -7,6 +7,25 @@
     updatedAt: Date;
     createdAt: Date;
   };
+
+  const isAnnouncement = (
+    arg: Partial<Announcement>,
+    titleError: boolean,
+    bodyError: boolean,
+  ): arg is Announcement => {
+    if (titleError) {
+      return false;
+    }
+
+    if (bodyError) {
+      return false;
+    }
+
+    if (!arg.body) {
+      return false;
+    }
+    return true;
+  };
 </script>
 
 <script lang="ts">
@@ -25,7 +44,7 @@
 
   export let announcement: Announcement | undefined = undefined;
 
-  const dispatcher = createEventDispatcher<{ preview: Partial<Announcement>; cancel: undefined }>();
+  const dispatcher = createEventDispatcher<{ preview: Announcement }>();
 
   let form: Partial<Announcement>;
   let titleError = false;
@@ -34,7 +53,6 @@
   let imagesFileInput: FileInput;
 
   $: form = { ...announcement };
-  $: validated = !!form.body && !titleError && !bodyError;
 </script>
 
 <div class="container">
@@ -59,6 +77,7 @@
       >
     {:else}
       <button
+        class="small"
         on:click={() => {
           headerImageFileInput.open();
         }}>{$LL.chooseHeaderImage()}</button
@@ -107,6 +126,7 @@
       {/if}
     </div>
     <button
+      class="small"
       on:click={() => {
         imagesFileInput.open();
       }}
@@ -126,22 +146,26 @@
   <hr />
 
   <button
-    disabled={!validated}
+    disabled={!isAnnouncement(form, titleError, bodyError)}
     class="preview-btn"
     on:click={() => {
-      dispatcher('preview', form);
+      const previewData = { ...form };
+      const now = new Date();
+      if (!previewData.createdAt) {
+        previewData.createdAt = now;
+      }
+      if (!previewData.updatedAt) {
+        previewData.updatedAt = now;
+      }
+      if (isAnnouncement(previewData, titleError, bodyError)) {
+        dispatcher('preview', previewData);
+      }
     }}>{$LL.preview()}</button
   >
 </div>
 
 <style lang="scss">
   .container {
-    background-color: var(--color-background);
-    border-radius: 8px;
-    width: 100%;
-    max-width: 600px;
-    margin: auto;
-    padding: 8px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -183,7 +207,7 @@
       .desc {
         font-size: 13px;
         font-style: italic;
-        margin: 4px 0 0 0;
+        margin: 8px 0 0 0;
       }
     }
 
