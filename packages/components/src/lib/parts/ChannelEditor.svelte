@@ -148,6 +148,7 @@
           height: 64px;
           &.ja {
             font-size: 12px;
+            white-space: normal;
           }
         }
         button.icon-remove {
