@@ -10,7 +10,6 @@
 <script lang="ts">
   import Loading from '$lib/atoms/Loading.svelte';
   import { LL } from '$lib/i18n';
-  import AnnouncementEditor from '$lib/parts/AnnouncementEditor/AnnouncementEditor.svelte';
   import type { Channel as EditorChannel } from '$lib/parts/ChannelEditor.svelte';
   import ChannelEditor from '$lib/parts/ChannelEditor.svelte';
 
@@ -21,11 +20,11 @@
   export let readerPrefix: string;
   export let updateChannelSubmit: (channel: EditorChannel) => Promise<void>;
   export let deleteChannelClick: () => Promise<void>;
+  export let createAnnouncementURL: string;
 
   let urlCopyModal: UrlCopyModal;
   let deleteModal: DeleteModal;
   let channelEditor: ChannelEditor;
-  let announcementEditor: AnnouncementEditor;
   let loading = false;
 
   const handleUpdateSubmit = async (event: CustomEvent<EditorChannel>) => {
@@ -75,12 +74,9 @@
       >
     </li>
     <li>
-      <button
-        class="text"
-        on:click={() => {
-          announcementEditor.showModal();
-        }}>{$LL.channelActions.createAnnouncement()}</button
-      >
+      <a href={createAnnouncementURL}>
+        {$LL.channelActions.createAnnouncement()}
+      </a>
     </li>
     <li>
       <button class="text">{$LL.channelActions.editAnnouncement()}</button>
@@ -108,7 +104,6 @@
 <UrlCopyModal bind:this={urlCopyModal} url={`${readerPrefix}${channel.id}`} />
 <DeleteModal bind:this={deleteModal} name={channel.name} deleteClick={handleDeleteClick} />
 <ChannelEditor bind:this={channelEditor} {channel} on:submit={handleUpdateSubmit} />
-<AnnouncementEditor bind:this={announcementEditor} />
 
 <Loading show={loading} />
 

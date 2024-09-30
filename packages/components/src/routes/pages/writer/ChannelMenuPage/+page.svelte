@@ -15,7 +15,6 @@
   updateChannelSubmit={(updated) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         channel = updated;
         resolve();
       }, 1000);
@@ -28,4 +27,5 @@
       }, 1000);
     });
   }}
+  createAnnouncementURL="/pages/writer/AnnouncementEditorPage"
 />
