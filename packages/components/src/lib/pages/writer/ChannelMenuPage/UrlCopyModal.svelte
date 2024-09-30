@@ -4,19 +4,19 @@
 
   export let url: string;
 
-  let modal: Modal;
+  let open = false;
   let copied: undefined | 'copied' | 'error' = undefined;
 
   export const showModal = () => {
-    modal.showModal();
+    open = true;
     copied = undefined;
   };
   export const closeModal = () => {
-    modal.closeModal();
+    open = false;
   };
 </script>
 
-<Modal bind:this={modal}>
+<Modal bind:open>
   <div class="modal-body">
     {#if copied}
       <div
