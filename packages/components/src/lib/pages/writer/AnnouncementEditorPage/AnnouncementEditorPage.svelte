@@ -19,6 +19,7 @@
 
   export let announcement: Announcement | undefined = undefined;
   export let backURL: string;
+  export let onPostClick: ((announcement: Announcement) => void) | undefined = undefined;
 
   $: previewData = $page.state.announcementEditorPagePreview;
 </script>
@@ -32,6 +33,15 @@
 
   {#if previewData?.announcement}
     <AnnouncementView announcement={previewData.announcement} />
+    <hr />
+    <button
+      class="post-btn"
+      on:click={() => {
+        if (onPostClick) {
+          onPostClick(previewData.announcement);
+        }
+      }}>{$LL.postAnnouncement()}</button
+    >
   {/if}
 
   <div style={toStyle({ display: previewData ? 'none' : undefined })}>
@@ -39,7 +49,7 @@
       {announcement}
       on:preview={(event) => {
         const announcement = event.detail;
-        pushState('#preview', {
+        pushState('', {
           ...$page.state,
           announcementEditorPagePreview: {
             announcement,
@@ -66,5 +76,9 @@
   }
   hr {
     margin: 0 0 20px;
+  }
+  .post-btn {
+    display: block;
+    margin: 0 auto;
   }
 </style>
