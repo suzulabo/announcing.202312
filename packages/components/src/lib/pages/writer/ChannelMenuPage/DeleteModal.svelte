@@ -5,16 +5,16 @@
   export let name: string;
   export let deleteClick: () => void;
 
-  let modal: Modal;
+  let open = false;
   let deleteUnderstand: boolean;
 
   export const showModal = () => {
     deleteUnderstand = false;
-    modal.showModal();
+    open = true;
   };
 </script>
 
-<Modal bind:this={modal} dismissMode="none">
+<Modal bind:open dismissMode="none">
   <div class="delete-modal">
     <span>{$LL.deleteChannel()}</span>
     <hr />
@@ -29,7 +29,7 @@
       disabled={!deleteUnderstand}
       on:click={() => {
         if (confirm($LL.deleteChannelConfirmation())) {
-          modal.closeModal();
+          open = false;
           deleteClick();
         }
       }}
@@ -40,7 +40,7 @@
     <button
       class="text small"
       on:click={() => {
-        modal.closeModal();
+        open = false;
       }}>{$LL.cancel()}</button
     >
   </div>
