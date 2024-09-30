@@ -32,8 +32,10 @@
   })();
 </script>
 
-<button
-  class={`unstyled modal`}
+<div
+  role="button"
+  tabindex="0"
+  class="modal"
   style={toStyle({ display: open ? undefined : 'none', padding })}
   on:click={() => {
     if (dismissMode === 'anywhere') {
@@ -45,9 +47,17 @@
       open = false;
     }
   }}
+  on:keydown|self={() => {
+    // TODO: Need to learn about accessibility
+    /*
+    if (event.key === 'Enter' || event.key === ' ') {
+      open = false;
+    }
+    */
+  }}
 >
   <slot />
-</button>
+</div>
 
 <svelte:window
   on:keydown={(event) => {
