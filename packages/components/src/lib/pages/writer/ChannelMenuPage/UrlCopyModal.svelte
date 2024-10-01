@@ -14,9 +14,13 @@
   export const closeModal = () => {
     open = false;
   };
+
+  const onFocus = (event: FocusEvent) => {
+    (event.target as HTMLInputElement).select();
+  };
 </script>
 
-<Modal bind:open>
+<Modal bind:open dismissMode="none">
   <div class="modal-body">
     {#if copied}
       <div
@@ -29,20 +33,28 @@
       </div>
     {:else}
       <div class="copy-box">
-        <input value={url} readonly />
-        <button
-          on:click={() => {
-            navigator.clipboard
-              .writeText(url)
-              .then(() => {
-                copied = 'copied';
-              })
-              .catch(() => {
-                copied = 'error';
-              });
-          }}>{$LL.copy()}</button
-        >
+        <input value={url} readonly on:focus={onFocus} />
+        {#if navigator.clipboard}
+          <button
+            on:click={() => {
+              navigator.clipboard
+                .writeText(url)
+                .then(() => {
+                  copied = 'copied';
+                })
+                .catch(() => {
+                  copied = 'error';
+                });
+            }}>{$LL.copy()}</button
+          >
+        {/if}
       </div>
+      <button
+        class="close-btn text"
+        on:click={() => {
+          open = false;
+        }}>{$LL.close()}</button
+      >
     {/if}
   </div>
 </Modal>
@@ -58,10 +70,17 @@
 
     .copy-box {
       display: flex;
+      input {
+        text-align: center;
+      }
     }
     .msg-box {
       text-align: center;
       animation: showDelay 1s;
+    }
+    .close-btn {
+      display: block;
+      margin: 16px auto 0;
     }
 
     @keyframes showDelay {

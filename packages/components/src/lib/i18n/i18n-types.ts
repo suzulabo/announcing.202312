@@ -27,6 +27,10 @@ type RootTranslation = {
 	 */
 	cancel: string
 	/**
+	 * C​l​o​s​e
+	 */
+	close: string
+	/**
 	 * R​e​m​o​v​e
 	 */
 	remove: string
@@ -198,6 +202,10 @@ export type TranslationFunctions = {
 	 * Cancel
 	 */
 	cancel: () => LocalizedString
+	/**
+	 * Close
+	 */
+	close: () => LocalizedString
 	/**
 	 * Remove
 	 */
