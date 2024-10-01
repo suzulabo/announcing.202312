@@ -43,7 +43,7 @@
     topHeight = startRow * itemHeight + (startRow - 1) * gap;
   };
 
-  let resizeObserver: ResizeObserver;
+  let resizeObserver: ResizeObserver | undefined;
 
   onMount(() => {
     resizeObserver = new ResizeObserver(() => {
@@ -53,7 +53,9 @@
   });
 
   onDestroy(() => {
-    resizeObserver.disconnect();
+    if (resizeObserver) {
+      resizeObserver.disconnect();
+    }
   });
 </script>
 

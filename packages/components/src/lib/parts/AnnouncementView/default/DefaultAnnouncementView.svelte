@@ -1,14 +1,3 @@
-<script lang="ts" context="module">
-  export type Announcement = {
-    headerImage?: string | undefined;
-    title?: string | undefined;
-    body: string;
-    images?: string[] | undefined;
-    updatedAt: Date;
-    createdAt: Date;
-  };
-</script>
-
 <script lang="ts">
   import { pushState } from '$app/navigation';
   import { page } from '$app/stores';
@@ -17,6 +6,8 @@
   import { LL } from '$lib/i18n';
   import { formatDate } from '$lib/utils/formatDate';
   import { toHtml } from '$lib/utils/toHtml';
+
+  import type { Announcement } from '../AnnouncementView.svelte';
 
   export let announcement: Announcement;
 

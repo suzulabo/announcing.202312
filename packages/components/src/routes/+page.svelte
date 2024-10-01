@@ -10,6 +10,7 @@
   <li><a href="./modal">Modal</a></li>
   <li><a href="./channelEditor/create">ChannelEditor - create</a></li>
   <li><a href="./channelEditor/edit">ChannelEditor - edit</a></li>
+  <li><a href="./parts/ChannelView">ChannelView - default</a></li>
   <li><a href="./parts/AnnouncementEditor/create">AnnouncementEditor - create</a></li>
   <li><a href="./parts/AnnouncementView/default">AnnouncementView - default</a></li>
   <li>
