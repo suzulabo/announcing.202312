@@ -69,6 +69,7 @@ const svelteConfig = ts.config({
     // TODO: It does not seem to be working well.
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
   },
 });
 
