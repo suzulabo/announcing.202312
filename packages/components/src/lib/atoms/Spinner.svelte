@@ -3,7 +3,7 @@
   import { toStyle } from '$lib/utils/toStyle';
 
   export let size = 12;
-  export let delay = '1s';
+  export let delay = '0';
 </script>
 
 <div class="spinner" style={toStyle({ 'font-size': `${size}px`, '--delay': delay })}>
