@@ -7,14 +7,13 @@
     icon: string | undefined;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   export type AnnouncementLoaderFunction = (key: string) => Promise<Announcement> | Announcement;
 
   export type ChannelViewParams = {
     channel: Channel;
+    announcementHrefPrefix: string;
     announcementKeys?: string[];
     announcementLoader?: AnnouncementLoaderFunction;
-    onAnnouncementClick?: (key: string) => void;
   };
 </script>
 

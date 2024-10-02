@@ -9,17 +9,7 @@
 
   export let params: ChannelViewParams;
 
-  $: ({ channel, announcementKeys, announcementLoader, onAnnouncementClick } = params);
-
-  const announcementClickHandler = (event: Event) => {
-    if (onAnnouncementClick) {
-      const el = event.currentTarget as HTMLElement;
-      const key = el.getAttribute('data-key');
-      if (key) {
-        onAnnouncementClick(key);
-      }
-    }
-  };
+  $: ({ channel, announcementHrefPrefix, announcementKeys, announcementLoader } = params);
 </script>
 
 <div class="name-line">
@@ -44,13 +34,7 @@
     </div>
   {:else}
     <VirtualScrollGrid items={announcementKeys} itemHeight={300} itemMinWidth={300} gap={8}>
-      <button
-        class="unstyled item"
-        slot="item"
-        let:item
-        data-key={item}
-        on:click={announcementClickHandler}
-      >
+      <a class="item" slot="item" let:item href={`${announcementHrefPrefix}${item}`}>
         {#await announcementLoader(item)}
           <div class="loading">
             <Spinner />
@@ -58,7 +42,7 @@
         {:then announcement}
           <GridItem {announcement} />
         {/await}
-      </button>
+      </a>
     </VirtualScrollGrid>
   {/if}
 {/if}

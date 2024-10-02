@@ -21,6 +21,7 @@
   export let updateChannelSubmit: (channel: EditorChannel) => Promise<void>;
   export let deleteChannelClick: () => Promise<void>;
   export let createAnnouncementURL: string;
+  export let announcementMaintenanceURL: string;
 
   let urlCopyModal: UrlCopyModal;
   let deleteModal: DeleteModal;
@@ -79,7 +80,7 @@
       </a>
     </li>
     <li>
-      <button class="text">{$LL.channelActions.editAnnouncement()}</button>
+      <a href={announcementMaintenanceURL}>{$LL.channelActions.editAnnouncement()}</a>
     </li>
     <li>
       <button

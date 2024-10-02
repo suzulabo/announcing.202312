@@ -28,4 +28,5 @@
     });
   }}
   createAnnouncementURL="/pages/writer/AnnouncementEditorPage"
+  announcementMaintenanceURL="/pages/writer/AnnouncementMaintenancePage"
 />
