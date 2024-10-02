@@ -10,9 +10,10 @@
 </script>
 
 <script lang="ts">
+  import { LL } from '@announcing/i18n';
+
   import { pushState } from '$app/navigation';
   import { page } from '$app/stores';
-  import { LL } from '$lib/i18n';
   import AnnouncementEditor from '$lib/parts/AnnouncementEditor/AnnouncementEditor.svelte';
   import AnnouncementView from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
   import { toStyle } from '$lib/utils/toStyle';

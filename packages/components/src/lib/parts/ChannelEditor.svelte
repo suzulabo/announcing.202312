@@ -7,6 +7,7 @@
 </script>
 
 <script lang="ts">
+  import { LL } from '@announcing/i18n';
   import { createEventDispatcher } from 'svelte';
 
   import { imgSrc } from '$lib/actions/imgSrc';
@@ -19,7 +20,6 @@
     CHANNEL_ICON_MAX_SIZE,
     CHANNEL_NAME_MAX_BYTES,
   } from '$lib/constants';
-  import LL, { locale } from '$lib/i18n/i18n-svelte';
 
   export let channel: Channel | undefined = undefined;
 

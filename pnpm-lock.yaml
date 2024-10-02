@@ -74,13 +74,13 @@ importers:
       lru-cache:
         specifier: ^11.0.0
         version: 11.0.0
-      typesafe-i18n:
-        specifier: ^5.26.2
-        version: 5.26.2(typescript@5.5.4)
     devDependencies:
       '@announcing/db':
         specifier: workspace:^
         version: link:../db
+      '@announcing/i18n':
+        specifier: workspace:^
+        version: link:../i18n
       '@faker-js/faker':
         specifier: ^8.4.1
         version: 8.4.1

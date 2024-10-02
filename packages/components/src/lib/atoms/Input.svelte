@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LL from '$lib/i18n/i18n-svelte';
+  import { LL } from '@announcing/i18n';
 
   export let name: string;
   export let label: string;
