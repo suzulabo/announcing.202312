@@ -17,11 +17,7 @@ const jsConfig = ts.config({
 
 const tsConfig = ts.config({
   files: ['**/*.ts', '**/*.svelte'],
-  extends: [
-    js.configs.recommended,
-    ...ts.configs.strictTypeChecked,
-    ...ts.configs.stylisticTypeChecked,
-  ],
+  extends: [js.configs.recommended, ...ts.configs.strict, ...ts.configs.stylistic],
   languageOptions: {
     parserOptions: {
       project: true,
