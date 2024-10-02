@@ -89,6 +89,7 @@ export default ts.config(
       '**/.svelte-kit',
       'packages/db-dev',
       'packages/db/drizzle/**/*',
+      'packages/i18n/src/i18n/*.ts',
       '**/test-results',
       '**/playwright-report',
     ],

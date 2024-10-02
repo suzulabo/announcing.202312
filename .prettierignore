@@ -1,3 +1,3 @@
 pnpm-lock.yaml
 packages/db/drizzle/**/*
-packages/components/src/lib/i18n/*.ts
+packages/i18n/src/i18n/*.ts
