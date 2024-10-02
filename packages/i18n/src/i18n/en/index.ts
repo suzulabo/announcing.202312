@@ -44,10 +44,7 @@ const en = {
   removeHeaderImage: 'Remove',
   addImage: 'Add Image',
   addImageDescription: 'You can add up to 4 images.',
-  announcementView: {
-    created: 'Created: ',
-    updated: 'Updated: ',
-  },
+  announcementView: { created: 'Created: ', updated: 'Updated: ' },
 } satisfies BaseTranslation;
 
 export default en;
