@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { LL } from '@announcing/i18n';
+
   import Spinner from '$lib/atoms/Spinner.svelte';
   import VirtualScrollGrid from '$lib/atoms/VirtualScrollGrid.svelte';
-  import { LL } from '$lib/i18n';
   import { toHtml } from '$lib/utils/toHtml';
 
   import type { ChannelViewParams } from '../ChannelView.svelte';

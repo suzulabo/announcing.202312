@@ -1,8 +1,7 @@
 <script lang="ts">
   import ChannelEditor, { type Channel } from '@announcing/components/ChannelEditor.svelte';
-  import { LL } from '@announcing/components/i18n';
   import Loading from '@announcing/components/Loading.svelte';
-  import Logo from '@announcing/components/Logo.svelte';
+  import { LL } from '@announcing/i18n';
   import { signOut } from '@auth/sveltekit/client';
   import SuperDebug from 'sveltekit-superforms';
 
@@ -20,7 +19,8 @@
     const form = new FormData();
     if (channel.name) form.append('name', channel.name);
     if (channel.desc) form.append('desc', channel.desc);
-    if (channel.iconFile) form.append('iconFile', channel.iconFile);
+    // TODO
+    //if (channel.iconFile) form.append('iconFile', channel.iconFile);
 
     loading = true;
     try {
@@ -39,7 +39,6 @@
 </script>
 
 <header>
-  <Logo size="20px" />
   <span class="label">Announcing Writer</span>
 </header>
 <div class="container">

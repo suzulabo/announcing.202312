@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { LL } from '@announcing/i18n';
+
   import { pushState } from '$app/navigation';
   import { page } from '$app/stores';
   import { imgSrc } from '$lib/actions/imgSrc';
   import Modal from '$lib/atoms/Modal.svelte';
-  import { LL } from '$lib/i18n';
   import { formatDate } from '$lib/utils/formatDate';
   import { toHtml } from '$lib/utils/toHtml';
 

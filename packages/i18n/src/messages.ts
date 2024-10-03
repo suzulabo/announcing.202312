@@ -171,4 +171,10 @@ export const messages = {
       ja: '更新: ',
     },
   },
+  writer: {
+    subTitle: {
+      en: 'Author Site',
+      ja: '投稿者用サイト',
+    },
+  },
 };

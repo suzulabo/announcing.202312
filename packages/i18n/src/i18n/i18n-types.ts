@@ -187,6 +187,12 @@ type RootTranslation = {
 		 */
 		updated: string
 	}
+	writer: {
+		/**
+		 * A​u​t​h​o​r​ ​S​i​t​e
+		 */
+		subTitle: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -361,6 +367,12 @@ export type TranslationFunctions = {
 		 * Updated: 
 		 */
 		updated: () => LocalizedString
+	}
+	writer: {
+		/**
+		 * Author Site
+		 */
+		subTitle: () => LocalizedString
 	}
 }
 

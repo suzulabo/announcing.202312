@@ -45,6 +45,7 @@ const en = {
   addImage: 'Add Image',
   addImageDescription: 'You can add up to 4 images.',
   announcementView: { created: 'Created: ', updated: 'Updated: ' },
+  writer: { subTitle: 'Author Site' },
 } satisfies BaseTranslation;
 
 export default en;

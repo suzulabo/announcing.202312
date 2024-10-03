@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { LL } from '@announcing/i18n';
   import { LRUCache } from 'lru-cache';
 
-  import LL from '$lib/i18n/i18n-svelte';
   import Spinner from '$lib/Spinner.svelte';
   import { toHtml } from '$lib/utils/toHtml';
   import VirtualScrollGrid from '$lib/VirtualScrollGrid.svelte';

@@ -1,8 +1,8 @@
 <script lang="ts">
   import ChannelPage from '@announcing/components/ChannelPage.svelte';
-  import { LL } from '@announcing/components/i18n';
   import Loading from '@announcing/components/Loading.svelte';
   import Modal from '@announcing/components/Modal.svelte';
+  import { LL } from '@announcing/i18n';
 
   import { goto } from '$app/navigation';
 

@@ -29,6 +29,7 @@
 </script>
 
 <script lang="ts">
+  import { LL } from '@announcing/i18n';
   import { createEventDispatcher } from 'svelte';
 
   import { imgSrc } from '$lib/actions/imgSrc';
@@ -40,7 +41,6 @@
     ANNOUNCEMENT_IMAGE_MAX_SIZE,
     ANNOUNCEMENT_TITLE_MAX_BYTES,
   } from '$lib/constants';
-  import { LL } from '$lib/i18n';
 
   export let announcement: Announcement | undefined = undefined;
 

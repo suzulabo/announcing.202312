@@ -8,8 +8,9 @@
 </script>
 
 <script lang="ts">
+  import { LL } from '@announcing/i18n';
+
   import Loading from '$lib/atoms/Loading.svelte';
-  import { LL } from '$lib/i18n';
   import type { Channel as EditorChannel } from '$lib/parts/ChannelEditor.svelte';
   import ChannelEditor from '$lib/parts/ChannelEditor.svelte';
 

@@ -16,54 +16,42 @@
   },
   "type": "module",
   "exports": {
-    "./i18n": {
-      "types": "./dist/i18n.d.ts",
-      "import": "./dist/i18n.js"
-    },
     "./actions/loadImage": {
       "types": "./dist/actions/loadImage.d.ts",
       "import": "./dist/actions/loadImage.js"
     },
     "./base.scss": "./dist/base.scss",
-    "./ChannelPage.svelte": {
-      "types": "./dist/ChannelPage/ChannelPage.svelte.d.ts",
-      "svelte": "./dist/ChannelPage/ChannelPage.svelte"
-    },
     "./ChannelEditor.svelte": {
-      "types": "./dist/ChannelEditor.svelte.d.ts",
-      "svelte": "./dist/ChannelEditor.svelte"
+      "types": "./dist/parts/ChannelEditor.svelte.d.ts",
+      "svelte": "./dist/parts/ChannelEditor.svelte"
     },
     "./FileInput.svelte": {
-      "types": "./dist/FileInput.svelte.d.ts",
-      "svelte": "./dist/FileInput.svelte"
+      "types": "./dist/atoms/FileInput.svelte.d.ts",
+      "svelte": "./dist/atoms/FileInput.svelte"
     },
     "./Input.svelte": {
-      "types": "./dist/Input.svelte.d.ts",
-      "svelte": "./dist/Input.svelte"
+      "types": "./dist/atoms/Input.svelte.d.ts",
+      "svelte": "./dist/atoms/Input.svelte"
     },
     "./Loading.svelte": {
-      "types": "./dist/Loading.svelte.d.ts",
-      "svelte": "./dist/Loading.svelte"
-    },
-    "./Logo.svelte": {
-      "types": "./dist/Logo.svelte.d.ts",
-      "svelte": "./dist/Logo.svelte"
+      "types": "./dist/atoms/Loading.svelte.d.ts",
+      "svelte": "./dist/atoms/Loading.svelte"
     },
     "./Modal.svelte": {
-      "types": "./dist/Modal.svelte.d.ts",
-      "svelte": "./dist/Modal.svelte"
+      "types": "./dist/atoms/Modal.svelte.d.ts",
+      "svelte": "./dist/atoms/Modal.svelte"
     },
     "./NavigationSupport.svelte": {
-      "types": "./dist/NavigationSupport.svelte.d.ts",
-      "svelte": "./dist/NavigationSupport.svelte"
+      "types": "./dist/atoms/NavigationSupport.svelte.d.ts",
+      "svelte": "./dist/atoms/NavigationSupport.svelte"
     },
     "./Spinner.svelte": {
-      "types": "./dist/Spinner.svelte.d.ts",
-      "svelte": "./dist/Spinner.svelte"
+      "types": "./dist/atoms/Spinner.svelte.d.ts",
+      "svelte": "./dist/atoms/Spinner.svelte"
     },
     "./TextArea.svelte": {
-      "types": "./dist/TextArea.svelte.d.ts",
-      "svelte": "./dist/TextArea.svelte"
+      "types": "./dist/atoms/TextArea.svelte.d.ts",
+      "svelte": "./dist/atoms/TextArea.svelte"
     }
   },
   "files": [
