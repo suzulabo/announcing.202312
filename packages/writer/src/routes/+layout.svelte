@@ -16,12 +16,14 @@
   import { LL, setupLocale } from '@announcing/i18n';
 
   import { browser } from '$app/environment';
+  import { page } from '$app/stores';
 
   import type { LayoutServerData } from './$types';
 
   export let data: LayoutServerData;
 
-  $: siteNameElementAttrs = data.userID ? { this: 'a', href: '/' } : { this: 'div' };
+  $: siteNameElementAttrs =
+    data.userID && $page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' };
   $: locale = data.locale;
   $: void updateLocale(locale);
 </script>
