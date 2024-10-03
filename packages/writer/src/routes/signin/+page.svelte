@@ -7,6 +7,13 @@
 
 <div class="container">
   <div class="buttons">
+    {#if env.PUBLIC_TEST}
+      <button
+        on:click={() => {
+          void signIn('credentials', { id: 'test_user01' });
+        }}>Credentials</button
+      >
+    {/if}
     <button
       on:click={() => {
         void signIn('google');
@@ -15,13 +22,6 @@
         <GoogleIcon /><span class="label"></span>
       </div></button
     >
-    {#if env.PUBLIC_TEST}
-      <button
-        on:click={() => {
-          void signIn('credentials', { id: `test_user-${Math.random().toString()}` });
-        }}>Credentials</button
-      >
-    {/if}
   </div>
 </div>
 
@@ -30,14 +30,13 @@
     padding: 20px 10px;
 
     .buttons {
-      text-align: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 8px;
 
       button {
-        display: inline-block;
-        width: 90%;
-        min-width: 200px;
-        max-width: 300px;
-        margin: 0 0 20px;
+        width: 100%;
+        height: 55px;
 
         .inner {
           display: inline-flex;
