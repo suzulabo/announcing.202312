@@ -25,6 +25,7 @@ const tsConfig = ts.config({
     },
   },
   rules: {
+    '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/no-unnecessary-condition': 'error',
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/restrict-template-expressions': [
