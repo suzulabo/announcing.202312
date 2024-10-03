@@ -47,6 +47,10 @@ export const messages = {
     en: '(Required)',
     ja: '(必須)',
   },
+  signOut: {
+    en: 'Sign Out',
+    ja: 'ログアウト',
+  },
   channelName: {
     en: 'Channel name',
     ja: 'チャンネル名',

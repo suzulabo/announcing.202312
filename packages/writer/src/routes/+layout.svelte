@@ -14,6 +14,7 @@
 <script lang="ts">
   import NavigationSupport from '@announcing/components/NavigationSupport.svelte';
   import { LL, setupLocale } from '@announcing/i18n';
+  import { signOut } from '@auth/sveltekit/client';
 
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
@@ -42,6 +43,14 @@
       <option value="en">English</option>
       <option value="ja">日本語</option>
     </select>
+    {#if data.userID}
+      <button
+        class="sign-out text"
+        on:click={() => {
+          void signOut();
+        }}>{$LL.signOut()}</button
+      >
+    {/if}
   </header>
   <hr />
   <slot />
@@ -73,6 +82,12 @@
 
       select {
         margin-left: auto;
+        font-size: 14px;
+      }
+
+      .sign-out {
+        font-weight: normal;
+        font-size: 14px;
       }
     }
   }

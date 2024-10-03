@@ -63,6 +63,10 @@ type RootTranslation = {
 	 */
 	required: string
 	/**
+	 * S​i​g​n​ ​O​u​t
+	 */
+	signOut: string
+	/**
 	 * C​h​a​n​n​e​l​ ​n​a​m​e
 	 */
 	channelName: string
@@ -244,6 +248,10 @@ export type TranslationFunctions = {
 	 * (Required)
 	 */
 	required: () => LocalizedString
+	/**
+	 * Sign Out
+	 */
+	signOut: () => LocalizedString
 	/**
 	 * Channel name
 	 */

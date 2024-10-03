@@ -13,6 +13,7 @@ const ja = {
   copied: 'コピーしました',
   copyError: 'コピーできませんでした',
   required: '(必須)',
+  signOut: 'ログアウト',
   channelName: 'チャンネル名',
   desc: '説明文',
   title: 'タイトル',

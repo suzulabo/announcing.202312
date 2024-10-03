@@ -13,6 +13,7 @@ const en = {
   copied: 'Copied to clipboard.',
   copyError: 'Unable to copy to clipboard.',
   required: '(Required)',
+  signOut: 'Sign Out',
   channelName: 'Channel name',
   desc: 'Description',
   title: 'Title',

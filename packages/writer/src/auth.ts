@@ -42,7 +42,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
           .update(`${account.provider}:${account.providerAccountId}`)
           .digest();
 
-        token['userID'] = base62.encode(digest);
+        token['userID'] = base62.encode(new Uint8Array(digest));
       }
 
       return token;
