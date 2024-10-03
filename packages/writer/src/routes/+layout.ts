@@ -13,3 +13,5 @@ export const load: LayoutLoad = async ({ data }) => {
     document.body.setAttribute('locale', data.locale);
   }
 };
+
+export const ssr = false;
