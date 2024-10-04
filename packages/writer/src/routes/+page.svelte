@@ -56,6 +56,7 @@
   .container {
     display: flex;
     flex-direction: column;
+    margin: 20px 0;
 
     .channels {
       margin: 0 0 20px;
