@@ -17,9 +17,10 @@ export const updateChannel = async ({
   channelID: string;
   name: string;
   desc?: string | undefined;
-  iconFile?: Blob | undefined;
+  iconFile?: Blob | 'remove' | undefined;
 }) => {
-  const [icon, iconInsert] = iconFile ? await makeInsertBlob(iconFile) : [null, undefined];
+  const [icon, iconInsert] =
+    iconFile instanceof Blob ? await makeInsertBlob(iconFile) : [null, undefined];
 
   await db.batch([
     db
@@ -27,7 +28,7 @@ export const updateChannel = async ({
       .set({
         name,
         desc: desc ?? null,
-        icon,
+        ...(iconFile !== undefined && { icon }),
         updatedAt: new Date(),
       })
       .where(

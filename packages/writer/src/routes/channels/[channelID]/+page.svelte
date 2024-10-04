@@ -1,7 +1,7 @@
 <script lang="ts">
   import { LL } from '@announcing/i18n';
 
-  import { goto } from '$app/navigation';
+  import { goto, invalidateAll } from '$app/navigation';
   import { PUBLIC_READER_PREFIX } from '$env/static/public';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
 
@@ -15,16 +15,26 @@
   let deleteModal: DeleteModal;
   let channelEditor: ChannelEditor;
 
-  $: ({ channelID, channel } = data);
+  $: ({ channel } = data);
+  $: channelID = channel.channelID;
   $: readerURL = `${PUBLIC_READER_PREFIX}${channelID}`;
 
+  const updateChannel = async (formData: FormData) => {
+    formData.append('updatedAt', channel.updatedAt.getTime() + '');
+    await fetch(`/api/channels/${channelID}`, {
+      method: 'PUT',
+      body: formData,
+    });
+    await invalidateAll();
+  };
+
   const deleteChannel = async () => {
-    await fetch(`/api/channels/${data.channel.channelID}`, {
+    await fetch(`/api/channels/${channelID}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ updatedAt: data.channel.updatedAt.getTime() }),
+      body: JSON.stringify({ updatedAt: channel.updatedAt.getTime() }),
     });
     await goto('/');
   };
@@ -84,12 +94,7 @@
 
 <UrlCopyModal bind:this={urlCopyModal} />
 <DeleteModal bind:this={deleteModal} name={channel.name} onSubmit={deleteChannel} />
-<ChannelEditor
-  bind:this={channelEditor}
-  onSubmit={() => {
-    return Promise.resolve();
-  }}
-/>
+<ChannelEditor bind:this={channelEditor} onSubmit={updateChannel} />
 
 <style lang="scss">
   .container {
