@@ -1,42 +1,42 @@
 <script lang="ts">
-  import ChannelPage from '@announcing/components/ChannelPage.svelte';
-  import Loading from '@announcing/components/Loading.svelte';
-  import Modal from '@announcing/components/Modal.svelte';
   import { LL } from '@announcing/i18n';
 
   import { goto } from '$app/navigation';
+  import { PUBLIC_READER_PREFIX } from '$env/static/public';
+  import ChannelEditor from '$lib/components/ChannelEditor.svelte';
 
   import type { PageData } from './$types';
+  import DeleteModal from './DeleteModal.svelte';
+  import UrlCopyModal from './UrlCopyModal.svelte';
 
   export let data: PageData;
 
-  let deleteModal: Modal;
-  let deleteUnderstand = false;
-  let loading = false;
+  let urlCopyModal: UrlCopyModal;
+  let deleteModal: DeleteModal;
+  let channelEditor: ChannelEditor;
+
+  $: ({ channelID, channel } = data);
+  $: readerURL = `${PUBLIC_READER_PREFIX}${channelID}`;
 
   const deleteChannel = async () => {
-    loading = true;
-    try {
-      await fetch(`/api/channels/${data.channel.channelID}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ updatedAt: data.channel.updatedAt.getTime() }),
-      });
-      await goto('/');
-    } finally {
-      loading = false;
-    }
+    await fetch(`/api/channels/${data.channel.channelID}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ updatedAt: data.channel.updatedAt.getTime() }),
+    });
+    await goto('/');
   };
 </script>
 
 <div class="container">
-  <div class="header">
-    <a href="/">{$LL.back()}</a>
+  <div class="name-box">
+    <span class="name">{channel.name}</span>
+    {#if channel.icon}
+      <img class="icon" src={channel.icon} alt="channel icon" />
+    {/if}
   </div>
-
-  <ChannelPage theme="default" channel={data.channel} channelPreview={true} />
 
   <hr />
 
@@ -44,74 +44,69 @@
 
   <ul class="actions">
     <li>
-      <a href="/">{$LL.channelActions.viewChannel()}</a>
+      <a href={readerURL}>{$LL.channelActions.viewChannel()}</a>
     </li>
     <li>
-      <button class="text">{$LL.channelActions.copyURL()}</button>
+      <button
+        class="text"
+        on:click={() => {
+          urlCopyModal.openModal(readerURL);
+        }}>{$LL.channelActions.copyURL()}</button
+      >
     </li>
     <li>
-      <button class="text">{$LL.channelActions.createAnnouncement()}</button>
+      <a href="/">
+        {$LL.channelActions.createAnnouncement()}
+      </a>
     </li>
     <li>
-      <button class="text">{$LL.channelActions.editAnnouncement()}</button>
+      <a href="/">{$LL.channelActions.editAnnouncement()}</a>
     </li>
     <li>
-      <button class="text">{$LL.channelActions.editChannel()}</button>
+      <button
+        class="text"
+        on:click={() => {
+          channelEditor.openEditor(channel);
+        }}>{$LL.channelActions.editChannel()}</button
+      >
     </li>
     <hr />
     <li>
       <button
         class="text"
         on:click={() => {
-          deleteUnderstand = false;
-          deleteModal.showModal();
+          deleteModal.openModal();
         }}>{$LL.channelActions.deleteChannel()}</button
       >
     </li>
   </ul>
 </div>
 
-<Modal bind:this={deleteModal} dismissMode="none">
-  <div class="delete-modal">
-    <span>{$LL.deleteChannel()}</span>
-    <hr />
-    <div class="warning">{$LL.deleteChannelDescription({ name: data.channel.name })}</div>
-    <label class="understand-box">
-      <input type="checkbox" bind:checked={deleteUnderstand} />
-      {$LL.deleteChannelUnderstand()}
-    </label>
-
-    <button
-      class="delete-btn"
-      disabled={!deleteUnderstand}
-      on:click={() => {
-        if (confirm($LL.deleteChannelConfirmation())) {
-          void deleteChannel();
-        }
-      }}
-    >
-      {$LL.deleteChannel()}
-    </button>
-
-    <button
-      class="text small"
-      on:click={() => {
-        deleteModal.closeModal();
-      }}>{$LL.cancel()}</button
-    >
-  </div>
-</Modal>
-
-<Loading show={loading} />
+<UrlCopyModal bind:this={urlCopyModal} />
+<DeleteModal bind:this={deleteModal} name={channel.name} onSubmit={deleteChannel} />
+<ChannelEditor
+  bind:this={channelEditor}
+  onSubmit={() => {
+    return Promise.resolve();
+  }}
+/>
 
 <style lang="scss">
   .container {
-    padding: 8px;
-    max-width: 600px;
-    margin: 0 auto;
+    padding: 16px 8px;
 
-    .header {
+    .name-box {
       display: flex;
+      align-items: center;
+      margin: 0 0 16px 0;
+      .name {
+        font-size: 22px;
+      }
+      .icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 0 0 auto;
+      }
     }
 
     .actions-instruction {
@@ -126,29 +121,5 @@
         margin: 12px 0;
       }
     }
-  }
-
-  .delete-modal {
-    background-color: var(--color-background);
-    border-radius: 8px;
-    margin: auto;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-
-    hr {
-      margin: -8px 0 0;
-    }
-
-    .warning {
-      font-weight: bold;
-      color: var(--color-error);
-    }
-  }
-
-  a {
-    text-decoration: underline;
   }
 </style>
