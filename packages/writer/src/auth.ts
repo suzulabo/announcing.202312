@@ -1,4 +1,4 @@
-import { base62 } from '@announcing/db';
+import { base62 } from '@announcing/db/utils';
 import { SvelteKitAuth, type SvelteKitAuthConfig } from '@auth/sveltekit';
 import Credentials from '@auth/sveltekit/providers/credentials';
 import Google from '@auth/sveltekit/providers/google';

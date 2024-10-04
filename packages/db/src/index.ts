@@ -8,5 +8,3 @@ export { deleteChannel } from './api/channel/deleteChannel';
 export { getChannel } from './api/channel/getChannel';
 export { getChannels } from './api/channel/getChannels';
 export { updateChannel } from './api/channel/updateChannel';
-export { base62 } from './lib/base62';
-export { setDBEnv } from './lib/env';

@@ -1,4 +1,4 @@
-import { setDBEnv } from '@announcing/db';
+import { setDBEnv } from '@announcing/db/utils';
 import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 

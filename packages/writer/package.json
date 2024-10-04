@@ -14,7 +14,6 @@
     "@announcing/db": "workspace:^",
     "@announcing/i18n": "workspace:^",
     "@auth/sveltekit": "^1.4.2",
-    "@libsql/client": "^0.9.0",
     "@playwright/test": "^1.46.0",
     "@sveltejs/adapter-auto": "^3.2.3",
     "@sveltejs/kit": "^2.5.21",
