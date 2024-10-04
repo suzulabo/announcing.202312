@@ -16,11 +16,19 @@
   },
   "type": "module",
   "exports": {
+    "./actions/imgSrc": {
+      "types": "./dist/actions/imgSrc.d.ts",
+      "import": "./dist/actions/imgSrc.js"
+    },
     "./actions/loadImage": {
       "types": "./dist/actions/loadImage.d.ts",
       "import": "./dist/actions/loadImage.js"
     },
     "./base.scss": "./dist/base.scss",
+    "./utils/idbBlob": {
+      "types": "./dist/utils/idbBlob.d.ts",
+      "import": "./dist/utils/idbBlob.js"
+    },
     "./ChannelEditor.svelte": {
       "types": "./dist/parts/ChannelEditor.svelte.d.ts",
       "svelte": "./dist/parts/ChannelEditor.svelte"

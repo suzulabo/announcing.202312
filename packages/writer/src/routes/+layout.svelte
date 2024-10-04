@@ -61,7 +61,7 @@
 <style lang="scss">
   .container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 100px;
 
     header {
       padding: 16px 8px;
