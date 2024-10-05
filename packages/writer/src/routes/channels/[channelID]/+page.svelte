@@ -2,6 +2,7 @@
   import { LL } from '@announcing/i18n';
 
   import { goto, invalidateAll } from '$app/navigation';
+  import { page } from '$app/stores';
   import { PUBLIC_READER_PREFIX } from '$env/static/public';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
 
@@ -65,7 +66,7 @@
       >
     </li>
     <li>
-      <a href="/">
+      <a href={`${$page.url.pathname}/announcements`}>
         {$LL.channelActions.createAnnouncement()}
       </a>
     </li>

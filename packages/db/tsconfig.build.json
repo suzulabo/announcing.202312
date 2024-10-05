@@ -5,5 +5,5 @@
     "declaration": true,
     "outDir": "dist"
   },
-  "files": ["src/index.ts", "src/constants.ts", "src/utils.ts"]
+  "files": ["src/index.ts", "src/constants.ts", "src/types.ts", "src/utils.ts"]
 }
