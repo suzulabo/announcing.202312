@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  export const gotoPage = (url: string, state: object) => {
+  export const gotoPage = (url: string, state?: object) => {
     return goto(url, {
       state: {
         fromHref: location.href,
