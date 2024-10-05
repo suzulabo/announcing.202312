@@ -28,7 +28,7 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
-  await updateChannel({ userID, updatedAt: new Date(updatedAt), channelID, name, desc, iconFile });
+  await updateChannel({ userID, updatedAt, channelID, name, desc, iconFile });
 
   return json({});
 };
@@ -52,7 +52,7 @@ export const DELETE: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
-  await deleteChannel({ userID, channelID, updatedAt: new Date(data.updatedAt) });
+  await deleteChannel({ userID, channelID, updatedAt: data.updatedAt });
 
   return json({});
 };

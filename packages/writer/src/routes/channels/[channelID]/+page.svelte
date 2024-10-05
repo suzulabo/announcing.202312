@@ -21,7 +21,7 @@
   $: readerURL = `${PUBLIC_READER_PREFIX}${channelID}`;
 
   const updateChannel = async (formData: FormData) => {
-    formData.append('updatedAt', channel.updatedAt.getTime() + '');
+    formData.append('updatedAt', channel.updatedAt + '');
     await fetch(`/api/channels/${channelID}`, {
       method: 'PUT',
       body: formData,
@@ -35,7 +35,7 @@
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ updatedAt: channel.updatedAt.getTime() }),
+      body: JSON.stringify({ updatedAt: channel.updatedAt }),
     });
     await goto('/');
   };
