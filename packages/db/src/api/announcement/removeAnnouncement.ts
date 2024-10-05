@@ -33,7 +33,7 @@ export const removeAnnouncement = async ({
     .update(channelsTable)
     .set({
       announcementIDs,
-      updatedAt: new Date(),
+      updatedAt: new Date().getTime(),
     })
     .where(
       and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),

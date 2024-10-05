@@ -1,12 +1,11 @@
 <script lang="ts" context="module">
   export type Announcement = {
-    id: string;
     headerImage?: string | undefined;
     title?: string | undefined;
     body: string;
     images?: string[] | undefined;
-    updatedAt: Date;
-    createdAt: Date;
+    updatedAt: number;
+    createdAt: number;
   };
 </script>
 

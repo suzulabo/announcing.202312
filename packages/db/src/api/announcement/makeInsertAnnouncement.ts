@@ -16,16 +16,18 @@ const genID = ({
   title: string | undefined;
   body: string;
   images: string[] | undefined;
-  createdAt: Date;
+  createdAt: number;
 }) => {
   const hash = createHash('sha256');
+
+  const createdDate = new Date(createdAt);
 
   const list = [
     headerImage,
     title,
     body,
     ...(images ?? []),
-    new Date(createdAt.getFullYear(), createdAt.getMonth(), createdAt.getDate())
+    new Date(createdDate.getFullYear(), createdDate.getMonth(), createdDate.getDate())
       .getTime()
       .toString(),
   ];
@@ -40,7 +42,7 @@ const genID = ({
 
   const digest = hash.digest();
 
-  return base62.encode(digest).substring(0, 6);
+  return base62.encode(new Uint8Array(digest.buffer)).substring(0, 6);
 };
 
 export const makeInsertAnnouncement = async ({
@@ -59,8 +61,8 @@ export const makeInsertAnnouncement = async ({
   title?: string | undefined;
   body: string;
   imagesFiles?: Blob[] | undefined;
-  updatedAt: Date;
-  createdAt: Date;
+  updatedAt: number;
+  createdAt: number;
 }) => {
   const [headerImage, headerImageInsert] = headerImageFile
     ? await makeInsertBlob(headerImageFile)

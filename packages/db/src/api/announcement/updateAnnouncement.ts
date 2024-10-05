@@ -19,7 +19,7 @@ export const updateAnnouncement = async ({
   userID: string;
   channelID: string;
   targetAnnouncementID: string;
-  targetUpdatedAt: Date;
+  targetUpdatedAt: number;
   headerImageFile: Blob | undefined;
   title: string | undefined;
   body: string;
@@ -43,6 +43,8 @@ export const updateAnnouncement = async ({
     return;
   }
 
+  const now = new Date().getTime();
+
   const { announcementID, announcementQueries } = await makeInsertAnnouncement({
     userID,
     channelID,
@@ -50,7 +52,7 @@ export const updateAnnouncement = async ({
     title,
     body,
     imagesFiles,
-    updatedAt: new Date(),
+    updatedAt: now,
     createdAt: announcement.createdAt,
   });
 
@@ -61,7 +63,7 @@ export const updateAnnouncement = async ({
       .update(channelsTable)
       .set({
         announcementIDs,
-        updatedAt: new Date(),
+        updatedAt: now,
       })
       .where(
         and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),

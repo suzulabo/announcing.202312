@@ -13,7 +13,7 @@ export const updateChannel = async ({
   iconFile,
 }: {
   userID: string;
-  updatedAt: Date;
+  updatedAt: number;
   channelID: string;
   name: string;
   desc?: string | undefined;
@@ -29,7 +29,7 @@ export const updateChannel = async ({
         name,
         desc: desc ?? null,
         ...(iconFile !== undefined && { icon }),
-        updatedAt: new Date(),
+        updatedAt: new Date().getTime(),
       })
       .where(
         and(

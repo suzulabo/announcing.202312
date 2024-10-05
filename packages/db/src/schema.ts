@@ -6,12 +6,8 @@ export const channelsTable = sqliteTable('channels', {
   desc: text('desc'),
   icon: text('icon'),
   announcementIDs: text('announcementIDs', { mode: 'json' }).$type<string[]>(),
-  updatedAt: integer('updatedAt', { mode: 'timestamp' })
-    .notNull()
-    .$default(() => new Date()),
-  createdAt: integer('createdAt', { mode: 'timestamp' })
-    .notNull()
-    .$default(() => new Date()),
+  updatedAt: integer('updatedAt').notNull(),
+  createdAt: integer('createdAt').notNull(),
 });
 
 export const ownersTable = sqliteTable(
@@ -21,9 +17,7 @@ export const ownersTable = sqliteTable(
       .notNull()
       .references(() => channelsTable.channelID, { onDelete: 'cascade' }),
     userID: text('userID').notNull(),
-    createdAt: integer('createdAt', { mode: 'timestamp' })
-      .notNull()
-      .$default(() => new Date()),
+    createdAt: integer('createdAt').notNull(),
   },
   (table) => {
     return {
@@ -44,8 +38,8 @@ export const announcementsTable = sqliteTable(
     title: text('title'),
     body: text('body').notNull(),
     images: text('images', { mode: 'json' }).$type<string[]>(),
-    updatedAt: integer('updatedAt', { mode: 'timestamp' }).notNull(),
-    createdAt: integer('createdAt', { mode: 'timestamp' }).notNull(),
+    updatedAt: integer('updatedAt').notNull(),
+    createdAt: integer('createdAt').notNull(),
   },
   (table) => {
     return {
@@ -58,7 +52,5 @@ export const blobsTable = sqliteTable('blobs', {
   blobID: text('blobID').notNull().primaryKey(),
   contentType: text('contentType').notNull(),
   data: blob('blob', { mode: 'buffer' }).notNull(),
-  createdAt: integer('createdAt', { mode: 'timestamp' })
-    .notNull()
-    .$default(() => new Date()),
+  createdAt: integer('createdAt').notNull(),
 });

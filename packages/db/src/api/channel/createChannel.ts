@@ -29,9 +29,13 @@ export const createChannel = async ({
     }
   }
 
+  const now = new Date().getTime();
+
   const queries = [
-    db.insert(channelsTable).values({ channelID, name, desc: desc ?? null, icon }),
-    db.insert(ownersTable).values({ channelID, userID }),
+    db
+      .insert(channelsTable)
+      .values({ channelID, name, desc: desc ?? null, icon, updatedAt: now, createdAt: now }),
+    db.insert(ownersTable).values({ channelID, userID, createdAt: now }),
     ...(iconInsert ? [iconInsert] : []),
   ] as const;
 

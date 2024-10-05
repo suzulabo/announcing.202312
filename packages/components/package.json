@@ -29,6 +29,10 @@
       "types": "./dist/utils/idbBlob.d.ts",
       "import": "./dist/utils/idbBlob.js"
     },
+    "./AnnouncementView.svelte": {
+      "types": "./dist/parts/AnnouncementView/AnnouncementView.svelte.d.ts",
+      "svelte": "./dist/parts/AnnouncementView/AnnouncementView.svelte"
+    },
     "./ChannelEditor.svelte": {
       "types": "./dist/parts/ChannelEditor.svelte.d.ts",
       "svelte": "./dist/parts/ChannelEditor.svelte"

@@ -140,7 +140,7 @@
     class="preview-btn"
     on:click={() => {
       const previewData = { ...form };
-      const now = new Date();
+      const now = new Date().getTime();
       if (!previewData.createdAt) {
         previewData.createdAt = now;
       }

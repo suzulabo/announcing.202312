@@ -35,7 +35,7 @@
     </button>
   {/if}
   <div class="date">
-    {#if announcement.createdAt.getTime() === announcement.updatedAt.getTime()}
+    {#if announcement.createdAt === announcement.updatedAt}
       <div>{formatDate(announcement.createdAt)}</div>
     {:else}
       <div>{$LL.announcementView.created()}{formatDate(announcement.createdAt)}</div>

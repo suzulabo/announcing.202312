@@ -20,7 +20,7 @@ export const addAnnouncement = async ({
   title: string | undefined;
   body: string;
   imagesFiles: Blob[] | undefined;
-  createdAt: Date;
+  createdAt: number;
 }) => {
   const channel = await getChannel({ userID, channelID });
   if (!channel) {
@@ -47,7 +47,7 @@ export const addAnnouncement = async ({
       .update(channelsTable)
       .set({
         announcementIDs,
-        updatedAt: new Date(),
+        updatedAt: new Date().getTime(),
       })
       .where(
         and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
