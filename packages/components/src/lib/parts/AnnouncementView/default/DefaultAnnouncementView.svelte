@@ -95,8 +95,6 @@
 
 <style lang="scss">
   .container {
-    max-width: 600px;
-    margin: 0 auto 100px;
     display: flex;
     flex-direction: column;
     gap: 8px;

@@ -1,3 +1,14 @@
+<script lang="ts" context="module">
+  export const gotoPage = (url: string, state: object) => {
+    return goto(url, {
+      state: {
+        fromHref: location.href,
+        ...state,
+      },
+    });
+  };
+</script>
+
 <script lang="ts">
   import { get } from 'svelte/store';
 

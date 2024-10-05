@@ -1,31 +1,54 @@
 <script lang="ts">
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
-  import type { GetAnnouncementResult } from '@announcing/db/types';
+  import { LL } from '@announcing/i18n';
   import { onMount } from 'svelte';
 
   import { page } from '$app/stores';
 
   import type { Snapshot } from '../$types';
 
-  let announcement: GetAnnouncementResult | undefined;
+  let previewData: App.PageState['announcementPreviewData'];
 
   onMount(() => {
-    announcement = $page.state.announcementPreviewData;
+    previewData = $page.state.announcementPreviewData;
   });
 
-  export const snapshot: Snapshot<GetAnnouncementResult | undefined> = {
-    capture: () => announcement,
+  export const snapshot: Snapshot<App.PageState['announcementPreviewData']> = {
+    capture: () => {
+      return previewData;
+    },
     restore: (value) => {
-      const previewData = $page.state.announcementPreviewData;
-      if (previewData) {
-        announcement = previewData;
+      const stateData = $page.state.announcementPreviewData;
+      if (stateData) {
+        previewData = stateData;
       } else {
-        announcement = value;
+        previewData = value;
       }
     },
   };
 </script>
 
-{#if announcement}
-  <AnnouncementView {announcement} />
+{#if previewData}
+  {@const { channel, announcement } = previewData}
+  <div class="container">
+    <div class="trail">
+      <a href={`/channels/${channel.channelID}`}>{channel.name}</a>
+      /
+      <a href={`${$page.url.pathname.replace('/preview', '')}`}>{$LL.postAnnouncement()}</a>
+      /
+      {$LL.preview()}
+    </div>
+    <AnnouncementView {announcement} />
+  </div>
 {/if}
+
+<style lang="scss">
+  .container {
+    padding: 4px 8px;
+
+    .trail {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+  }
+</style>

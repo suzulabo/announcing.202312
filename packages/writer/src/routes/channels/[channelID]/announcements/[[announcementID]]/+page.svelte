@@ -23,6 +23,7 @@
   import { imgSrc } from '@announcing/components/actions/imgSrc';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
+  import { gotoPage } from '@announcing/components/NavigationSupport.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
   import {
     ANNOUNCEMENT_BODY_MAX_BYTES,
@@ -32,12 +33,20 @@
   import type { GetAnnouncementResult } from '@announcing/db/types';
   import { LL } from '@announcing/i18n';
 
-  import { goto } from '$app/navigation';
   import { page } from '$app/stores';
 
-  import type { PageData } from './$types';
+  import type { PageData, Snapshot } from './$types';
 
   export let data: PageData;
+
+  export const snapshot: Snapshot<Partial<GetAnnouncementResult>> = {
+    capture: () => {
+      return form;
+    },
+    restore: (value) => {
+      form = value;
+    },
+  };
 
   let form: Partial<GetAnnouncementResult>;
   let titleError = false;
@@ -45,11 +54,16 @@
   let headerImageFileInput: FileInput;
   let imagesFileInput: FileInput;
 
-  $: announcement = data.announcement;
+  $: ({ channel, announcement } = data);
   $: form = { ...announcement };
 </script>
 
 <div class="container">
+  <div class="trail">
+    <a href={`/channels/${channel.channelID}`}>{channel.name}</a>
+    /
+    {$LL.postAnnouncement()}
+  </div>
   <div class="header-image">
     {#if form.headerImage}
       <button
@@ -139,18 +153,16 @@
     disabled={!isAnnouncement(form, titleError, bodyError)}
     class="preview-btn"
     on:click={() => {
-      const previewData = { ...form };
+      const previewAnnouncement = { ...form };
       const now = new Date().getTime();
-      if (!previewData.createdAt) {
-        previewData.createdAt = now;
+      if (!previewAnnouncement.createdAt) {
+        previewAnnouncement.createdAt = now;
       }
-      previewData.updatedAt = now;
+      previewAnnouncement.updatedAt = now;
 
-      if (isAnnouncement(previewData, titleError, bodyError)) {
-        void goto(`${$page.url.pathname}/preview`, {
-          state: {
-            announcementPreviewData: previewData,
-          },
+      if (isAnnouncement(previewAnnouncement, titleError, bodyError)) {
+        void gotoPage(`${$page.url.pathname}/preview`, {
+          announcementPreviewData: { channel, announcement: previewAnnouncement },
         });
       }
     }}>{$LL.preview()}</button
@@ -159,10 +171,15 @@
 
 <style lang="scss">
   .container {
-    padding: 16px 8px;
+    padding: 4px 8px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    .trail {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
 
     .header-image {
       display: flex;
