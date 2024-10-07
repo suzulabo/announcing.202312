@@ -71,7 +71,9 @@
       </a>
     </li>
     <li>
-      <a href="/">{$LL.channelActions.editAnnouncement()}</a>
+      <a href={`${$page.url.pathname}/announcements/list`}
+        >{$LL.channelActions.editAnnouncement()}</a
+      >
     </li>
     <li>
       <button

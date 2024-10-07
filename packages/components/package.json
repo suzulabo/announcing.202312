@@ -33,6 +33,10 @@
       "types": "./dist/parts/AnnouncementView/AnnouncementView.svelte.d.ts",
       "svelte": "./dist/parts/AnnouncementView/AnnouncementView.svelte"
     },
+    "./ChannelView.svelte": {
+      "types": "./dist/parts/ChannelView/ChannelView.svelte.d.ts",
+      "svelte": "./dist/parts/ChannelView/ChannelView.svelte"
+    },
     "./ChannelEditor.svelte": {
       "types": "./dist/parts/ChannelEditor.svelte.d.ts",
       "svelte": "./dist/parts/ChannelEditor.svelte"
