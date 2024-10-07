@@ -10,9 +10,18 @@ export const getAnnouncement = async ({
   channelID: string;
   announcementID: string;
 }) => {
+  const { title, body, headerImage, images, updatedAt, createdAt } = announcementsTable;
+
   const announcement = (
     await db
-      .select()
+      .select({
+        title,
+        body,
+        headerImage,
+        images,
+        updatedAt,
+        createdAt,
+      })
       .from(announcementsTable)
       .where(
         and(
