@@ -1,6 +1,5 @@
 <script lang="ts" generics="T">
   import { onMount } from 'svelte';
-  import type { Action } from 'svelte/action';
 
   import { toStyle } from '$lib/utils/toStyle';
 
@@ -9,22 +8,25 @@
   export let gap = 0;
   export let overScanCount = 2;
 
-  type ItemDetail = (typeof itemDetails)[number];
+  const heightMap = new Map<T, number>();
 
   let totalHeight: number;
-  let visibleItems: ItemDetail[] = [];
+  let visibleItems: T[] = [];
   let topHeight = 0;
   let itemsElement: HTMLDivElement | undefined;
 
-  $: itemDetails = items.map((item) => {
-    return { item, height: itemMinHeight };
-  });
-  $: updateVisibleItems(itemDetails);
+  export const invalidateItems = () => {
+    items = [...items];
+  };
 
-  const updateVisibleItems = (itemDetails: ItemDetail[]) => {
+  const updateVisibleItems = (items: T[]) => {
     if (!itemsElement) {
       return;
     }
+
+    const getItemHeight = (item: T) => {
+      return heightMap.get(item) ?? itemMinHeight;
+    };
 
     const rect = itemsElement.getBoundingClientRect();
 
@@ -33,50 +35,50 @@
 
     const startRow = (() => {
       let sumHeight = 0;
-      for (const [i, detail] of itemDetails.entries()) {
-        sumHeight += detail.height + gap;
+      for (const [i, item] of items.entries()) {
+        sumHeight += getItemHeight(item) + gap;
         if (sumHeight > y) {
           return Math.max(0, i - overScanCount);
         }
       }
-      topHeight = 0;
       return 0;
     })();
 
-    topHeight = itemDetails.slice(0, startRow).reduce((p, v) => {
-      return p + v.height + gap;
+    topHeight = items.slice(0, startRow).reduce((p, v) => {
+      return p + getItemHeight(v) + gap;
     }, 0);
 
     const endRow = (() => {
       let sumHeight = topHeight;
-      for (const [i, detail] of itemDetails.slice(startRow).entries()) {
-        sumHeight += detail.height + gap;
+      for (const [i, item] of items.slice(startRow).entries()) {
+        sumHeight += getItemHeight(item) + gap;
         if (sumHeight >= visibleBottomY) {
           return i + startRow + overScanCount;
         }
       }
-      return itemDetails.length - 1;
+      return items.length - 1;
     })();
 
-    const newVisibleItems = itemDetails.slice(startRow, endRow + 1);
+    const newVisibleItems = items.slice(startRow, endRow + 1);
     if (visibleItems[0] !== newVisibleItems[0] || visibleItems.length !== newVisibleItems.length) {
+      visibleItems = newVisibleItems;
+    } else {
       visibleItems = newVisibleItems;
     }
 
     totalHeight =
-      itemDetails.reduce((p, v) => {
-        return p + v.height;
+      items.reduce((p, v) => {
+        return p + getItemHeight(v);
       }, 0) +
-      (itemDetails.length - 1) * gap;
+      (items.length - 1) * gap;
   };
 
-  const updateItemDetails = () => {
-    itemDetails = [...itemDetails];
-  };
+  $: updateVisibleItems(items);
 
   onMount(() => {
     const resizeObserver = new ResizeObserver(() => {
-      updateItemDetails();
+      console.log('resize itemsElement');
+      invalidateItems();
     });
     if (itemsElement) {
       resizeObserver.observe(itemsElement);
@@ -88,19 +90,20 @@
   });
 
   const itemResize = (() => {
-    const elMap = new Map<Element, ItemDetail>();
+    const elMap = new Map<Element, T>();
 
     let itemResizeObserver: ResizeObserver | undefined;
 
     onMount(() => {
       itemResizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
-          const itemDetail = elMap.get(entry.target);
-          if (itemDetail) {
-            itemDetail.height = entry.contentRect.height;
+          const item = elMap.get(entry.target);
+          if (item) {
+            heightMap.set(item, entry.contentRect.height);
           }
         }
-        updateItemDetails();
+        console.log('resize item');
+        invalidateItems();
       });
 
       return () => {
@@ -108,16 +111,16 @@
       };
     });
 
-    const result: Action<Element, ItemDetail> = (el, itemDetail: ItemDetail) => {
-      elMap.set(el, itemDetail);
+    const result = (el: Element, item: T) => {
+      elMap.set(el, item);
       itemResizeObserver?.observe(el);
 
-      updateItemDetails();
+      console.log('item mount');
+      invalidateItems();
 
       return {
-        update: (itemDetail) => {
-          elMap.set(el, itemDetail);
-          updateItemDetails();
+        update: (item: T) => {
+          elMap.set(el, item);
         },
         destroy: () => {
           itemResizeObserver?.unobserve(el);
@@ -132,7 +135,7 @@
 
 <svelte:document
   on:scroll={() => {
-    itemDetails = [...itemDetails];
+    invalidateItems();
   }}
 />
 
@@ -146,9 +149,9 @@
   })}
 >
   {#if visibleItems}
-    {#each visibleItems as detail (detail)}
-      <div class="item-box" use:itemResize={detail}>
-        <slot name="item" item={detail.item} />
+    {#each visibleItems as item (item)}
+      <div class="item-box" use:itemResize={item}>
+        <slot name="item" {item} />
       </div>
     {/each}
   {/if}
