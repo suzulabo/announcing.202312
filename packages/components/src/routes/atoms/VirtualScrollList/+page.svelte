@@ -9,7 +9,12 @@
 
 <div class="container">
   <VirtualScrollList {items} itemMinHeight={100} gap={0}>
-    <div class="item" slot="item" let:item style={toStyle({ height: `150px` })}>
+    <div
+      class="item"
+      slot="item"
+      let:item
+      style={toStyle({ height: `${100 + item.index * 10}px` })}
+    >
       <div>{item.index}</div>
     </div>
   </VirtualScrollList>
