@@ -72,8 +72,6 @@
           return p + getItemHeight(v);
         }, 0) +
         (items.length - 1) * gap;
-
-      console.log('##update', { startRow, endRow, visibleBottomY });
     }
   }
 
