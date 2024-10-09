@@ -5,7 +5,7 @@
 </script>
 
 <div class="container">
-  <VirtualScrollList {items} itemMinHeight={100}>
+  <VirtualScrollList {items} idKey="index" itemMinHeight={100}>
     <div class="item" slot="item" let:item>
       <div class="title">{item.title}</div>
       <div class="body">{item.body}</div>

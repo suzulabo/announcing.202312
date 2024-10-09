@@ -8,7 +8,7 @@
 </script>
 
 <div class="container">
-  <VirtualScrollList {items} itemMinHeight={100} gap={0}>
+  <VirtualScrollList {items} idKey="index" itemMinHeight={100} gap={0}>
     <div
       class="item"
       slot="item"

@@ -1,85 +1,84 @@
-<script lang="ts" generics="T">
+<script lang="ts" generics="T extends Record<K, string | number>, K extends keyof T">
   import { onMount } from 'svelte';
 
   import { toStyle } from '$lib/utils/toStyle';
 
   export let items: T[];
+  export let idKey: K;
   export let itemMinHeight: number;
   export let gap = 0;
   export let overScanCount = 2;
 
-  const heightMap = new Map<T, number>();
-
+  let itemsY = -1;
+  let visibleBottomY = -1;
   let totalHeight: number;
   let visibleItems: T[] = [];
   let topHeight = 0;
   let itemsElement: HTMLDivElement | undefined;
 
-  export const invalidateItems = () => {
-    items = [...items];
+  const heightMap: Record<string | number, number> = {};
+
+  const updateItemsRect = () => {
+    if (itemsElement) {
+      const rect = itemsElement.getBoundingClientRect();
+      itemsY = Math.max(0, rect.y * -1);
+      visibleBottomY = itemsY + document.documentElement.clientHeight;
+    }
   };
 
-  const updateVisibleItems = (items: T[]) => {
-    if (!itemsElement) {
-      return;
-    }
-
-    const getItemHeight = (item: T) => {
-      return heightMap.get(item) ?? itemMinHeight;
-    };
-
-    const rect = itemsElement.getBoundingClientRect();
-
-    const y = Math.max(0, rect.y * -1);
-    const visibleBottomY = y + document.documentElement.clientHeight;
-
-    const startRow = (() => {
-      let sumHeight = 0;
-      for (const [i, item] of items.entries()) {
-        sumHeight += getItemHeight(item) + gap;
-        if (sumHeight > y) {
-          return Math.max(0, i - overScanCount);
+  $: {
+    if (itemsElement && itemsY >= 0 && visibleBottomY >= 0) {
+      const getItemHeight = (item: T) => {
+        return heightMap[item[idKey]] ?? itemMinHeight;
+      };
+      const startRow = (() => {
+        let sumHeight = 0;
+        for (const [i, item] of items.entries()) {
+          sumHeight += getItemHeight(item) + gap;
+          if (sumHeight > itemsY) {
+            return Math.max(0, i - overScanCount);
+          }
         }
-      }
-      return 0;
-    })();
+        return 0;
+      })();
 
-    topHeight = items.slice(0, startRow).reduce((p, v) => {
-      return p + getItemHeight(v) + gap;
-    }, 0);
+      topHeight = items.slice(0, startRow).reduce((p, v) => {
+        return p + getItemHeight(v) + gap;
+      }, 0);
 
-    const endRow = (() => {
-      let sumHeight = topHeight;
-      for (const [i, item] of items.slice(startRow).entries()) {
-        sumHeight += getItemHeight(item) + gap;
-        if (sumHeight >= visibleBottomY) {
-          return i + startRow + overScanCount;
+      const endRow = (() => {
+        let sumHeight = topHeight;
+        for (const [i, item] of items.slice(startRow).entries()) {
+          sumHeight += getItemHeight(item) + gap;
+          if (sumHeight >= visibleBottomY) {
+            return i + startRow + overScanCount;
+          }
         }
+        return items.length - 1;
+      })();
+
+      const newVisibleItems = items.slice(startRow, endRow + 1);
+      if (
+        visibleItems[0] !== newVisibleItems[0] ||
+        visibleItems.length !== newVisibleItems.length
+      ) {
+        visibleItems = newVisibleItems;
+      } else {
+        visibleItems = newVisibleItems;
       }
-      return items.length - 1;
-    })();
 
-    const newVisibleItems = items.slice(startRow, endRow + 1);
-    if (visibleItems[0] !== newVisibleItems[0] || visibleItems.length !== newVisibleItems.length) {
-      visibleItems = newVisibleItems;
-    } else {
-      visibleItems = newVisibleItems;
+      totalHeight =
+        items.reduce((p, v) => {
+          return p + getItemHeight(v);
+        }, 0) +
+        (items.length - 1) * gap;
+
+      console.log('##update', { startRow, endRow, visibleBottomY });
     }
-
-    totalHeight =
-      items.reduce((p, v) => {
-        return p + getItemHeight(v);
-      }, 0) +
-      (items.length - 1) * gap;
-  };
-
-  $: updateVisibleItems(items);
+  }
 
   onMount(() => {
-    const resizeObserver = new ResizeObserver(() => {
-      console.log('resize itemsElement');
-      invalidateItems();
-    });
+    const resizeObserver = new ResizeObserver(updateItemsRect);
     if (itemsElement) {
       resizeObserver.observe(itemsElement);
     }
@@ -89,21 +88,21 @@
     };
   });
 
-  const itemResize = (() => {
-    const elMap = new Map<Element, T>();
+  type ElementWithItem = Element & { item?: T };
 
+  const itemResize = (() => {
     let itemResizeObserver: ResizeObserver | undefined;
 
     onMount(() => {
       itemResizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
-          const item = elMap.get(entry.target);
+          const item = (entry.target as ElementWithItem).item;
           if (item) {
-            heightMap.set(item, entry.contentRect.height);
+            if (heightMap[item[idKey]] !== entry.contentRect.height) {
+              heightMap[item[idKey]] = entry.contentRect.height;
+            }
           }
         }
-        console.log('resize item');
-        invalidateItems();
       });
 
       return () => {
@@ -111,33 +110,25 @@
       };
     });
 
-    const result = (el: Element, item: T) => {
-      elMap.set(el, item);
+    const action = (el: ElementWithItem, item: T) => {
+      el.item = item;
       itemResizeObserver?.observe(el);
-
-      console.log('item mount');
-      invalidateItems();
 
       return {
         update: (item: T) => {
-          elMap.set(el, item);
+          el.item = item;
         },
         destroy: () => {
           itemResizeObserver?.unobserve(el);
-          elMap.delete(el);
         },
       };
     };
 
-    return result;
+    return action;
   })();
 </script>
 
-<svelte:document
-  on:scroll={() => {
-    invalidateItems();
-  }}
-/>
+<svelte:document on:scroll={updateItemsRect} />
 
 <div
   bind:this={itemsElement}
@@ -149,7 +140,7 @@
   })}
 >
   {#if visibleItems}
-    {#each visibleItems as item (item)}
+    {#each visibleItems as item (item[idKey])}
       <div class="item-box" use:itemResize={item}>
         <slot name="item" {item} />
       </div>

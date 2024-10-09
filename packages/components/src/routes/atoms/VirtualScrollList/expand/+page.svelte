@@ -2,15 +2,13 @@
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
   import { toStyle } from '$lib/utils/toStyle';
 
-  let virtualScrollList: VirtualScrollList<(typeof items)[number]>;
-
   let items = [...Array(20)].map((_, index) => {
     return { index, expand: false };
   });
 </script>
 
 <div class="container">
-  <VirtualScrollList bind:this={virtualScrollList} {items} itemMinHeight={100} gap={0}>
+  <VirtualScrollList {items} idKey="index" itemMinHeight={100} gap={0}>
     <!-- eslint-disable-next-line svelte/valid-compile -->
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
@@ -21,12 +19,8 @@
       role="button"
       tabindex="0"
       on:click={() => {
-        items = items.map((v) => {
-          if (v === item) {
-            return { ...v, expand: !v.expand };
-          }
-          return v;
-        });
+        item.expand = !item.expand;
+        items = [...items];
       }}
     >
       <div>
