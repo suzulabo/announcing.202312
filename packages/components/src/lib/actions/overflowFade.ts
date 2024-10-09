@@ -33,7 +33,7 @@ const resizeObserver = readable<ResizeObserver>(undefined, (set) => {
 // ResizeObserver cannot detect changes in overflow state if the content changes.
 // In such cases, pass an arbitrary value that syncs with content changes to create
 // a timing to check the overflow state.
-export const overflow: Action<Element, unknown> = (el) => {
+export const overflowFade: Action<Element, unknown> = (el) => {
   let observer: ResizeObserver | undefined;
   const unsubscribe = resizeObserver.subscribe((v) => {
     observer = v;
