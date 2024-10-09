@@ -1,8 +1,11 @@
 <script lang="ts">
   import { overflowFade } from '$lib/actions/overflowFade';
+  import { toClass } from '$lib/utils/toClass';
+
+  let small = false;
 </script>
 
-<div class="container">
+<div class={toClass({ container: true, small })}>
   <div class="script1">
     <div class="overflow-fade" use:overflowFade>
       Announcing is the world’s most boring web service, by design. Unlike traditional social media
@@ -16,6 +19,11 @@
       simply.
     </div>
   </div>
+  <button
+    on:click={() => {
+      small = !small;
+    }}>Switch</button
+  >
 </div>
 
 <style lang="scss">
@@ -25,6 +33,10 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    &.small {
+      max-width: 400px;
+    }
 
     .script1 {
       padding: 8px;
