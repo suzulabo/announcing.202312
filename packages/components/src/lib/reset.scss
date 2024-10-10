@@ -114,24 +114,3 @@ div.info {
 .error {
   color: var(--color-error);
 }
-
-.overflow-fade {
-  position: relative;
-  overflow: hidden;
-  max-height: 100%;
-
-  &.overflowing-y:after {
-    position: absolute;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    content: '';
-    background: linear-gradient(
-      to top,
-      rgba(var(--color-background-rgb), 1),
-      rgba(var(--color-text-rgb), 0) var(--gradient-height, 20%)
-    );
-    pointer-events: none;
-  }
-}
