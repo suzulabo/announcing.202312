@@ -12,7 +12,6 @@
 </script>
 
 <script lang="ts">
-  import NavigationSupport from '@announcing/components/NavigationSupport.svelte';
   import { LL, setupLocale } from '@announcing/i18n';
   import { signOut } from '@auth/sveltekit/client';
 
@@ -55,8 +54,6 @@
   <hr />
   <slot />
 </div>
-
-<NavigationSupport />
 
 <style lang="scss">
   .container {
