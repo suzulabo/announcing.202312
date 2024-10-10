@@ -16,6 +16,10 @@
   },
   "type": "module",
   "exports": {
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "import": "./dist/utils.js"
+    },
     "./actions/back": {
       "types": "./dist/actions/back.d.ts",
       "import": "./dist/actions/back.js"

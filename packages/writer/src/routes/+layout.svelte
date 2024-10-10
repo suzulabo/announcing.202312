@@ -57,7 +57,7 @@
 
 <style lang="scss">
   .container {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto 100px;
 
     header {

@@ -23,7 +23,6 @@
   import { imgSrc } from '@announcing/components/actions/imgSrc';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
-  import { gotoPage } from '@announcing/components/NavigationSupport.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
   import {
     ANNOUNCEMENT_BODY_MAX_BYTES,
@@ -33,6 +32,7 @@
   import type { GetAnnouncementResult } from '@announcing/db/types';
   import { LL } from '@announcing/i18n';
 
+  import { goto } from '$app/navigation';
   import { page } from '$app/stores';
 
   import type { PageData, Snapshot } from './$types';
@@ -161,8 +161,10 @@
       previewAnnouncement.updatedAt = now;
 
       if (isAnnouncement(previewAnnouncement, titleError, bodyError)) {
-        void gotoPage(`${$page.url.pathname}/preview`, {
-          announcementPreviewData: { channel, announcement: previewAnnouncement },
+        void goto(`${$page.url.pathname}/preview`, {
+          state: {
+            announcementPreviewData: { channel, announcement: previewAnnouncement },
+          },
         });
       }
     }}>{$LL.preview()}</button

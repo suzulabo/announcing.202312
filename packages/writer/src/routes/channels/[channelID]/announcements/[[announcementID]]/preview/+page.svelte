@@ -37,12 +37,12 @@
 <script lang="ts">
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
   import Loading from '@announcing/components/Loading.svelte';
-  import { gotoPage } from '@announcing/components/NavigationSupport.svelte';
   import { loadBlob } from '@announcing/components/utils/idbBlob';
   import type { GetAnnouncementResult } from '@announcing/db/types';
   import { LL } from '@announcing/i18n';
   import { onMount } from 'svelte';
 
+  import { goto } from '$app/navigation';
   import { page } from '$app/stores';
 
   import type { Snapshot } from '../$types';
@@ -81,7 +81,7 @@
         body: formData,
       });
 
-      await gotoPage(`/channels/${previewData.channel.channelID}`);
+      await goto(`/channels/${previewData.channel.channelID}`);
     } finally {
       loading = false;
     }
