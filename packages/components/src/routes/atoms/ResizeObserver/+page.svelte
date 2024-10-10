@@ -17,7 +17,7 @@
         overflow = el.scrollHeight > el.clientHeight;
       }}
     >
-      <div class="overflow-fade" class:overflowing={overflow}>
+      <div class="overflow-fade" class:overflow>
         Announcing is the world’s most boring web service, by design. Unlike traditional social
         media platforms, it strips away all the noise—there are no likes, comments, shares, or user
         interactions. It’s a space free from the clutter of social engagement, allowing you to focus
@@ -54,7 +54,7 @@
         overflow: hidden;
         max-height: 250px;
 
-        &.overflowing:after {
+        &.overflow:after {
           position: absolute;
           bottom: 0;
           top: 0;

@@ -21,7 +21,7 @@
         }
       }}
     >
-      <div class="overflow-fade" class:overflowing={overflow} class:read-more={openReadMore}>
+      <div class="overflow-fade" class:overflow class:openReadMore>
         Announcing is the world’s most boring web service, by design. Unlike traditional social
         media platforms, it strips away all the noise—there are no likes, comments, shares, or user
         interactions. It’s a space free from the clutter of social engagement, allowing you to focus
@@ -35,8 +35,8 @@
     </ResizeObserver>
     <button
       class="text"
-      class:overflowing={overflow}
-      class:open={openReadMore}
+      class:overflow
+      class:openReadMore
       on:click={() => {
         openReadMore = !openReadMore;
       }}>{openReadMore ? 'Read less' : 'Read more'}</button
@@ -69,7 +69,7 @@
           max-height: 200px;
         }
 
-        &.overflowing:after {
+        &.overflow:after {
           position: absolute;
           bottom: 0;
           top: 0;
@@ -89,8 +89,8 @@
         display: none;
         margin: 8px 4px 0 auto;
 
-        &.overflowing,
-        &.open {
+        &.overflow,
+        &.openReadMore {
           display: block;
         }
       }
