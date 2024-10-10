@@ -19,8 +19,8 @@ faker.seed(1192);
 MockDate.set('2024-08-08T11:59:00Z');
 
 const genAnnouncement = () => {
-  const title = faker.lorem.sentence();
-  const body = faker.lorem.text();
+  const title = faker.lorem.sentence({ min: 5, max: 10 });
+  const body = faker.lorem.paragraphs({ min: 1, max: 10 });
 
   return {
     title,
