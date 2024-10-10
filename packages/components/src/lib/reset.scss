@@ -130,7 +130,7 @@ div.info {
     background: linear-gradient(
       to top,
       rgba(var(--color-background-rgb), 1),
-      rgba(var(--color-text-rgb), 0) 20%
+      rgba(var(--color-text-rgb), 0) var(--gradient-height, 20%)
     );
     pointer-events: none;
   }
