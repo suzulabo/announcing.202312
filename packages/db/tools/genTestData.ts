@@ -10,7 +10,7 @@ import { deleteChannel } from '../src/api/channel/deleteChannel';
 import { getChannel } from '../src/api/channel/getChannel';
 
 const channelData = {
-  title: 'Aether Dynamics Corporation',
+  name: 'Aether Dynamics Corporation',
   desc: 'Aether Dynamics Corporation is at the forefront of cutting-edge technology, pioneering advancements in energy solutions and sustainable innovation.\nJoin us as we transform the future with dynamic, visionary science.',
 };
 
@@ -30,15 +30,21 @@ const genAnnouncement = () => {
 
 const generate = async (userID: string, channelID: string, count: number) => {
   {
-    const channel = await getChannel(userID, channelID);
+    const channel = await getChannel({ userID, channelID });
     if (channel) {
-      await deleteChannel(userID, channelID, channel.updatedAt);
+      await deleteChannel({ userID, channelID, updatedAt: channel.updatedAt });
     }
   }
 
   {
-    const icon = await openAsBlob('./tools/assets/cat-1484725_256.png');
-    await createChannel(userID, channelID, channelData.title, channelData.desc, icon);
+    const iconFile = await openAsBlob('./tools/assets/cat-1484725_256.png');
+    await createChannel({
+      userID,
+      channelID,
+      name: channelData.name,
+      desc: channelData.desc,
+      iconFile,
+    });
   }
 
   {
@@ -79,20 +85,20 @@ const generate = async (userID: string, channelID: string, count: number) => {
     };
 
     for (let i = 0; i < count; i++) {
-      const channel = await getChannel(userID, channelID);
+      const channel = await getChannel({ userID, channelID });
       if (!channel) {
         throw new Error();
       }
       const a = genAnnouncement();
-      await addAnnouncement(
+      await addAnnouncement({
         userID,
         channelID,
-        await getHeaderImage(i),
-        a.title,
-        a.body,
-        await getImages(i),
-        new Date(),
-      );
+        headerImageFile: await getHeaderImage(i),
+        title: a.title,
+        body: a.body,
+        imagesFiles: await getImages(i),
+        createdAt: new Date().getTime(),
+      });
     }
   }
 };
