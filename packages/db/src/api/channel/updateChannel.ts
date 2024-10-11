@@ -1,4 +1,5 @@
 import { and, eq, exists } from 'drizzle-orm';
+import type { SQLiteUpdateSetSource } from 'drizzle-orm/sqlite-core';
 
 import { db } from '../../client';
 import { channelsTable, ownersTable } from '../../schema';
@@ -19,18 +20,27 @@ export const updateChannel = async ({
   desc?: string | undefined;
   iconFile?: Blob | 'remove' | undefined;
 }) => {
-  const [icon, iconInsert] =
-    iconFile instanceof Blob ? await makeInsertBlob(iconFile) : [null, undefined];
+  const queries = [];
+
+  const values: SQLiteUpdateSetSource<typeof channelsTable> = {
+    name,
+    desc: desc ?? null,
+    updatedAt: new Date().getTime(),
+  };
+  if (iconFile) {
+    if (iconFile === 'remove') {
+      values.icon = null;
+    } else {
+      const [v, q] = await makeInsertBlob(iconFile);
+      values.icon = v;
+      queries.push(q);
+    }
+  }
 
   await db.batch([
     db
       .update(channelsTable)
-      .set({
-        name,
-        desc: desc ?? null,
-        ...(iconFile !== undefined && { icon }),
-        updatedAt: new Date().getTime(),
-      })
+      .set(values)
       .where(
         and(
           eq(channelsTable.channelID, channelID),
@@ -43,6 +53,6 @@ export const updateChannel = async ({
           ),
         ),
       ),
-    ...(iconInsert ? [iconInsert] : []),
+    ...queries,
   ]);
 };

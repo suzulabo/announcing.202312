@@ -2,9 +2,9 @@ import { and, eq } from 'drizzle-orm';
 
 import { db } from '../../client';
 import { announcementsTable, channelsTable } from '../../schema';
+import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getChannel } from '../channel/getChannel';
-import { getAnnouncement } from './getAnnouncement';
-import { makeInsertAnnouncement } from './makeInsertAnnouncement';
+import { genAnnouncementID } from './genAnnouncementID';
 
 export const updateAnnouncement = async ({
   userID,
@@ -20,10 +20,10 @@ export const updateAnnouncement = async ({
   channelID: string;
   targetAnnouncementID: string;
   targetUpdatedAt: number;
-  headerImageFile: Blob | undefined;
+  headerImageFile: Blob | 'remove' | undefined;
   title: string | undefined;
   body: string;
-  imagesFiles: Blob[] | undefined;
+  imagesFiles: Blob[] | 'remove' | undefined;
 }) => {
   const channel = await getChannel({ userID, channelID });
   if (!channel) {
@@ -38,40 +38,85 @@ export const updateAnnouncement = async ({
     return;
   }
 
-  const announcement = await getAnnouncement({ channelID, announcementID: targetAnnouncementID });
-  if (!announcement || announcement.updatedAt !== targetUpdatedAt) {
+  const targetAnnouncement = (
+    await db
+      .select({
+        title: announcementsTable.title,
+        body: announcementsTable.body,
+        headerImage: announcementsTable.headerImage,
+        images: announcementsTable.images,
+        createdAt: announcementsTable.createdAt,
+      })
+      .from(announcementsTable)
+      .where(
+        and(
+          eq(announcementsTable.channelID, channelID),
+          eq(announcementsTable.announcementID, targetAnnouncementID),
+          eq(announcementsTable.updatedAt, targetUpdatedAt),
+        ),
+      )
+  ).shift();
+
+  if (!targetAnnouncement) {
     return;
   }
 
+  const queries = [];
   const now = new Date().getTime();
 
-  const { announcementID, announcementQueries } = await makeInsertAnnouncement({
+  const values: Omit<typeof announcementsTable.$inferInsert, 'announcementID'> = {
+    ...targetAnnouncement,
     userID,
     channelID,
-    headerImageFile,
-    title,
     body,
-    imagesFiles,
     updatedAt: now,
-    createdAt: announcement.createdAt,
-  });
+  };
+
+  if (title) {
+    values.title = title;
+  }
+
+  if (headerImageFile) {
+    if (headerImageFile == 'remove') {
+      values.headerImage = null;
+    } else {
+      const [v, q] = await makeInsertBlob(headerImageFile);
+      values.headerImage = v;
+      queries.push(q);
+    }
+  }
+
+  if (imagesFiles) {
+    if (imagesFiles === 'remove') {
+      values.images = null;
+    } else {
+      const images = [];
+      for (const f of imagesFiles) {
+        const [v, q] = await makeInsertBlob(f);
+        images.push(v);
+        queries.push(q);
+      }
+      values.images = images;
+    }
+  }
+
+  const announcementID = genAnnouncementID(values);
+
+  queries.push(db.insert(announcementsTable).values({ ...values, announcementID }));
 
   announcementIDs[index] = announcementID;
 
-  const queries = [
-    db
-      .update(channelsTable)
-      .set({
-        announcementIDs,
-        updatedAt: now,
-      })
-      .where(
-        and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
-      ),
-    ...announcementQueries,
-  ] as const;
+  const updateChannel = db
+    .update(channelsTable)
+    .set({
+      announcementIDs,
+      updatedAt: now,
+    })
+    .where(
+      and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
+    );
 
-  const batchResults = await db.batch(queries);
+  const batchResults = await db.batch([updateChannel, ...queries]);
   if (batchResults[0].rowsAffected === 1) {
     await db
       .delete(announcementsTable)
