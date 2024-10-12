@@ -16,8 +16,6 @@ const channelData = {
 
 faker.seed(1192);
 
-MockDate.set('2024-08-08T11:59:00Z');
-
 const genAnnouncement = () => {
   const title = faker.lorem.sentence({ min: 5, max: 10 });
   const body = faker.lorem.paragraphs({ min: 1, max: 10 });
@@ -36,14 +34,16 @@ const generate = async (userID: string, channelID: string, count: number) => {
     }
   }
 
+  let date = new Date('2024-08-08T11:59:00Z').getTime();
   {
-    const iconFile = await openAsBlob('./tools/assets/cat-1484725_256.png');
+    MockDate.set(date);
+    const icon = await openAsBlob('./tools/assets/cat-1484725_256.png');
     await createChannel({
       userID,
       channelID,
       name: channelData.name,
       desc: channelData.desc,
-      iconFile,
+      icon,
     });
   }
 
@@ -90,6 +90,10 @@ const generate = async (userID: string, channelID: string, count: number) => {
         throw new Error();
       }
       const a = genAnnouncement();
+
+      date += 60 * 60 * 24 * 1000;
+      MockDate.set(date);
+
       await addAnnouncement({
         userID,
         channelID,
