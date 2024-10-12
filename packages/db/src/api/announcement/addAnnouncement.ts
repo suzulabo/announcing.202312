@@ -60,10 +60,9 @@ export const addAnnouncement = async ({
 
   const announcementID = genAnnouncementID(values);
 
-  queries.push(db.insert(announcementsTable).values({ ...values, announcementID }));
+  queries.push(db.insert(announcementsTable).values({ announcementID, ...values }));
 
-  const announcementIDs = channel.announcementIDs ?? [];
-  announcementIDs.push(announcementID);
+  const announcementIDs = [announcementID, ...(channel.announcementIDs ?? [])];
 
   const updateChannel = db
     .update(channelsTable)
