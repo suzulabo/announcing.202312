@@ -51,8 +51,8 @@ test('add, update and remove', async () => {
       targetUpdatedAt: a.updatedAt,
       title: 'updated',
       body: 'This is updated',
-      headerImageFile: 'remove',
-      imagesFiles: 'remove',
+      headerImage: undefined,
+      images: undefined,
     });
   }
 

@@ -1,6 +1,6 @@
 /// <reference types="@sveltejs/kit" />
 
-import type { GetAnnouncementResult, GetChannelResult } from '@announcing/db/types';
+import type { AnnouncementPreviewData } from './routes/channels/[channelID]/announcements/[[announcementID]]/preview/+page.svelte';
 
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
@@ -11,10 +11,7 @@ declare global {
     // interface PageData {}
     interface PageState {
       fromPage?: string;
-      announcementPreviewData?: {
-        channel: GetChannelResult;
-        announcement: GetAnnouncementResult;
-      };
+      announcementPreviewData?: AnnouncementPreviewData;
     }
   }
 }

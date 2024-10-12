@@ -3,7 +3,7 @@
     arg: Partial<GetAnnouncementResult>,
     titleError: boolean,
     bodyError: boolean,
-  ): arg is GetAnnouncementResult => {
+  ): arg is Exclude<App.PageState['announcementPreviewData'], undefined>['announcement'] => {
     if (titleError) {
       return false;
     }
@@ -31,11 +31,13 @@
   } from '@announcing/db/constants';
   import type { GetAnnouncementResult } from '@announcing/db/types';
   import { LL } from '@announcing/i18n';
+  import { onMount } from 'svelte';
 
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
 
   import type { PageData, Snapshot } from './$types';
+  import type { AnnouncementPreviewData } from './preview/+page.svelte';
 
   export let data: PageData;
 
@@ -48,14 +50,48 @@
     },
   };
 
-  let form: Partial<GetAnnouncementResult>;
+  let form: Partial<GetAnnouncementResult> = {};
   let titleError = false;
   let bodyError = false;
   let headerImageFileInput: FileInput;
   let imagesFileInput: FileInput;
 
   $: ({ channel, announcement } = data);
-  $: form = { ...announcement };
+
+  onMount(() => {
+    form = { ...announcement };
+  });
+
+  const previewClickHandler = () => {
+    const { title, body, headerImage, images } = form;
+    if (!body) {
+      return;
+    }
+
+    const announcementPreviewData: AnnouncementPreviewData = {
+      channel,
+      announcement: {
+        title,
+        body,
+        headerImage,
+        images,
+      },
+    };
+
+    if (announcement) {
+      announcementPreviewData.announcement.edit = {
+        announcementID: $page.params['announcementID'] as string,
+        updatedAt: announcement.updatedAt,
+        createdAt: announcement.createdAt,
+      };
+    }
+
+    return goto(`${$page.url.pathname}/preview`, {
+      state: {
+        announcementPreviewData,
+      },
+    });
+  };
 </script>
 
 <div class="container">
@@ -152,22 +188,7 @@
   <button
     disabled={!isAnnouncement(form, titleError, bodyError)}
     class="preview-btn"
-    on:click={() => {
-      const previewAnnouncement = { ...form };
-      const now = new Date().getTime();
-      if (!previewAnnouncement.createdAt) {
-        previewAnnouncement.createdAt = now;
-      }
-      previewAnnouncement.updatedAt = now;
-
-      if (isAnnouncement(previewAnnouncement, titleError, bodyError)) {
-        void goto(`${$page.url.pathname}/preview`, {
-          state: {
-            announcementPreviewData: { channel, announcement: previewAnnouncement },
-          },
-        });
-      }
-    }}>{$LL.preview()}</button
+    on:click={previewClickHandler}>{$LL.preview()}</button
   >
 </div>
 

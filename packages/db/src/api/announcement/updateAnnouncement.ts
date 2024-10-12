@@ -11,19 +11,19 @@ export const updateAnnouncement = async ({
   channelID,
   targetAnnouncementID,
   targetUpdatedAt,
-  headerImageFile,
+  headerImage,
   title,
   body,
-  imagesFiles,
+  images,
 }: {
   userID: string;
   channelID: string;
   targetAnnouncementID: string;
   targetUpdatedAt: number;
-  headerImageFile: Blob | 'remove' | undefined;
+  headerImage: Blob | string | undefined;
   title: string | undefined;
   body: string;
-  imagesFiles: Blob[] | 'remove' | undefined;
+  images: (Blob | string)[] | undefined;
 }) => {
   const channel = await getChannel({ userID, channelID });
   if (!channel) {
@@ -76,28 +76,30 @@ export const updateAnnouncement = async ({
     values.title = title;
   }
 
-  if (headerImageFile) {
-    if (headerImageFile == 'remove') {
-      values.headerImage = null;
-    } else {
-      const [v, q] = await makeInsertBlob(headerImageFile);
-      values.headerImage = v;
-      queries.push(q);
-    }
+  if (!headerImage) {
+    values.headerImage = null;
+  } else if (typeof headerImage === 'string') {
+    values.headerImage = headerImage;
+  } else if (headerImage instanceof Blob) {
+    const [v, q] = await makeInsertBlob(headerImage);
+    values.headerImage = v;
+    queries.push(q);
   }
 
-  if (imagesFiles) {
-    if (imagesFiles === 'remove') {
-      values.images = null;
-    } else {
-      const images = [];
-      for (const f of imagesFiles) {
-        const [v, q] = await makeInsertBlob(f);
+  if (!images) {
+    values.images = null;
+  } else {
+    const imagesValues = [];
+    for (const image of images) {
+      if (typeof image === 'string') {
+        imagesValues.push(image);
+      } else if (image instanceof Blob) {
+        const [v, q] = await makeInsertBlob(image);
         images.push(v);
         queries.push(q);
       }
-      values.images = images;
     }
+    values.images = imagesValues;
   }
 
   const announcementID = genAnnouncementID(values);
