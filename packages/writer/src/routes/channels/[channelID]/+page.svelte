@@ -110,6 +110,7 @@
     .name-box {
       display: flex;
       align-items: center;
+      min-height: 64px;
       .name {
         font-size: 22px;
       }
