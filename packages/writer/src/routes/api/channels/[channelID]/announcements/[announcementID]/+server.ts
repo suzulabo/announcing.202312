@@ -1,4 +1,4 @@
-import { getAnnouncement, updateAnnouncement } from '@announcing/db';
+import { getAnnouncement, removeAnnouncement, updateAnnouncement } from '@announcing/db';
 import { error, json } from '@sveltejs/kit';
 
 import {
@@ -59,6 +59,35 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
     title,
     body,
     images,
+  });
+
+  return json({});
+};
+
+type DeleteRequestData =
+  | {
+      updatedAt?: number;
+    }
+  | undefined;
+
+export const DELETE: RequestHandler = async ({ locals, params, request }) => {
+  const userID = await getUserIDNoRedirect(locals);
+  if (!userID) {
+    error(400, 'Missing userID');
+  }
+
+  const data = (await request.json()) as DeleteRequestData;
+  if (!data || typeof data.updatedAt !== 'number') {
+    error(400, 'Invalid request data.');
+  }
+
+  const { channelID, announcementID } = params;
+
+  await removeAnnouncement({
+    userID,
+    channelID,
+    targetAnnouncementID: announcementID,
+    targetUpdatedAt: data.updatedAt,
   });
 
   return json({});

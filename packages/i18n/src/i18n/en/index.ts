@@ -14,6 +14,7 @@ const en = {
   copyError: 'Unable to copy to clipboard.',
   required: '(Required)',
   signOut: 'Sign Out',
+  understand: 'I understand.',
   channelName: 'Channel name',
   desc: 'Description',
   title: 'Title',
@@ -37,7 +38,6 @@ const en = {
   deleteChannel: 'Delete Channel',
   deleteChannelDescription:
     'You are about to delete the channel "{name}". This action cannot be undone.',
-  deleteChannelUnderstand: 'I understand.',
   deleteChannelConfirmation: 'Are you sure you want to delete the channel?',
   postAnnouncement: 'Post announcement',
   updateAnnouncement: 'Edit announcement',
@@ -47,6 +47,11 @@ const en = {
   addImageDescription: 'You can add up to 4 images.',
   announcementView: { created: 'Created: ', updated: 'Updated: ' },
   writer: { subTitle: 'Author Site' },
+  deleteAnnouncement: {
+    title: 'Delete Announcement',
+    description: 'You are about to delete the announcement. This action cannot be undone.',
+    confirmation: 'Are you sure you want to delete the announcement?',
+  },
 } satisfies BaseTranslation;
 
 export default en;

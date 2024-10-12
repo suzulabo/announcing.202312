@@ -5,18 +5,40 @@
   import VirtualScrollList from '@announcing/components/VirtualScrollList.svelte';
   import { LL } from '@announcing/i18n';
 
+  import { invalidateAll } from '$app/navigation';
   import { page } from '$app/stores';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
   import { normalizePath } from '$lib/utils/normalizePath';
 
   import type { PageData } from './$types';
+  import DeleteModal from './DeleteModal.svelte';
 
   export let data: PageData;
+
+  let deleteModal: DeleteModal;
+  let deleteTarget:
+    | {
+        id: string;
+        updatedAt: number;
+      }
+    | undefined;
 
   $: items =
     data.channel.announcementIDs?.map((v) => {
       return { id: v, expand: false, overflow: false };
     }) ?? [];
+
+  const deleteAnnouncement = async () => {
+    if (!deleteTarget) {
+      return;
+    }
+    await fetch(`/api/channels/${data.channel.channelID}/announcements/${deleteTarget.id}`, {
+      method: 'DELETE',
+      body: JSON.stringify({ updatedAt: deleteTarget.updatedAt }),
+    });
+
+    await invalidateAll();
+  };
 </script>
 
 <div class="container">
@@ -51,7 +73,15 @@
               <a class="button" href={`${$page.url.pathname.replace('list', item.id)}`}>
                 {$LL.edit()}
               </a>
-              <button>
+              <button
+                on:click={() => {
+                  deleteTarget = {
+                    id: item.id,
+                    updatedAt: announcement.updatedAt,
+                  };
+                  deleteModal.openModal();
+                }}
+              >
                 {$LL.remove()}
               </button>
             </div>
@@ -76,6 +106,8 @@
     </div>
   </VirtualScrollList>
 </div>
+
+<DeleteModal bind:this={deleteModal} onSubmit={deleteAnnouncement} />
 
 <style lang="scss">
   .container {

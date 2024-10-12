@@ -14,6 +14,7 @@ const ja = {
   copyError: 'コピーできませんでした',
   required: '(必須)',
   signOut: 'ログアウト',
+  understand: '問題ありません',
   channelName: 'チャンネル名',
   desc: '説明文',
   title: 'タイトル',
@@ -36,7 +37,6 @@ const ja = {
   },
   deleteChannel: 'チャンネルの削除',
   deleteChannelDescription: 'チャンネル「{name}」を削除します。この操作は元に戻せません。',
-  deleteChannelUnderstand: '問題ありません',
   deleteChannelConfirmation: 'チャンネルを削除します。よろしいですか？',
   postAnnouncement: 'お知らせを投稿',
   updateAnnouncement: 'お知らせを編集',
@@ -46,6 +46,11 @@ const ja = {
   addImageDescription: '画像は4枚まで追加できます',
   announcementView: { created: '作成: ', updated: '更新: ' },
   writer: { subTitle: '投稿者用サイト' },
+  deleteAnnouncement: {
+    title: 'お知らせの削除',
+    description: '選択したお知らせを削除します。この操作は元に戻せません。',
+    confirmation: 'お知らせを削除します。よろしいですか？',
+  },
 } satisfies Translation;
 
 export default ja;

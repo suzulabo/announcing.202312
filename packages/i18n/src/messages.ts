@@ -51,6 +51,10 @@ export const messages = {
     en: 'Sign Out',
     ja: 'ログアウト',
   },
+  understand: {
+    en: 'I understand.',
+    ja: '問題ありません',
+  },
   channelName: {
     en: 'Channel name',
     ja: 'チャンネル名',
@@ -133,10 +137,6 @@ export const messages = {
     en: 'You are about to delete the channel "{name}". This action cannot be undone.',
     ja: 'チャンネル「{name}」を削除します。この操作は元に戻せません。',
   },
-  deleteChannelUnderstand: {
-    en: 'I understand.',
-    ja: '問題ありません',
-  },
   deleteChannelConfirmation: {
     en: 'Are you sure you want to delete the channel?',
     ja: 'チャンネルを削除します。よろしいですか？',
@@ -179,6 +179,20 @@ export const messages = {
     subTitle: {
       en: 'Author Site',
       ja: '投稿者用サイト',
+    },
+  },
+  deleteAnnouncement: {
+    title: {
+      en: 'Delete Announcement',
+      ja: 'お知らせの削除',
+    },
+    description: {
+      en: 'You are about to delete the announcement. This action cannot be undone.',
+      ja: '選択したお知らせを削除します。この操作は元に戻せません。',
+    },
+    confirmation: {
+      en: 'Are you sure you want to delete the announcement?',
+      ja: 'お知らせを削除します。よろしいですか？',
     },
   },
 };

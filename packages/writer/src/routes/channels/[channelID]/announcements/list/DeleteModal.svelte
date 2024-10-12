@@ -3,7 +3,6 @@
   import Modal from '@announcing/components/Modal.svelte';
   import { LL } from '@announcing/i18n';
 
-  export let name: string;
   export let onSubmit: () => Promise<void>;
 
   export const openModal = () => {
@@ -17,7 +16,7 @@
   let loading = false;
 
   const submitHandler = async () => {
-    if (!confirm($LL.deleteChannelConfirmation())) {
+    if (!confirm($LL.deleteAnnouncement.confirmation())) {
       return;
     }
 
@@ -33,16 +32,16 @@
 
 <Modal bind:open dismissMode="none">
   <div class="delete-modal">
-    <span>{$LL.deleteChannel()}</span>
+    <span>{$LL.deleteAnnouncement.title()}</span>
     <hr />
-    <div class="warning">{$LL.deleteChannelDescription({ name: name })}</div>
+    <div class="warning">{$LL.deleteAnnouncement.description()}</div>
     <label class="understand-box">
       <input type="checkbox" bind:checked={deleteUnderstand} />
       {$LL.understand()}
     </label>
 
     <button class="delete-btn" disabled={!deleteUnderstand} on:click={submitHandler}>
-      {$LL.deleteChannel()}
+      {$LL.deleteAnnouncement.title()}
     </button>
 
     <button

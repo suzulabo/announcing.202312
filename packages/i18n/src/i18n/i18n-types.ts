@@ -67,6 +67,10 @@ type RootTranslation = {
 	 */
 	signOut: string
 	/**
+	 * I​ ​u​n​d​e​r​s​t​a​n​d​.
+	 */
+	understand: string
+	/**
 	 * C​h​a​n​n​e​l​ ​n​a​m​e
 	 */
 	channelName: string
@@ -150,10 +154,6 @@ type RootTranslation = {
 	 */
 	deleteChannelDescription: RequiredParams<'name'>
 	/**
-	 * I​ ​u​n​d​e​r​s​t​a​n​d​.
-	 */
-	deleteChannelUnderstand: string
-	/**
 	 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​c​h​a​n​n​e​l​?
 	 */
 	deleteChannelConfirmation: string
@@ -196,6 +196,20 @@ type RootTranslation = {
 		 * A​u​t​h​o​r​ ​S​i​t​e
 		 */
 		subTitle: string
+	}
+	deleteAnnouncement: {
+		/**
+		 * D​e​l​e​t​e​ ​A​n​n​o​u​n​c​e​m​e​n​t
+		 */
+		title: string
+		/**
+		 * Y​o​u​ ​a​r​e​ ​a​b​o​u​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​.​ ​T​h​i​s​ ​a​c​t​i​o​n​ ​c​a​n​n​o​t​ ​b​e​ ​u​n​d​o​n​e​.
+		 */
+		description: string
+		/**
+		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​?
+		 */
+		confirmation: string
 	}
 }
 
@@ -252,6 +266,10 @@ export type TranslationFunctions = {
 	 * Sign Out
 	 */
 	signOut: () => LocalizedString
+	/**
+	 * I understand.
+	 */
+	understand: () => LocalizedString
 	/**
 	 * Channel name
 	 */
@@ -335,10 +353,6 @@ export type TranslationFunctions = {
 	 */
 	deleteChannelDescription: (arg: { name: unknown }) => LocalizedString
 	/**
-	 * I understand.
-	 */
-	deleteChannelUnderstand: () => LocalizedString
-	/**
 	 * Are you sure you want to delete the channel?
 	 */
 	deleteChannelConfirmation: () => LocalizedString
@@ -381,6 +395,20 @@ export type TranslationFunctions = {
 		 * Author Site
 		 */
 		subTitle: () => LocalizedString
+	}
+	deleteAnnouncement: {
+		/**
+		 * Delete Announcement
+		 */
+		title: () => LocalizedString
+		/**
+		 * You are about to delete the announcement. This action cannot be undone.
+		 */
+		description: () => LocalizedString
+		/**
+		 * Are you sure you want to delete the announcement?
+		 */
+		confirmation: () => LocalizedString
 	}
 }
 

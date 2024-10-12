@@ -72,6 +72,7 @@ test('add, update and remove', async () => {
       channelID: 'a1',
       announcementID,
     });
+    assert(a);
     expect(a).toMatchObject({
       title: 'updated',
       body: 'This is updated',
@@ -83,6 +84,7 @@ test('add, update and remove', async () => {
       userID: 'u1',
       channelID: 'a1',
       targetAnnouncementID: announcementID,
+      targetUpdatedAt: a.updatedAt,
     });
 
     expect(
