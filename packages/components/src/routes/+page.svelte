@@ -5,6 +5,7 @@
 <hr />
 
 <ul class="links">
+  <li><a href="./atoms/Input">Input</a></li>
   <li><a href="./atoms/FileInput">FileInput</a></li>
   <li><a href="./atoms/FileInput/multiple">FileInput - multiple</a></li>
   <li><a href="./modal">Modal</a></li>
