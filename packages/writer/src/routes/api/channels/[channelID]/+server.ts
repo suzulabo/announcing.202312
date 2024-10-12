@@ -1,7 +1,7 @@
 import { deleteChannel, updateChannel } from '@announcing/db';
 import { error, json } from '@sveltejs/kit';
 
-import { getFormFileOrRemove, getFormNumber, getFormString } from '$lib/utils/form';
+import { getFormFileOrString, getFormNumber, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 
 import type { RequestHandler } from './$types';
@@ -24,11 +24,11 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
   }
 
   const desc = getFormString(formData, 'desc');
-  const iconFile = getFormFileOrRemove(formData, 'icon');
+  const icon = getFormFileOrString(formData, 'icon');
 
   const channelID = params.channelID;
 
-  await updateChannel({ userID, updatedAt, channelID, name, desc, iconFile });
+  await updateChannel({ userID, updatedAt, channelID, name, desc, icon });
 
   return json({});
 };

@@ -7,6 +7,7 @@
 
   import { page } from '$app/stores';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
+  import { normalizePath } from '$lib/utils/normalizePath';
 
   import type { PageData } from './$types';
 
@@ -55,7 +56,11 @@
               </button>
             </div>
             {#if announcement.headerImage}
-              <img class="header-image" src={`/s/${announcement.headerImage}`} alt="header" />
+              <img
+                class="header-image"
+                src={normalizePath(announcement.headerImage)}
+                alt="header"
+              />
             {/if}
             {#if announcement.title}
               <div class="title">

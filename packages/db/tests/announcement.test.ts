@@ -12,7 +12,13 @@ import {
 
 test('add, update and remove', async () => {
   vi.mock('../src/client');
-  await createChannel({ userID: 'u1', channelID: 'a1', name: 'announcement test channel' });
+  await createChannel({
+    userID: 'u1',
+    channelID: 'a1',
+    name: 'announcement test channel',
+    desc: undefined,
+    icon: undefined,
+  });
 
   await addAnnouncement({
     userID: 'u1',

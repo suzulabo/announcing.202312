@@ -5,6 +5,7 @@
   import { page } from '$app/stores';
   import { PUBLIC_READER_PREFIX } from '$env/static/public';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
+  import { normalizePath } from '$lib/utils/normalizePath';
 
   import type { PageData } from './$types';
   import DeleteModal from './DeleteModal.svelte';
@@ -45,9 +46,12 @@
   <div class="name-box">
     <span class="name">{channel.name}</span>
     {#if channel.icon}
-      <img class="icon" src={`/s/${channel.icon}`} alt="channel icon" />
+      <img class="icon" src={normalizePath(channel.icon)} alt="channel icon" />
     {/if}
   </div>
+  {#if channel.desc}
+    <div>{channel.desc}</div>
+  {/if}
 
   <hr />
 
@@ -106,7 +110,6 @@
     .name-box {
       display: flex;
       align-items: center;
-      margin: 0 0 16px 0;
       .name {
         font-size: 22px;
       }
@@ -115,6 +118,10 @@
         height: 64px;
         margin: 0 0 0 auto;
       }
+    }
+
+    hr {
+      margin: 16px 0;
     }
 
     .actions-instruction {

@@ -21,6 +21,8 @@
   } from '@announcing/db/constants';
   import { LL } from '@announcing/i18n';
 
+  import { normalizePath } from '$lib/utils/normalizePath';
+
   let open = false;
   let loading = false;
 
@@ -40,9 +42,9 @@
       const blob = await loadBlob(form.icon);
       if (blob) {
         formData.append('icon', blob);
+      } else {
+        formData.append('icon', form.icon);
       }
-    } else {
-      formData.append('icon', 'remove');
     }
 
     loading = true;
@@ -85,7 +87,7 @@
             }}
           >
             {#if form.icon}
-              <img class="icon" alt="icon preview" use:imgSrc={form.icon} />
+              <img class="icon" alt="icon preview" use:imgSrc={normalizePath(form.icon)} />
             {/if}
           </button>
           <button

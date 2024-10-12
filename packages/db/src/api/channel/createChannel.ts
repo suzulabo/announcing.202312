@@ -9,16 +9,14 @@ export const createChannel = async ({
   channelID,
   name,
   desc,
-  iconFile,
+  icon,
 }: {
   userID: string;
   channelID: string;
   name: string;
-  desc?: string | undefined;
-  iconFile?: Blob | undefined;
+  desc: string | undefined;
+  icon: Blob | undefined;
 }) => {
-  const [icon, iconInsert] = iconFile ? await makeInsertBlob(iconFile) : [null, undefined];
-
   {
     // This should ideally be enforced by a database trigger.
     const c = (
@@ -30,14 +28,23 @@ export const createChannel = async ({
   }
 
   const now = new Date().getTime();
+  const queries = [];
 
-  const queries = [
-    db
-      .insert(channelsTable)
-      .values({ channelID, name, desc: desc ?? null, icon, updatedAt: now, createdAt: now }),
-    db.insert(ownersTable).values({ channelID, userID, createdAt: now }),
-    ...(iconInsert ? [iconInsert] : []),
-  ] as const;
+  const values: typeof channelsTable.$inferInsert = {
+    channelID,
+    name,
+    desc: desc ?? null,
+    updatedAt: now,
+    createdAt: now,
+  };
 
-  await db.batch(queries);
+  if (icon) {
+    const [v, q] = await makeInsertBlob(icon);
+    values.icon = v;
+    queries.push(q);
+  }
+
+  queries.push(db.insert(ownersTable).values({ channelID, userID, createdAt: now }));
+
+  await db.batch([db.insert(channelsTable).values(values), ...queries]);
 };

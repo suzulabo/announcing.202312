@@ -11,14 +11,14 @@ export const updateChannel = async ({
   channelID,
   name,
   desc,
-  iconFile,
+  icon,
 }: {
   userID: string;
   updatedAt: number;
   channelID: string;
   name: string;
-  desc?: string | undefined;
-  iconFile?: Blob | 'remove' | undefined;
+  desc: string | undefined;
+  icon: Blob | string | undefined;
 }) => {
   const queries = [];
 
@@ -27,14 +27,15 @@ export const updateChannel = async ({
     desc: desc ?? null,
     updatedAt: new Date().getTime(),
   };
-  if (iconFile) {
-    if (iconFile === 'remove') {
-      values.icon = null;
-    } else {
-      const [v, q] = await makeInsertBlob(iconFile);
-      values.icon = v;
-      queries.push(q);
-    }
+
+  if (!icon) {
+    values.icon = null;
+  } else if (typeof icon === 'string') {
+    values.icon = icon;
+  } else if (icon instanceof Blob) {
+    const [v, q] = await makeInsertBlob(icon);
+    values.icon = v;
+    queries.push(q);
   }
 
   await db.batch([

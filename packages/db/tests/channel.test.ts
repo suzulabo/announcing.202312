@@ -14,7 +14,7 @@ describe('Channel', () => {
       channelID: '1',
       name: 'test channel',
       desc: 'This is test',
-      iconFile: new Blob(['aaa'], { type: 'image/test' }),
+      icon: new Blob(['aaa'], { type: 'image/test' }),
     });
     expect(await getChannel({ userID: 'u2', channelID: '1' })).toBeUndefined();
 
@@ -34,6 +34,8 @@ describe('Channel', () => {
         updatedAt: c.updatedAt,
         channelID: '1',
         name: 'should not update',
+        desc: c.desc,
+        icon: c.icon,
       });
       expect(await getChannel({ userID: 'u1', channelID: '1' })).toMatchObject({
         channelID: '1',
@@ -47,7 +49,7 @@ describe('Channel', () => {
         channelID: '1',
         name: 'update channel',
         desc: 'updated',
-        iconFile: new Blob(['aaa'], { type: 'image/test' }),
+        icon: undefined,
       });
     }
     {
@@ -59,6 +61,7 @@ describe('Channel', () => {
         channelID: '1',
         name: 'update channel',
         desc: 'updated',
+        icon: undefined,
       });
 
       await deleteChannel({ userID: 'u2', channelID: '1', updatedAt: c.updatedAt });
@@ -66,6 +69,7 @@ describe('Channel', () => {
         channelID: '1',
         name: 'update channel',
         desc: 'updated',
+        icon: undefined,
       });
 
       await deleteChannel({ userID: 'u1', channelID: '1', updatedAt: c.updatedAt });
@@ -77,7 +81,13 @@ describe('Channel', () => {
     vi.mock('../src/client');
 
     for (let i = 1; i <= 6; i++) {
-      await createChannel({ userID: 'u1', channelID: i.toString(), name: `channel${i}` });
+      await createChannel({
+        userID: 'u1',
+        channelID: i.toString(),
+        name: `channel${i}`,
+        desc: undefined,
+        icon: undefined,
+      });
     }
 
     const channels = await getChannels({ userID: 'u1' });
