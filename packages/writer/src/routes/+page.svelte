@@ -31,7 +31,7 @@
               {channel.name}
             </span>
             {#if channel.icon}
-              <img src={channel.icon} alt="icon" />
+              <img src={`/s/${channel.icon}`} alt="icon" />
             {/if}
           </div>
         </a>

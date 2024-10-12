@@ -45,7 +45,7 @@
   <div class="name-box">
     <span class="name">{channel.name}</span>
     {#if channel.icon}
-      <img class="icon" src={channel.icon} alt="channel icon" />
+      <img class="icon" src={`/s/${channel.icon}`} alt="channel icon" />
     {/if}
   </div>
 

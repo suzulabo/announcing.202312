@@ -1,7 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 
 import { db } from '../../client';
-import { getEnv } from '../../lib/env';
 import { announcementsTable } from '../../schema';
 
 export const getAnnouncement = async ({
@@ -34,16 +33,10 @@ export const getAnnouncement = async ({
 
   if (!announcement) return;
 
-  const { imagePrefix } = getEnv();
-
   return {
     ...announcement,
     title: announcement.title ?? undefined,
-    headerImage: announcement.headerImage ? `${imagePrefix}${announcement.headerImage}` : undefined,
-    images: announcement.images
-      ? announcement.images.map((v) => {
-          return `${imagePrefix}${v}`;
-        })
-      : undefined,
+    headerImage: announcement.headerImage ?? undefined,
+    images: announcement.images ?? undefined,
   };
 };

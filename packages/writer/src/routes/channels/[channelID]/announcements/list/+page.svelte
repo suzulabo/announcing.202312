@@ -55,7 +55,7 @@
               </button>
             </div>
             {#if announcement.headerImage}
-              <img class="header-image" src={announcement.headerImage} alt="header" />
+              <img class="header-image" src={`/s/${announcement.headerImage}`} alt="header" />
             {/if}
             {#if announcement.title}
               <div class="title">

@@ -1,7 +1,6 @@
 import { and, eq, exists } from 'drizzle-orm';
 
 import { db } from '../../client';
-import { getEnv } from '../../lib/env';
 import { channelsTable, ownersTable } from '../../schema';
 
 export const READER = Symbol('READER');
@@ -34,12 +33,10 @@ export const getChannel = async ({
 
   if (!channel) return;
 
-  const { imagePrefix } = getEnv();
-
   return {
     ...channel,
     desc: channel.desc ?? undefined,
-    icon: channel.icon ? `${imagePrefix}${channel.icon}` : undefined,
+    icon: channel.icon ?? undefined,
     announcementIDs: channel.announcementIDs ?? undefined,
   };
 };
