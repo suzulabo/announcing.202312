@@ -4,7 +4,6 @@
 
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import svelteParser from 'svelte-eslint-parser';
@@ -70,17 +69,6 @@ const svelteConfig = ts.config({
   },
 });
 
-const sortConfig = ts.config({
-  files: ['**/*.js', '**/*.ts', '**/*.svelte'],
-  plugins: {
-    'simple-import-sort': simpleImportSort,
-  },
-  rules: {
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
-  },
-});
-
 export default ts.config(
   {
     ignores: [
@@ -98,6 +86,5 @@ export default ts.config(
   ...jsConfig,
   ...tsConfig,
   ...svelteConfig,
-  ...sortConfig,
   prettier,
 );
