@@ -4,7 +4,6 @@
 
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import svelteParser from 'svelte-eslint-parser';
@@ -17,11 +16,7 @@ const jsConfig = ts.config({
 
 const tsConfig = ts.config({
   files: ['**/*.ts', '**/*.svelte'],
-  extends: [
-    js.configs.recommended,
-    ...ts.configs.strictTypeChecked,
-    ...ts.configs.stylisticTypeChecked,
-  ],
+  extends: [js.configs.recommended, ...ts.configs.strict, ...ts.configs.stylistic],
   languageOptions: {
     parserOptions: {
       project: true,
@@ -29,6 +24,7 @@ const tsConfig = ts.config({
     },
   },
   rules: {
+    '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/no-unnecessary-condition': 'error',
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/restrict-template-expressions': [
@@ -52,21 +48,24 @@ const svelteConfig = ts.config({
       parser: ts.parser,
     },
   },
+  settings: {
+    svelte: {
+      // https://github.com/sveltejs/eslint-plugin-svelte/issues/442
+      // https://sveltejs.github.io/eslint-plugin-svelte/user-guide/#settings-svelte-ignore-warnings
+      ignoreWarnings: [
+        '@typescript-eslint/no-unsafe-assignment',
+        '@typescript-eslint/no-unsafe-member-access',
+      ],
+    },
+  },
   rules: {
     'svelte/no-at-html-tags': 'off',
     // https://github.com/sveltejs/eslint-plugin-svelte/issues/298
     '@typescript-eslint/no-unsafe-call': 'off',
-  },
-});
-
-const sortConfig = ts.config({
-  files: ['**/*.js', '**/*.ts', '**/*.svelte'],
-  plugins: {
-    'simple-import-sort': simpleImportSort,
-  },
-  rules: {
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
+    // TODO: It does not seem to be working well.
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
   },
 });
 
@@ -77,10 +76,9 @@ export default ts.config(
       '**/node_modules',
       '**/dist',
       '**/.svelte-kit',
-      '**/storybook-static',
       'packages/db-dev',
       'packages/db/drizzle/**/*',
-      '**/storybook-static',
+      'packages/i18n/src/i18n/*.ts',
       '**/test-results',
       '**/playwright-report',
     ],
@@ -88,6 +86,5 @@ export default ts.config(
   ...jsConfig,
   ...tsConfig,
   ...svelteConfig,
-  ...sortConfig,
   prettier,
 );

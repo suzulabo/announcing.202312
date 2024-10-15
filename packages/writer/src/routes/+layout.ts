@@ -1,18 +1,18 @@
 import '@announcing/components/base.scss';
 
-import { setupLocale } from '@announcing/components/i18n';
-import type { Load } from '@sveltejs/kit';
+import { setupLocale } from '@announcing/i18n';
 
-import { loadTranslations } from '$lib/i18n/translations';
+import { browser } from '$app/environment';
 
-export const load: Load = async ({ url, data }) => {
-  const { pathname } = url;
+import type { LayoutLoad } from './$types';
 
-  const initLocale = 'ja';
+export const load: LayoutLoad = async ({ data }) => {
+  await setupLocale(data.locale);
 
-  await loadTranslations(initLocale, pathname);
-
-  await setupLocale();
-
-  return { ...data };
+  if (browser) {
+    document.body.setAttribute('locale', data.locale);
+  }
 };
+
+export const ssr = false;
+export const prerender = false;

@@ -3,10 +3,25 @@ import { and, eq } from 'drizzle-orm';
 import { db } from '../../client';
 import { announcementsTable } from '../../schema';
 
-export const getAnnouncement = async (channelID: string, announcementID: string) => {
+export const getAnnouncement = async ({
+  channelID,
+  announcementID,
+}: {
+  channelID: string;
+  announcementID: string;
+}) => {
+  const { title, body, headerImage, images, updatedAt, createdAt } = announcementsTable;
+
   const announcement = (
     await db
-      .select()
+      .select({
+        title,
+        body,
+        headerImage,
+        images,
+        updatedAt,
+        createdAt,
+      })
       .from(announcementsTable)
       .where(
         and(

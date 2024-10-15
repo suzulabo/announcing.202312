@@ -1,11 +1,28 @@
+<script lang="ts">
+</script>
+
 <div class="title">Announcing components</div>
 <hr />
 
 <ul class="links">
-  <li><a href="./modal">Modal</a></li>
-  <li><a href="./channelEditor/create">ChannelEditor - create</a></li>
-  <li><a href="./channelEditor/edit">ChannelEditor - edit</a></li>
-  <li><a href="./nav/10">Navigation</a></li>
+  <li><a href="./atoms/Input">Input</a></li>
+  <li><a href="./atoms/FileInput">FileInput</a></li>
+  <li><a href="./atoms/FileInput/multiple">FileInput - multiple</a></li>
+  <li><a href="./atoms/Modal">Modal</a></li>
+  <li><a href="./atoms/VirtualScrollList">VirtualScrollList</a></li>
+  <li><a href="./atoms/VirtualScrollList/text">VirtualScrollList - text</a></li>
+  <li><a href="./atoms/VirtualScrollList/expand">VirtualScrollList - expand</a></li>
+  <li><a href="./atoms/ResizeObserver">ResizeObserver</a></li>
+  <li><a href="./atoms/ResizeObserver/readMore">ResizeObserver - read more</a></li>
+  <li><a href="./actions/back">Back</a></li>
+</ul>
+<hr />
+<ul class="links">
+  <li><a href="./parts/ChannelView">ChannelView - default</a></li>
+  <li><a href="./parts/AnnouncementView/default">AnnouncementView - default</a></li>
+  <li>
+    <a href="./parts/AnnouncementView/default/singleImage">AnnouncementView - single image</a>
+  </li>
 </ul>
 
 <style lang="scss">
@@ -15,11 +32,15 @@
     font-size: 20px;
   }
   hr {
-    margin: 20px;
+    margin: 20px 0;
   }
   .links {
+    width: fit-content;
     max-width: 600px;
     margin: 0 auto;
     list-style: inside;
+    li {
+      margin: 12px 0;
+    }
   }
 </style>

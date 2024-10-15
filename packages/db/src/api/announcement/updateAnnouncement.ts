@@ -2,21 +2,30 @@ import { and, eq } from 'drizzle-orm';
 
 import { db } from '../../client';
 import { announcementsTable, channelsTable } from '../../schema';
+import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getChannel } from '../channel/getChannel';
-import { getAnnouncement } from './getAnnouncement';
-import { makeInsertAnnouncement } from './makeInsertAnnouncement';
+import { genAnnouncementID } from './genAnnouncementID';
 
-export const updateAnnouncement = async (
-  userID: string,
-  channelID: string,
-  targetAnnouncementID: string,
-  targetUpdatedAt: Date,
-  headerImageFile: Blob | undefined,
-  title: string | undefined,
-  body: string,
-  imagesFiles: Blob[] | undefined,
-) => {
-  const channel = await getChannel(userID, channelID);
+export const updateAnnouncement = async ({
+  userID,
+  channelID,
+  targetAnnouncementID,
+  targetUpdatedAt,
+  headerImage,
+  title,
+  body,
+  images,
+}: {
+  userID: string;
+  channelID: string;
+  targetAnnouncementID: string;
+  targetUpdatedAt: number;
+  headerImage: Blob | string | undefined;
+  title: string | undefined;
+  body: string;
+  images: (Blob | string)[] | undefined;
+}) => {
+  const channel = await getChannel({ userID, channelID });
   if (!channel) {
     return;
   }
@@ -29,38 +38,87 @@ export const updateAnnouncement = async (
     return;
   }
 
-  const announcement = await getAnnouncement(channelID, targetAnnouncementID);
-  if (!announcement || announcement.updatedAt !== targetUpdatedAt) {
+  const targetAnnouncement = (
+    await db
+      .select({
+        title: announcementsTable.title,
+        body: announcementsTable.body,
+        headerImage: announcementsTable.headerImage,
+        images: announcementsTable.images,
+        createdAt: announcementsTable.createdAt,
+      })
+      .from(announcementsTable)
+      .where(
+        and(
+          eq(announcementsTable.channelID, channelID),
+          eq(announcementsTable.announcementID, targetAnnouncementID),
+          eq(announcementsTable.updatedAt, targetUpdatedAt),
+        ),
+      )
+  ).shift();
+
+  if (!targetAnnouncement) {
     return;
   }
 
-  const { announcementID, announcementQueries } = await makeInsertAnnouncement(
+  const queries = [];
+  const now = new Date().getTime();
+
+  const values: Omit<typeof announcementsTable.$inferInsert, 'announcementID'> = {
+    ...targetAnnouncement,
     userID,
     channelID,
-    headerImageFile,
-    title,
     body,
-    imagesFiles,
-    new Date(),
-    announcement.createdAt,
-  );
+    updatedAt: now,
+  };
+
+  if (title) {
+    values.title = title;
+  }
+
+  if (!headerImage) {
+    values.headerImage = null;
+  } else if (typeof headerImage === 'string') {
+    values.headerImage = headerImage;
+  } else if (headerImage instanceof Blob) {
+    const [v, q] = await makeInsertBlob(headerImage);
+    values.headerImage = v;
+    queries.push(q);
+  }
+
+  if (!images) {
+    values.images = null;
+  } else {
+    const imagesValues = [];
+    for (const image of images) {
+      if (typeof image === 'string') {
+        imagesValues.push(image);
+      } else if (image instanceof Blob) {
+        const [v, q] = await makeInsertBlob(image);
+        images.push(v);
+        queries.push(q);
+      }
+    }
+    values.images = imagesValues;
+  }
+
+  const announcementID = genAnnouncementID(values);
+
+  queries.push(db.insert(announcementsTable).values({ ...values, announcementID }));
 
   announcementIDs[index] = announcementID;
 
-  const queries = [
-    db
-      .update(channelsTable)
-      .set({
-        announcementIDs,
-        updatedAt: new Date(),
-      })
-      .where(
-        and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
-      ),
-    ...announcementQueries,
-  ] as const;
+  const updateChannel = db
+    .update(channelsTable)
+    .set({
+      announcementIDs,
+      updatedAt: now,
+    })
+    .where(
+      and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
+    );
 
-  const batchResults = await db.batch(queries);
+  const batchResults = await db.batch([updateChannel, ...queries]);
   if (batchResults[0].rowsAffected === 1) {
     await db
       .delete(announcementsTable)

@@ -1,50 +1,78 @@
 import { and, eq } from 'drizzle-orm';
 
 import { db } from '../../client';
-import { channelsTable } from '../../schema';
+import { announcementsTable, channelsTable } from '../../schema';
+import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getChannel } from '../channel/getChannel';
-import { makeInsertAnnouncement } from './makeInsertAnnouncement';
+import { genAnnouncementID } from './genAnnouncementID';
 
-export const addAnnouncement = async (
-  userID: string,
-  channelID: string,
-  headerImageFile: Blob | undefined,
-  title: string | undefined,
-  body: string,
-  imagesFiles: Blob[] | undefined,
-  createdAt: Date,
-) => {
-  const channel = await getChannel(userID, channelID);
+export const addAnnouncement = async ({
+  userID,
+  channelID,
+  headerImageFile,
+  title,
+  body,
+  imagesFiles,
+  createdAt,
+}: {
+  userID: string;
+  channelID: string;
+  headerImageFile: Blob | undefined;
+  title: string | undefined;
+  body: string;
+  imagesFiles: Blob[] | undefined;
+  createdAt: number;
+}) => {
+  const channel = await getChannel({ userID, channelID });
   if (!channel) {
     return;
   }
 
-  const { announcementID, announcementQueries } = await makeInsertAnnouncement(
+  const queries = [];
+
+  const values: Omit<typeof announcementsTable.$inferInsert, 'announcementID'> = {
     userID,
     channelID,
-    headerImageFile,
-    title,
     body,
-    imagesFiles,
+    updatedAt: createdAt,
     createdAt,
-    createdAt,
-  );
+  };
 
-  const announcementIDs = channel.announcementIDs ?? [];
-  announcementIDs.push(announcementID);
+  if (title) {
+    values.title = title;
+  }
 
-  const queries = [
-    ...announcementQueries,
-    db
-      .update(channelsTable)
-      .set({
-        announcementIDs,
-        updatedAt: new Date(),
-      })
-      .where(
-        and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
-      ),
-  ] as const;
+  if (headerImageFile) {
+    const [v, q] = await makeInsertBlob(headerImageFile);
+    values.headerImage = v;
+    queries.push(q);
+  }
 
-  await db.batch(queries);
+  if (imagesFiles) {
+    const images = [];
+    for (const f of imagesFiles) {
+      const [v, q] = await makeInsertBlob(f);
+      images.push(v);
+      queries.push(q);
+    }
+    values.images = images;
+  }
+
+  const announcementID = genAnnouncementID(values);
+
+  queries.push(db.insert(announcementsTable).values({ announcementID, ...values }));
+
+  const announcementIDs = [announcementID, ...(channel.announcementIDs ?? [])];
+
+  const updateChannel = db
+    .update(channelsTable)
+    .set({
+      announcementIDs,
+      updatedAt: new Date().getTime(),
+    })
+    .where(
+      and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
+    );
+
+  await db.batch([updateChannel, ...queries]);
 };

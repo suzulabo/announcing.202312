@@ -9,7 +9,7 @@ const getHash = async (blob: Blob) => {
 
   const digest = createHash('sha256').update(new Uint8Array(ab)).digest();
 
-  const hash = base62.encode(digest);
+  const hash = base62.encode(new Uint8Array(digest));
 
   return [hash, ab] as const;
 };
@@ -21,7 +21,12 @@ export const makeInsertBlob = async (blob: Blob) => {
     blobID,
     db
       .insert(blobsTable)
-      .values({ blobID, contentType: blob.type, data: Buffer.from(ab) })
+      .values({
+        blobID,
+        contentType: blob.type,
+        data: Buffer.from(ab),
+        createdAt: new Date().getTime(),
+      })
       .onConflictDoNothing(),
   ] as const;
 };

@@ -6,6 +6,5 @@ dist
 
 packages/db-dev
 
-storybook-static
 test-results
 playwright-report

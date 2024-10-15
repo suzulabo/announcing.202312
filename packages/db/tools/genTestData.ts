@@ -10,17 +10,15 @@ import { deleteChannel } from '../src/api/channel/deleteChannel';
 import { getChannel } from '../src/api/channel/getChannel';
 
 const channelData = {
-  title: 'Aether Dynamics Corporation',
+  name: 'Aether Dynamics Corporation',
   desc: 'Aether Dynamics Corporation is at the forefront of cutting-edge technology, pioneering advancements in energy solutions and sustainable innovation.\nJoin us as we transform the future with dynamic, visionary science.',
 };
 
 faker.seed(1192);
 
-MockDate.set('2024-08-08T11:59:00Z');
-
 const genAnnouncement = () => {
-  const title = faker.lorem.sentence();
-  const body = faker.lorem.text();
+  const title = faker.lorem.sentence({ min: 5, max: 10 });
+  const body = faker.lorem.paragraphs({ min: 1, max: 10 });
 
   return {
     title,
@@ -30,15 +28,23 @@ const genAnnouncement = () => {
 
 const generate = async (userID: string, channelID: string, count: number) => {
   {
-    const channel = await getChannel(userID, channelID);
+    const channel = await getChannel({ userID, channelID });
     if (channel) {
-      await deleteChannel(userID, channelID, channel.updatedAt);
+      await deleteChannel({ userID, channelID, updatedAt: channel.updatedAt });
     }
   }
 
+  let date = new Date('2024-08-08T11:59:00Z').getTime();
   {
+    MockDate.set(date);
     const icon = await openAsBlob('./tools/assets/cat-1484725_256.png');
-    await createChannel(userID, channelID, channelData.title, channelData.desc, icon);
+    await createChannel({
+      userID,
+      channelID,
+      name: channelData.name,
+      desc: channelData.desc,
+      icon,
+    });
   }
 
   {
@@ -79,20 +85,24 @@ const generate = async (userID: string, channelID: string, count: number) => {
     };
 
     for (let i = 0; i < count; i++) {
-      const channel = await getChannel(userID, channelID);
+      const channel = await getChannel({ userID, channelID });
       if (!channel) {
         throw new Error();
       }
       const a = genAnnouncement();
-      await addAnnouncement(
+
+      date += 60 * 60 * 24 * 1000;
+      MockDate.set(date);
+
+      await addAnnouncement({
         userID,
         channelID,
-        await getHeaderImage(i),
-        a.title,
-        a.body,
-        await getImages(i),
-        new Date(),
-      );
+        headerImageFile: await getHeaderImage(i),
+        title: a.title,
+        body: a.body,
+        imagesFiles: await getImages(i),
+        createdAt: new Date().getTime(),
+      });
     }
   }
 };

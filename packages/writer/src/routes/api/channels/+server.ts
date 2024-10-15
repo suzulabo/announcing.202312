@@ -32,11 +32,11 @@ export const POST: RequestHandler = async ({ locals, request }) => {
     error(400, 'Missing name');
   }
   const desc = getFormString(formData, 'desc');
-  const iconFile = getFormFile(formData, 'iconFile');
+  const icon = getFormFile(formData, 'icon');
 
   const channelID = genChannelID();
 
-  await createChannel(userID, channelID, name, desc, iconFile);
+  await createChannel({ userID, channelID, name, desc, icon });
 
   return json({});
 };

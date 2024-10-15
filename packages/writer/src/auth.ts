@@ -1,4 +1,4 @@
-import { base62 } from '@announcing/db';
+import { base62 } from '@announcing/db/utils';
 import { SvelteKitAuth, type SvelteKitAuthConfig } from '@auth/sveltekit';
 import Credentials from '@auth/sveltekit/providers/credentials';
 import Google from '@auth/sveltekit/providers/google';
@@ -42,7 +42,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
           .update(`${account.provider}:${account.providerAccountId}`)
           .digest();
 
-        token['userID'] = base62.encode(digest);
+        token['userID'] = base62.encode(new Uint8Array(digest));
       }
 
       return token;

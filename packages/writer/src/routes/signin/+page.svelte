@@ -1,33 +1,27 @@
 <script lang="ts">
-  import Logo from '@announcing/components/Logo.svelte';
   import { signIn } from '@auth/sveltekit/client';
 
   import { env } from '$env/dynamic/public';
   import GoogleIcon from '$lib/components/icon/GoogleIcon.svelte';
-  import { t } from '$lib/i18n/translations';
 </script>
 
 <div class="container">
-  <div class="title">
-    <Logo size="40px" />
-    <div class="label">Announcing Writer</div>
-  </div>
   <div class="buttons">
+    {#if env.PUBLIC_TEST}
+      <button
+        on:click={() => {
+          void signIn('credentials', { id: 'test_user01' });
+        }}>Credentials</button
+      >
+    {/if}
     <button
       on:click={() => {
         void signIn('google');
       }}
       ><div class="inner">
-        <GoogleIcon /><span class="label">{$t('signIn', { value: 'Google' })}</span>
+        <GoogleIcon /><span class="label"></span>
       </div></button
     >
-    {#if env.PUBLIC_TEST}
-      <button
-        on:click={() => {
-          void signIn('credentials', { id: `test_user-${Math.random().toString()}` });
-        }}>Credentials</button
-      >
-    {/if}
   </div>
 </div>
 
@@ -35,25 +29,14 @@
   .container {
     padding: 20px 10px;
 
-    .title {
-      text-align: center;
-
-      margin-bottom: 40px;
-
-      .label {
-        font-size: 24px;
-      }
-    }
-
     .buttons {
-      text-align: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 8px;
 
       button {
-        display: inline-block;
-        width: 90%;
-        min-width: 200px;
-        max-width: 300px;
-        margin: 0 0 20px;
+        width: 100%;
+        height: 55px;
 
         .inner {
           display: inline-flex;

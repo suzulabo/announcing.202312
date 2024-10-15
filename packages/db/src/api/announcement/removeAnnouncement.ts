@@ -3,13 +3,20 @@ import { and, eq } from 'drizzle-orm';
 import { db } from '../../client';
 import { announcementsTable, channelsTable } from '../../schema';
 import { getChannel } from '../channel/getChannel';
+import { getAnnouncement } from './getAnnouncement';
 
-export const removeAnnouncement = async (
-  userID: string,
-  channelID: string,
-  targetAnnouncementID: string,
-) => {
-  const channel = await getChannel(userID, channelID);
+export const removeAnnouncement = async ({
+  userID,
+  channelID,
+  targetAnnouncementID,
+  targetUpdatedAt,
+}: {
+  userID: string;
+  channelID: string;
+  targetAnnouncementID: string;
+  targetUpdatedAt: number;
+}) => {
+  const channel = await getChannel({ userID, channelID });
   if (!channel) {
     return;
   }
@@ -23,13 +30,23 @@ export const removeAnnouncement = async (
     return;
   }
 
+  {
+    const announcement = await getAnnouncement({ channelID, announcementID: targetAnnouncementID });
+    if (!announcement) {
+      return;
+    }
+    if (announcement.updatedAt !== targetUpdatedAt) {
+      return;
+    }
+  }
+
   announcementIDs.splice(index, 1);
 
   const result = await db
     .update(channelsTable)
     .set({
       announcementIDs,
-      updatedAt: new Date(),
+      updatedAt: new Date().getTime(),
     })
     .where(
       and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),

@@ -1,10 +1,9 @@
 import { eq } from 'drizzle-orm';
 
 import { db } from '../../client';
-import { getEnv } from '../../lib/env';
 import { channelsTable, ownersTable } from '../../schema';
 
-export const getChannels = async (userID: string) => {
+export const getChannels = async ({ userID }: { userID: string }) => {
   const channels = await db
     .select({
       channelID: channelsTable.channelID,
@@ -19,13 +18,11 @@ export const getChannels = async (userID: string) => {
     .innerJoin(ownersTable, eq(channelsTable.channelID, ownersTable.channelID))
     .where(eq(ownersTable.userID, userID));
 
-  const { imagePrefix } = getEnv();
-
   return channels.map((channel) => {
     return {
       ...channel,
       desc: channel.desc ?? undefined,
-      icon: channel.icon ? `${imagePrefix}${channel.icon}` : undefined,
+      icon: channel.icon ?? undefined,
       announcementIDs: channel.announcementIDs ?? undefined,
     };
   });

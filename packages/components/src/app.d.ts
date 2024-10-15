@@ -1,4 +1,5 @@
 // See https://kit.svelte.dev/docs/types#app
+
 // for information about these interfaces
 declare global {
   namespace App {
@@ -6,7 +7,9 @@ declare global {
     // interface Locals {}
     // interface PageData {}
     interface PageState {
-      modal?: Record<string, boolean>;
+      announcementViewZoomImage?: {
+        src: string;
+      };
       fromHref?: string;
     }
     // interface Platform {}
