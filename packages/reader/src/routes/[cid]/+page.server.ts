@@ -1,5 +1,4 @@
-import { getChannel } from '@announcing/db';
-import { READER } from '@announcing/db/dist/api/channel/getChannel';
+import { getChannel, READER } from '@announcing/db';
 import { error } from '@sveltejs/kit';
 
 import type { PageServerLoad } from './$types';
@@ -7,7 +6,7 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ params }) => {
   const { cid } = params;
 
-  const channel = await getChannel(READER, cid);
+  const channel = await getChannel({ userID: READER, channelID: cid });
 
   console.log({ channel });
 

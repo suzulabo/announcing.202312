@@ -5,6 +5,6 @@ export { updateAnnouncement } from './api/announcement/updateAnnouncement';
 export { getBlob } from './api/blob/getBlob';
 export { createChannel } from './api/channel/createChannel';
 export { deleteChannel } from './api/channel/deleteChannel';
-export { getChannel } from './api/channel/getChannel';
+export { READER, getChannel } from './api/channel/getChannel';
 export { getChannels } from './api/channel/getChannels';
 export { updateChannel } from './api/channel/updateChannel';
