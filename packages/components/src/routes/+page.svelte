@@ -14,22 +14,15 @@
   <li><a href="./atoms/VirtualScrollList/expand">VirtualScrollList - expand</a></li>
   <li><a href="./atoms/ResizeObserver">ResizeObserver</a></li>
   <li><a href="./atoms/ResizeObserver/readMore">ResizeObserver - read more</a></li>
-  <li><a href="./actions/overflowFade">OverflowFade</a></li>
   <li><a href="./actions/back">Back</a></li>
 </ul>
 <hr />
 <ul class="links">
-  <li><a href="./channelEditor/create">ChannelEditor - create</a></li>
-  <li><a href="./channelEditor/edit">ChannelEditor - edit</a></li>
   <li><a href="./parts/ChannelView">ChannelView - default</a></li>
-  <li><a href="./parts/AnnouncementEditor/create">AnnouncementEditor - create</a></li>
   <li><a href="./parts/AnnouncementView/default">AnnouncementView - default</a></li>
   <li>
     <a href="./parts/AnnouncementView/default/singleImage">AnnouncementView - single image</a>
   </li>
-  <li><a href="./nav/10">Navigation</a></li>
-  <li><a href="./pages/writer/ChannelMenuPage">ChannelMenuPage</a></li>
-  <li><a href="./pages/writer/AnnouncementEditorPage">AnnouncementEditorPage</a></li>
 </ul>
 
 <style lang="scss">

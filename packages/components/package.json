@@ -28,10 +28,6 @@
       "types": "./dist/actions/imgSrc.d.ts",
       "import": "./dist/actions/imgSrc.js"
     },
-    "./actions/loadImage": {
-      "types": "./dist/actions/loadImage.d.ts",
-      "import": "./dist/actions/loadImage.js"
-    },
     "./base.scss": "./dist/base.scss",
     "./utils/idbBlob": {
       "types": "./dist/utils/idbBlob.d.ts",
@@ -44,10 +40,6 @@
     "./ChannelView.svelte": {
       "types": "./dist/parts/ChannelView/ChannelView.svelte.d.ts",
       "svelte": "./dist/parts/ChannelView/ChannelView.svelte"
-    },
-    "./ChannelEditor.svelte": {
-      "types": "./dist/parts/ChannelEditor.svelte.d.ts",
-      "svelte": "./dist/parts/ChannelEditor.svelte"
     },
     "./FileInput.svelte": {
       "types": "./dist/atoms/FileInput.svelte.d.ts",
