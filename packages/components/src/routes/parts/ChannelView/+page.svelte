@@ -14,9 +14,8 @@
   const announcementLoader: AnnouncementLoaderFunction = (key: string) => {
     const keyNum = +key;
     faker.seed(keyNum + 100);
-    const date = addDays('2023-12-31T00:11:22', keyNum * -1);
+    const date = addDays('2023-12-31T00:11:22', keyNum * -1).getTime();
     const result: Announcement = {
-      id: key,
       title: `[${key}] ${faker.lorem.sentence()}`,
       body: faker.lorem.text(),
       updatedAt: date,
@@ -32,7 +31,6 @@
     }
 
     if (loaded.has(key)) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return result;
     }
 

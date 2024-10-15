@@ -11,8 +11,8 @@
       '/assets/music-8559592_441x640.jpg',
     ],
     //updatedAt: new Date('2024-09-22T23:24:25'),
-    updatedAt: new Date('2024-09-20T11:22:33'),
-    createdAt: new Date('2024-09-20T11:22:33'),
+    updatedAt: new Date('2024-09-20T11:22:33').getTime(),
+    createdAt: new Date('2024-09-20T11:22:33').getTime(),
   };
 </script>
 

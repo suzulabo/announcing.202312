@@ -5,8 +5,8 @@
       '/assets/gecko-8483282_640x452.png',
       //'/assets/cat-8612685_640_small_100x150.jpg',
     ],
-    updatedAt: new Date('2024-09-20T11:22:33'),
-    createdAt: new Date('2024-09-20T11:22:33'),
+    updatedAt: new Date('2024-09-20T11:22:33').getTime(),
+    createdAt: new Date('2024-09-20T11:22:33').getTime(),
   };
 </script>
 
