@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { imgSrc } from '@announcing/components/actions/imgSrc';
   import { LL } from '@announcing/i18n';
 
   import { invalidateAll } from '$app/navigation';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
-  import { normalizePath } from '$lib/utils/normalizePath';
 
   import type { PageServerData } from './$types';
 
@@ -32,7 +32,7 @@
               {channel.name}
             </span>
             {#if channel.icon}
-              <img src={normalizePath(channel.icon)} alt="icon" />
+              <img alt="icon" use:imgSrc={channel.icon} />
             {/if}
           </div>
         </a>

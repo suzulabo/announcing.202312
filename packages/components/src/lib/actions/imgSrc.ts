@@ -2,6 +2,10 @@ import type { Action } from 'svelte/action';
 
 import { loadBlob } from '$lib/utils/idbBlob';
 
+const env = {
+  prefix: '/s',
+};
+
 class SrcSetter {
   private objectURL: string | undefined = undefined;
   private serial = 0;
@@ -16,6 +20,11 @@ class SrcSetter {
     this.revoke();
     if (!src) {
       this.img.src = '';
+      return;
+    }
+    // BlobID
+    if (!src.includes('/')) {
+      this.img.src = `${env.prefix}/${src}`;
       return;
     }
     if (!src.startsWith('idb://')) {

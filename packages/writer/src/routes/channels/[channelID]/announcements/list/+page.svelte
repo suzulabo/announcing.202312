@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { imgSrc } from '@announcing/components/actions/imgSrc';
   import Loading from '@announcing/components/Loading.svelte';
   import ResizeObserver from '@announcing/components/ResizeObserver.svelte';
   import { formatDate, toHtml } from '@announcing/components/utils';
@@ -8,7 +9,6 @@
   import { invalidateAll } from '$app/navigation';
   import { page } from '$app/stores';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
-  import { normalizePath } from '$lib/utils/normalizePath';
 
   import type { PageData } from './$types';
   import DeleteModal from './DeleteModal.svelte';
@@ -86,11 +86,7 @@
               </button>
             </div>
             {#if announcement.headerImage}
-              <img
-                class="header-image"
-                src={normalizePath(announcement.headerImage)}
-                alt="header"
-              />
+              <img class="header-image" alt="header" use:imgSrc={announcement.headerImage} />
             {/if}
             {#if announcement.title}
               <div class="title">

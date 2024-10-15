@@ -21,8 +21,6 @@
   } from '@announcing/db/constants';
   import { LL } from '@announcing/i18n';
 
-  import { normalizePath } from '$lib/utils/normalizePath';
-
   let open = false;
   let loading = false;
 
@@ -87,7 +85,7 @@
             }}
           >
             {#if form.icon}
-              <img class="icon" alt="icon preview" use:imgSrc={normalizePath(form.icon)} />
+              <img class="icon" alt="icon preview" use:imgSrc={form.icon} />
             {/if}
           </button>
           <button

@@ -1,11 +1,11 @@
 <script lang="ts">
+  import { imgSrc } from '@announcing/components/actions/imgSrc';
   import { LL } from '@announcing/i18n';
 
   import { goto, invalidateAll } from '$app/navigation';
   import { page } from '$app/stores';
   import { PUBLIC_READER_PREFIX } from '$env/static/public';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
-  import { normalizePath } from '$lib/utils/normalizePath';
 
   import type { PageData } from './$types';
   import DeleteModal from './DeleteModal.svelte';
@@ -46,7 +46,7 @@
   <div class="name-box">
     <span class="name">{channel.name}</span>
     {#if channel.icon}
-      <img class="icon" src={normalizePath(channel.icon)} alt="channel icon" />
+      <img class="icon" alt="channel icon" use:imgSrc={channel.icon} />
     {/if}
   </div>
   {#if channel.desc}
