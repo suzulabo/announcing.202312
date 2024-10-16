@@ -8,8 +8,6 @@ export const load: PageServerLoad = async ({ params }) => {
 
   const channel = await getChannel({ userID: READER, channelID });
 
-  console.log({ channel });
-
   if (!channel) {
     error(404);
   }
