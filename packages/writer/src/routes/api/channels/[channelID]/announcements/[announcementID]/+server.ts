@@ -48,8 +48,6 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
   const channelID = params.channelID;
   const targetAnnouncementID = params.announcementID;
 
-  console.log('update?');
-
   await updateAnnouncement({
     userID,
     channelID,
