@@ -1,5 +1,5 @@
 <script lang="ts" generics="T extends Record<K, string | number>, K extends keyof T">
-  import { onMount } from 'svelte';
+  import { afterUpdate, onMount } from 'svelte';
 
   import { toStyle } from '$lib/utils/toStyle';
 
@@ -8,6 +8,8 @@
   export let itemMinHeight: number;
   export let gap = 0;
   export let overScanCount = 2;
+  export let heightMap: Record<string | number, number> = {};
+  export let onTotalHeightChanged: (() => void) | undefined = undefined;
 
   let itemsY = -1;
   let visibleBottomY = -1;
@@ -15,8 +17,6 @@
   let visibleItems: T[] = [];
   let topHeight = 0;
   let itemsElement: HTMLDivElement | undefined;
-
-  const heightMap: Record<string | number, number> = {};
 
   const updateItemsRect = () => {
     if (itemsElement) {
@@ -84,6 +84,14 @@
     return () => {
       resizeObserver.disconnect();
     };
+  });
+
+  afterUpdate(() => {
+    if (onTotalHeightChanged && itemsElement) {
+      if (itemsElement.style.height === `${totalHeight}px`) {
+        onTotalHeightChanged();
+      }
+    }
   });
 
   type ElementWithItem = Element & { item?: T };
