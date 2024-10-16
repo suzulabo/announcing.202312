@@ -23,10 +23,10 @@ test('add, update and remove', async () => {
   await addAnnouncement({
     userID: 'u1',
     channelID: 'a1',
-    headerImageFile: new Blob(['headerImage'], { type: 'image/test' }),
+    headerImage: new Blob(['headerImage'], { type: 'image/test' }),
     title: 'test',
     body: 'This is test',
-    imagesFiles: [new Blob(['images1'], { type: 'image/test' })],
+    images: [new Blob(['images1'], { type: 'image/test' })],
     createdAt: new Date().getTime(),
   });
 

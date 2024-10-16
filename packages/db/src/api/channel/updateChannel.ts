@@ -5,21 +5,36 @@ import { getDB } from '../../client';
 import { channelsTable, ownersTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
 
-export const updateChannel = async ({
-  userID,
-  updatedAt,
-  channelID,
-  name,
-  desc,
-  icon,
-}: {
-  userID: string;
-  updatedAt: number;
-  channelID: string;
-  name: string;
-  desc: string | undefined;
-  icon: Blob | string | undefined;
-}) => {
+import * as v from 'valibot';
+import {
+  BLOB_ID_MAX_BYTES,
+  CHANNEL_DESC_MAX_BYTES,
+  CHANNEL_ICON_MAX_BYTES,
+  CHANNEL_ID_MAX_BYTES,
+  CHANNEL_NAME_MAX_BYTES,
+  USER_ID_MAX_BYTES,
+} from '../../constants';
+
+const paramsSchema = v.object({
+  userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
+  updatedAt: v.number(),
+  channelID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_ID_MAX_BYTES)),
+  name: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_NAME_MAX_BYTES)),
+  desc: v.union([v.pipe(v.string(), v.maxBytes(CHANNEL_DESC_MAX_BYTES)), v.undefined()]),
+  icon: v.union([
+    v.pipe(v.blob(), v.maxSize(CHANNEL_ICON_MAX_BYTES)),
+    v.pipe(v.string(), v.nonEmpty(), v.maxBytes(BLOB_ID_MAX_BYTES)),
+    v.undefined(),
+  ]),
+});
+
+type Params = v.InferOutput<typeof paramsSchema>;
+
+export const updateChannel = async (params: Params) => {
+  v.assert(paramsSchema, params);
+
+  const { userID, updatedAt, channelID, name, desc, icon } = params;
+
   const queries = [];
 
   const values: SQLiteUpdateSetSource<typeof channelsTable> = {
