@@ -1,6 +1,6 @@
 import { and, eq, exists } from 'drizzle-orm';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { channelsTable, ownersTable } from '../../schema';
 
 export const READER = Symbol('READER');
@@ -12,6 +12,8 @@ export const getChannel = async ({
   userID: typeof READER | string;
   channelID: string;
 }) => {
+  const db = getDB();
+
   const conditions = [eq(channelsTable.channelID, channelID)];
   if (userID !== READER) {
     conditions.push(

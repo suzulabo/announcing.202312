@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { announcementsTable, channelsTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getChannel } from '../channel/getChannel';
@@ -37,6 +37,8 @@ export const updateAnnouncement = async ({
   if (index < 0) {
     return;
   }
+
+  const db = getDB();
 
   const targetAnnouncement = (
     await db

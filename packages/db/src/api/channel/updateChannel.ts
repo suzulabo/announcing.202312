@@ -1,7 +1,7 @@
 import { and, eq, exists } from 'drizzle-orm';
 import type { SQLiteUpdateSetSource } from 'drizzle-orm/sqlite-core';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { channelsTable, ownersTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
 
@@ -37,6 +37,8 @@ export const updateChannel = async ({
     values.icon = v;
     queries.push(q);
   }
+
+  const db = getDB();
 
   await db.batch([
     db

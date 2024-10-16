@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { announcementsTable, channelsTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getChannel } from '../channel/getChannel';
@@ -59,6 +59,8 @@ export const addAnnouncement = async ({
   }
 
   const announcementID = genAnnouncementID(values);
+
+  const db = getDB();
 
   queries.push(db.insert(announcementsTable).values({ announcementID, ...values }));
 

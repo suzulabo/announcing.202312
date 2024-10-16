@@ -1,6 +1,6 @@
 import { count, eq } from 'drizzle-orm';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { channelsTable, ownersTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
 
@@ -17,6 +17,8 @@ export const createChannel = async ({
   desc: string | undefined;
   icon: Blob | undefined;
 }) => {
+  const db = getDB();
+
   {
     // This should ideally be enforced by a database trigger.
     const c = (

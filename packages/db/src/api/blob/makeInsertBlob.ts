@@ -1,6 +1,6 @@
 import { createHash } from 'crypto';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { base62 } from '../../lib/base62';
 import { blobsTable } from '../../schema';
 
@@ -16,6 +16,8 @@ const getHash = async (blob: Blob) => {
 
 export const makeInsertBlob = async (blob: Blob) => {
   const [blobID, ab] = await getHash(blob);
+
+  const db = getDB();
 
   return [
     blobID,

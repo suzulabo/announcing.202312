@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { announcementsTable } from '../../schema';
 
 export const getAnnouncement = async ({
@@ -11,6 +11,8 @@ export const getAnnouncement = async ({
   announcementID: string;
 }) => {
   const { title, body, headerImage, images, updatedAt, createdAt } = announcementsTable;
+
+  const db = getDB();
 
   const announcement = (
     await db

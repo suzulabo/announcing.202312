@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { announcementsTable, channelsTable } from '../../schema';
 import { getChannel } from '../channel/getChannel';
 import { getAnnouncement } from './getAnnouncement';
@@ -41,6 +41,8 @@ export const removeAnnouncement = async ({
   }
 
   announcementIDs.splice(index, 1);
+
+  const db = getDB();
 
   const result = await db
     .update(channelsTable)
