@@ -1,5 +1,6 @@
 import { assert, describe, expect, test, vi } from 'vitest';
 
+import { ValiError } from 'valibot';
 import { getChannels } from '../src';
 import { createChannel } from '../src/api/channel/createChannel';
 import { deleteChannel } from '../src/api/channel/deleteChannel';
@@ -92,5 +93,17 @@ describe('Channel', () => {
 
     const channels = await getChannels({ userID: 'u1' });
     expect(channels.length).toEqual(5);
+  });
+
+  test('empty name', async () => {
+    await expect(
+      createChannel({
+        userID: '1',
+        channelID: '1',
+        name: '',
+        desc: undefined,
+        icon: undefined,
+      }),
+    ).rejects.toBeInstanceOf(ValiError);
   });
 });
