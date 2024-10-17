@@ -2,9 +2,9 @@
   import { LL } from '@announcing/i18n';
 
   import Spinner from '$lib/atoms/Spinner.svelte';
-  import VirtualScrollGrid from '$lib/atoms/VirtualScrollGrid.svelte';
   import { toHtml } from '$lib/utils/toHtml';
 
+  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
   import type { ChannelViewParams } from '../ChannelView.svelte';
   import GridItem from './GridItem.svelte';
 
@@ -34,9 +34,9 @@
       {$LL.noAnnouncements()}
     </div>
   {:else}
-    <VirtualScrollGrid items={announcementKeys} itemHeight={300} itemMinWidth={300} gap={8}>
-      <a class="item" slot="item" let:item href={`${announcementHrefPrefix}${item}`}>
-        {#await announcementLoader(item)}
+    <VirtualScrollList keys={announcementKeys} itemMinHeight={200} gap={8}>
+      <a class="item" slot="item" let:key href={`${announcementHrefPrefix}/${key}`}>
+        {#await announcementLoader(key)}
           <div class="loading">
             <Spinner />
           </div>
@@ -44,7 +44,7 @@
           <GridItem {announcement} />
         {/await}
       </a>
-    </VirtualScrollGrid>
+    </VirtualScrollList>
   {/if}
 {/if}
 
@@ -82,7 +82,7 @@
   .item {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    min-height: 200px;
     border: 1px solid var(--color-border-light);
     border-radius: 4px;
     overflow: hidden;
