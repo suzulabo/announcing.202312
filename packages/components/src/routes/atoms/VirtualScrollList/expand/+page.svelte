@@ -2,30 +2,31 @@
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
   import { toStyle } from '$lib/utils/toStyle';
 
-  let items = [...Array(20)].map((_, index) => {
-    return { index, expand: false };
+  const keys = [...Array(20)].map((_, index) => {
+    return index;
   });
+
+  const expands: Record<number, boolean> = {};
 </script>
 
 <div class="container">
-  <VirtualScrollList {items} idKey="index" itemMinHeight={100} gap={0}>
+  <VirtualScrollList {keys} itemMinHeight={100} gap={0}>
     <!-- eslint-disable-next-line svelte/valid-compile -->
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
       class="item"
       slot="item"
-      let:item
-      style={toStyle({ height: `${item.expand ? 200 : 100}px` })}
+      let:key
+      style={toStyle({ height: `${expands[key] ? 200 : 100}px` })}
       role="button"
       tabindex="0"
       on:click={() => {
-        item.expand = !item.expand;
-        items = [...items];
+        expands[key] = !expands[key];
       }}
     >
       <div>
-        {item.index}
-        {item.expand ? 'expand' : 'not expand'}
+        {key}
+        {expands[key] ? 'expand' : 'not expand'}
       </div>
     </div>
   </VirtualScrollList>

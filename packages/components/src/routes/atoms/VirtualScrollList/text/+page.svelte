@@ -2,13 +2,15 @@
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
 
   import { items } from './items';
+
+  const keys = [...items.keys()];
 </script>
 
 <div class="container">
-  <VirtualScrollList {items} idKey="index" itemMinHeight={100}>
-    <div class="item" slot="item" let:item>
-      <div class="title">{item.title}</div>
-      <div class="body">{item.body}</div>
+  <VirtualScrollList {keys} itemMinHeight={100}>
+    <div class="item" slot="item" let:key>
+      <div class="title">{items.get(key)?.title}</div>
+      <div class="body">{items.get(key)?.body}</div>
       <hr />
     </div>
   </VirtualScrollList>
