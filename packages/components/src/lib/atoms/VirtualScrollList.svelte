@@ -1,3 +1,10 @@
+<script lang="ts" context="module">
+  export type SnapShotData = {
+    heightMap: Record<string | number, number>;
+    scrollY: number;
+  };
+</script>
+
 <script lang="ts" generics="T extends Record<K, string | number>, K extends keyof T">
   import { afterUpdate, onMount } from 'svelte';
 
@@ -8,8 +15,6 @@
   export let itemMinHeight: number;
   export let gap = 0;
   export let overScanCount = 2;
-  export let heightMap: Record<string | number, number> = {};
-  export let onTotalHeightChanged: (() => void) | undefined = undefined;
 
   let itemsY = -1;
   let visibleBottomY = -1;
@@ -17,6 +22,19 @@
   let visibleItems: T[] = [];
   let topHeight = 0;
   let itemsElement: HTMLDivElement | undefined;
+  let heightMap: Record<string | number, number> = {};
+  let scrollYForRestore = -1;
+
+  export const snapshot = {
+    capture: (): SnapShotData => {
+      const data = { heightMap, scrollY: window.scrollY };
+      return data;
+    },
+    restore: (data: SnapShotData) => {
+      heightMap = data.heightMap;
+      scrollYForRestore = data.scrollY;
+    },
+  };
 
   const updateItemsRect = () => {
     if (itemsElement) {
@@ -87,9 +105,10 @@
   });
 
   afterUpdate(() => {
-    if (onTotalHeightChanged && itemsElement) {
+    if (scrollYForRestore >= 0 && itemsElement) {
       if (itemsElement.style.height === `${totalHeight}px`) {
-        onTotalHeightChanged();
+        window.scrollTo({ top: scrollYForRestore });
+        scrollYForRestore = -1;
       }
     }
   });

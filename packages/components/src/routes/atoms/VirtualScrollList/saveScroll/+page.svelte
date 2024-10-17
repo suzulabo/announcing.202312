@@ -1,28 +1,18 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
+  import VirtualScrollList, { type SnapShotData } from '$lib/atoms/VirtualScrollList.svelte';
   import type { Snapshot } from '../$types';
 
   import { items } from './items';
 
-  let heightMap = {};
-  let onTotalHeightChanged: (() => void) | undefined = undefined;
+  let scrollList: VirtualScrollList<(typeof items)[number], 'index'>;
 
-  export const snapshot: Snapshot<{ heightMap: Record<string, number>; scrollY: number }> = {
+  export const snapshot: Snapshot<SnapShotData> = {
     capture: () => {
-      console.log('capture', { heightMap, scrollY: window.scrollY });
-      return { heightMap, scrollY: document.documentElement.scrollTop };
+      return scrollList.snapshot.capture();
     },
-    restore: async (value) => {
-      console.log('restore', value);
-      heightMap = value.heightMap;
-
-      const scrollY = value.scrollY;
-      onTotalHeightChanged = () => {
-        console.log('onTotalHeightChanged', scrollY);
-        window.scrollTo({ top: scrollY });
-        onTotalHeightChanged = undefined;
-      };
+    restore: (data) => {
+      scrollList.snapshot.restore(data);
     },
   };
 </script>
@@ -31,13 +21,7 @@
   <div class="forward-box">
     <a href={`${$page.url.href}/back`}>Forward</a>
   </div>
-  <VirtualScrollList
-    {items}
-    idKey="index"
-    itemMinHeight={100}
-    bind:heightMap
-    {onTotalHeightChanged}
-  >
+  <VirtualScrollList bind:this={scrollList} {items} idKey="index" itemMinHeight={100}>
     <div class="item" slot="item" let:item>
       <div class="title">{item.title}</div>
       <div class="body">{item.body}</div>
