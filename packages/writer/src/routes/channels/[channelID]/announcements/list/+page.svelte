@@ -23,10 +23,12 @@
       }
     | undefined;
 
-  $: items =
-    data.channel.announcementIDs?.map((v) => {
-      return { id: v, expand: false, overflow: false };
-    }) ?? [];
+  let overflowMap: Record<string, boolean>;
+
+  $: keys = data.channel.announcementIDs ?? [];
+  $: if (typeof data !== 'undefined') {
+    overflowMap = {};
+  }
 
   const deleteAnnouncement = async () => {
     if (!deleteTarget) {
@@ -42,25 +44,17 @@
 </script>
 
 <div class="container">
-  <VirtualScrollList {items} idKey="id" itemMinHeight={200} gap={8}>
-    <div class="item" slot="item" let:item>
-      {#await fetchAnnouncement({ channelID: data.channel.channelID, announcementID: item.id })}
+  <VirtualScrollList {keys} itemMinHeight={200} gap={8}>
+    <div class="item" slot="item" let:key>
+      {#await fetchAnnouncement({ channelID: data.channel.channelID, announcementID: key })}
         <Loading />
       {:then announcement}
         <ResizeObserver
           onResize={({ el }) => {
-            const overflow = el.scrollHeight > el.clientHeight;
-            if (item.overflow !== overflow) {
-              items = items.map((v) => {
-                if (v === item) {
-                  return { ...v, overflow };
-                }
-                return v;
-              });
-            }
+            overflowMap[key] = el.scrollHeight > el.clientHeight;
           }}
         >
-          <div class="overflow-fade" class:overflow={item.overflow}>
+          <div class="overflow-fade" class:overflow={overflowMap[key]}>
             <div class="top-box">
               <div class="date">
                 {#if announcement.createdAt === announcement.updatedAt}
@@ -70,13 +64,13 @@
                   <div>{$LL.announcementView.updated()}{formatDate(announcement.updatedAt)}</div>
                 {/if}
               </div>
-              <a class="button" href={`${$page.url.pathname.replace('list', item.id)}`}>
+              <a class="button" href={`${$page.url.pathname.replace('list', key)}`}>
                 {$LL.edit()}
               </a>
               <button
                 on:click={() => {
                   deleteTarget = {
-                    id: item.id,
+                    id: key,
                     updatedAt: announcement.updatedAt,
                   };
                   deleteModal.openModal();
