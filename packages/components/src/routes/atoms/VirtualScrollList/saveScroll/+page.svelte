@@ -1,27 +1,17 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import VirtualScrollList, { type SnapShotData } from '$lib/atoms/VirtualScrollList.svelte';
-  import type { Snapshot } from '../$types';
-
+  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
+  import { createSnapshotContext } from '$lib/utils/snapshotContext.js';
   import { items } from './items';
 
-  let scrollList: VirtualScrollList<(typeof items)[number], 'index'>;
-
-  export const snapshot: Snapshot<SnapShotData> = {
-    capture: () => {
-      return scrollList.snapshot.capture();
-    },
-    restore: (data) => {
-      scrollList.snapshot.restore(data);
-    },
-  };
+  export const snapshot = createSnapshotContext();
 </script>
 
 <div class="container">
   <div class="forward-box">
     <a href={`${$page.url.href}/back`}>Forward</a>
   </div>
-  <VirtualScrollList bind:this={scrollList} {items} idKey="index" itemMinHeight={100}>
+  <VirtualScrollList {items} idKey="index" itemMinHeight={100}>
     <div class="item" slot="item" let:item>
       <div class="title">{item.title}</div>
       <div class="body">{item.body}</div>

@@ -6,6 +6,8 @@
 </script>
 
 <script lang="ts" generics="T extends Record<K, string | number>, K extends keyof T">
+  import { addSnapShot } from '$lib/utils/snapshotContext';
+
   import { afterUpdate, onMount } from 'svelte';
 
   import { toStyle } from '$lib/utils/toStyle';
@@ -25,7 +27,7 @@
   let heightMap: Record<string | number, number> = {};
   let scrollYForRestore = -1;
 
-  export const snapshot = {
+  addSnapShot({
     capture: (): SnapShotData => {
       const data = { heightMap, scrollY: window.scrollY };
       return data;
@@ -34,7 +36,7 @@
       heightMap = data.heightMap;
       scrollYForRestore = data.scrollY;
     },
-  };
+  });
 
   const updateItemsRect = () => {
     if (itemsElement) {
