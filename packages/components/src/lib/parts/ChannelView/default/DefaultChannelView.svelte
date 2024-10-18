@@ -13,29 +13,30 @@
   $: ({ channel, announcementHrefPrefix, announcementKeys, announcementLoader } = params);
 </script>
 
-<div class="name-line">
-  <div class="name">
-    {channel.name}
+<div class="channel-box">
+  <div class="name-line">
+    <div class="name">
+      {channel.name}
+    </div>
+    {#if channel.icon}
+      <img class="icon" src={channel.icon} alt={channel.name} />
+    {/if}
   </div>
-  {#if channel.icon}
-    <img class="icon" src={channel.icon} alt={channel.name} />
+  {#if channel.desc}
+    <div class="desc">
+      {@html toHtml(channel.desc)}
+    </div>
   {/if}
 </div>
-{#if channel.desc}
-  <div class="desc">
-    {@html toHtml(channel.desc)}
-  </div>
-{/if}
 
 {#if announcementKeys && announcementLoader}
-  <hr />
   {#if announcementKeys.length === 0}
     <div class="no-announcements">
       {$LL.noAnnouncements()}
     </div>
   {:else}
     <VirtualScrollList keys={announcementKeys} itemMinHeight={200} gap={8}>
-      <a class="item" slot="item" let:key href={`${announcementHrefPrefix}/${key}`}>
+      <a class="item unstyled" slot="item" let:key href={`${announcementHrefPrefix}/${key}`}>
         {#await announcementLoader(key)}
           <div class="loading">
             <Spinner />
@@ -49,8 +50,14 @@
 {/if}
 
 <style lang="scss">
+  :global(html) {
+    background-color: var(--color-background-light);
+  }
+  .channel-box {
+    padding: 8px 8px 16px;
+  }
+
   .name-line {
-    margin: 10px 0 0;
     display: flex;
     align-items: center;
     .name {
@@ -63,16 +70,13 @@
       height: 64px;
       border-radius: 8px;
       object-fit: contain;
+      background-color: var(--color-background);
     }
   }
 
   .desc {
     margin: 10px 5px 0;
     white-space: pre-line;
-  }
-
-  hr {
-    margin: 20px 0;
   }
 
   .no-announcements {
@@ -83,9 +87,11 @@
     display: flex;
     flex-direction: column;
     min-height: 200px;
-    border: 1px solid var(--color-border-light);
-    border-radius: 4px;
+    max-height: 50svh;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
     overflow: hidden;
+    background-color: var(--color-background);
     cursor: pointer;
     .loading {
       margin: auto;

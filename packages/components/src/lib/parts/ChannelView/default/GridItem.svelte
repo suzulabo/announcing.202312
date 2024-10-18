@@ -63,6 +63,11 @@
       pointer-events: none;
     }
 
+    .date {
+      color: var(--color-text-light);
+      font-size: 15px;
+    }
+
     .header-image-box {
       width: 100%;
       max-height: 100px;
@@ -74,7 +79,7 @@
     }
 
     .title {
-      font-size: 1.1em;
+      font-size: 18px;
       font-weight: bold;
     }
   }
