@@ -13,6 +13,14 @@
   $: ({ channel, announcementHrefPrefix, announcementKeys, announcementLoader } = params);
 </script>
 
+<svelte:head>
+  <style>
+    body {
+      background-color: var(--color-background-light);
+    }
+  </style>
+</svelte:head>
+
 <div class="channel-box">
   <div class="name-line">
     <div class="name">
@@ -50,9 +58,6 @@
 {/if}
 
 <style lang="scss">
-  :global(html) {
-    background-color: var(--color-background-light);
-  }
   .channel-box {
     padding: 8px 8px 16px;
   }
