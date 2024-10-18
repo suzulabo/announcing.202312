@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Input from '$lib/atoms/Input.svelte';
+  import TextArea from '$lib/atoms/TextArea.svelte';
 
   let required = false;
 </script>
 
 <div class="container">
-  <Input name="test" label="Name" {required} />
+  <TextArea name="test" label="Description" {required} />
 
   <label class="required">
     <input type="checkbox" bind:checked={required} />

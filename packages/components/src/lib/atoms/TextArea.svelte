@@ -38,11 +38,6 @@
     {#if required}
       <span class="required">{$LL.required()}</span>
     {/if}
-    {#if maxBytes > 0 && bytes > 0}
-      <div class="progress">
-        <div class="bar" style={`width: ${((bytes / maxBytes) * 100).toString()}%`} />
-      </div>
-    {/if}
   </div>
   <textarea
     {name}
@@ -59,6 +54,10 @@
 </label>
 
 <style lang="scss">
+  label {
+    display: flex;
+    flex-direction: column;
+  }
   .label-box {
     display: flex;
     align-items: center;
@@ -67,20 +66,6 @@
       font-size: 12px;
       color: var(--color-text-light);
       margin: 0 0 0 4px;
-    }
-
-    .progress {
-      margin-left: auto;
-      height: 8px;
-      width: 60px;
-      border-radius: 2px;
-      background-color: var(--color-background-light);
-      overflow: hidden;
-
-      .bar {
-        height: 100%;
-        background-color: var(--color-text);
-      }
     }
   }
 
