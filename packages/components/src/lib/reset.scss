@@ -80,17 +80,8 @@ textarea {
   border-radius: 4px;
   padding: 8px;
 
-  &::placeholder {
-    color: var(--color-text-placeholder);
-    text-align: center;
-  }
-
   &:focus {
-    border-width: 2px;
-    padding: 7px;
-    &::placeholder {
-      visibility: hidden;
-    }
+    background-color: var(--color-background-light);
   }
 }
 
