@@ -78,7 +78,6 @@
     right: 0;
     margin: 0;
     background-color: var(--color-background-modal);
-    backdrop-filter: blur(1px);
     z-index: var(--modal-z-index, 999);
   }
 </style>
