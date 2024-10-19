@@ -38,6 +38,7 @@
 </script>
 
 <div class="tool-bar">
+  <a href="/">Announcing Components</a>
   <select class="color-mode" bind:value={colorScheme}>
     <option value="">Default</option>
     <option value="light">Light</option>
