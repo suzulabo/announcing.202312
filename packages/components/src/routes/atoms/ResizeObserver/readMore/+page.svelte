@@ -65,7 +65,7 @@
         position: relative;
         overflow: hidden;
 
-        &:not(.read-more) {
+        &:not(.openReadMore) {
           max-height: 200px;
         }
 
