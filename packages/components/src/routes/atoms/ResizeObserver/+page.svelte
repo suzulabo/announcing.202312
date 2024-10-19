@@ -61,11 +61,7 @@
           left: 0;
           right: 0;
           content: '';
-          background: linear-gradient(
-            to top,
-            rgba(var(--color-background-rgb), 1),
-            rgba(var(--color-text-rgb), 0) 20%
-          );
+          background: linear-gradient(to top, var(--color-background), transparent 20%);
           pointer-events: none;
         }
       }
