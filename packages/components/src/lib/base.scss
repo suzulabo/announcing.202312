@@ -30,21 +30,29 @@ html {
   --color-background-loading: #{rgba(#eff5f6, 0.6)}; // Container Low (N-96)
 
   @mixin dark-mode {
-    --color-text-rgb: 222 227 229;
-    --color-text: rgb(var(--color-text-rgb));
-    --color-error: rgb(255 180 171);
-    --color-text-disable: rgb(var(--color-text-rgb) / 0.5);
-    --color-text-light: rgb(191 200 202);
-    --color-background-rgb: 0, 0, 0;
-    --color-background: rgb(var(--color-background-rgb));
-    --color-background-light: #1b2122;
-    --color-background-modal: rgba(0, 0, 0, 0.7);
-    --color-background-loading: rgba(0, 0, 0, 0.5);
-    --color-border-rgb: 137 146 148;
-    --color-border: rgb(var(--color-border-rgb));
-    --color-border-disable: rgb(var(--color-border-rgb) / 0.5);
-    --color-border-light: rgb(63 72 74);
-    --color-hover: #212121;
+    $color-text: #dee3e5; // On Surface (N-90)
+    --color-text: #{$color-text};
+    --color-text-disable: #{rgba($color-text, 0.5)};
+
+    --color-text-light: #bfc8ca; // On Surface Variant (NV-90)
+
+    --color-error: #ffb4ab; // Error (E-80)
+
+    --color-background: #090f10; // Container Lowest (N-4)
+
+    --color-background-light: #171d1e; // Container Low (N-10)
+
+    $color-border: #899294; // Outline (NV-60)
+    --color-border: #{$color-border};
+    --color-border-disable: #{rgba($color-border, 0.5)};
+
+    --color-border-light: #3f484a; // OUtline Variant (NV-30)
+
+    --color-hover: #1b2122; // Container (N-12)
+
+    --color-background-modal: #{rgba(#dee3e5, 0.8)}; // Inverse Surface (N-90)
+
+    --color-background-loading: #{rgba(#3f484a, 0.6)}; // OUtline Variant (NV-30)
   }
 
   color: var(--color-text);
