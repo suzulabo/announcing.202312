@@ -8,6 +8,10 @@
     ChannelViewParams,
   } from '$lib/parts/ChannelView/ChannelView.svelte';
   import ChannelView from '$lib/parts/ChannelView/ChannelView.svelte';
+  import { page } from '$app/stores';
+  import { createSnapshotContext } from '$lib/utils/snapshotContext.js';
+
+  export const snapshot = createSnapshotContext();
 
   const loaded = new Set<string>();
   const announcementKeys = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
@@ -48,7 +52,7 @@
       desc: 'Aether Dynamics Corporation is at the forefront of cutting-edge technology, pioneering advancements in energy solutions and sustainable innovation.\nJoin us as we transform the future with dynamic, visionary science.',
       icon: '/assets/logo.png',
     },
-    announcementHrefPrefix: '/parts/ChannelView/',
+    announcementHrefPrefix: `${$page.url.pathname}/announcements`,
     announcementKeys,
     announcementLoader,
   };
