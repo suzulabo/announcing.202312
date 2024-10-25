@@ -53,27 +53,37 @@
   {#if announcement.images}
     {#if announcement.images.length === 1}
       {@const image = announcement.images[0]}
-      <button
-        class="unstyled"
+      <div
+        class="image-box"
+        role="button"
+        tabindex="0"
         on:click={() => {
           if (image) {
             showImageModal(image);
           }
         }}
+        on:keydown={() => {
+          // TODO
+        }}
       >
         <img class="single-image" use:imgSrc={image} alt="" />
-      </button>
+      </div>
     {:else}
       <div class="images-grid">
         {#each announcement.images as image}
-          <button
-            class="unstyled"
+          <div
+            role="button"
+            tabindex="0"
+            class="image-box"
             on:click={() => {
               showImageModal(image);
             }}
+            on:keydown={() => {
+              // TODO
+            }}
           >
             <img use:imgSrc={image} alt="" />
-          </button>
+          </div>
         {/each}
       </div>
     {/if}
@@ -123,6 +133,11 @@
         text-decoration: underline;
       }
     }
+
+    .image-box {
+      display: contents;
+    }
+
     .single-image {
       object-fit: cover;
       margin: 8px auto;
@@ -134,8 +149,9 @@
       grid-template-columns: auto auto;
       gap: 4px;
       padding: 8px 4px;
+
       img {
-        aspect-ratio: 1;
+        aspect-ratio: 5/4;
         object-fit: cover;
         margin: auto;
         border-radius: 8px;
