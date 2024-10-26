@@ -127,11 +127,6 @@
       padding: 0 16px;
       white-space: pre-wrap;
       line-height: 1.4;
-      :global(a) {
-        padding: 0;
-        font-weight: normal;
-        text-decoration: underline;
-      }
     }
 
     .image-box {

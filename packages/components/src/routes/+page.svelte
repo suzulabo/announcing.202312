@@ -3,6 +3,7 @@
 
 <ul class="links">
   <li><a href="./atoms/button">button</a></li>
+  <li><a href="./atoms/anchor">anchor</a></li>
   <li><a href="./atoms/Input">Input</a></li>
   <li><a href="./atoms/Input/maxBytes">Input - max bytes</a></li>
   <li><a href="./atoms/TextArea">TextArea</a></li>
