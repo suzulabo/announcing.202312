@@ -13,18 +13,17 @@
 
 <script lang="ts">
   import { LL, setupLocale } from '@announcing/i18n';
-  import { signOut } from '@auth/sveltekit/client';
 
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
 
+  import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import type { LayoutServerData } from './$types';
-  import MaterialSymbolsLanguage from '$lib/components/icon/MaterialSymbolsLanguage.svelte';
-  import MaterialSymbolsLogout from '$lib/components/icon/MaterialSymbolsLogout.svelte';
+  import SettingsModal from './SettingsModal.svelte';
 
   export let data: LayoutServerData;
 
-  let languagesSelect: HTMLSelectElement;
+  let settingsModal: SettingsModal;
 
   $: siteNameElementAttrs =
     data.userID && $page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' };
@@ -43,25 +42,21 @@
       <span class="sub-title">{$LL.writer.subTitle()}</span>
     </svelte:element>
 
-    <div class="menu-box">
-      <MaterialSymbolsLanguage />
-      <select bind:this={languagesSelect} bind:value={data.locale}>
-        <option value="en">English</option>
-        <option value="ja">日本語</option>
-      </select>
-      {#if data.userID}
-        <button
-          class="sign-out text"
-          on:click={() => {
-            void signOut();
-          }}><MaterialSymbolsLogout />{$LL.signOut()}</button
-        >
-      {/if}
-    </div>
+    <button
+      class="small settings-btn"
+      on:click={() => {
+        settingsModal.openModal();
+      }}
+    >
+      <MaterialSymbolsSettingsOutline />
+      <span>{$LL.settings()}</span></button
+    >
   </header>
   <hr />
   <slot />
 </div>
+
+<SettingsModal bind:this={settingsModal} bind:locale={data.locale} />
 
 <style lang="scss">
   .container {
@@ -85,22 +80,11 @@
         }
       }
 
-      .menu-box {
+      .settings-btn {
+        margin-left: auto;
         display: flex;
         align-items: center;
-        margin-left: auto;
-        font-size: 14px;
-
-        select {
-          margin-left: 2px;
-        }
-
-        .sign-out {
-          margin-left: 8px;
-          font-weight: normal;
-          display: flex;
-          align-items: center;
-        }
+        gap: 2px;
       }
     }
   }

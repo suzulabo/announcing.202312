@@ -1,0 +1,105 @@
+<script lang="ts" context="module">
+  const localeValues = [
+    ['en', 'English'],
+    ['ja', '日本語'],
+  ] satisfies [Locales, string][];
+</script>
+
+<script lang="ts">
+  import IcBaselineRadioButtonChecked from '$lib/components/icon/IcBaselineRadioButtonChecked.svelte';
+  import IcBaselineRadioButtonUnchecked from '$lib/components/icon/IcBaselineRadioButtonUnchecked.svelte';
+  import MaterialSymbolsLanguage from '$lib/components/icon/MaterialSymbolsLanguage.svelte';
+  import Modal from '@announcing/components/Modal.svelte';
+  import { LL, type Locales } from '@announcing/i18n';
+
+  export let locale: Locales;
+
+  let open = false;
+
+  export const openModal = () => {
+    open = true;
+  };
+</script>
+
+<Modal bind:open dismissMode="backdrop">
+  <div class="modal-body">
+    <div class="language-title">
+      <MaterialSymbolsLanguage />Language
+    </div>
+    <div class="language-grid">
+      {#each localeValues as [locale_, label]}
+        <button
+          class="unstyled"
+          on:click={() => {
+            locale = locale_;
+          }}
+        >
+          {#if locale_ === locale}
+            <IcBaselineRadioButtonChecked />
+          {:else}
+            <IcBaselineRadioButtonUnchecked />
+          {/if}
+          {label}</button
+        >
+      {/each}
+    </div>
+
+    <hr />
+
+    <button
+      class="close-btn text"
+      on:click={() => {
+        open = false;
+      }}>{$LL.close()}</button
+    >
+  </div>
+</Modal>
+
+<style lang="scss">
+  .modal-body {
+    background-color: var(--color-background);
+    border-radius: 8px;
+    margin: auto;
+    padding: 16px;
+    width: 100%;
+    max-width: 400px;
+
+    .language-title {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+    .language-grid {
+      display: grid;
+      gap: 4px;
+      justify-content: center;
+      grid-template-columns: repeat(auto-fit, 80px);
+      button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+      }
+    }
+
+    hr {
+      margin: 8px 0;
+    }
+
+    .close-btn {
+      display: block;
+      margin: 16px auto 0;
+    }
+
+    @keyframes showDelay {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+</style>
