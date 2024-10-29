@@ -9,10 +9,13 @@
   import IcBaselineRadioButtonChecked from '$lib/components/icon/IcBaselineRadioButtonChecked.svelte';
   import IcBaselineRadioButtonUnchecked from '$lib/components/icon/IcBaselineRadioButtonUnchecked.svelte';
   import MaterialSymbolsLanguage from '$lib/components/icon/MaterialSymbolsLanguage.svelte';
+  import MaterialSymbolsLogout from '$lib/components/icon/MaterialSymbolsLogout.svelte';
   import Modal from '@announcing/components/Modal.svelte';
   import { LL, type Locales } from '@announcing/i18n';
+  import { signOut } from '@auth/sveltekit/client';
 
   export let locale: Locales;
+  export let showSignOut: boolean;
 
   let open = false;
 
@@ -43,6 +46,19 @@
         >
       {/each}
     </div>
+
+    {#if showSignOut}
+      <hr />
+      <button
+        class="logout-btn unstyled"
+        on:click={() => {
+          return signOut();
+        }}
+      >
+        <MaterialSymbolsLogout />
+        {$LL.signOut()}
+      </button>
+    {/if}
 
     <hr />
 
@@ -86,6 +102,13 @@
 
     hr {
       margin: 8px 0;
+    }
+
+    .logout-btn {
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .close-btn {

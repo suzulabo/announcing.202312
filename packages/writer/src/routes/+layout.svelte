@@ -56,7 +56,7 @@
   <slot />
 </div>
 
-<SettingsModal bind:this={settingsModal} bind:locale={data.locale} />
+<SettingsModal bind:this={settingsModal} bind:locale={data.locale} showSignOut={!!data.userID} />
 
 <style lang="scss">
   .container {
