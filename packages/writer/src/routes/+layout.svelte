@@ -19,8 +19,12 @@
   import { page } from '$app/stores';
 
   import type { LayoutServerData } from './$types';
+  import MaterialSymbolsLanguage from '$lib/components/icon/MaterialSymbolsLanguage.svelte';
+  import MaterialSymbolsLogout from '$lib/components/icon/MaterialSymbolsLogout.svelte';
 
   export let data: LayoutServerData;
+
+  let languagesSelect: HTMLSelectElement;
 
   $: siteNameElementAttrs =
     data.userID && $page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' };
@@ -32,24 +36,28 @@
   <header>
     <svelte:element
       this={siteNameElementAttrs.this}
-      class="site-name-box"
+      class="site-name-box unstyled"
       {...siteNameElementAttrs}
     >
       <span class="site-name">Announcing</span>
       <span class="sub-title">{$LL.writer.subTitle()}</span>
     </svelte:element>
-    <select bind:value={data.locale}>
-      <option value="en">English</option>
-      <option value="ja">日本語</option>
-    </select>
-    {#if data.userID}
-      <button
-        class="sign-out text"
-        on:click={() => {
-          void signOut();
-        }}>{$LL.signOut()}</button
-      >
-    {/if}
+
+    <div class="menu-box">
+      <MaterialSymbolsLanguage />
+      <select bind:this={languagesSelect} bind:value={data.locale}>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+      </select>
+      {#if data.userID}
+        <button
+          class="sign-out text"
+          on:click={() => {
+            void signOut();
+          }}><MaterialSymbolsLogout />{$LL.signOut()}</button
+        >
+      {/if}
+    </div>
   </header>
   <hr />
   <slot />
@@ -77,14 +85,22 @@
         }
       }
 
-      select {
+      .menu-box {
+        display: flex;
+        align-items: center;
         margin-left: auto;
         font-size: 14px;
-      }
 
-      .sign-out {
-        font-weight: normal;
-        font-size: 14px;
+        select {
+          margin-left: 2px;
+        }
+
+        .sign-out {
+          margin-left: 8px;
+          font-weight: normal;
+          display: flex;
+          align-items: center;
+        }
       }
     }
   }
