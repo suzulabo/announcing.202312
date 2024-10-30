@@ -98,6 +98,10 @@ input[type='checkbox'] {
   all: revert;
 }
 
+img {
+  background-color: var(--color-background-image);
+}
+
 div.info {
   border-radius: 4px;
   background-color: var(--color-background-light);

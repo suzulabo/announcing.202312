@@ -31,6 +31,8 @@ html {
 
   --color-background-loading: #{rgba(#eff5f6, 0.6)}; // Container Low (N-96)
 
+  --color-background-image: #ffffff;
+
   @mixin dark-mode {
     $color-text: #dee3e5; // On Surface (N-90)
     --color-text: #{$color-text};

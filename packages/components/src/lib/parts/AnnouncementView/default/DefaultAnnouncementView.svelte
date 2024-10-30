@@ -131,6 +131,7 @@
 
     .image-box {
       display: contents;
+      cursor: pointer;
     }
 
     .single-image {
