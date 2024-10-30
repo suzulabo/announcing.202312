@@ -10,6 +10,7 @@
   import IcBaselineRadioButtonUnchecked from '$lib/components/icon/IcBaselineRadioButtonUnchecked.svelte';
   import MaterialSymbolsLanguage from '$lib/components/icon/MaterialSymbolsLanguage.svelte';
   import MaterialSymbolsLogout from '$lib/components/icon/MaterialSymbolsLogout.svelte';
+  import MdiThemeLightDark from '$lib/components/icon/MdiThemeLightDark.svelte';
   import Modal from '@announcing/components/Modal.svelte';
   import { LL, type Locales } from '@announcing/i18n';
   import { signOut } from '@auth/sveltekit/client';
@@ -56,6 +57,7 @@
     <hr />
 
     <div class="theme-title">
+      <MdiThemeLightDark />
       {$LL.appearance()}
     </div>
 
@@ -114,13 +116,14 @@
       margin: 24px 0;
     }
 
-    .language-title {
+    .language-title,
+    .theme-title {
       display: flex;
       align-items: center;
       gap: 4px;
-      margin-bottom: 8px;
     }
     .language-grid {
+      margin-top: 8px;
       display: grid;
       gap: 4px;
       justify-content: center;
@@ -135,6 +138,7 @@
     }
 
     .theme-buttons {
+      margin-top: 8px;
       display: flex;
       justify-content: center;
       gap: 16px;
