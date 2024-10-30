@@ -17,6 +17,8 @@ html {
 
   --color-background-light: #eff5f6; // Container Low (N-96)
 
+  --color-background-highlight: #e3e9ea; // Container High (N-92)
+
   $color-border: #6f797a; // Outline (NV-50)
   --color-border: #{$color-border};
   --color-border-disable: #{rgba($color-border, 0.5)};
@@ -41,6 +43,8 @@ html {
     --color-background: #090f10; // Container Lowest (N-4)
 
     --color-background-light: #171d1e; // Container Low (N-10)
+
+    --color-background-highlight: #303637; // Container Highest (N-24)
 
     $color-border: #899294; // Outline (NV-60)
     --color-border: #{$color-border};

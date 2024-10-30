@@ -20,24 +20,15 @@ button.unstyled {
   display: contents;
 }
 
-button:not(.unstyled, .text),
+button:not(.unstyled),
 a.button {
   display: inline-block;
   border-radius: 4px;
   padding: 8px 16px;
   text-align: center;
-  width: max-content;
   font-weight: 500;
   white-space: nowrap;
-
-  &:not(.text) {
-    border: 1px solid var(--color-border);
-  }
-
-  &:disabled {
-    color: var(--color-text-disable);
-    border-color: var(--color-border-disable);
-  }
+  border: 1px solid var(--color-border);
 
   &:active:not(:disabled) {
     position: relative;
@@ -45,10 +36,27 @@ a.button {
     left: 1px;
   }
 
+  &:disabled {
+    color: var(--color-text-disable);
+    border-color: var(--color-border-disable);
+  }
+
   &.small {
     padding: 4px 8px;
-    font-size: 90%;
-    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  &.text {
+    border: none;
+    padding: 2px 4px;
+  }
+
+  &.highlight {
+    border: none;
+    background-color: var(--color-background-highlight);
+    &:disabled {
+      background-color: var(--color-background-light);
+    }
   }
 
   @media (hover: hover) {
@@ -64,21 +72,6 @@ a:not(.unstyled) {
     &:hover {
       background-color: var(--color-hover);
     }
-  }
-}
-
-button.text {
-  font-weight: 600;
-  padding: 2px 4px;
-  border-radius: 4px;
-  @media (hover: hover) {
-    &:hover:not(:disabled) {
-      background-color: var(--color-hover);
-    }
-  }
-
-  &:disabled {
-    color: var(--color-text-disable);
   }
 }
 
