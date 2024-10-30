@@ -73,10 +73,11 @@
           font-size: 20px;
         }
         .sub-title {
-          background-color: var(--color-background-light);
+          background-color: var(--color-background-highlight);
           padding: 4px;
           border-radius: 4px;
           font-size: 14px;
+          font-weight: 500;
         }
       }
 
