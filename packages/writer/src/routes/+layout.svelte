@@ -1,5 +1,4 @@
 <script lang="ts" context="module">
-  import '../app.scss';
   import type { Locales } from '@announcing/i18n';
   import Cookies from 'js-cookie';
 
