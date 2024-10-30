@@ -1,0 +1,7 @@
+.contents {
+  display: none;
+}
+
+html[hydrated] .contents {
+  display: contents;
+}

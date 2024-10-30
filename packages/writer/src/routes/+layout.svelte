@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+  import '../app.scss';
   import type { Locales } from '@announcing/i18n';
   import Cookies from 'js-cookie';
 
@@ -40,6 +41,7 @@
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import type { LayoutServerData } from './$types';
   import SettingsModal from './SettingsModal.svelte';
+  import { onMount } from 'svelte';
 
   export let data: LayoutServerData;
 
@@ -52,6 +54,10 @@
   $: locale = data.locale;
   $: void updateLocale(locale);
   $: updateTheme(theme);
+
+  onMount(() => {
+    document.documentElement.setAttribute('hydrated', '');
+  });
 </script>
 
 <div class="container">
