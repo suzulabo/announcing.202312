@@ -112,10 +112,6 @@ export const messages = {
     ja: 'チャンネルは5つまで作れます',
   },
   channelActions: {
-    instruction: {
-      en: 'What would you like to do today? Please choose from the options below:',
-      ja: '今日はなにをしましょうか。以下のメニューから選んでください。',
-    },
     viewChannel: {
       en: 'View this channel',
       ja: 'チャンネルの表示を確認する',

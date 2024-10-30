@@ -9,7 +9,7 @@ const en = {
   back: 'Back',
   preview: 'Preview',
   settings: 'Settings',
-  appearance: 'Appearance',
+  theme: 'Theme',
   default: 'Default',
   darkMode: 'Dark Mode',
   copy: 'Copy',
@@ -30,7 +30,6 @@ const en = {
   updateChannel: 'Update Channel',
   channelsCanBeCreated: 'Up to five channels can be created.',
   channelActions: {
-    instruction: 'What would you like to do today? Please choose from the options below:',
     viewChannel: 'View this channel',
     copyURL: 'Copy channel URL',
     createAnnouncement: 'Create a new announcement',

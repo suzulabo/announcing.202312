@@ -9,7 +9,7 @@ const ja = {
   back: '戻る',
   preview: '表示を確認',
   settings: '設定',
-  appearance: '表示設定',
+  theme: '表示設定',
   default: '標準',
   darkMode: 'ダークモード',
   copy: 'コピー',
@@ -30,7 +30,6 @@ const ja = {
   updateChannel: 'チャンネルを更新',
   channelsCanBeCreated: 'チャンネルは5つまで作れます',
   channelActions: {
-    instruction: '今日はなにをしましょうか。以下のメニューから選んでください。',
     viewChannel: 'チャンネルの表示を確認する',
     copyURL: 'チャンネルのURLをコピーする',
     createAnnouncement: '新しいお知らせを書く',

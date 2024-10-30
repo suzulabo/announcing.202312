@@ -47,9 +47,9 @@ type RootTranslation = {
 	 */
 	settings: string
 	/**
-	 * A​p​p​e​a​r​a​n​c​e
+	 * T​h​e​m​e
 	 */
-	appearance: string
+	theme: string
 	/**
 	 * D​e​f​a​u​l​t
 	 */
@@ -127,10 +127,6 @@ type RootTranslation = {
 	 */
 	channelsCanBeCreated: string
 	channelActions: {
-		/**
-		 * W​h​a​t​ ​w​o​u​l​d​ ​y​o​u​ ​l​i​k​e​ ​t​o​ ​d​o​ ​t​o​d​a​y​?​ ​P​l​e​a​s​e​ ​c​h​o​o​s​e​ ​f​r​o​m​ ​t​h​e​ ​o​p​t​i​o​n​s​ ​b​e​l​o​w​:
-		 */
-		instruction: string
 		/**
 		 * V​i​e​w​ ​t​h​i​s​ ​c​h​a​n​n​e​l
 		 */
@@ -259,9 +255,9 @@ export type TranslationFunctions = {
 	 */
 	settings: () => LocalizedString
 	/**
-	 * Appearance
+	 * Theme
 	 */
-	appearance: () => LocalizedString
+	theme: () => LocalizedString
 	/**
 	 * Default
 	 */
@@ -339,10 +335,6 @@ export type TranslationFunctions = {
 	 */
 	channelsCanBeCreated: () => LocalizedString
 	channelActions: {
-		/**
-		 * What would you like to do today? Please choose from the options below:
-		 */
-		instruction: () => LocalizedString
 		/**
 		 * View this channel
 		 */

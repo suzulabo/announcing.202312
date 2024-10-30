@@ -7,9 +7,15 @@
   import { PUBLIC_READER_PREFIX } from '$env/static/public';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
 
+  import MaterialSymbolsContentCopyOutline from '$lib/components/icon/MaterialSymbolsContentCopyOutline.svelte';
+  import MdiExternalLink from '$lib/components/icon/MdiExternalLink.svelte';
   import type { PageData } from './$types';
   import DeleteModal from './DeleteModal.svelte';
   import UrlCopyModal from './UrlCopyModal.svelte';
+  import MaterialSymbolsPostAdd from '$lib/components/icon/MaterialSymbolsPostAdd.svelte';
+  import MaterialSymbolsEditDocumentOutline from '$lib/components/icon/MaterialSymbolsEditDocumentOutline.svelte';
+  import MaterialSymbolsBoxEditOutline from '$lib/components/icon/MaterialSymbolsBoxEditOutline.svelte';
+  import MaterialSymbolsDangerous from '$lib/components/icon/MaterialSymbolsDangerous.svelte';
 
   export let data: PageData;
 
@@ -40,6 +46,11 @@
     });
     await goto('/');
   };
+
+  const iconProps = {
+    width: '20px',
+    height: '20px',
+  };
 </script>
 
 <div class="container">
@@ -49,42 +60,50 @@
       <img class="icon" alt="channel icon" use:imgSrc={channel.icon} />
     {/if}
   </div>
-  {#if channel.desc}
-    <div>{channel.desc}</div>
-  {/if}
 
   <hr />
 
-  <div class="actions-instruction">{$LL.channelActions.instruction()}</div>
-
   <ul class="actions">
     <li>
-      <a href={readerURL}>{$LL.channelActions.viewChannel()}</a>
+      <a href={readerURL}>
+        <MdiExternalLink {...iconProps} />
+        {$LL.channelActions.viewChannel()}</a
+      >
     </li>
     <li>
       <button
         class="text"
         on:click={() => {
           urlCopyModal.openModal(readerURL);
-        }}>{$LL.channelActions.copyURL()}</button
+        }}
+      >
+        <MaterialSymbolsContentCopyOutline {...iconProps} />
+        {$LL.channelActions.copyURL()}</button
       >
     </li>
+    <hr />
     <li>
       <a href={`${$page.url.pathname}/announcements`}>
+        <MaterialSymbolsPostAdd {...iconProps} />
         {$LL.channelActions.createAnnouncement()}
       </a>
     </li>
     <li>
-      <a href={`${$page.url.pathname}/announcements/list`}
-        >{$LL.channelActions.editAnnouncement()}</a
+      <a href={`${$page.url.pathname}/announcements/list`}>
+        <MaterialSymbolsEditDocumentOutline {...iconProps} />
+        {$LL.channelActions.editAnnouncement()}</a
       >
     </li>
+    <hr />
     <li>
       <button
         class="text"
         on:click={() => {
           channelEditor.openEditor(channel);
-        }}>{$LL.channelActions.editChannel()}</button
+        }}
+      >
+        <MaterialSymbolsBoxEditOutline {...iconProps} />
+        {$LL.channelActions.editChannel()}</button
       >
     </li>
     <hr />
@@ -93,7 +112,10 @@
         class="text"
         on:click={() => {
           deleteModal.openModal();
-        }}>{$LL.channelActions.deleteChannel()}</button
+        }}
+      >
+        <MaterialSymbolsDangerous {...iconProps} />
+        {$LL.channelActions.deleteChannel()}</button
       >
     </li>
   </ul>
@@ -126,16 +148,18 @@
       margin: 16px 0;
     }
 
-    .actions-instruction {
-      margin: 16px;
-    }
     .actions {
-      list-style: inside;
       li {
         margin: 8px 24px;
-      }
-      hr {
-        margin: 12px 0;
+        a,
+        button {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+        }
+        button {
+          padding: 0;
+        }
       }
     }
   }
