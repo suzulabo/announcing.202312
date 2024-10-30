@@ -16,12 +16,18 @@
 
   export let locale: Locales;
   export let showSignOut: boolean;
+  export let theme: string;
 
   let open = false;
 
   export const openModal = () => {
     open = true;
   };
+
+  $: themes = [
+    ['light', $LL.default()],
+    ['dark', $LL.darkMode()],
+  ] as const;
 </script>
 
 <Modal bind:open dismissMode="backdrop">
@@ -44,6 +50,30 @@
           {/if}
           {label}</button
         >
+      {/each}
+    </div>
+
+    <hr />
+
+    <div class="theme-title">
+      {$LL.appearance()}
+    </div>
+
+    <div class="theme-buttons">
+      {#each themes as [theme_, label]}
+        <button
+          class="unstyled"
+          on:click={() => {
+            theme = theme_;
+          }}
+        >
+          {#if theme === theme_}
+            <IcBaselineRadioButtonChecked />
+          {:else}
+            <IcBaselineRadioButtonUnchecked />
+          {/if}
+          {label}
+        </button>
       {/each}
     </div>
 
@@ -80,6 +110,10 @@
     width: 100%;
     max-width: 400px;
 
+    hr {
+      margin: 24px 0;
+    }
+
     .language-title {
       display: flex;
       align-items: center;
@@ -100,8 +134,15 @@
       }
     }
 
-    hr {
-      margin: 24px 0;
+    .theme-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      button {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
     }
 
     .logout-btn {

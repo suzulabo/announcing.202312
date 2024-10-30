@@ -47,6 +47,18 @@ type RootTranslation = {
 	 */
 	settings: string
 	/**
+	 * A​p​p​e​a​r​a​n​c​e
+	 */
+	appearance: string
+	/**
+	 * D​e​f​a​u​l​t
+	 */
+	'default': string
+	/**
+	 * D​a​r​k​ ​M​o​d​e
+	 */
+	darkMode: string
+	/**
 	 * C​o​p​y
 	 */
 	copy: string
@@ -246,6 +258,18 @@ export type TranslationFunctions = {
 	 * Settings
 	 */
 	settings: () => LocalizedString
+	/**
+	 * Appearance
+	 */
+	appearance: () => LocalizedString
+	/**
+	 * Default
+	 */
+	'default': () => LocalizedString
+	/**
+	 * Dark Mode
+	 */
+	darkMode: () => LocalizedString
 	/**
 	 * Copy
 	 */

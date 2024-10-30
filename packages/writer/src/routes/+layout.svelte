@@ -9,6 +9,26 @@
     }
     return;
   };
+
+  const updateTheme = (theme: string) => {
+    if (!browser) {
+      return;
+    }
+
+    Cookies.set('theme', theme);
+    document.documentElement.setAttribute('data-color-scheme', theme);
+  };
+
+  const getSystemTheme = () => {
+    if (browser && 'matchMedia' in window) {
+      const m = window.matchMedia('(prefers-color-scheme: dark)');
+      if (m.matches) {
+        return 'dark';
+      }
+    }
+
+    return 'light';
+  };
 </script>
 
 <script lang="ts">
@@ -25,10 +45,13 @@
 
   let settingsModal: SettingsModal;
 
+  let theme = Cookies.get('theme') ?? getSystemTheme();
+
   $: siteNameElementAttrs =
     data.userID && $page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' };
   $: locale = data.locale;
   $: void updateLocale(locale);
+  $: updateTheme(theme);
 </script>
 
 <div class="container">
@@ -56,7 +79,12 @@
   <slot />
 </div>
 
-<SettingsModal bind:this={settingsModal} bind:locale={data.locale} showSignOut={!!data.userID} />
+<SettingsModal
+  bind:this={settingsModal}
+  bind:locale={data.locale}
+  bind:theme
+  showSignOut={!!data.userID}
+/>
 
 <style lang="scss">
   .container {

@@ -31,6 +31,18 @@ export const messages = {
     en: 'Settings',
     ja: '設定',
   },
+  theme: {
+    en: 'Theme',
+    ja: '表示設定',
+  },
+  default: {
+    en: 'Default',
+    ja: '標準',
+  },
+  darkMode: {
+    en: 'Dark Mode',
+    ja: 'ダークモード',
+  },
   copy: {
     en: 'Copy',
     ja: 'コピー',
