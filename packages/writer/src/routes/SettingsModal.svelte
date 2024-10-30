@@ -50,7 +50,7 @@
     {#if showSignOut}
       <hr />
       <button
-        class="logout-btn unstyled"
+        class="logout-btn small"
         on:click={() => {
           return signOut();
         }}
@@ -63,7 +63,7 @@
     <hr />
 
     <button
-      class="close-btn text"
+      class="close-btn small highlight"
       on:click={() => {
         open = false;
       }}>{$LL.close()}</button
@@ -101,14 +101,14 @@
     }
 
     hr {
-      margin: 8px 0;
+      margin: 24px 0;
     }
 
     .logout-btn {
       margin: 0 auto;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 2px;
     }
 
     .close-btn {
