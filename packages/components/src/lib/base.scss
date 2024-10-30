@@ -31,7 +31,7 @@ html {
 
   --color-background-loading: #{rgba(#eff5f6, 0.6)}; // Container Low (N-96)
 
-  --color-background-image: #ffffff;
+  --color-border-image: #e3e9ea; // Container High (N-92)
 
   @mixin dark-mode {
     $color-text: #dee3e5; // On Surface (N-90)
@@ -59,6 +59,8 @@ html {
     --color-background-modal: #{rgba(#dee3e5, 0.8)}; // Inverse Surface (N-90)
 
     --color-background-loading: #{rgba(#3f484a, 0.6)}; // OUtline Variant (NV-30)
+
+    --color-border-image: #252b2c; // Container High (N-17)
   }
 
   color: var(--color-text);
