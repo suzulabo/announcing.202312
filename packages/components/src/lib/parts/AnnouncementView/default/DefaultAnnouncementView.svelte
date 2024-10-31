@@ -112,7 +112,7 @@
     .header-image {
       max-height: 40vh;
       align-self: center;
-      margin: 0 0 16px 0;
+      margin: 0 0 8px 0;
     }
     .date {
       padding: 0 8px;
