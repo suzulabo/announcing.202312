@@ -35,8 +35,6 @@
 
 <style lang="scss">
   .wrapper {
-    background-color: var(--color-background-light);
-
     .container {
       max-width: 600px;
       margin: 0 auto;
