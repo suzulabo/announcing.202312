@@ -18,7 +18,7 @@
   <li><a href="./atoms/VirtualScrollList/saveScroll">VirtualScrollList - saveScroll</a></li>
   <li><a href="./atoms/ResizeObserver">ResizeObserver</a></li>
   <li><a href="./atoms/ResizeObserver/readMore">ResizeObserver - read more</a></li>
-  <li><a href="./actions/back">Back</a></li>
+  <li><a href="./actions/back/0">Back</a></li>
 </ul>
 <hr />
 <ul class="links">
