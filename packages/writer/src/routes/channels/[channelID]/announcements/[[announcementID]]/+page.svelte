@@ -38,6 +38,7 @@
 
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
+  import { setupBack } from '@announcing/components/actions/back';
 
   export let data: PageData;
 
@@ -49,6 +50,8 @@
       form = value;
     },
   };
+
+  const back = setupBack();
 
   let form: Partial<GetAnnouncementResult> = {};
   let titleError = false;
@@ -95,11 +98,6 @@
 </script>
 
 <div class="container">
-  <div class="trail">
-    <a href={`/channels/${channel.channelID}`}>{channel.name}</a>
-    /
-    {$LL.postAnnouncement()}
-  </div>
   <div class="header-image">
     {#if form.headerImage}
       <button
@@ -155,7 +153,7 @@
           <div class="img-box">
             <img alt="" use:imgSrc={image} />
             <button
-              class="text"
+              class="small highlight"
               on:click={() => {
                 form.images = form.images?.filter((v) => {
                   return v !== image;
@@ -190,19 +188,16 @@
     class="preview-btn"
     on:click={previewClickHandler}>{$LL.preview()}</button
   >
+
+  <a class="back" href={$page.url.href.replace('/announcements', '')} use:back>{$LL.cancel()}</a>
 </div>
 
 <style lang="scss">
   .container {
-    padding: 4px 8px;
+    padding: 16px 8px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-
-    .trail {
-      font-size: 14px;
-      margin-bottom: 16px;
-    }
 
     .header-image {
       display: flex;
@@ -246,6 +241,10 @@
     }
 
     .preview-btn {
+      align-self: center;
+    }
+
+    .back {
       align-self: center;
     }
   }

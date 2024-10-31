@@ -63,6 +63,9 @@
   import { page } from '$app/stores';
 
   import type { Snapshot } from './$types';
+  import { setupBack } from '@announcing/components/actions/back';
+
+  const back = setupBack();
 
   let previewData: AnnouncementPreviewData | undefined;
   let loading = false;
@@ -145,20 +148,12 @@
 
 {#if channel && announcement}
   <div class="container">
-    <div class="trail">
-      <a href={`/channels/${channelID}`}>{channel.name}</a>
-      /
-      <a href={`${$page.url.pathname.replace('/preview', '')}`}>{$LL.postAnnouncement()}</a>
-      /
-      {$LL.preview()}
-    </div>
-    <div class="submit-box">
-      <button on:click={addAnnouncement}
-        >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
-      >
-      <hr />
-    </div>
     <AnnouncementView {announcement} />
+    <hr />
+    <button class="submit-btn" on:click={addAnnouncement}
+      >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
+    >
+    <a class="back" href={`${$page.url.pathname.replace('/preview', '')}`} use:back>{$LL.back()}</a>
   </div>
 {/if}
 
@@ -166,21 +161,14 @@
 
 <style lang="scss">
   .container {
-    padding: 4px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px 0 16px;
 
-    .trail {
-      font-size: 14px;
-    }
-  }
-  .submit-box {
-    position: sticky;
-    top: 0;
-    padding: 16px 8px 4px;
-    text-align: center;
-    background-color: var(--color-background);
-
-    hr {
-      margin: 8px 0;
+    .submit-btn,
+    .back {
+      align-self: center;
     }
   }
 </style>
