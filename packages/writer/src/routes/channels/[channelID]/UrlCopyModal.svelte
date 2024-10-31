@@ -17,7 +17,7 @@
   };
 </script>
 
-<Modal bind:open dismissMode="none">
+<Modal bind:open dismissMode="backdrop">
   <div class="modal-body">
     {#if copied}
       <div
@@ -47,7 +47,7 @@
         {/if}
       </div>
       <button
-        class="close-btn text"
+        class="close-btn highlight small"
         on:click={() => {
           open = false;
         }}>{$LL.close()}</button

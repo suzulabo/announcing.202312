@@ -58,7 +58,7 @@
 
     <div class="theme-title">
       <MdiThemeLightDark />
-      {$LL.appearance()}
+      {$LL.theme()}
     </div>
 
     <div class="theme-buttons">

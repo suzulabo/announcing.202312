@@ -124,7 +124,7 @@
       >{creating ? $LL.createChannel() : $LL.updateChannel()}</button
     >
     <button
-      class="small text cancel-btn"
+      class="small highlight cancel-btn"
       on:click={() => {
         open = false;
       }}>{$LL.cancel()}</button
@@ -141,7 +141,7 @@
     width: 100%;
     max-width: 600px;
     margin: auto;
-    padding: 8px;
+    padding: 8px 8px 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;
