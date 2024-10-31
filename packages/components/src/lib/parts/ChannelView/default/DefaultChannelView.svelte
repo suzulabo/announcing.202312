@@ -13,14 +13,6 @@
   $: ({ channel, announcementHrefPrefix, announcementKeys, announcementLoader } = params);
 </script>
 
-<svelte:head>
-  <style>
-    body {
-      background-color: var(--color-background-light);
-    }
-  </style>
-</svelte:head>
-
 <div class="channel-box">
   <div class="name-line">
     <div class="name">
@@ -92,10 +84,8 @@
     flex-direction: column;
     min-height: 200px;
     max-height: 50svh;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-top: 1px solid var(--color-border-light);
     overflow: hidden;
-    background-color: var(--color-background);
     cursor: pointer;
     .loading {
       margin: auto;

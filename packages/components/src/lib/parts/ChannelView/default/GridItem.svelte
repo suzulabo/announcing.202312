@@ -41,7 +41,9 @@
 <style lang="scss">
   .container {
     max-height: 100%;
-    margin: 12px;
+    margin: 8px 0 0;
+    padding: 8px;
+    border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -77,6 +79,12 @@
     .title {
       font-size: 18px;
       font-weight: bold;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--color-hover);
+      }
     }
   }
 </style>
