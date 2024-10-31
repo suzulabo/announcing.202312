@@ -21,7 +21,10 @@
     const date = addDays('2023-12-31T00:11:22', keyNum * -1).getTime();
     const result: Announcement = {
       title: `[${key}] ${faker.lorem.sentence()}`,
-      body: faker.lorem.text(),
+      body: faker.lorem.paragraphs({
+        min: 3,
+        max: 6,
+      }),
       updatedAt: date,
       createdAt: date,
     };
