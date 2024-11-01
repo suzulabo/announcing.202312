@@ -124,7 +124,7 @@
       >{creating ? $LL.createChannel() : $LL.updateChannel()}</button
     >
     <button
-      class="small highlight cancel-btn"
+      class="small filled cancel-btn"
       on:click={() => {
         open = false;
       }}>{$LL.cancel()}</button

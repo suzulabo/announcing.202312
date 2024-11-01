@@ -110,7 +110,7 @@
       </button>
       <button
         type="button"
-        class="small"
+        class="small filled"
         on:click={() => {
           form.headerImage = undefined;
         }}>{$LL.removeHeaderImage()}</button
@@ -153,7 +153,7 @@
           <div class="img-box">
             <img alt="" use:imgSrc={image} />
             <button
-              class="small highlight"
+              class="small filled"
               on:click={() => {
                 form.images = form.images?.filter((v) => {
                   return v !== image;
@@ -189,7 +189,9 @@
     on:click={previewClickHandler}>{$LL.preview()}</button
   >
 
-  <a class="back" href={$page.url.href.replace('/announcements', '')} use:back>{$LL.cancel()}</a>
+  <a class="back button filled small" href={$page.url.href.replace('/announcements', '')} use:back
+    >{$LL.cancel()}</a
+  >
 </div>
 
 <style lang="scss">

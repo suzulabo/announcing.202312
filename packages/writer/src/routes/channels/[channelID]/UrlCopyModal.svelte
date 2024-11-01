@@ -47,7 +47,7 @@
         {/if}
       </div>
       <button
-        class="close-btn highlight small"
+        class="close-btn filled small"
         on:click={() => {
           open = false;
         }}>{$LL.close()}</button

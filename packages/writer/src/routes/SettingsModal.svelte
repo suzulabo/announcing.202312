@@ -95,7 +95,7 @@
     <hr />
 
     <button
-      class="close-btn small highlight"
+      class="close-btn small filled"
       on:click={() => {
         open = false;
       }}>{$LL.close()}</button
