@@ -9,7 +9,7 @@ import { genAnnouncementID } from './genAnnouncementID';
 import * as v from 'valibot';
 import {
   ANNOUNCEMENT_BODY_MAX_BYTES,
-  ANNOUNCEMENT_IMAGE_MAX_SIZE,
+  ANNOUNCEMENT_IMAGE_MAX_BYTES,
   ANNOUNCEMENT_TITLE_MAX_BYTES,
   CHANNEL_ID_MAX_BYTES,
   USER_ID_MAX_BYTES,
@@ -18,11 +18,11 @@ import {
 const paramsSchema = v.object({
   userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
   channelID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_ID_MAX_BYTES)),
-  headerImage: v.union([v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_SIZE)), v.undefined()]),
+  headerImage: v.union([v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES)), v.undefined()]),
   title: v.union([v.pipe(v.string(), v.maxBytes(ANNOUNCEMENT_TITLE_MAX_BYTES)), v.undefined()]),
   body: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_BODY_MAX_BYTES)),
   images: v.union([
-    v.array(v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_SIZE))),
+    v.array(v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES))),
     v.undefined(),
   ]),
   createdAt: v.number(),
