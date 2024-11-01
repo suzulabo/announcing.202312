@@ -45,7 +45,7 @@
     </button>
 
     <button
-      class="text small"
+      class="small filled"
       on:click={() => {
         open = false;
       }}>{$LL.cancel()}</button
