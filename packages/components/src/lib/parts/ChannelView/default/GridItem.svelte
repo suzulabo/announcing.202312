@@ -74,7 +74,6 @@
       img {
         object-fit: contain;
         border-radius: 4px;
-        max-height: 100px;
       }
     }
 
