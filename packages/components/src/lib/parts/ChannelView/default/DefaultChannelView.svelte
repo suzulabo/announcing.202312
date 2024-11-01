@@ -7,6 +7,7 @@
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
   import type { ChannelViewParams } from '../ChannelView.svelte';
   import GridItem from './GridItem.svelte';
+  import { imgSrc } from '$lib/actions/imgSrc';
 
   export let params: ChannelViewParams;
 
@@ -19,7 +20,7 @@
       {channel.name}
     </div>
     {#if channel.icon}
-      <img class="icon" src={channel.icon} alt={channel.name} />
+      <img class="icon" alt={channel.name} use:imgSrc={channel.icon} />
     {/if}
   </div>
   {#if channel.desc}

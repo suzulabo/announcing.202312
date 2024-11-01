@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { imgSrc } from '$lib/actions/imgSrc';
   import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
   import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
   import { formatDate } from '$lib/utils/formatDate';
@@ -28,7 +29,7 @@
     <div class="date">{formatDate(announcement.createdAt)}</div>
     {#if announcement.headerImage}
       <div class="header-image-box" style={toStyle(getAspectRatio(announcement.headerImage))}>
-        <img src={announcement.headerImage} alt="" />
+        <img use:imgSrc={announcement.headerImage} alt="" />
       </div>
     {/if}
     {#if announcement.title}
@@ -73,6 +74,7 @@
       img {
         object-fit: contain;
         border-radius: 4px;
+        max-height: 100px;
       }
     }
 
