@@ -4,14 +4,23 @@ import { getDB } from '../../client';
 import { base62 } from '../../lib/base62';
 import { blobsTable } from '../../schema';
 
-const getHash = async (blob: Blob) => {
-  const ab = await blob.arrayBuffer();
+import imageSize, { disableFS } from 'image-size';
 
-  const digest = createHash('sha256').update(new Uint8Array(ab)).digest();
+disableFS(true);
+
+const getHash = async (blob: Blob) => {
+  const ab = new Uint8Array(await blob.arrayBuffer());
+
+  const digest = createHash('sha256').update(ab).digest();
 
   const hash = base62.encode(new Uint8Array(digest));
 
-  return [hash, ab] as const;
+  const size = imageSize(ab);
+  if (size.type) {
+    return [`${hash}_${size.width}x${size.height}.${size.type}`, ab] as const;
+  } else {
+    return [`${hash}_${size.width}x${size.height}`, ab] as const;
+  }
 };
 
 export const makeInsertBlob = async (blob: Blob) => {

@@ -1,7 +1,7 @@
 export const USER_ID_MAX_BYTES = 256;
 export const CHANNEL_ID_MAX_BYTES = 8;
 
-export const BLOB_ID_MAX_BYTES = 50;
+export const BLOB_ID_MAX_BYTES = 100;
 
 export const CHANNEL_NAME_MAX_BYTES = 150;
 export const CHANNEL_DESC_MAX_BYTES = 1000;

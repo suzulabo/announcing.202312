@@ -1,5 +1,6 @@
 import { assert, describe, expect, test, vi } from 'vitest';
 
+import { openAsBlob } from 'fs';
 import { ValiError } from 'valibot';
 import { getChannels } from '../src';
 import { createChannel } from '../src/api/channel/createChannel';
@@ -15,7 +16,7 @@ describe('Channel', () => {
       channelID: '1',
       name: 'test channel',
       desc: 'This is test',
-      icon: new Blob(['aaa'], { type: 'image/test' }),
+      icon: await openAsBlob('tests/board-361516_1280.jpg'),
     });
     expect(await getChannel({ userID: 'u2', channelID: '1' })).toBeUndefined();
 
