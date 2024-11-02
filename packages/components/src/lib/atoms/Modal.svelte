@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onDestroy } from 'svelte';
 
   import { browser } from '$app/environment';
   import { toStyle } from '$lib/utils/toStyle';
@@ -30,6 +30,17 @@
       eventDispatcher('dismiss');
     }
   })();
+
+  onDestroy(() => {
+    if (!browser) {
+      return;
+    }
+    if (bodyOverflow) {
+      document.body.style.overflow = bodyOverflow;
+    } else {
+      document.body.style.removeProperty('overflow');
+    }
+  });
 </script>
 
 <div
