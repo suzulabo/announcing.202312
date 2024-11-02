@@ -8,6 +8,7 @@
   <li><a href="./atoms/Input/maxBytes">Input - max bytes</a></li>
   <li><a href="./atoms/TextArea">TextArea</a></li>
   <li><a href="./atoms/TextArea/maxBytes">TextArea - max bytes</a></li>
+  <li><a href="./atoms/TextArea/autoGrow">TextArea - auto grow</a></li>
   <li><a href="./atoms/FileInput">FileInput</a></li>
   <li><a href="./atoms/FileInput/multiple">FileInput - multiple</a></li>
   <li><a href="./atoms/Modal">Modal</a></li>

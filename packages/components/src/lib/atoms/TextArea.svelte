@@ -1,6 +1,6 @@
 <script lang="ts">
   import { LL } from '@announcing/i18n';
-  import { afterUpdate, onMount } from 'svelte';
+  import autosize from 'autosize';
 
   export let name: string;
   export let label: string;
@@ -11,25 +11,22 @@
   export let maxHeight = 'none';
   export let required = false;
 
-  let textAreaRef: HTMLTextAreaElement;
-
   const encoder = new TextEncoder();
 
   $: bytes = encoder.encode(value).length;
   $: error = maxBytes > 0 && bytes > maxBytes;
 
-  const adjustHeight = () => {
-    textAreaRef.style.height = 'auto';
-    textAreaRef.style.height = `${textAreaRef.scrollHeight.toString()}px`;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const autoSizeAction = (el: Element, _: string | undefined) => {
+    autosize(el);
+
+    return {
+      // When the value is updated from the parent component, the height is not updated, so it will be updated here.
+      update: () => {
+        autosize.update(el);
+      },
+    };
   };
-
-  onMount(() => {
-    adjustHeight();
-  });
-
-  afterUpdate(() => {
-    adjustHeight();
-  });
 </script>
 
 <label>
@@ -43,8 +40,8 @@
     {name}
     {placeholder}
     bind:value
-    bind:this={textAreaRef}
     style={`--max-height:${maxHeight}`}
+    use:autoSizeAction={value}
   ></textarea>
   {#if error}
     <div class="error">

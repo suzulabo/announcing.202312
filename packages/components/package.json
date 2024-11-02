@@ -92,6 +92,7 @@
     "@sveltejs/kit": "^2.5.21",
     "@sveltejs/package": "^2.3.3",
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
+    "@types/autosize": "^4.0.3",
     "@types/image-blob-reduce": "^4.1.4",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^22.2.0",
@@ -108,6 +109,7 @@
   },
   "dependencies": {
     "@kvs/indexeddb": "^2.1.4",
+    "autosize": "^6.0.1",
     "base-x": "^5.0.0",
     "date-fns": "^4.1.0",
     "image-blob-reduce": "^4.1.0",
