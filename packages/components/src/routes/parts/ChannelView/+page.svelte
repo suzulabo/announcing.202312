@@ -22,19 +22,32 @@
     const result: Announcement = {
       title: `[${key}] ${faker.lorem.sentence()}`,
       body: faker.lorem.paragraphs({
-        min: 3,
+        min: 1,
         max: 6,
       }),
       updatedAt: date,
       createdAt: date,
     };
-    switch (keyNum) {
-      case 1:
-        result.headerImage = '/assets/1_550x368.webp';
-        break;
-      case 2:
-        result.headerImage = '/assets/cat-8575641_427x640.jpg';
-        break;
+    if (keyNum <= 30) {
+      switch (keyNum % 5) {
+        case 1:
+          result.headerImage = '/assets/1_550x368.webp';
+          break;
+        case 2:
+          result.headerImage = '/assets/cat-8575641_427x640.jpg';
+          break;
+        case 3:
+          result.images = [
+            '/assets/gecko-8483282_640x452.png',
+            '/assets/background-7000157_1920x1357.jpg',
+            '/assets/cat-8612685_640_small_100x150.jpg',
+            '/assets/music-8559592_441x640.jpg',
+          ];
+          break;
+        case 4:
+          result.images = ['/assets/gecko-8483282_640x452.png'];
+          break;
+      }
     }
 
     if (loaded.has(key)) {
