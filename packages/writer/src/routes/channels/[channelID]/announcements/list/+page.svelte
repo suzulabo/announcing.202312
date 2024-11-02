@@ -5,8 +5,12 @@
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
 
   import type { PageData } from './$types';
+  import { setupBack } from '@announcing/components/actions/back';
+  import { LL } from '@announcing/i18n';
 
   export let data: PageData;
+
+  const back = setupBack();
 
   $: params = {
     channel: data.channel,
@@ -21,12 +25,24 @@
   } satisfies ChannelViewParams;
 </script>
 
-<div class="container">
-  <ChannelView {params} />
+<div class="menu">
+  <a class="back" href={`${$page.url.href.replace('/announcements/list', '')}`} use:back
+    >{$LL.back()}</a
+  >
+  <div class="prompt info">{$LL.announcementListPrompt()}</div>
 </div>
+<ChannelView {params} />
 
 <style lang="scss">
-  .container {
-    padding: 8px;
+  .menu {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 16px 8px;
+    border-bottom: 1px solid var(--color-border-light);
+    margin-bottom: 16px;
+    .prompt {
+      margin-left: auto;
+    }
   }
 </style>

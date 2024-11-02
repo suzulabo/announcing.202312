@@ -53,6 +53,7 @@ const ja = {
     description: '選択したお知らせを削除します。この操作は元に戻せません。',
     confirmation: 'お知らせを削除します。よろしいですか？',
   },
+  announcementListPrompt: '編集または削除するお知らせを開いてください',
 } satisfies Translation;
 
 export default ja;

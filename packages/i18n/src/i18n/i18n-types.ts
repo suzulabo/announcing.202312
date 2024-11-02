@@ -219,6 +219,10 @@ type RootTranslation = {
 		 */
 		confirmation: string
 	}
+	/**
+	 * O​p​e​n​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​e​d​i​t​ ​o​r​ ​d​e​l​e​t​e​.
+	 */
+	announcementListPrompt: string
 }
 
 export type TranslationFunctions = {
@@ -426,6 +430,10 @@ export type TranslationFunctions = {
 		 */
 		confirmation: () => LocalizedString
 	}
+	/**
+	 * Open the announcement you want to edit or delete.
+	 */
+	announcementListPrompt: () => LocalizedString
 }
 
 export type Formatters = {}

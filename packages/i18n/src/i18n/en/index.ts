@@ -54,6 +54,7 @@ const en = {
     description: 'You are about to delete the announcement. This action cannot be undone.',
     confirmation: 'Are you sure you want to delete the announcement?',
   },
+  announcementListPrompt: 'Open the announcement you want to edit or delete.',
 } satisfies BaseTranslation;
 
 export default en;
