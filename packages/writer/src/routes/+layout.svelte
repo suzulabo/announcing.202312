@@ -29,6 +29,13 @@
 
     return 'light';
   };
+
+  type BackLabelKeys = 'back';
+
+  export type HeaderBack = {
+    href: string;
+    labelKey: BackLabelKeys;
+  };
 </script>
 
 <script lang="ts">
@@ -38,11 +45,14 @@
   import { page } from '$app/stores';
 
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
+  import { onMount } from 'svelte';
   import type { LayoutServerData } from './$types';
   import SettingsModal from './SettingsModal.svelte';
-  import { onMount } from 'svelte';
+  import { setupBack } from '@announcing/components/actions/back';
 
   export let data: LayoutServerData;
+
+  const back = setupBack();
 
   let settingsModal: SettingsModal;
 
@@ -53,6 +63,7 @@
   $: locale = data.locale;
   $: void updateLocale(locale);
   $: updateTheme(theme);
+  $: headerBack = $page.data['headerBack'] as HeaderBack | undefined;
 
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
@@ -61,14 +72,18 @@
 
 <div class="container">
   <header>
-    <svelte:element
-      this={siteNameElementAttrs.this}
-      class="site-name-box unstyled"
-      {...siteNameElementAttrs}
-    >
-      <span class="site-name">Announcing</span>
-      <span class="sub-title">{$LL.writer.subTitle()}</span>
-    </svelte:element>
+    {#if headerBack}
+      <a href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
+    {:else}
+      <svelte:element
+        this={siteNameElementAttrs.this}
+        class="site-name-box unstyled"
+        {...siteNameElementAttrs}
+      >
+        <span class="site-name">Announcing</span>
+        <span class="sub-title">{$LL.writer.subTitle()}</span>
+      </svelte:element>
+    {/if}
 
     <button
       class="small settings-btn"

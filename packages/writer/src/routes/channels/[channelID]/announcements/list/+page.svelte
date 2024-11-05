@@ -4,16 +4,13 @@
   import { page } from '$app/stores';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
 
-  import type { PageData } from './$types';
-  import { setupBack } from '@announcing/components/actions/back';
-  import { LL } from '@announcing/i18n';
   import { createSnapshotContext } from '@announcing/components/utils';
+  import { LL } from '@announcing/i18n';
+  import type { PageData } from './$types';
 
   export let data: PageData;
 
   export const snapshot = createSnapshotContext();
-
-  const back = setupBack();
 
   $: params = {
     channel: data.channel,
@@ -29,9 +26,6 @@
 </script>
 
 <div class="menu">
-  <a class="back" href={`${$page.url.href.replace('/announcements/list', '')}`} use:back
-    >{$LL.back()}</a
-  >
   <div class="prompt info">{$LL.announcementListPrompt()}</div>
 </div>
 <ChannelView {params} />
@@ -45,7 +39,7 @@
     border-bottom: 1px solid var(--color-border-light);
     margin-bottom: 16px;
     .prompt {
-      margin-left: auto;
+      margin: auto;
     }
   }
 </style>
