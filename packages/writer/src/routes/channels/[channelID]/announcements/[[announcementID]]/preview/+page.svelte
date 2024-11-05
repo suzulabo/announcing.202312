@@ -63,9 +63,6 @@
   import { page } from '$app/stores';
 
   import type { Snapshot } from './$types';
-  import { setupBack } from '@announcing/components/actions/back';
-
-  const back = setupBack();
 
   let previewData: AnnouncementPreviewData | undefined;
   let loading = false;
@@ -153,7 +150,6 @@
     <button class="submit-btn" on:click={addAnnouncement}
       >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
     >
-    <a class="back" href={`${$page.url.pathname.replace('/preview', '')}`} use:back>{$LL.back()}</a>
   </div>
 {/if}
 
@@ -166,8 +162,7 @@
     gap: 16px;
     padding: 8px 0 16px;
 
-    .submit-btn,
-    .back {
+    .submit-btn {
       align-self: center;
     }
   }

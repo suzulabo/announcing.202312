@@ -38,7 +38,6 @@
 
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
-  import { setupBack } from '@announcing/components/actions/back';
 
   export let data: PageData;
 
@@ -51,8 +50,6 @@
     },
   };
 
-  const back = setupBack();
-
   let form: Partial<GetAnnouncementResult> = {};
   let titleError = false;
   let bodyError = false;
@@ -60,10 +57,6 @@
   let imagesFileInput: FileInput;
 
   $: ({ channel, announcement } = data);
-
-  $: backHref = data.announcementID
-    ? `/channels/${data.channelID}/announcements/list/${data.announcementID}`
-    : `/channels/${data.channelID}`;
 
   onMount(() => {
     form = { ...announcement };
@@ -192,8 +185,6 @@
     class="preview-btn"
     on:click={previewClickHandler}>{$LL.preview()}</button
   >
-
-  <a class="back button filled small" href={backHref} use:back>{$LL.cancel()}</a>
 </div>
 
 <style lang="scss">
@@ -245,10 +236,6 @@
     }
 
     .preview-btn {
-      align-self: center;
-    }
-
-    .back {
       align-self: center;
     }
   }

@@ -1,4 +1,5 @@
 import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
+import type { HeaderBack } from '../../../../../+layout.svelte';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ params, fetch }) => {
@@ -10,5 +11,9 @@ export const load: PageLoad = async ({ params, fetch }) => {
     channelID,
     announcementID,
     announcement,
+    headerBack: {
+      href: '../list',
+      labelKey: 'back',
+    } satisfies HeaderBack,
   };
 };

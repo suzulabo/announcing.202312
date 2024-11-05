@@ -1,17 +1,14 @@
 <script lang="ts">
-  import { setupBack } from '@announcing/components/actions/back';
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
   import { LL } from '@announcing/i18n';
   import type { PageData } from './$types';
 
   export let data: PageData;
 
-  import DeleteModal from './DeleteModal.svelte';
   import { goto } from '$app/navigation';
+  import DeleteModal from './DeleteModal.svelte';
 
   let deleteModal: DeleteModal;
-
-  const back = setupBack();
 
   const deleteAnnouncement = async () => {
     await fetch(`/api/channels/${data.channelID}/announcements/${data.announcementID}`, {
@@ -24,8 +21,6 @@
 </script>
 
 <div class="buttons">
-  <a class="back" href="../list" use:back>{$LL.back()}</a>
-
   <a class="button" href={`/channels/${data.channelID}/announcements/${data.announcementID}`}
     >{$LL.edit()}</a
   >
@@ -44,14 +39,10 @@
   .buttons {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 24px;
     align-items: center;
     padding: 16px 8px;
     border-bottom: 1px solid var(--color-border-light);
     margin-bottom: 16px;
-
-    .back {
-      margin-right: auto;
-    }
   }
 </style>
