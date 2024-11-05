@@ -7,8 +7,11 @@
   import type { PageData } from './$types';
   import { setupBack } from '@announcing/components/actions/back';
   import { LL } from '@announcing/i18n';
+  import { createSnapshotContext } from '@announcing/components/utils';
 
   export let data: PageData;
+
+  export const snapshot = createSnapshotContext();
 
   const back = setupBack();
 
