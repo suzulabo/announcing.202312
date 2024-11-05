@@ -55,7 +55,7 @@
 <script lang="ts">
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
   import Loading from '@announcing/components/Loading.svelte';
-  import { loadBlob } from '@announcing/components/utils/idbBlob';
+  import { loadBlob } from '@announcing/components/utils';
   import type { GetAnnouncementResult } from '@announcing/db/types';
   import { LL } from '@announcing/i18n';
 

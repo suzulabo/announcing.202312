@@ -13,7 +13,7 @@
   import Loading from '@announcing/components/Loading.svelte';
   import Modal from '@announcing/components/Modal.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
-  import { loadBlob } from '@announcing/components/utils/idbBlob';
+  import { loadBlob } from '@announcing/components/utils';
   import {
     CHANNEL_DESC_MAX_BYTES,
     CHANNEL_ICON_MAX_SIZE,

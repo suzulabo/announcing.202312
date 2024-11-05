@@ -29,10 +29,6 @@
       "import": "./dist/actions/imgSrc.js"
     },
     "./base.scss": "./dist/base.scss",
-    "./utils/idbBlob": {
-      "types": "./dist/utils/idbBlob.d.ts",
-      "import": "./dist/utils/idbBlob.js"
-    },
     "./AnnouncementView.svelte": {
       "types": "./dist/parts/AnnouncementView/AnnouncementView.svelte.d.ts",
       "svelte": "./dist/parts/AnnouncementView/AnnouncementView.svelte"
