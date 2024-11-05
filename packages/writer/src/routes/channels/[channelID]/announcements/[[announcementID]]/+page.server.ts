@@ -19,6 +19,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     // Create New Announcement
     return {
       channel,
+      channelID,
       announcement: undefined,
     };
   }
@@ -37,6 +38,8 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 
   return {
     channel,
+    channelID,
+    announcementID,
     announcement,
   };
 };

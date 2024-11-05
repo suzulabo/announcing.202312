@@ -61,6 +61,10 @@
 
   $: ({ channel, announcement } = data);
 
+  $: backHref = data.announcementID
+    ? `/channels/${data.channelID}/announcements/list/${data.announcementID}`
+    : `/channels/${data.channelID}`;
+
   onMount(() => {
     form = { ...announcement };
   });
@@ -189,9 +193,7 @@
     on:click={previewClickHandler}>{$LL.preview()}</button
   >
 
-  <a class="back button filled small" href={$page.url.href.replace('/announcements', '')} use:back
-    >{$LL.cancel()}</a
-  >
+  <a class="back button filled small" href={backHref} use:back>{$LL.cancel()}</a>
 </div>
 
 <style lang="scss">
