@@ -76,18 +76,19 @@
         return keys.length - 1;
       })();
 
-      const newvisibleKeys = keys.slice(startRow, endRow + 1);
-      if (visibleKeys[0] !== newvisibleKeys[0] || visibleKeys.length !== newvisibleKeys.length) {
-        visibleKeys = newvisibleKeys;
+      const newVisibleKeys = keys.slice(startRow, endRow + 1);
+      if (visibleKeys[0] !== newVisibleKeys[0] || visibleKeys.length !== newVisibleKeys.length) {
+        visibleKeys = newVisibleKeys;
       } else {
-        visibleKeys = newvisibleKeys;
+        visibleKeys = newVisibleKeys;
       }
 
-      totalHeight =
+      totalHeight = Math.ceil(
         keys.reduce((p, v) => {
           return p + getItemHeight(v);
         }, 0) +
-        (keys.length - 1) * gap;
+          (keys.length - 1) * gap,
+      );
     }
   }
 
@@ -104,7 +105,9 @@
 
   afterUpdate(() => {
     if (scrollYForRestore >= 0 && itemsElement) {
+      console.log({ itemHeight: itemsElement.style.height, totalHeight });
       if (itemsElement.style.height === `${totalHeight}px`) {
+        console.log('restore scroll', scrollYForRestore);
         window.scrollTo({ top: scrollYForRestore });
         scrollYForRestore = -1;
       }
