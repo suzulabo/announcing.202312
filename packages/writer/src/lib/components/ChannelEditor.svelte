@@ -13,7 +13,7 @@
   import Loading from '@announcing/components/Loading.svelte';
   import Modal from '@announcing/components/Modal.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
-  import { loadBlob } from '@announcing/components/utils/idbBlob';
+  import { loadBlob } from '@announcing/components/utils';
   import {
     CHANNEL_DESC_MAX_BYTES,
     CHANNEL_ICON_MAX_SIZE,
@@ -124,7 +124,7 @@
       >{creating ? $LL.createChannel() : $LL.updateChannel()}</button
     >
     <button
-      class="small text cancel-btn"
+      class="small filled cancel-btn"
       on:click={() => {
         open = false;
       }}>{$LL.cancel()}</button
@@ -141,7 +141,7 @@
     width: 100%;
     max-width: 600px;
     margin: auto;
-    padding: 8px;
+    padding: 8px 8px 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;

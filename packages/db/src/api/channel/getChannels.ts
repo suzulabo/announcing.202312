@@ -1,9 +1,11 @@
 import { eq } from 'drizzle-orm';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { channelsTable, ownersTable } from '../../schema';
 
 export const getChannels = async ({ userID }: { userID: string }) => {
+  const db = getDB();
+
   const channels = await db
     .select({
       channelID: channelsTable.channelID,

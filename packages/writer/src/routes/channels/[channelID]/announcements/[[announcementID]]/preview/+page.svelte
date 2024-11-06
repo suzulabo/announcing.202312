@@ -55,7 +55,7 @@
 <script lang="ts">
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
   import Loading from '@announcing/components/Loading.svelte';
-  import { loadBlob } from '@announcing/components/utils/idbBlob';
+  import { loadBlob } from '@announcing/components/utils';
   import type { GetAnnouncementResult } from '@announcing/db/types';
   import { LL } from '@announcing/i18n';
 
@@ -145,20 +145,11 @@
 
 {#if channel && announcement}
   <div class="container">
-    <div class="trail">
-      <a href={`/channels/${channelID}`}>{channel.name}</a>
-      /
-      <a href={`${$page.url.pathname.replace('/preview', '')}`}>{$LL.postAnnouncement()}</a>
-      /
-      {$LL.preview()}
-    </div>
-    <div class="submit-box">
-      <button on:click={addAnnouncement}
-        >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
-      >
-      <hr />
-    </div>
     <AnnouncementView {announcement} />
+    <hr />
+    <button class="submit-btn" on:click={addAnnouncement}
+      >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
+    >
   </div>
 {/if}
 
@@ -166,21 +157,13 @@
 
 <style lang="scss">
   .container {
-    padding: 4px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px 0 16px;
 
-    .trail {
-      font-size: 14px;
-    }
-  }
-  .submit-box {
-    position: sticky;
-    top: 0;
-    padding: 16px 8px 4px;
-    text-align: center;
-    background-color: var(--color-background);
-
-    hr {
-      margin: 8px 0;
+    .submit-btn {
+      align-self: center;
     }
   }
 </style>

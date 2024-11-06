@@ -28,7 +28,7 @@
 <style lang="scss">
   .container {
     text-align: center;
-    padding: 30vh;
+    padding: 30vh 0;
   }
 
   .modal-body {

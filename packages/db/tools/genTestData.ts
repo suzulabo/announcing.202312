@@ -97,10 +97,10 @@ const generate = async (userID: string, channelID: string, count: number) => {
       await addAnnouncement({
         userID,
         channelID,
-        headerImageFile: await getHeaderImage(i),
+        headerImage: await getHeaderImage(i),
         title: a.title,
         body: a.body,
-        imagesFiles: await getImages(i),
+        images: await getImages(i),
         createdAt: new Date().getTime(),
       });
     }
@@ -116,7 +116,7 @@ const main = async () => {
     options: {
       userID: {
         type: 'string',
-        default: 'test',
+        default: 'credentials:test_user01',
       },
       channelID: {
         type: 'string',
@@ -131,7 +131,7 @@ const main = async () => {
   });
 
   const { userID, channelID } = parsed.values;
-  const count = parseInt(parsed.values.count ?? '');
+  const count = parseInt(parsed.values.count);
 
   if (!userID || !channelID) {
     printUsage();

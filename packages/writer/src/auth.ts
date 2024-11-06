@@ -1,8 +1,6 @@
-import { base62 } from '@announcing/db/utils';
 import { SvelteKitAuth, type SvelteKitAuthConfig } from '@auth/sveltekit';
 import Credentials from '@auth/sveltekit/providers/credentials';
 import Google from '@auth/sveltekit/providers/google';
-import { createHash } from 'crypto';
 
 import { env } from '$env/dynamic/public';
 import { AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_SECRET } from '$env/static/private';
@@ -38,11 +36,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   callbacks: {
     jwt: ({ token, account }) => {
       if (account) {
-        const digest = createHash('sha256')
-          .update(`${account.provider}:${account.providerAccountId}`)
-          .digest();
-
-        token['userID'] = base62.encode(new Uint8Array(digest));
+        token['userID'] = `${account.provider}:${account.providerAccountId}`;
       }
 
       return token;

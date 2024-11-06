@@ -95,11 +95,6 @@
 </script>
 
 <div class="container">
-  <div class="trail">
-    <a href={`/channels/${channel.channelID}`}>{channel.name}</a>
-    /
-    {$LL.postAnnouncement()}
-  </div>
   <div class="header-image">
     {#if form.headerImage}
       <button
@@ -112,7 +107,7 @@
       </button>
       <button
         type="button"
-        class="small"
+        class="small filled"
         on:click={() => {
           form.headerImage = undefined;
         }}>{$LL.removeHeaderImage()}</button
@@ -155,7 +150,7 @@
           <div class="img-box">
             <img alt="" use:imgSrc={image} />
             <button
-              class="text"
+              class="small filled"
               on:click={() => {
                 form.images = form.images?.filter((v) => {
                   return v !== image;
@@ -194,15 +189,10 @@
 
 <style lang="scss">
   .container {
-    padding: 4px 8px;
+    padding: 16px 8px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-
-    .trail {
-      font-size: 14px;
-      margin-bottom: 16px;
-    }
 
     .header-image {
       display: flex;

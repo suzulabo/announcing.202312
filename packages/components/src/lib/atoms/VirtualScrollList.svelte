@@ -1,10 +1,18 @@
-<script lang="ts" generics="T extends Record<K, string | number>, K extends keyof T">
-  import { onMount } from 'svelte';
+<script lang="ts" context="module">
+  export type SnapShotData = {
+    heightMap: Record<string | number, number>;
+    scrollY: number;
+  };
+</script>
+
+<script lang="ts" generics="T extends string | number">
+  import { addSnapShot } from '$lib/utils/snapshotContext';
+
+  import { afterUpdate, onMount } from 'svelte';
 
   import { toStyle } from '$lib/utils/toStyle';
 
-  export let items: T[];
-  export let idKey: K;
+  export let keys: T[];
   export let itemMinHeight: number;
   export let gap = 0;
   export let overScanCount = 2;
@@ -12,11 +20,22 @@
   let itemsY = -1;
   let visibleBottomY = -1;
   let totalHeight: number;
-  let visibleItems: T[] = [];
+  let visibleKeys: T[] = [];
   let topHeight = 0;
   let itemsElement: HTMLDivElement | undefined;
+  let heightMap = {} as Record<T, number>;
+  let scrollYForRestore = -1;
 
-  const heightMap: Record<string | number, number> = {};
+  addSnapShot({
+    capture: (): SnapShotData => {
+      const data = { heightMap, scrollY: window.scrollY };
+      return data;
+    },
+    restore: (data: SnapShotData) => {
+      heightMap = data.heightMap;
+      scrollYForRestore = data.scrollY;
+    },
+  });
 
   const updateItemsRect = () => {
     if (itemsElement) {
@@ -28,13 +47,13 @@
 
   $: {
     if (itemsElement && itemsY >= 0 && visibleBottomY >= 0) {
-      const getItemHeight = (item: T) => {
-        return heightMap[item[idKey]] ?? itemMinHeight;
+      const getItemHeight = (key: T) => {
+        return heightMap[key] ?? itemMinHeight;
       };
       const startRow = (() => {
         let sumHeight = 0;
-        for (const [i, item] of items.entries()) {
-          sumHeight += getItemHeight(item) + gap;
+        for (const [i, key] of keys.entries()) {
+          sumHeight += getItemHeight(key) + gap;
           if (sumHeight > itemsY) {
             return Math.max(0, i - overScanCount);
           }
@@ -42,36 +61,34 @@
         return 0;
       })();
 
-      topHeight = items.slice(0, startRow).reduce((p, v) => {
+      topHeight = keys.slice(0, startRow).reduce((p, v) => {
         return p + getItemHeight(v) + gap;
       }, 0);
 
       const endRow = (() => {
         let sumHeight = topHeight;
-        for (const [i, item] of items.slice(startRow).entries()) {
+        for (const [i, item] of keys.slice(startRow).entries()) {
           sumHeight += getItemHeight(item) + gap;
           if (sumHeight >= visibleBottomY) {
             return i + startRow + overScanCount;
           }
         }
-        return items.length - 1;
+        return keys.length - 1;
       })();
 
-      const newVisibleItems = items.slice(startRow, endRow + 1);
-      if (
-        visibleItems[0] !== newVisibleItems[0] ||
-        visibleItems.length !== newVisibleItems.length
-      ) {
-        visibleItems = newVisibleItems;
+      const newVisibleKeys = keys.slice(startRow, endRow + 1);
+      if (visibleKeys[0] !== newVisibleKeys[0] || visibleKeys.length !== newVisibleKeys.length) {
+        visibleKeys = newVisibleKeys;
       } else {
-        visibleItems = newVisibleItems;
+        visibleKeys = newVisibleKeys;
       }
 
-      totalHeight =
-        items.reduce((p, v) => {
+      totalHeight = Math.ceil(
+        keys.reduce((p, v) => {
           return p + getItemHeight(v);
         }, 0) +
-        (items.length - 1) * gap;
+          (keys.length - 1) * gap,
+      );
     }
   }
 
@@ -86,7 +103,18 @@
     };
   });
 
-  type ElementWithItem = Element & { item?: T };
+  afterUpdate(() => {
+    if (scrollYForRestore >= 0 && itemsElement) {
+      console.log({ itemHeight: itemsElement.style.height, totalHeight });
+      if (itemsElement.style.height === `${totalHeight}px`) {
+        console.log('restore scroll', scrollYForRestore);
+        window.scrollTo({ top: scrollYForRestore });
+        scrollYForRestore = -1;
+      }
+    }
+  });
+
+  type ElementWithItem = Element & { key?: T };
 
   const itemResize = (() => {
     let itemResizeObserver: ResizeObserver | undefined;
@@ -94,10 +122,10 @@
     onMount(() => {
       itemResizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
-          const item = (entry.target as ElementWithItem).item;
-          if (item) {
-            if (heightMap[item[idKey]] !== entry.contentRect.height) {
-              heightMap[item[idKey]] = entry.contentRect.height;
+          const key = (entry.target as ElementWithItem).key;
+          if (key) {
+            if (heightMap[key] !== entry.contentRect.height) {
+              heightMap[key] = entry.contentRect.height;
             }
           }
         }
@@ -108,13 +136,13 @@
       };
     });
 
-    const action = (el: ElementWithItem, item: T) => {
-      el.item = item;
+    const action = (el: ElementWithItem, key: T) => {
+      el.key = key;
       itemResizeObserver?.observe(el);
 
       return {
-        update: (item: T) => {
-          el.item = item;
+        update: (key: T) => {
+          el.key = key;
         },
         destroy: () => {
           itemResizeObserver?.unobserve(el);
@@ -137,10 +165,10 @@
     'padding-top': `${topHeight}px`,
   })}
 >
-  {#if visibleItems}
-    {#each visibleItems as item (item[idKey])}
-      <div class="item-box" use:itemResize={item}>
-        <slot name="item" {item} />
+  {#if visibleKeys}
+    {#each visibleKeys as key (key)}
+      <div class="item-box" use:itemResize={key}>
+        <slot name="item" {key} />
       </div>
     {/each}
   {/if}

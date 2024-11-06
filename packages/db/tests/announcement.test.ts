@@ -1,5 +1,6 @@
 import { assert, expect, test, vi } from 'vitest';
 
+import { openAsBlob } from 'fs';
 import {
   addAnnouncement,
   createChannel,
@@ -23,10 +24,10 @@ test('add, update and remove', async () => {
   await addAnnouncement({
     userID: 'u1',
     channelID: 'a1',
-    headerImageFile: new Blob(['headerImage'], { type: 'image/test' }),
+    headerImage: await openAsBlob('tests/board-361516_1280.jpg'),
     title: 'test',
     body: 'This is test',
-    imagesFiles: [new Blob(['images1'], { type: 'image/test' })],
+    images: [await openAsBlob('tests/board-361516_1280.jpg')],
     createdAt: new Date().getTime(),
   });
 

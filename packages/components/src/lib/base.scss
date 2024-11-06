@@ -1,39 +1,66 @@
 @use './reset.scss';
 
+/*
+I used the Material Theme Builder (https://material-foundation.github.io/material-theme-builder/) and generated the color codes based on a Source Color of #FFFFFF.
+*/
+
 html {
-  --color-text-rgb: 33, 33, 33;
-  --color-text: rgb(var(--color-text-rgb));
-  --color-error: #d32f2f;
-  --color-text-disable: #bdbdbd;
-  --color-text-light: #757575;
-  --color-text-placeholder: #757575;
-  --color-background-rgb: 255, 255, 255;
-  --color-background: rgb(var(--color-background-rgb));
-  --color-background-light: #e0e0e0;
-  --color-background-modal: rgba(0, 0, 0, 0.7);
-  --color-background-loading: rgba(255, 255, 255, 0.5);
-  --color-border: #212121;
-  --color-border-disable: #bdbdbd;
-  --color-border-light: #bdbdbd;
-  --color-hover: #f5f5f5;
+  $color-text: #171d1e; // On Surface (N-10)
+  --color-text: #{$color-text};
+  --color-text-disable: #{rgba($color-text, 0.5)};
+
+  --color-text-light: #3f484a; // On Surface Variant (NV-30)
+
+  --color-error: #ba1a1a; // Error (E-40)
+
+  --color-background: #ffffff; // Container Lowest (N-100)
+
+  --color-background-light: #eff5f6; // Container Low (N-96)
+
+  --color-background-highlight: #e3e9ea; // Container High (N-92)
+
+  $color-border: #6f797a; // Outline (NV-50)
+  --color-border: #{$color-border};
+  --color-border-disable: #{rgba($color-border, 0.5)};
+
+  --color-border-light: #bfc8ca; // OUtline Variant (NV-80)
+
+  --color-hover: #e9eff0; // Container (N-94)
+
+  --color-background-modal: #{rgba(#2b3133, 0.8)}; // Inverse Surface (N-20)
+
+  --color-background-loading: #{rgba(#eff5f6, 0.6)}; // Container Low (N-96)
+
+  --color-border-image: #e3e9ea; // Container High (N-92)
 
   @mixin dark-mode {
-    --color-text-rgb: 250, 250, 250;
-    --color-text: rgb(var(--color-text-rgb));
-    --color-text-light: #757575;
-    --color-error: #f44336;
-    --color-text-disable: #9e9e9e;
-    --color-text-light: #757575;
-    --color-text-placeholder: #757575;
-    --color-background-rgb: 0, 0, 0;
-    --color-background: rgb(var(--color-background-rgb));
-    --color-background-light: #616161;
-    --color-background-modal: rgba(0, 0, 0, 0.7);
-    --color-background-loading: rgba(0, 0, 0, 0.5);
-    --color-border: #fafafa;
-    --color-border-disable: #9e9e9e;
-    --color-border-light: #757575;
-    --color-hover: #212121;
+    $color-text: #dee3e5; // On Surface (N-90)
+    --color-text: #{$color-text};
+    --color-text-disable: #{rgba($color-text, 0.5)};
+
+    --color-text-light: #bfc8ca; // On Surface Variant (NV-90)
+
+    --color-error: #ffb4ab; // Error (E-80)
+
+    --color-background: #090f10; // Container Lowest (N-4)
+
+    --color-background-light: #171d1e; // Container Low (N-10)
+
+    --color-background-highlight: #303637; // Container Highest (N-24)
+
+    $color-border: #899294; // Outline (NV-60)
+    --color-border: #{$color-border};
+    --color-border-disable: #{rgba($color-border, 0.5)};
+
+    --color-border-light: #3f484a; // OUtline Variant (NV-30)
+
+    --color-hover: #1b2122; // Container (N-12)
+
+    --color-background-modal: #{rgba(#dee3e5, 0.8)}; // Inverse Surface (N-90)
+
+    --color-background-loading: #{rgba(#3f484a, 0.6)}; // OUtline Variant (NV-30)
+
+    --color-border-image: #252b2c; // Container High (N-17)
   }
 
   color: var(--color-text);

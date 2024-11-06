@@ -31,6 +31,18 @@ export const messages = {
     en: 'Settings',
     ja: '設定',
   },
+  theme: {
+    en: 'Theme',
+    ja: '表示設定',
+  },
+  default: {
+    en: 'Default',
+    ja: '標準',
+  },
+  darkMode: {
+    en: 'Dark Mode',
+    ja: 'ダークモード',
+  },
   copy: {
     en: 'Copy',
     ja: 'コピー',
@@ -100,10 +112,6 @@ export const messages = {
     ja: 'チャンネルは5つまで作れます',
   },
   channelActions: {
-    instruction: {
-      en: 'What would you like to do today? Please choose from the options below:',
-      ja: '今日はなにをしましょうか。以下のメニューから選んでください。',
-    },
     viewChannel: {
       en: 'View this channel',
       ja: 'チャンネルの表示を確認する',
@@ -194,5 +202,9 @@ export const messages = {
       en: 'Are you sure you want to delete the announcement?',
       ja: 'お知らせを削除します。よろしいですか？',
     },
+  },
+  announcementListPrompt: {
+    en: 'Open the announcement you want to edit or delete.',
+    ja: '編集または削除するお知らせを開いてください',
   },
 };

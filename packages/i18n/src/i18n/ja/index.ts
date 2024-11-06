@@ -9,6 +9,9 @@ const ja = {
   back: '戻る',
   preview: '表示を確認',
   settings: '設定',
+  theme: '表示設定',
+  default: '標準',
+  darkMode: 'ダークモード',
   copy: 'コピー',
   copied: 'コピーしました',
   copyError: 'コピーできませんでした',
@@ -27,7 +30,6 @@ const ja = {
   updateChannel: 'チャンネルを更新',
   channelsCanBeCreated: 'チャンネルは5つまで作れます',
   channelActions: {
-    instruction: '今日はなにをしましょうか。以下のメニューから選んでください。',
     viewChannel: 'チャンネルの表示を確認する',
     copyURL: 'チャンネルのURLをコピーする',
     createAnnouncement: '新しいお知らせを書く',
@@ -51,6 +53,7 @@ const ja = {
     description: '選択したお知らせを削除します。この操作は元に戻せません。',
     confirmation: 'お知らせを削除します。よろしいですか？',
   },
+  announcementListPrompt: '編集または削除するお知らせを開いてください',
 } satisfies Translation;
 
 export default ja;

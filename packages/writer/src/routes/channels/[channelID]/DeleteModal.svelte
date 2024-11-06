@@ -31,7 +31,7 @@
   };
 </script>
 
-<Modal bind:open dismissMode="none">
+<Modal bind:open dismissMode="backdrop">
   <div class="delete-modal">
     <span>{$LL.deleteChannel()}</span>
     <hr />
@@ -46,7 +46,7 @@
     </button>
 
     <button
-      class="text small"
+      class="filled small"
       on:click={() => {
         open = false;
       }}>{$LL.cancel()}</button
@@ -61,7 +61,7 @@
     background-color: var(--color-background);
     border-radius: 8px;
     margin: auto;
-    padding: 8px;
+    padding: 8px 8px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;

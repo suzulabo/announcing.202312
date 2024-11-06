@@ -1,14 +1,27 @@
 <script lang="ts">
   import Input from '$lib/atoms/Input.svelte';
+
+  let required = false;
 </script>
 
 <div class="container">
-  <Input name="test" label="Name" />
+  <Input name="test" label="Name" {required} />
+
+  <label class="required">
+    <input type="checkbox" bind:checked={required} />
+    <span>Required</span>
+  </label>
 </div>
 
 <style lang="scss">
   .container {
-    text-align: center;
-    padding: 30vh;
+    margin: 0 auto;
+    padding: 30vh 16px;
+    max-width: 400px;
+
+    .required {
+      margin-top: 16px;
+      display: flex;
+    }
   }
 </style>

@@ -1,6 +1,6 @@
 import { and, eq, exists } from 'drizzle-orm';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { channelsTable, ownersTable } from '../../schema';
 
 export const deleteChannel = async ({
@@ -12,6 +12,8 @@ export const deleteChannel = async ({
   channelID: string;
   updatedAt: number;
 }) => {
+  const db = getDB();
+
   const result = await db.delete(channelsTable).where(
     and(
       eq(channelsTable.channelID, channelID),

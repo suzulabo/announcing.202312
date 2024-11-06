@@ -19,18 +19,18 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
     error(400, 'Missing body');
   }
   const title = getFormString(formData, 'title');
-  const headerImageFile = getFormFile(formData, 'headerImage');
-  const imagesFiles = getFormFiles(formData, 'images');
+  const headerImage = getFormFile(formData, 'headerImage');
+  const images = getFormFiles(formData, 'images');
 
   const channelID = params.channelID;
 
   await addAnnouncement({
     userID,
     channelID,
-    headerImageFile,
+    headerImage,
     title,
     body,
-    imagesFiles,
+    images,
     createdAt: new Date().getTime(),
   });
 

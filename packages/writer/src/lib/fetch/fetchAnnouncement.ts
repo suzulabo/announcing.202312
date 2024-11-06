@@ -5,13 +5,16 @@ import { promiseCache } from './promiseCache';
 
 const cache = new LRUCache<string, GetAnnouncementResult>({ max: 100 });
 
-export const fetchAnnouncement = ({
-  channelID,
-  announcementID,
-}: {
-  channelID: string;
-  announcementID: string;
-}): GetAnnouncementResult | Promise<GetAnnouncementResult> => {
+export const fetchAnnouncement = (
+  {
+    channelID,
+    announcementID,
+  }: {
+    channelID: string;
+    announcementID: string;
+  },
+  fetch_ = fetch,
+): GetAnnouncementResult | Promise<GetAnnouncementResult> => {
   const cacheKey = `${channelID}-${announcementID}`;
 
   const cached = cache.get(cacheKey);
@@ -22,7 +25,7 @@ export const fetchAnnouncement = ({
   const url = `/api/channels/${channelID}/announcements/${announcementID}`;
 
   return promiseCache(url, async () => {
-    const res = await fetch(url);
+    const res = await fetch_(url);
     if (res.ok) {
       const data = await res.json();
       cache.set(cacheKey, data);

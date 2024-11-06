@@ -1,30 +1,60 @@
 import { and, eq } from 'drizzle-orm';
 
-import { db } from '../../client';
+import * as v from 'valibot';
+import { getDB } from '../../client';
+import {
+  ANNOUNCEMENT_BODY_MAX_BYTES,
+  ANNOUNCEMENT_ID_SIZE,
+  ANNOUNCEMENT_IMAGE_MAX_BYTES,
+  ANNOUNCEMENT_TITLE_MAX_BYTES,
+  BLOB_ID_MAX_BYTES,
+  CHANNEL_ID_MAX_BYTES,
+  USER_ID_MAX_BYTES,
+} from '../../constants';
 import { announcementsTable, channelsTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getChannel } from '../channel/getChannel';
 import { genAnnouncementID } from './genAnnouncementID';
 
-export const updateAnnouncement = async ({
-  userID,
-  channelID,
-  targetAnnouncementID,
-  targetUpdatedAt,
-  headerImage,
-  title,
-  body,
-  images,
-}: {
-  userID: string;
-  channelID: string;
-  targetAnnouncementID: string;
-  targetUpdatedAt: number;
-  headerImage: Blob | string | undefined;
-  title: string | undefined;
-  body: string;
-  images: (Blob | string)[] | undefined;
-}) => {
+const paramsSchema = v.object({
+  userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
+  channelID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_ID_MAX_BYTES)),
+  targetAnnouncementID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_ID_SIZE)),
+  targetUpdatedAt: v.number(),
+  headerImage: v.union([
+    v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES)),
+    v.pipe(v.string(), v.nonEmpty(), v.maxBytes(BLOB_ID_MAX_BYTES)),
+    v.undefined(),
+  ]),
+  title: v.union([v.pipe(v.string(), v.maxBytes(ANNOUNCEMENT_TITLE_MAX_BYTES)), v.undefined()]),
+  body: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_BODY_MAX_BYTES)),
+  images: v.union([
+    v.array(
+      v.union([
+        v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES)),
+        v.pipe(v.string(), v.nonEmpty(), v.maxBytes(BLOB_ID_MAX_BYTES)),
+      ]),
+    ),
+    v.undefined(),
+  ]),
+});
+
+type Params = v.InferOutput<typeof paramsSchema>;
+
+export const updateAnnouncement = async (params: Params) => {
+  v.assert(paramsSchema, params);
+
+  const {
+    userID,
+    channelID,
+    targetAnnouncementID,
+    targetUpdatedAt,
+    headerImage,
+    title,
+    body,
+    images,
+  } = params;
+
   const channel = await getChannel({ userID, channelID });
   if (!channel) {
     return;
@@ -37,6 +67,8 @@ export const updateAnnouncement = async ({
   if (index < 0) {
     return;
   }
+
+  const db = getDB();
 
   const targetAnnouncement = (
     await db
@@ -95,7 +127,7 @@ export const updateAnnouncement = async ({
         imagesValues.push(image);
       } else if (image instanceof Blob) {
         const [v, q] = await makeInsertBlob(image);
-        images.push(v);
+        imagesValues.push(v);
         queries.push(q);
       }
     }

@@ -47,6 +47,18 @@ type RootTranslation = {
 	 */
 	settings: string
 	/**
+	 * T​h​e​m​e
+	 */
+	theme: string
+	/**
+	 * D​e​f​a​u​l​t
+	 */
+	'default': string
+	/**
+	 * D​a​r​k​ ​M​o​d​e
+	 */
+	darkMode: string
+	/**
 	 * C​o​p​y
 	 */
 	copy: string
@@ -115,10 +127,6 @@ type RootTranslation = {
 	 */
 	channelsCanBeCreated: string
 	channelActions: {
-		/**
-		 * W​h​a​t​ ​w​o​u​l​d​ ​y​o​u​ ​l​i​k​e​ ​t​o​ ​d​o​ ​t​o​d​a​y​?​ ​P​l​e​a​s​e​ ​c​h​o​o​s​e​ ​f​r​o​m​ ​t​h​e​ ​o​p​t​i​o​n​s​ ​b​e​l​o​w​:
-		 */
-		instruction: string
 		/**
 		 * V​i​e​w​ ​t​h​i​s​ ​c​h​a​n​n​e​l
 		 */
@@ -211,6 +219,10 @@ type RootTranslation = {
 		 */
 		confirmation: string
 	}
+	/**
+	 * O​p​e​n​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​e​d​i​t​ ​o​r​ ​d​e​l​e​t​e​.
+	 */
+	announcementListPrompt: string
 }
 
 export type TranslationFunctions = {
@@ -246,6 +258,18 @@ export type TranslationFunctions = {
 	 * Settings
 	 */
 	settings: () => LocalizedString
+	/**
+	 * Theme
+	 */
+	theme: () => LocalizedString
+	/**
+	 * Default
+	 */
+	'default': () => LocalizedString
+	/**
+	 * Dark Mode
+	 */
+	darkMode: () => LocalizedString
 	/**
 	 * Copy
 	 */
@@ -315,10 +339,6 @@ export type TranslationFunctions = {
 	 */
 	channelsCanBeCreated: () => LocalizedString
 	channelActions: {
-		/**
-		 * What would you like to do today? Please choose from the options below:
-		 */
-		instruction: () => LocalizedString
 		/**
 		 * View this channel
 		 */
@@ -410,6 +430,10 @@ export type TranslationFunctions = {
 		 */
 		confirmation: () => LocalizedString
 	}
+	/**
+	 * Open the announcement you want to edit or delete.
+	 */
+	announcementListPrompt: () => LocalizedString
 }
 
 export type Formatters = {}

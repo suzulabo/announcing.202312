@@ -20,24 +20,15 @@ button.unstyled {
   display: contents;
 }
 
-button:not(.unstyled, .text),
+button:not(.unstyled),
 a.button {
   display: inline-block;
   border-radius: 4px;
   padding: 8px 16px;
   text-align: center;
-  width: max-content;
   font-weight: 500;
   white-space: nowrap;
-
-  &:not(.text) {
-    border: 1px solid var(--color-border);
-  }
-
-  &:disabled {
-    color: var(--color-text-disable);
-    border-color: var(--color-border-disable);
-  }
+  border: 1px solid var(--color-border);
 
   &:active:not(:disabled) {
     position: relative;
@@ -45,10 +36,27 @@ a.button {
     left: 1px;
   }
 
+  &:disabled {
+    color: var(--color-text-disable);
+    border-color: var(--color-border-disable);
+  }
+
   &.small {
     padding: 4px 8px;
-    font-size: 90%;
-    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  &.text {
+    border: none;
+    padding: 2px 4px;
+  }
+
+  &.filled {
+    border: none;
+    background-color: var(--color-background-highlight);
+    &:disabled {
+      background-color: var(--color-background-light);
+    }
   }
 
   @media (hover: hover) {
@@ -58,17 +66,11 @@ a.button {
   }
 }
 
-a:not(.unstyled),
-button.text {
-  text-decoration: none;
+a:not(.unstyled) {
   font-weight: 600;
-  padding: 2px 4px;
-  border-radius: 4px;
   @media (hover: hover) {
-    &:hover:not(:disabled) {
+    &:hover {
       background-color: var(--color-hover);
-      cursor: pointer;
-      text-decoration: underline;
     }
   }
 }
@@ -80,17 +82,8 @@ textarea {
   border-radius: 4px;
   padding: 8px;
 
-  &::placeholder {
-    color: var(--color-text-placeholder);
-    text-align: center;
-  }
-
   &:focus {
-    border-width: 2px;
-    padding: 7px;
-    &::placeholder {
-      visibility: hidden;
-    }
+    background-color: var(--color-background-light);
   }
 }
 
@@ -103,6 +96,11 @@ textarea {
 
 input[type='checkbox'] {
   all: revert;
+}
+
+img {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border-image);
 }
 
 div.info {

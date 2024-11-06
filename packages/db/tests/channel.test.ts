@@ -1,5 +1,7 @@
 import { assert, describe, expect, test, vi } from 'vitest';
 
+import { openAsBlob } from 'fs';
+import { ValiError } from 'valibot';
 import { getChannels } from '../src';
 import { createChannel } from '../src/api/channel/createChannel';
 import { deleteChannel } from '../src/api/channel/deleteChannel';
@@ -14,7 +16,7 @@ describe('Channel', () => {
       channelID: '1',
       name: 'test channel',
       desc: 'This is test',
-      icon: new Blob(['aaa'], { type: 'image/test' }),
+      icon: await openAsBlob('tests/board-361516_1280.jpg'),
     });
     expect(await getChannel({ userID: 'u2', channelID: '1' })).toBeUndefined();
 
@@ -92,5 +94,17 @@ describe('Channel', () => {
 
     const channels = await getChannels({ userID: 'u1' });
     expect(channels.length).toEqual(5);
+  });
+
+  test('empty name', async () => {
+    await expect(
+      createChannel({
+        userID: '1',
+        channelID: '1',
+        name: '',
+        desc: undefined,
+        icon: undefined,
+      }),
+    ).rejects.toBeInstanceOf(ValiError);
   });
 });

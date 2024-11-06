@@ -1,28 +1,40 @@
 import { and, eq } from 'drizzle-orm';
 
-import { db } from '../../client';
+import { getDB } from '../../client';
 import { announcementsTable, channelsTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getChannel } from '../channel/getChannel';
 import { genAnnouncementID } from './genAnnouncementID';
 
-export const addAnnouncement = async ({
-  userID,
-  channelID,
-  headerImageFile,
-  title,
-  body,
-  imagesFiles,
-  createdAt,
-}: {
-  userID: string;
-  channelID: string;
-  headerImageFile: Blob | undefined;
-  title: string | undefined;
-  body: string;
-  imagesFiles: Blob[] | undefined;
-  createdAt: number;
-}) => {
+import * as v from 'valibot';
+import {
+  ANNOUNCEMENT_BODY_MAX_BYTES,
+  ANNOUNCEMENT_IMAGE_MAX_BYTES,
+  ANNOUNCEMENT_TITLE_MAX_BYTES,
+  CHANNEL_ID_MAX_BYTES,
+  USER_ID_MAX_BYTES,
+} from '../../constants';
+
+const paramsSchema = v.object({
+  userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
+  channelID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_ID_MAX_BYTES)),
+  headerImage: v.union([v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES)), v.undefined()]),
+  title: v.union([v.pipe(v.string(), v.maxBytes(ANNOUNCEMENT_TITLE_MAX_BYTES)), v.undefined()]),
+  body: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_BODY_MAX_BYTES)),
+  images: v.union([
+    v.array(v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES))),
+    v.undefined(),
+  ]),
+  createdAt: v.number(),
+});
+
+type Params = v.InferOutput<typeof paramsSchema>;
+
+export const addAnnouncement = async (params: Params) => {
+  v.assert(paramsSchema, params);
+
+  const { userID, channelID, headerImage, title, body, images, createdAt } = params;
+
   const channel = await getChannel({ userID, channelID });
   if (!channel) {
     return;
@@ -42,23 +54,25 @@ export const addAnnouncement = async ({
     values.title = title;
   }
 
-  if (headerImageFile) {
-    const [v, q] = await makeInsertBlob(headerImageFile);
+  if (headerImage) {
+    const [v, q] = await makeInsertBlob(headerImage);
     values.headerImage = v;
     queries.push(q);
   }
 
-  if (imagesFiles) {
-    const images = [];
-    for (const f of imagesFiles) {
+  if (images) {
+    const a = [];
+    for (const f of images) {
       const [v, q] = await makeInsertBlob(f);
-      images.push(v);
+      a.push(v);
       queries.push(q);
     }
-    values.images = images;
+    values.images = a;
   }
 
   const announcementID = genAnnouncementID(values);
+
+  const db = getDB();
 
   queries.push(db.insert(announcementsTable).values({ announcementID, ...values }));
 

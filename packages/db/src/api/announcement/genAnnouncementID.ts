@@ -1,5 +1,6 @@
 import { createHash } from 'crypto';
 
+import { ANNOUNCEMENT_ID_SIZE } from '../../constants';
 import { base62 } from '../../lib/base62';
 
 export const genAnnouncementID = ({
@@ -39,5 +40,5 @@ export const genAnnouncementID = ({
 
   const digest = hash.digest();
 
-  return base62.encode(new Uint8Array(digest.buffer)).substring(0, 6);
+  return base62.encode(new Uint8Array(digest.buffer)).substring(0, ANNOUNCEMENT_ID_SIZE);
 };

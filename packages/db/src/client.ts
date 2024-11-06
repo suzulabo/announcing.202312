@@ -1,6 +1,22 @@
 import { createClient } from '@libsql/client';
-import { drizzle } from 'drizzle-orm/libsql';
+import { drizzle as drizzleD1 } from 'drizzle-orm/d1';
+import { drizzle as drizzleLibSql } from 'drizzle-orm/libsql';
+import { env } from './api/env';
 
-const sqlite = createClient({ url: 'file:../db-dev/dev.db' });
+const createDB = () => {
+  if (env.d1) {
+    return drizzleD1(env.d1, { logger: env.logger });
+  }
+  const sqlite = createClient({ url: 'file:../db-dev/dev.db' });
+  return drizzleLibSql(sqlite, { logger: env.logger });
+};
 
-export const db = drizzle(sqlite, { logger: false });
+let db: ReturnType<typeof createDB> | undefined;
+
+export const getDB = () => {
+  if (!db) {
+    db = createDB();
+  }
+
+  return db;
+};

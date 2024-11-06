@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { imgSrc } from '$lib/actions/imgSrc';
   import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
   import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
   import { formatDate } from '$lib/utils/formatDate';
@@ -28,20 +29,35 @@
     <div class="date">{formatDate(announcement.createdAt)}</div>
     {#if announcement.headerImage}
       <div class="header-image-box" style={toStyle(getAspectRatio(announcement.headerImage))}>
-        <img src={announcement.headerImage} alt="" />
+        <img use:imgSrc={announcement.headerImage} alt="" />
       </div>
     {/if}
     {#if announcement.title}
       <div class="title">{announcement.title}</div>
     {/if}
     <div class="body">{announcement.body}</div>
+    {#if announcement.images}
+      {#if announcement.images.length === 1}
+        {@const image = announcement.images[0]}
+        <img class="single-image" use:imgSrc={image} alt="" />
+      {:else}
+        <div class="images-grid">
+          {#each announcement.images as image}
+            <img use:imgSrc={image} alt="" />
+          {/each}
+        </div>
+      {/if}
+    {/if}
   </div>
 </ResizeObserver>
 
 <style lang="scss">
   .container {
+    flex-grow: 1;
     max-height: 100%;
-    margin: 12px;
+    margin: 8px 0 0;
+    padding: 8px;
+    border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -55,12 +71,13 @@
       left: 0;
       right: 0;
       content: '';
-      background: linear-gradient(
-        to top,
-        rgba(var(--color-background-rgb), 1),
-        rgba(var(--color-text-rgb), 0) 20%
-      );
+      background: linear-gradient(to top, var(--color-background), transparent 20%);
       pointer-events: none;
+    }
+
+    .date {
+      color: var(--color-text-light);
+      font-size: 15px;
     }
 
     .header-image-box {
@@ -74,8 +91,33 @@
     }
 
     .title {
-      font-size: 1.1em;
+      font-size: 18px;
       font-weight: bold;
+    }
+
+    .single-image {
+      object-fit: contain;
+      margin: 8px auto;
+      border-radius: 8px;
+    }
+    .images-grid {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 4px;
+      padding: 8px 4px;
+
+      img {
+        aspect-ratio: 5/4;
+        object-fit: cover;
+        margin: auto;
+        border-radius: 8px;
+      }
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--color-hover);
+      }
     }
   }
 </style>
