@@ -1,117 +1,91 @@
-<script lang="ts" context="module">
-  export type SnapShotData = {
-    heightMap: Record<string | number, number>;
-    scrollY: number;
-  };
-</script>
-
 <script lang="ts" generics="T extends string | number">
   import { addSnapShot } from '$lib/utils/snapshotContext';
 
-  import { afterUpdate, onMount } from 'svelte';
+  import { onMount, tick, type Snippet } from 'svelte';
 
   import { toStyle } from '$lib/utils/toStyle';
 
-  export let keys: T[];
-  export let itemMinHeight: number;
-  export let gap = 0;
-  export let overScanCount = 2;
+  interface Props {
+    keys: T[];
+    itemMinHeight: number;
+    gap?: number;
+    overScanCount?: number;
+    itemSnippet: Snippet<[T]>;
+  }
 
-  let itemsY = -1;
-  let visibleBottomY = -1;
-  let totalHeight: number;
-  let visibleKeys: T[] = [];
-  let topHeight = 0;
-  let itemsElement: HTMLDivElement | undefined;
-  let heightMap = {} as Record<T, number>;
-  let scrollYForRestore = -1;
+  let { keys, itemMinHeight, gap = 0, overScanCount = 2, itemSnippet }: Props = $props();
 
-  addSnapShot({
-    capture: (): SnapShotData => {
-      const data = { heightMap, scrollY: window.scrollY };
-      return data;
-    },
-    restore: (data: SnapShotData) => {
-      heightMap = data.heightMap;
-      scrollYForRestore = data.scrollY;
-    },
+  let itemsRect = $state<DOMRect>();
+  let heightMap = $state({} as Record<T, number>);
+  let itemsElement: HTMLDivElement;
+
+  let { topHeight, totalHeight, visibleKeys } = $derived.by<{
+    topHeight: number;
+    totalHeight: number;
+    visibleKeys: T[];
+  }>(() => {
+    if (!itemsRect) {
+      return { topHeight: 0, totalHeight: 0, visibleKeys: [] };
+    }
+
+    const itemsY = Math.max(0, itemsRect.y * -1);
+    const visibleBottomY = itemsY + document.documentElement.clientHeight;
+
+    const getItemHeight = (key: T) => {
+      return heightMap[key] ?? itemMinHeight;
+    };
+    const startRow = (() => {
+      let sumHeight = 0;
+      for (const [i, key] of keys.entries()) {
+        sumHeight += getItemHeight(key) + gap;
+        if (sumHeight > itemsY) {
+          return Math.max(0, i - overScanCount);
+        }
+      }
+      return 0;
+    })();
+
+    const topHeight = keys.slice(0, startRow).reduce((p, v) => {
+      return p + getItemHeight(v) + gap;
+    }, 0);
+
+    const endRow = (() => {
+      let sumHeight = topHeight;
+      for (const [i, item] of keys.slice(startRow).entries()) {
+        sumHeight += getItemHeight(item) + gap;
+        if (sumHeight >= visibleBottomY) {
+          return i + startRow + overScanCount;
+        }
+      }
+      return keys.length - 1;
+    })();
+
+    const totalHeight = Math.ceil(
+      keys.reduce((p, v) => {
+        return p + getItemHeight(v);
+      }, 0) +
+        (keys.length - 1) * gap,
+    );
+
+    const visibleKeys = keys.slice(startRow, endRow + 1);
+    return {
+      topHeight,
+      totalHeight,
+      visibleKeys,
+    };
   });
 
   const updateItemsRect = () => {
-    if (itemsElement) {
-      const rect = itemsElement.getBoundingClientRect();
-      itemsY = Math.max(0, rect.y * -1);
-      visibleBottomY = itemsY + document.documentElement.clientHeight;
-    }
+    itemsRect = itemsElement.getBoundingClientRect();
   };
-
-  $: {
-    if (itemsElement && itemsY >= 0 && visibleBottomY >= 0) {
-      const getItemHeight = (key: T) => {
-        return heightMap[key] ?? itemMinHeight;
-      };
-      const startRow = (() => {
-        let sumHeight = 0;
-        for (const [i, key] of keys.entries()) {
-          sumHeight += getItemHeight(key) + gap;
-          if (sumHeight > itemsY) {
-            return Math.max(0, i - overScanCount);
-          }
-        }
-        return 0;
-      })();
-
-      topHeight = keys.slice(0, startRow).reduce((p, v) => {
-        return p + getItemHeight(v) + gap;
-      }, 0);
-
-      const endRow = (() => {
-        let sumHeight = topHeight;
-        for (const [i, item] of keys.slice(startRow).entries()) {
-          sumHeight += getItemHeight(item) + gap;
-          if (sumHeight >= visibleBottomY) {
-            return i + startRow + overScanCount;
-          }
-        }
-        return keys.length - 1;
-      })();
-
-      const newVisibleKeys = keys.slice(startRow, endRow + 1);
-      if (visibleKeys[0] !== newVisibleKeys[0] || visibleKeys.length !== newVisibleKeys.length) {
-        visibleKeys = newVisibleKeys;
-      } else {
-        visibleKeys = newVisibleKeys;
-      }
-
-      totalHeight = Math.ceil(
-        keys.reduce((p, v) => {
-          return p + getItemHeight(v);
-        }, 0) +
-          (keys.length - 1) * gap,
-      );
-    }
-  }
 
   onMount(() => {
     const resizeObserver = new ResizeObserver(updateItemsRect);
-    if (itemsElement) {
-      resizeObserver.observe(itemsElement);
-    }
+    resizeObserver.observe(itemsElement);
 
     return () => {
       resizeObserver.disconnect();
     };
-  });
-
-  afterUpdate(() => {
-    if (scrollYForRestore >= 0 && itemsElement) {
-      console.log({ itemHeight: itemsElement.style.height, totalHeight });
-      if (itemsElement.style.height === `${totalHeight}px`) {
-        console.log('restore scroll', scrollYForRestore);
-        window.scrollTo({ top: scrollYForRestore });
-        scrollYForRestore = -1;
-      }
-    }
   });
 
   type ElementWithItem = Element & { key?: T };
@@ -152,6 +126,29 @@
 
     return action;
   })();
+
+  type SnapShotData = {
+    heightMap: Record<string | number, number>;
+    scrollY: number;
+  };
+
+  addSnapShot({
+    capture: (): SnapShotData => {
+      const data = { heightMap, scrollY: window.scrollY };
+      return data;
+    },
+    restore: (data: SnapShotData) => {
+      updateItemsRect();
+      heightMap = data.heightMap;
+      tick()
+        .then(() => {
+          window.scrollTo({ top: data.scrollY });
+        })
+        .catch(() => {
+          //
+        });
+    },
+  });
 </script>
 
 <svelte:document on:scroll={updateItemsRect} />
@@ -168,7 +165,7 @@
   {#if visibleKeys}
     {#each visibleKeys as key (key)}
       <div class="item-box" use:itemResize={key}>
-        <slot name="item" {key} />
+        {@render itemSnippet(key)}
       </div>
     {/each}
   {/if}

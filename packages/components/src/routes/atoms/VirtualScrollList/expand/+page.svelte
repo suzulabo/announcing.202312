@@ -6,29 +6,30 @@
     return index;
   });
 
-  const expands: Record<number, boolean> = {};
+  const expands: Record<number, boolean> = $state({});
 </script>
 
 <div class="container">
-  <VirtualScrollList {keys} itemMinHeight={100} gap={0}>
-    <!-- eslint-disable-next-line svelte/valid-compile -->
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div
-      class="item"
-      slot="item"
-      let:key
-      style={toStyle({ height: `${expands[key] ? 200 : 100}px` })}
-      role="button"
-      tabindex="0"
-      on:click={() => {
-        expands[key] = !expands[key];
-      }}
-    >
-      <div>
-        {key}
-        {expands[key] ? 'expand' : 'not expand'}
+  <VirtualScrollList {keys} itemMinHeight={100}>
+    {#snippet itemSnippet(key)}
+      <div
+        class="item"
+        style={toStyle({ height: `${expands[key] ? 200 : 100}px` })}
+        role="button"
+        tabindex="0"
+        onclick={() => {
+          expands[key] = !expands[key];
+        }}
+        onkeydown={() => {
+          //
+        }}
+      >
+        <div>
+          {key}
+          {expands[key] ? 'expand' : 'not expand'}
+        </div>
       </div>
-    </div>
+    {/snippet}
   </VirtualScrollList>
 </div>
 
