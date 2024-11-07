@@ -96,7 +96,6 @@
   open={!!imageModalSrc}
   dismissMode="anywhere"
   onDismiss={() => {
-    console.log('onDismiss');
     const src = $page.state.announcementViewZoomImage?.src;
     if (src) {
       history.back();

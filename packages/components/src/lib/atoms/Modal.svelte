@@ -40,8 +40,6 @@
       } else {
         document.body.style.removeProperty('overflow');
       }
-
-      onDismiss?.();
     }
   });
 
@@ -59,10 +57,10 @@
   const clickHandler = (event: MouseEvent) => {
     if (dismissMode === 'anywhere') {
       open = false;
-      return;
-    }
-    if (dismissMode === 'backdrop' && event.target === event.currentTarget) {
+      onDismiss?.();
+    } else if (dismissMode === 'backdrop' && event.target === event.currentTarget) {
       open = false;
+      onDismiss?.();
     }
   };
 </script>
@@ -84,6 +82,7 @@
   onkeydown={(event) => {
     if (event.key === 'Escape') {
       open = false;
+      onDismiss?.();
     }
   }}
 />
