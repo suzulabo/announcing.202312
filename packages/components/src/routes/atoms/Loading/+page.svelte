@@ -1,12 +1,12 @@
 <script lang="ts">
   import Loading from '$lib/atoms/Loading.svelte';
 
-  let show = false;
+  let show = $state(false);
 </script>
 
 <div class="container">
   <button
-    on:click={(event) => {
+    onclick={(event) => {
       show = true;
       event.stopPropagation();
     }}>Show</button
@@ -16,7 +16,7 @@
 <Loading {show} />
 
 <svelte:body
-  on:click={() => {
+  onclick={() => {
     show = false;
   }}
 />

@@ -1,19 +1,32 @@
+<script lang="ts" module>
+  export type DismissMode = 'backdrop' | 'anywhere' | 'none';
+</script>
+
 <script lang="ts">
-  import { createEventDispatcher, onDestroy } from 'svelte';
+  import { onDestroy, type Snippet } from 'svelte';
 
   import { browser } from '$app/environment';
   import { toStyle } from '$lib/utils/toStyle';
 
-  export let dismissMode: 'backdrop' | 'anywhere' | 'none' = 'backdrop';
-  export let padding = '8px';
+  interface Props {
+    dismissMode?: 'backdrop' | 'anywhere' | 'none';
+    padding?: string;
+    open?: boolean;
+    onDismiss?: () => void;
+    children?: Snippet;
+  }
 
-  const eventDispatcher = createEventDispatcher();
+  let {
+    dismissMode = 'backdrop',
+    padding = '8px',
+    open = $bindable(false),
+    onDismiss,
+    children,
+  }: Props = $props();
 
-  export let open = false;
+  let bodyOverflow: string | undefined = $state(undefined);
 
-  let bodyOverflow: string | undefined = undefined;
-
-  $: (() => {
+  $effect(() => {
     if (!browser) {
       return;
     }
@@ -27,9 +40,10 @@
       } else {
         document.body.style.removeProperty('overflow');
       }
-      eventDispatcher('dismiss');
+
+      onDismiss?.();
     }
-  })();
+  });
 
   onDestroy(() => {
     if (!browser) {
@@ -41,6 +55,16 @@
       document.body.style.removeProperty('overflow');
     }
   });
+
+  const clickHandler = (event: MouseEvent) => {
+    if (dismissMode === 'anywhere') {
+      open = false;
+      return;
+    }
+    if (dismissMode === 'backdrop' && event.target === event.currentTarget) {
+      open = false;
+    }
+  };
 </script>
 
 <div
@@ -48,30 +72,16 @@
   tabindex="0"
   class="modal"
   style={toStyle({ display: open ? undefined : 'none', padding })}
-  on:click={() => {
-    if (dismissMode === 'anywhere') {
-      open = false;
-    }
-  }}
-  on:click|self={() => {
-    if (dismissMode === 'backdrop') {
-      open = false;
-    }
-  }}
-  on:keydown|self={() => {
-    // TODO: Need to learn about accessibility
-    /*
-    if (event.key === 'Enter' || event.key === ' ') {
-      open = false;
-    }
-    */
+  onclick={clickHandler}
+  onkeydown={() => {
+    // TODO
   }}
 >
-  <slot />
+  {@render children?.()}
 </div>
 
 <svelte:window
-  on:keydown={(event) => {
+  onkeydown={(event) => {
     if (event.key === 'Escape') {
       open = false;
     }

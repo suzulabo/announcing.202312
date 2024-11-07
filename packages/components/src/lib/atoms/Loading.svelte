@@ -1,8 +1,12 @@
 <script lang="ts">
   import Spinner from './Spinner.svelte';
 
-  export let show = false;
-  export let showDelay = '0';
+  interface Props {
+    show?: boolean;
+    showDelay?: string;
+  }
+
+  let { show = false, showDelay = '0' }: Props = $props();
 </script>
 
 {#if show}

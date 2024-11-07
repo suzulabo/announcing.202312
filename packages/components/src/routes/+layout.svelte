@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   import { browser } from '$app/environment';
   import type { Locales } from '@announcing/i18n';
   import { setupLocale } from '@announcing/i18n';
@@ -28,13 +28,21 @@
 <script lang="ts">
   import type { LayoutServerData } from './$types';
 
-  export let data: LayoutServerData;
+  interface Props {
+    data: LayoutServerData;
+    children?: import('svelte').Snippet;
+  }
 
-  let colorScheme = Cookies.get('color-scheme') ?? '';
+  let { data = $bindable(), children }: Props = $props();
 
-  $: locale = data.locale;
-  $: void updateLocale(locale);
-  $: updateColorScheme(colorScheme);
+  let colorScheme = $state(Cookies.get('color-scheme') ?? '');
+
+  let locale = $state(data.locale);
+
+  $effect(() => {
+    void updateLocale(locale);
+    updateColorScheme(colorScheme);
+  });
 </script>
 
 <div class="tool-bar">
@@ -44,13 +52,13 @@
     <option value="light">Light</option>
     <option value="dark">Dark</option>
   </select>
-  <select class="lang" bind:value={data.locale}>
+  <select class="lang" bind:value={locale}>
     <option value="en">English</option>
     <option value="ja">日本語</option>
   </select>
 </div>
 
-<slot />
+{@render children?.()}
 
 <style lang="scss">
   .tool-bar {

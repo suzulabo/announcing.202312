@@ -1,7 +1,12 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, type Snippet } from 'svelte';
 
-  export let onResize: (params: { el: Element }) => void;
+  interface Props {
+    onResize: (params: { el: Element }) => void;
+    children?: Snippet;
+  }
+
+  let { onResize, children }: Props = $props();
 
   let wrapper: HTMLDivElement;
 
@@ -25,7 +30,7 @@
   });
 </script>
 
-<div bind:this={wrapper}><slot /></div>
+<div bind:this={wrapper}>{@render children?.()}</div>
 
 <style lang="scss">
   div {

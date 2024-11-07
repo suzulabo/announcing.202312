@@ -2,14 +2,15 @@
   import { imgSrc } from '$lib/actions/imgSrc';
   import FileInput from '$lib/atoms/FileInput.svelte';
 
-  let fileInput: FileInput;
-  let value: string | undefined;
+  let fileInput = $state<ReturnType<typeof FileInput>>();
+
+  let value: string | undefined = $state();
 </script>
 
 <div class="container">
   <button
-    on:click={() => {
-      fileInput.open();
+    onclick={() => {
+      fileInput?.open();
     }}>Open</button
   >
 
