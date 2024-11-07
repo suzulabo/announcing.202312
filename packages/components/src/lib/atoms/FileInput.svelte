@@ -21,6 +21,10 @@
     filesCount = 1,
   }: Props = $props();
 
+  // TODO: https://github.com/sveltejs/svelte/issues/12118
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  value;
+
   let loading = $state(false);
   let fileInput: HTMLInputElement;
 
