@@ -5,7 +5,7 @@
   import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
   import type {
     AnnouncementLoaderFunction,
-    ChannelViewParams,
+    ChannelViewProps,
   } from '$lib/parts/ChannelView/ChannelView.svelte';
   import ChannelView from '$lib/parts/ChannelView/ChannelView.svelte';
   import { page } from '$app/stores';
@@ -62,7 +62,7 @@
     });
   };
 
-  const params: ChannelViewParams = {
+  const props: ChannelViewProps = {
     channel: {
       name: 'Aether Dynamics Corporation',
       desc: 'Aether Dynamics Corporation is at the forefront of cutting-edge technology, pioneering advancements in energy solutions and sustainable innovation.\nJoin us as we transform the future with dynamic, visionary science.',
@@ -75,7 +75,7 @@
 </script>
 
 <div class="container">
-  <ChannelView {params} />
+  <ChannelView {...props} />
 </div>
 
 <style lang="scss">

@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   import type { Announcement } from '../AnnouncementView/AnnouncementView.svelte';
 
   export type Channel = {
@@ -9,7 +9,7 @@
 
   export type AnnouncementLoaderFunction = (key: string) => Promise<Announcement> | Announcement;
 
-  export type ChannelViewParams = {
+  export type ChannelViewProps = {
     channel: Channel;
     announcementHrefPrefix: string;
     announcementKeys?: string[];
@@ -20,7 +20,7 @@
 <script lang="ts">
   import DefaultChannelView from './default/DefaultChannelView.svelte';
 
-  export let params: ChannelViewParams;
+  let props: ChannelViewProps = $props();
 </script>
 
-<DefaultChannelView {params} />
+<DefaultChannelView {...props} />

@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   const announcement = {
     title: 'The Art of Subtle Transformation',
     body: 'In a world driven by constant change, true mastery lies in the ability to influence without disruption. The greatest innovators understand that small, thoughtful adjustments can lead to profound shifts.\nCreativity, at its core, is about envisioning the unseen and crafting solutions that echo through time, rather than loud revolutions.\nhttps://github.com/',
