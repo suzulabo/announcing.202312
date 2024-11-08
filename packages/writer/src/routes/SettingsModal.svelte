@@ -21,7 +21,7 @@
     theme: string;
   }
 
-  let { locale = $bindable(), showSignOut, theme = $bindable() }: Props = $props();
+  let { locale = $bindable(), theme = $bindable(), showSignOut }: Props = $props();
 
   let open = $state(false);
 

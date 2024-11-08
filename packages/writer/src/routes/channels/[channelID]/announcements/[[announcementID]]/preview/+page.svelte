@@ -68,7 +68,7 @@
   let loading = $state(false);
   let channelID = $derived($page.params['channelID'] as string);
   let announcementID = $derived($page.params['announcementID']);
-  let previewData: AnnouncementPreviewData | undefined = $state(
+  let previewData = $state<AnnouncementPreviewData | undefined>(
     $page.state.announcementPreviewData,
   );
 

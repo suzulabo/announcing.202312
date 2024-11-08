@@ -5,6 +5,7 @@
 
   import { goto } from '$app/navigation';
   import DeleteModal from './DeleteModal.svelte';
+
   interface Props {
     data: PageData;
   }

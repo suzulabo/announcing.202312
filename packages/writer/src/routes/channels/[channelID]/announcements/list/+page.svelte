@@ -16,7 +16,7 @@
 
   export const snapshot = createSnapshotContext();
 
-  let channelViewProps = $derived({
+  let channelViewProps = $derived<ChannelViewProps>({
     channel: data.channel,
     announcementHrefPrefix: $page.url.pathname,
     announcementKeys: data.channel.announcementIDs ?? [],
@@ -26,7 +26,7 @@
         announcementID: key,
       });
     },
-  } satisfies ChannelViewProps);
+  });
 </script>
 
 <div class="menu">

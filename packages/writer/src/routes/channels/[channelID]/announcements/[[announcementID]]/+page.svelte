@@ -54,13 +54,13 @@
     },
   } satisfies Snapshot<Partial<GetAnnouncementResult>>;
 
-  let form: Partial<GetAnnouncementResult> = $state({});
+  let form = $state<Partial<GetAnnouncementResult>>({});
   let titleError = $state(false);
   let bodyError = $state(false);
+  let { channel, announcement } = $derived(data);
+
   let headerImageFileInput: ReturnType<typeof FileInput>;
   let imagesFileInput: ReturnType<typeof FileInput>;
-
-  let { channel, announcement } = $derived(data);
 
   onMount(() => {
     form = { ...announcement };
