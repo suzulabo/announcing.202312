@@ -10,6 +10,7 @@
       createdAt: number;
     };
   };
+
   export type AnnouncementPreviewData = {
     channel: { name: string; icon: string | undefined };
     announcement: Announcement;
@@ -53,8 +54,6 @@
 </script>
 
 <script lang="ts">
-  import { run } from 'svelte/legacy';
-
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import { loadBlob } from '@announcing/components/utils';
@@ -66,45 +65,44 @@
 
   import type { Snapshot } from './$types';
 
-  let previewData: AnnouncementPreviewData | undefined = $state();
   let loading = $state(false);
-
   let channelID = $derived($page.params['channelID'] as string);
   let announcementID = $derived($page.params['announcementID']);
-  run(() => {
-    previewData = $page.state.announcementPreviewData;
-  });
-  let [channel, announcement] = $derived(
-    !previewData
-      ? [undefined, undefined]
-      : (() => {
-          const now = new Date().getTime();
-          if (!previewData.announcement.edit) {
-            return [
-              previewData.channel,
-              {
-                ...previewData.announcement,
-                updatedAt: now,
-                createdAt: now,
-              } satisfies GetAnnouncementResult,
-            ];
-          } else {
-            // Just in case
-            if (announcementID !== previewData.announcement.edit.announcementID) {
-              void goto('/');
-              return [undefined, undefined];
-            }
-            return [
-              previewData.channel,
-              {
-                ...previewData.announcement,
-                updatedAt: now,
-                createdAt: previewData.announcement.edit.createdAt,
-              } satisfies GetAnnouncementResult,
-            ];
-          }
-        })(),
+  let previewData: AnnouncementPreviewData | undefined = $state(
+    $page.state.announcementPreviewData,
   );
+
+  let [channel, announcement] = $derived.by(() => {
+    if (!previewData) {
+      return [undefined, undefined];
+    }
+
+    const now = new Date().getTime();
+    if (!previewData.announcement.edit) {
+      return [
+        previewData.channel,
+        {
+          ...previewData.announcement,
+          updatedAt: now,
+          createdAt: now,
+        } satisfies GetAnnouncementResult,
+      ];
+    } else {
+      // Just in case
+      if (announcementID !== previewData.announcement.edit.announcementID) {
+        void goto('/');
+        return [undefined, undefined];
+      }
+      return [
+        previewData.channel,
+        {
+          ...previewData.announcement,
+          updatedAt: now,
+          createdAt: previewData.announcement.edit.createdAt,
+        } satisfies GetAnnouncementResult,
+      ];
+    }
+  });
 
   export const snapshot = {
     capture: () => {
@@ -112,9 +110,7 @@
     },
     restore: (value) => {
       const stateData = $page.state.announcementPreviewData;
-      if (stateData) {
-        previewData = stateData;
-      } else {
+      if (!stateData) {
         previewData = value;
       }
     },
