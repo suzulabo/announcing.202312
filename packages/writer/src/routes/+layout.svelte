@@ -47,22 +47,22 @@
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import { setupBack } from '@announcing/components/actions/back';
   import { onMount, type Snippet } from 'svelte';
-  import type { LayoutServerData } from './$types';
+  import type { LayoutData } from './$types';
   import SettingsModal from './SettingsModal.svelte';
 
   interface Props {
-    data: LayoutServerData;
+    data: LayoutData;
     children?: Snippet;
   }
 
-  let { data = $bindable(), children }: Props = $props();
+  let { data, children }: Props = $props();
 
   let theme = $state(Cookies.get('theme') ?? getSystemTheme());
+  let locale = $state(data.locale);
+  let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
   let siteNameElementAttrs = $derived(
     data.userID && $page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' },
   );
-  let locale = $state(data.locale);
-  let headerBack = $derived($page.data['headerBack'] as HeaderBack | undefined);
 
   let settingsModal: ReturnType<typeof SettingsModal>;
 
