@@ -45,14 +45,14 @@
 
   let { data }: Props = $props();
 
-  export const snapshot: Snapshot<Partial<GetAnnouncementResult>> = {
+  export const snapshot = {
     capture: () => {
       return form;
     },
     restore: (value) => {
       form = value;
     },
-  };
+  } satisfies Snapshot<Partial<GetAnnouncementResult>>;
 
   let form: Partial<GetAnnouncementResult> = $state({});
   let titleError = $state(false);

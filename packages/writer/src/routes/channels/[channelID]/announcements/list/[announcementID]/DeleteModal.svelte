@@ -16,7 +16,7 @@
   };
 
   let open = $state(false);
-  let deleteUnderstand: boolean = $state();
+  let deleteUnderstand = $state(false);
   let loading = $state(false);
 
   const submitHandler = async () => {

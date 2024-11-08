@@ -3,7 +3,6 @@
   import { LL } from '@announcing/i18n';
   import type { PageData } from './$types';
 
-
   import { goto } from '$app/navigation';
   import DeleteModal from './DeleteModal.svelte';
   interface Props {
@@ -12,7 +11,7 @@
 
   let { data }: Props = $props();
 
-  let deleteModal: DeleteModal = $state();
+  let deleteModal: ReturnType<typeof DeleteModal>;
 
   const deleteAnnouncement = async () => {
     await fetch(`/api/channels/${data.channelID}/announcements/${data.announcementID}`, {

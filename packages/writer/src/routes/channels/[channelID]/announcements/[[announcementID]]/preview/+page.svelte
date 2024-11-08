@@ -74,37 +74,39 @@
   run(() => {
     previewData = $page.state.announcementPreviewData;
   });
-  let [channel, announcement] = $derived(!previewData
-    ? [undefined, undefined]
-    : (() => {
-        const now = new Date().getTime();
-        if (!previewData.announcement.edit) {
-          return [
-            previewData.channel,
-            {
-              ...previewData.announcement,
-              updatedAt: now,
-              createdAt: now,
-            } satisfies GetAnnouncementResult,
-          ];
-        } else {
-          // Just in case
-          if (announcementID !== previewData.announcement.edit.announcementID) {
-            void goto('/');
-            return [undefined, undefined];
+  let [channel, announcement] = $derived(
+    !previewData
+      ? [undefined, undefined]
+      : (() => {
+          const now = new Date().getTime();
+          if (!previewData.announcement.edit) {
+            return [
+              previewData.channel,
+              {
+                ...previewData.announcement,
+                updatedAt: now,
+                createdAt: now,
+              } satisfies GetAnnouncementResult,
+            ];
+          } else {
+            // Just in case
+            if (announcementID !== previewData.announcement.edit.announcementID) {
+              void goto('/');
+              return [undefined, undefined];
+            }
+            return [
+              previewData.channel,
+              {
+                ...previewData.announcement,
+                updatedAt: now,
+                createdAt: previewData.announcement.edit.createdAt,
+              } satisfies GetAnnouncementResult,
+            ];
           }
-          return [
-            previewData.channel,
-            {
-              ...previewData.announcement,
-              updatedAt: now,
-              createdAt: previewData.announcement.edit.createdAt,
-            } satisfies GetAnnouncementResult,
-          ];
-        }
-      })());
+        })(),
+  );
 
-  export const snapshot: Snapshot<AnnouncementPreviewData | undefined> = {
+  export const snapshot = {
     capture: () => {
       return previewData;
     },
@@ -116,7 +118,7 @@
         previewData = value;
       }
     },
-  };
+  } satisfies Snapshot<AnnouncementPreviewData | undefined>;
 
   const addAnnouncement = async () => {
     if (!previewData) {
