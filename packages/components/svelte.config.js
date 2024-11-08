@@ -16,6 +16,10 @@ const config = {
       assets: 'public',
     },
   },
+
+  compilerOptions: {
+    runes: true,
+  },
 };
 
 export default config;
