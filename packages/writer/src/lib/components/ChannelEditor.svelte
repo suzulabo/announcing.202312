@@ -58,7 +58,7 @@
   let open = $state(false);
   let loading = $state(false);
   let creating = $state(false);
-  let form: Channel = $state({});
+  let form = $state<Channel>({});
   let nameError = $state(false);
   let descError = $state(false);
   let validated = $derived(!!form.name && !nameError && !descError);
