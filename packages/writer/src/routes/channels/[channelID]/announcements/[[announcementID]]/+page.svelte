@@ -90,8 +90,6 @@
       };
     }
 
-    console.log({ announcementPreviewData });
-
     return goto(`${$page.url.pathname}/preview`, {
       state: {
         announcementPreviewData,
