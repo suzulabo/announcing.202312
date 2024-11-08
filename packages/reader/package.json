@@ -19,6 +19,8 @@
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/kit": "^2.8.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "@types/js-cookie": "^3.0.6",
+    "js-cookie": "^3.0.5",
     "lru-cache": "^11.0.2",
     "svelte": "^5.1.12",
     "svelte-check": "^4.0.5",
