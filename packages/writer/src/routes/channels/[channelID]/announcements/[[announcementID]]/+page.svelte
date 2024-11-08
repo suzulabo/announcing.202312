@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   const isAnnouncement = (
     arg: Partial<GetAnnouncementResult>,
     titleError: boolean,
@@ -39,7 +39,11 @@
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 
   export const snapshot: Snapshot<Partial<GetAnnouncementResult>> = {
     capture: () => {
@@ -50,13 +54,13 @@
     },
   };
 
-  let form: Partial<GetAnnouncementResult> = {};
-  let titleError = false;
-  let bodyError = false;
-  let headerImageFileInput: FileInput;
-  let imagesFileInput: FileInput;
+  let form: Partial<GetAnnouncementResult> = $state({});
+  let titleError = $state(false);
+  let bodyError = $state(false);
+  let headerImageFileInput: ReturnType<typeof FileInput>;
+  let imagesFileInput: ReturnType<typeof FileInput>;
 
-  $: ({ channel, announcement } = data);
+  let { channel, announcement } = $derived(data);
 
   onMount(() => {
     form = { ...announcement };
@@ -99,7 +103,7 @@
     {#if form.headerImage}
       <button
         class="unstyled"
-        on:click={() => {
+        onclick={() => {
           headerImageFileInput.open();
         }}
       >
@@ -108,14 +112,14 @@
       <button
         type="button"
         class="small filled"
-        on:click={() => {
+        onclick={() => {
           form.headerImage = undefined;
         }}>{$LL.removeHeaderImage()}</button
       >
     {:else}
       <button
         class="small"
-        on:click={() => {
+        onclick={() => {
           headerImageFileInput.open();
         }}>{$LL.chooseHeaderImage()}</button
       >
@@ -151,7 +155,7 @@
             <img alt="" use:imgSrc={image} />
             <button
               class="small filled"
-              on:click={() => {
+              onclick={() => {
                 form.images = form.images?.filter((v) => {
                   return v !== image;
                 });
@@ -163,7 +167,7 @@
     </div>
     <button
       class="small"
-      on:click={() => {
+      onclick={() => {
         imagesFileInput.open();
       }}
       disabled={form.images?.length === 4}>{$LL.addImage()}</button
@@ -183,7 +187,7 @@
   <button
     disabled={!isAnnouncement(form, titleError, bodyError)}
     class="preview-btn"
-    on:click={previewClickHandler}>{$LL.preview()}</button
+    onclick={previewClickHandler}>{$LL.preview()}</button
   >
 </div>
 

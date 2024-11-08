@@ -7,9 +7,15 @@
 
   import type { PageServerData } from './$types';
 
-  export let data: PageServerData;
+  interface Props {
+    data: PageServerData;
+  }
 
-  let editor: ChannelEditor;
+  let { data }: Props = $props();
+
+  let createDisabled = $derived(data.channels.length >= 5);
+
+  let editor: ReturnType<typeof ChannelEditor>;
 
   const submitHandler = async (formData: FormData) => {
     await fetch('/api/channels', {
@@ -18,8 +24,6 @@
     });
     await invalidateAll();
   };
-
-  $: createDisabled = data.channels.length >= 5;
 </script>
 
 <div class="container">
@@ -43,7 +47,7 @@
   <button
     class="create-btn"
     disabled={createDisabled}
-    on:click={() => {
+    onclick={() => {
       editor.openEditor();
     }}
     >{$LL.createChannel()}

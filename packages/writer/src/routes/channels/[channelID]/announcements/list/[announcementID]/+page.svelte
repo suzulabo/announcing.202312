@@ -3,12 +3,16 @@
   import { LL } from '@announcing/i18n';
   import type { PageData } from './$types';
 
-  export let data: PageData;
 
   import { goto } from '$app/navigation';
   import DeleteModal from './DeleteModal.svelte';
+  interface Props {
+    data: PageData;
+  }
 
-  let deleteModal: DeleteModal;
+  let { data }: Props = $props();
+
+  let deleteModal: DeleteModal = $state();
 
   const deleteAnnouncement = async () => {
     await fetch(`/api/channels/${data.channelID}/announcements/${data.announcementID}`, {
@@ -25,7 +29,7 @@
     >{$LL.edit()}</a
   >
   <button
-    on:click={() => {
+    onclick={() => {
       deleteModal.openModal();
     }}>{$LL.delete()}</button
   >

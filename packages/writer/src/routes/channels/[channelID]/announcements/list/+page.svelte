@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ChannelView, { type ChannelViewParams } from '@announcing/components/ChannelView.svelte';
+  import ChannelView, { type ChannelViewProps } from '@announcing/components/ChannelView.svelte';
 
   import { page } from '$app/stores';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
@@ -8,11 +8,15 @@
   import { LL } from '@announcing/i18n';
   import type { PageData } from './$types';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 
   export const snapshot = createSnapshotContext();
 
-  $: params = {
+  let channelViewProps = $derived({
     channel: data.channel,
     announcementHrefPrefix: $page.url.pathname,
     announcementKeys: data.channel.announcementIDs ?? [],
@@ -22,13 +26,13 @@
         announcementID: key,
       });
     },
-  } satisfies ChannelViewParams;
+  } satisfies ChannelViewProps);
 </script>
 
 <div class="menu">
   <div class="prompt info">{$LL.announcementListPrompt()}</div>
 </div>
-<ChannelView {params} />
+<ChannelView {...channelViewProps} />
 
 <style lang="scss">
   .menu {

@@ -247,7 +247,7 @@ importers:
         version: link:../i18n
       '@auth/sveltekit':
         specifier: ^1.7.3
-        version: 1.7.3(@sveltejs/kit@2.7.7(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@4.2.19)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@4.2.19)
+        version: 1.7.3(@sveltejs/kit@2.7.7(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@5.1.10)
       '@libsql/client':
         specifier: ^0.9.0
         version: 0.9.0
@@ -256,13 +256,13 @@ importers:
         version: 1.48.2
       '@sveltejs/adapter-auto':
         specifier: ^3.3.1
-        version: 3.3.1(@sveltejs/kit@2.7.7(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@4.2.19)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))
+        version: 3.3.1(@sveltejs/kit@2.7.7(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))
       '@sveltejs/kit':
         specifier: ^2.7.7
-        version: 2.7.7(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@4.2.19)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6))
+        version: 2.7.7(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6))
       '@sveltejs/vite-plugin-svelte':
-        specifier: ^3.1.2
-        version: 3.1.2(svelte@4.2.19)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6))
+        specifier: ^4.0.0
+        version: 4.0.0(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6))
       '@types/js-cookie':
         specifier: ^3.0.6
         version: 3.0.6
@@ -276,11 +276,11 @@ importers:
         specifier: ^11.0.2
         version: 11.0.2
       svelte:
-        specifier: ^4.2.19
-        version: 4.2.19
+        specifier: ^5.0.0
+        version: 5.1.10
       svelte-check:
-        specifier: ^3.8.6
-        version: 3.8.6(@babel/core@7.25.2)(postcss-load-config@3.1.4(postcss@8.4.47))(postcss@8.4.47)(sass@1.80.6)(svelte@4.2.19)
+        specifier: ^4.0.0
+        version: 4.0.5(picomatch@4.0.2)(svelte@5.1.10)(typescript@5.6.3)
       typesafe-i18n:
         specifier: ^5.26.2
         version: 5.26.2(typescript@5.6.3)
@@ -2246,7 +2246,6 @@ packages:
 
   libsql@0.4.6:
     resolution: {integrity: sha512-F5M+ltteK6dCcpjMahrkgT96uFJvVI8aQ4r9f2AzHQjC7BkAYtvfMSTWGvRBezRgMUIU2h1Sy0pF9nOGOD5iyA==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lilconfig@2.1.0:
@@ -3138,6 +3137,13 @@ snapshots:
       '@sveltejs/kit': 2.7.7(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@4.2.19)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6))
       set-cookie-parser: 2.7.1
       svelte: 4.2.19
+
+  '@auth/sveltekit@1.7.3(@sveltejs/kit@2.7.7(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@5.1.10)':
+    dependencies:
+      '@auth/core': 0.37.3
+      '@sveltejs/kit': 2.7.7(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6)))(svelte@5.1.10)(vite@5.4.10(@types/node@22.9.0)(sass@1.80.6))
+      set-cookie-parser: 2.7.1
+      svelte: 5.1.10
 
   '@babel/code-frame@7.26.2':
     dependencies:

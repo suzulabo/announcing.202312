@@ -2,9 +2,9 @@
   import Modal from '@announcing/components/Modal.svelte';
   import { LL } from '@announcing/i18n';
 
-  let open = false;
-  let copied: undefined | 'copied' | 'error' = undefined;
-  let url: string;
+  let open = $state(false);
+  let copied: undefined | 'copied' | 'error' = $state(undefined);
+  let url = $state('');
 
   export const openModal = (url_: string) => {
     open = true;
@@ -22,7 +22,7 @@
     {#if copied}
       <div
         class="msg-box"
-        on:animationend={() => {
+        onanimationend={() => {
           open = false;
         }}
       >
@@ -30,10 +30,10 @@
       </div>
     {:else}
       <div class="copy-box">
-        <input value={url} readonly on:focus={onFocus} />
+        <input value={url} readonly onfocus={onFocus} />
         {#if navigator.clipboard}
           <button
-            on:click={() => {
+            onclick={() => {
               navigator.clipboard
                 .writeText(url)
                 .then(() => {
@@ -48,7 +48,7 @@
       </div>
       <button
         class="close-btn filled small"
-        on:click={() => {
+        onclick={() => {
           open = false;
         }}>{$LL.close()}</button
       >

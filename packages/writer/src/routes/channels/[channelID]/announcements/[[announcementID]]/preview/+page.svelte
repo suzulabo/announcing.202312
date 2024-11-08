@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   type Announcement = {
     title: string | undefined;
     body: string;
@@ -53,6 +53,8 @@
 </script>
 
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import { loadBlob } from '@announcing/components/utils';
@@ -64,13 +66,15 @@
 
   import type { Snapshot } from './$types';
 
-  let previewData: AnnouncementPreviewData | undefined;
-  let loading = false;
+  let previewData: AnnouncementPreviewData | undefined = $state();
+  let loading = $state(false);
 
-  $: channelID = $page.params['channelID'] as string;
-  $: announcementID = $page.params['announcementID'];
-  $: previewData = $page.state.announcementPreviewData;
-  $: [channel, announcement] = !previewData
+  let channelID = $derived($page.params['channelID'] as string);
+  let announcementID = $derived($page.params['announcementID']);
+  run(() => {
+    previewData = $page.state.announcementPreviewData;
+  });
+  let [channel, announcement] = $derived(!previewData
     ? [undefined, undefined]
     : (() => {
         const now = new Date().getTime();
@@ -98,7 +102,7 @@
             } satisfies GetAnnouncementResult,
           ];
         }
-      })();
+      })());
 
   export const snapshot: Snapshot<AnnouncementPreviewData | undefined> = {
     capture: () => {
@@ -147,7 +151,7 @@
   <div class="container">
     <AnnouncementView {announcement} />
     <hr />
-    <button class="submit-btn" on:click={addAnnouncement}
+    <button class="submit-btn" onclick={addAnnouncement}
       >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
     >
   </div>

@@ -17,15 +17,19 @@
   import MaterialSymbolsBoxEditOutline from '$lib/components/icon/MaterialSymbolsBoxEditOutline.svelte';
   import MaterialSymbolsDangerous from '$lib/components/icon/MaterialSymbolsDangerous.svelte';
 
-  export let data: PageData;
+  interface Props {
+    data: PageData;
+  }
 
-  let urlCopyModal: UrlCopyModal;
-  let deleteModal: DeleteModal;
-  let channelEditor: ChannelEditor;
+  let { data }: Props = $props();
 
-  $: ({ channel } = data);
-  $: channelID = channel.channelID;
-  $: readerURL = `${PUBLIC_READER_PREFIX}${channelID}`;
+  let urlCopyModal: ReturnType<typeof UrlCopyModal>;
+  let deleteModal: ReturnType<typeof DeleteModal>;
+  let channelEditor: ReturnType<typeof ChannelEditor>;
+
+  let { channel } = $derived(data);
+  let channelID = $derived(channel.channelID);
+  let readerURL = $derived(`${PUBLIC_READER_PREFIX}${channelID}`);
 
   const updateChannel = async (formData: FormData) => {
     formData.append('updatedAt', channel.updatedAt + '');
@@ -73,7 +77,7 @@
     <li>
       <button
         class="text"
-        on:click={() => {
+        onclick={() => {
           urlCopyModal.openModal(readerURL);
         }}
       >
@@ -98,7 +102,7 @@
     <li>
       <button
         class="text"
-        on:click={() => {
+        onclick={() => {
           channelEditor.openEditor(channel);
         }}
       >
@@ -110,7 +114,7 @@
     <li>
       <button
         class="text"
-        on:click={() => {
+        onclick={() => {
           deleteModal.openModal();
         }}
       >
