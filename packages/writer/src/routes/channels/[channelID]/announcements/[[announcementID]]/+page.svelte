@@ -67,7 +67,7 @@
   });
 
   const previewClickHandler = () => {
-    const { title, body, headerImage, images } = form;
+    const { title, body, headerImage, images } = $state.snapshot(form);
     if (!body) {
       return;
     }
@@ -89,6 +89,8 @@
         createdAt: announcement.createdAt,
       };
     }
+
+    console.log({ announcementPreviewData });
 
     return goto(`${$page.url.pathname}/preview`, {
       state: {
