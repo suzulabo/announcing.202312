@@ -61,7 +61,7 @@
   let siteNameElementAttrs = $derived(
     data.userID && $page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' },
   );
-  let locale = $derived(data.locale);
+  let locale = $state(data.locale);
   let headerBack = $derived($page.data['headerBack'] as HeaderBack | undefined);
 
   let settingsModal: ReturnType<typeof SettingsModal>;
@@ -109,12 +109,7 @@
   {@render children?.()}
 </div>
 
-<SettingsModal
-  bind:this={settingsModal}
-  bind:locale={data.locale}
-  bind:theme
-  showSignOut={!!data.userID}
-/>
+<SettingsModal bind:this={settingsModal} bind:locale bind:theme showSignOut={!!data.userID} />
 
 <style lang="scss">
   .container {
