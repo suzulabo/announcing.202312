@@ -10,6 +10,3 @@
 </script>
 
 <AnnouncementView announcement={data.announcement} />
-
-<style lang="scss">
-</style>
