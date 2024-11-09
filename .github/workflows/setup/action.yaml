@@ -3,11 +3,11 @@ runs:
   steps:
     - uses: pnpm/action-setup@v3
       with:
-        version: 9.12.1
+        version: 9.12.3
 
     - uses: actions/setup-node@v4
       with:
-        node-version: '22.9.0'
+        node-version: '22.11.0'
         cache: 'pnpm'
 
     - run: pnpm install --frozen-lockfile

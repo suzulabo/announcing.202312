@@ -5,14 +5,28 @@
 
   import Loading from './Loading.svelte';
 
-  export let value: string | undefined = undefined;
-  export let values: string[] | undefined = undefined;
-  export let accept: string | undefined = undefined;
-  export let maxImageSize: number | undefined = undefined;
-  export let filesCount = 1;
+  interface Props {
+    value?: string | undefined;
+    values?: string[] | undefined;
+    accept?: string | undefined;
+    maxImageSize?: number | undefined;
+    filesCount?: number;
+  }
 
+  let {
+    value = $bindable(undefined),
+    values = $bindable(undefined),
+    accept = undefined,
+    maxImageSize = undefined,
+    filesCount = 1,
+  }: Props = $props();
+
+  // TODO: https://github.com/sveltejs/svelte/issues/12118
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  value;
+
+  let loading = $state(false);
   let fileInput: HTMLInputElement;
-  let loading = false;
 
   export const open = () => {
     fileInput.click();
@@ -72,7 +86,7 @@
   multiple={filesCount > 1}
   style="display:none"
   bind:this={fileInput}
-  on:change={fileInputChange}
+  onchange={fileInputChange}
 />
 
 {#if loading}

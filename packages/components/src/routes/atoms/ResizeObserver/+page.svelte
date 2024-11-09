@@ -1,13 +1,13 @@
 <script lang="ts">
   import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
 
-  let small = false;
-  let overflow = false;
+  let small = $state(false);
+  let overflow = $state(false);
 </script>
 
 <div class="container">
   <button
-    on:click={() => {
+    onclick={() => {
       small = !small;
     }}>{small ? 'Normal' : 'Small'}</button
   >

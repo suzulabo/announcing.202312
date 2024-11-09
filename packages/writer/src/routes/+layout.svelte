@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   import type { Locales } from '@announcing/i18n';
   import Cookies from 'js-cookie';
 
@@ -45,29 +45,39 @@
   import { page } from '$app/stores';
 
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import { onMount } from 'svelte';
-  import type { LayoutServerData } from './$types';
-  import SettingsModal from './SettingsModal.svelte';
   import { setupBack } from '@announcing/components/actions/back';
+  import { onMount, type Snippet } from 'svelte';
+  import type { LayoutData } from './$types';
+  import SettingsModal from './SettingsModal.svelte';
 
-  export let data: LayoutServerData;
+  interface Props {
+    data: LayoutData;
+    children?: Snippet;
+  }
 
-  const back = setupBack();
+  let { data, children }: Props = $props();
 
-  let settingsModal: SettingsModal;
+  let theme = $state(Cookies.get('theme') ?? getSystemTheme());
+  let locale = $state(data.locale);
+  let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
+  let siteNameElementAttrs = $derived(
+    data.userID && $page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' },
+  );
 
-  let theme = Cookies.get('theme') ?? getSystemTheme();
+  let settingsModal: ReturnType<typeof SettingsModal>;
 
-  $: siteNameElementAttrs =
-    data.userID && $page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' };
-  $: locale = data.locale;
-  $: void updateLocale(locale);
-  $: updateTheme(theme);
-  $: headerBack = $page.data['headerBack'] as HeaderBack | undefined;
+  $effect(() => {
+    void updateLocale(locale);
+  });
+  $effect(() => {
+    updateTheme(theme);
+  });
 
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
   });
+
+  const back = setupBack();
 </script>
 
 <div class="container">
@@ -87,7 +97,7 @@
 
     <button
       class="small settings-btn"
-      on:click={() => {
+      onclick={() => {
         settingsModal.openModal();
       }}
     >
@@ -96,15 +106,10 @@
     >
   </header>
   <hr />
-  <slot />
+  {@render children?.()}
 </div>
 
-<SettingsModal
-  bind:this={settingsModal}
-  bind:locale={data.locale}
-  bind:theme
-  showSignOut={!!data.userID}
-/>
+<SettingsModal bind:this={settingsModal} bind:locale bind:theme showSignOut={!!data.userID} />
 
 <style lang="scss">
   .container {

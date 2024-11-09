@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   type Announcement = {
     title: string | undefined;
     body: string;
@@ -10,6 +10,7 @@
       createdAt: number;
     };
   };
+
   export type AnnouncementPreviewData = {
     channel: { name: string; icon: string | undefined };
     announcement: Announcement;
@@ -64,55 +65,56 @@
 
   import type { Snapshot } from './$types';
 
-  let previewData: AnnouncementPreviewData | undefined;
-  let loading = false;
+  let loading = $state(false);
+  let channelID = $derived($page.params['channelID'] as string);
+  let announcementID = $derived($page.params['announcementID']);
+  let previewData = $state<AnnouncementPreviewData | undefined>(
+    $page.state.announcementPreviewData,
+  );
 
-  $: channelID = $page.params['channelID'] as string;
-  $: announcementID = $page.params['announcementID'];
-  $: previewData = $page.state.announcementPreviewData;
-  $: [channel, announcement] = !previewData
-    ? [undefined, undefined]
-    : (() => {
-        const now = new Date().getTime();
-        if (!previewData.announcement.edit) {
-          return [
-            previewData.channel,
-            {
-              ...previewData.announcement,
-              updatedAt: now,
-              createdAt: now,
-            } satisfies GetAnnouncementResult,
-          ];
-        } else {
-          // Just in case
-          if (announcementID !== previewData.announcement.edit.announcementID) {
-            void goto('/');
-            return [undefined, undefined];
-          }
-          return [
-            previewData.channel,
-            {
-              ...previewData.announcement,
-              updatedAt: now,
-              createdAt: previewData.announcement.edit.createdAt,
-            } satisfies GetAnnouncementResult,
-          ];
-        }
-      })();
+  let [channel, announcement] = $derived.by(() => {
+    if (!previewData) {
+      return [undefined, undefined];
+    }
 
-  export const snapshot: Snapshot<AnnouncementPreviewData | undefined> = {
+    const now = new Date().getTime();
+    if (!previewData.announcement.edit) {
+      return [
+        previewData.channel,
+        {
+          ...previewData.announcement,
+          updatedAt: now,
+          createdAt: now,
+        } satisfies GetAnnouncementResult,
+      ];
+    } else {
+      // Just in case
+      if (announcementID !== previewData.announcement.edit.announcementID) {
+        void goto('/');
+        return [undefined, undefined];
+      }
+      return [
+        previewData.channel,
+        {
+          ...previewData.announcement,
+          updatedAt: now,
+          createdAt: previewData.announcement.edit.createdAt,
+        } satisfies GetAnnouncementResult,
+      ];
+    }
+  });
+
+  export const snapshot = {
     capture: () => {
       return previewData;
     },
     restore: (value) => {
       const stateData = $page.state.announcementPreviewData;
-      if (stateData) {
-        previewData = stateData;
-      } else {
+      if (!stateData) {
         previewData = value;
       }
     },
-  };
+  } satisfies Snapshot<AnnouncementPreviewData | undefined>;
 
   const addAnnouncement = async () => {
     if (!previewData) {
@@ -147,7 +149,7 @@
   <div class="container">
     <AnnouncementView {announcement} />
     <hr />
-    <button class="submit-btn" on:click={addAnnouncement}
+    <button class="submit-btn" onclick={addAnnouncement}
       >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
     >
   </div>

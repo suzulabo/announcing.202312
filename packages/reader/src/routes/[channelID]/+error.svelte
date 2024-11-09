@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
 
-  $: status = $page.status;
+  let status = $derived($page.status);
 </script>
 
 {#if status === 404}

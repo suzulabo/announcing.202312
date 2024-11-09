@@ -3,15 +3,17 @@
   import { toStyle } from '$lib/utils/toStyle';
 
   const keys = [...Array(20)].map((_, index) => {
-    return index;
+    return index.toString();
   });
 </script>
 
 <div class="container">
-  <VirtualScrollList {keys} itemMinHeight={100} gap={0}>
-    <div class="item" slot="item" let:key style={toStyle({ height: `${100 + key * 10}px` })}>
-      <div>{key}</div>
-    </div>
+  <VirtualScrollList {keys} itemMinHeight={100}>
+    {#snippet itemSnippet(key: string)}
+      <div class="item" style={toStyle({ height: `${100 + +key * 10}px` })}>
+        <div>{key}</div>
+      </div>
+    {/snippet}
   </VirtualScrollList>
 </div>
 

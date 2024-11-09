@@ -2,8 +2,12 @@
 <script lang="ts">
   import { toStyle } from '$lib/utils/toStyle';
 
-  export let size = 12;
-  export let delay = '0';
+  interface Props {
+    size?: number;
+    delay?: string;
+  }
+
+  let { size = 12, delay = '0' }: Props = $props();
 </script>
 
 <div class="spinner" style={toStyle({ 'font-size': `${size}px`, '--delay': delay })}>

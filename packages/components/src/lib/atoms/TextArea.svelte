@@ -2,19 +2,34 @@
   import { LL } from '@announcing/i18n';
   import autosize from 'autosize';
 
-  export let name: string;
-  export let label: string;
-  export let placeholder = '';
-  export let value: string | undefined = undefined;
-  export let maxBytes = 0;
-  export let error = false;
-  export let maxHeight = 'none';
-  export let required = false;
+  interface Props {
+    name: string;
+    label: string;
+    placeholder?: string;
+    value?: string | undefined;
+    maxBytes?: number;
+    error?: boolean;
+    maxHeight?: string;
+    required?: boolean;
+  }
+
+  let {
+    name,
+    label,
+    placeholder = '',
+    value = $bindable(undefined),
+    maxBytes = 0,
+    error = $bindable(false),
+    maxHeight = 'none',
+    required = false,
+  }: Props = $props();
 
   const encoder = new TextEncoder();
 
-  $: bytes = encoder.encode(value).length;
-  $: error = maxBytes > 0 && bytes > maxBytes;
+  let bytes = $derived(encoder.encode(value).length);
+  $effect(() => {
+    error = maxBytes > 0 && bytes > maxBytes;
+  });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const autoSizeAction = (el: Element, _: string | undefined) => {

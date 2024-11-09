@@ -12,6 +12,8 @@ export const load: LayoutLoad = async ({ data }) => {
   if (browser) {
     document.body.setAttribute('locale', data.locale);
   }
+
+  return { ...data };
 };
 
 export const prerender = false;

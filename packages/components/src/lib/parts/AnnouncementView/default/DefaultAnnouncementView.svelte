@@ -10,22 +10,24 @@
 
   import type { Announcement } from '../AnnouncementView.svelte';
 
-  export let announcement: Announcement;
+  interface Props {
+    announcement: Announcement;
+  }
 
-  let imageModalSrc: string | undefined;
+  let { announcement }: Props = $props();
+
+  let imageModalSrc: string | undefined = $derived($page.state.announcementViewZoomImage?.src);
 
   const showImageModal = (src: string) => {
     pushState('', { ...$page.state, announcementViewZoomImage: { src } });
   };
-
-  $: imageModalSrc = $page.state.announcementViewZoomImage?.src;
 </script>
 
 <div class="container">
   {#if announcement.headerImage}
     <button
       class="unstyled"
-      on:click={() => {
+      onclick={() => {
         if (announcement.headerImage) {
           showImageModal(announcement.headerImage);
         }
@@ -57,12 +59,12 @@
         class="image-box"
         role="button"
         tabindex="0"
-        on:click={() => {
+        onclick={() => {
           if (image) {
             showImageModal(image);
           }
         }}
-        on:keydown={() => {
+        onkeydown={() => {
           // TODO
         }}
       >
@@ -75,10 +77,10 @@
             role="button"
             tabindex="0"
             class="image-box"
-            on:click={() => {
+            onclick={() => {
               showImageModal(image);
             }}
-            on:keydown={() => {
+            onkeydown={() => {
               // TODO
             }}
           >
@@ -93,7 +95,7 @@
 <Modal
   open={!!imageModalSrc}
   dismissMode="anywhere"
-  on:dismiss={() => {
+  onDismiss={() => {
     const src = $page.state.announcementViewZoomImage?.src;
     if (src) {
       history.back();

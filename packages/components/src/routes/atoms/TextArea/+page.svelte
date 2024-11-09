@@ -1,7 +1,7 @@
 <script lang="ts">
   import TextArea from '$lib/atoms/TextArea.svelte';
 
-  let required = false;
+  let required = $state(false);
 </script>
 
 <div class="container">

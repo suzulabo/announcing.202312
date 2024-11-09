@@ -5,13 +5,12 @@
   import { toHtml } from '$lib/utils/toHtml';
 
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
-  import type { ChannelViewParams } from '../ChannelView.svelte';
+  import type { ChannelViewProps } from '../ChannelView.svelte';
   import GridItem from './GridItem.svelte';
   import { imgSrc } from '$lib/actions/imgSrc';
 
-  export let params: ChannelViewParams;
-
-  $: ({ channel, announcementHrefPrefix, announcementKeys, announcementLoader } = params);
+  let { channel, announcementHrefPrefix, announcementKeys, announcementLoader }: ChannelViewProps =
+    $props();
 </script>
 
 <div class="channel-box">
@@ -37,15 +36,17 @@
     </div>
   {:else}
     <VirtualScrollList keys={announcementKeys} itemMinHeight={200} gap={8}>
-      <a class="item unstyled" slot="item" let:key href={`${announcementHrefPrefix}/${key}`}>
-        {#await announcementLoader(key)}
-          <div class="loading">
-            <Spinner />
-          </div>
-        {:then announcement}
-          <GridItem {announcement} />
-        {/await}
-      </a>
+      {#snippet itemSnippet(key)}
+        <a class="item unstyled" href={`${announcementHrefPrefix}/${key}`}>
+          {#await announcementLoader(key)}
+            <div class="loading">
+              <Spinner />
+            </div>
+          {:then announcement}
+            <GridItem {announcement} />
+          {/await}
+        </a>
+      {/snippet}
     </VirtualScrollList>
   {/if}
 {/if}

@@ -3,7 +3,11 @@
   import Modal from '@announcing/components/Modal.svelte';
   import { LL } from '@announcing/i18n';
 
-  export let onSubmit: () => Promise<void>;
+  interface Props {
+    onSubmit: () => Promise<void>;
+  }
+
+  let { onSubmit }: Props = $props();
 
   export const openModal = () => {
     deleteUnderstand = false;
@@ -11,9 +15,9 @@
     loading = false;
   };
 
-  let open = false;
-  let deleteUnderstand: boolean;
-  let loading = false;
+  let open = $state(false);
+  let deleteUnderstand = $state(false);
+  let loading = $state(false);
 
   const submitHandler = async () => {
     if (!confirm($LL.deleteAnnouncement.confirmation())) {
@@ -40,13 +44,13 @@
       {$LL.understand()}
     </label>
 
-    <button class="delete-btn" disabled={!deleteUnderstand} on:click={submitHandler}>
+    <button class="delete-btn" disabled={!deleteUnderstand} onclick={submitHandler}>
       {$LL.deleteAnnouncement.title()}
     </button>
 
     <button
       class="small filled"
-      on:click={() => {
+      onclick={() => {
         open = false;
       }}>{$LL.cancel()}</button
     >

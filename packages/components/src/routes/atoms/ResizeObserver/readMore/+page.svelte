@@ -1,14 +1,14 @@
 <script lang="ts">
   import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
 
-  let small = true;
-  let overflow = false;
-  let openReadMore = false;
+  let small = $state(true);
+  let overflow = $state(false);
+  let openReadMore = $state(false);
 </script>
 
 <div class="container">
   <button
-    on:click={() => {
+    onclick={() => {
       small = !small;
     }}>{small ? 'Normal' : 'Small'}</button
   >
@@ -37,7 +37,7 @@
       class="text"
       class:overflow
       class:openReadMore
-      on:click={() => {
+      onclick={() => {
         openReadMore = !openReadMore;
       }}>{openReadMore ? 'Read less' : 'Read more'}</button
     >
@@ -65,7 +65,7 @@
         position: relative;
         overflow: hidden;
 
-        &:not(.openReadMore) {
+        &:not(:global(.openReadMore)) {
           max-height: 200px;
         }
 

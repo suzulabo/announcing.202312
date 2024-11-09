@@ -12,5 +12,5 @@ export const load: PageServerLoad = async ({ params }) => {
     error(404);
   }
 
-  return { channel };
+  return { channel, channelID };
 };

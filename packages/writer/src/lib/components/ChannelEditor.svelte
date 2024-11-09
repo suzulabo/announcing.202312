@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   export type Channel = {
     icon?: string | undefined;
     name?: string | undefined;
@@ -21,10 +21,11 @@
   } from '@announcing/db/constants';
   import { LL } from '@announcing/i18n';
 
-  let open = false;
-  let loading = false;
+  interface Props {
+    onSubmit: (formData: FormData) => Promise<void>;
+  }
 
-  export let onSubmit: (formData: FormData) => Promise<void>;
+  let { onSubmit }: Props = $props();
 
   export const openEditor = (channel?: Channel) => {
     form = { ...channel };
@@ -54,13 +55,15 @@
     }
   };
 
-  let creating = false;
-  let form: Channel = {};
-  let fileInput: FileInput;
-  let nameError = false;
-  let descError = false;
+  let open = $state(false);
+  let loading = $state(false);
+  let creating = $state(false);
+  let form = $state<Channel>({});
+  let nameError = $state(false);
+  let descError = $state(false);
+  let validated = $derived(!!form.name && !nameError && !descError);
 
-  $: validated = !!form.name && !nameError && !descError;
+  let fileInput: ReturnType<typeof FileInput>;
 </script>
 
 <Modal bind:open dismissMode="none">
@@ -80,7 +83,7 @@
         {#if form.icon}
           <button
             class="unstyled"
-            on:click={() => {
+            onclick={() => {
               fileInput.open();
             }}
           >
@@ -91,7 +94,7 @@
           <button
             type="button"
             class="icon-remove"
-            on:click={() => {
+            onclick={() => {
               form.icon = undefined;
             }}>{$LL.removeIcon()}</button
           >
@@ -99,7 +102,7 @@
           <button
             type="button"
             class="icon-select small"
-            on:click={() => {
+            onclick={() => {
               fileInput.open();
             }}>{$LL.selectIcon()}</button
           >
@@ -120,12 +123,12 @@
       maxHeight="40vh"
       bind:error={descError}
     />
-    <button disabled={!validated} class="submit-btn" on:click={submitClickHandler}
+    <button disabled={!validated} class="submit-btn" onclick={submitClickHandler}
       >{creating ? $LL.createChannel() : $LL.updateChannel()}</button
     >
     <button
       class="small filled cancel-btn"
-      on:click={() => {
+      onclick={() => {
         open = false;
       }}>{$LL.cancel()}</button
     >

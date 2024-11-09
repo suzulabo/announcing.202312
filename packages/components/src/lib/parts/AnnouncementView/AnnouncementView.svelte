@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   export type Announcement = {
     headerImage?: string | undefined;
     title?: string | undefined;
@@ -12,7 +12,11 @@
 <script lang="ts">
   import DefaultAnnouncementView from './default/DefaultAnnouncementView.svelte';
 
-  export let announcement: Announcement;
+  interface Props {
+    announcement: Announcement;
+  }
+
+  let { announcement }: Props = $props();
 </script>
 
 <DefaultAnnouncementView {announcement} />

@@ -1,24 +1,38 @@
 <script lang="ts">
-  import Modal from '$lib/atoms/Modal.svelte';
+  import Modal, { type DismissMode } from '$lib/atoms/Modal.svelte';
 
-  let open = false;
+  let open = $state(false);
+  let dismissMode = $state<DismissMode>('backdrop');
 </script>
 
 <div class="container">
   <button
-    on:click={() => {
+    onclick={() => {
+      dismissMode = 'backdrop';
       open = true;
-    }}>Open</button
+    }}>Open(backdrop)</button
+  >
+  <button
+    onclick={() => {
+      dismissMode = 'anywhere';
+      open = true;
+    }}>Open(anywhere)</button
+  >
+  <button
+    onclick={() => {
+      dismissMode = 'none';
+      open = true;
+    }}>Open(none)</button
   >
 </div>
-<Modal bind:open>
+<Modal bind:open {dismissMode}>
   <div class="modal-body">
     <div>
       This is a test modal for verifying the component’s functionality. Please review the layout and
       interactions. Close the modal when you’re done.
     </div>
     <button
-      on:click={() => {
+      onclick={() => {
         open = false;
       }}>Close</button
     >

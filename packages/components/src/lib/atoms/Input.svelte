@@ -1,17 +1,31 @@
 <script lang="ts">
   import { LL } from '@announcing/i18n';
 
-  export let name: string;
-  export let label: string;
-  export let value: string | undefined = undefined;
-  export let maxBytes = 0;
-  export let error = false;
-  export let required = false;
+  interface Props {
+    name: string;
+    label: string;
+    value?: string | undefined;
+    maxBytes?: number;
+    error?: boolean;
+    required?: boolean;
+  }
+
+  let {
+    name,
+    label,
+    value = $bindable(undefined),
+    maxBytes = 0,
+    error = $bindable(false),
+    required = false,
+  }: Props = $props();
 
   const encoder = new TextEncoder();
 
-  $: bytes = encoder.encode(value).length;
-  $: error = maxBytes > 0 && bytes > maxBytes;
+  let bytes = $derived(encoder.encode(value).length);
+
+  $effect(() => {
+    error = maxBytes > 0 && bytes > maxBytes;
+  });
 </script>
 
 <label>

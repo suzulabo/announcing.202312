@@ -4,7 +4,7 @@
 
   const back = setupBack();
 
-  $: id = +($page.params['id'] ?? '0');
+  let id = $derived(+($page.params['id'] ?? '0'));
 </script>
 
 <div class="container">

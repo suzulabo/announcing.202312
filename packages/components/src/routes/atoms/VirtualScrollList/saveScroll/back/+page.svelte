@@ -3,7 +3,7 @@
 
 <div class="container">
   <button
-    on:click={() => {
+    onclick={() => {
       history.back();
     }}>Back</button
   >

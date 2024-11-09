@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   const localeValues = [
     ['en', 'English'],
     ['ja', '日本語'],
@@ -15,20 +15,24 @@
   import { LL, type Locales } from '@announcing/i18n';
   import { signOut } from '@auth/sveltekit/client';
 
-  export let locale: Locales;
-  export let showSignOut: boolean;
-  export let theme: string;
+  interface Props {
+    locale: Locales;
+    showSignOut: boolean;
+    theme: string;
+  }
 
-  let open = false;
+  let { locale = $bindable(), theme = $bindable(), showSignOut }: Props = $props();
+
+  let open = $state(false);
 
   export const openModal = () => {
     open = true;
   };
 
-  $: themes = [
+  let themes = $derived([
     ['light', $LL.default()],
     ['dark', $LL.darkMode()],
-  ] as const;
+  ] as const);
 </script>
 
 <Modal bind:open dismissMode="backdrop">
@@ -40,7 +44,7 @@
       {#each localeValues as [locale_, label]}
         <button
           class="unstyled"
-          on:click={() => {
+          onclick={() => {
             locale = locale_;
           }}
         >
@@ -65,7 +69,7 @@
       {#each themes as [theme_, label]}
         <button
           class="unstyled"
-          on:click={() => {
+          onclick={() => {
             theme = theme_;
           }}
         >
@@ -83,7 +87,7 @@
       <hr />
       <button
         class="logout-btn small"
-        on:click={() => {
+        onclick={() => {
           return signOut();
         }}
       >
@@ -96,7 +100,7 @@
 
     <button
       class="close-btn small filled"
-      on:click={() => {
+      onclick={() => {
         open = false;
       }}>{$LL.close()}</button
     >

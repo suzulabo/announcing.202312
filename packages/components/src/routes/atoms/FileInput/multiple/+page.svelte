@@ -2,14 +2,14 @@
   import { imgSrc } from '$lib/actions/imgSrc';
   import FileInput from '$lib/atoms/FileInput.svelte';
 
-  let fileInput: FileInput;
-  let values: string[] | undefined;
+  let fileInput = $state<ReturnType<typeof FileInput>>();
+  let values: string[] | undefined = $state();
 </script>
 
 <div class="container">
   <button
-    on:click={() => {
-      fileInput.open();
+    onclick={() => {
+      fileInput?.open();
     }}>Open</button
   >
 
@@ -20,7 +20,7 @@
       {#each values as value}
         <button
           class="unstyled"
-          on:click={() => {
+          onclick={() => {
             values = values?.filter((v) => v !== value);
           }}
         >

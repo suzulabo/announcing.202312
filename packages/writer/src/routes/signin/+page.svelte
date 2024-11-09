@@ -9,13 +9,13 @@
   <div class="buttons">
     {#if env.PUBLIC_TEST}
       <button
-        on:click={() => {
+        onclick={() => {
           void signIn('credentials', { id: 'test_user01' });
         }}>Credentials</button
       >
     {/if}
     <button
-      on:click={() => {
+      onclick={() => {
         void signIn('google');
       }}
       ><div class="inner">

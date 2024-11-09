@@ -6,9 +6,13 @@
   import { parseImageSize } from '$lib/utils/parseImageSize';
   import { toStyle } from '$lib/utils/toStyle';
 
-  export let announcement: Announcement;
+  interface Props {
+    announcement: Announcement;
+  }
 
-  let overflow = false;
+  let { announcement }: Props = $props();
+
+  let overflow = $state(false);
 
   const getAspectRatio = (src: string) => {
     const size = parseImageSize(src);
