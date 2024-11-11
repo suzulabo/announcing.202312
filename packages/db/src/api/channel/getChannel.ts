@@ -12,7 +12,7 @@ export const getChannel = async ({
   userID: typeof READER | string;
   channelID: string;
 }) => {
-  const db = getDB();
+  const db = await getDB();
 
   const conditions = [eq(channelsTable.channelID, channelID)];
   if (userID !== READER) {

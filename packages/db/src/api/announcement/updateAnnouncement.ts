@@ -22,7 +22,11 @@ const paramsSchema = v.object({
   targetAnnouncementID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_ID_SIZE)),
   targetUpdatedAt: v.number(),
   headerImage: v.union([
-    v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES)),
+    v.pipe(
+      v.blob(),
+      v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
+      v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES),
+    ),
     v.pipe(v.string(), v.nonEmpty(), v.maxBytes(BLOB_ID_MAX_BYTES)),
     v.undefined(),
   ]),
@@ -31,7 +35,11 @@ const paramsSchema = v.object({
   images: v.union([
     v.array(
       v.union([
-        v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES)),
+        v.pipe(
+          v.blob(),
+          v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
+          v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES),
+        ),
         v.pipe(v.string(), v.nonEmpty(), v.maxBytes(BLOB_ID_MAX_BYTES)),
       ]),
     ),
@@ -68,7 +76,7 @@ export const updateAnnouncement = async (params: Params) => {
     return;
   }
 
-  const db = getDB();
+  const db = await getDB();
 
   const targetAnnouncement = (
     await db

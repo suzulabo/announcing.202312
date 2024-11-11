@@ -1,21 +1,22 @@
-import { createClient } from '@libsql/client';
+import { D1Database, D1DatabaseAPI } from '@miniflare/d1';
+import { createSQLiteDB } from '@miniflare/shared';
 import { drizzle as drizzleD1 } from 'drizzle-orm/d1';
-import { drizzle as drizzleLibSql } from 'drizzle-orm/libsql';
 import { env } from './api/env';
 
-const createDB = () => {
+const createDB = async () => {
   if (env.d1) {
     return drizzleD1(env.d1, { logger: env.logger });
   }
-  const sqlite = createClient({ url: 'file:../db-dev/dev.db' });
-  return drizzleLibSql(sqlite, { logger: env.logger });
+  const sqliteDb = await createSQLiteDB('../db-dev/dev.db');
+  const db = new D1Database(new D1DatabaseAPI(sqliteDb));
+  return drizzleD1(db, { logger: env.logger });
 };
 
-let db: ReturnType<typeof createDB> | undefined;
+let db: Awaited<ReturnType<typeof createDB>> | undefined;
 
-export const getDB = () => {
+export const getDB = async () => {
   if (!db) {
-    db = createDB();
+    db = await createDB();
   }
 
   return db;

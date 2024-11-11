@@ -24,10 +24,10 @@ test('add, update and remove', async () => {
   await addAnnouncement({
     userID: 'u1',
     channelID: 'a1',
-    headerImage: await openAsBlob('tests/board-361516_1280.jpg'),
+    headerImage: await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' }),
     title: 'test',
     body: 'This is test',
-    images: [await openAsBlob('tests/board-361516_1280.jpg')],
+    images: [await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' })],
     createdAt: new Date().getTime(),
   });
 

@@ -16,7 +16,7 @@ describe('Channel', () => {
       channelID: '1',
       name: 'test channel',
       desc: 'This is test',
-      icon: await openAsBlob('tests/board-361516_1280.jpg'),
+      icon: await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' }),
     });
     expect(await getChannel({ userID: 'u2', channelID: '1' })).toBeUndefined();
 

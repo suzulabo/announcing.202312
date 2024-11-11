@@ -22,7 +22,11 @@ const paramsSchema = v.object({
   name: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_NAME_MAX_BYTES)),
   desc: v.union([v.pipe(v.string(), v.maxBytes(CHANNEL_DESC_MAX_BYTES)), v.undefined()]),
   icon: v.union([
-    v.pipe(v.blob(), v.maxSize(CHANNEL_ICON_MAX_BYTES)),
+    v.pipe(
+      v.blob(),
+      v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
+      v.maxSize(CHANNEL_ICON_MAX_BYTES),
+    ),
     v.pipe(v.string(), v.nonEmpty(), v.maxBytes(BLOB_ID_MAX_BYTES)),
     v.undefined(),
   ]),
@@ -53,7 +57,7 @@ export const updateChannel = async (params: Params) => {
     queries.push(q);
   }
 
-  const db = getDB();
+  const db = await getDB();
 
   await db.batch([
     db

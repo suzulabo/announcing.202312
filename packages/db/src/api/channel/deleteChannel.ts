@@ -12,7 +12,7 @@ export const deleteChannel = async ({
   channelID: string;
   updatedAt: number;
 }) => {
-  const db = getDB();
+  const db = await getDB();
 
   const result = await db.delete(channelsTable).where(
     and(

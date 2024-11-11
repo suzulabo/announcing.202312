@@ -26,7 +26,7 @@ const getHash = async (blob: Blob) => {
 export const makeInsertBlob = async (blob: Blob) => {
   const [blobID, ab] = await getHash(blob);
 
-  const db = getDB();
+  const db = await getDB();
 
   return [
     blobID,

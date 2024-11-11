@@ -42,7 +42,7 @@ export const removeAnnouncement = async ({
 
   announcementIDs.splice(index, 1);
 
-  const db = getDB();
+  const db = await getDB();
 
   const result = await db
     .update(channelsTable)
@@ -54,7 +54,7 @@ export const removeAnnouncement = async ({
       and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
     );
 
-  if (result.rowsAffected === 1) {
+  if (result.meta.changes) {
     await db
       .delete(announcementsTable)
       .where(

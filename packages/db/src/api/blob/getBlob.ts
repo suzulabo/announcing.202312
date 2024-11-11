@@ -4,7 +4,7 @@ import { getDB } from '../../client';
 import { blobsTable } from '../../schema';
 
 export const getBlob = async (blobID: string) => {
-  const db = getDB();
+  const db = await getDB();
 
   const blob = (await db.select().from(blobsTable).where(eq(blobsTable.blobID, blobID))).shift();
   if (!blob) {
@@ -13,6 +13,7 @@ export const getBlob = async (blobID: string) => {
 
   return {
     contentType: blob.contentType,
-    data: blob.data,
+    // D1 driver returns Array
+    data: Buffer.from(blob.data),
   };
 };
