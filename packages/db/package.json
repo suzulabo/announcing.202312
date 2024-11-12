@@ -42,7 +42,8 @@
     "date-fns": "^4.1.0",
     "mockdate": "^3.0.5",
     "tsx": "^4.19.2",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.4",
+    "wrangler": "^3.86.0"
   },
   "dependencies": {
     "base-x": "^5.0.0",

@@ -1,8 +1,9 @@
 node_modules
 dist
 .svelte-kit
-.wrangler
 .env.local
+.wrangler
+wrangler.toml
 
 packages/db-dev
 
