@@ -24,7 +24,10 @@ const tsConfig = ts.config({
     },
   },
   rules: {
+    'require-await': 'off',
+    '@typescript-eslint/require-await': 'error',
     '@typescript-eslint/no-floating-promises': 'error',
+    '@typescript-eslint/await-thenable': 'error',
     '@typescript-eslint/no-unnecessary-condition': 'error',
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/restrict-template-expressions': [
