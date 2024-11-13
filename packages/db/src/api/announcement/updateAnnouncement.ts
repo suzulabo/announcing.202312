@@ -76,7 +76,7 @@ export const updateAnnouncement = async (params: Params) => {
     return;
   }
 
-  const db = await getDB();
+  const db = getDB();
 
   const targetAnnouncement = (
     await db

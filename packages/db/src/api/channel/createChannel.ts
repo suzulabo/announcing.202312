@@ -34,7 +34,7 @@ export const createChannel = async (params: Params) => {
 
   const { userID, channelID, name, desc, icon } = params;
 
-  const db = await getDB();
+  const db = getDB();
 
   {
     // This should ideally be enforced by a database trigger.

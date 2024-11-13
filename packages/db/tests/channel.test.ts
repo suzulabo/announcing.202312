@@ -1,4 +1,4 @@
-import { assert, describe, expect, test, vi } from 'vitest';
+import { assert, beforeEach, describe, expect, test } from 'vitest';
 
 import { openAsBlob } from 'fs';
 import { ValiError } from 'valibot';
@@ -7,10 +7,16 @@ import { createChannel } from '../src/api/channel/createChannel';
 import { deleteChannel } from '../src/api/channel/deleteChannel';
 import { getChannel } from '../src/api/channel/getChannel';
 import { updateChannel } from '../src/api/channel/updateChannel';
+import { setupDB } from './setupDB';
 
 describe('Channel', () => {
+  beforeEach(async () => {
+    await setupDB();
+  });
+
   test('create, update and delete', async () => {
-    vi.mock('../src/client');
+    await setupDB();
+
     await createChannel({
       userID: 'u1',
       channelID: '1',
@@ -80,8 +86,6 @@ describe('Channel', () => {
   });
 
   test('Too many channels', async () => {
-    vi.mock('../src/client');
-
     for (let i = 1; i <= 6; i++) {
       await createChannel({
         userID: 'u1',
@@ -106,5 +110,10 @@ describe('Channel', () => {
         icon: undefined,
       }),
     ).rejects.toBeInstanceOf(ValiError);
+  });
+
+  test('check channel left', async () => {
+    const c = await getChannel({ userID: 'u1', channelID: '1' });
+    expect(c).toBeUndefined();
   });
 });

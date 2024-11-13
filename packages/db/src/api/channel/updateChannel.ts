@@ -57,7 +57,7 @@ export const updateChannel = async (params: Params) => {
     queries.push(q);
   }
 
-  const db = await getDB();
+  const db = getDB();
 
   await db.batch([
     db

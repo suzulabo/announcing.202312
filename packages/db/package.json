@@ -19,6 +19,10 @@
     "./utils": {
       "types": "./dist/utils.d.ts",
       "import": "./dist/utils.js"
+    },
+    "./localDB": {
+      "types": "./dist/lib/createLocalDB.d.ts",
+      "import": "./dist/lib/createLocalDB.js"
     }
   },
   "files": [
@@ -29,7 +33,7 @@
     "test:watch": "vitest watch",
     "generate": "drizzle-kit generate",
     "migrate": "mkdir -p ../db-dev/storage && drizzle-kit migrate",
-    "build": "pnpm run migrate && tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
     "genTestData": "tsx tools/genTestData.ts"
   },
@@ -49,7 +53,6 @@
     "base-x": "^5.0.0",
     "drizzle-kit": "^0.28.0",
     "drizzle-orm": "^0.36.1",
-    "image-size": "^1.1.1",
     "valibot": "1.0.0-beta.3"
   }
 }

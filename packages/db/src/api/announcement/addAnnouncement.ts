@@ -79,7 +79,7 @@ export const addAnnouncement = async (params: Params) => {
 
   const announcementID = genAnnouncementID(values);
 
-  const db = await getDB();
+  const db = getDB();
 
   queries.push(db.insert(announcementsTable).values({ announcementID, ...values }));
 

@@ -12,7 +12,7 @@ export const getAnnouncement = async ({
 }) => {
   const { title, body, headerImage, images, updatedAt, createdAt } = announcementsTable;
 
-  const db = await getDB();
+  const db = getDB();
 
   const announcement = (
     await db

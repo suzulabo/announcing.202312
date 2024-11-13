@@ -4,9 +4,15 @@ import { getDB } from '../../client';
 import { base62 } from '../../lib/base62';
 import { blobsTable } from '../../schema';
 
-import imageSize, { disableFS } from 'image-size';
-
-disableFS(true);
+// TODO
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const imageSize = (_: unknown) => {
+  return {
+    width: 0,
+    height: 0,
+    type: '',
+  };
+};
 
 const getHash = async (blob: Blob) => {
   const ab = new Uint8Array(await blob.arrayBuffer());
@@ -26,7 +32,7 @@ const getHash = async (blob: Blob) => {
 export const makeInsertBlob = async (blob: Blob) => {
   const [blobID, ab] = await getHash(blob);
 
-  const db = await getDB();
+  const db = getDB();
 
   return [
     blobID,

@@ -42,7 +42,7 @@ export const removeAnnouncement = async ({
 
   announcementIDs.splice(index, 1);
 
-  const db = await getDB();
+  const db = getDB();
 
   const result = await db
     .update(channelsTable)
