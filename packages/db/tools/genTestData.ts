@@ -4,10 +4,12 @@ import { parseArgs } from 'node:util';
 import { faker } from '@faker-js/faker';
 import MockDate from 'mockdate';
 
+import { setDBEnv } from '../src';
 import { addAnnouncement } from '../src/api/announcement/addAnnouncement';
 import { createChannel } from '../src/api/channel/createChannel';
 import { deleteChannel } from '../src/api/channel/deleteChannel';
 import { getChannel } from '../src/api/channel/getChannel';
+import { createLocalDB } from '../src/lib/createLocalDB';
 
 const channelData = {
   name: 'Aether Dynamics Corporation',
@@ -139,6 +141,8 @@ const main = async () => {
     printUsage();
     return;
   }
+
+  setDBEnv(await createLocalDB());
 
   await generate(userID, channelID, count);
 };
