@@ -35,7 +35,8 @@
     "migrate": "mkdir -p ../db-dev/storage && drizzle-kit migrate",
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
-    "genTestData": "tsx tools/genTestData.ts"
+    "genTestData": "tsx tools/genTestData.ts",
+    "migrateLocalDB": "tsx tools/migrateLocalDB.ts"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.2.0",
