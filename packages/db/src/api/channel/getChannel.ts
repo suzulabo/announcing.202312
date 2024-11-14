@@ -1,7 +1,7 @@
 import { and, eq, exists } from 'drizzle-orm';
 
-import { getDB } from '../../client';
 import { channelsTable, ownersTable } from '../../schema';
+import { getDB } from '../db';
 
 export const READER = Symbol('READER');
 

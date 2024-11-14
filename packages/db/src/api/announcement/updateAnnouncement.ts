@@ -1,7 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 
 import * as v from 'valibot';
-import { getDB } from '../../client';
 import {
   ANNOUNCEMENT_BODY_MAX_BYTES,
   ANNOUNCEMENT_ID_SIZE,
@@ -10,10 +9,11 @@ import {
   BLOB_ID_MAX_BYTES,
   CHANNEL_ID_MAX_BYTES,
   USER_ID_MAX_BYTES,
-} from '../../constants';
+} from '../../lib/constants';
 import { announcementsTable, channelsTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getChannel } from '../channel/getChannel';
+import { getDB } from '../db';
 import { genAnnouncementID } from './genAnnouncementID';
 
 const paramsSchema = v.object({

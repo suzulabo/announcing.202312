@@ -5,24 +5,24 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/api/index.d.ts",
+      "import": "./dist/api/index.js"
     },
     "./constants": {
-      "types": "./dist/constants.d.ts",
-      "import": "./dist/constants.js"
+      "types": "./dist/lib/constants.d.ts",
+      "import": "./dist/lib/constants.js"
     },
     "./types": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/types.js"
+      "types": "./dist/lib/types.d.ts",
+      "import": "./dist/lib/types.js"
     },
     "./utils": {
-      "types": "./dist/utils.d.ts",
-      "import": "./dist/utils.js"
+      "types": "./dist/lib/utils.d.ts",
+      "import": "./dist/lib/utils.js"
     },
     "./localDB": {
-      "types": "./dist/lib/createLocalDB.d.ts",
-      "import": "./dist/lib/createLocalDB.js"
+      "types": "./dist/lib/localDB.d.ts",
+      "import": "./dist/lib/localDB.js"
     }
   },
   "files": [

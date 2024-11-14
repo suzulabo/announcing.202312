@@ -1,16 +1,16 @@
 import { count, eq } from 'drizzle-orm';
 
 import * as v from 'valibot';
-import { getDB } from '../../client';
 import {
   CHANNEL_DESC_MAX_BYTES,
   CHANNEL_ICON_MAX_BYTES,
   CHANNEL_ID_MAX_BYTES,
   CHANNEL_NAME_MAX_BYTES,
   USER_ID_MAX_BYTES,
-} from '../../constants';
+} from '../../lib/constants';
 import { channelsTable, ownersTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
+import { getDB } from '../db';
 
 const paramsSchema = v.object({
   userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),

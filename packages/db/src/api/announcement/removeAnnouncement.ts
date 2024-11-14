@@ -1,8 +1,8 @@
 import { and, eq } from 'drizzle-orm';
 
-import { getDB } from '../../client';
 import { announcementsTable, channelsTable } from '../../schema';
 import { getChannel } from '../channel/getChannel';
+import { getDB } from '../db';
 import { getAnnouncement } from './getAnnouncement';
 
 export const removeAnnouncement = async ({

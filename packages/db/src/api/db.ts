@@ -4,7 +4,6 @@ let db: DrizzleD1Database | undefined;
 
 export const setDBEnv = (d1: AnyD1Database, logger = false) => {
   db = drizzleD1(d1, { logger });
-  console.log('set db');
 };
 
 export const getDB = () => {

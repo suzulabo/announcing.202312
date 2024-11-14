@@ -1,5 +1,5 @@
-import { setDBEnv } from '../src/client';
-import { createLocalDB } from '../src/lib/createLocalDB';
+import { setDBEnv } from '../src/api';
+import { createLocalDB } from '../src/lib/localDB';
 
 export const setupDB = async () => {
   setDBEnv(await createLocalDB(true));

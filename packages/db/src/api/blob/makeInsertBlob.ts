@@ -1,8 +1,8 @@
 import { createHash } from 'crypto';
 
-import { getDB } from '../../client';
 import { base62 } from '../../lib/base62';
 import { blobsTable } from '../../schema';
+import { getDB } from '../db';
 
 // TODO
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

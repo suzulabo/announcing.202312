@@ -9,7 +9,7 @@ import {
   getChannel,
   removeAnnouncement,
   updateAnnouncement,
-} from '../src';
+} from '../src/api';
 import { setupDB } from './setupDB';
 
 describe('Announcement', () => {
