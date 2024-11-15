@@ -6,7 +6,8 @@ dist
 wrangler.toml
 .dev.vars
 
-packages/db-dev
-
 test-results
 playwright-report
+
+packages/db-dev
+packages/cloudflare/env.ts
