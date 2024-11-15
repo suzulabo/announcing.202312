@@ -3,11 +3,12 @@ dist
 .svelte-kit
 .env.local
 .wrangler
-wrangler.toml
-.dev.vars
 
 test-results
 playwright-report
 
 packages/db-dev
+
 packages/cloudflare/env.ts
+packages/cloudflare/wrangler.toml
+packages/cloudflare/.dev.vars

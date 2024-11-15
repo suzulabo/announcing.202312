@@ -1,9 +1,8 @@
-import { type Handle, redirect } from '@sveltejs/kit';
+import { type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 import { CF } from '$env/static/private';
 import { setDBEnv } from '@announcing/db';
-import { handle as authenticationHandle } from './auth';
 
 const localDB = await (async () => {
   if (!CF) {
@@ -28,16 +27,4 @@ const localDBHandle: Handle = ({ resolve, event }) => {
   return resolve(event);
 };
 
-const authorizationHandle: Handle = async ({ resolve, event }) => {
-  if (!event.url.pathname.startsWith('/signin')) {
-    const session = await event.locals.auth();
-
-    if (!session?.user?.id) {
-      redirect(303, '/signin');
-    }
-  }
-
-  return resolve(event);
-};
-
-export const handle = sequence(authenticationHandle, authorizationHandle, localDBHandle);
+export const handle = sequence(localDBHandle);
