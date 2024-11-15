@@ -3,7 +3,8 @@
   "name": "@announcing/cloudflare",
   "scripts": {
     "d1Migration": "tsx tools/d1Migration.ts",
-    "devWriter": "tsx tools/devWriter.ts"
+    "devWriter": "tsx tools/devWriter.ts",
+    "devReader": "tsx tools/devReader.ts"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",

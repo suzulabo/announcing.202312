@@ -10,6 +10,11 @@ declare global {
     interface PageState {
       fromPage?: string;
     }
+    interface Platform {
+      env: {
+        DB: D1Database;
+      };
+    }
   }
 }
 
