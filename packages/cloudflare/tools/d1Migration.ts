@@ -1,6 +1,6 @@
 import { DATABASE_NAME } from '../env';
-import { genToml } from './genToml';
-import { runCommand } from './runCommand';
+import { genToml } from '../lib/genToml';
+import { runCommand } from '../lib/runCommand';
 
 const main = () => {
   genToml();
