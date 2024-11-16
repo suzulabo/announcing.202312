@@ -1,16 +1,23 @@
 import { createHash } from 'crypto';
 
+import { imageDimensionsFromData } from 'image-dimensions';
+import imageType from 'image-type';
 import { base62 } from '../../lib/base62';
 import { blobsTable } from '../../schema';
 import { getDB } from '../db';
 
-// TODO
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const imageSize = (_: unknown) => {
+const imageSize = async (ab: Uint8Array) => {
+  const d = imageDimensionsFromData(ab);
+  if (!d) {
+    throw new Error('Can not get image size');
+  }
+
+  const t = await imageType(ab);
+
   return {
-    width: 0,
-    height: 0,
-    type: '',
+    width: d.width,
+    height: d.height,
+    ext: t?.ext,
   };
 };
 
@@ -21,9 +28,9 @@ const getHash = async (blob: Blob) => {
 
   const hash = base62.encode(new Uint8Array(digest));
 
-  const size = imageSize(ab);
-  if (size.type) {
-    return [`${hash}_${size.width}x${size.height}.${size.type}`, ab] as const;
+  const size = await imageSize(ab);
+  if (size.ext) {
+    return [`${hash}_${size.width}x${size.height}.${size.ext}`, ab] as const;
   } else {
     return [`${hash}_${size.width}x${size.height}`, ab] as const;
   }
