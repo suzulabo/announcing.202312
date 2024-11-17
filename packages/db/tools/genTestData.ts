@@ -4,8 +4,9 @@ import { parseArgs } from 'node:util';
 import { faker } from '@faker-js/faker';
 import MockDate from 'mockdate';
 
+import { createLocalDB } from '@announcing/cloudflare/localDB';
+
 import { addAnnouncement, createChannel, deleteChannel, getChannel, setDBEnv } from '../src/api';
-import { createLocalDB } from '../src/lib/localDB';
 
 const channelData = {
   name: 'Aether Dynamics Corporation',

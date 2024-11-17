@@ -1,15 +1,24 @@
 {
   "private": true,
   "name": "@announcing/cloudflare",
+  "type": "module",
+  "exports": {
+    "./localDB": {
+      "types": "./dist/lib/localDB.d.ts",
+      "import": "./dist/lib/localDB.js"
+    }
+  },
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
     "d1Migration": "tsx tools/d1Migration.ts",
     "devWriter": "tsx tools/devWriter.ts",
     "devReader": "tsx tools/devReader.ts"
   },
   "devDependencies": {
+    "@miniflare/d1": "^2.14.4",
+    "@miniflare/shared": "^2.14.4",
     "@types/node": "^22.9.0",
     "tsx": "^4.19.2",
     "wrangler": "^3.87.0"
-  },
-  "type": "module"
+  }
 }

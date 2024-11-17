@@ -53,6 +53,12 @@ importers:
 
   packages/cloudflare:
     devDependencies:
+      '@miniflare/d1':
+        specifier: ^2.14.4
+        version: 2.14.4
+      '@miniflare/shared':
+        specifier: ^2.14.4
+        version: 2.14.4
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0
@@ -155,6 +161,9 @@ importers:
 
   packages/db:
     devDependencies:
+      '@announcing/cloudflare':
+        specifier: workspace:^
+        version: link:../cloudflare
       '@faker-js/faker':
         specifier: ^9.2.0
         version: 9.2.0
