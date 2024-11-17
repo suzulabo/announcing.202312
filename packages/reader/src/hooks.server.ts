@@ -10,7 +10,7 @@ const localDB = await (async () => {
     Cloudflare Pages does not allow local filesystem APIs.
     Therefore, use dynamic import to exclude this code from the Cloudflare build.
    */
-    const { createLocalDB } = await import('@announcing/db/localDB');
+    const { createLocalDB } = await import('@announcing/cloudflare/localDB');
     return createLocalDB();
   }
   return undefined;

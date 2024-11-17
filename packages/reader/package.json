@@ -11,6 +11,7 @@
     "playwright": "echo TODO: refactor playwright test"
   },
   "devDependencies": {
+    "@announcing/cloudflare": "workspace:^",
     "@announcing/components": "workspace:^",
     "@announcing/db": "workspace:^",
     "@announcing/i18n": "workspace:^",
