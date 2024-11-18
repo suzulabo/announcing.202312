@@ -9,6 +9,5 @@ playwright-report
 
 packages/db-dev
 
-packages/cloudflare/env.ts
 packages/cloudflare/wrangler.toml
 packages/cloudflare/.dev.vars
