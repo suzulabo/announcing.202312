@@ -5,6 +5,19 @@ import { CF } from '$env/static/private';
 import { setDBEnv } from '@announcing/db';
 import { handle as authenticationHandle } from './auth';
 
+const timingHandle: Handle = async ({ event, resolve }) => {
+  const start = performance.now();
+
+  const response = await resolve(event);
+
+  const end = performance.now();
+  const duration = end - start;
+
+  console.log(`[PERF] ${event.request.method} ${event.url.pathname} - ${duration.toFixed(2)} ms`);
+
+  return response;
+};
+
 const localDB = await (async () => {
   if (!CF) {
     /*
@@ -40,4 +53,9 @@ const authorizationHandle: Handle = async ({ resolve, event }) => {
   return resolve(event);
 };
 
-export const handle = sequence(authenticationHandle, authorizationHandle, localDBHandle);
+export const handle = sequence(
+  timingHandle,
+  authenticationHandle,
+  authorizationHandle,
+  localDBHandle,
+);
