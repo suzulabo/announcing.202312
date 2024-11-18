@@ -4,8 +4,8 @@
   "type": "module",
   "exports": {
     "./localDB": {
-      "types": "./dist/lib/localDB.d.ts",
-      "import": "./dist/lib/localDB.js"
+      "types": "./dist/localDB.d.ts",
+      "import": "./dist/localDB.js"
     }
   },
   "scripts": {
