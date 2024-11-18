@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
 
-import { getDB } from '../../client';
 import { blobsTable } from '../../schema';
+import { getDB } from '../db';
 
 export const getBlob = async (blobID: string) => {
   const db = getDB();
@@ -13,6 +13,7 @@ export const getBlob = async (blobID: string) => {
 
   return {
     contentType: blob.contentType,
-    data: blob.data,
+    // D1 driver returns Array
+    data: Buffer.from(blob.data),
   };
 };

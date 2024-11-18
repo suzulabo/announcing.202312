@@ -4,10 +4,9 @@ import { parseArgs } from 'node:util';
 import { faker } from '@faker-js/faker';
 import MockDate from 'mockdate';
 
-import { addAnnouncement } from '../src/api/announcement/addAnnouncement';
-import { createChannel } from '../src/api/channel/createChannel';
-import { deleteChannel } from '../src/api/channel/deleteChannel';
-import { getChannel } from '../src/api/channel/getChannel';
+import { createLocalDB } from '@announcing/cloudflare/localDB';
+
+import { addAnnouncement, createChannel, deleteChannel, getChannel, setDBEnv } from '../src/api';
 
 const channelData = {
   name: 'Aether Dynamics Corporation',
@@ -37,7 +36,7 @@ const generate = async (userID: string, channelID: string, count: number) => {
   let date = new Date('2024-08-08T11:59:00Z').getTime();
   {
     MockDate.set(date);
-    const icon = await openAsBlob('./tools/assets/cat-1484725_256.png');
+    const icon = await openAsBlob('./tools/assets/cat-1484725_256.png', { type: 'image/png' });
     await createChannel({
       userID,
       channelID,
@@ -51,9 +50,9 @@ const generate = async (userID: string, channelID: string, count: number) => {
     const getHeaderImage = async (i: number) => {
       switch (i % 13) {
         case 0:
-          return await openAsBlob('./tools/assets/gecko-8483282_640.png');
+          return await openAsBlob('./tools/assets/gecko-8483282_640.png', { type: 'image/png' });
         case 1:
-          return await openAsBlob('./tools/assets/cat-8575641_640.jpg');
+          return await openAsBlob('./tools/assets/cat-8575641_640.jpg', { type: 'image/jpeg' });
       }
       return;
     };
@@ -61,24 +60,26 @@ const generate = async (userID: string, channelID: string, count: number) => {
     const getImages = async (i: number) => {
       switch (i % 8) {
         case 2:
-          return Promise.all([openAsBlob('./tools/assets/chicks-8782391_640.jpg')]);
+          return Promise.all([
+            openAsBlob('./tools/assets/chicks-8782391_640.jpg', { type: 'image/jpeg' }),
+          ]);
         case 3:
           return Promise.all([
-            openAsBlob('./tools/assets/chicks-8782391_640.jpg'),
-            openAsBlob('./tools/assets/leaves-8846763_640.jpg'),
+            openAsBlob('./tools/assets/chicks-8782391_640.jpg', { type: 'image/jpeg' }),
+            openAsBlob('./tools/assets/leaves-8846763_640.jpg', { type: 'image/jpeg' }),
           ]);
         case 4:
           return Promise.all([
-            openAsBlob('./tools/assets/chicks-8782391_640.jpg'),
-            openAsBlob('./tools/assets/leaves-8846763_640.jpg'),
-            openAsBlob('./tools/assets/cat-8612685_640_small.jpg'),
+            openAsBlob('./tools/assets/chicks-8782391_640.jpg', { type: 'image/jpeg' }),
+            openAsBlob('./tools/assets/leaves-8846763_640.jpg', { type: 'image/jpeg' }),
+            openAsBlob('./tools/assets/cat-8612685_640_small.jpg', { type: 'image/jpeg' }),
           ]);
         case 5:
           return Promise.all([
-            openAsBlob('./tools/assets/chicks-8782391_640.jpg'),
-            openAsBlob('./tools/assets/leaves-8846763_640.jpg'),
-            openAsBlob('./tools/assets/cat-8612685_640_small.jpg'),
-            openAsBlob('./tools/assets/music-8559592_640.jpg'),
+            openAsBlob('./tools/assets/chicks-8782391_640.jpg', { type: 'image/jpeg' }),
+            openAsBlob('./tools/assets/leaves-8846763_640.jpg', { type: 'image/jpeg' }),
+            openAsBlob('./tools/assets/cat-8612685_640_small.jpg', { type: 'image/jpeg' }),
+            openAsBlob('./tools/assets/music-8559592_640.jpg', { type: 'image/jpeg' }),
           ]);
       }
       return;
@@ -137,6 +138,8 @@ const main = async () => {
     printUsage();
     return;
   }
+
+  setDBEnv(await createLocalDB());
 
   await generate(userID, channelID, count);
 };

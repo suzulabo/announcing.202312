@@ -1,9 +1,9 @@
 import { and, eq } from 'drizzle-orm';
 
-import { getDB } from '../../client';
 import { announcementsTable, channelsTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getChannel } from '../channel/getChannel';
+import { getDB } from '../db';
 import { genAnnouncementID } from './genAnnouncementID';
 
 import * as v from 'valibot';
@@ -13,12 +13,19 @@ import {
   ANNOUNCEMENT_TITLE_MAX_BYTES,
   CHANNEL_ID_MAX_BYTES,
   USER_ID_MAX_BYTES,
-} from '../../constants';
+} from '../../lib/constants';
 
 const paramsSchema = v.object({
   userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
   channelID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_ID_MAX_BYTES)),
-  headerImage: v.union([v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES)), v.undefined()]),
+  headerImage: v.union([
+    v.pipe(
+      v.blob(),
+      v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
+      v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES),
+    ),
+    v.undefined(),
+  ]),
   title: v.union([v.pipe(v.string(), v.maxBytes(ANNOUNCEMENT_TITLE_MAX_BYTES)), v.undefined()]),
   body: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_BODY_MAX_BYTES)),
   images: v.union([

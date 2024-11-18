@@ -13,6 +13,11 @@ declare global {
       fromPage?: string;
       announcementPreviewData?: AnnouncementPreviewData;
     }
+    interface Platform {
+      env: {
+        DB: D1Database;
+      };
+    }
   }
 }
 

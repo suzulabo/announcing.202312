@@ -7,7 +7,9 @@ export default defineConfig({
     include: ['src/**/*.{test,spec}.{js,ts}'],
   },
   build: {
-    minify: true,
+    // TODO
+    minify: false,
+    sourcemap: true,
   },
   server: {
     host: '0.0.0.0',

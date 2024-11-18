@@ -1,9 +1,9 @@
 import { and, eq, exists } from 'drizzle-orm';
 import type { SQLiteUpdateSetSource } from 'drizzle-orm/sqlite-core';
 
-import { getDB } from '../../client';
 import { channelsTable, ownersTable } from '../../schema';
 import { makeInsertBlob } from '../blob/makeInsertBlob';
+import { getDB } from '../db';
 
 import * as v from 'valibot';
 import {
@@ -13,7 +13,7 @@ import {
   CHANNEL_ID_MAX_BYTES,
   CHANNEL_NAME_MAX_BYTES,
   USER_ID_MAX_BYTES,
-} from '../../constants';
+} from '../../lib/constants';
 
 const paramsSchema = v.object({
   userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
@@ -22,7 +22,11 @@ const paramsSchema = v.object({
   name: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_NAME_MAX_BYTES)),
   desc: v.union([v.pipe(v.string(), v.maxBytes(CHANNEL_DESC_MAX_BYTES)), v.undefined()]),
   icon: v.union([
-    v.pipe(v.blob(), v.maxSize(CHANNEL_ICON_MAX_BYTES)),
+    v.pipe(
+      v.blob(),
+      v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
+      v.maxSize(CHANNEL_ICON_MAX_BYTES),
+    ),
     v.pipe(v.string(), v.nonEmpty(), v.maxBytes(BLOB_ID_MAX_BYTES)),
     v.undefined(),
   ]),

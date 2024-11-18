@@ -5,20 +5,20 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/api/index.d.ts",
+      "import": "./dist/api/index.js"
     },
     "./constants": {
-      "types": "./dist/constants.d.ts",
-      "import": "./dist/constants.js"
+      "types": "./dist/lib/constants.d.ts",
+      "import": "./dist/lib/constants.js"
     },
     "./types": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/types.js"
+      "types": "./dist/lib/types.d.ts",
+      "import": "./dist/lib/types.js"
     },
     "./utils": {
-      "types": "./dist/utils.d.ts",
-      "import": "./dist/utils.js"
+      "types": "./dist/lib/utils.d.ts",
+      "import": "./dist/lib/utils.js"
     }
   },
   "files": [
@@ -27,26 +27,27 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "generate": "drizzle-kit generate",
-    "migrate": "mkdir -p ../db-dev/storage && drizzle-kit migrate",
-    "build": "pnpm run migrate && tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
+    "generate": "drizzle-kit generate",
     "genTestData": "tsx tools/genTestData.ts"
   },
   "devDependencies": {
+    "@announcing/cloudflare": "workspace:^",
     "@faker-js/faker": "^9.2.0",
+    "@miniflare/d1": "^2.14.4",
+    "@miniflare/shared": "^2.14.4",
     "@types/node": "^22.9.0",
-    "date-fns": "^4.1.0",
-    "mockdate": "^3.0.5",
-    "tsx": "^4.19.2",
-    "vitest": "^2.1.4"
-  },
-  "dependencies": {
-    "@libsql/client": "^0.14.0",
     "base-x": "^5.0.0",
+    "better-sqlite3": "^11.5.0",
+    "date-fns": "^4.1.0",
     "drizzle-kit": "^0.28.0",
     "drizzle-orm": "^0.36.1",
-    "image-size": "^1.1.1",
-    "valibot": "1.0.0-beta.3"
+    "image-dimensions": "^2.3.0",
+    "image-type": "^5.2.0",
+    "mockdate": "^3.0.5",
+    "tsx": "^4.19.2",
+    "valibot": "1.0.0-beta.3",
+    "vitest": "^2.1.4"
   }
 }

@@ -1,7 +1,7 @@
 import { createHash } from 'crypto';
 
-import { ANNOUNCEMENT_ID_SIZE } from '../../constants';
 import { base62 } from '../../lib/base62';
+import { ANNOUNCEMENT_ID_SIZE } from '../../lib/constants';
 
 export const genAnnouncementID = ({
   headerImage,

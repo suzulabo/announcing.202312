@@ -1,12 +1,25 @@
 import { createHash } from 'crypto';
 
-import { getDB } from '../../client';
+import { imageDimensionsFromData } from 'image-dimensions';
+import imageType from 'image-type';
 import { base62 } from '../../lib/base62';
 import { blobsTable } from '../../schema';
+import { getDB } from '../db';
 
-import imageSize, { disableFS } from 'image-size';
+const imageSize = async (ab: Uint8Array) => {
+  const d = imageDimensionsFromData(ab);
+  if (!d) {
+    throw new Error('Can not get image size');
+  }
 
-disableFS(true);
+  const t = await imageType(ab);
+
+  return {
+    width: d.width,
+    height: d.height,
+    ext: t?.ext,
+  };
+};
 
 const getHash = async (blob: Blob) => {
   const ab = new Uint8Array(await blob.arrayBuffer());
@@ -15,9 +28,9 @@ const getHash = async (blob: Blob) => {
 
   const hash = base62.encode(new Uint8Array(digest));
 
-  const size = imageSize(ab);
-  if (size.type) {
-    return [`${hash}_${size.width}x${size.height}.${size.type}`, ab] as const;
+  const size = await imageSize(ab);
+  if (size.ext) {
+    return [`${hash}_${size.width}x${size.height}.${size.ext}`, ab] as const;
   } else {
     return [`${hash}_${size.width}x${size.height}`, ab] as const;
   }
