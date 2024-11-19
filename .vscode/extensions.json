@@ -1,11 +1,9 @@
 {
   "recommendations": [
-    "streetsidesoftware.code-spell-checker",
     "dbaeumer.vscode-eslint",
     "ms-vscode.vscode-typescript-next",
     "esbenp.prettier-vscode",
     "svelte.svelte-vscode",
-    "kimuson.ts-type-expand",
     "editorconfig.editorconfig"
   ]
 }
