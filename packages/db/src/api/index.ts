@@ -8,4 +8,3 @@ export { deleteChannel } from './channel/deleteChannel';
 export { READER, getChannel } from './channel/getChannel';
 export { getChannels } from './channel/getChannels';
 export { updateChannel } from './channel/updateChannel';
-export { setDBEnv } from './db';

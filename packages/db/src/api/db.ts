@@ -1,28 +1,33 @@
-import { drizzle as drizzleD1, DrizzleD1Database, type AnyD1Database } from 'drizzle-orm/d1';
-
 import { drizzle as drizzleLibSql, type LibSQLDatabase } from 'drizzle-orm/libsql';
+import process from 'node:process';
 
-const ctx = {} as { d1?: AnyD1Database; db?: DrizzleD1Database };
+const createDB = () => {
+  const { DB_URL, DB_AUTH_TOKEN } = process.env;
+  if (!DB_URL) {
+    throw new Error('DB_URL is not set');
+  }
 
-const db = drizzleLibSql({
-  connection: {
-    url: 'libsql://announcing-suzulabo.turso.io',
-    authToken:
-      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MzE5OTM3MTUsImlkIjoiYTMwOGVmY2ItMjY3Mi00Nzk0LTkwMWMtNmU2NDhiZTAzNWExIn0.Hj6kZ-aBZlDflAE77jeT_mTR9HNR8bMZIFEvLsQPSZJKAYke6XVqacFEDpo-4E3IBU8OLmYSNC6Dd06QXz6NDA',
-  },
-});
-
-export const setDBEnv = (d1: AnyD1Database, logger = false) => {
-  if (ctx.d1 !== d1) {
-    ctx.db = drizzleD1(d1, { logger });
-    ctx.d1 = d1;
+  if (DB_AUTH_TOKEN) {
+    return drizzleLibSql({
+      connection: {
+        url: DB_URL,
+        authToken: DB_AUTH_TOKEN,
+      },
+    });
+  } else {
+    return drizzleLibSql({
+      connection: {
+        url: DB_URL,
+      },
+    });
   }
 };
 
-export const getDB = (): LibSQLDatabase => {
-  if (!ctx.db) {
-    throw new Error('DB is not set');
-  }
+let db: LibSQLDatabase | undefined;
 
+export const getDB = (forceCreate = false): LibSQLDatabase => {
+  if (!db || forceCreate) {
+    db = createDB();
+  }
   return db;
 };

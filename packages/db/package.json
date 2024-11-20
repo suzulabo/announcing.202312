@@ -30,17 +30,14 @@
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
     "generate": "drizzle-kit generate",
+    "migrate:local": "drizzle-kit migrate",
     "genTestData": "tsx tools/genTestData.ts"
   },
   "devDependencies": {
-    "@announcing/cloudflare": "workspace:^",
     "@faker-js/faker": "^9.2.0",
     "@libsql/client": "^0.14.0",
-    "@miniflare/d1": "^2.14.4",
-    "@miniflare/shared": "^2.14.4",
     "@types/node": "^22.9.0",
     "base-x": "^5.0.0",
-    "better-sqlite3": "^11.5.0",
     "date-fns": "^4.1.0",
     "drizzle-kit": "^0.28.0",
     "drizzle-orm": "^0.36.1",
