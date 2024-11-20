@@ -1,5 +1,6 @@
 import { createHash } from 'crypto';
 
+import type { BatchItem } from 'drizzle-orm/batch';
 import { imageDimensionsFromData } from 'image-dimensions';
 import imageType from 'image-type';
 import { base62 } from '../../lib/base62';
@@ -36,7 +37,7 @@ const getHash = async (blob: Blob) => {
   }
 };
 
-export const makeInsertBlob = async (blob: Blob) => {
+export const makeInsertBlob = async (blob: Blob): Promise<[string, BatchItem<'sqlite'>]> => {
   const [blobID, ab] = await getHash(blob);
 
   const db = getDB();

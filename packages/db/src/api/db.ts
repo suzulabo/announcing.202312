@@ -1,6 +1,6 @@
 import { drizzle as drizzleD1, DrizzleD1Database, type AnyD1Database } from 'drizzle-orm/d1';
 
-import { drizzle as drizzleLibSql } from 'drizzle-orm/libsql';
+import { drizzle as drizzleLibSql, type LibSQLDatabase } from 'drizzle-orm/libsql';
 
 const ctx = {} as { d1?: AnyD1Database; db?: DrizzleD1Database };
 
@@ -19,7 +19,7 @@ export const setDBEnv = (d1: AnyD1Database, logger = false) => {
   }
 };
 
-export const getDB = () => {
+export const getDB = (): LibSQLDatabase => {
   if (!ctx.db) {
     throw new Error('DB is not set');
   }

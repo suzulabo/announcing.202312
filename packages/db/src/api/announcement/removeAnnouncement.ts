@@ -54,7 +54,7 @@ export const removeAnnouncement = async ({
       and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
     );
 
-  if (result.meta.changes) {
+  if (result.rowsAffected === 1) {
     await db
       .delete(announcementsTable)
       .where(
