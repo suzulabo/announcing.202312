@@ -16,6 +16,7 @@
     "@announcing/db": "workspace:^",
     "@announcing/i18n": "workspace:^",
     "@auth/sveltekit": "^1.7.3",
+    "@libsql/client": "^0.14.0",
     "@playwright/test": "^1.48.2",
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/adapter-cloudflare": "^4.7.4",

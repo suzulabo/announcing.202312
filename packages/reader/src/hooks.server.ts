@@ -1,29 +1,18 @@
+import { env } from '$env/dynamic/private';
+import { CF } from '$env/static/private';
+import { setStorage } from '@announcing/db';
 import { type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
-import { CF } from '$env/static/private';
-import { setDBEnv } from '@announcing/db';
+process.env['DB_URL'] = env.DB_URL;
+process.env['DB_AUTH_TOKEN'] = env.DB_AUTH_TOKEN;
 
-const localDB = await (async () => {
-  if (!CF) {
-    /*
-    Cloudflare Pages does not allow local filesystem APIs.
-    Therefore, use dynamic import to exclude this code from the Cloudflare build.
-   */
-    const { createLocalDB } = await import('@announcing/cloudflare/localDB');
-    return createLocalDB();
-  }
-  return undefined;
-})();
+if (!CF) {
+  const createLocalStorage = (await import('@announcing/db/LocalStorage')).createLocalStorage;
+  setStorage(createLocalStorage());
+}
 
 const localDBHandle: Handle = ({ resolve, event }) => {
-  const db = event.platform?.env.DB ?? localDB;
-  if (db) {
-    setDBEnv(db);
-  } else {
-    throw new Error('D1 is not set');
-  }
-
   return resolve(event);
 };
 
