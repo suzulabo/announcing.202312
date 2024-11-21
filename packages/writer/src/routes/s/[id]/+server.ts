@@ -1,12 +1,12 @@
-import { getBlob } from '@announcing/db';
 import { error } from '@sveltejs/kit';
 
+import { getStorageData } from '@announcing/db';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ params }) => {
   const id = params.id;
 
-  const res = await getBlob(id);
+  const res = await getStorageData(id);
 
   if (!res) {
     return error(404);

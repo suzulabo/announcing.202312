@@ -11,7 +11,7 @@ import {
   USER_ID_MAX_BYTES,
 } from '../../lib/constants';
 import { announcementsTable, channelsTable } from '../../schema';
-import { makeInsertBlob } from '../blob/makeInsertBlob';
+import { putStorageData } from '../../storage/storage';
 import { getChannel } from '../channel/getChannel';
 import { getDB } from '../db';
 import { genAnnouncementID } from './genAnnouncementID';
@@ -101,7 +101,6 @@ export const updateAnnouncement = async (params: Params) => {
     return;
   }
 
-  const queries = [];
   const now = new Date().getTime();
 
   const values: Omit<typeof announcementsTable.$inferInsert, 'announcementID'> = {
@@ -116,35 +115,41 @@ export const updateAnnouncement = async (params: Params) => {
     values.title = title;
   }
 
+  const storagePuts = [];
+
   if (!headerImage) {
     values.headerImage = null;
   } else if (typeof headerImage === 'string') {
     values.headerImage = headerImage;
   } else if (headerImage instanceof Blob) {
-    const [v, q] = await makeInsertBlob(headerImage);
-    values.headerImage = v;
-    queries.push(q);
+    storagePuts.push(
+      putStorageData(headerImage).then((v) => {
+        values.headerImage = v;
+      }),
+    );
   }
 
   if (!images) {
     values.images = null;
   } else {
-    const imagesValues = [];
-    for (const image of images) {
+    const a: string[] = [];
+    values.images = a;
+    images.forEach((image, i) => {
       if (typeof image === 'string') {
-        imagesValues.push(image);
+        a[i] = image;
       } else if (image instanceof Blob) {
-        const [v, q] = await makeInsertBlob(image);
-        imagesValues.push(v);
-        queries.push(q);
+        storagePuts.push(
+          putStorageData(image).then((v) => {
+            a[i] = v;
+          }),
+        );
       }
-    }
-    values.images = imagesValues;
+    });
   }
 
-  const announcementID = genAnnouncementID(values);
+  await Promise.all(storagePuts);
 
-  queries.push(db.insert(announcementsTable).values({ ...values, announcementID }));
+  const announcementID = genAnnouncementID(values);
 
   announcementIDs[index] = announcementID;
 
@@ -158,7 +163,10 @@ export const updateAnnouncement = async (params: Params) => {
       and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
     );
 
-  const batchResults = await db.batch([updateChannel, ...queries]);
+  const batchResults = await db.batch([
+    updateChannel,
+    db.insert(announcementsTable).values({ ...values, announcementID }),
+  ]);
   if (batchResults[0].rowsAffected === 1) {
     await db
       .delete(announcementsTable)

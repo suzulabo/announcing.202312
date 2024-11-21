@@ -2,7 +2,6 @@ import { and, eq, exists } from 'drizzle-orm';
 import type { SQLiteUpdateSetSource } from 'drizzle-orm/sqlite-core';
 
 import { channelsTable, ownersTable } from '../../schema';
-import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getDB } from '../db';
 
 import * as v from 'valibot';
@@ -14,6 +13,7 @@ import {
   CHANNEL_NAME_MAX_BYTES,
   USER_ID_MAX_BYTES,
 } from '../../lib/constants';
+import { putStorageData } from '../../storage/storage';
 
 const paramsSchema = v.object({
   userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
@@ -39,8 +39,6 @@ export const updateChannel = async (params: Params) => {
 
   const { userID, updatedAt, channelID, name, desc, icon } = params;
 
-  const queries = [];
-
   const values: SQLiteUpdateSetSource<typeof channelsTable> = {
     name,
     desc: desc ?? null,
@@ -52,9 +50,7 @@ export const updateChannel = async (params: Params) => {
   } else if (typeof icon === 'string') {
     values.icon = icon;
   } else if (icon instanceof Blob) {
-    const [v, q] = await makeInsertBlob(icon);
-    values.icon = v;
-    queries.push(q);
+    values.icon = await putStorageData(icon);
   }
 
   const db = getDB();
@@ -75,6 +71,5 @@ export const updateChannel = async (params: Params) => {
           ),
         ),
       ),
-    ...queries,
   ]);
 };

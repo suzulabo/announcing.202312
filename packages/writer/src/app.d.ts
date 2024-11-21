@@ -16,6 +16,7 @@ declare global {
     interface Platform {
       env: {
         DB: D1Database;
+        Storage: R2Bucket;
       };
     }
   }

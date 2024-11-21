@@ -5,8 +5,8 @@ import {
   addAnnouncement,
   createChannel,
   getAnnouncement,
-  getBlob,
   getChannel,
+  getStorageData,
   removeAnnouncement,
   updateAnnouncement,
 } from '../src/api';
@@ -53,7 +53,7 @@ describe('Announcement', () => {
         body: 'This is test',
       });
 
-      const b = await getBlob(a.headerImage ?? '');
+      const b = await getStorageData(a.headerImage ?? '');
       assert(b);
 
       await updateAnnouncement({

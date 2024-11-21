@@ -9,7 +9,7 @@ import {
   USER_ID_MAX_BYTES,
 } from '../../lib/constants';
 import { channelsTable, ownersTable } from '../../schema';
-import { makeInsertBlob } from '../blob/makeInsertBlob';
+import { putStorageData } from '../../storage/storage';
 import { getDB } from '../db';
 
 const paramsSchema = v.object({
@@ -47,7 +47,6 @@ export const createChannel = async (params: Params) => {
   }
 
   const now = new Date().getTime();
-  const queries = [];
 
   const values: typeof channelsTable.$inferInsert = {
     channelID,
@@ -58,12 +57,11 @@ export const createChannel = async (params: Params) => {
   };
 
   if (icon) {
-    const [v, q] = await makeInsertBlob(icon);
-    values.icon = v;
-    queries.push(q);
+    values.icon = await putStorageData(icon);
   }
 
-  queries.push(db.insert(ownersTable).values({ channelID, userID, createdAt: now }));
-
-  await db.batch([db.insert(channelsTable).values(values), ...queries]);
+  await db.batch([
+    db.insert(channelsTable).values(values),
+    db.insert(ownersTable).values({ channelID, userID, createdAt: now }),
+  ]);
 };

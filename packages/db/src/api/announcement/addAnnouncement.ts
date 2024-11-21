@@ -1,7 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 
 import { announcementsTable, channelsTable } from '../../schema';
-import { makeInsertBlob } from '../blob/makeInsertBlob';
 import { getChannel } from '../channel/getChannel';
 import { getDB } from '../db';
 import { genAnnouncementID } from './genAnnouncementID';
@@ -14,6 +13,7 @@ import {
   CHANNEL_ID_MAX_BYTES,
   USER_ID_MAX_BYTES,
 } from '../../lib/constants';
+import { putStorageData } from '../../storage/storage';
 
 const paramsSchema = v.object({
   userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
@@ -47,8 +47,6 @@ export const addAnnouncement = async (params: Params) => {
     return;
   }
 
-  const queries = [];
-
   const values: Omit<typeof announcementsTable.$inferInsert, 'announcementID'> = {
     userID,
     channelID,
@@ -61,27 +59,33 @@ export const addAnnouncement = async (params: Params) => {
     values.title = title;
   }
 
+  const storagePuts = [];
+
   if (headerImage) {
-    const [v, q] = await makeInsertBlob(headerImage);
-    values.headerImage = v;
-    queries.push(q);
+    storagePuts.push(
+      putStorageData(headerImage).then((v) => {
+        values.headerImage = v;
+      }),
+    );
   }
 
   if (images) {
-    const a = [];
-    for (const f of images) {
-      const [v, q] = await makeInsertBlob(f);
-      a.push(v);
-      queries.push(q);
-    }
+    const a: string[] = [];
     values.images = a;
+    images.forEach((image, i) => {
+      storagePuts.push(
+        putStorageData(image).then((v) => {
+          a[i] = v;
+        }),
+      );
+    });
   }
+
+  await Promise.all(storagePuts);
 
   const announcementID = genAnnouncementID(values);
 
   const db = getDB();
-
-  queries.push(db.insert(announcementsTable).values({ announcementID, ...values }));
 
   const announcementIDs = [announcementID, ...(channel.announcementIDs ?? [])];
 
@@ -95,5 +99,8 @@ export const addAnnouncement = async (params: Params) => {
       and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
     );
 
-  await db.batch([updateChannel, ...queries]);
+  await db.batch([
+    updateChannel,
+    db.insert(announcementsTable).values({ announcementID, ...values }),
+  ]);
 };

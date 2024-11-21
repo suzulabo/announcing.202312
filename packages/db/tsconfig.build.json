@@ -5,5 +5,11 @@
     "declaration": true,
     "outDir": "dist"
   },
-  "files": ["src/api/index.ts", "src/lib/constants.ts", "src/lib/types.ts", "src/lib/utils.ts"]
+  "files": [
+    "src/api/index.ts",
+    "src/lib/constants.ts",
+    "src/lib/types.ts",
+    "src/lib/utils.ts",
+    "src/storage/LocalStorage.ts"
+  ]
 }

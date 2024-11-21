@@ -1,8 +1,8 @@
+export { getStorageData, setStorage } from '../storage/storage';
 export { addAnnouncement } from './announcement/addAnnouncement';
 export { getAnnouncement } from './announcement/getAnnouncement';
 export { removeAnnouncement } from './announcement/removeAnnouncement';
 export { updateAnnouncement } from './announcement/updateAnnouncement';
-export { getBlob } from './blob/getBlob';
 export { createChannel } from './channel/createChannel';
 export { deleteChannel } from './channel/deleteChannel';
 export { READER, getChannel } from './channel/getChannel';
