@@ -8,7 +8,7 @@ export const createLocalStorage = (): Storage => {
       const res = readFileSync(`../db-dev/storage/${key}`);
       return Promise.resolve({
         contentType: '',
-        data: res.buffer as ArrayBuffer,
+        data: res,
       });
     } catch (err: unknown) {
       if (err instanceof Error && 'code' in err) {

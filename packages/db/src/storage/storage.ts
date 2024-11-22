@@ -1,4 +1,4 @@
-type GetResult = { contentType: string; data: ArrayBuffer } | undefined;
+type GetResult = { contentType: string; data: Uint8Array } | undefined;
 
 export type Storage = {
   get: (key: string) => Promise<GetResult>;

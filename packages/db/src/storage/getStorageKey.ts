@@ -15,6 +15,7 @@ const imageSize = async (ab: Uint8Array) => {
     width: d.width,
     height: d.height,
     ext: t?.ext,
+    mime: t?.mime,
   };
 };
 
@@ -26,13 +27,16 @@ export const getStorageKey = async (blob: Blob) => {
   const hash = base62.encode(new Uint8Array(digest));
 
   const size = await imageSize(ab);
+
+  const mimeType = size?.mime ?? blob.type;
+
   if (!size) {
-    return [hash, ab] as const;
+    return [hash, ab, mimeType] as const;
   }
 
   if (size.ext) {
-    return [`${hash}_${size.width}x${size.height}.${size.ext}`, ab] as const;
+    return [`${hash}_${size.width}x${size.height}.${size.ext}`, ab, mimeType] as const;
   } else {
-    return [`${hash}_${size.width}x${size.height}`, ab] as const;
+    return [`${hash}_${size.width}x${size.height}`, ab, mimeType] as const;
   }
 };

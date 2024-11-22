@@ -11,7 +11,7 @@ export const createR2Storage = (bucket: R2Bucket): Storage => {
 
     return {
       contentType: res.httpMetadata?.contentType ?? '',
-      data: await res.arrayBuffer(),
+      data: new Uint8Array(await res.arrayBuffer()),
     };
   };
 
