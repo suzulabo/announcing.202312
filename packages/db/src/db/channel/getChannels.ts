@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
 
-import { channelsTable, ownersTable } from '../../schema';
 import { getDB } from '../db';
+import { channelsTable, ownersTable } from '../schema';
 
 export const getChannels = async ({ userID }: { userID: string }) => {
   const db = getDB();

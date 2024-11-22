@@ -1,7 +1,7 @@
 import { and, eq } from 'drizzle-orm';
 
-import { announcementsTable } from '../../schema';
 import { getDB } from '../db';
+import { announcementsTable } from '../schema';
 
 export const getAnnouncement = async ({
   channelID,

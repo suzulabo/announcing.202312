@@ -1,8 +1,8 @@
 import { and, eq, exists } from 'drizzle-orm';
 import type { SQLiteUpdateSetSource } from 'drizzle-orm/sqlite-core';
 
-import { channelsTable, ownersTable } from '../../schema';
 import { getDB } from '../db';
+import { channelsTable, ownersTable } from '../schema';
 
 import * as v from 'valibot';
 import {

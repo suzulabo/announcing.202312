@@ -1,6 +1,6 @@
 import { migrate } from 'drizzle-orm/libsql/migrator';
 import process from 'node:process';
-import { getDB } from '../src/api/db';
+import { getDB } from '../src/db/db';
 import { setStorage, type Storage } from '../src/storage/storage';
 
 const createMemoryStorage = (): Storage => {

@@ -9,7 +9,7 @@ import {
   getStorageData,
   removeAnnouncement,
   updateAnnouncement,
-} from '../src/api';
+} from '../src';
 import { setupDB } from './setupDB';
 
 describe('Announcement', () => {

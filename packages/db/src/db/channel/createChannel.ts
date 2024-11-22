@@ -8,9 +8,9 @@ import {
   CHANNEL_NAME_MAX_BYTES,
   USER_ID_MAX_BYTES,
 } from '../../lib/constants';
-import { channelsTable, ownersTable } from '../../schema';
 import { putStorageData } from '../../storage/storage';
 import { getDB } from '../db';
+import { channelsTable, ownersTable } from '../schema';
 
 const paramsSchema = v.object({
   userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),

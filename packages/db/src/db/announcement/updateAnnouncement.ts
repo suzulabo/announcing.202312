@@ -10,10 +10,10 @@ import {
   CHANNEL_ID_MAX_BYTES,
   USER_ID_MAX_BYTES,
 } from '../../lib/constants';
-import { announcementsTable, channelsTable } from '../../schema';
 import { putStorageData } from '../../storage/storage';
 import { getChannel } from '../channel/getChannel';
 import { getDB } from '../db';
+import { announcementsTable, channelsTable } from '../schema';
 import { genAnnouncementID } from './genAnnouncementID';
 
 const paramsSchema = v.object({
