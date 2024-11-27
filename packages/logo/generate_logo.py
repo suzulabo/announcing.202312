@@ -34,7 +34,7 @@ img.save("/workspace/logo_512.png", "PNG")
 img = img.resize((192, 192), Image.Resampling.LANCZOS)
 img.save("/workspace/logo_192.png", "PNG")
 img = img.resize((180, 180), Image.Resampling.LANCZOS)
-img.save("/workspace/logo_180.png", "PNG")
+img.save("/workspace/apple-touch-icon.png", "PNG")
 img = img.resize((32, 32), Image.Resampling.LANCZOS)
 img.save("/workspace/favicon.ico", "ICO")
 

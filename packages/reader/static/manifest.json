@@ -2,7 +2,7 @@
   "name": "Announcing",
   "short_name": "Announcing",
   "start_url": "/",
-  "display": "minimal-ui",
+  "display": "standalone",
   "icons": [
     {
       "src": "/logo_192.png",
