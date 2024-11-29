@@ -1,0 +1,17 @@
+{
+  "name": "@announcing/push",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "build": "tsc -p tsconfig.build.json",
+    "build:watch": "tsc -w -p tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@libsql/client": "^0.14.0",
+    "@types/node": "^22.9.0",
+    "vitest": "^2.1.4"
+  }
+}
