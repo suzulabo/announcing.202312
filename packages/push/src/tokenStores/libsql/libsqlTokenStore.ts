@@ -1,5 +1,11 @@
 import { type Client, type InStatement } from '@libsql/client';
 
+type Config = {
+  client: Client;
+  maxTokens?: number;
+  debug?: boolean;
+};
+
 type TagSub = {
   tag: string;
   sub: number;
@@ -8,9 +14,9 @@ type TagSub = {
 const MAX_TOKENS = 50000;
 
 const SELECT_TOKEN = 'SELECT * FROM tokens WHERE token = :token';
-const SELECT_SUB = `
-SELECT sub FROM tags
-WHERE tag = :tag AND count <= ${MAX_TOKENS} ORDER BY sub LIMIT 1
+const SELECT_SUB_COUNT = `
+SELECT sub, count FROM tags
+WHERE tag = :tag ORDER BY sub ASC LIMIT 1
 `;
 const UPSERT_TAGS = `
 INSERT INTO tags(tag, sub, tokens, count)
@@ -40,7 +46,33 @@ const parseTagSub = (s: string): TagSub => {
   };
 };
 
-const putToken = async (client: Client, token: string, tags: string[]): Promise<void> => {
+const debugClient = (client: Client): Client => {
+  const batch: Client['batch'] = async (...args) => {
+    const start = performance.now();
+    try {
+      return await client.batch(...args);
+    } finally {
+      const end = performance.now();
+      console.log(`[PERF] batch ${end - start}ms`, args);
+    }
+  };
+  const execute: Client['execute'] = async (...args) => {
+    const start = performance.now();
+    try {
+      return await client.execute(...args);
+    } finally {
+      const end = performance.now();
+      console.log(`[PERF] execute ${end - start}ms`, args);
+    }
+  };
+
+  return { ...client, batch, execute };
+};
+
+const putToken = async (config: Config, token: string, tags: string[]): Promise<void> => {
+  const client = config.debug ? debugClient(config.client) : config.client;
+  const maxTokens = config.maxTokens ?? MAX_TOKENS;
+
   const curTokenRow = (
     await client.execute({
       sql: SELECT_TOKEN,
@@ -83,7 +115,7 @@ const putToken = async (client: Client, token: string, tags: string[]): Promise<
   if (tagsAdded.length > 0) {
     const stmts = tagsAdded.map((tag) => {
       return {
-        sql: SELECT_SUB,
+        sql: SELECT_SUB_COUNT,
         args: { tag },
       };
     });
@@ -91,7 +123,14 @@ const putToken = async (client: Client, token: string, tags: string[]): Promise<
     const recs = await client.batch(stmts, 'read');
 
     tagsAdded.forEach((tag, i) => {
-      const sub = (recs[i]?.rows[0]?.['sub'] ?? 1) as number;
+      const rec = recs[i]?.rows[0];
+      let sub = 1;
+      if (rec) {
+        const count = rec['count'] as number;
+        if (count >= maxTokens) {
+          sub = (rec['sub'] as number) + 1;
+        }
+      }
       putStatements.push({
         sql: UPSERT_TAGS,
         args: { tag, sub, token },
@@ -124,10 +163,11 @@ const putToken = async (client: Client, token: string, tags: string[]): Promise<
   await client.batch(putStatements, 'write');
 };
 
-export const createLibSqlTokenStore = (client: Client) => {
+export const createLibSqlTokenStore = (config: Config) => {
   return {
     putToken: (token: string, tags: string[]) => {
-      return putToken(client, token, tags);
+      return putToken(config, token, tags);
     },
+    config,
   };
 };
