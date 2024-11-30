@@ -1,4 +1,5 @@
 import { type Client, type InStatement } from '@libsql/client';
+import type { PushTokenStore } from '..';
 
 type Config = {
   client: Client;
@@ -10,29 +11,6 @@ type TagSub = {
   tag: string;
   sub: number;
 };
-
-const MAX_TOKENS = 50000;
-
-const SELECT_TOKEN = 'SELECT * FROM tokens WHERE token = :token';
-const SELECT_SUB_COUNT = `
-SELECT sub, count FROM tags
-WHERE tag = :tag ORDER BY sub ASC LIMIT 1
-`;
-const UPSERT_TAGS = `
-INSERT INTO tags(tag, sub, tokens, count)
-VALUES(:tag, :sub, :token || ' ', 1)
-ON CONFLICT(tag, sub) DO UPDATE SET
-tokens = tokens || ' ' || :token , count = count + 1
-`;
-const REMOVE_TOKEN = `
-UPDATE tags SET
-tokens = REPLACE(tokens, :token || ' ', ''), count = count - 1
-WHERE tag = :tag AND sub = :sub AND INSTR(tokens, :token) >= 0
-`;
-const UPSERT_TOKENS = `
-REPLACE INTO tokens(token, tags)
-VALUES(:token, :tags)
-`;
 
 const parseTagSub = (s: string): TagSub => {
   const [tag, sub] = s.split(':');
@@ -53,7 +31,8 @@ const debugClient = (client: Client): Client => {
       return await client.batch(...args);
     } finally {
       const end = performance.now();
-      console.log(`[PERF] batch ${end - start}ms`, args);
+      console.log(`[PERF] batch ${end - start}ms`);
+      console.dir(args, { depth: null });
     }
   };
   const execute: Client['execute'] = async (...args) => {
@@ -62,12 +41,39 @@ const debugClient = (client: Client): Client => {
       return await client.execute(...args);
     } finally {
       const end = performance.now();
-      console.log(`[PERF] execute ${end - start}ms`, args);
+      console.log(`[PERF] execute ${end - start}ms`);
+      console.dir(args, { depth: null });
     }
   };
 
   return { ...client, batch, execute };
 };
+
+const MAX_TOKENS = 50000;
+
+const SELECT_TOKEN = 'SELECT * FROM tokens WHERE token = :token';
+const SELECT_SUB_COUNT = `
+SELECT sub, count, tail FROM tags
+WHERE tag = :tag ORDER BY sub DESC LIMIT 1
+`;
+const UPSERT_TAGS = `
+INSERT INTO tags(tag, sub, tokens, count, tail)
+VALUES(:tag, :sub, :token || ' ', 1, 1)
+ON CONFLICT(tag, sub) DO UPDATE SET
+tokens = tokens || :token  || ' ', count = count + 1
+`;
+const UPDATE_NOT_TAIL = `
+UPDATE tags SET tail = 0 WHERE tag = :tag AND sub = :sub
+`;
+const REMOVE_TOKEN = `
+UPDATE tags SET
+tokens = REPLACE(tokens, :token || ' ', ''), count = count - 1
+WHERE tag = :tag AND sub = :sub AND INSTR(tokens, :token) >= 0
+`;
+const UPSERT_TOKENS = `
+REPLACE INTO tokens(token, tags)
+VALUES(:token, :tags)
+`;
 
 const putToken = async (config: Config, token: string, tags: string[]): Promise<void> => {
   const client = config.debug ? debugClient(config.client) : config.client;
@@ -129,6 +135,12 @@ const putToken = async (config: Config, token: string, tags: string[]): Promise<
         const count = rec['count'] as number;
         if (count >= maxTokens) {
           sub = (rec['sub'] as number) + 1;
+          putStatements.push({
+            sql: UPDATE_NOT_TAIL,
+            args: { tag, sub: sub - 1 },
+          });
+        } else {
+          sub = rec['sub'] as number;
         }
       }
       putStatements.push({
@@ -163,10 +175,47 @@ const putToken = async (config: Config, token: string, tags: string[]): Promise<
   await client.batch(putStatements, 'write');
 };
 
-export const createLibSqlTokenStore = (config: Config) => {
+const SELECT_TOKENS = `
+SELECT tokens,tail FROM tags WHERE tag = :tag AND sub = :sub
+`;
+
+const getTokensReader = (config: Config, tag: string): (() => Promise<string[] | undefined>) => {
+  const client = config.debug ? debugClient(config.client) : config.client;
+
+  let sub = 1;
+
+  const read = async () => {
+    if (sub === 0) {
+      return;
+    }
+    const row = (await client.execute({ sql: SELECT_TOKENS, args: { tag, sub } })).rows.shift();
+    if (!row) {
+      sub = 0;
+      return;
+    }
+
+    if (row['tail']) {
+      sub = 0;
+    } else {
+      sub++;
+    }
+
+    return (row['tokens'] as string)
+      .trim()
+      .split(' ')
+      .filter((v) => !!v.trim());
+  };
+
+  return read;
+};
+
+export const createLibSqlTokenStore = (config: Config): PushTokenStore & { config: Config } => {
   return {
     putToken: (token: string, tags: string[]) => {
       return putToken(config, token, tags);
+    },
+    getTokensReader: (tag: string) => {
+      return getTokensReader(config, tag);
     },
     config,
   };

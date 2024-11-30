@@ -8,5 +8,6 @@ CREATE TABLE tags (
   sub integer NOT NULL,
 	tokens text NOT NULL,
   count integer NOT NULL,
+  tail integer NOT NULL,
 	PRIMARY KEY(tag, sub)
 );

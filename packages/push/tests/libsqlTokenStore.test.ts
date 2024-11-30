@@ -28,16 +28,16 @@ describe('libsqlTokenStore', () => {
       { token: 'token1', tags: '123:1 456:1' },
     ]);
     expect((await client.execute('SELECT * FROM tags')).rows).toStrictEqual([
-      { tag: '123', sub: 1, tokens: 'token1 ', count: 1 },
-      { tag: '456', sub: 1, tokens: 'token1 ', count: 1 },
+      { tag: '123', sub: 1, tokens: 'token1 ', count: 1, tail: 1 },
+      { tag: '456', sub: 1, tokens: 'token1 ', count: 1, tail: 1 },
     ]);
     await store.putToken('token1', ['123']);
     expect((await client.execute('SELECT * FROM tokens')).rows).toStrictEqual([
       { token: 'token1', tags: '123:1' },
     ]);
     expect((await client.execute('SELECT * FROM tags')).rows).toStrictEqual([
-      { tag: '123', sub: 1, tokens: 'token1 ', count: 1 },
-      { tag: '456', sub: 1, tokens: '', count: 0 },
+      { tag: '123', sub: 1, tokens: 'token1 ', count: 1, tail: 1 },
+      { tag: '456', sub: 1, tokens: '', count: 0, tail: 1 },
     ]);
   });
 
@@ -45,13 +45,25 @@ describe('libsqlTokenStore', () => {
     const client = await createTestClient();
     const store = createLibSqlTokenStore({ client, maxTokens: 10 });
 
-    for (let i = 1; i <= 11; i++) {
+    for (let i = 1; i <= 31; i++) {
       await store.putToken(`token${i}`, ['123']);
     }
-    expect((await client.execute('SELECT sub ,count FROM tags ORDER BY sub')).rows).toStrictEqual([
-      { sub: 1, count: 10 },
-      { sub: 2, count: 1 },
+
+    expect(
+      (await client.execute('SELECT sub, count, tail FROM tags ORDER BY sub')).rows,
+    ).toStrictEqual([
+      { sub: 1, count: 10, tail: 0 },
+      { sub: 2, count: 10, tail: 0 },
+      { sub: 3, count: 10, tail: 0 },
+      { sub: 4, count: 1, tail: 1 },
     ]);
+
+    const reader = store.getTokensReader('123');
+    expect((await reader())?.length).toEqual(10);
+    expect((await reader())?.length).toEqual(10);
+    expect((await reader())?.length).toEqual(10);
+    expect((await reader())?.length).toEqual(1);
+    expect(await reader()).toBeUndefined();
   });
 
   test.skip('put performance', async () => {
