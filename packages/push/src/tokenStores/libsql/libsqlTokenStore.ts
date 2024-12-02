@@ -217,6 +217,10 @@ export const createLibSqlTokenStore = (config: Config): PushTokenStore & { confi
     getTokensReader: (tag: string) => {
       return getTokensReader(config, tag);
     },
+    // TODO
+    removeTokens: () => {
+      return Promise.resolve();
+    },
     config,
   };
 };
