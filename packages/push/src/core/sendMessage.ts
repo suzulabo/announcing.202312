@@ -25,6 +25,6 @@ export const sendMessage = async (config: Config, message: MulticastMessage) => 
   });
 
   if (invalidTokens.length > 0) {
-    await config.tokenStore.removeTokens(invalidTokens);
+    await config.tokenStore.deleteTokens(invalidTokens);
   }
 };
