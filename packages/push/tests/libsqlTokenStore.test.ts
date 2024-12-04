@@ -99,6 +99,24 @@ describe('libsqlTokenStore', () => {
     expect(spyBatch).toBeCalledTimes(2);
   });
 
+  test('reader', async () => {
+    const client = await createTestClient();
+
+    const store = createLibSqlTokenStore({ client });
+
+    {
+      const reader = store.getTokensReader('tag');
+      expect(await reader()).toBeUndefined();
+    }
+
+    {
+      await store.putToken('token1', ['123']);
+      await store.putToken('token1', []);
+      const reader = store.getTokensReader('123');
+      expect(await reader()).toBeUndefined();
+    }
+  });
+
   test.skip('put performance', async () => {
     // 150 characters
     const TOKEN =

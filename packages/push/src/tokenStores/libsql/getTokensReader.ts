@@ -28,10 +28,16 @@ export const getTokensReader = (
       sub++;
     }
 
-    return (row['tokens'] as string)
+    const result = (row['tokens'] as string)
       .trim()
       .split(' ')
       .filter((v) => !!v.trim());
+    if (result.length > 0) {
+      return result;
+    } else {
+      sub = 0;
+      return;
+    }
   };
 
   return read;
