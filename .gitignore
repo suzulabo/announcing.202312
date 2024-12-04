@@ -4,6 +4,7 @@ dist
 .env.local
 .env.test
 .wrangler
+coverage
 
 test-results
 playwright-report
