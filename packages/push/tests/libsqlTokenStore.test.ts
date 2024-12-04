@@ -1,21 +1,6 @@
-import { createClient } from '@libsql/client';
-import { readFileSync } from 'node:fs';
 import { describe, expect, test, vi } from 'vitest';
 import { createLibSqlTokenStore } from '../src/tokenStores/libsql/libsqlTokenStore';
-
-const schemas = readFileSync('src/tokenStores/libsql/schema.sql', 'utf8')
-  .split(';')
-  .filter((v) => {
-    return !!v.trim();
-  });
-
-const createTestClient = async () => {
-  const client = createClient({ url: ':memory:' });
-
-  await client.migrate(schemas);
-
-  return client;
-};
+import { createTestClient } from './createTestClient';
 
 describe('libsqlTokenStore', () => {
   test('set and unset', async () => {
