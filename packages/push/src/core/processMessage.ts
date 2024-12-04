@@ -1,12 +1,11 @@
-import type { TaskManager } from '../tasks';
-import type { PushTokenStore } from '../tokenStores';
+import type { TaskManager, TokenStore } from './types';
 
 import { type BaseMessage } from 'firebase-admin/messaging';
 
 const TOKEN_LIMIT = 500;
 
 type Config = {
-  tokenStore: PushTokenStore;
+  tokenStore: TokenStore;
   taskManager: TaskManager;
 };
 

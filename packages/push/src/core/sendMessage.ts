@@ -1,9 +1,9 @@
 import type { Messaging, MulticastMessage } from 'firebase-admin/messaging';
-import type { PushTokenStore } from '../tokenStores';
+import type { TokenStore } from './types';
 
 type Config = {
   messaging: Messaging;
-  tokenStore: PushTokenStore;
+  tokenStore: TokenStore;
 };
 
 export const sendMessage = async (config: Config, message: MulticastMessage) => {
