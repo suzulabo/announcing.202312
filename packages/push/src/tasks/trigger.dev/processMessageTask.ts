@@ -26,9 +26,12 @@ export const processMessageTask = schemaTask({
   id: 'process-message',
   schema,
   maxDuration: 10,
-  run: async (payload) => {
+  run: async (payload, { ctx }) => {
+    const idPrefix = ctx.run.id;
+
     await processMessage(
       {
+        idPrefix,
         tokenStore,
         taskManager: {
           createSendMessageTask,
