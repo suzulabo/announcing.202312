@@ -97,6 +97,10 @@
       font-weight: bold;
     }
 
+    .body {
+      white-space: pre-wrap;
+    }
+
     .single-image {
       object-fit: contain;
       margin: 8px auto;
