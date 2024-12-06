@@ -3,9 +3,8 @@
 </script>
 
 <script lang="ts">
-  import { onDestroy, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
 
-  import { browser } from '$app/environment';
   import { toStyle } from '$lib/utils/toStyle';
 
   interface Props {
@@ -24,36 +23,6 @@
     children,
   }: Props = $props();
 
-  let bodyOverflow: string | undefined = $state(undefined);
-
-  $effect(() => {
-    if (!browser) {
-      return;
-    }
-
-    if (open) {
-      bodyOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-    } else {
-      if (bodyOverflow) {
-        document.body.style.overflow = bodyOverflow;
-      } else {
-        document.body.style.removeProperty('overflow');
-      }
-    }
-  });
-
-  onDestroy(() => {
-    if (!browser) {
-      return;
-    }
-    if (bodyOverflow) {
-      document.body.style.overflow = bodyOverflow;
-    } else {
-      document.body.style.removeProperty('overflow');
-    }
-  });
-
   const clickHandler = (event: MouseEvent) => {
     if (dismissMode === 'anywhere') {
       open = false;
@@ -69,6 +38,7 @@
   role="button"
   tabindex="0"
   class="modal"
+  class:open
   style={toStyle({ display: open ? undefined : 'none', padding })}
   onclick={clickHandler}
   onkeydown={() => {
@@ -88,6 +58,10 @@
 />
 
 <style lang="scss">
+  :global(body:has(.modal.open)) {
+    overflow: hidden;
+  }
+
   .modal {
     cursor: default;
     display: flex;
