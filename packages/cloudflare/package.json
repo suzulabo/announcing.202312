@@ -17,8 +17,8 @@
   "devDependencies": {
     "@miniflare/d1": "^2.14.4",
     "@miniflare/shared": "^2.14.4",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.10.1",
     "tsx": "^4.19.2",
-    "wrangler": "^3.87.0"
+    "wrangler": "^3.92.0"
   }
 }
