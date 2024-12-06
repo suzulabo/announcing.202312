@@ -235,14 +235,14 @@ importers:
         specifier: ^3.3.5
         version: 3.3.5(zod@3.23.8)
       '@types/node':
-        specifier: ^22.9.0
-        version: 22.9.0
+        specifier: ^22.10.1
+        version: 22.10.1
       '@vitest/coverage-v8':
-        specifier: 2.1.4
-        version: 2.1.4(vitest@2.1.4(@types/node@22.9.0)(jsdom@24.1.1)(sass@1.80.6)(terser@5.36.0))
+        specifier: 2.1.8
+        version: 2.1.8(vitest@2.1.8(@types/node@22.10.1)(jsdom@24.1.1)(sass@1.80.6)(terser@5.36.0))
       dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
+        specifier: ^16.4.7
+        version: 16.4.7
       firebase-admin:
         specifier: ^13.0.1
         version: 13.0.1
@@ -250,11 +250,11 @@ importers:
         specifier: ^4.19.2
         version: 4.19.2
       valibot:
-        specifier: 1.0.0-beta.3
-        version: 1.0.0-beta.3(typescript@5.7.2)
+        specifier: 1.0.0-beta.9
+        version: 1.0.0-beta.9(typescript@5.7.2)
       vitest:
-        specifier: ^2.1.4
-        version: 2.1.4(@types/node@22.9.0)(jsdom@24.1.1)(sass@1.80.6)(terser@5.36.0)
+        specifier: ^2.1.8
+        version: 2.1.8(@types/node@22.10.1)(jsdom@24.1.1)(sass@1.80.6)(terser@5.36.0)
 
   packages/reader:
     devDependencies:
@@ -630,11 +630,6 @@ packages:
     resolution: {integrity: sha512-tbhNuIxNcVb21pInl3ZSjksLCvgdZy9KwJ8brv993QtIVKJBBkYXz4q4ZbAv31GdnC+R90np23L5FbEBlthAEw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/parser@7.26.2':
-    resolution: {integrity: sha512-DWMCZH9WA4Maitz2q21SRKHo9QXZxkDsbNZoVD62gusNtNBBqDg9i7uOhASfTfIGNzW+O+r7+jAlM8dwphcJKQ==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-
   '@babel/parser@7.26.3':
     resolution: {integrity: sha512-WJ/CvmY8Mea8iDXo6a7RK2wbmJITT5fN3BEkRuFlxVyNx8jOKIIhmC4fSkTcPcf8JyavbBwIe6OpiCOBXt/IcA==}
     engines: {node: '>=6.0.0'}
@@ -646,10 +641,6 @@ packages:
 
   '@babel/traverse@7.26.4':
     resolution: {integrity: sha512-fH+b7Y4p3yqvApJALCPJcwb0/XaOSgtK4pzV6WVjPR5GLFQBRI7pfoX2V2iM48NXvX07NUxxm1Vw98YjqTcU5w==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/types@7.26.0':
-    resolution: {integrity: sha512-Z/yiTPj+lDVnF7lWeKCIJzaIkI0vYO87dMpZ4bg4TDrFe4XXLFWL1TbXU27gBP3QccxV9mZICCrnjnYlJjXHOA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.26.3':
@@ -1458,8 +1449,8 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@fastify/busboy@3.0.0':
-    resolution: {integrity: sha512-83rnH2nCvclWaPQQKvkJ2pdOjG4TZyEVuFDnlOF6KP08lDaaceVyw/W63mDuafQT+MKHCvXIPpE5uYWeM0rT4w==}
+  '@fastify/busboy@3.1.0':
+    resolution: {integrity: sha512-yHmUtGwEbW6HsKpPqT140/L6GpHtquHogRLgtanJFep3UAfDkE0fQfC49U+F9irCAoJVlv3M7VSp4rrtO4LnfA==}
 
   '@firebase/analytics-compat@0.2.16':
     resolution: {integrity: sha512-Q/s+u/TEMSb2EDJFQMGsOzpSosybBl8HuoSEMyGZ99+0Pu7SIR9MPDGUjc8PKiCFQWDJ3QXxgqh1d/rujyAMbA==}
@@ -1671,8 +1662,8 @@ packages:
   '@firebase/webchannel-wrapper@1.0.3':
     resolution: {integrity: sha512-2xCRM9q9FlzGZCdgDMJwc0gyUkWFtkosy7Xxr6sFgQwn+wMNIWd7xIvYNauU1r64B5L5rsGKy/n9TKJ0aAFeqQ==}
 
-  '@google-cloud/firestore@7.10.0':
-    resolution: {integrity: sha512-VFNhdHvfnmqcHHs6YhmSNHHxQqaaD64GwiL0c+e1qz85S8SWZPC2XFRf8p9yHRTF40Kow424s1KBU9f0fdQa+Q==}
+  '@google-cloud/firestore@7.11.0':
+    resolution: {integrity: sha512-88uZ+jLsp1aVMj7gh3EKYH1aulTAMFAp8sH/v5a9w8q8iqSG27RiWLoxSAFr/XocZ9hGiWH1kEnBw+zl3xAgNA==}
     engines: {node: '>=14.0.0'}
 
   '@google-cloud/paginator@5.0.2':
@@ -1695,8 +1686,8 @@ packages:
     resolution: {integrity: sha512-H41bPL2cMfSi4EEnFzKvg7XSb7T67ocSXrmF7MPjfgFB0L6CKGzfIYJheAZi1iqXjz6XaCT1OBf6HCG5vDBTOQ==}
     engines: {node: '>=14'}
 
-  '@grpc/grpc-js@1.12.2':
-    resolution: {integrity: sha512-bgxdZmgTrJZX50OjyVwz3+mNEnCTNkh3cIqGPWVNeW9jX6bn1ZkU80uPd+67/ZpIJIjRQ9qaHCjhavyoWYxumg==}
+  '@grpc/grpc-js@1.12.4':
+    resolution: {integrity: sha512-NBhrxEWnFh0FxeA0d//YP95lRFsSx2TNLEUQg4/W+5f/BMxcCjgOOIT24iD+ZB/tZw057j44DaIxja7w4XMrhg==}
     engines: {node: '>=12.10.0'}
 
   '@grpc/grpc-js@1.9.15':
@@ -2731,11 +2722,11 @@ packages:
     resolution: {integrity: sha512-1Hm7THLpO6ww5QU6H/Qp+AusUUl+z/CAm3cNZZ0jQvon9yicgO7Rwd+/WWRpMKLYV6p2UvdbR27c86rzCPpreg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@vitest/coverage-v8@2.1.4':
-    resolution: {integrity: sha512-FPKQuJfR6VTfcNMcGpqInmtJuVXFSCd9HQltYncfR01AzXhLucMEtQ5SinPdZxsT5x/5BK7I5qFJ5/ApGCmyTQ==}
+  '@vitest/coverage-v8@2.1.8':
+    resolution: {integrity: sha512-2Y7BPlKH18mAZYAW1tYByudlCYrQyl5RGvnnDYJKW5tCiO5qg3KSAy3XAxcxKz900a0ZXxWtKrMuZLe3lKBpJw==}
     peerDependencies:
-      '@vitest/browser': 2.1.4
-      vitest: 2.1.4
+      '@vitest/browser': 2.1.8
+      vitest: 2.1.8
     peerDependenciesMeta:
       '@vitest/browser':
         optional: true
@@ -3124,10 +3115,6 @@ packages:
     resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
     engines: {node: '>=10'}
 
-  dotenv@16.4.5:
-    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
-    engines: {node: '>=12'}
-
   dotenv@16.4.7:
     resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
@@ -3440,6 +3427,10 @@ packages:
     resolution: {integrity: sha512-xkjOecfnKGkSsOwtZ5Pz7Us/T6mrbPQrq0nh+aCO5V9nk5NLWmasAHumTKjiPJPWANe+kAZ84Jc8ooJkzZ88Sw==}
     hasBin: true
 
+  fast-xml-parser@4.5.0:
+    resolution: {integrity: sha512-/PlTQCI96+fZMAOLMZK4CWG1ItCbfZ/0jx7UIJFChPNrx7tcEgerUgWbeieCM9MfHInUDyK8DWYZ+YrywDJuTg==}
+    hasBin: true
+
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
 
@@ -3704,8 +3695,8 @@ packages:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
 
-  import-in-the-middle@1.11.2:
-    resolution: {integrity: sha512-gK6Rr6EykBcc6cVWRSBR5TWf8nn6hZMYSRYqCcHa0l0d1fPK7JSYo6+Mlmck76jIX9aL/IZ71c06U2VpFwl1zA==}
+  import-in-the-middle@1.11.3:
+    resolution: {integrity: sha512-tNpKEb4AjZrCyrxi+Eyu43h5ig0O8ZRFSXPHh/00/o+4P4pKzVEW/m5lsVtsAT7fCIgmQOAPjdqecGDsBXRxsw==}
 
   import-meta-resolve@4.1.0:
     resolution: {integrity: sha512-I6fiaX09Xivtk+THaMfAwnA3MVA5Big1WHF1Dfx9hFuvNIWpXnorlkzhcQf6ehrqQiiZECRt1poOAkPmer3ruw==}
@@ -4600,8 +4591,8 @@ packages:
   stubs@3.0.0:
     resolution: {integrity: sha512-PdHt7hHUJKxvTCgbKX9C1V/ftOcjJQgz8BZwNfV5c4B6dcGqlpelTbJ999jBGZ2jYiPAwcX5dP6oBwVlBlUbxw==}
 
-  superjson@2.2.1:
-    resolution: {integrity: sha512-8iGv75BYOa0xRJHK5vRLEjE2H/i4lulTjzpUXic3Eg8akftYjkmQDa8JARQ42rlczXyFR3IeRoeFCc7RxHsYZA==}
+  superjson@2.2.2:
+    resolution: {integrity: sha512-5JRxVqC8I8NuOUjzBbvVJAKNM8qoVuH0O77h4WInc/qC2q5IreqKxYwgkga3PfA22OayK2ikceb/B26dztPl+Q==}
     engines: {node: '>=16'}
 
   supports-color@7.2.0:
@@ -4860,14 +4851,6 @@ packages:
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
-
-  valibot@1.0.0-beta.3:
-    resolution: {integrity: sha512-PRknKVj2249cF8Pxqil1dahkVHgyaPDq++Y8sA96R5lx4nYnVazs11kefOsRVD3PSygYJG5q2MEdEm7kuSWa+g==}
-    peerDependencies:
-      typescript: '>=5'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
 
   valibot@1.0.0-beta.9:
     resolution: {integrity: sha512-yEX8gMAZ2R1yI2uwOO4NCtVnJQx36zn3vD0omzzj9FhcoblvPukENIiRZXKZwCnqSeV80bMm8wNiGhQ0S8fiww==}
@@ -5800,14 +5783,9 @@ snapshots:
       '@babel/types': 7.26.3
     optional: true
 
-  '@babel/parser@7.26.2':
-    dependencies:
-      '@babel/types': 7.26.0
-
   '@babel/parser@7.26.3':
     dependencies:
       '@babel/types': 7.26.3
-    optional: true
 
   '@babel/template@7.25.9':
     dependencies:
@@ -5829,16 +5807,10 @@ snapshots:
       - supports-color
     optional: true
 
-  '@babel/types@7.26.0':
-    dependencies:
-      '@babel/helper-string-parser': 7.25.9
-      '@babel/helper-validator-identifier': 7.25.9
-
   '@babel/types@7.26.3':
     dependencies:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
-    optional: true
 
   '@bcoe/v8-coverage@0.2.3': {}
 
@@ -5876,7 +5848,7 @@ snapshots:
 
   '@electric-sql/client@0.7.1':
     optionalDependencies:
-      '@rollup/rollup-darwin-arm64': 4.24.4
+      '@rollup/rollup-darwin-arm64': 4.28.0
 
   '@esbuild-kit/core-utils@3.3.2':
     dependencies:
@@ -6287,7 +6259,7 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@fastify/busboy@3.0.0': {}
+  '@fastify/busboy@3.1.0': {}
 
   '@firebase/analytics-compat@0.2.16(@firebase/app-compat@0.2.46)(@firebase/app@0.10.16)':
     dependencies:
@@ -6606,7 +6578,7 @@ snapshots:
 
   '@firebase/webchannel-wrapper@1.0.3': {}
 
-  '@google-cloud/firestore@7.10.0':
+  '@google-cloud/firestore@7.11.0':
     dependencies:
       '@opentelemetry/api': 1.9.0
       fast-deep-equal: 3.1.3
@@ -6640,7 +6612,7 @@ snapshots:
       abort-controller: 3.0.0
       async-retry: 1.3.3
       duplexify: 4.1.3
-      fast-xml-parser: 4.4.1
+      fast-xml-parser: 4.5.0
       gaxios: 6.7.1
       google-auth-library: 9.15.0
       html-entities: 2.5.2
@@ -6654,7 +6626,7 @@ snapshots:
       - supports-color
     optional: true
 
-  '@grpc/grpc-js@1.12.2':
+  '@grpc/grpc-js@1.12.4':
     dependencies:
       '@grpc/proto-loader': 0.7.13
       '@js-sdsl/ordered-map': 4.4.2
@@ -6870,7 +6842,7 @@ snapshots:
 
   '@opentelemetry/exporter-trace-otlp-grpc@0.52.1(@opentelemetry/api@1.9.0)':
     dependencies:
-      '@grpc/grpc-js': 1.12.2
+      '@grpc/grpc-js': 1.12.4
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/core': 1.25.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/otlp-grpc-exporter-base': 0.52.1(@opentelemetry/api@1.9.0)
@@ -6909,7 +6881,7 @@ snapshots:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/api-logs': 0.52.1
       '@types/shimmer': 1.2.0
-      import-in-the-middle: 1.11.2
+      import-in-the-middle: 1.11.3
       require-in-the-middle: 7.4.0
       semver: 7.6.3
       shimmer: 1.2.1
@@ -6924,7 +6896,7 @@ snapshots:
 
   '@opentelemetry/otlp-grpc-exporter-base@0.52.1(@opentelemetry/api@1.9.0)':
     dependencies:
-      '@grpc/grpc-js': 1.12.2
+      '@grpc/grpc-js': 1.12.4
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/core': 1.25.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/otlp-exporter-base': 0.52.1(@opentelemetry/api@1.9.0)
@@ -7692,9 +7664,9 @@ snapshots:
       execa: 8.0.1
       humanize-duration: 3.32.1
       jose: 5.9.6
-      nanoid: 3.3.7
+      nanoid: 3.3.8
       socket.io-client: 4.7.5
-      superjson: 2.2.1
+      superjson: 2.2.2
       zod: 3.23.8
       zod-error: 1.5.0
       zod-validation-error: 1.5.0(zod@3.23.8)
@@ -7733,14 +7705,14 @@ snapshots:
   '@types/body-parser@1.19.5':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 22.9.0
+      '@types/node': 22.10.1
 
   '@types/caseless@0.12.5':
     optional: true
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.9.0
+      '@types/node': 22.10.1
 
   '@types/cookie@0.6.0': {}
 
@@ -7759,7 +7731,7 @@ snapshots:
 
   '@types/express-serve-static-core@4.19.6':
     dependencies:
-      '@types/node': 22.9.0
+      '@types/node': 22.10.1
       '@types/qs': 6.9.17
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
@@ -7783,7 +7755,7 @@ snapshots:
 
   '@types/jsonwebtoken@9.0.7':
     dependencies:
-      '@types/node': 22.9.0
+      '@types/node': 22.10.1
 
   '@types/long@4.0.2':
     optional: true
@@ -7820,7 +7792,7 @@ snapshots:
   '@types/request@2.48.12':
     dependencies:
       '@types/caseless': 0.12.5
-      '@types/node': 22.9.0
+      '@types/node': 22.10.1
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.2
     optional: true
@@ -7828,12 +7800,12 @@ snapshots:
   '@types/send@0.17.4':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 22.9.0
+      '@types/node': 22.10.1
 
   '@types/serve-static@1.15.7':
     dependencies:
       '@types/http-errors': 2.0.4
-      '@types/node': 22.9.0
+      '@types/node': 22.10.1
       '@types/send': 0.17.4
 
   '@types/shimmer@1.2.0': {}
@@ -7927,7 +7899,7 @@ snapshots:
       '@typescript-eslint/types': 8.17.0
       eslint-visitor-keys: 4.2.0
 
-  '@vitest/coverage-v8@2.1.4(vitest@2.1.4(@types/node@22.9.0)(jsdom@24.1.1)(sass@1.80.6)(terser@5.36.0))':
+  '@vitest/coverage-v8@2.1.8(vitest@2.1.8(@types/node@22.10.1)(jsdom@24.1.1)(sass@1.80.6)(terser@5.36.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -7936,12 +7908,12 @@ snapshots:
       istanbul-lib-report: 3.0.1
       istanbul-lib-source-maps: 5.0.6
       istanbul-reports: 3.1.7
-      magic-string: 0.30.12
+      magic-string: 0.30.14
       magicast: 0.3.5
       std-env: 3.8.0
       test-exclude: 7.0.1
       tinyrainbow: 1.2.0
-      vitest: 2.1.4(@types/node@22.9.0)(jsdom@24.1.1)(sass@1.80.6)(terser@5.36.0)
+      vitest: 2.1.8(@types/node@22.10.1)(jsdom@24.1.1)(sass@1.80.6)(terser@5.36.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -8324,8 +8296,6 @@ snapshots:
   devalue@5.1.1: {}
 
   dotenv@10.0.0: {}
-
-  dotenv@16.4.5: {}
 
   dotenv@16.4.7: {}
 
@@ -8716,6 +8686,11 @@ snapshots:
     dependencies:
       strnum: 1.0.5
 
+  fast-xml-parser@4.5.0:
+    dependencies:
+      strnum: 1.0.5
+    optional: true
+
   fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
@@ -8756,10 +8731,10 @@ snapshots:
 
   firebase-admin@13.0.1:
     dependencies:
-      '@fastify/busboy': 3.0.0
+      '@fastify/busboy': 3.1.0
       '@firebase/database-compat': 2.0.1
       '@firebase/database-types': 1.0.7
-      '@types/node': 22.9.0
+      '@types/node': 22.10.1
       farmhash-modern: 1.1.0
       google-auth-library: 9.15.0
       jsonwebtoken: 9.0.2
@@ -8767,7 +8742,7 @@ snapshots:
       node-forge: 1.3.1
       uuid: 11.0.3
     optionalDependencies:
-      '@google-cloud/firestore': 7.10.0
+      '@google-cloud/firestore': 7.11.0
       '@google-cloud/storage': 7.14.0
     transitivePeerDependencies:
       - encoding
@@ -8945,7 +8920,7 @@ snapshots:
 
   google-gax@4.4.1:
     dependencies:
-      '@grpc/grpc-js': 1.12.2
+      '@grpc/grpc-js': 1.12.4
       '@grpc/proto-loader': 0.7.13
       '@types/long': 4.0.2
       abort-controller: 3.0.0
@@ -9060,7 +9035,7 @@ snapshots:
       parent-module: 1.0.1
       resolve-from: 4.0.0
 
-  import-in-the-middle@1.11.2:
+  import-in-the-middle@1.11.3:
     dependencies:
       acorn: 8.14.0
       acorn-import-attributes: 1.9.5(acorn@8.14.0)
@@ -9358,8 +9333,8 @@ snapshots:
 
   magicast@0.3.5:
     dependencies:
-      '@babel/parser': 7.26.2
-      '@babel/types': 7.26.0
+      '@babel/parser': 7.26.3
+      '@babel/types': 7.26.3
       source-map-js: 1.2.1
 
   make-dir@4.0.0:
@@ -9691,7 +9666,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 22.9.0
+      '@types/node': 22.10.1
       long: 5.2.3
 
   psl@1.15.0:
@@ -10008,7 +9983,7 @@ snapshots:
   stubs@3.0.0:
     optional: true
 
-  superjson@2.2.1:
+  superjson@2.2.2:
     dependencies:
       copy-anything: 3.0.5
 
@@ -10263,10 +10238,6 @@ snapshots:
     optional: true
 
   uuid@9.0.1: {}
-
-  valibot@1.0.0-beta.3(typescript@5.7.2):
-    optionalDependencies:
-      typescript: 5.7.2
 
   valibot@1.0.0-beta.9(typescript@5.7.2):
     optionalDependencies:
