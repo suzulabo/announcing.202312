@@ -19,7 +19,7 @@ const createMemoryStorage = (): Storage => {
     if (blob) {
       return {
         contentType: blob.type,
-        data: await blob.arrayBuffer(),
+        data: new Uint8Array(await blob.arrayBuffer()),
       };
     }
     return;
