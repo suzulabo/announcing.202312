@@ -8,6 +8,11 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 import { build, files, version } from '$service-worker';
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
 
+{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (self as any).__WB_DISABLE_DEV_LOGS = true;
+}
+
 const precacheAssets = [...build, ...files].map((url) => {
   return { url, revision: version };
 });
