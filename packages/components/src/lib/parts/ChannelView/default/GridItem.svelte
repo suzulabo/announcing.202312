@@ -60,8 +60,6 @@
     flex-grow: 1;
     max-height: 100%;
     margin: 8px 0 0;
-    padding: 8px;
-    border-radius: 8px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -75,7 +73,7 @@
       left: 0;
       right: 0;
       content: '';
-      background: linear-gradient(to top, var(--color-background), transparent 20%);
+      background: linear-gradient(to top, var(--color-gradient), transparent 10%);
       pointer-events: none;
     }
 
@@ -115,12 +113,6 @@
         object-fit: cover;
         margin: auto;
         border-radius: 8px;
-      }
-    }
-
-    @media (hover: hover) {
-      &:hover {
-        background-color: var(--color-hover);
       }
     }
   }

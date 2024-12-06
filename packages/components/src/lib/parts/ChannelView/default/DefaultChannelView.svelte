@@ -88,11 +88,24 @@
     flex-direction: column;
     min-height: 200px;
     max-height: 50svh;
-    border-top: 1px solid var(--color-border-light);
+    background-color: var(--color-background-light);
+    margin: 0 8px;
+    padding: 8px;
+    border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
+
+    --color-gradient: var(--color-background-light);
+
     .loading {
       margin: auto;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--color-hover);
+        --color-gradient: var(--color-hover);
+      }
     }
   }
 </style>
