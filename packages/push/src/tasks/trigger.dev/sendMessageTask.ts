@@ -1,6 +1,6 @@
 import { schemaTask } from '@trigger.dev/sdk/v3';
-import { type MulticastMessage } from 'firebase-admin/messaging';
 
+import type { MulticastMessage } from 'firebase-admin/messaging';
 import * as v from 'valibot';
 import { sendMessage } from '../../core/sendMessage';
 import { messaging } from './messaging';
@@ -15,7 +15,13 @@ const schema = v.parser(
 export const sendMessageTask = schemaTask({
   id: 'send-message',
   schema,
-  maxDuration: 10,
+  maxDuration: 30,
+  retry: {
+    maxAttempts: 5,
+    minTimeoutInMs: 60000,
+    factor: 2,
+    randomize: true,
+  },
   run: async (payload) => {
     await sendMessage({ messaging, tokenStore }, payload.message);
 

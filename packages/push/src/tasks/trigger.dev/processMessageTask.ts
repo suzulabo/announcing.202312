@@ -25,7 +25,13 @@ const createSendMessageTask = async (id: string, message: MulticastMessage) => {
 export const processMessageTask = schemaTask({
   id: 'process-message',
   schema,
-  maxDuration: 10,
+  maxDuration: 30,
+  retry: {
+    maxAttempts: 5,
+    minTimeoutInMs: 60000,
+    factor: 2,
+    randomize: true,
+  },
   run: async (payload, { ctx }) => {
     const idPrefix = ctx.run.id;
 
