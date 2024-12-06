@@ -5,8 +5,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/api/index.d.ts",
-      "import": "./dist/api/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     },
     "./constants": {
       "types": "./dist/lib/constants.d.ts",
@@ -19,6 +19,10 @@
     "./utils": {
       "types": "./dist/lib/utils.d.ts",
       "import": "./dist/lib/utils.js"
+    },
+    "./LocalStorage": {
+      "types": "./dist/storage/LocalStorage.d.ts",
+      "import": "./dist/storage/LocalStorage.js"
     }
   },
   "files": [
@@ -30,21 +34,23 @@
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
     "generate": "drizzle-kit generate",
+    "migrate:local": "drizzle-kit migrate",
     "genTestData": "tsx tools/genTestData.ts"
   },
   "devDependencies": {
-    "@announcing/cloudflare": "workspace:^",
+    "@aws-sdk/client-s3": "^3.698.0",
+    "@cloudflare/workers-types": "^4.20241112.0",
     "@faker-js/faker": "^9.2.0",
-    "@miniflare/d1": "^2.14.4",
-    "@miniflare/shared": "^2.14.4",
+    "@libsql/client": "^0.14.0",
     "@types/node": "^22.9.0",
     "base-x": "^5.0.0",
-    "better-sqlite3": "^11.5.0",
     "date-fns": "^4.1.0",
+    "dotenv": "^16.4.5",
     "drizzle-kit": "^0.28.0",
     "drizzle-orm": "^0.36.1",
     "image-dimensions": "^2.3.0",
     "image-type": "^5.2.0",
+    "jdenticon": "^3.3.0",
     "mockdate": "^3.0.5",
     "tsx": "^4.19.2",
     "valibot": "1.0.0-beta.3",

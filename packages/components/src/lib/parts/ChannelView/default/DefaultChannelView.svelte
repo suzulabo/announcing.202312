@@ -43,7 +43,9 @@
               <Spinner />
             </div>
           {:then announcement}
-            <GridItem {announcement} />
+            {#if announcement}
+              <GridItem {announcement} />
+            {/if}
           {/await}
         </a>
       {/snippet}

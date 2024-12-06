@@ -16,6 +16,7 @@
     "@announcing/db": "workspace:^",
     "@announcing/i18n": "workspace:^",
     "@auth/sveltekit": "^1.7.3",
+    "@libsql/client": "^0.14.0",
     "@playwright/test": "^1.48.2",
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/adapter-cloudflare": "^4.7.4",
@@ -23,12 +24,14 @@
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@types/js-cookie": "^3.0.6",
     "better-sqlite3": "^11.5.0",
+    "firebase": "^11.0.2",
     "js-cookie": "^3.0.5",
     "lru-cache": "^11.0.2",
     "svelte": "^5.1.13",
     "svelte-check": "^4.0.6",
     "vite": "^5.4.10",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.4",
+    "workbox-precaching": "^7.3.0"
   },
   "type": "module",
   "msw": {

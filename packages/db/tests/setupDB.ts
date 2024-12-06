@@ -1,17 +1,40 @@
-import { setDBEnv } from '../src/api';
+import { migrate } from 'drizzle-orm/libsql/migrator';
+import process from 'node:process';
+import { getDB } from '../src/db/db';
+import { setStorage, type Storage } from '../src/storage/storage';
 
-import { drizzle as drizzleBetterSqlite3 } from 'drizzle-orm/better-sqlite3';
-import * as schema from '../src/schema';
+const createMemoryStorage = (): Storage => {
+  let index = 1;
+  const m = new Map<string, Blob>();
 
-import { D1Database, D1DatabaseAPI } from '@miniflare/d1';
-import { createSQLiteDB } from '@miniflare/shared';
-import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
+  const put = (blob: Blob) => {
+    const key = index.toString();
+    m.set(key, blob);
+    index++;
+    return Promise.resolve(key);
+  };
+
+  const get = async (key: string) => {
+    const blob = m.get(key);
+    if (blob) {
+      return {
+        contentType: blob.type,
+        data: await blob.arrayBuffer(),
+      };
+    }
+    return;
+  };
+
+  return {
+    put,
+    get,
+  };
+};
 
 export const setupDB = async () => {
-  const sqliteDb = await createSQLiteDB(':memory:');
-  const db = drizzleBetterSqlite3(sqliteDb, { schema });
-  migrate(db, { migrationsFolder: './drizzle' });
-  const d1 = new D1Database(new D1DatabaseAPI(sqliteDb));
+  process.env['DB_URL'] = ':memory:';
+  const db = getDB(true);
+  await migrate(db, { migrationsFolder: './drizzle' });
 
-  setDBEnv(d1);
+  setStorage(createMemoryStorage());
 };

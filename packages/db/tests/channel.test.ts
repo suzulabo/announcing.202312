@@ -2,7 +2,7 @@ import { assert, beforeEach, describe, expect, test } from 'vitest';
 
 import { openAsBlob } from 'fs';
 import { ValiError } from 'valibot';
-import { createChannel, deleteChannel, getChannel, getChannels, updateChannel } from '../src/api';
+import { createChannel, deleteChannel, getChannel, getChannels, updateChannel } from '../src';
 import { setupDB } from './setupDB';
 
 describe('Channel', () => {

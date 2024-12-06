@@ -45,6 +45,7 @@
   import { page } from '$app/stores';
 
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
+  import { getPushToken, initFirebase } from '$lib/firebase/firebase';
   import { setupBack } from '@announcing/components/actions/back';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
@@ -60,6 +61,7 @@
   let theme = $state(Cookies.get('theme') ?? getSystemTheme());
   let locale = $state(data.locale);
   let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
+  let token = $state<string | undefined>();
 
   let settingsModal: ReturnType<typeof SettingsModal>;
 
@@ -72,9 +74,19 @@
 
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
+
+    initFirebase();
   });
 
   const back = setupBack();
+
+  const getTokenClick = async () => {
+    try {
+      token = await getPushToken();
+    } catch (err) {
+      token = JSON.stringify(err, undefined, 2);
+    }
+  };
 </script>
 
 <div class="container">
@@ -94,7 +106,9 @@
       <MaterialSymbolsSettingsOutline />
       <span>{$LL.settings()}</span></button
     >
+    <button class="small" onclick={getTokenClick}> getToken </button>
   </header>
+  <pre>{token}</pre>
   <hr />
   {@render children?.()}
 </div>
@@ -102,6 +116,13 @@
 <SettingsModal bind:this={settingsModal} bind:locale bind:theme />
 
 <style lang="scss">
+  pre {
+    border: 1px solid black;
+    white-space: pre-line;
+    word-break: break-all;
+    padding: 8px;
+  }
+
   .container {
     max-width: 600px;
     margin: 0 auto 100px;

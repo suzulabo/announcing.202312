@@ -7,7 +7,9 @@
     icon: string | undefined;
   };
 
-  export type AnnouncementLoaderFunction = (key: string) => Promise<Announcement> | Announcement;
+  export type AnnouncementLoaderFunction = (
+    key: string,
+  ) => Promise<Announcement | undefined> | Announcement | undefined;
 
   export type ChannelViewProps = {
     channel: Channel;
