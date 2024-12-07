@@ -3,8 +3,6 @@
   import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
   import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
   import { formatDate } from '$lib/utils/formatDate';
-  import { parseImageSize } from '$lib/utils/parseImageSize';
-  import { toStyle } from '$lib/utils/toStyle';
 
   interface Props {
     announcement: Announcement;
@@ -13,15 +11,6 @@
   let { announcement }: Props = $props();
 
   let overflow = $state(false);
-
-  const getAspectRatio = (src: string) => {
-    const size = parseImageSize(src);
-    if (!size) {
-      return;
-    }
-
-    return { 'aspect-ratio': `${size.width}/${size.height}` };
-  };
 </script>
 
 <ResizeObserver
@@ -31,27 +20,15 @@
 >
   <div class="container" class:overflow>
     <div class="date">{formatDate(announcement.createdAt)}</div>
-    {#if announcement.headerImage}
-      <div class="header-image-box" style={toStyle(getAspectRatio(announcement.headerImage))}>
+    <div class="title-box">
+      {#if announcement.headerImage}
         <img use:imgSrc={announcement.headerImage} alt="" />
-      </div>
-    {/if}
-    {#if announcement.title}
-      <div class="title">{announcement.title}</div>
-    {/if}
-    <div class="body">{announcement.body}</div>
-    {#if announcement.images}
-      {#if announcement.images.length === 1}
-        {@const image = announcement.images[0]}
-        <img class="single-image" use:imgSrc={image} alt="" />
-      {:else}
-        <div class="images-grid">
-          {#each announcement.images as image}
-            <img use:imgSrc={image} alt="" />
-          {/each}
-        </div>
       {/if}
-    {/if}
+      {#if announcement.title}
+        <div class="title">{announcement.title}</div>
+      {/if}
+    </div>
+    <div class="body">{announcement.body}</div>
   </div>
 </ResizeObserver>
 
@@ -82,42 +59,26 @@
       font-size: 15px;
     }
 
-    .header-image-box {
-      width: 100%;
-      max-height: 100px;
-      text-align: center;
+    .title-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
       img {
-        object-fit: contain;
+        margin: auto;
+        max-height: 100px;
+        max-width: 30%;
         border-radius: 4px;
       }
-    }
 
-    .title {
-      font-size: 18px;
-      font-weight: bold;
+      .title {
+        font-size: 18px;
+        font-weight: bold;
+      }
     }
 
     .body {
       white-space: pre-wrap;
-    }
-
-    .single-image {
-      object-fit: contain;
-      margin: 8px auto;
-      border-radius: 8px;
-    }
-    .images-grid {
-      display: grid;
-      grid-template-columns: auto auto;
-      gap: 4px;
-      padding: 8px 4px;
-
-      img {
-        aspect-ratio: 5/4;
-        object-fit: cover;
-        margin: auto;
-        border-radius: 8px;
-      }
     }
   }
 </style>
