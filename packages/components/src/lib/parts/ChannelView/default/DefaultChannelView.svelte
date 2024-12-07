@@ -6,7 +6,7 @@
 
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
   import type { ChannelViewProps } from '../ChannelView.svelte';
-  import GridItem from './GridItem.svelte';
+  import Item from './Item.svelte';
   import { imgSrc } from '$lib/actions/imgSrc';
 
   let { channel, announcementHrefPrefix, announcementKeys, announcementLoader }: ChannelViewProps =
@@ -44,7 +44,7 @@
             </div>
           {:then announcement}
             {#if announcement}
-              <GridItem {announcement} />
+              <Item {announcement} />
             {/if}
           {/await}
         </a>
