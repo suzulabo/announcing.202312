@@ -103,8 +103,8 @@
 
     @media (hover: hover) {
       &:hover {
-        background-color: var(--color-hover);
-        --color-gradient: var(--color-hover);
+        background-color: var(--color-hover-light);
+        --color-gradient: var(--color-hover-light);
       }
     }
   }
