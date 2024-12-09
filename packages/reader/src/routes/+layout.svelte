@@ -72,10 +72,10 @@
     updateTheme(theme);
   });
 
-  onMount(() => {
+  onMount(async () => {
     document.documentElement.setAttribute('hydrated', '');
 
-    initFirebase();
+    await initFirebase();
   });
 
   const back = setupBack();
