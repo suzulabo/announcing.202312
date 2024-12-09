@@ -1,6 +1,7 @@
 <script lang="ts" module>
   import type { Locales } from '@announcing/i18n';
   import Cookies from 'js-cookie';
+  import Logo from '@announcing/components/Logo.svelte';
 
   const updateLocale = (locale: Locales) => {
     if (browser) {
@@ -85,7 +86,7 @@
     {#if headerBack}
       <a href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
     {:else}
-      <a href="/" class="site-name">♪</a>
+      <a href="/" class="site-name"><Logo /></a>
     {/if}
 
     <button
@@ -110,9 +111,22 @@
     margin: 0 auto 100px;
 
     header {
-      padding: 16px 8px;
+      padding: 0 8px;
       display: flex;
       align-items: center;
+      height: 60px;
+
+      .site-name {
+        font-size: 28px;
+        border-radius: 50%;
+        //border: 1px solid var(--color-border);
+        background-color: var(--color-background-light);
+        height: 36px;
+        width: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
       .settings-btn {
         margin-left: auto;

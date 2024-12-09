@@ -49,6 +49,10 @@
       "types": "./dist/atoms/Loading.svelte.d.ts",
       "svelte": "./dist/atoms/Loading.svelte"
     },
+    "./Logo.svelte": {
+      "types": "./dist/atoms/Logo.svelte.d.ts",
+      "svelte": "./dist/atoms/Logo.svelte"
+    },
     "./Modal.svelte": {
       "types": "./dist/atoms/Modal.svelte.d.ts",
       "svelte": "./dist/atoms/Modal.svelte"
