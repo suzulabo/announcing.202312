@@ -7,7 +7,7 @@ import {
   PUBLIC_FIREBASE_VAPID_KEY,
 } from '$env/static/public';
 import { initializeApp } from 'firebase/app';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { getMessaging, getToken, isSupported, onMessage } from 'firebase/messaging';
 
 const firebaseConfig = {
   apiKey: PUBLIC_FIREBASE_API_KEY,
@@ -18,8 +18,14 @@ const firebaseConfig = {
 
 const vapidKey = PUBLIC_FIREBASE_VAPID_KEY;
 
-const initContext = () => {
+const initContext = async () => {
   if (!browser) {
+    return;
+  }
+
+  if (!(await isSupported())) {
+    // TODO
+    console.log('Push message is not supported');
     return;
   }
 
@@ -48,10 +54,10 @@ const initContext = () => {
   return { getPushToken };
 };
 
-let ctx: ReturnType<typeof initContext>;
+let ctx: Awaited<ReturnType<typeof initContext>>;
 
-export const initFirebase = () => {
-  ctx = initContext();
+export const initFirebase = async () => {
+  ctx = await initContext();
 };
 
 export const getPushToken = () => {
