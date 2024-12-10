@@ -220,5 +220,13 @@ export const messages = {
       en: 'Set Notifications',
       ja: '通知を設定',
     },
+    notSupported: {
+      en: 'Notifications are not available in this browser.',
+      ja: 'このブラウザでは通知が利用できません',
+    },
+    denied: {
+      en: 'You are not allowed to use notifications. \nPlease change your browser settings.',
+      ja: '通知の利用が許可されていません。\nブラウザの設定を変更してください。',
+    },
   },
 };

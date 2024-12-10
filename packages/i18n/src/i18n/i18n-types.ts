@@ -237,6 +237,15 @@ type RootTranslation = {
 		 * S​e​t​ ​N​o​t​i​f​i​c​a​t​i​o​n​s
 		 */
 		button: string
+		/**
+		 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e​ ​i​n​ ​t​h​i​s​ ​b​r​o​w​s​e​r​.
+		 */
+		notSupported: string
+		/**
+		 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​l​l​o​w​e​d​ ​t​o​ ​u​s​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​
+	​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​b​r​o​w​s​e​r​ ​s​e​t​t​i​n​g​s​.
+		 */
+		denied: string
 	}
 }
 
@@ -463,6 +472,15 @@ export type TranslationFunctions = {
 		 * Set Notifications
 		 */
 		button: () => LocalizedString
+		/**
+		 * Notifications are not available in this browser.
+		 */
+		notSupported: () => LocalizedString
+		/**
+		 * You are not allowed to use notifications. 
+	Please change your browser settings.
+		 */
+		denied: () => LocalizedString
 	}
 }
 

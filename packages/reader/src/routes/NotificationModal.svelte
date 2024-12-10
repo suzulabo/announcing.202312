@@ -41,20 +41,26 @@
 <Modal bind:open dismissMode="backdrop">
   <div class="modal-body">
     {@render content()}
-  </div></Modal
->
+    <button
+      class="close-btn small filled"
+      onclick={() => {
+        open = false;
+      }}>{$LL.close()}</button
+    >
+  </div>
+</Modal>
 
 {#snippet notSupportedContent()}
-  Not Supported
+  <div class="desc">{$LL.setupNotification.notSupported()}</div>
 {/snippet}
 
 {#snippet defaultContent()}
-  <pre>{$LL.setupNotification.description()}</pre>
+  <div class="desc">{$LL.setupNotification.description()}</div>
   <button onclick={requestPermissionClick}>{$LL.setupNotification.button()}</button>
 {/snippet}
 
 {#snippet deniedContent()}
-  Denied
+  <div class="desc">{$LL.setupNotification.denied()}</div>
 {/snippet}
 
 {#snippet grantedContent()}
@@ -69,9 +75,13 @@
     padding: 16px;
     width: 100%;
     max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    pre {
+    .desc {
       white-space: pre-wrap;
+      margin: 16px 0;
     }
   }
 </style>
