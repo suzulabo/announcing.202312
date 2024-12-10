@@ -227,6 +227,17 @@ type RootTranslation = {
 	 * N​o​t​i​f​i​c​a​t​i​o​n
 	 */
 	notification: string
+	setupNotification: {
+		/**
+		 * P​r​e​p​a​r​e​ ​t​o​ ​r​e​c​e​i​v​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​w​h​e​n​ ​n​e​w​ ​n​o​t​i​c​e​s​ ​a​r​e​ ​p​o​s​t​e​d​.​ ​
+	​P​r​e​s​s​ ​t​h​e​ ​"​S​e​t​ ​N​o​t​i​f​i​c​a​t​i​o​n​s​"​ ​b​u​t​t​o​n​ ​t​o​ ​s​e​t​ ​t​h​e​ ​p​e​r​m​i​s​s​i​o​n​ ​s​e​t​t​i​n​g​s​,​ ​a​s​ ​a​ ​m​e​s​s​a​g​e​ ​w​i​l​l​ ​a​p​p​e​a​r​ ​a​s​k​i​n​g​ ​y​o​u​ ​t​o​ ​c​o​n​f​i​r​m​ ​p​e​r​m​i​s​s​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.
+		 */
+		description: string
+		/**
+		 * S​e​t​ ​N​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		button: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -442,6 +453,17 @@ export type TranslationFunctions = {
 	 * Notification
 	 */
 	notification: () => LocalizedString
+	setupNotification: {
+		/**
+		 * Prepare to receive notifications when new notices are posted. 
+	Press the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.
+		 */
+		description: () => LocalizedString
+		/**
+		 * Set Notifications
+		 */
+		button: () => LocalizedString
+	}
 }
 
 export type Formatters = {}

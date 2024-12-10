@@ -56,6 +56,11 @@ const en = {
   },
   announcementListPrompt: 'Open the announcement you want to edit or delete.',
   notification: 'Notification',
+  setupNotification: {
+    description:
+      'Prepare to receive notifications when new notices are posted. \nPress the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.',
+    button: 'Set Notifications',
+  },
 } satisfies BaseTranslation;
 
 export default en;

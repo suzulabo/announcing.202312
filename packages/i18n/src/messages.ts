@@ -211,4 +211,14 @@ export const messages = {
     en: 'Notification',
     ja: '通知',
   },
+  setupNotification: {
+    description: {
+      en: 'Prepare to receive notifications when new notices are posted. \nPress the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.',
+      ja: '新しいお知らせが投稿されたときに、通知を受け取る準備を行います。\n「通知を設定」ボタンを押すと、通知の許可を確認するメッセージが表示されるので、許可設定を行ってください。',
+    },
+    button: {
+      en: 'Set Notifications',
+      ja: '通知を設定',
+    },
+  },
 };

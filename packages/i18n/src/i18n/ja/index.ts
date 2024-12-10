@@ -55,6 +55,11 @@ const ja = {
   },
   announcementListPrompt: '編集または削除するお知らせを開いてください',
   notification: '通知',
+  setupNotification: {
+    description:
+      '新しいお知らせが投稿されたときに、通知を受け取る準備を行います。\n「通知を設定」ボタンを押すと、通知の許可を確認するメッセージが表示されるので、許可設定を行ってください。',
+    button: '通知を設定',
+  },
 } satisfies Translation;
 
 export default ja;

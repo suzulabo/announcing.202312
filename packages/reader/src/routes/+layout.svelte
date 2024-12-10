@@ -1,7 +1,7 @@
 <script lang="ts" module>
+  import Logo from '@announcing/components/Logo.svelte';
   import type { Locales } from '@announcing/i18n';
   import Cookies from 'js-cookie';
-  import Logo from '@announcing/components/Logo.svelte';
 
   const updateLocale = (locale: Locales) => {
     if (browser) {
@@ -51,14 +51,15 @@
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
 
+  import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
+  import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import { initFirebase, isMessagingSupported } from '$lib/firebase/firebase';
+  import { initFirebase, isNotificationSupported } from '$lib/firebase/firebase';
   import { setupBack } from '@announcing/components/actions/back';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
   import SettingsModal from './SettingsModal.svelte';
-  import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
-  import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
+  import NotificationModal from './NotificationModal.svelte';
 
   interface Props {
     data: LayoutData;
@@ -69,12 +70,13 @@
 
   let theme = $state(Cookies.get('theme') ?? getSystemTheme());
   let locale = $state(data.locale);
-  let messagingSupported = $state(false);
+  let supported = $state(false);
   let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
   let headerNotification = $derived<HeaderNotification | undefined>(
     $page.data['headerNotification'],
   );
 
+  let notificationModal: ReturnType<typeof NotificationModal>;
   let settingsModal: ReturnType<typeof SettingsModal>;
 
   $effect(() => {
@@ -85,13 +87,10 @@
   });
 
   onMount(async () => {
+    await initFirebase();
+    supported = isNotificationSupported();
+
     document.documentElement.setAttribute('hydrated', '');
-
-    messagingSupported = await isMessagingSupported();
-
-    if (messagingSupported) {
-      initFirebase();
-    }
   });
 
   const back = setupBack();
@@ -109,10 +108,10 @@
       <button
         class="small notification-btn"
         onclick={() => {
-          //settingsModal.openModal();
+          notificationModal.openModal();
         }}
       >
-        {#if messagingSupported}
+        {#if supported}
           <MaterialSymbolsNotificationsOutlineRounded />
         {:else}
           <MaterialSymbolsNotificationImportantOutlineRounded />
@@ -135,6 +134,7 @@
   {@render children?.()}
 </div>
 
+<NotificationModal bind:this={notificationModal} />
 <SettingsModal bind:this={settingsModal} bind:locale bind:theme />
 
 <style lang="scss">
