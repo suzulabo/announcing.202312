@@ -37,6 +37,12 @@
     href: string;
     labelKey: BackLabelKeys;
   };
+
+  export type HeaderNotification = {
+    channelID: string;
+    name: string;
+    icon?: string;
+  };
 </script>
 
 <script lang="ts">
@@ -46,11 +52,13 @@
   import { page } from '$app/stores';
 
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import { initFirebase } from '$lib/firebase/firebase';
+  import { initFirebase, isMessagingSupported } from '$lib/firebase/firebase';
   import { setupBack } from '@announcing/components/actions/back';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
   import SettingsModal from './SettingsModal.svelte';
+  import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
+  import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
 
   interface Props {
     data: LayoutData;
@@ -61,7 +69,11 @@
 
   let theme = $state(Cookies.get('theme') ?? getSystemTheme());
   let locale = $state(data.locale);
+  let messagingSupported = $state(false);
   let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
+  let headerNotification = $derived<HeaderNotification | undefined>(
+    $page.data['headerNotification'],
+  );
 
   let settingsModal: ReturnType<typeof SettingsModal>;
 
@@ -75,7 +87,11 @@
   onMount(async () => {
     document.documentElement.setAttribute('hydrated', '');
 
-    await initFirebase();
+    messagingSupported = await isMessagingSupported();
+
+    if (messagingSupported) {
+      initFirebase();
+    }
   });
 
   const back = setupBack();
@@ -84,9 +100,25 @@
 <div class="container">
   <header>
     {#if headerBack}
-      <a href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
+      <a class="back" href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
     {:else}
       <a href="/" class="site-name"><Logo /></a>
+    {/if}
+
+    {#if headerNotification}
+      <button
+        class="small notification-btn"
+        onclick={() => {
+          //settingsModal.openModal();
+        }}
+      >
+        {#if messagingSupported}
+          <MaterialSymbolsNotificationsOutlineRounded />
+        {:else}
+          <MaterialSymbolsNotificationImportantOutlineRounded />
+        {/if}
+        <span>{$LL.notification()}</span></button
+      >
     {/if}
 
     <button
@@ -114,12 +146,17 @@
       padding: 0 8px;
       display: flex;
       align-items: center;
+      gap: 4px;
       height: 60px;
+
+      .site-name,
+      .back {
+        margin-right: auto;
+      }
 
       .site-name {
         font-size: 28px;
         border-radius: 50%;
-        //border: 1px solid var(--color-border);
         background-color: var(--color-background-light);
         height: 36px;
         width: 36px;
@@ -128,8 +165,8 @@
         justify-content: center;
       }
 
-      .settings-btn {
-        margin-left: auto;
+      .settings-btn,
+      .notification-btn {
         display: flex;
         align-items: center;
         gap: 2px;

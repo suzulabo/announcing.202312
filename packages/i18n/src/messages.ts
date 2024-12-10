@@ -207,4 +207,8 @@ export const messages = {
     en: 'Open the announcement you want to edit or delete.',
     ja: '編集または削除するお知らせを開いてください',
   },
+  notification: {
+    en: 'Notification',
+    ja: '通知',
+  },
 };

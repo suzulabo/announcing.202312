@@ -55,6 +55,7 @@ const en = {
     confirmation: 'Are you sure you want to delete the announcement?',
   },
   announcementListPrompt: 'Open the announcement you want to edit or delete.',
+  notification: 'Notification',
 } satisfies BaseTranslation;
 
 export default en;

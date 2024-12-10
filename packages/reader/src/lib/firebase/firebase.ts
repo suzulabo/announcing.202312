@@ -18,14 +18,8 @@ const firebaseConfig = {
 
 const vapidKey = PUBLIC_FIREBASE_VAPID_KEY;
 
-const initContext = async () => {
+const initContext = () => {
   if (!browser) {
-    return;
-  }
-
-  if (!(await isSupported())) {
-    // TODO
-    console.log('Push message is not supported');
     return;
   }
 
@@ -56,8 +50,12 @@ const initContext = async () => {
 
 let ctx: Awaited<ReturnType<typeof initContext>>;
 
-export const initFirebase = async () => {
-  ctx = await initContext();
+export const isMessagingSupported = () => {
+  return isSupported();
+};
+
+export const initFirebase = () => {
+  ctx = initContext();
 };
 
 export const getPushToken = () => {
