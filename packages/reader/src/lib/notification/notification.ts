@@ -31,14 +31,10 @@ export const initNotification = async () => {
   if (isNotificationSupported()) {
     notificationState.permission = Notification.permission;
 
-    console.log('navigator.permissions', navigator.permissions);
-
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (navigator.permissions) {
-      console.log('permission change event');
       const permissionStatus = await navigator.permissions.query({ name: 'notifications' });
       permissionStatus.addEventListener('change', () => {
-        console.log('permission change event handler');
         notificationState.permission = Notification.permission;
       });
     }
