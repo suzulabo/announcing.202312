@@ -55,13 +55,12 @@
   import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import { initFirebase, isNotificationSupported } from '$lib/firebase/firebase';
+  import { initNotification } from '$lib/notification/notification';
   import { setupBack } from '@announcing/components/actions/back';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
-  import SettingsModal from './SettingsModal.svelte';
   import NotificationModal from './NotificationModal.svelte';
-  import { initNotification } from '$lib/notification/notification';
-  import { notificationState } from '$lib/notification/notificationState.svelte';
+  import SettingsModal from './SettingsModal.svelte';
 
   interface Props {
     data: LayoutData;
@@ -106,8 +105,6 @@
     {:else}
       <a href="/" class="site-name"><Logo /></a>
     {/if}
-
-    {notificationState.permission}
 
     {#if headerNotification}
       <button
