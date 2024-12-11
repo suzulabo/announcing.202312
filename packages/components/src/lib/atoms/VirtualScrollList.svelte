@@ -77,9 +77,7 @@
   });
 
   const updateItemsRect = () => {
-    requestAnimationFrame(() => {
-      itemsRect = itemsElement.getBoundingClientRect();
-    });
+    itemsRect = itemsElement.getBoundingClientRect();
   };
 
   onMount(() => {
