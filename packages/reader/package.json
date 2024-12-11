@@ -15,6 +15,7 @@
     "@announcing/components": "workspace:^",
     "@announcing/db": "workspace:^",
     "@announcing/i18n": "workspace:^",
+    "@announcing/notification": "workspace:^",
     "@auth/sveltekit": "^1.7.4",
     "@libsql/client": "^0.14.0",
     "@playwright/test": "^1.49.0",

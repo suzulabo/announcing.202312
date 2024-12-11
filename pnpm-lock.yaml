@@ -226,7 +226,7 @@ importers:
         specifier: ^4.19.2
         version: 4.19.2
 
-  packages/push:
+  packages/notification:
     devDependencies:
       '@libsql/client':
         specifier: ^0.14.0
@@ -270,6 +270,9 @@ importers:
       '@announcing/i18n':
         specifier: workspace:^
         version: link:../i18n
+      '@announcing/notification':
+        specifier: workspace:^
+        version: link:../notification
       '@auth/sveltekit':
         specifier: ^1.7.4
         version: 1.7.4(@sveltejs/kit@2.9.0(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.7.1)(vite@6.0.3(@types/node@22.10.1)(jiti@1.21.6)(sass@1.82.0)(terser@5.36.0)(tsx@4.19.2)))(svelte@5.7.1)(vite@6.0.3(@types/node@22.10.1)(jiti@1.21.6)(sass@1.82.0)(terser@5.36.0)(tsx@4.19.2)))(svelte@5.7.1)
@@ -3915,7 +3918,6 @@ packages:
 
   libsql@0.4.7:
     resolution: {integrity: sha512-T9eIRCs6b0J1SHKYIvD8+KCJMcWZ900iZyxdnSCdqxN12Z1ijzT+jY5nrk72Jw4B0HGzms2NgpryArlJqvc3Lw==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lilconfig@2.1.0:

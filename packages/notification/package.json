@@ -1,8 +1,18 @@
 {
-  "name": "@announcing/push",
+  "name": "@announcing/notification",
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "exports": {
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./tokenStores/libsql": {
+      "types": "./dist/tokenStores/libsql/index.d.ts",
+      "import": "./dist/tokenStores/libsql/index.js"
+    }
+  },
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest watch",
