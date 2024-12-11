@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { isNotificationSupported } from '$lib/firebase/firebase';
+  import { requestPermission } from '$lib/notification/notification';
+  import { notificationState } from '$lib/notification/notificationState.svelte';
   import Modal from '@announcing/components/Modal.svelte';
   import { LL } from '@announcing/i18n';
 
-  let permission = $state<NotificationPermission | 'not-supported'>('not-supported');
+  let permission = $derived(notificationState.permission);
 
   let open = $state(false);
 
@@ -20,20 +21,11 @@
     }
   });
 
-  const checkPermission = () => {
-    if (!isNotificationSupported()) {
-      return 'not-supported';
-    }
-
-    return Notification.permission;
-  };
-
   const requestPermissionClick = async () => {
-    permission = await Notification.requestPermission();
+    await requestPermission();
   };
 
   export const openModal = () => {
-    permission = checkPermission();
     open = true;
   };
 </script>

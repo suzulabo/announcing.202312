@@ -60,6 +60,8 @@
   import type { LayoutData } from './$types';
   import SettingsModal from './SettingsModal.svelte';
   import NotificationModal from './NotificationModal.svelte';
+  import { initNotification } from '$lib/notification/notification';
+  import { notificationState } from '$lib/notification/notificationState.svelte';
 
   interface Props {
     data: LayoutData;
@@ -88,6 +90,7 @@
 
   onMount(async () => {
     await initFirebase();
+    await initNotification();
     supported = isNotificationSupported();
 
     document.documentElement.setAttribute('hydrated', '');
@@ -103,6 +106,8 @@
     {:else}
       <a href="/" class="site-name"><Logo /></a>
     {/if}
+
+    {notificationState.permission}
 
     {#if headerNotification}
       <button
