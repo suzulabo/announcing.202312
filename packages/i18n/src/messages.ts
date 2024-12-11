@@ -209,7 +209,7 @@ export const messages = {
   },
   notification: {
     en: 'Notification',
-    ja: '通知',
+    ja: '新着通知',
   },
   setupNotification: {
     description: {
@@ -227,6 +227,22 @@ export const messages = {
     denied: {
       en: 'You are not allowed to use notifications. \nPlease change your browser settings.',
       ja: '通知の利用が許可されていません。\nブラウザの設定を変更してください。',
+    },
+    grantedDisabled: {
+      en: '<i><b>{name}</b></i> notifications are now <b>off</b>.',
+      ja: '<i><b>{name}</b></i> の新着通知は<b>オフ</b>です',
+    },
+    grantedEnabled: {
+      en: '<i><b>{name}</b></i> notifications are now <b>on</b>.',
+      ja: '<i><b>{name}</b></i> の新着通知は<b>オン</b>です',
+    },
+    toEnabled: {
+      en: 'Turn on notifications',
+      ja: '通知を受け取る',
+    },
+    toDisabled: {
+      en: 'Turn off notifications',
+      ja: '通知を受け取らない',
     },
   },
 };

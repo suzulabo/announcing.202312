@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { isNotificationSupported } from '$lib/firebase/firebase';
+import { getPushToken, isNotificationSupported } from '$lib/firebase/firebase';
 import { notificationState } from './notificationState.svelte';
 
 const CHANNELS_KEY = 'notification-channels';
@@ -43,4 +43,36 @@ export const initNotification = async () => {
 
 export const requestPermission = async () => {
   notificationState.permission = await Notification.requestPermission();
+};
+
+export const addChannel = async (channelID: string) => {
+  const channels = [...notificationState.channels];
+
+  if (!channels.includes(channelID)) {
+    channels.push(channelID);
+    localStorage.setItem(CHANNELS_KEY, JSON.stringify(channels));
+  }
+
+  const token = await getPushToken();
+
+  console.log({ token });
+
+  notificationState.channels = channels;
+};
+
+export const removeChannel = async (channelID: string) => {
+  let channels = [...notificationState.channels];
+
+  if (channels.includes(channelID)) {
+    channels = channels.filter((v) => {
+      return v !== channelID;
+    });
+    localStorage.setItem(CHANNELS_KEY, JSON.stringify(channels));
+  }
+
+  const token = await getPushToken();
+
+  console.log({ token });
+
+  notificationState.channels = channels;
 };

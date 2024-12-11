@@ -62,6 +62,10 @@ const en = {
     button: 'Set Notifications',
     notSupported: 'Notifications are not available in this browser.',
     denied: 'You are not allowed to use notifications. \nPlease change your browser settings.',
+    grantedDisabled: '<i><b>{name}</b></i> notifications are now <b>off</b>.',
+    grantedEnabled: '<i><b>{name}</b></i> notifications are now <b>on</b>.',
+    toEnabled: 'Turn on notifications',
+    toDisabled: 'Turn off notifications',
   },
 } satisfies BaseTranslation;
 

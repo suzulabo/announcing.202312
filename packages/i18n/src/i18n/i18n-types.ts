@@ -246,6 +246,24 @@ type RootTranslation = {
 	​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​b​r​o​w​s​e​r​ ​s​e​t​t​i​n​g​s​.
 		 */
 		denied: string
+		/**
+		 * <​i​>​<​b​>​{​n​a​m​e​}​<​/​b​>​<​/​i​>​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​w​ ​<​b​>​o​f​f​<​/​b​>​.
+		 * @param {unknown} name
+		 */
+		grantedDisabled: RequiredParams<'name'>
+		/**
+		 * <​i​>​<​b​>​{​n​a​m​e​}​<​/​b​>​<​/​i​>​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​w​ ​<​b​>​o​n​<​/​b​>​.
+		 * @param {unknown} name
+		 */
+		grantedEnabled: RequiredParams<'name'>
+		/**
+		 * T​u​r​n​ ​o​n​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		toEnabled: string
+		/**
+		 * T​u​r​n​ ​o​f​f​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		toDisabled: string
 	}
 }
 
@@ -481,6 +499,22 @@ export type TranslationFunctions = {
 	Please change your browser settings.
 		 */
 		denied: () => LocalizedString
+		/**
+		 * <i><b>{name}</b></i> notifications are now <b>off</b>.
+		 */
+		grantedDisabled: (arg: { name: unknown }) => LocalizedString
+		/**
+		 * <i><b>{name}</b></i> notifications are now <b>on</b>.
+		 */
+		grantedEnabled: (arg: { name: unknown }) => LocalizedString
+		/**
+		 * Turn on notifications
+		 */
+		toEnabled: () => LocalizedString
+		/**
+		 * Turn off notifications
+		 */
+		toDisabled: () => LocalizedString
 	}
 }
 

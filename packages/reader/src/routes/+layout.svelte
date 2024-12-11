@@ -61,6 +61,8 @@
   import type { LayoutData } from './$types';
   import NotificationModal from './NotificationModal.svelte';
   import SettingsModal from './SettingsModal.svelte';
+  import { notificationState } from '$lib/notification/notificationState.svelte';
+  import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
 
   interface Props {
     data: LayoutData;
@@ -110,11 +112,15 @@
       <button
         class="small notification-btn"
         onclick={() => {
-          notificationModal.openModal();
+          notificationModal.openModal(headerNotification);
         }}
       >
         {#if supported}
-          <MaterialSymbolsNotificationsOutlineRounded />
+          {#if notificationState.channels.includes(headerNotification.channelID)}
+            <MaterialSymbolsNotificationsRounded />
+          {:else}
+            <MaterialSymbolsNotificationsOutlineRounded />
+          {/if}
         {:else}
           <MaterialSymbolsNotificationImportantOutlineRounded />
         {/if}
