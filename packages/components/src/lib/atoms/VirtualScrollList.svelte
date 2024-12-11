@@ -4,6 +4,7 @@
   import { onMount, tick, type Snippet } from 'svelte';
 
   import { toStyle } from '$lib/utils/toStyle';
+  import { createResizeObserverHelper } from '$lib/utils/resizeObserverHelper';
 
   interface Props {
     keys: T[];
@@ -76,11 +77,13 @@
   });
 
   const updateItemsRect = () => {
-    itemsRect = itemsElement.getBoundingClientRect();
+    requestAnimationFrame(() => {
+      itemsRect = itemsElement.getBoundingClientRect();
+    });
   };
 
   onMount(() => {
-    const resizeObserver = new ResizeObserver(updateItemsRect);
+    const resizeObserver = createResizeObserverHelper(updateItemsRect);
     resizeObserver.observe(itemsElement);
 
     return () => {
@@ -91,35 +94,31 @@
   type ElementWithItem = Element & { key?: T };
 
   const itemResize = (() => {
-    let itemResizeObserver: ResizeObserver | undefined;
+    const itemResizeHelper = createResizeObserverHelper((entry) => {
+      const key = (entry.target as ElementWithItem).key;
+      if (key) {
+        if (heightMap[key] !== entry.contentRect.height) {
+          heightMap[key] = entry.contentRect.height;
+        }
+      }
+    });
 
     onMount(() => {
-      itemResizeObserver = new ResizeObserver((entries) => {
-        for (const entry of entries) {
-          const key = (entry.target as ElementWithItem).key;
-          if (key) {
-            if (heightMap[key] !== entry.contentRect.height) {
-              heightMap[key] = entry.contentRect.height;
-            }
-          }
-        }
-      });
-
       return () => {
-        itemResizeObserver?.disconnect();
+        itemResizeHelper.disconnect();
       };
     });
 
     const action = (el: ElementWithItem, key: T) => {
       el.key = key;
-      itemResizeObserver?.observe(el);
+      itemResizeHelper.observe(el);
 
       return {
         update: (key: T) => {
           el.key = key;
         },
         destroy: () => {
-          itemResizeObserver?.unobserve(el);
+          itemResizeHelper.unobserve(el);
         },
       };
     };
