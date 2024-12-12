@@ -5,6 +5,7 @@ import process from 'node:process';
 import { env } from '$env/dynamic/private';
 import { CF } from '$env/static/private';
 import { setStorage } from '@announcing/db';
+import { configure } from '@trigger.dev/sdk/v3';
 import { handle as authenticationHandle } from './auth';
 
 process.env['DB_URL'] = env.DB_URL;
@@ -14,6 +15,8 @@ if (!CF) {
   const createLocalStorage = (await import('@announcing/db/LocalStorage')).createLocalStorage;
   setStorage(createLocalStorage());
 }
+
+configure({ accessToken: env.TRIGGER_SECRET_KEY });
 
 const timingHandle: Handle = async ({ event, resolve }) => {
   const start = performance.now();

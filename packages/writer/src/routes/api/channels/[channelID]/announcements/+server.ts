@@ -1,12 +1,15 @@
-import { addAnnouncement } from '@announcing/db';
+import { addAnnouncement, getChannel } from '@announcing/db';
 import { error, json } from '@sveltejs/kit';
 
 import { getFormFile, getFormFiles, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 
+import { triggerProcessMessage } from '$lib/trigger.dev/triggerProcessMessage';
 import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ locals, params, request }) => {
+  console.log('## check1');
+
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -24,6 +27,11 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
+  const channel = await getChannel({ userID, channelID });
+  if (!channel) {
+    error(404, 'Missing channel');
+  }
+
   await addAnnouncement({
     userID,
     channelID,
@@ -32,6 +40,14 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
     body,
     images,
     createdAt: new Date().getTime(),
+  });
+
+  await triggerProcessMessage({
+    channel: {
+      channelID,
+      name: channel.name,
+      icon: channel.icon,
+    },
   });
 
   return json({});

@@ -46,20 +46,25 @@ sw.addEventListener('push', (event) => {
   if (!event.data) {
     return;
   }
-  const data = event.data.json();
-  const { title, body } = data.notification;
-  const options = {
-    body,
-  };
+  const payload = event.data.json();
+
+  console.log('payload', payload);
+
+  const name = payload.notification.data.name;
+
+  const title = `${name} : New announcement`;
+  const options = payload.notification;
 
   event.waitUntil(sw.registration.showNotification(title, options));
 });
 
 sw.addEventListener('notificationclick', (event) => {
+  console.log('notificationclick', event.notification);
+
   event.notification.close();
 
-  const url = event.notification.data?.url;
-  if (url) {
-    event.waitUntil(sw.clients.openWindow(url));
+  const channelID = event.notification.data.channelID;
+  if (channelID) {
+    event.waitUntil(sw.clients.openWindow(`/${channelID}`));
   }
 });

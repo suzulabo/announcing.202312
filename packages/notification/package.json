@@ -11,6 +11,10 @@
     "./tokenStores/libsql": {
       "types": "./dist/tokenStores/libsql/index.d.ts",
       "import": "./dist/tokenStores/libsql/index.js"
+    },
+    "./tasks/trigger.dev": {
+      "types": "./dist/tasks/trigger.dev/index.d.ts",
+      "import": "./dist/tasks/trigger.dev/index.js"
     }
   },
   "scripts": {
@@ -23,7 +27,7 @@
   },
   "devDependencies": {
     "@libsql/client": "^0.14.0",
-    "@trigger.dev/sdk": "^3.3.5",
+    "@trigger.dev/sdk": "3.3.6",
     "@types/node": "^22.10.1",
     "@vitest/coverage-v8": "2.1.8",
     "dotenv": "^16.4.7",
