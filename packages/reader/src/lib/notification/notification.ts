@@ -1,4 +1,5 @@
 import { browser } from '$app/environment';
+import { postNotification } from '$lib/fetch/postNotification';
 import { getPushToken, isNotificationSupported } from '$lib/firebase/firebase';
 import { notificationState } from './notificationState.svelte';
 
@@ -46,33 +47,47 @@ export const requestPermission = async () => {
 };
 
 export const addChannel = async (channelID: string) => {
-  const channels = [...notificationState.channels];
+  const curChannels = [...notificationState.channels];
+  const newChannels = [...curChannels];
 
-  if (!channels.includes(channelID)) {
-    channels.push(channelID);
-    localStorage.setItem(CHANNELS_KEY, JSON.stringify(channels));
+  if (!newChannels.includes(channelID)) {
+    newChannels.push(channelID);
   }
 
+  localStorage.setItem(CHANNELS_KEY, JSON.stringify(newChannels));
+
   const token = await getPushToken();
+  if (!token) {
+    return;
+  }
 
-  console.log({ token });
-
-  notificationState.channels = channels;
+  try {
+    await postNotification({ token, tags: newChannels });
+    notificationState.channels = newChannels;
+  } catch {
+    localStorage.setItem(CHANNELS_KEY, JSON.stringify(curChannels));
+    // TODO
+  }
 };
 
 export const removeChannel = async (channelID: string) => {
-  let channels = [...notificationState.channels];
+  const curChannels = [...notificationState.channels];
+  const newChannels = curChannels.filter((v) => {
+    return v !== channelID;
+  });
 
-  if (channels.includes(channelID)) {
-    channels = channels.filter((v) => {
-      return v !== channelID;
-    });
-    localStorage.setItem(CHANNELS_KEY, JSON.stringify(channels));
-  }
+  localStorage.setItem(CHANNELS_KEY, JSON.stringify(newChannels));
 
   const token = await getPushToken();
+  if (!token) {
+    return;
+  }
 
-  console.log({ token });
-
-  notificationState.channels = channels;
+  try {
+    await postNotification({ token, tags: newChannels });
+    notificationState.channels = newChannels;
+  } catch {
+    localStorage.setItem(CHANNELS_KEY, JSON.stringify(curChannels));
+    // TODO
+  }
 };
