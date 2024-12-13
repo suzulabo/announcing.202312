@@ -50,10 +50,15 @@ sw.addEventListener('push', (event) => {
 
   console.log('payload', payload);
 
-  const name = payload.notification.data.name;
+  const data = payload.data;
+
+  const name = data.name;
 
   const title = `${name} : New announcement`;
-  const options = payload.notification;
+  const options = {
+    data: { channelID: data.channelID },
+    ...(data.icon && { icon: `/s/${data.icon}` }),
+  };
 
   event.waitUntil(sw.registration.showNotification(title, options));
 });

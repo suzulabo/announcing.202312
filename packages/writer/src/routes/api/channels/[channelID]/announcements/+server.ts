@@ -4,7 +4,6 @@ import { error, json } from '@sveltejs/kit';
 import { getFormFile, getFormFiles, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 
-import { triggerProcessMessage } from '$lib/trigger.dev/triggerProcessMessage';
 import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ locals, params, request }) => {
@@ -42,7 +41,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
     createdAt: new Date().getTime(),
   });
 
-  await triggerProcessMessage({
+  await locals.triggerClient.triggerProcessMessage({
     channel: {
       channelID,
       name: channel.name,

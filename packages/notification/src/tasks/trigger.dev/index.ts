@@ -1,3 +1,4 @@
-import { type processMessageTask } from './processMessageTask';
+import type { createTriggerClient } from './triggerClient';
 
-export type ProcessMessageTask = typeof processMessageTask;
+export { createTriggerClient } from './triggerClient';
+export type TriggerClient = ReturnType<typeof createTriggerClient>;
