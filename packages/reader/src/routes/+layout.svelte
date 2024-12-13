@@ -53,16 +53,16 @@
 
   import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
   import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
+  import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import { initFirebase, isNotificationSupported } from '$lib/firebase/firebase';
+  import { initFirebase } from '$lib/firebase/firebase';
   import { initNotification } from '$lib/notification/notification';
+  import { notificationState } from '$lib/notification/notificationState.svelte';
   import { setupBack } from '@announcing/components/actions/back';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
   import NotificationModal from './NotificationModal.svelte';
   import SettingsModal from './SettingsModal.svelte';
-  import { notificationState } from '$lib/notification/notificationState.svelte';
-  import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
 
   interface Props {
     data: LayoutData;
@@ -73,7 +73,6 @@
 
   let theme = $state(Cookies.get('theme') ?? getSystemTheme());
   let locale = $state(data.locale);
-  let supported = $state(false);
   let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
   let headerNotification = $derived<HeaderNotification | undefined>(
     $page.data['headerNotification'],
@@ -92,7 +91,6 @@
   onMount(async () => {
     await initFirebase();
     await initNotification();
-    supported = isNotificationSupported();
 
     document.documentElement.setAttribute('hydrated', '');
   });
@@ -115,12 +113,14 @@
           notificationModal.openModal(headerNotification);
         }}
       >
-        {#if supported}
+        {#if notificationState.permission === 'granted'}
           {#if notificationState.channels.includes(headerNotification.channelID)}
             <MaterialSymbolsNotificationsRounded />
           {:else}
             <MaterialSymbolsNotificationsOutlineRounded />
           {/if}
+        {:else if notificationState.permission === 'default'}
+          <MaterialSymbolsNotificationsOutlineRounded />
         {:else}
           <MaterialSymbolsNotificationImportantOutlineRounded />
         {/if}
