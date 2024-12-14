@@ -54,13 +54,14 @@ sw.addEventListener('push', (event) => {
 
   const name = data.name;
 
-  const title = `${name} : New announcement`;
+  const iconPath = data.icon && `/s/${data.icon}`;
+
   const options = {
     data: { channelID: data.channelID },
-    ...(data.icon && { icon: `/s/${data.icon}` }),
+    ...(iconPath && { icon: iconPath, badge: iconPath }),
   };
 
-  event.waitUntil(sw.registration.showNotification(title, options));
+  event.waitUntil(sw.registration.showNotification(name, options));
 });
 
 sw.addEventListener('notificationclick', (event) => {
