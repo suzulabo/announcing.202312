@@ -15,6 +15,13 @@ import { CacheFirst } from 'workbox-strategies';
   (self as any).__WB_DISABLE_DEV_LOGS = true;
 }
 
+sw.addEventListener('install', (event) => {
+  event.waitUntil(sw.skipWaiting());
+});
+sw.addEventListener('activate', (event) => {
+  event.waitUntil(sw.clients.claim());
+});
+
 {
   const precacheAssets = [...build, ...files].map((url) => {
     return { url, revision: version };
@@ -48,20 +55,11 @@ sw.addEventListener('push', (event) => {
   }
   const payload = event.data.json();
 
-  console.log('payload', payload);
+  console.debug('payload', payload);
 
-  const data = payload.data;
+  const notification = payload.notification;
 
-  const name = data.name;
-
-  const iconPath = data.icon && `/s/${data.icon}`;
-
-  const options = {
-    data: { channelID: data.channelID },
-    ...(iconPath && { icon: iconPath, badge: iconPath }),
-  };
-
-  event.waitUntil(sw.registration.showNotification(name, options));
+  event.waitUntil(sw.registration.showNotification(notification.title, notification));
 });
 
 sw.addEventListener('notificationclick', (event) => {
@@ -69,8 +67,10 @@ sw.addEventListener('notificationclick', (event) => {
 
   event.notification.close();
 
-  const channelID = event.notification.data.channelID;
-  if (channelID) {
-    event.waitUntil(sw.clients.openWindow(`/${channelID}`));
+  const link = event.notification.data.link;
+  if (link) {
+    event.waitUntil(sw.clients.openWindow(link));
+  } else {
+    console.log('Missing link');
   }
 });

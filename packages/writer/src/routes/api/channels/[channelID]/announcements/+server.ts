@@ -4,11 +4,11 @@ import { error, json } from '@sveltejs/kit';
 import { getFormFile, getFormFiles, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 
+import { PUBLIC_READER_PREFIX } from '$env/static/public';
+import { type TriggerProcessMessageParams } from '@announcing/notification/tasks/trigger.dev';
 import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ locals, params, request }) => {
-  console.log('## check1');
-
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -41,13 +41,26 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
     createdAt: new Date().getTime(),
   });
 
-  await locals.triggerClient.triggerProcessMessage({
-    channel: {
-      channelID,
-      name: channel.name,
-      icon: channel.icon,
+  const triggerParams: TriggerProcessMessageParams = {
+    tag: channelID,
+    message: {
+      webpush: {
+        headers: {
+          TTL: '3600',
+        },
+        notification: {
+          title: channel.name,
+          body: title ?? body,
+          ...(channel.icon && { icon: `${PUBLIC_READER_PREFIX}/s/${channel.icon}` }),
+          data: {
+            link: `${PUBLIC_READER_PREFIX}/${channelID}`,
+          },
+        },
+      },
     },
-  });
+  };
+
+  await locals.triggerClient.triggerProcessMessage(triggerParams);
 
   return json({});
 };
