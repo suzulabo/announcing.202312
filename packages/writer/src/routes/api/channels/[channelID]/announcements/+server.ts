@@ -4,7 +4,6 @@ import { error, json } from '@sveltejs/kit';
 import { getFormFile, getFormFiles, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 
-import { PUBLIC_READER_PREFIX } from '$env/static/public';
 import { type TriggerProcessMessageParams } from '@announcing/notification/tasks/trigger.dev';
 import type { RequestHandler } from './$types';
 
@@ -51,9 +50,9 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
         notification: {
           title: channel.name,
           body: title ?? body,
-          ...(channel.icon && { icon: `${PUBLIC_READER_PREFIX}/s/${channel.icon}` }),
+          ...(channel.icon && { icon: `/s/${channel.icon}` }),
           data: {
-            link: `${PUBLIC_READER_PREFIX}/${channelID}`,
+            link: `/${channelID}`,
           },
         },
       },
