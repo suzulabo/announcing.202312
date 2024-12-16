@@ -232,8 +232,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.0
       '@trigger.dev/sdk':
-        specifier: 3.3.6
-        version: 3.3.6(zod@3.23.8)
+        specifier: 3.3.7
+        version: 3.3.7(zod@3.23.8)
       '@types/node':
         specifier: ^22.10.1
         version: 22.10.1
@@ -710,8 +710,8 @@ packages:
   '@drizzle-team/brocli@0.10.2':
     resolution: {integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==}
 
-  '@electric-sql/client@0.9.0':
-    resolution: {integrity: sha512-UL2Gep9wPdGMTE0oEWVi0HA8R293R2OzFfHeAsN2LABYYl/boXss7nseNEiIV5+RjHPH7Tm8NsjH9iJW2rZkrQ==}
+  '@electric-sql/client@1.0.0-beta.1':
+    resolution: {integrity: sha512-Ei9jN3pDoGzc+a/bGqnB5ajb52IvSv7/n2btuyzUlcOHIR2kM9fqtYTJXPwZYKLkGZlHWlpHgWyRtrinkP2nHg==}
 
   '@esbuild-kit/core-utils@3.3.2':
     resolution: {integrity: sha512-sPRAnw9CdSsRmEtnsl2WXWdyquogVpB3yZ3dgwJfe8zrOzTsV7cJvmwrKVa+0ma5BoiGJ+BoqkMvawbayKUsqQ==}
@@ -2628,12 +2628,12 @@ packages:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
 
-  '@trigger.dev/core@3.3.6':
-    resolution: {integrity: sha512-X4WdeUGcXrhfFjV2+ntthQ8DqX8iMHAOHjNtS3OLzde7hPOaRJ7OWcVeJL1FHBVvhS3m7j/qloytNqyWPr+zsg==}
+  '@trigger.dev/core@3.3.7':
+    resolution: {integrity: sha512-K5mAYXYbhSi8TP57VorfTlbNcbR4WIhUfjCsuSwL5tl6rVIM88ZJDdTN034XlZBh0FhAKIIIp8MUG1wt3bRjkA==}
     engines: {node: '>=18.20.0'}
 
-  '@trigger.dev/sdk@3.3.6':
-    resolution: {integrity: sha512-yoMlYeMC24nYCYMzqHrqZnGFogtoykE/70wdwJvzDHtwb5pkkntHBY/xMSZrckEurpy5TZGq8VA/eqfgWojD4w==}
+  '@trigger.dev/sdk@3.3.7':
+    resolution: {integrity: sha512-PoEp6BMuC2UA6s8AgBaBth8w0GEgKvGfdbGPb5hxuUojm0ejSkQ9pFTNaV/R0l4FyfHzc1sTrC06GQuBXnoA8g==}
     engines: {node: '>=18.20.0'}
     peerDependencies:
       zod: ^3.0.0
@@ -5860,7 +5860,7 @@ snapshots:
 
   '@drizzle-team/brocli@0.10.2': {}
 
-  '@electric-sql/client@0.9.0':
+  '@electric-sql/client@1.0.0-beta.1':
     optionalDependencies:
       '@rollup/rollup-darwin-arm64': 4.28.0
 
@@ -7673,9 +7673,9 @@ snapshots:
   '@tootallnate/once@2.0.0':
     optional: true
 
-  '@trigger.dev/core@3.3.6':
+  '@trigger.dev/core@3.3.7':
     dependencies:
-      '@electric-sql/client': 0.9.0
+      '@electric-sql/client': 1.0.0-beta.1
       '@google-cloud/precise-date': 4.0.0
       '@jsonhero/path': 1.0.21
       '@opentelemetry/api': 1.9.0
@@ -7705,12 +7705,12 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@trigger.dev/sdk@3.3.6(zod@3.23.8)':
+  '@trigger.dev/sdk@3.3.7(zod@3.23.8)':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/api-logs': 0.52.1
       '@opentelemetry/semantic-conventions': 1.25.1
-      '@trigger.dev/core': 3.3.6
+      '@trigger.dev/core': 3.3.7
       chalk: 5.3.0
       cronstrue: 2.52.0
       debug: 4.3.7
