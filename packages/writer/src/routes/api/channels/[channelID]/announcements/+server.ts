@@ -30,7 +30,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
     error(404, 'Missing channel');
   }
 
-  await addAnnouncement({
+  const announcementValues = await addAnnouncement({
     userID,
     channelID,
     headerImage,
@@ -40,26 +40,33 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
     createdAt: new Date().getTime(),
   });
 
-  const triggerParams: TriggerProcessMessageParams = {
-    tag: channelID,
-    message: {
-      webpush: {
-        headers: {
-          TTL: '3600',
-        },
-        notification: {
-          title: channel.name,
-          body: title ?? body,
-          ...(channel.icon && { icon: `/s/${channel.icon}` }),
-          data: {
-            link: `/${channelID}`,
+  if (announcementValues) {
+    const triggerParams: TriggerProcessMessageParams = {
+      tag: channelID,
+      message: {
+        webpush: {
+          headers: {
+            TTL: '3600',
+          },
+          notification: {
+            title: channel.name,
+            body: title ?? body,
+            tag: channelID,
+            ...(channel.icon && { icon: `/s/${channel.icon}` }),
+            ...(channel.icon && { badge: `/s/${channel.icon}` }),
+            ...(announcementValues.headerImage && {
+              image: `/s/${announcementValues.headerImage}`,
+            }),
+            data: {
+              link: `/${channelID}`,
+            },
           },
         },
       },
-    },
-  };
+    };
 
-  await locals.triggerClient.triggerProcessMessage(triggerParams);
+    await locals.triggerClient.triggerProcessMessage(triggerParams);
+  }
 
   return json({});
 };
