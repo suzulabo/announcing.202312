@@ -1,4 +1,3 @@
-import { browser } from '$app/environment';
 import {
   PUBLIC_FIREBASE_API_KEY,
   PUBLIC_FIREBASE_APP_ID,
@@ -7,7 +6,7 @@ import {
   PUBLIC_FIREBASE_VAPID_KEY,
 } from '$env/static/public';
 import { initializeApp } from 'firebase/app';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import { getMessaging, getToken, isSupported, type Messaging } from 'firebase/messaging';
 
 const firebaseConfig = {
   apiKey: PUBLIC_FIREBASE_API_KEY,
@@ -18,19 +17,20 @@ const firebaseConfig = {
 
 const vapidKey = PUBLIC_FIREBASE_VAPID_KEY;
 
-const initContext = () => {
-  if (!browser) {
-    return;
+const initContext = async () => {
+  const supported = await isSupported();
+
+  let messaging: Messaging | undefined;
+
+  if (supported) {
+    const app = initializeApp(firebaseConfig);
+    messaging = getMessaging(app);
   }
 
-  const app = initializeApp(firebaseConfig);
-  const messaging = getMessaging(app);
-
-  onMessage(messaging, (payload) => {
-    console.log('Message received. ', payload);
-  });
-
   const getPushToken = async () => {
+    if (!messaging) {
+      return;
+    }
     const serviceWorkerRegistration = await navigator.serviceWorker.getRegistration();
     if (!serviceWorkerRegistration) {
       console.log('no sw');
@@ -45,13 +45,17 @@ const initContext = () => {
     return token;
   };
 
-  return { getPushToken };
+  return { supported, getPushToken };
 };
 
-let ctx: ReturnType<typeof initContext>;
+let ctx: Awaited<ReturnType<typeof initContext>> | undefined;
 
-export const initFirebase = () => {
-  ctx = initContext();
+export const initFirebase = async () => {
+  ctx = await initContext();
+};
+
+export const isNotificationSupported = () => {
+  return !!ctx?.supported;
 };
 
 export const getPushToken = () => {

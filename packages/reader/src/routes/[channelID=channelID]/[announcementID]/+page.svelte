@@ -9,4 +9,12 @@
   let { data }: Props = $props();
 </script>
 
-<AnnouncementView announcement={data.announcement} />
+<div class="container">
+  <AnnouncementView announcement={data.announcement} />
+</div>
+
+<style lang="scss">
+  .container {
+    margin: 16px 0;
+  }
+</style>

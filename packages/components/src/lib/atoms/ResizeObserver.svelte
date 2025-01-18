@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createResizeObserverHelper } from '$lib/utils/resizeObserverHelper';
   import { onMount, type Snippet } from 'svelte';
 
   interface Props {
@@ -10,22 +11,20 @@
 
   let wrapper: HTMLDivElement;
 
-  const observerCallback: ResizeObserverCallback = (entries) => {
-    for (const entry of entries) {
-      const el = entry.target;
-      onResize({ el });
-    }
+  const observerCallback = (entry: ResizeObserverEntry) => {
+    const el = entry.target;
+    onResize({ el });
   };
 
   onMount(() => {
-    const observer = new ResizeObserver(observerCallback);
+    const resizeHelper = createResizeObserverHelper(observerCallback);
 
     for (const el of wrapper.children) {
-      observer.observe(el);
+      resizeHelper.observe(el);
     }
 
     return () => {
-      observer.disconnect();
+      resizeHelper.disconnect();
     };
   });
 </script>

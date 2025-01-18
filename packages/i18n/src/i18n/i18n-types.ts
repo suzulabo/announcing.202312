@@ -223,6 +223,48 @@ type RootTranslation = {
 	 * O​p​e​n​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​e​d​i​t​ ​o​r​ ​d​e​l​e​t​e​.
 	 */
 	announcementListPrompt: string
+	/**
+	 * N​o​t​i​f​i​c​a​t​i​o​n
+	 */
+	notification: string
+	setupNotification: {
+		/**
+		 * P​r​e​p​a​r​e​ ​t​o​ ​r​e​c​e​i​v​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​w​h​e​n​ ​n​e​w​ ​n​o​t​i​c​e​s​ ​a​r​e​ ​p​o​s​t​e​d​.​ ​
+	​P​r​e​s​s​ ​t​h​e​ ​"​S​e​t​ ​N​o​t​i​f​i​c​a​t​i​o​n​s​"​ ​b​u​t​t​o​n​ ​t​o​ ​s​e​t​ ​t​h​e​ ​p​e​r​m​i​s​s​i​o​n​ ​s​e​t​t​i​n​g​s​,​ ​a​s​ ​a​ ​m​e​s​s​a​g​e​ ​w​i​l​l​ ​a​p​p​e​a​r​ ​a​s​k​i​n​g​ ​y​o​u​ ​t​o​ ​c​o​n​f​i​r​m​ ​p​e​r​m​i​s​s​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.
+		 */
+		description: string
+		/**
+		 * S​e​t​ ​N​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		button: string
+		/**
+		 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e​ ​i​n​ ​t​h​i​s​ ​b​r​o​w​s​e​r​.
+		 */
+		notSupported: string
+		/**
+		 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​l​l​o​w​e​d​ ​t​o​ ​u​s​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​
+	​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​b​r​o​w​s​e​r​ ​s​e​t​t​i​n​g​s​.
+		 */
+		denied: string
+		/**
+		 * <​i​>​<​b​>​{​n​a​m​e​}​<​/​b​>​<​/​i​>​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​w​ ​<​b​>​o​f​f​<​/​b​>​.
+		 * @param {unknown} name
+		 */
+		grantedDisabled: RequiredParams<'name'>
+		/**
+		 * <​i​>​<​b​>​{​n​a​m​e​}​<​/​b​>​<​/​i​>​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​w​ ​<​b​>​o​n​<​/​b​>​.
+		 * @param {unknown} name
+		 */
+		grantedEnabled: RequiredParams<'name'>
+		/**
+		 * T​u​r​n​ ​o​n​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		toEnabled: string
+		/**
+		 * T​u​r​n​ ​o​f​f​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+		 */
+		toDisabled: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -434,6 +476,46 @@ export type TranslationFunctions = {
 	 * Open the announcement you want to edit or delete.
 	 */
 	announcementListPrompt: () => LocalizedString
+	/**
+	 * Notification
+	 */
+	notification: () => LocalizedString
+	setupNotification: {
+		/**
+		 * Prepare to receive notifications when new notices are posted. 
+	Press the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.
+		 */
+		description: () => LocalizedString
+		/**
+		 * Set Notifications
+		 */
+		button: () => LocalizedString
+		/**
+		 * Notifications are not available in this browser.
+		 */
+		notSupported: () => LocalizedString
+		/**
+		 * You are not allowed to use notifications. 
+	Please change your browser settings.
+		 */
+		denied: () => LocalizedString
+		/**
+		 * <i><b>{name}</b></i> notifications are now <b>off</b>.
+		 */
+		grantedDisabled: (arg: { name: unknown }) => LocalizedString
+		/**
+		 * <i><b>{name}</b></i> notifications are now <b>on</b>.
+		 */
+		grantedEnabled: (arg: { name: unknown }) => LocalizedString
+		/**
+		 * Turn on notifications
+		 */
+		toEnabled: () => LocalizedString
+		/**
+		 * Turn off notifications
+		 */
+		toDisabled: () => LocalizedString
+	}
 }
 
 export type Formatters = {}

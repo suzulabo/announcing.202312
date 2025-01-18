@@ -29,7 +29,7 @@
 
   let { channel } = $derived(data);
   let channelID = $derived(channel.channelID);
-  let readerURL = $derived(`${PUBLIC_READER_PREFIX}${channelID}`);
+  let readerURL = $derived(`${PUBLIC_READER_PREFIX}/${channelID}`);
 
   const updateChannel = async (formData: FormData) => {
     formData.append('updatedAt', channel.updatedAt + '');

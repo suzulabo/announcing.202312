@@ -16,7 +16,7 @@
     "typesafe-i18n": "^5.26.2"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.10.1",
     "tsx": "^4.19.2"
   }
 }

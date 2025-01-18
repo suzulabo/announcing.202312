@@ -4,8 +4,6 @@ import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ params }) => {
-  console.log('getAnnouncement', params);
-
   const { channelID, announcementID } = params;
 
   const result = await getAnnouncement({ channelID, announcementID });

@@ -53,42 +53,44 @@
     {@html toHtml(announcement.body)}
   </div>
   {#if announcement.images}
-    {#if announcement.images.length === 1}
-      {@const image = announcement.images[0]}
-      <div
-        class="image-box"
-        role="button"
-        tabindex="0"
-        onclick={() => {
-          if (image) {
-            showImageModal(image);
-          }
-        }}
-        onkeydown={() => {
-          // TODO
-        }}
-      >
-        <img class="single-image" use:imgSrc={image} alt="" />
-      </div>
-    {:else}
-      <div class="images-grid">
-        {#each announcement.images as image}
-          <div
-            role="button"
-            tabindex="0"
-            class="image-box"
-            onclick={() => {
+    <div class="images-box">
+      {#if announcement.images.length === 1}
+        {@const image = announcement.images[0]}
+        <div
+          class="image-box"
+          role="button"
+          tabindex="0"
+          onclick={() => {
+            if (image) {
               showImageModal(image);
-            }}
-            onkeydown={() => {
-              // TODO
-            }}
-          >
-            <img use:imgSrc={image} alt="" />
-          </div>
-        {/each}
-      </div>
-    {/if}
+            }
+          }}
+          onkeydown={() => {
+            // TODO
+          }}
+        >
+          <img class="single-image" use:imgSrc={image} alt="" />
+        </div>
+      {:else}
+        <div class="images-grid">
+          {#each announcement.images as image}
+            <div
+              role="button"
+              tabindex="0"
+              class="image-box"
+              onclick={() => {
+                showImageModal(image);
+              }}
+              onkeydown={() => {
+                // TODO
+              }}
+            >
+              <img use:imgSrc={image} alt="" />
+            </div>
+          {/each}
+        </div>
+      {/if}
+    </div>
   {/if}
 </div>
 
@@ -131,28 +133,33 @@
       line-height: 1.4;
     }
 
-    .image-box {
-      display: contents;
-      cursor: pointer;
-    }
+    .images-box {
+      margin: 8px 4px;
+      display: flex;
 
-    .single-image {
-      object-fit: cover;
-      margin: 8px auto;
-      border-radius: 8px;
-      max-height: 50vh;
-    }
-    .images-grid {
-      display: grid;
-      grid-template-columns: auto auto;
-      gap: 4px;
-      padding: 8px 4px;
+      .image-box {
+        display: contents;
+        cursor: pointer;
+      }
 
-      img {
-        aspect-ratio: 5/4;
-        object-fit: cover;
-        margin: auto;
+      .single-image {
+        margin: 0 auto;
+        object-fit: contain;
         border-radius: 8px;
+        max-height: 50vh;
+        width: fit-content;
+      }
+      .images-grid {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 4px;
+
+        img {
+          aspect-ratio: 5/4;
+          object-fit: cover;
+          margin: auto;
+          border-radius: 8px;
+        }
       }
     }
   }

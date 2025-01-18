@@ -6,7 +6,7 @@
 
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
   import type { ChannelViewProps } from '../ChannelView.svelte';
-  import GridItem from './GridItem.svelte';
+  import Item from './Item.svelte';
   import { imgSrc } from '$lib/actions/imgSrc';
 
   let { channel, announcementHrefPrefix, announcementKeys, announcementLoader }: ChannelViewProps =
@@ -44,7 +44,7 @@
             </div>
           {:then announcement}
             {#if announcement}
-              <GridItem {announcement} />
+              <Item {announcement} />
             {/if}
           {/await}
         </a>
@@ -88,11 +88,24 @@
     flex-direction: column;
     min-height: 200px;
     max-height: 50svh;
-    border-top: 1px solid var(--color-border-light);
+    background-color: var(--color-background-light);
+    margin: 0 8px;
+    padding: 8px;
+    border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
+
+    --color-gradient: var(--color-background-light);
+
     .loading {
       margin: auto;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: var(--color-hover-light);
+        --color-gradient: var(--color-hover-light);
+      }
     }
   }
 </style>

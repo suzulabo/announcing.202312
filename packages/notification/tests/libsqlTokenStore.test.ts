@@ -102,6 +102,16 @@ describe('libsqlTokenStore', () => {
     }
   });
 
+  test('set empty tags', async () => {
+    const client = await createTestClient();
+
+    const store = createLibSqlTokenStore({ client });
+
+    await store.putToken('token1', ['123', '456']);
+    await store.putToken('token1', []);
+    expect((await client.execute('SELECT * FROM tokens')).rows).toStrictEqual([]);
+  });
+
   test.skip('put performance', async () => {
     // 150 characters
     const TOKEN =

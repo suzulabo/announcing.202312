@@ -7,32 +7,70 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 
 import { build, files, version } from '$service-worker';
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
+import { registerRoute, Route } from 'workbox-routing';
+import { CacheFirst } from 'workbox-strategies';
 
-const precacheAssets = [...build, ...files].map((url) => {
-  return { url, revision: version };
+{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (self as any).__WB_DISABLE_DEV_LOGS = true;
+}
+
+sw.addEventListener('install', (event) => {
+  event.waitUntil(sw.skipWaiting());
+});
+sw.addEventListener('activate', (event) => {
+  event.waitUntil(sw.clients.claim());
 });
 
-precacheAndRoute(precacheAssets);
-cleanupOutdatedCaches();
+{
+  const precacheAssets = [...build, ...files].map((url) => {
+    return { url, revision: version };
+  });
+
+  precacheAndRoute(precacheAssets);
+  cleanupOutdatedCaches();
+}
+
+{
+  const imageRoute = new Route(({ sameOrigin, url }) => {
+    if (!sameOrigin) {
+      return false;
+    }
+    if (url.pathname.startsWith('/api/channels/')) {
+      return true;
+    }
+    if (url.pathname.startsWith('/s/')) {
+      return true;
+    }
+
+    return false;
+  }, new CacheFirst());
+
+  registerRoute(imageRoute);
+}
 
 sw.addEventListener('push', (event) => {
   if (!event.data) {
     return;
   }
-  const data = event.data.json();
-  const { title, body } = data.notification;
-  const options = {
-    body,
-  };
+  const payload = event.data.json();
 
-  event.waitUntil(sw.registration.showNotification(title, options));
+  console.debug('payload', payload);
+
+  const notification = payload.notification;
+
+  event.waitUntil(sw.registration.showNotification(notification.title, notification));
 });
 
 sw.addEventListener('notificationclick', (event) => {
+  console.log('notificationclick', event.notification);
+
   event.notification.close();
 
-  const url = event.notification.data?.url;
-  if (url) {
-    event.waitUntil(sw.clients.openWindow(url));
+  const link = event.notification.data.link;
+  if (link) {
+    event.waitUntil(sw.clients.openWindow(link));
+  } else {
+    console.log('Missing link');
   }
 });

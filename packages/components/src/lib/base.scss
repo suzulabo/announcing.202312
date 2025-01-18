@@ -19,6 +19,8 @@ html {
 
   --color-background-highlight: #e3e9ea; // Container High (N-92)
 
+  --color-background-image: #ffffff; // Container Lowest (N-100)
+
   $color-border: #6f797a; // Outline (NV-50)
   --color-border: #{$color-border};
   --color-border-disable: #{rgba($color-border, 0.5)};
@@ -26,6 +28,7 @@ html {
   --color-border-light: #bfc8ca; // OUtline Variant (NV-80)
 
   --color-hover: #e9eff0; // Container (N-94)
+  --color-hover-light: #e3e9ea; // Container High(N-92)
 
   --color-background-modal: #{rgba(#2b3133, 0.8)}; // Inverse Surface (N-20)
 
@@ -44,9 +47,12 @@ html {
 
     --color-background: #090f10; // Container Lowest (N-4)
 
-    --color-background-light: #171d1e; // Container Low (N-10)
+    --color-background-light: #252b2c; // Container High (N-17)
 
     --color-background-highlight: #303637; // Container Highest (N-24)
+
+    // background-color of img is always white.
+    // --color-background-image: #ffffff; // Container Lowest (N-100)
 
     $color-border: #899294; // Outline (NV-60)
     --color-border: #{$color-border};
@@ -55,6 +61,7 @@ html {
     --color-border-light: #3f484a; // OUtline Variant (NV-30)
 
     --color-hover: #1b2122; // Container (N-12)
+    --color-hover-light: #3f484a; // Outline variant(NV-30)
 
     --color-background-modal: #{rgba(#dee3e5, 0.8)}; // Inverse Surface (N-90)
 

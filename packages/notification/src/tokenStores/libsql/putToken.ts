@@ -8,7 +8,7 @@ const SELECT_SUB_COUNT = `
 SELECT sub, count, tail FROM tags
 WHERE tag = :tag ORDER BY sub DESC LIMIT 1
 `;
-const UPSERT_TAGS = `
+const UPSERT_TAG = `
 INSERT INTO tags(tag, sub, tokens, count, tail)
 VALUES(:tag, :sub, :token || ' ', 1, 1)
 ON CONFLICT(tag, sub) DO UPDATE SET
@@ -17,14 +17,17 @@ tokens = tokens || :token  || ' ', count = count + 1
 const UPDATE_NOT_TAIL = `
 UPDATE tags SET tail = 0 WHERE tag = :tag AND sub = :sub
 `;
-const REMOVE_TOKEN = `
+const REMOVE_TAGS_TOKEN = `
 UPDATE tags SET
 tokens = REPLACE(tokens, :token || ' ', ''), count = count - 1
 WHERE tag = :tag AND sub = :sub AND INSTR(tokens, :token) >= 0
 `;
-const UPSERT_TOKENS = `
+const UPSERT_TOKEN = `
 REPLACE INTO tokens(token, tags)
 VALUES(:token, :tags)
+`;
+const DELETE_TOKEN = `
+DELETE FROM tokens WHERE token = :token
 `;
 
 export const putToken = async (config: Config, token: string, tags: string[]): Promise<void> => {
@@ -96,7 +99,7 @@ export const putToken = async (config: Config, token: string, tags: string[]): P
         }
       }
       putStatements.push({
-        sql: UPSERT_TAGS,
+        sql: UPSERT_TAG,
         args: { tag, sub, token },
       });
       newTagSubs.push({
@@ -108,7 +111,7 @@ export const putToken = async (config: Config, token: string, tags: string[]): P
 
   for (const v of tagSubsRemoved) {
     putStatements.push({
-      sql: REMOVE_TOKEN,
+      sql: REMOVE_TAGS_TOKEN,
       args: {
         ...v,
         token,
@@ -116,13 +119,20 @@ export const putToken = async (config: Config, token: string, tags: string[]): P
     });
   }
 
-  putStatements.push({
-    sql: UPSERT_TOKENS,
-    args: {
-      token,
-      tags: newTagSubs.map((v) => `${v.tag}:${v.sub}`).join(' '),
-    },
-  });
+  if (newTagSubs.length === 0) {
+    putStatements.push({
+      sql: DELETE_TOKEN,
+      args: { token },
+    });
+  } else {
+    putStatements.push({
+      sql: UPSERT_TOKEN,
+      args: {
+        token,
+        tags: newTagSubs.map((v) => `${v.tag}:${v.sub}`).join(' '),
+      },
+    });
+  }
 
   await client.batch(putStatements, 'write');
 };

@@ -17,8 +17,6 @@ export const fetchAnnouncement = (
 ): (GetAnnouncementResult | undefined) | Promise<GetAnnouncementResult | undefined> => {
   const cacheKey = `${channelID}-${announcementID}`;
 
-  console.log('fetchAnnouncement', cacheKey);
-
   const cached = cache.get(cacheKey);
   if (cached) {
     return cached;

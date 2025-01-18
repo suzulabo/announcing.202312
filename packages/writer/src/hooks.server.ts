@@ -5,6 +5,7 @@ import process from 'node:process';
 import { env } from '$env/dynamic/private';
 import { CF } from '$env/static/private';
 import { setStorage } from '@announcing/db';
+import { createTriggerClient } from '@announcing/notification/tasks/trigger.dev';
 import { handle as authenticationHandle } from './auth';
 
 process.env['DB_URL'] = env.DB_URL;
@@ -40,4 +41,14 @@ const authorizationHandle: Handle = async ({ resolve, event }) => {
   return resolve(event);
 };
 
-export const handle = sequence(timingHandle, authenticationHandle, authorizationHandle);
+const triggerClientHandle: Handle = ({ resolve, event }) => {
+  event.locals.triggerClient = createTriggerClient(env.TRIGGER_SECRET_KEY);
+  return resolve(event);
+};
+
+export const handle = sequence(
+  timingHandle,
+  authenticationHandle,
+  authorizationHandle,
+  triggerClientHandle,
+);

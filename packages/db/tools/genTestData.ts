@@ -4,9 +4,13 @@ import { parseArgs } from 'node:util';
 import { faker } from '@faker-js/faker';
 import MockDate from 'mockdate';
 
-import { createLocalDB } from '@announcing/cloudflare/localDB';
+import { configDotenv } from 'dotenv';
+import { addAnnouncement, createChannel, deleteChannel, getChannel, setStorage } from '../src/';
+import { createLocalStorage } from '../src/storage/LocalStorage';
 
-import { addAnnouncement, createChannel, deleteChannel, getChannel, setDBEnv } from '../src/api';
+configDotenv({ path: '.env.local' });
+
+setStorage(createLocalStorage());
 
 const channelData = {
   name: 'Aether Dynamics Corporation',
@@ -138,8 +142,6 @@ const main = async () => {
     printUsage();
     return;
   }
-
-  setDBEnv(await createLocalDB());
 
   await generate(userID, channelID, count);
 };

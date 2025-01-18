@@ -99,8 +99,9 @@ export const addAnnouncement = async (params: Params) => {
       and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
     );
 
-  await db.batch([
-    updateChannel,
-    db.insert(announcementsTable).values({ announcementID, ...values }),
-  ]);
+  const announcementValues = { announcementID, ...values };
+
+  await db.batch([updateChannel, db.insert(announcementsTable).values(announcementValues)]);
+
+  return announcementValues;
 };

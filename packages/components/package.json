@@ -49,6 +49,10 @@
       "types": "./dist/atoms/Loading.svelte.d.ts",
       "svelte": "./dist/atoms/Loading.svelte"
     },
+    "./Logo.svelte": {
+      "types": "./dist/atoms/Logo.svelte.d.ts",
+      "svelte": "./dist/atoms/Logo.svelte"
+    },
     "./Modal.svelte": {
       "types": "./dist/atoms/Modal.svelte.d.ts",
       "svelte": "./dist/atoms/Modal.svelte"
@@ -76,15 +80,14 @@
     "!dist/**/*.spec.*"
   ],
   "peerDependencies": {
-    "@sveltejs/kit": "^2.5.21",
     "svelte": "^4.0.0"
   },
   "devDependencies": {
     "@announcing/db": "workspace:^",
     "@announcing/i18n": "workspace:^",
-    "@faker-js/faker": "^9.2.0",
+    "@faker-js/faker": "^9.3.0",
     "@kvs/indexeddb": "^2.1.4",
-    "@playwright/test": "^1.48.2",
+    "@playwright/test": "^1.49.0",
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/kit": "^2.8.0",
     "@sveltejs/package": "^2.3.7",
@@ -92,22 +95,22 @@
     "@types/autosize": "^4.0.3",
     "@types/image-blob-reduce": "^4.1.4",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.10.1",
     "autosize": "^6.0.1",
     "base-x": "^5.0.0",
     "date-fns": "^4.1.0",
     "image-blob-reduce": "^4.1.0",
     "js-cookie": "^3.0.5",
-    "linkify-html": "^4.1.3",
+    "linkify-html": "^4.2.0",
     "lru-cache": "^11.0.2",
     "publint": "^0.2.12",
-    "sass": "^1.80.6",
-    "svelte": "^5.1.13",
-    "svelte-check": "^4.0.6",
+    "sass": "^1.82.0",
+    "svelte": "^5.7.1",
+    "svelte-check": "^4.1.1",
     "svelte-preprocess": "^6.0.3",
     "the-new-css-reset": "^1.11.3",
     "tslib": "^2.8.1",
     "vite": "^5.4.10",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.8"
   }
 }

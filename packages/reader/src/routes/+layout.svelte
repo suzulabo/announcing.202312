@@ -1,4 +1,5 @@
 <script lang="ts" module>
+  import Logo from '@announcing/components/Logo.svelte';
   import type { Locales } from '@announcing/i18n';
   import Cookies from 'js-cookie';
 
@@ -36,6 +37,12 @@
     href: string;
     labelKey: BackLabelKeys;
   };
+
+  export type HeaderNotification = {
+    channelID: string;
+    name: string;
+    icon?: string;
+  };
 </script>
 
 <script lang="ts">
@@ -44,11 +51,17 @@
   import { browser } from '$app/environment';
   import { page } from '$app/stores';
 
+  import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
+  import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
+  import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import { getPushToken, initFirebase } from '$lib/firebase/firebase';
+  import { initFirebase } from '$lib/firebase/firebase';
+  import { initNotification } from '$lib/notification/notification';
+  import { notificationState } from '$lib/notification/notificationState.svelte';
   import { setupBack } from '@announcing/components/actions/back';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
+  import NotificationModal from './NotificationModal.svelte';
   import SettingsModal from './SettingsModal.svelte';
 
   interface Props {
@@ -61,8 +74,11 @@
   let theme = $state(Cookies.get('theme') ?? getSystemTheme());
   let locale = $state(data.locale);
   let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
-  let token = $state<string | undefined>();
+  let headerNotification = $derived<HeaderNotification | undefined>(
+    $page.data['headerNotification'],
+  );
 
+  let notificationModal: ReturnType<typeof NotificationModal>;
   let settingsModal: ReturnType<typeof SettingsModal>;
 
   $effect(() => {
@@ -72,29 +88,44 @@
     updateTheme(theme);
   });
 
-  onMount(() => {
-    document.documentElement.setAttribute('hydrated', '');
+  onMount(async () => {
+    await initFirebase();
+    await initNotification();
 
-    initFirebase();
+    document.documentElement.setAttribute('hydrated', '');
   });
 
   const back = setupBack();
-
-  const getTokenClick = async () => {
-    try {
-      token = await getPushToken();
-    } catch (err) {
-      token = JSON.stringify(err, undefined, 2);
-    }
-  };
 </script>
 
 <div class="container">
   <header>
     {#if headerBack}
-      <a href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
+      <a class="back" href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
     {:else}
-      <a href="/" class="site-name">♪</a>
+      <a href="/" class="site-name"><Logo /></a>
+    {/if}
+
+    {#if headerNotification}
+      <button
+        class="small notification-btn"
+        onclick={() => {
+          notificationModal.openModal(headerNotification);
+        }}
+      >
+        {#if notificationState.permission === 'granted'}
+          {#if notificationState.channels.includes(headerNotification.channelID)}
+            <MaterialSymbolsNotificationsRounded />
+          {:else}
+            <MaterialSymbolsNotificationsOutlineRounded />
+          {/if}
+        {:else if notificationState.permission === 'default'}
+          <MaterialSymbolsNotificationsOutlineRounded />
+        {:else}
+          <MaterialSymbolsNotificationImportantOutlineRounded />
+        {/if}
+        <span>{$LL.notification()}</span></button
+      >
     {/if}
 
     <button
@@ -106,47 +137,44 @@
       <MaterialSymbolsSettingsOutline />
       <span>{$LL.settings()}</span></button
     >
-    <button class="small" onclick={getTokenClick}> getToken </button>
   </header>
-  <pre>{token}</pre>
   <hr />
   {@render children?.()}
 </div>
 
+<NotificationModal bind:this={notificationModal} />
 <SettingsModal bind:this={settingsModal} bind:locale bind:theme />
 
 <style lang="scss">
-  pre {
-    border: 1px solid black;
-    white-space: pre-line;
-    word-break: break-all;
-    padding: 8px;
-  }
-
   .container {
     max-width: 600px;
     margin: 0 auto 100px;
 
     header {
-      padding: 16px 8px;
+      padding: 0 8px;
       display: flex;
       align-items: center;
+      gap: 4px;
+      height: 60px;
 
-      .site-name-box {
-        .site-name {
-          font-size: 20px;
-        }
-        .sub-title {
-          background-color: var(--color-background-highlight);
-          padding: 4px;
-          border-radius: 4px;
-          font-size: 14px;
-          font-weight: 500;
-        }
+      .site-name,
+      .back {
+        margin-right: auto;
       }
 
-      .settings-btn {
-        margin-left: auto;
+      .site-name {
+        font-size: 28px;
+        border-radius: 50%;
+        background-color: var(--color-background-light);
+        height: 36px;
+        width: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .settings-btn,
+      .notification-btn {
         display: flex;
         align-items: center;
         gap: 2px;
