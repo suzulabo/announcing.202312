@@ -1,7 +1,8 @@
 {
   "name": "Announcing",
   "short_name": "Announcing",
-  "start_url": "/",
+  "start_url": "/ios-pwa",
+  "scope": "/ios-pwa",
   "display": "standalone",
   "icons": [
     {
@@ -14,6 +15,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "screenshots": []
+  ]
 }

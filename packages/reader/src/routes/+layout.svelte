@@ -63,6 +63,7 @@
   import type { LayoutData } from './$types';
   import NotificationModal from './NotificationModal.svelte';
   import SettingsModal from './SettingsModal.svelte';
+  import { isIOS } from '$lib/platform/platform';
 
   interface Props {
     data: LayoutData;
@@ -73,6 +74,7 @@
 
   let theme = $state(Cookies.get('theme') ?? getSystemTheme());
   let locale = $state(data.locale);
+  let iOS = $state(isIOS());
   let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
   let headerNotification = $derived<HeaderNotification | undefined>(
     $page.data['headerNotification'],
@@ -97,6 +99,12 @@
 
   const back = setupBack();
 </script>
+
+<svelte:head>
+  {#if iOS}
+    <link rel="manifest" href="/ios.webmanifest" />
+  {/if}
+</svelte:head>
 
 <div class="container">
   <header>
