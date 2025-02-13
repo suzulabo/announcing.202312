@@ -58,12 +58,12 @@
   import { initFirebase } from '$lib/firebase/firebase';
   import { initNotification } from '$lib/notification/notification';
   import { notificationState } from '$lib/notification/notificationState.svelte';
+  import { getIOSPwaUUID, isIOS, isStandalone } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
   import NotificationModal from './NotificationModal.svelte';
   import SettingsModal from './SettingsModal.svelte';
-  import { isIOS } from '$lib/platform/platform';
 
   interface Props {
     data: LayoutData;
@@ -74,7 +74,7 @@
 
   let theme = $state(Cookies.get('theme') ?? getSystemTheme());
   let locale = $state(data.locale);
-  let iOS = $state(isIOS());
+  let addManifest = $state(isIOS() && !isStandalone());
   let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
   let headerNotification = $derived<HeaderNotification | undefined>(
     $page.data['headerNotification'],
@@ -101,8 +101,8 @@
 </script>
 
 <svelte:head>
-  {#if iOS}
-    <link rel="manifest" href="/ios.webmanifest" />
+  {#if addManifest}
+    <link rel="manifest" href={`/ios.webmanifest?uuid=${getIOSPwaUUID()}`} />
   {/if}
 </svelte:head>
 

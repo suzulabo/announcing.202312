@@ -47,6 +47,38 @@ sw.addEventListener('activate', (event) => {
   }, new CacheFirst());
 
   registerRoute(imageRoute);
+
+  registerRoute(
+    ({ url }) => url.pathname === '/ios.webmanifest',
+    (options) => {
+      return Promise.resolve(
+        new Response(
+          JSON.stringify({
+            name: 'Announcing',
+            short_name: 'Announcing',
+            start_url: `/ios-pwa${options.url.search}`,
+            scope: '/ios-pwa',
+            display: 'standalone',
+            icons: [
+              {
+                src: '/logo_192.png',
+                sizes: '192x192',
+                type: 'image/png',
+              },
+              {
+                src: '/logo_512.png',
+                sizes: '512x512',
+                type: 'image/png',
+              },
+            ],
+          }),
+          {
+            headers: { 'Content-Type': 'application/manifest+json' },
+          },
+        ),
+      );
+    },
+  );
 }
 
 sw.addEventListener('push', (event) => {
