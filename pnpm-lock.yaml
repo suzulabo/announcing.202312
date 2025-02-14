@@ -232,8 +232,8 @@ importers:
         specifier: ^0.14.0
         version: 0.14.0
       '@trigger.dev/sdk':
-        specifier: 3.3.7
-        version: 3.3.7(zod@3.23.8)
+        specifier: 3.3.15
+        version: 3.3.15(zod@3.23.8)
       '@types/node':
         specifier: ^22.10.7
         version: 22.10.7
@@ -2514,12 +2514,12 @@ packages:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
 
-  '@trigger.dev/core@3.3.7':
-    resolution: {integrity: sha512-K5mAYXYbhSi8TP57VorfTlbNcbR4WIhUfjCsuSwL5tl6rVIM88ZJDdTN034XlZBh0FhAKIIIp8MUG1wt3bRjkA==}
+  '@trigger.dev/core@3.3.15':
+    resolution: {integrity: sha512-q5Vei+eBsDgO4QxMfYNiaS1v6hziw+QzfX9x3eCeqEisx32XPoLHumgHFiZlvABTY2sayJbuuMH0HC6Nr3D60A==}
     engines: {node: '>=18.20.0'}
 
-  '@trigger.dev/sdk@3.3.7':
-    resolution: {integrity: sha512-PoEp6BMuC2UA6s8AgBaBth8w0GEgKvGfdbGPb5hxuUojm0ejSkQ9pFTNaV/R0l4FyfHzc1sTrC06GQuBXnoA8g==}
+  '@trigger.dev/sdk@3.3.15':
+    resolution: {integrity: sha512-W03G6GbTabkwI2UgUQCmM/0xjQ2bcpoBx2Xn56la3UgkC5pb8H6nEtmcLodr7YFGAycnHvHpwShRQ/SFAeBtNQ==}
     engines: {node: '>=18.20.0'}
     peerDependencies:
       zod: ^3.0.0
@@ -3309,6 +3309,10 @@ packages:
     resolution: {integrity: sha512-T1C0XCUimhxVQzW4zFipdx0SficT651NnkR0ZSH3yQwh+mFMdLfgjABVi4YtMTtaL4s168593DaoaRLMqryavA==}
     engines: {node: '>=18.0.0'}
 
+  eventsource@3.0.5:
+    resolution: {integrity: sha512-LT/5J605bx5SNyE+ITBDiM3FxffBiq9un7Vx0EwMDM3vg8sWKx/tO2zC+LMqZ+smAM0F2hblaDZUVZF0te2pSw==}
+    engines: {node: '>=18.0.0'}
+
   evt@2.5.9:
     resolution: {integrity: sha512-GpjX476FSlttEGWHT8BdVMoI8wGXQGbEOtKcP4E+kggg+yJzXBZN2n4x7TS/zPBJ1DZqWI+rguZZApjjzQ0HpA==}
 
@@ -3778,7 +3782,6 @@ packages:
 
   libsql@0.4.7:
     resolution: {integrity: sha512-T9eIRCs6b0J1SHKYIvD8+KCJMcWZ900iZyxdnSCdqxN12Z1ijzT+jY5nrk72Jw4B0HGzms2NgpryArlJqvc3Lw==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lilconfig@2.1.0:
@@ -7357,7 +7360,7 @@ snapshots:
   '@tootallnate/once@2.0.0':
     optional: true
 
-  '@trigger.dev/core@3.3.7':
+  '@trigger.dev/core@3.3.15':
     dependencies:
       '@electric-sql/client': 1.0.0-beta.1
       '@google-cloud/precise-date': 4.0.0
@@ -7374,6 +7377,7 @@ snapshots:
       '@opentelemetry/sdk-trace-node': 1.25.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.25.1
       dequal: 2.0.3
+      eventsource: 3.0.5
       eventsource-parser: 3.0.0
       execa: 8.0.1
       humanize-duration: 3.32.1
@@ -7389,12 +7393,12 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@trigger.dev/sdk@3.3.7(zod@3.23.8)':
+  '@trigger.dev/sdk@3.3.15(zod@3.23.8)':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/api-logs': 0.52.1
       '@opentelemetry/semantic-conventions': 1.25.1
-      '@trigger.dev/core': 3.3.7
+      '@trigger.dev/core': 3.3.15
       chalk: 5.4.1
       cronstrue: 2.53.0
       debug: 4.4.0
@@ -8295,6 +8299,10 @@ snapshots:
     optional: true
 
   eventsource-parser@3.0.0: {}
+
+  eventsource@3.0.5:
+    dependencies:
+      eventsource-parser: 3.0.0
 
   evt@2.5.9:
     dependencies:
@@ -10109,7 +10117,7 @@ snapshots:
 
   zod-error@1.5.0:
     dependencies:
-      zod: 3.23.8
+      zod: 3.24.1
 
   zod-validation-error@1.5.0(zod@3.23.8):
     dependencies:
