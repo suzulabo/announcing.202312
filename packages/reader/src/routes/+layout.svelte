@@ -84,6 +84,7 @@
   let settingsModal: ReturnType<typeof SettingsModal>;
 
   $effect(() => {
+    document.body.setAttribute('locale', locale);
     void updateLocale(locale);
   });
   $effect(() => {
