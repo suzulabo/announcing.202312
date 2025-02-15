@@ -45,7 +45,8 @@ const initContext = async () => {
     return token;
   };
 
-  return { supported, getPushToken };
+  const iOSToken = localStorage.getItem('ios-token');
+  return { supported: !!iOSToken || supported, getPushToken };
 };
 
 let ctx: Awaited<ReturnType<typeof initContext>> | undefined;
@@ -59,5 +60,10 @@ export const isNotificationSupported = () => {
 };
 
 export const getPushToken = () => {
+  const iOSToken = localStorage.getItem('ios-token');
+  if (iOSToken) {
+    return iOSToken;
+  }
+
   return ctx?.getPushToken();
 };

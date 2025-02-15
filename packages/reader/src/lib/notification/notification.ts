@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
 import { postNotification } from '$lib/fetch/postNotification';
-import { getPushToken, isNotificationSupported } from '$lib/firebase/firebase';
+import { getPushToken } from '$lib/firebase/firebase';
 import { notificationState } from './notificationState.svelte';
 
 const CHANNELS_KEY = 'notification-channels';
@@ -29,16 +29,19 @@ export const initNotification = async () => {
 
   loadChannels();
 
-  if (isNotificationSupported()) {
+  if ('Notification' in window) {
     notificationState.permission = Notification.permission;
+  }
+  if (localStorage.getItem('ios-token')) {
+    notificationState.permission = 'granted';
+  }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (navigator.permissions) {
-      const permissionStatus = await navigator.permissions.query({ name: 'notifications' });
-      permissionStatus.addEventListener('change', () => {
-        notificationState.permission = Notification.permission;
-      });
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (navigator.permissions) {
+    const permissionStatus = await navigator.permissions.query({ name: 'notifications' });
+    permissionStatus.addEventListener('change', () => {
+      notificationState.permission = Notification.permission;
+    });
   }
 };
 
