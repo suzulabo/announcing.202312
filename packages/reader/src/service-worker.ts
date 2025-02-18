@@ -23,16 +23,6 @@ const log = async (...args: unknown[]) => {
   });
 };
 
-sw.addEventListener('install', (event) => {
-  event.waitUntil(sw.skipWaiting());
-});
-sw.addEventListener('activate', (event) => {
-  event.waitUntil(sw.clients.claim());
-});
-sw.addEventListener('message', (event) => {
-  event.waitUntil(log(`Start`));
-});
-
 {
   const precacheAssets = [...build, ...files].map((url) => {
     return { url, revision: version };
@@ -91,6 +81,16 @@ sw.addEventListener('message', (event) => {
     },
   );
 }
+
+sw.addEventListener('install', (event) => {
+  event.waitUntil(sw.skipWaiting());
+});
+sw.addEventListener('activate', (event) => {
+  event.waitUntil(sw.clients.claim());
+});
+sw.addEventListener('message', (event) => {
+  event.waitUntil(log(`Start`));
+});
 
 sw.addEventListener('push', (event) => {
   event.waitUntil(
