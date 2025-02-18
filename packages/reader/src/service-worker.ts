@@ -5,6 +5,7 @@
 
 const sw = self as unknown as ServiceWorkerGlobalScope;
 
+import { isIOS } from '$lib/platform/platform';
 import { build, files, version } from '$service-worker';
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
 import { registerRoute, Route } from 'workbox-routing';
@@ -15,11 +16,21 @@ import { CacheFirst } from 'workbox-strategies';
   (self as any).__WB_DISABLE_DEV_LOGS = true;
 }
 
+const log = async (...args: unknown[]) => {
+  const clients = await sw.clients.matchAll();
+  clients.forEach((client) => {
+    client.postMessage({ type: 'log', args });
+  });
+};
+
 sw.addEventListener('install', (event) => {
   event.waitUntil(sw.skipWaiting());
 });
 sw.addEventListener('activate', (event) => {
   event.waitUntil(sw.clients.claim());
+});
+sw.addEventListener('message', (event) => {
+  event.waitUntil(log(`Start`));
 });
 
 {
@@ -82,27 +93,62 @@ sw.addEventListener('activate', (event) => {
 }
 
 sw.addEventListener('push', (event) => {
-  if (!event.data) {
-    return;
-  }
-  const payload = event.data.json();
+  event.waitUntil(
+    (async () => {
+      if (!event.data) {
+        return;
+      }
+      const payload = event.data.json();
 
-  console.debug('payload', payload);
+      await log('payload', payload);
 
-  const notification = payload.notification;
+      const notification = payload.notification;
 
-  event.waitUntil(sw.registration.showNotification(notification.title, notification));
+      await sw.registration.showNotification(notification.title, notification);
+    })(),
+  );
 });
 
 sw.addEventListener('notificationclick', (event) => {
-  console.log('notificationclick', event.notification);
+  // https://github.com/mdn/browser-compat-data/issues/22959#issuecomment-2336683759
+  // https://stackoverflow.com/questions/76399649/why-isnt-the-notificationclick-event-called-on-ios-during-pwa-push-notificati
+  event.preventDefault();
 
-  event.notification.close();
+  event.waitUntil(
+    (async () => {
+      await log('notificationclick');
+      event.notification.close();
 
-  const link = event.notification.data.link;
-  if (link) {
-    event.waitUntil(sw.clients.openWindow(link));
-  } else {
-    console.log('Missing link');
-  }
+      const channelID = event.notification.data.channelID;
+
+      if (!channelID) {
+        await log('Missing channelID');
+        return;
+      }
+
+      if (isIOS()) {
+        const url = `x-safari-https://${location.host}/${channelID}`;
+        const clients = await sw.clients.matchAll();
+
+        for (const client of clients) {
+          client.postMessage({ type: 'open', url });
+          return;
+        }
+
+        const client = await sw.clients.openWindow('/ios-pwa');
+
+        if (client) {
+          client.postMessage({ type: 'open', url });
+        }
+      } else {
+        const clients = await sw.clients.matchAll();
+        for (const client of clients) {
+          client.postMessage({ type: 'open', url: `/${channelID}` });
+          return;
+        }
+
+        await sw.clients.openWindow(`/${channelID}`);
+      }
+    })(),
+  );
 });

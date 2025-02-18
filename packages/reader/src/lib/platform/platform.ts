@@ -1,7 +1,5 @@
-import { browser } from '$app/environment';
-
 export const isIOS = () => {
-  return browser && /iphone|ipad|ipod/i.test(navigator.userAgent);
+  return /iphone|ipad|ipod/i.test(navigator.userAgent);
 };
 
 export const isStandalone = () => {
@@ -9,7 +7,7 @@ export const isStandalone = () => {
     standalone?: unknown;
   }
 
-  return browser && !!(window.navigator as NavigatorStandalone).standalone;
+  return !!(window.navigator as NavigatorStandalone).standalone;
 };
 
 export const getIOSPwaUUID = () => {
