@@ -1,11 +1,5 @@
 <script lang="ts">
-  import type { PageData } from './$types';
-
-  let { data }: { data: PageData } = $props();
+  import { page } from '$app/state';
 </script>
 
-{#if data.ok}
-  Notification is ready
-{:else}
-  Notification is not ready
-{/if}
+{page.url.searchParams.get('token')}

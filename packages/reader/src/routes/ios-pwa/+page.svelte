@@ -3,10 +3,13 @@
   import { getPushToken } from '$lib/firebase/firebase';
   import { requestPermission } from '$lib/notification/notification';
   import { notificationState } from '$lib/notification/notificationState.svelte';
+  import { setIOSBrowserSchema } from '$lib/platform/localStorage';
+  import { resolveBrowserSchema } from '$lib/platform/resolveBrowserSchema';
   import Loading from '@announcing/components/Loading.svelte';
+  import Radio from '@announcing/components/Radio.svelte';
   import { LL } from '@announcing/i18n';
-  import { onMount } from 'svelte';
 
+  let browserSchema = $state('x-safari-https://@urlBase');
   let loading = $state(false);
 
   let permission = $derived(notificationState.permission);
@@ -30,16 +33,21 @@
 
     if (permission === 'granted') {
       const token = await getPushToken();
-      const uuid = page.url.searchParams.get('uuid');
-      if (token && uuid) {
-        location.href = `x-safari-https://${page.url.host}/ios-token${location.search}&token=${token}`;
+      if (token) {
+        setIOSBrowserSchema(browserSchema);
+        const urlResolved = resolveBrowserSchema(`${page.url.origin}/ios-token?token=${token}`);
+        location.href = urlResolved;
       }
     }
   };
 
-  onMount(() => {
-    console.log('page onMount');
-  });
+  const browserSchemas = [
+    ['Safari', 'x-safari-https://@urlBase'],
+    ['Chrome', 'googlechromes://@urlBase'],
+    ['Firefox', 'firefox://open-url?url=@urlEncoded'],
+    ['Opera', 'touch-https://@urlBase'],
+    ['Edge', 'microsoft-edge-https://@urlBase'],
+  ] as const;
 </script>
 
 {#snippet notSupportedContent()}
@@ -48,6 +56,13 @@
 
 {#snippet defaultContent()}
   <div class="desc">{$LL.setupNotification.description()}</div>
+
+  <div class="browser-schemas">
+    {#each browserSchemas as [name, schema]}
+      <Radio bind:value={browserSchema} selectedValue={schema}>{name}</Radio>
+    {/each}
+  </div>
+
   <button onclick={requestPermissionClick}>{$LL.setupNotification.button()}</button>
 
   {#if permission === 'denied'}
@@ -58,3 +73,10 @@
 {@render content()}
 
 <Loading show={loading} />
+
+<style lang="scss">
+  .browser-schemas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 100px);
+  }
+</style>

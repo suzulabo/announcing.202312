@@ -8,7 +8,7 @@
   <Radio bind:value selectedValue="cat">Cat</Radio>
   <Radio bind:value selectedValue="dog">Dog</Radio>
   <Radio bind:value selectedValue="bird">Bird</Radio>
-  <Radio bind:value selectedValue="fish">Fish</Radio>
+  <Radio bind:value selectedValue="hippopotamus">Hippopotamus</Radio>
 </div>
 
 <style lang="scss">

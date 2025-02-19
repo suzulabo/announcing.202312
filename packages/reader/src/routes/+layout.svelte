@@ -58,7 +58,7 @@
   import { initFirebase } from '$lib/firebase/firebase';
   import { initNotification } from '$lib/notification/notification';
   import { notificationState } from '$lib/notification/notificationState.svelte';
-  import { getIOSPwaUUID, isIOS, isStandalone } from '$lib/platform/platform';
+  import { isIOS, isStandalone } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
@@ -103,7 +103,7 @@
 
 <svelte:head>
   {#if addManifest}
-    <link rel="manifest" href={`/ios.webmanifest?uuid=${getIOSPwaUUID()}`} />
+    <link rel="manifest" href={`/ios.webmanifest}`} />
   {/if}
 </svelte:head>
 

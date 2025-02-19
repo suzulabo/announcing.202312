@@ -1,11 +1,13 @@
+import { resolveBrowserSchema } from '$lib/platform/resolveBrowserSchema';
+
 type SWMessageData =
   | {
       type: 'log';
       args: unknown[];
     }
   | {
-      type: 'open';
-      url: string;
+      type: 'openChannel';
+      channelID: string;
     };
 
 if ('serviceWorker' in navigator) {
@@ -15,9 +17,12 @@ if ('serviceWorker' in navigator) {
       case 'log':
         console.log('SW:', ...data.args);
         break;
-      case 'open':
-        location.href = data.url;
+      case 'openChannel': {
+        const url = `${location.origin}/${data.channelID}`;
+        const urlResolved = resolveBrowserSchema(url);
+        location.href = urlResolved;
         break;
+      }
     }
   });
 

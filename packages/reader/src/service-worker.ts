@@ -51,13 +51,13 @@ const log = async (...args: unknown[]) => {
 
   registerRoute(
     ({ url }) => url.pathname === '/ios.webmanifest',
-    (options) => {
+    () => {
       return Promise.resolve(
         new Response(
           JSON.stringify({
             name: 'Announcing',
             short_name: 'Announcing',
-            start_url: `/ios-pwa${options.url.search}`,
+            start_url: `/ios-pwa`,
             scope: '/ios-pwa',
             display: 'standalone',
             icons: [

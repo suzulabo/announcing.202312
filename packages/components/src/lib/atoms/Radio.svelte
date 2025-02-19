@@ -16,21 +16,20 @@
   };
 </script>
 
-<button class="unstyled" onclick={click}>
+<button class="radio unstyled" onclick={click}>
   {#if value === selectedValue}
     <IcBaselineRadioButtonChecked />
   {:else}
     <IcBaselineRadioButtonUnchecked />
   {/if}
-  {@render children?.()}</button
+  <div>{@render children?.()}</div></button
 >
 
 <style lang="scss">
-  button {
-    width: 100%;
+  button.radio {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
     gap: 4px;
   }
 </style>
