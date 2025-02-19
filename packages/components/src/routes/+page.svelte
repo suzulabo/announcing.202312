@@ -11,6 +11,7 @@
   <li><a href="./atoms/TextArea/autoGrow">TextArea - auto grow</a></li>
   <li><a href="./atoms/FileInput">FileInput</a></li>
   <li><a href="./atoms/FileInput/multiple">FileInput - multiple</a></li>
+  <li><a href="./atoms/Radio">Radio</a></li>
   <li><a href="./atoms/Modal">Modal</a></li>
   <li><a href="./atoms/Loading">Loading</a></li>
   <li><a href="./atoms/Logo">Logo</a></li>
