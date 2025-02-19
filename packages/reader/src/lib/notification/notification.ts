@@ -1,19 +1,15 @@
 import { browser } from '$app/environment';
 import { postNotification } from '$lib/fetch/postNotification';
 import { getPushToken } from '$lib/firebase/firebase';
+import {
+  addNotificationChannelsListener,
+  getNotificationChannels,
+  setNotificationChannels,
+} from '$lib/platform/localStorage';
 import { notificationState } from './notificationState.svelte';
 
-const CHANNELS_KEY = 'notification-channels';
-
 const loadChannels = () => {
-  const s = localStorage.getItem(CHANNELS_KEY);
-  if (!s) {
-    if (notificationState.channels.length > 0) {
-      notificationState.channels = [];
-    }
-  } else {
-    notificationState.channels = JSON.parse(s);
-  }
+  notificationState.channels = getNotificationChannels();
 };
 
 export const initNotification = async () => {
@@ -21,11 +17,7 @@ export const initNotification = async () => {
     return;
   }
 
-  window.addEventListener('storage', (event) => {
-    if (event.key === CHANNELS_KEY) {
-      loadChannels();
-    }
-  });
+  addNotificationChannelsListener(loadChannels);
 
   loadChannels();
 
@@ -57,7 +49,7 @@ export const addChannel = async (channelID: string) => {
     newChannels.push(channelID);
   }
 
-  localStorage.setItem(CHANNELS_KEY, JSON.stringify(newChannels));
+  setNotificationChannels(newChannels);
 
   const token = await getPushToken();
   if (!token) {
@@ -68,7 +60,7 @@ export const addChannel = async (channelID: string) => {
     await postNotification({ token, tags: newChannels });
     notificationState.channels = newChannels;
   } catch {
-    localStorage.setItem(CHANNELS_KEY, JSON.stringify(curChannels));
+    setNotificationChannels(curChannels);
     // TODO
   }
 };
@@ -79,7 +71,7 @@ export const removeChannel = async (channelID: string) => {
     return v !== channelID;
   });
 
-  localStorage.setItem(CHANNELS_KEY, JSON.stringify(newChannels));
+  setNotificationChannels(newChannels);
 
   const token = await getPushToken();
   if (!token) {
@@ -90,7 +82,7 @@ export const removeChannel = async (channelID: string) => {
     await postNotification({ token, tags: newChannels });
     notificationState.channels = newChannels;
   } catch {
-    localStorage.setItem(CHANNELS_KEY, JSON.stringify(curChannels));
+    setNotificationChannels(curChannels);
     // TODO
   }
 };
