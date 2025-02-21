@@ -109,26 +109,6 @@ sw.addEventListener('push', (event) => {
   );
 });
 
-const sendOpenMessage = async (path: string) => {
-  const clients = await sw.clients.matchAll();
-
-  for (const client of clients) {
-    client.postMessage({ type: 'open', path });
-    return;
-  }
-
-  if (!isIOS()) {
-    await sw.clients.openWindow(path);
-    return;
-  }
-
-  const client = await sw.clients.openWindow('/ios-pwa');
-
-  if (client) {
-    client.postMessage({ type: 'open', path });
-  }
-};
-
 sw.addEventListener('notificationclick', (event) => {
   // https://github.com/mdn/browser-compat-data/issues/22959#issuecomment-2336683759
   // https://stackoverflow.com/questions/76399649/why-isnt-the-notificationclick-event-called-on-ios-during-pwa-push-notificati
@@ -139,16 +119,6 @@ sw.addEventListener('notificationclick', (event) => {
       await log('notificationclick');
       event.notification.close();
 
-      if (event.notification.tag === 'verifyNotificationToken') {
-        const code = event.notification.data.verifyCode;
-        if (!code) {
-          await log('Missing verifyCode');
-          return;
-        }
-
-        await sendOpenMessage(`/ios-token/verify?code=${code}`);
-      }
-
       const channelID = event.notification.data.channelID;
 
       if (!channelID) {
@@ -157,7 +127,7 @@ sw.addEventListener('notificationclick', (event) => {
       }
 
       if (isIOS()) {
-        const url = `${location.origin}/${channelID}`;
+        const url = `x-safari-https://${location.host}/${channelID}`;
         const clients = await sw.clients.matchAll();
 
         for (const client of clients) {

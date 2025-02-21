@@ -67,10 +67,6 @@ const en = {
     toEnabled: 'Turn on notifications',
     toDisabled: 'Turn off notifications',
   },
-  verifyNotificationToken: {
-    title: 'Notification Confirmation',
-    body: 'Tap this notification to complete the verification.',
-  },
 } satisfies BaseTranslation;
 
 export default en;

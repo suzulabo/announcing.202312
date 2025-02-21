@@ -66,10 +66,6 @@ const ja = {
     toEnabled: '通知を受け取る',
     toDisabled: '通知を受け取らない',
   },
-  verifyNotificationToken: {
-    title: '通知の確認',
-    body: 'この通知をタップすると、確認が完了します',
-  },
 } satisfies Translation;
 
 export default ja;

@@ -1,6 +1,5 @@
 import { LL, setLocale } from './i18n/i18n-svelte';
 import type { Locales } from './i18n/i18n-types';
-import { i18nObject } from './i18n/i18n-util';
 import { loadLocaleAsync } from './i18n/i18n-util.async';
 
 const validLocales = new Set(['en', 'ja']);
@@ -41,11 +40,5 @@ export const setupLocale = async (locale: Locales) => {
   setLocale(locale);
 };
 
-export const getI18n = (locale: Locales) => {
-  return i18nObject(locale);
-};
-
 export { LL };
 export type { Locales };
-
-// TODO: Split exports into server-side and client-side
