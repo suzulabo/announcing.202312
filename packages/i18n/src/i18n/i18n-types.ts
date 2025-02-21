@@ -265,6 +265,16 @@ type RootTranslation = {
 		 */
 		toDisabled: string
 	}
+	verifyNotificationToken: {
+		/**
+		 * N​o​t​i​f​i​c​a​t​i​o​n​ ​C​o​n​f​i​r​m​a​t​i​o​n
+		 */
+		title: string
+		/**
+		 * T​a​p​ ​t​h​i​s​ ​n​o​t​i​f​i​c​a​t​i​o​n​ ​t​o​ ​c​o​m​p​l​e​t​e​ ​t​h​e​ ​v​e​r​i​f​i​c​a​t​i​o​n​.
+		 */
+		body: string
+	}
 }
 
 export type TranslationFunctions = {
@@ -515,6 +525,16 @@ export type TranslationFunctions = {
 		 * Turn off notifications
 		 */
 		toDisabled: () => LocalizedString
+	}
+	verifyNotificationToken: {
+		/**
+		 * Notification Confirmation
+		 */
+		title: () => LocalizedString
+		/**
+		 * Tap this notification to complete the verification.
+		 */
+		body: () => LocalizedString
 	}
 }
 

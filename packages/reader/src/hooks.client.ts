@@ -6,8 +6,8 @@ type SWMessageData =
       args: unknown[];
     }
   | {
-      type: 'openChannel';
-      channelID: string;
+      type: 'open';
+      path: string;
     };
 
 if ('serviceWorker' in navigator) {
@@ -17,8 +17,8 @@ if ('serviceWorker' in navigator) {
       case 'log':
         console.log('SW:', ...data.args);
         break;
-      case 'openChannel': {
-        const url = `${location.origin}/${data.channelID}`;
+      case 'open': {
+        const url = `${location.origin}/${data.path}`;
         const urlResolved = resolveBrowserSchema(url);
         location.href = urlResolved;
         break;

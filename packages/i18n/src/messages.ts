@@ -245,4 +245,14 @@ export const messages = {
       ja: '通知を受け取らない',
     },
   },
+  verifyNotificationToken: {
+    title: {
+      en: 'Notification Confirmation',
+      ja: '通知の確認',
+    },
+    body: {
+      en: 'Tap this notification to complete the verification.',
+      ja: 'この通知をタップすると、確認が完了します',
+    },
+  },
 };
