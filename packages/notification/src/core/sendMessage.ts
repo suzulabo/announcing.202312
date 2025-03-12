@@ -1,30 +1,30 @@
-import type { Messaging, MulticastMessage } from 'firebase-admin/messaging';
-import type { TokenStore } from './types';
+import type { Messaging, MulticastMessage } from 'firebase-admin/messaging'
+import type { TokenStore } from './types'
 
-type Config = {
-  messaging: Messaging;
-  tokenStore: TokenStore;
-};
+interface Config {
+  messaging: Messaging
+  tokenStore: TokenStore
+}
 
-export const sendMessage = async (config: Config, message: MulticastMessage) => {
-  const res = await config.messaging.sendEachForMulticast(message);
+export async function sendMessage(config: Config, message: MulticastMessage) {
+  const res = await config.messaging.sendEachForMulticast(message)
 
-  const invalidTokens: string[] = [];
+  const invalidTokens: string[] = []
 
   res.responses.forEach((v, i) => {
-    const code = v.error?.code;
+    const code = v.error?.code
     if (
-      code === 'messaging/invalid-registration-token' ||
-      code === 'messaging/registration-token-not-registered'
+      code === 'messaging/invalid-registration-token'
+      || code === 'messaging/registration-token-not-registered'
     ) {
-      const token = message.tokens[i];
+      const token = message.tokens[i]
       if (token) {
-        invalidTokens.push(token);
+        invalidTokens.push(token)
       }
     }
-  });
+  })
 
   if (invalidTokens.length > 0) {
-    await config.tokenStore.deleteTokens(invalidTokens);
+    await config.tokenStore.deleteTokens(invalidTokens)
   }
-};
+}

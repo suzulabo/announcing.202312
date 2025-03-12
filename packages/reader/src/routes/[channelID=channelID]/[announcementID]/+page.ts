@@ -1,14 +1,14 @@
-import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
-import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { PageLoad } from './$types'
+import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement'
+import { error } from '@sveltejs/kit'
 
 export const load: PageLoad = async ({ params, fetch }) => {
-  const { channelID, announcementID } = params;
+  const { channelID, announcementID } = params
 
-  const announcement = await fetchAnnouncement({ channelID, announcementID }, fetch);
+  const announcement = await fetchAnnouncement({ channelID, announcementID }, fetch)
 
   if (!announcement) {
-    error(404);
+    error(404)
   }
 
   return {
@@ -19,5 +19,5 @@ export const load: PageLoad = async ({ params, fetch }) => {
       href: `/${channelID}`,
       labelKey: 'back',
     },
-  };
-};
+  }
+}

@@ -1,17 +1,17 @@
-import { assert, beforeEach, describe, expect, test } from 'vitest';
+import { openAsBlob } from 'node:fs'
 
-import { openAsBlob } from 'fs';
-import { ValiError } from 'valibot';
-import { createChannel, deleteChannel, getChannel, getChannels, updateChannel } from '../src';
-import { setupDB } from './setupDB';
+import { ValiError } from 'valibot'
+import { assert, beforeEach, describe, expect } from 'vitest'
+import { createChannel, deleteChannel, getChannel, getChannels, updateChannel } from '../src'
+import { setupDB } from './setupDB'
 
-describe('Channel', () => {
+describe('channel', () => {
   beforeEach(async () => {
-    await setupDB();
-  });
+    await setupDB()
+  })
 
-  test('create, update and delete', async () => {
-    await setupDB();
+  it('create, update and delete', async () => {
+    await setupDB()
 
     await createChannel({
       userID: 'u1',
@@ -19,19 +19,19 @@ describe('Channel', () => {
       name: 'test channel',
       desc: 'This is test',
       icon: await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' }),
-    });
-    expect(await getChannel({ userID: 'u2', channelID: '1' })).toBeUndefined();
+    })
+    expect(await getChannel({ userID: 'u2', channelID: '1' })).toBeUndefined()
 
     {
-      const c = await getChannel({ userID: 'u1', channelID: '1' });
+      const c = await getChannel({ userID: 'u1', channelID: '1' })
 
-      assert(c);
+      assert(c)
 
       expect(c).toMatchObject({
         channelID: '1',
         name: 'test channel',
         desc: 'This is test',
-      });
+      })
 
       await updateChannel({
         userID: 'u2',
@@ -40,12 +40,12 @@ describe('Channel', () => {
         name: 'should not update',
         desc: c.desc,
         icon: c.icon,
-      });
+      })
       expect(await getChannel({ userID: 'u1', channelID: '1' })).toMatchObject({
         channelID: '1',
         name: 'test channel',
         desc: 'This is test',
-      });
+      })
 
       await updateChannel({
         userID: 'u1',
@@ -54,34 +54,34 @@ describe('Channel', () => {
         name: 'update channel',
         desc: 'updated',
         icon: undefined,
-      });
+      })
     }
     {
-      const c = await getChannel({ userID: 'u1', channelID: '1' });
+      const c = await getChannel({ userID: 'u1', channelID: '1' })
 
-      assert(c);
+      assert(c)
 
       expect(c).toMatchObject({
         channelID: '1',
         name: 'update channel',
         desc: 'updated',
         icon: undefined,
-      });
+      })
 
-      await deleteChannel({ userID: 'u2', channelID: '1', updatedAt: c.updatedAt });
+      await deleteChannel({ userID: 'u2', channelID: '1', updatedAt: c.updatedAt })
       expect(await getChannel({ userID: 'u1', channelID: '1' })).toMatchObject({
         channelID: '1',
         name: 'update channel',
         desc: 'updated',
         icon: undefined,
-      });
+      })
 
-      await deleteChannel({ userID: 'u1', channelID: '1', updatedAt: c.updatedAt });
-      expect(await getChannel({ userID: 'u1', channelID: '1' })).toBeUndefined();
+      await deleteChannel({ userID: 'u1', channelID: '1', updatedAt: c.updatedAt })
+      expect(await getChannel({ userID: 'u1', channelID: '1' })).toBeUndefined()
     }
-  });
+  })
 
-  test('Too many channels', async () => {
+  it('too many channels', async () => {
     for (let i = 1; i <= 6; i++) {
       await createChannel({
         userID: 'u1',
@@ -89,14 +89,14 @@ describe('Channel', () => {
         name: `channel${i}`,
         desc: undefined,
         icon: undefined,
-      });
+      })
     }
 
-    const channels = await getChannels({ userID: 'u1' });
-    expect(channels.length).toEqual(5);
-  });
+    const channels = await getChannels({ userID: 'u1' })
+    expect(channels.length).toEqual(5)
+  })
 
-  test('empty name', async () => {
+  it('empty name', async () => {
     await expect(
       createChannel({
         userID: '1',
@@ -105,11 +105,11 @@ describe('Channel', () => {
         desc: undefined,
         icon: undefined,
       }),
-    ).rejects.toBeInstanceOf(ValiError);
-  });
+    ).rejects.toBeInstanceOf(ValiError)
+  })
 
-  test('check channel left', async () => {
-    const c = await getChannel({ userID: 'u1', channelID: '1' });
-    expect(c).toBeUndefined();
-  });
-});
+  it('check channel left', async () => {
+    const c = await getChannel({ userID: 'u1', channelID: '1' })
+    expect(c).toBeUndefined()
+  })
+})

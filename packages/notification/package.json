@@ -1,8 +1,8 @@
 {
   "name": "@announcing/notification",
+  "type": "module",
   "version": "0.0.1",
   "private": true,
-  "type": "module",
   "exports": {
     "./core": {
       "types": "./dist/core/index.d.ts",

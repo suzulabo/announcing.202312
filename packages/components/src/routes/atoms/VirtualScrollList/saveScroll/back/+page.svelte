@@ -1,15 +1,15 @@
 <script>
 </script>
 
-<div class="container">
+<div class='container'>
   <button
     onclick={() => {
-      history.back();
+      history.back()
     }}>Back</button
   >
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     margin: 40vh 0 0;
     text-align: center;

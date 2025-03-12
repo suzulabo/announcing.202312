@@ -1,20 +1,7 @@
 {
   "name": "@announcing/components",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "vite dev --port 5173",
-    "build": "vite build && pnpm run package",
-    "preview": "vite preview",
-    "package": "svelte-kit sync && svelte-package && publint",
-    "package:watch": "svelte-package -w",
-    "prepublishOnly": "pnpm run package",
-    "sync": "svelte-kit sync",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "playwright": "echo TODO: refactor playwright tests",
-    "typesafe-i18n": "typesafe-i18n"
-  },
   "type": "module",
+  "version": "0.0.1",
   "exports": {
     "./utils": {
       "types": "./dist/utils.d.ts",
@@ -79,10 +66,23 @@
     }
   },
   "files": [
-    "dist",
+    "!dist/**/*.spec.*",
     "!dist/**/*.test.*",
-    "!dist/**/*.spec.*"
+    "dist"
   ],
+  "scripts": {
+    "dev": "vite dev --port 5173",
+    "build": "vite build && pnpm run package",
+    "preview": "vite preview",
+    "package": "svelte-kit sync && svelte-package && publint",
+    "package:watch": "svelte-package -w",
+    "prepublishOnly": "pnpm run package",
+    "sync": "svelte-kit sync",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "playwright": "echo TODO: refactor playwright tests",
+    "typesafe-i18n": "typesafe-i18n"
+  },
   "peerDependencies": {
     "svelte": "^4.0.0"
   },

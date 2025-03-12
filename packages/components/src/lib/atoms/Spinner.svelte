@@ -1,22 +1,22 @@
 <!-- https://codepen.io/adrianmg/pen/Omedpo -->
-<script lang="ts">
-  import { toStyle } from '$lib/utils/toStyle';
+<script lang='ts'>
+  import { toStyle } from '$lib/utils/toStyle'
 
   interface Props {
-    size?: number;
-    delay?: string;
+    size?: number
+    delay?: string
   }
 
-  let { size = 12, delay = '0' }: Props = $props();
+  const { size = 12, delay = '0' }: Props = $props()
 </script>
 
-<div class="spinner" style={toStyle({ 'font-size': `${size}px`, '--delay': delay })}>
+<div class='spinner' style={toStyle({ 'font-size': `${size}px`, '--delay': delay })}>
   <div></div>
   <div></div>
   <div></div>
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .spinner {
     animation: showDelay var(--delay) ease-in;
 

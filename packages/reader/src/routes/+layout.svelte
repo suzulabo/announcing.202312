@@ -1,125 +1,125 @@
-<script lang="ts" module>
-  import Logo from '@announcing/components/Logo.svelte';
-  import type { Locales } from '@announcing/i18n';
-  import Cookies from 'js-cookie';
+<script lang='ts' module>
+  import type { Locales } from '@announcing/i18n'
+  import Logo from '@announcing/components/Logo.svelte'
+  import Cookies from 'js-cookie'
 
   const updateLocale = (locale: Locales) => {
     if (browser) {
-      Cookies.set('locale', locale);
-      return setupLocale(locale);
+      Cookies.set('locale', locale)
+      return setupLocale(locale)
     }
-    return;
-  };
+  }
 
   const updateTheme = (theme: string) => {
     if (!browser) {
-      return;
+      return
     }
 
-    Cookies.set('theme', theme);
-    document.documentElement.setAttribute('data-color-scheme', theme);
-  };
+    Cookies.set('theme', theme)
+    document.documentElement.setAttribute('data-color-scheme', theme)
+  }
 
   const getSystemTheme = () => {
     if (browser && 'matchMedia' in window) {
-      const m = window.matchMedia('(prefers-color-scheme: dark)');
+      const m = window.matchMedia('(prefers-color-scheme: dark)')
       if (m.matches) {
-        return 'dark';
+        return 'dark'
       }
     }
 
-    return 'light';
-  };
-
-  type BackLabelKeys = 'back';
-
-  export type HeaderBack = {
-    href: string;
-    labelKey: BackLabelKeys;
-  };
-
-  export type HeaderNotification = {
-    channelID: string;
-    name: string;
-    icon?: string;
-  };
-</script>
-
-<script lang="ts">
-  import { LL, setupLocale } from '@announcing/i18n';
-
-  import { browser } from '$app/environment';
-  import { page } from '$app/stores';
-
-  import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
-  import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
-  import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
-  import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import { initFirebase } from '$lib/firebase/firebase';
-  import { initNotification } from '$lib/notification/notification';
-  import { notificationState } from '$lib/notification/notificationState.svelte';
-  import { isIOS, isStandalone } from '$lib/platform/platform';
-  import { setupBack } from '@announcing/components/actions/back';
-  import { onMount, type Snippet } from 'svelte';
-  import type { LayoutData } from './$types';
-  import NotificationModal from './NotificationModal.svelte';
-  import SettingsModal from './SettingsModal.svelte';
-
-  interface Props {
-    data: LayoutData;
-    children?: Snippet;
+    return 'light'
   }
 
-  let { data, children }: Props = $props();
+  type BackLabelKeys = 'back'
 
-  let theme = $state(Cookies.get('theme') ?? getSystemTheme());
-  let locale = $state(data.locale);
-  let addManifest = $state(isIOS() && !isStandalone());
-  let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
-  let headerNotification = $derived<HeaderNotification | undefined>(
-    $page.data['headerNotification'],
-  );
+  export type HeaderBack = {
+    href: string
+    labelKey: BackLabelKeys
+  }
 
-  let notificationModal: ReturnType<typeof NotificationModal>;
-  let settingsModal: ReturnType<typeof SettingsModal>;
+  export type HeaderNotification = {
+    channelID: string
+    name: string
+    icon?: string
+  }
+</script>
+
+<script lang='ts'>
+  import type { Snippet } from 'svelte'
+
+  import type { LayoutData } from './$types'
+  import { browser } from '$app/environment'
+
+  import { page } from '$app/stores'
+  import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte'
+  import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte'
+  import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte'
+  import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte'
+  import { initFirebase } from '$lib/firebase/firebase'
+  import { initNotification } from '$lib/notification/notification'
+  import { notificationState } from '$lib/notification/notificationState.svelte'
+  import { isIOS, isStandalone } from '$lib/platform/platform'
+  import { setupBack } from '@announcing/components/actions/back'
+  import { LL, setupLocale } from '@announcing/i18n'
+  import { onMount } from 'svelte'
+  import NotificationModal from './NotificationModal.svelte'
+  import SettingsModal from './SettingsModal.svelte'
+
+  interface Props {
+    data: LayoutData
+    children?: Snippet
+  }
+
+  const { data, children }: Props = $props()
+
+  let theme = $state(Cookies.get('theme') ?? getSystemTheme())
+  let locale = $state(data.locale)
+  const addManifest = $state(isIOS() && !isStandalone())
+  const headerBack = $derived<HeaderBack | undefined>($page.data.headerBack)
+  const headerNotification = $derived<HeaderNotification | undefined>(
+    $page.data.headerNotification,
+  )
+
+  let notificationModal: ReturnType<typeof NotificationModal>
+  let settingsModal: ReturnType<typeof SettingsModal>
 
   $effect(() => {
-    document.body.setAttribute('locale', locale);
-    void updateLocale(locale);
-  });
+    document.body.setAttribute('locale', locale)
+    void updateLocale(locale)
+  })
   $effect(() => {
-    updateTheme(theme);
-  });
+    updateTheme(theme)
+  })
 
   onMount(async () => {
-    await initFirebase();
-    await initNotification();
+    await initFirebase()
+    await initNotification()
 
-    document.documentElement.setAttribute('hydrated', '');
-  });
+    document.documentElement.setAttribute('hydrated', '')
+  })
 
-  const back = setupBack();
+  const back = setupBack()
 </script>
 
 <svelte:head>
   {#if addManifest}
-    <link rel="manifest" href={`/ios.webmanifest}`} />
+    <link rel='manifest' href='/ios.webmanifest}' />
   {/if}
 </svelte:head>
 
-<div class="container">
+<div class='container'>
   <header>
     {#if headerBack}
-      <a class="back" href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
+      <a class='back' href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
     {:else}
-      <a href="/" class="site-name"><Logo /></a>
+      <a href='/' class='site-name'><Logo /></a>
     {/if}
 
     {#if headerNotification}
       <button
-        class="small notification-btn"
+        class='small notification-btn'
         onclick={() => {
-          notificationModal.openModal(headerNotification);
+          notificationModal.openModal(headerNotification)
         }}
       >
         {#if notificationState.permission === 'granted'}
@@ -138,9 +138,9 @@
     {/if}
 
     <button
-      class="small settings-btn"
+      class='small settings-btn'
       onclick={() => {
-        settingsModal.openModal();
+        settingsModal.openModal()
       }}
     >
       <MaterialSymbolsSettingsOutline />
@@ -154,7 +154,7 @@
 <NotificationModal bind:this={notificationModal} />
 <SettingsModal bind:this={settingsModal} bind:locale bind:theme />
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     max-width: 600px;
     margin: 0 auto 100px;

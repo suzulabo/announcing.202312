@@ -1,5 +1,5 @@
-import { writeFileSync } from 'node:fs';
-import { DATABASE_ID, DATABASE_NAME } from '../env';
+import { writeFileSync } from 'node:fs'
+import { DATABASE_ID, DATABASE_NAME } from '../env'
 
 const toml = `
 compatibility_flags = [ "nodejs_compat" ]
@@ -11,8 +11,8 @@ binding = "DB"
 database_name = "${DATABASE_NAME}"
 database_id = "${DATABASE_ID}"
 migrations_dir = "../db/drizzle"
-`;
+`
 
-export const genToml = () => {
-  writeFileSync('wrangler.toml', toml);
-};
+export function genToml() {
+  writeFileSync('wrangler.toml', toml)
+}

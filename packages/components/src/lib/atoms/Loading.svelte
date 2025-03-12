@@ -1,21 +1,21 @@
-<script lang="ts">
-  import Spinner from './Spinner.svelte';
+<script lang='ts'>
+  import Spinner from './Spinner.svelte'
 
   interface Props {
-    show?: boolean;
-    showDelay?: string;
+    show?: boolean
+    showDelay?: string
   }
 
-  let { show = false, showDelay = '0' }: Props = $props();
+  const { show = false, showDelay = '0' }: Props = $props()
 </script>
 
 {#if show}
-  <div class="loading" style={`--showDelay: ${showDelay}`}>
+  <div class='loading' style={`--showDelay: ${showDelay}`}>
     <Spinner />
   </div>
 {/if}
 
-<style lang="scss">
+<style lang='scss'>
   .loading {
     position: fixed;
     top: 0;

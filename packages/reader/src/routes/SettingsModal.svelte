@@ -1,48 +1,49 @@
-<script lang="ts" module>
+<script lang='ts' module>
   const localeValues = [
     ['en', 'English'],
     ['ja', '日本語'],
-  ] satisfies [Locales, string][];
+  ] satisfies [Locales, string][]
 </script>
 
-<script lang="ts">
-  import IcBaselineRadioButtonChecked from '$lib/components/icon/IcBaselineRadioButtonChecked.svelte';
-  import IcBaselineRadioButtonUnchecked from '$lib/components/icon/IcBaselineRadioButtonUnchecked.svelte';
-  import MaterialSymbolsLanguage from '$lib/components/icon/MaterialSymbolsLanguage.svelte';
-  import MdiThemeLightDark from '$lib/components/icon/MdiThemeLightDark.svelte';
-  import Modal from '@announcing/components/Modal.svelte';
-  import { LL, type Locales } from '@announcing/i18n';
+<script lang='ts'>
+  import type { Locales } from '@announcing/i18n'
+  import IcBaselineRadioButtonChecked from '$lib/components/icon/IcBaselineRadioButtonChecked.svelte'
+  import IcBaselineRadioButtonUnchecked from '$lib/components/icon/IcBaselineRadioButtonUnchecked.svelte'
+  import MaterialSymbolsLanguage from '$lib/components/icon/MaterialSymbolsLanguage.svelte'
+  import MdiThemeLightDark from '$lib/components/icon/MdiThemeLightDark.svelte'
+  import Modal from '@announcing/components/Modal.svelte'
+  import { LL } from '@announcing/i18n'
 
   interface Props {
-    locale: Locales;
-    theme: string;
+    locale: Locales
+    theme: string
   }
 
-  let { locale = $bindable(), theme = $bindable() }: Props = $props();
+  let { locale = $bindable(), theme = $bindable() }: Props = $props()
 
-  let open = $state(false);
+  let open = $state(false)
 
-  export const openModal = () => {
-    open = true;
-  };
+  export function openModal() {
+    open = true
+  }
 
-  let themes = $derived([
+  const themes = $derived([
     ['light', $LL.default()],
     ['dark', $LL.darkMode()],
-  ] as const);
+  ] as const)
 </script>
 
-<Modal bind:open dismissMode="backdrop">
-  <div class="modal-body">
-    <div class="language-title">
+<Modal bind:open dismissMode='backdrop'>
+  <div class='modal-body'>
+    <div class='language-title'>
       <MaterialSymbolsLanguage />Language
     </div>
-    <div class="language-grid">
+    <div class='language-grid'>
       {#each localeValues as [locale_, label]}
         <button
-          class="unstyled"
+          class='unstyled'
           onclick={() => {
-            locale = locale_;
+            locale = locale_
           }}
         >
           {#if locale_ === locale}
@@ -57,17 +58,17 @@
 
     <hr />
 
-    <div class="theme-title">
+    <div class='theme-title'>
       <MdiThemeLightDark />
       {$LL.theme()}
     </div>
 
-    <div class="theme-buttons">
+    <div class='theme-buttons'>
       {#each themes as [theme_, label]}
         <button
-          class="unstyled"
+          class='unstyled'
           onclick={() => {
-            theme = theme_;
+            theme = theme_
           }}
         >
           {#if theme === theme_}
@@ -83,15 +84,15 @@
     <hr />
 
     <button
-      class="close-btn small filled"
+      class='close-btn small filled'
       onclick={() => {
-        open = false;
+        open = false
       }}>{$LL.close()}</button
     >
   </div>
 </Modal>
 
-<style lang="scss">
+<style lang='scss'>
   .modal-body {
     background-color: var(--color-background);
     border-radius: 8px;

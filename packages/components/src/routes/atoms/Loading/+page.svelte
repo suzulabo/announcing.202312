@@ -1,14 +1,14 @@
-<script lang="ts">
-  import Loading from '$lib/atoms/Loading.svelte';
+<script lang='ts'>
+  import Loading from '$lib/atoms/Loading.svelte'
 
-  let show = $state(false);
+  let show = $state(false)
 </script>
 
-<div class="container">
+<div class='container'>
   <button
     onclick={(event) => {
-      show = true;
-      event.stopPropagation();
+      show = true
+      event.stopPropagation()
     }}>Show</button
   >
 </div>
@@ -17,11 +17,11 @@
 
 <svelte:body
   onclick={() => {
-    show = false;
+    show = false
   }}
 />
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     text-align: center;
     padding: 30vh 16px;

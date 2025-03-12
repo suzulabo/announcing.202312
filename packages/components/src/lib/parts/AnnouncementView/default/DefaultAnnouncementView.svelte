@@ -1,42 +1,42 @@
-<script lang="ts">
-  import { LL } from '@announcing/i18n';
+<script lang='ts'>
+  import type { Announcement } from '../AnnouncementView.svelte'
 
-  import { pushState } from '$app/navigation';
-  import { page } from '$app/stores';
-  import { imgSrc } from '$lib/actions/imgSrc';
-  import Modal from '$lib/atoms/Modal.svelte';
-  import { formatDate } from '$lib/utils/formatDate';
-  import { toHtml } from '$lib/utils/toHtml';
+  import { pushState } from '$app/navigation'
+  import { page } from '$app/stores'
+  import { imgSrc } from '$lib/actions/imgSrc'
+  import Modal from '$lib/atoms/Modal.svelte'
+  import { formatDate } from '$lib/utils/formatDate'
+  import { toHtml } from '$lib/utils/toHtml'
 
-  import type { Announcement } from '../AnnouncementView.svelte';
+  import { LL } from '@announcing/i18n'
 
   interface Props {
-    announcement: Announcement;
+    announcement: Announcement
   }
 
-  let { announcement }: Props = $props();
+  const { announcement }: Props = $props()
 
-  let imageModalSrc: string | undefined = $derived($page.state.announcementViewZoomImage?.src);
+  const imageModalSrc: string | undefined = $derived($page.state.announcementViewZoomImage?.src)
 
   const showImageModal = (src: string) => {
-    pushState('', { ...$page.state, announcementViewZoomImage: { src } });
-  };
+    pushState('', { ...$page.state, announcementViewZoomImage: { src } })
+  }
 </script>
 
-<div class="container">
+<div class='container'>
   {#if announcement.headerImage}
     <button
-      class="unstyled"
+      class='unstyled'
       onclick={() => {
         if (announcement.headerImage) {
-          showImageModal(announcement.headerImage);
+          showImageModal(announcement.headerImage)
         }
       }}
     >
-      <img class="header-image" alt="" use:imgSrc={announcement.headerImage} />
+      <img class='header-image' alt="" use:imgSrc={announcement.headerImage} />
     </button>
   {/if}
-  <div class="date">
+  <div class='date'>
     {#if announcement.createdAt === announcement.updatedAt}
       <div>{formatDate(announcement.createdAt)}</div>
     {:else}
@@ -45,44 +45,44 @@
     {/if}
   </div>
   {#if announcement.title}
-    <div class="title">
+    <div class='title'>
       {announcement.title}
     </div>
   {/if}
-  <div class="body">
+  <div class='body'>
     {@html toHtml(announcement.body)}
   </div>
   {#if announcement.images}
-    <div class="images-box">
+    <div class='images-box'>
       {#if announcement.images.length === 1}
         {@const image = announcement.images[0]}
         <div
-          class="image-box"
-          role="button"
-          tabindex="0"
+          class='image-box'
+          role='button'
+          tabindex='0'
           onclick={() => {
             if (image) {
-              showImageModal(image);
+              showImageModal(image)
             }
           }}
           onkeydown={() => {
-            // TODO
+          // TODO
           }}
         >
-          <img class="single-image" use:imgSrc={image} alt="" />
+          <img class='single-image' use:imgSrc={image} alt="" />
         </div>
       {:else}
-        <div class="images-grid">
+        <div class='images-grid'>
           {#each announcement.images as image}
             <div
-              role="button"
-              tabindex="0"
-              class="image-box"
+              role='button'
+              tabindex='0'
+              class='image-box'
               onclick={() => {
-                showImageModal(image);
+                showImageModal(image)
               }}
               onkeydown={() => {
-                // TODO
+              // TODO
               }}
             >
               <img use:imgSrc={image} alt="" />
@@ -96,18 +96,18 @@
 
 <Modal
   open={!!imageModalSrc}
-  dismissMode="anywhere"
+  dismissMode='anywhere'
   onDismiss={() => {
-    const src = $page.state.announcementViewZoomImage?.src;
+    const src = $page.state.announcementViewZoomImage?.src
     if (src) {
-      history.back();
+      history.back()
     }
   }}
 >
-  <div class="zoom-image"><img use:imgSrc={imageModalSrc} alt="" /></div>
+  <div class='zoom-image'><img use:imgSrc={imageModalSrc} alt="" /></div>
 </Modal>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     display: flex;
     flex-direction: column;

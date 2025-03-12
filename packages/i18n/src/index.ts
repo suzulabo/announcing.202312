@@ -1,44 +1,43 @@
-import { LL, setLocale } from './i18n/i18n-svelte';
-import type { Locales } from './i18n/i18n-types';
-import { loadLocaleAsync } from './i18n/i18n-util.async';
+import type { Locales } from './i18n/i18n-types'
+import { LL, setLocale } from './i18n/i18n-svelte'
+import { loadLocaleAsync } from './i18n/i18n-util.async'
 
-const validLocales = new Set(['en', 'ja']);
+const validLocales = new Set(['en', 'ja'])
 
-const checkLocale = (locale: string | undefined): Locales | undefined => {
+function checkLocale(locale: string | undefined): Locales | undefined {
   if (locale && validLocales.has(locale)) {
-    return locale as Locales;
+    return locale as Locales
   }
-  return;
-};
+}
 
-export const detectLocale = ({
+export function detectLocale({
   cookie,
   acceptLanguage,
 }: {
-  cookie: string | undefined;
-  acceptLanguage: string | undefined;
-}): Locales => {
+  cookie: string | undefined
+  acceptLanguage: string | undefined
+}): Locales {
   {
-    const locale = checkLocale(cookie);
+    const locale = checkLocale(cookie)
     if (locale) {
-      return locale;
+      return locale
     }
   }
   if (acceptLanguage) {
-    const s = acceptLanguage.split(/[,;-]/)[0];
-    const locale = checkLocale(s);
+    const s = acceptLanguage.split(/[,;-]/)[0]
+    const locale = checkLocale(s)
     if (locale) {
-      return locale;
+      return locale
     }
   }
 
-  return 'en';
-};
+  return 'en'
+}
 
-export const setupLocale = async (locale: Locales) => {
-  await loadLocaleAsync(locale);
-  setLocale(locale);
-};
+export async function setupLocale(locale: Locales) {
+  await loadLocaleAsync(locale)
+  setLocale(locale)
+}
 
-export { LL };
-export type { Locales };
+export { LL }
+export type { Locales }

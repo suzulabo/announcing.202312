@@ -1,4 +1,4 @@
-import type { Translation } from '../i18n-types';
+import type { Translation } from '../i18n-types'
 
 const ja = {
   edit: '編集',
@@ -66,6 +66,6 @@ const ja = {
     toEnabled: '通知を受け取る',
     toDisabled: '通知を受け取らない',
   },
-} satisfies Translation;
+} satisfies Translation
 
-export default ja;
+export default ja

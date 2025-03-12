@@ -1,6 +1,7 @@
 {
-  "private": true,
   "name": "@announcing/reader",
+  "type": "module",
+  "private": true,
   "scripts": {
     "dev": "vite dev --port 5175",
     "build": "vite build",
@@ -36,7 +37,6 @@
     "workbox-routing": "^7.3.0",
     "workbox-strategies": "^7.3.0"
   },
-  "type": "module",
   "msw": {
     "workerDirectory": "static"
   }

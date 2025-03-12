@@ -1,20 +1,20 @@
-import { and, eq, exists } from 'drizzle-orm';
+import { and, eq, exists } from 'drizzle-orm'
 
-import { getDB } from '../db';
-import { channelsTable, ownersTable } from '../schema';
+import { getDB } from '../db'
+import { channelsTable, ownersTable } from '../schema'
 
-export const READER = Symbol('READER');
+export const READER = Symbol('READER')
 
-export const getChannel = async ({
+export async function getChannel({
   userID,
   channelID,
 }: {
-  userID: typeof READER | string;
-  channelID: string;
-}) => {
-  const db = getDB();
+  userID: typeof READER | string
+  channelID: string
+}) {
+  const db = getDB()
 
-  const conditions = [eq(channelsTable.channelID, channelID)];
+  const conditions = [eq(channelsTable.channelID, channelID)]
   if (userID !== READER) {
     conditions.push(
       exists(
@@ -23,7 +23,7 @@ export const getChannel = async ({
           .from(ownersTable)
           .where(and(eq(ownersTable.channelID, channelID), eq(ownersTable.userID, userID))),
       ),
-    );
+    )
   }
 
   const channel = (
@@ -31,14 +31,15 @@ export const getChannel = async ({
       .select()
       .from(channelsTable)
       .where(and(...conditions))
-  ).shift();
+  ).shift()
 
-  if (!channel) return;
+  if (!channel)
+    return
 
   return {
     ...channel,
     desc: channel.desc ?? undefined,
     icon: channel.icon ?? undefined,
     announcementIDs: channel.announcementIDs ?? undefined,
-  };
-};
+  }
+}

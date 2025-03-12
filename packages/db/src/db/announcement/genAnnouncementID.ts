@@ -1,24 +1,24 @@
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto'
 
-import { base62 } from '../../lib/base62';
-import { ANNOUNCEMENT_ID_SIZE } from '../../lib/constants';
+import { base62 } from '../../lib/base62'
+import { ANNOUNCEMENT_ID_SIZE } from '../../lib/constants'
 
-export const genAnnouncementID = ({
+export function genAnnouncementID({
   headerImage,
   title,
   body,
   images,
   createdAt,
 }: {
-  headerImage?: string | null | undefined;
-  title?: string | null | undefined;
-  body: string;
-  images?: string[] | null | undefined;
-  createdAt: number;
-}) => {
-  const hash = createHash('sha256');
+  headerImage?: string | null | undefined
+  title?: string | null | undefined
+  body: string
+  images?: string[] | null | undefined
+  createdAt: number
+}) {
+  const hash = createHash('sha256')
 
-  const createdDate = new Date(createdAt);
+  const createdDate = new Date(createdAt)
 
   const list = [
     headerImage,
@@ -28,17 +28,18 @@ export const genAnnouncementID = ({
     new Date(createdDate.getFullYear(), createdDate.getMonth(), createdDate.getDate())
       .getTime()
       .toString(),
-  ];
+  ]
 
   for (const s of list) {
     if (typeof s === 'string') {
-      hash.update(s);
-    } else {
-      hash.update('\0');
+      hash.update(s)
+    }
+    else {
+      hash.update('\0')
     }
   }
 
-  const digest = hash.digest();
+  const digest = hash.digest()
 
-  return base62.encode(new Uint8Array(digest.buffer)).substring(0, ANNOUNCEMENT_ID_SIZE);
-};
+  return base62.encode(new Uint8Array(digest.buffer)).substring(0, ANNOUNCEMENT_ID_SIZE)
+}

@@ -1,19 +1,19 @@
-import { and, eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm'
 
-import { getChannel } from '../channel/getChannel';
-import { getDB } from '../db';
-import { announcementsTable, channelsTable } from '../schema';
-import { genAnnouncementID } from './genAnnouncementID';
-
-import * as v from 'valibot';
+import * as v from 'valibot'
 import {
   ANNOUNCEMENT_BODY_MAX_BYTES,
   ANNOUNCEMENT_IMAGE_MAX_BYTES,
   ANNOUNCEMENT_TITLE_MAX_BYTES,
   CHANNEL_ID_MAX_BYTES,
   USER_ID_MAX_BYTES,
-} from '../../lib/constants';
-import { putStorageData } from '../../storage/storage';
+} from '../../lib/constants'
+import { putStorageData } from '../../storage/storage'
+import { getChannel } from '../channel/getChannel'
+
+import { getDB } from '../db'
+import { announcementsTable, channelsTable } from '../schema'
+import { genAnnouncementID } from './genAnnouncementID'
 
 const paramsSchema = v.object({
   userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
@@ -33,18 +33,18 @@ const paramsSchema = v.object({
     v.undefined(),
   ]),
   createdAt: v.number(),
-});
+})
 
-type Params = v.InferOutput<typeof paramsSchema>;
+type Params = v.InferOutput<typeof paramsSchema>
 
-export const addAnnouncement = async (params: Params) => {
-  v.assert(paramsSchema, params);
+export async function addAnnouncement(params: Params) {
+  v.assert(paramsSchema, params)
 
-  const { userID, channelID, headerImage, title, body, images, createdAt } = params;
+  const { userID, channelID, headerImage, title, body, images, createdAt } = params
 
-  const channel = await getChannel({ userID, channelID });
+  const channel = await getChannel({ userID, channelID })
   if (!channel) {
-    return;
+    return
   }
 
   const values: Omit<typeof announcementsTable.$inferInsert, 'announcementID'> = {
@@ -53,41 +53,41 @@ export const addAnnouncement = async (params: Params) => {
     body,
     updatedAt: createdAt,
     createdAt,
-  };
-
-  if (title) {
-    values.title = title;
   }
 
-  const storagePuts = [];
+  if (title) {
+    values.title = title
+  }
+
+  const storagePuts = []
 
   if (headerImage) {
     storagePuts.push(
       putStorageData(headerImage).then((v) => {
-        values.headerImage = v;
+        values.headerImage = v
       }),
-    );
+    )
   }
 
   if (images) {
-    const a: string[] = [];
-    values.images = a;
+    const a: string[] = []
+    values.images = a
     images.forEach((image, i) => {
       storagePuts.push(
         putStorageData(image).then((v) => {
-          a[i] = v;
+          a[i] = v
         }),
-      );
-    });
+      )
+    })
   }
 
-  await Promise.all(storagePuts);
+  await Promise.all(storagePuts)
 
-  const announcementID = genAnnouncementID(values);
+  const announcementID = genAnnouncementID(values)
 
-  const db = getDB();
+  const db = getDB()
 
-  const announcementIDs = [announcementID, ...(channel.announcementIDs ?? [])];
+  const announcementIDs = [announcementID, ...(channel.announcementIDs ?? [])]
 
   const updateChannel = db
     .update(channelsTable)
@@ -97,11 +97,11 @@ export const addAnnouncement = async (params: Params) => {
     })
     .where(
       and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
-    );
+    )
 
-  const announcementValues = { announcementID, ...values };
+  const announcementValues = { announcementID, ...values }
 
-  await db.batch([updateChannel, db.insert(announcementsTable).values(announcementValues)]);
+  await db.batch([updateChannel, db.insert(announcementsTable).values(announcementValues)])
 
-  return announcementValues;
-};
+  return announcementValues
+}

@@ -1,33 +1,34 @@
+import type { GetObjectCommandOutput, HeadObjectCommandOutput } from '@aws-sdk/client-s3'
+import type { Storage } from './storage'
+import process from 'node:process'
 import {
   GetObjectCommand,
+
   HeadObjectCommand,
+
   PutObjectCommand,
   S3Client,
-  type GetObjectCommandOutput,
-  type HeadObjectCommandOutput,
-} from '@aws-sdk/client-s3';
-import process from 'node:process';
-import { getStorageKey } from './getStorageKey';
-import type { Storage } from './storage';
+} from '@aws-sdk/client-s3'
+import { getStorageKey } from './getStorageKey'
 
-export const createS3Storage = (): Storage => {
-  const params = process.env['S3_CLIENT_PARAMS'];
-  const bucket = process.env['S3_BUCKET'];
-  const prefix = process.env['S3_PREFIX'] ?? '';
+export function createS3Storage(): Storage {
+  const params = process.env.S3_CLIENT_PARAMS
+  const bucket = process.env.S3_BUCKET
+  const prefix = process.env.S3_PREFIX ?? ''
   if (!params) {
-    throw new Error('S3_CLIENT_PARAMS is not set');
+    throw new Error('S3_CLIENT_PARAMS is not set')
   }
   if (!bucket) {
-    throw new Error('S3_BUCKET is not set');
+    throw new Error('S3_BUCKET is not set')
   }
 
-  const client = new S3Client(JSON.parse(params));
+  const client = new S3Client(JSON.parse(params))
 
   const getObject = async <T extends boolean>(
     key: string,
     head: T,
   ): Promise<(T extends true ? HeadObjectCommandOutput : GetObjectCommandOutput) | undefined> => {
-    const cmd = head ? HeadObjectCommand : GetObjectCommand;
+    const cmd = head ? HeadObjectCommand : GetObjectCommand
 
     try {
       return await client.send(
@@ -35,38 +36,39 @@ export const createS3Storage = (): Storage => {
           Bucket: bucket,
           Key: `${prefix}/${key}`,
         }),
-      );
-    } catch (error: unknown) {
+      )
+    }
+    catch (error: unknown) {
       if (error instanceof Error) {
         if (error.name === 'NotFound') {
-          return Promise.resolve(undefined);
+          return Promise.resolve(undefined)
         }
       }
-      throw error;
+      throw error
     }
-  };
+  }
 
   const get = async (key: string) => {
-    const res = await getObject(key, false);
+    const res = await getObject(key, false)
     if (!res || !res.Body) {
-      return;
+      return
     }
 
-    console.log({ res });
+    console.log({ res })
 
     return {
       contentType: res.Metadata?.['content-type'] ?? '',
       data: await res.Body.transformToByteArray(),
-    };
-  };
+    }
+  }
 
   const put = async (blob: Blob) => {
-    const [key, ab, mimeType] = await getStorageKey(blob);
+    const [key, ab, mimeType] = await getStorageKey(blob)
 
     {
-      const res = await getObject(key, true);
+      const res = await getObject(key, true)
       if (res) {
-        return key;
+        return key
       }
     }
 
@@ -79,10 +81,10 @@ export const createS3Storage = (): Storage => {
           'content-type': mimeType,
         },
       }),
-    );
+    )
 
-    return key;
-  };
+    return key
+  }
 
-  return { get, put };
-};
+  return { get, put }
+}

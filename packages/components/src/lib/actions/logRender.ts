@@ -1,5 +1,5 @@
-import type { Action } from 'svelte/action';
+import type { Action } from 'svelte/action'
 
 export const logRender: Action<Element, string> = (el, k) => {
-  console.log(`Render: ${k}`, el);
-};
+  console.log(`Render: ${k}`, el)
+}

@@ -1,13 +1,14 @@
-import { redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit'
 
-export const getUserID = async (locals: App.Locals) => {
-  const userID = (await locals.auth())?.user?.id;
+export async function getUserID(locals: App.Locals) {
+  const userID = (await locals.auth())?.user?.id
 
-  if (!userID) redirect(303, '/signin');
+  if (!userID)
+    redirect(303, '/signin')
 
-  return userID;
-};
+  return userID
+}
 
-export const getUserIDNoRedirect = async (locals: App.Locals) => {
-  return (await locals.auth())?.user?.id;
-};
+export async function getUserIDNoRedirect(locals: App.Locals) {
+  return (await locals.auth())?.user?.id
+}

@@ -1,4 +1,4 @@
-import type { BaseTranslation } from '../i18n-types';
+import type { BaseTranslation } from '../i18n-types'
 
 const en = {
   edit: 'Edit',
@@ -67,6 +67,6 @@ const en = {
     toEnabled: 'Turn on notifications',
     toDisabled: 'Turn off notifications',
   },
-} satisfies BaseTranslation;
+} satisfies BaseTranslation
 
-export default en;
+export default en

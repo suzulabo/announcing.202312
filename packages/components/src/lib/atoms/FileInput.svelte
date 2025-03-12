@@ -1,16 +1,16 @@
-<script lang="ts">
-  import reduce from 'image-blob-reduce';
+<script lang='ts'>
+  import { saveBlob } from '$lib/utils/idbBlob'
 
-  import { saveBlob } from '$lib/utils/idbBlob';
+  import reduce from 'image-blob-reduce'
 
-  import Loading from './Loading.svelte';
+  import Loading from './Loading.svelte'
 
   interface Props {
-    value?: string | undefined;
-    values?: string[] | undefined;
-    accept?: string | undefined;
-    maxImageSize?: number | undefined;
-    filesCount?: number;
+    value?: string | undefined
+    values?: string[] | undefined
+    accept?: string | undefined
+    maxImageSize?: number | undefined
+    filesCount?: number
   }
 
   let {
@@ -19,72 +19,75 @@
     accept = undefined,
     maxImageSize = undefined,
     filesCount = 1,
-  }: Props = $props();
+  }: Props = $props()
 
   // TODO: https://github.com/sveltejs/svelte/issues/12118
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  value;
+  value
 
-  let loading = $state(false);
-  let fileInput: HTMLInputElement;
+  let loading = $state(false)
+  let fileInput: HTMLInputElement
 
-  export const open = () => {
-    fileInput.click();
-  };
+  export function open() {
+    fileInput.click()
+  }
 
   const fileInputChange = async () => {
-    const selectedFiles = fileInput.files;
+    const selectedFiles = fileInput.files
 
     if (!selectedFiles || selectedFiles.length === 0) {
-      return;
+      return
     }
 
-    const newValues = new Set(values);
+    const newValues = new Set(values)
 
-    loading = true;
+    loading = true
 
     try {
       for (let i = 0; i < filesCount; i++) {
-        const f = selectedFiles.item(i);
+        const f = selectedFiles.item(i)
 
-        if (!f) break;
+        if (!f)
+          break
 
         if (!maxImageSize) {
-          const id = await saveBlob(f);
-          newValues.add(id);
-          continue;
+          const id = await saveBlob(f)
+          newValues.add(id)
+          continue
         }
 
-        const reducer = reduce();
+        const reducer = reduce()
 
         const reduced = await reducer.toBlob(f, {
           max: maxImageSize,
           unsharpAmount: 160,
           unsharpRadius: 0.6,
           unsharpThreshold: 1,
-        });
+        })
 
-        newValues.add(await saveBlob(reduced));
+        newValues.add(await saveBlob(reduced))
       }
 
       if (filesCount > 1) {
-        values = [...newValues.values()].slice(0, filesCount);
-      } else {
-        value = newValues.values().next().value;
+        values = [...newValues.values()].slice(0, filesCount)
+      }
+      else {
+        value = newValues.values().next().value
       }
 
-      fileInput.value = '';
-    } finally {
-      loading = false;
+      fileInput.value = ''
     }
-  };
+    finally {
+      loading = false
+    }
+  }
 </script>
 
 <input
-  type="file"
+  type='file'
   {accept}
   multiple={filesCount > 1}
-  style="display:none"
+  style='display:none'
   bind:this={fileInput}
   onchange={fileInputChange}
 />

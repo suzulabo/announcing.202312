@@ -1,9 +1,10 @@
-import { SvelteKitAuth, type SvelteKitAuthConfig } from '@auth/sveltekit';
-import Credentials from '@auth/sveltekit/providers/credentials';
-import Google from '@auth/sveltekit/providers/google';
+import type { SvelteKitAuthConfig } from '@auth/sveltekit'
+import { env } from '$env/dynamic/public'
+import { AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_SECRET } from '$env/static/private'
+import { SvelteKitAuth } from '@auth/sveltekit'
 
-import { env } from '$env/dynamic/public';
-import { AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_SECRET } from '$env/static/private';
+import Credentials from '@auth/sveltekit/providers/credentials'
+import Google from '@auth/sveltekit/providers/google'
 
 const providers: SvelteKitAuthConfig['providers'] = [
   Google({
@@ -16,7 +17,7 @@ const providers: SvelteKitAuthConfig['providers'] = [
       },
     },
   }),
-];
+]
 
 if (env.PUBLIC_TEST) {
   providers.push(
@@ -25,10 +26,10 @@ if (env.PUBLIC_TEST) {
         id: {},
       },
       authorize: (credentials) => {
-        return { id: credentials.id as string };
+        return { id: credentials.id as string }
       },
     }),
-  );
+  )
 }
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
@@ -36,19 +37,19 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   callbacks: {
     jwt: ({ token, account }) => {
       if (account) {
-        token['userID'] = `${account.provider}:${account.providerAccountId}`;
+        token.userID = `${account.provider}:${account.providerAccountId}`
       }
 
-      return token;
+      return token
     },
     session: ({ session, token }) => {
-      if (token['userID']) {
-        session.user.id = token['userID'] as string;
+      if (token.userID) {
+        session.user.id = token.userID as string
       }
 
-      return session;
+      return session
     },
   },
   secret: AUTH_SECRET,
   trustHost: true,
-});
+})

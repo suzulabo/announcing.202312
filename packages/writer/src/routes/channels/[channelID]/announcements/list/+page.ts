@@ -1,5 +1,5 @@
-import type { HeaderBack } from '../../../../+layout.svelte';
-import type { PageLoad } from './$types';
+import type { HeaderBack } from '../../../../+layout.svelte'
+import type { PageLoad } from './$types'
 
 export const load: PageLoad = ({ data }) => {
   return {
@@ -8,5 +8,5 @@ export const load: PageLoad = ({ data }) => {
       href: `/channels/${data.channel.channelID}`,
       labelKey: 'back',
     } satisfies HeaderBack,
-  };
-};
+  }
+}

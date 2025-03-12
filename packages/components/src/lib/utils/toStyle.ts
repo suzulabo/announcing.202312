@@ -1,15 +1,15 @@
-export const toStyle = (m: Record<string, string | undefined> | undefined) => {
+export function toStyle(m: Record<string, string | undefined> | undefined) {
   if (!m) {
-    return;
+    return
   }
 
-  const result = [];
+  const result = []
 
   for (const [k, v] of Object.entries(m)) {
     if (v) {
-      result.push(`${k}: ${v}`);
+      result.push(`${k}: ${v}`)
     }
   }
 
-  return result.join(';');
-};
+  return result.join(';')
+}

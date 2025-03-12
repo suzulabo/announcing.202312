@@ -1,44 +1,44 @@
-<script lang="ts">
-  import { imgSrc } from '@announcing/components/actions/imgSrc';
-  import { LL } from '@announcing/i18n';
+<script lang='ts'>
+  import type { PageData } from './$types'
+  import { goto, invalidateAll } from '$app/navigation'
 
-  import { goto, invalidateAll } from '$app/navigation';
-  import { page } from '$app/stores';
-  import { PUBLIC_READER_PREFIX } from '$env/static/public';
-  import ChannelEditor from '$lib/components/ChannelEditor.svelte';
+  import { page } from '$app/stores'
+  import { PUBLIC_READER_PREFIX } from '$env/static/public'
+  import ChannelEditor from '$lib/components/ChannelEditor.svelte'
+  import MaterialSymbolsBoxEditOutline from '$lib/components/icon/MaterialSymbolsBoxEditOutline.svelte'
 
-  import MaterialSymbolsContentCopyOutline from '$lib/components/icon/MaterialSymbolsContentCopyOutline.svelte';
-  import MdiExternalLink from '$lib/components/icon/MdiExternalLink.svelte';
-  import type { PageData } from './$types';
-  import DeleteModal from './DeleteModal.svelte';
-  import UrlCopyModal from './UrlCopyModal.svelte';
-  import MaterialSymbolsPostAdd from '$lib/components/icon/MaterialSymbolsPostAdd.svelte';
-  import MaterialSymbolsEditDocumentOutline from '$lib/components/icon/MaterialSymbolsEditDocumentOutline.svelte';
-  import MaterialSymbolsBoxEditOutline from '$lib/components/icon/MaterialSymbolsBoxEditOutline.svelte';
-  import MaterialSymbolsDangerous from '$lib/components/icon/MaterialSymbolsDangerous.svelte';
+  import MaterialSymbolsContentCopyOutline from '$lib/components/icon/MaterialSymbolsContentCopyOutline.svelte'
+  import MaterialSymbolsDangerous from '$lib/components/icon/MaterialSymbolsDangerous.svelte'
+  import MaterialSymbolsEditDocumentOutline from '$lib/components/icon/MaterialSymbolsEditDocumentOutline.svelte'
+  import MaterialSymbolsPostAdd from '$lib/components/icon/MaterialSymbolsPostAdd.svelte'
+  import MdiExternalLink from '$lib/components/icon/MdiExternalLink.svelte'
+  import { imgSrc } from '@announcing/components/actions/imgSrc'
+  import { LL } from '@announcing/i18n'
+  import DeleteModal from './DeleteModal.svelte'
+  import UrlCopyModal from './UrlCopyModal.svelte'
 
   interface Props {
-    data: PageData;
+    data: PageData
   }
 
-  let { data }: Props = $props();
+  const { data }: Props = $props()
 
-  let urlCopyModal: ReturnType<typeof UrlCopyModal>;
-  let deleteModal: ReturnType<typeof DeleteModal>;
-  let channelEditor: ReturnType<typeof ChannelEditor>;
+  let urlCopyModal: ReturnType<typeof UrlCopyModal>
+  let deleteModal: ReturnType<typeof DeleteModal>
+  let channelEditor: ReturnType<typeof ChannelEditor>
 
-  let { channel } = $derived(data);
-  let channelID = $derived(channel.channelID);
-  let readerURL = $derived(`${PUBLIC_READER_PREFIX}/${channelID}`);
+  const { channel } = $derived(data)
+  const channelID = $derived(channel.channelID)
+  const readerURL = $derived(`${PUBLIC_READER_PREFIX}/${channelID}`)
 
   const updateChannel = async (formData: FormData) => {
-    formData.append('updatedAt', channel.updatedAt + '');
+    formData.append('updatedAt', `${channel.updatedAt}`)
     await fetch(`/api/channels/${channelID}`, {
       method: 'PUT',
       body: formData,
-    });
-    await invalidateAll();
-  };
+    })
+    await invalidateAll()
+  }
 
   const deleteChannel = async () => {
     await fetch(`/api/channels/${channelID}`, {
@@ -47,27 +47,27 @@
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ updatedAt: channel.updatedAt }),
-    });
-    await goto('/');
-  };
+    })
+    await goto('/')
+  }
 
   const iconProps = {
     width: '20px',
     height: '20px',
-  };
+  }
 </script>
 
-<div class="container">
-  <div class="name-box">
-    <span class="name">{channel.name}</span>
+<div class='container'>
+  <div class='name-box'>
+    <span class='name'>{channel.name}</span>
     {#if channel.icon}
-      <img class="icon" alt="channel icon" use:imgSrc={channel.icon} />
+      <img class='icon' alt='channel icon' use:imgSrc={channel.icon} />
     {/if}
   </div>
 
   <hr />
 
-  <ul class="actions">
+  <ul class='actions'>
     <li>
       <a href={readerURL}>
         <MdiExternalLink {...iconProps} />
@@ -76,9 +76,9 @@
     </li>
     <li>
       <button
-        class="text"
+        class='text'
         onclick={() => {
-          urlCopyModal.openModal(readerURL);
+          urlCopyModal.openModal(readerURL)
         }}
       >
         <MaterialSymbolsContentCopyOutline {...iconProps} />
@@ -101,9 +101,9 @@
     <hr />
     <li>
       <button
-        class="text"
+        class='text'
         onclick={() => {
-          channelEditor.openEditor(channel);
+          channelEditor.openEditor(channel)
         }}
       >
         <MaterialSymbolsBoxEditOutline {...iconProps} />
@@ -113,9 +113,9 @@
     <hr />
     <li>
       <button
-        class="text"
+        class='text'
         onclick={() => {
-          deleteModal.openModal();
+          deleteModal.openModal()
         }}
       >
         <MaterialSymbolsDangerous {...iconProps} />
@@ -129,7 +129,7 @@
 <DeleteModal bind:this={deleteModal} name={channel.name} onSubmit={deleteChannel} />
 <ChannelEditor bind:this={channelEditor} onSubmit={updateChannel} />
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     padding: 16px 8px;
 

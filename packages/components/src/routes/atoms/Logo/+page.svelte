@@ -1,12 +1,12 @@
-<script lang="ts">
-  import Logo from '$lib/atoms/Logo.svelte';
+<script lang='ts'>
+  import Logo from '$lib/atoms/Logo.svelte'
 </script>
 
-<div class="container">
+<div class='container'>
   <Logo />
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     max-width: 600px;
     margin: 30vh auto;

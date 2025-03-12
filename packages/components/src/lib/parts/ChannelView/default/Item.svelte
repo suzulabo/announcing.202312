@@ -1,38 +1,38 @@
-<script lang="ts">
-  import { imgSrc } from '$lib/actions/imgSrc';
-  import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
-  import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
-  import { formatDate } from '$lib/utils/formatDate';
+<script lang='ts'>
+  import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView.svelte'
+  import { imgSrc } from '$lib/actions/imgSrc'
+  import ResizeObserver from '$lib/atoms/ResizeObserver.svelte'
+  import { formatDate } from '$lib/utils/formatDate'
 
   interface Props {
-    announcement: Announcement;
+    announcement: Announcement
   }
 
-  let { announcement }: Props = $props();
+  const { announcement }: Props = $props()
 
-  let overflow = $state(false);
+  let overflow = $state(false)
 </script>
 
 <ResizeObserver
   onResize={({ el }) => {
-    overflow = el.scrollHeight > el.clientHeight;
+    overflow = el.scrollHeight > el.clientHeight
   }}
 >
-  <div class="container" class:overflow>
-    <div class="date">{formatDate(announcement.createdAt)}</div>
-    <div class="title-box">
+  <div class='container' class:overflow>
+    <div class='date'>{formatDate(announcement.createdAt)}</div>
+    <div class='title-box'>
       {#if announcement.headerImage}
         <img use:imgSrc={announcement.headerImage} alt="" />
       {/if}
       {#if announcement.title}
-        <div class="title">{announcement.title}</div>
+        <div class='title'>{announcement.title}</div>
       {/if}
     </div>
-    <div class="body">{announcement.body}</div>
+    <div class='body'>{announcement.body}</div>
   </div>
 </ResizeObserver>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     flex-grow: 1;
     max-height: 100%;

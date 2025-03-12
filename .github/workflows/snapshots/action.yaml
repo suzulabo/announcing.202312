@@ -3,7 +3,7 @@ inputs:
     required: true
 
 runs:
-  using: 'composite'
+  using: composite
   steps:
     - run: echo '${{  github.ref_name }}-update-snapshots'
       shell: bash

@@ -1,16 +1,16 @@
-const cache = new Map<string, Promise<unknown>>();
+const cache = new Map<string, Promise<unknown>>()
 
-export const promiseCache = <T>(key: string, func: () => Promise<T>): Promise<T> => {
+export function promiseCache<T>(key: string, func: () => Promise<T>): Promise<T> {
   if (cache.has(key)) {
-    return cache.get(key) as Promise<T>;
+    return cache.get(key) as Promise<T>
   }
 
-  const promise = func();
-  cache.set(key, promise);
+  const promise = func()
+  cache.set(key, promise)
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   promise.finally(() => {
-    cache.delete(key);
-  });
+    cache.delete(key)
+  })
 
-  return promise;
-};
+  return promise
+}

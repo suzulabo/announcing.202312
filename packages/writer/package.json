@@ -1,6 +1,7 @@
 {
-  "private": true,
   "name": "@announcing/writer",
+  "type": "module",
+  "private": true,
   "scripts": {
     "dev": "vite dev --port 5174",
     "dev:cf": "wrangler pages dev .svelte-kit/cloudflare",
@@ -34,7 +35,6 @@
     "vite": "^6.0.7",
     "vitest": "^3.0.2"
   },
-  "type": "module",
   "msw": {
     "workerDirectory": "static"
   }

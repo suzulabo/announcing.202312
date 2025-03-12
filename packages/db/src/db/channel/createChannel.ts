@@ -1,16 +1,16 @@
-import { count, eq } from 'drizzle-orm';
+import { count, eq } from 'drizzle-orm'
 
-import * as v from 'valibot';
+import * as v from 'valibot'
 import {
   CHANNEL_DESC_MAX_BYTES,
   CHANNEL_ICON_MAX_BYTES,
   CHANNEL_ID_MAX_BYTES,
   CHANNEL_NAME_MAX_BYTES,
   USER_ID_MAX_BYTES,
-} from '../../lib/constants';
-import { putStorageData } from '../../storage/storage';
-import { getDB } from '../db';
-import { channelsTable, ownersTable } from '../schema';
+} from '../../lib/constants'
+import { putStorageData } from '../../storage/storage'
+import { getDB } from '../db'
+import { channelsTable, ownersTable } from '../schema'
 
 const paramsSchema = v.object({
   userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
@@ -25,28 +25,28 @@ const paramsSchema = v.object({
     ),
     v.undefined(),
   ]),
-});
+})
 
-type Params = v.InferOutput<typeof paramsSchema>;
+type Params = v.InferOutput<typeof paramsSchema>
 
-export const createChannel = async (params: Params) => {
-  v.assert(paramsSchema, params);
+export async function createChannel(params: Params) {
+  v.assert(paramsSchema, params)
 
-  const { userID, channelID, name, desc, icon } = params;
+  const { userID, channelID, name, desc, icon } = params
 
-  const db = getDB();
+  const db = getDB()
 
   {
     // This should ideally be enforced by a database trigger.
     const c = (
       await db.select({ count: count() }).from(ownersTable).where(eq(ownersTable.userID, userID))
-    ).shift();
+    ).shift()
     if (c && c.count >= 5) {
-      return;
+      return
     }
   }
 
-  const now = new Date().getTime();
+  const now = new Date().getTime()
 
   const values: typeof channelsTable.$inferInsert = {
     channelID,
@@ -54,14 +54,14 @@ export const createChannel = async (params: Params) => {
     desc: desc ?? null,
     updatedAt: now,
     createdAt: now,
-  };
+  }
 
   if (icon) {
-    values.icon = await putStorageData(icon);
+    values.icon = await putStorageData(icon)
   }
 
   await db.batch([
     db.insert(channelsTable).values(values),
     db.insert(ownersTable).values({ channelID, userID, createdAt: now }),
-  ]);
-};
+  ])
+}

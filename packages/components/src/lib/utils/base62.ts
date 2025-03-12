@@ -1,3 +1,3 @@
-import bsx from 'base-x';
+import bsx from 'base-x'
 
-export const base62 = bsx('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+export const base62 = bsx('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')

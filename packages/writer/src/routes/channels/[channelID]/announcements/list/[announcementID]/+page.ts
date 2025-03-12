@@ -1,11 +1,11 @@
-import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
-import type { HeaderBack } from '../../../../../+layout.svelte';
-import type { PageLoad } from './$types';
+import type { HeaderBack } from '../../../../../+layout.svelte'
+import type { PageLoad } from './$types'
+import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement'
 
 export const load: PageLoad = async ({ params, fetch }) => {
-  const { channelID, announcementID } = params;
+  const { channelID, announcementID } = params
 
-  const announcement = await fetchAnnouncement({ channelID, announcementID }, fetch);
+  const announcement = await fetchAnnouncement({ channelID, announcementID }, fetch)
 
   return {
     channelID,
@@ -15,5 +15,5 @@ export const load: PageLoad = async ({ params, fetch }) => {
       href: '../list',
       labelKey: 'back',
     } satisfies HeaderBack,
-  };
-};
+  }
+}

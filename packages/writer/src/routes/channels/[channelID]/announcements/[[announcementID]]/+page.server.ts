@@ -1,18 +1,18 @@
-import { getAnnouncement, getChannel } from '@announcing/db';
-import { redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types'
+import { getUserID } from '$lib/utils/getUserID'
 
-import { getUserID } from '$lib/utils/getUserID';
+import { getAnnouncement, getChannel } from '@announcing/db'
 
-import type { PageServerLoad } from './$types';
+import { redirect } from '@sveltejs/kit'
 
 export const load: PageServerLoad = async ({ params, locals }) => {
-  const userID = await getUserID(locals);
-  const { channelID, announcementID } = params;
+  const userID = await getUserID(locals)
+  const { channelID, announcementID } = params
 
-  const channel = await getChannel({ userID, channelID });
+  const channel = await getChannel({ userID, channelID })
 
   if (!channel) {
-    redirect(303, '/');
+    redirect(303, '/')
   }
 
   if (!announcementID) {
@@ -21,19 +21,19 @@ export const load: PageServerLoad = async ({ params, locals }) => {
       channel,
       channelID,
       announcement: undefined,
-    };
+    }
   }
 
-  if (!channel.announcementIDs || channel.announcementIDs.indexOf(announcementID) < 0) {
-    redirect(303, '/');
+  if (!channel.announcementIDs || !channel.announcementIDs.includes(announcementID)) {
+    redirect(303, '/')
   }
 
   const announcement = announcementID
     ? await getAnnouncement({ channelID, announcementID })
-    : undefined;
+    : undefined
 
   if (!announcement) {
-    redirect(303, '/');
+    redirect(303, '/')
   }
 
   return {
@@ -41,5 +41,5 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     channelID,
     announcementID,
     announcement,
-  };
-};
+  }
+}

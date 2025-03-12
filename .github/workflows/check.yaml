@@ -32,7 +32,7 @@ jobs:
       contents: write
     strategy:
       matrix:
-        target: ['components', 'reader', 'writer']
+        target: [components, reader, writer]
       fail-fast: false
 
     steps:

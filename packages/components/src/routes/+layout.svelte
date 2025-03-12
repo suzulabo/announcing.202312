@@ -1,66 +1,65 @@
-<script lang="ts" module>
-  import { browser } from '$app/environment';
-  import type { Locales } from '@announcing/i18n';
-  import { setupLocale } from '@announcing/i18n';
-  import Cookies from 'js-cookie';
+<script lang='ts' module>
+  import type { Locales } from '@announcing/i18n'
+  import { browser } from '$app/environment'
+  import { setupLocale } from '@announcing/i18n'
+  import Cookies from 'js-cookie'
 
   const updateLocale = (locale: Locales) => {
     if (browser) {
-      Cookies.set('locale', locale);
-      return setupLocale(locale);
+      Cookies.set('locale', locale)
+      return setupLocale(locale)
     }
-    return;
-  };
+  }
 
   const updateColorScheme = (colorScheme: string) => {
     if (browser) {
       if (colorScheme === 'light' || colorScheme === 'dark') {
-        Cookies.set('color-scheme', colorScheme);
-        document.documentElement.setAttribute('data-color-scheme', colorScheme);
-        return;
+        Cookies.set('color-scheme', colorScheme)
+        document.documentElement.setAttribute('data-color-scheme', colorScheme)
+        return
       }
-      Cookies.remove('color-scheme');
-      document.documentElement.removeAttribute('data-color-scheme');
+      Cookies.remove('color-scheme')
+      document.documentElement.removeAttribute('data-color-scheme')
     }
-  };
+  }
 </script>
 
-<script lang="ts">
-  import type { LayoutServerData } from './$types';
+<script lang='ts'>
+  import type { LayoutServerData } from './$types'
 
   interface Props {
-    data: LayoutServerData;
-    children?: import('svelte').Snippet;
+    data: LayoutServerData
+    children?: import('svelte').Snippet
   }
 
-  let { data = $bindable(), children }: Props = $props();
+  let { data = $bindable(), children }: Props = $props()
 
-  let colorScheme = $state(Cookies.get('color-scheme') ?? '');
+  let colorScheme = $state(Cookies.get('color-scheme') ?? '')
 
-  let locale = $state(data.locale);
+  let locale = $state(data.locale)
 
   $effect(() => {
-    void updateLocale(locale);
-    updateColorScheme(colorScheme);
-  });
+    void updateLocale(locale)
+    updateColorScheme(colorScheme)
+  })
 </script>
 
-<div class="tool-bar">
-  <a href="/">Announcing Components</a>
-  <select class="color-mode" bind:value={colorScheme}>
+<div class='tool-bar'>
+  <a href='/'>Announcing Components</a>
+  <select class='color-mode' bind:value={colorScheme}>
     <option value="">Default</option>
-    <option value="light">Light</option>
-    <option value="dark">Dark</option>
+    <option value='light'>Light</option>
+    <option value='dark'>Dark</option>
   </select>
-  <select class="lang" bind:value={locale}>
-    <option value="en">English</option>
-    <option value="ja">日本語</option>
+  <select class='lang' bind:value={locale}>
+    <option value='en'>English</option>
+    <option value='ja'>日本語</option>
   </select>
 </div>
 
 {@render children?.()}
 
-<style lang="scss">
+<style lang='scss'>
   .tool-bar {
     display: flex;
     align-items: center;

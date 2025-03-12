@@ -1,25 +1,25 @@
-<script lang="ts">
-  import { page } from '$app/stores';
-  import { setupBack } from '$lib/actions/back';
+<script lang='ts'>
+  import { page } from '$app/stores'
+  import { setupBack } from '$lib/actions/back'
 
-  const back = setupBack();
+  const back = setupBack()
 
-  let id = $derived(+($page.params['id'] ?? '0'));
+  const id = $derived(+($page.params.id ?? '0'))
 </script>
 
-<div class="container">
-  <div class="current">{id}</div>
-  <div class="links">
+<div class='container'>
+  <div class='current'>{id}</div>
+  <div class='links'>
     {#if id > 0}
       <a href={`/actions/back/${id - 1}`} use:back>Back to {id - 1}</a>
     {:else}
-      <a href="/" use:back>Back to Top</a>
+      <a href='/' use:back>Back to Top</a>
     {/if}
     <a href={`/actions/back/${id + 1}`}>Forward to {id + 1}</a>
   </div>
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     max-width: 600px;
     margin: 100px auto;

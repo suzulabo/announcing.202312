@@ -1,30 +1,30 @@
-<script lang="ts">
-  import { page } from '$app/stores';
-  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
-  import { createSnapshotContext } from '$lib/utils/snapshotContext.js';
-  import { items } from './items';
+<script lang='ts'>
+  import { page } from '$app/stores'
+  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte'
+  import { createSnapshotContext } from '$lib/utils/snapshotContext.js'
+  import { items } from './items'
 
-  export const snapshot = createSnapshotContext();
+  export const snapshot = createSnapshotContext()
 
-  const keys = [...items.keys()];
+  const keys = [...items.keys()]
 </script>
 
-<div class="container">
-  <div class="forward-box">
+<div class='container'>
+  <div class='forward-box'>
     <a href={`${$page.url.href}/back`}>Forward</a>
   </div>
   <VirtualScrollList {keys} itemMinHeight={100}>
     {#snippet itemSnippet(key)}
-      <div class="item">
-        <div class="title">{items.get(key)?.title}</div>
-        <div class="body">{items.get(key)?.body}</div>
+      <div class='item'>
+        <div class='title'>{items.get(key)?.title}</div>
+        <div class='body'>{items.get(key)?.body}</div>
         <hr />
       </div>
     {/snippet}
   </VirtualScrollList>
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     max-width: 600px;
     margin: 0 auto;

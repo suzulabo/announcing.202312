@@ -3,7 +3,7 @@ inputs:
     required: true
 
 runs:
-  using: 'composite'
+  using: composite
 
   steps:
     - uses: ./.github/workflows/setup

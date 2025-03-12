@@ -1,37 +1,38 @@
-<script lang="ts">
-  import { createResizeObserverHelper } from '$lib/utils/resizeObserverHelper';
-  import { onMount, type Snippet } from 'svelte';
+<script lang='ts'>
+  import type { Snippet } from 'svelte'
+  import { createResizeObserverHelper } from '$lib/utils/resizeObserverHelper'
+  import { onMount } from 'svelte'
 
   interface Props {
-    onResize: (params: { el: Element }) => void;
-    children?: Snippet;
+    onResize: (params: { el: Element }) => void
+    children?: Snippet
   }
 
-  let { onResize, children }: Props = $props();
+  const { onResize, children }: Props = $props()
 
-  let wrapper: HTMLDivElement;
+  let wrapper: HTMLDivElement
 
   const observerCallback = (entry: ResizeObserverEntry) => {
-    const el = entry.target;
-    onResize({ el });
-  };
+    const el = entry.target
+    onResize({ el })
+  }
 
   onMount(() => {
-    const resizeHelper = createResizeObserverHelper(observerCallback);
+    const resizeHelper = createResizeObserverHelper(observerCallback)
 
     for (const el of wrapper.children) {
-      resizeHelper.observe(el);
+      resizeHelper.observe(el)
     }
 
     return () => {
-      resizeHelper.disconnect();
-    };
-  });
+      resizeHelper.disconnect()
+    }
+  })
 </script>
 
 <div bind:this={wrapper}>{@render children?.()}</div>
 
-<style lang="scss">
+<style lang='scss'>
   div {
     display: contents;
   }

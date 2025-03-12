@@ -1,16 +1,16 @@
-<script lang="ts">
-  import { LL } from '@announcing/i18n';
-  import autosize from 'autosize';
+<script lang='ts'>
+  import { LL } from '@announcing/i18n'
+  import autosize from 'autosize'
 
   interface Props {
-    name: string;
-    label: string;
-    placeholder?: string;
-    value?: string | undefined;
-    maxBytes?: number;
-    error?: boolean;
-    maxHeight?: string;
-    required?: boolean;
+    name: string
+    label: string
+    placeholder?: string
+    value?: string | undefined
+    maxBytes?: number
+    error?: boolean
+    maxHeight?: string
+    required?: boolean
   }
 
   let {
@@ -22,33 +22,33 @@
     error = $bindable(false),
     maxHeight = 'none',
     required = false,
-  }: Props = $props();
+  }: Props = $props()
 
-  const encoder = new TextEncoder();
+  const encoder = new TextEncoder()
 
-  let bytes = $derived(encoder.encode(value).length);
+  const bytes = $derived(encoder.encode(value).length)
   $effect(() => {
-    error = maxBytes > 0 && bytes > maxBytes;
-  });
+    error = maxBytes > 0 && bytes > maxBytes
+  })
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const autoSizeAction = (el: Element, _: string | undefined) => {
-    autosize(el);
+    autosize(el)
 
     return {
       // When the value is updated from the parent component, the height is not updated, so it will be updated here.
       update: () => {
-        autosize.update(el);
+        autosize.update(el)
       },
-    };
-  };
+    }
+  }
 </script>
 
 <label>
-  <div class="label-box">
-    <span class="label">{label}</span>
+  <div class='label-box'>
+    <span class='label'>{label}</span>
     {#if required}
-      <span class="required">{$LL.required()}</span>
+      <span class='required'>{$LL.required()}</span>
     {/if}
   </div>
   <textarea
@@ -59,13 +59,13 @@
     use:autoSizeAction={value}
   ></textarea>
   {#if error}
-    <div class="error">
+    <div class='error'>
       {$LL.textTooLong()}
     </div>
   {/if}
 </label>
 
-<style lang="scss">
+<style lang='scss'>
   label {
     display: flex;
     flex-direction: column;

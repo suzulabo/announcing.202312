@@ -1,27 +1,27 @@
-<script lang="ts">
-  import { imgSrc } from '$lib/actions/imgSrc';
-  import FileInput from '$lib/atoms/FileInput.svelte';
+<script lang='ts'>
+  import { imgSrc } from '$lib/actions/imgSrc'
+  import FileInput from '$lib/atoms/FileInput.svelte'
 
-  let fileInput = $state<ReturnType<typeof FileInput>>();
-  let values: string[] | undefined = $state();
+  let fileInput = $state<ReturnType<typeof FileInput>>()
+  let values: string[] | undefined = $state()
 </script>
 
-<div class="container">
+<div class='container'>
   <button
     onclick={() => {
-      fileInput?.open();
+      fileInput?.open()
     }}>Open</button
   >
 
-  <FileInput bind:this={fileInput} bind:values accept="*/image" filesCount={4} />
+  <FileInput bind:this={fileInput} bind:values accept='*/image' filesCount={4} />
 
   {#if values}
-    <div class="images">
+    <div class='images'>
       {#each values as value}
         <button
-          class="unstyled"
+          class='unstyled'
           onclick={() => {
-            values = values?.filter((v) => v !== value);
+            values = values?.filter(v => v !== value)
           }}
         >
           <img alt="" use:imgSrc={value} />
@@ -31,7 +31,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     text-align: center;
     padding: 30vh;

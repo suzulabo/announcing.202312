@@ -1,26 +1,27 @@
-import { schemaTask, type Task } from '@trigger.dev/sdk/v3';
+import type { Task } from '@trigger.dev/sdk/v3'
+import type { BaseMessage, MulticastMessage } from 'firebase-admin/messaging'
 
-import { type BaseMessage, type MulticastMessage } from 'firebase-admin/messaging';
-import * as v from 'valibot';
-import { processMessage } from '../../core/processMessage';
-import { sendMessageTask } from './sendMessageTask';
-import { tokenStore } from './tokenStore';
+import { schemaTask } from '@trigger.dev/sdk/v3'
+import * as v from 'valibot'
+import { processMessage } from '../../core/processMessage'
+import { sendMessageTask } from './sendMessageTask'
+import { tokenStore } from './tokenStore'
 
 const schema = v.object({
   tag: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(10)),
   message: v.custom<BaseMessage>(() => true),
-});
+})
 
-const createSendMessageTask = async (id: string, message: MulticastMessage) => {
+async function createSendMessageTask(id: string, message: MulticastMessage) {
   await sendMessageTask.trigger(
     { message },
     {
       idempotencyKey: id,
     },
-  );
-};
+  )
+}
 
-const schemaParser = v.parser(schema);
+const schemaParser = v.parser(schema)
 
 export const processMessageTask: Task<'process-message', v.InferInput<typeof schema>> = schemaTask({
   id: 'process-message',
@@ -33,7 +34,7 @@ export const processMessageTask: Task<'process-message', v.InferInput<typeof sch
     randomize: true,
   },
   run: async (payload, { ctx }) => {
-    const idPrefix = ctx.run.id;
+    const idPrefix = ctx.run.id
 
     await processMessage(
       {
@@ -45,8 +46,8 @@ export const processMessageTask: Task<'process-message', v.InferInput<typeof sch
       },
       payload.tag,
       payload.message,
-    );
+    )
 
-    return {};
+    return {}
   },
-});
+})

@@ -245,4 +245,4 @@ export const messages = {
       ja: '通知を受け取らない',
     },
   },
-};
+}

@@ -1,10 +1,7 @@
-import { and, eq, exists } from 'drizzle-orm';
-import type { SQLiteUpdateSetSource } from 'drizzle-orm/sqlite-core';
+import type { SQLiteUpdateSetSource } from 'drizzle-orm/sqlite-core'
+import { and, eq, exists } from 'drizzle-orm'
 
-import { getDB } from '../db';
-import { channelsTable, ownersTable } from '../schema';
-
-import * as v from 'valibot';
+import * as v from 'valibot'
 import {
   BLOB_ID_MAX_BYTES,
   CHANNEL_DESC_MAX_BYTES,
@@ -12,8 +9,11 @@ import {
   CHANNEL_ID_MAX_BYTES,
   CHANNEL_NAME_MAX_BYTES,
   USER_ID_MAX_BYTES,
-} from '../../lib/constants';
-import { putStorageData } from '../../storage/storage';
+} from '../../lib/constants'
+
+import { putStorageData } from '../../storage/storage'
+import { getDB } from '../db'
+import { channelsTable, ownersTable } from '../schema'
 
 const paramsSchema = v.object({
   userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
@@ -30,30 +30,32 @@ const paramsSchema = v.object({
     v.pipe(v.string(), v.nonEmpty(), v.maxBytes(BLOB_ID_MAX_BYTES)),
     v.undefined(),
   ]),
-});
+})
 
-type Params = v.InferOutput<typeof paramsSchema>;
+type Params = v.InferOutput<typeof paramsSchema>
 
-export const updateChannel = async (params: Params) => {
-  v.assert(paramsSchema, params);
+export async function updateChannel(params: Params) {
+  v.assert(paramsSchema, params)
 
-  const { userID, updatedAt, channelID, name, desc, icon } = params;
+  const { userID, updatedAt, channelID, name, desc, icon } = params
 
   const values: SQLiteUpdateSetSource<typeof channelsTable> = {
     name,
     desc: desc ?? null,
     updatedAt: new Date().getTime(),
-  };
-
-  if (!icon) {
-    values.icon = null;
-  } else if (typeof icon === 'string') {
-    values.icon = icon;
-  } else if (icon instanceof Blob) {
-    values.icon = await putStorageData(icon);
   }
 
-  const db = getDB();
+  if (!icon) {
+    values.icon = null
+  }
+  else if (typeof icon === 'string') {
+    values.icon = icon
+  }
+  else if (icon instanceof Blob) {
+    values.icon = await putStorageData(icon)
+  }
+
+  const db = getDB()
 
   await db.batch([
     db
@@ -71,5 +73,5 @@ export const updateChannel = async (params: Params) => {
           ),
         ),
       ),
-  ]);
-};
+  ])
+}

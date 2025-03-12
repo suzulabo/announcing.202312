@@ -1,20 +1,20 @@
-<script lang="ts">
-  import { imgSrc } from '$lib/actions/imgSrc';
-  import FileInput from '$lib/atoms/FileInput.svelte';
+<script lang='ts'>
+  import { imgSrc } from '$lib/actions/imgSrc'
+  import FileInput from '$lib/atoms/FileInput.svelte'
 
-  let fileInput = $state<ReturnType<typeof FileInput>>();
+  let fileInput = $state<ReturnType<typeof FileInput>>()
 
-  let value: string | undefined = $state();
+  let value: string | undefined = $state()
 </script>
 
-<div class="container">
+<div class='container'>
   <button
     onclick={() => {
-      fileInput?.open();
+      fileInput?.open()
     }}>Open</button
   >
 
-  <FileInput bind:this={fileInput} bind:value accept="*/image" />
+  <FileInput bind:this={fileInput} bind:value accept='*/image' />
 
   {#if value}
     <div>
@@ -26,7 +26,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     text-align: center;
     padding: 30vh;

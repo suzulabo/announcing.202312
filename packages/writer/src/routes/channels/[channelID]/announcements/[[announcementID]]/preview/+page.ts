@@ -1,5 +1,5 @@
-import type { HeaderBack } from '../../../../../+layout.svelte';
-import type { PageLoad } from './$types';
+import type { HeaderBack } from '../../../../../+layout.svelte'
+import type { PageLoad } from './$types'
 
 export const load: PageLoad = ({ url }) => {
   return {
@@ -7,5 +7,5 @@ export const load: PageLoad = ({ url }) => {
       href: url.href.replace('/preview', ''),
       labelKey: 'back',
     } satisfies HeaderBack,
-  };
-};
+  }
+}

@@ -1,29 +1,29 @@
-<script lang="ts">
-  import { LL } from '@announcing/i18n';
+<script lang='ts'>
+  import type { ChannelViewProps } from '../ChannelView.svelte'
 
-  import Spinner from '$lib/atoms/Spinner.svelte';
-  import { toHtml } from '$lib/utils/toHtml';
+  import { imgSrc } from '$lib/actions/imgSrc'
+  import Spinner from '$lib/atoms/Spinner.svelte'
 
-  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
-  import type { ChannelViewProps } from '../ChannelView.svelte';
-  import Item from './Item.svelte';
-  import { imgSrc } from '$lib/actions/imgSrc';
+  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte'
+  import { toHtml } from '$lib/utils/toHtml'
+  import { LL } from '@announcing/i18n'
+  import Item from './Item.svelte'
 
-  let { channel, announcementHrefPrefix, announcementKeys, announcementLoader }: ChannelViewProps =
-    $props();
+  const { channel, announcementHrefPrefix, announcementKeys, announcementLoader }: ChannelViewProps
+    = $props()
 </script>
 
-<div class="channel-box">
-  <div class="name-line">
-    <div class="name">
+<div class='channel-box'>
+  <div class='name-line'>
+    <div class='name'>
       {channel.name}
     </div>
     {#if channel.icon}
-      <img class="icon" alt={channel.name} use:imgSrc={channel.icon} />
+      <img class='icon' alt={channel.name} use:imgSrc={channel.icon} />
     {/if}
   </div>
   {#if channel.desc}
-    <div class="desc">
+    <div class='desc'>
       {@html toHtml(channel.desc)}
     </div>
   {/if}
@@ -31,15 +31,15 @@
 
 {#if announcementKeys && announcementLoader}
   {#if announcementKeys.length === 0}
-    <div class="no-announcements">
+    <div class='no-announcements'>
       {$LL.noAnnouncements()}
     </div>
   {:else}
     <VirtualScrollList keys={announcementKeys} itemMinHeight={200} gap={8}>
       {#snippet itemSnippet(key)}
-        <a class="item unstyled" href={`${announcementHrefPrefix}/${key}`}>
+        <a class='item unstyled' href={`${announcementHrefPrefix}/${key}`}>
           {#await announcementLoader(key)}
-            <div class="loading">
+            <div class='loading'>
               <Spinner />
             </div>
           {:then announcement}
@@ -53,7 +53,7 @@
   {/if}
 {/if}
 
-<style lang="scss">
+<style lang='scss'>
   .channel-box {
     padding: 8px 8px 16px;
   }

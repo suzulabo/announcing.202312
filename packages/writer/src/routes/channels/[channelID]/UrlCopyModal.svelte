@@ -1,35 +1,35 @@
-<script lang="ts">
-  import Modal from '@announcing/components/Modal.svelte';
-  import { LL } from '@announcing/i18n';
+<script lang='ts'>
+  import Modal from '@announcing/components/Modal.svelte'
+  import { LL } from '@announcing/i18n'
 
-  let open = $state(false);
-  let copied: undefined | 'copied' | 'error' = $state(undefined);
-  let url = $state('');
+  let open = $state(false)
+  let copied: undefined | 'copied' | 'error' = $state(undefined)
+  let url = $state('')
 
-  export const openModal = (url_: string) => {
-    open = true;
-    url = url_;
-    copied = undefined;
-  };
+  export function openModal(url_: string) {
+    open = true
+    url = url_
+    copied = undefined
+  }
 
   const onFocus = (event: FocusEvent) => {
-    (event.target as HTMLInputElement).select();
-  };
+    (event.target as HTMLInputElement).select()
+  }
 </script>
 
-<Modal bind:open dismissMode="backdrop">
-  <div class="modal-body">
+<Modal bind:open dismissMode='backdrop'>
+  <div class='modal-body'>
     {#if copied}
       <div
-        class="msg-box"
+        class='msg-box'
         onanimationend={() => {
-          open = false;
+          open = false
         }}
       >
         {copied === 'copied' ? $LL.copied() : $LL.copyError()}
       </div>
     {:else}
-      <div class="copy-box">
+      <div class='copy-box'>
         <input value={url} readonly onfocus={onFocus} />
         {#if navigator.clipboard}
           <button
@@ -37,26 +37,26 @@
               navigator.clipboard
                 .writeText(url)
                 .then(() => {
-                  copied = 'copied';
+                  copied = 'copied'
                 })
                 .catch(() => {
-                  copied = 'error';
-                });
+                  copied = 'error'
+                })
             }}>{$LL.copy()}</button
           >
         {/if}
       </div>
       <button
-        class="close-btn filled small"
+        class='close-btn filled small'
         onclick={() => {
-          open = false;
+          open = false
         }}>{$LL.close()}</button
       >
     {/if}
   </div>
 </Modal>
 
-<style lang="scss">
+<style lang='scss'>
   .modal-body {
     background-color: var(--color-background);
     border-radius: 8px;

@@ -1,18 +1,18 @@
-import { and, eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm'
 
-import { getDB } from '../db';
-import { announcementsTable } from '../schema';
+import { getDB } from '../db'
+import { announcementsTable } from '../schema'
 
-export const getAnnouncement = async ({
+export async function getAnnouncement({
   channelID,
   announcementID,
 }: {
-  channelID: string;
-  announcementID: string;
-}) => {
-  const { title, body, headerImage, images, updatedAt, createdAt } = announcementsTable;
+  channelID: string
+  announcementID: string
+}) {
+  const { title, body, headerImage, images, updatedAt, createdAt } = announcementsTable
 
-  const db = getDB();
+  const db = getDB()
 
   const announcement = (
     await db
@@ -31,14 +31,15 @@ export const getAnnouncement = async ({
           eq(announcementsTable.announcementID, announcementID),
         ),
       )
-  ).shift();
+  ).shift()
 
-  if (!announcement) return;
+  if (!announcement)
+    return
 
   return {
     ...announcement,
     title: announcement.title ?? undefined,
     headerImage: announcement.headerImage ?? undefined,
     images: announcement.images ?? undefined,
-  };
-};
+  }
+}

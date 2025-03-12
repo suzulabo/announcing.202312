@@ -1,17 +1,17 @@
-<script lang="ts">
-  import Radio from '$lib/atoms/Radio.svelte';
+<script lang='ts'>
+  import Radio from '$lib/atoms/Radio.svelte'
 
-  let value = $state('cat');
+  let value = $state('cat')
 </script>
 
-<div class="container">
-  <Radio bind:value selectedValue="cat">Cat</Radio>
-  <Radio bind:value selectedValue="dog">Dog</Radio>
-  <Radio bind:value selectedValue="bird">Bird</Radio>
-  <Radio bind:value selectedValue="hippopotamus">Hippopotamus</Radio>
+<div class='container'>
+  <Radio bind:value selectedValue='cat'>Cat</Radio>
+  <Radio bind:value selectedValue='dog'>Dog</Radio>
+  <Radio bind:value selectedValue='bird'>Bird</Radio>
+  <Radio bind:value selectedValue='hippopotamus'>Hippopotamus</Radio>
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     display: grid;
     grid-template-columns: auto auto;

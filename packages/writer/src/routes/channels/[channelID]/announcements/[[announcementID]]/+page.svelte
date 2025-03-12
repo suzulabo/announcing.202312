@@ -1,75 +1,75 @@
-<script lang="ts" module>
+<script lang='ts' module>
   const isAnnouncement = (
     arg: Partial<GetAnnouncementResult>,
     titleError: boolean,
     bodyError: boolean,
   ): arg is Exclude<App.PageState['announcementPreviewData'], undefined>['announcement'] => {
     if (titleError) {
-      return false;
+      return false
     }
 
     if (bodyError) {
-      return false;
+      return false
     }
 
     if (!arg.body) {
-      return false;
+      return false
     }
-    return true;
-  };
+    return true
+  }
 </script>
 
-<script lang="ts">
-  import { imgSrc } from '@announcing/components/actions/imgSrc';
-  import FileInput from '@announcing/components/FileInput.svelte';
-  import Input from '@announcing/components/Input.svelte';
-  import TextArea from '@announcing/components/TextArea.svelte';
+<script lang='ts'>
+  import type { GetAnnouncementResult } from '@announcing/db/types'
+  import type { PageData, Snapshot } from './$types'
+  import type { AnnouncementPreviewData } from './preview/+page.svelte'
+  import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
+  import { imgSrc } from '@announcing/components/actions/imgSrc'
+  import FileInput from '@announcing/components/FileInput.svelte'
+  import Input from '@announcing/components/Input.svelte'
+
+  import TextArea from '@announcing/components/TextArea.svelte'
   import {
     ANNOUNCEMENT_BODY_MAX_BYTES,
     ANNOUNCEMENT_IMAGE_MAX_SIZE,
     ANNOUNCEMENT_TITLE_MAX_BYTES,
-  } from '@announcing/db/constants';
-  import type { GetAnnouncementResult } from '@announcing/db/types';
-  import { LL } from '@announcing/i18n';
-  import { onMount } from 'svelte';
+  } from '@announcing/db/constants'
 
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
-
-  import type { PageData, Snapshot } from './$types';
-  import type { AnnouncementPreviewData } from './preview/+page.svelte';
+  import { LL } from '@announcing/i18n'
+  import { onMount } from 'svelte'
 
   interface Props {
-    data: PageData;
+    data: PageData
   }
 
-  let { data }: Props = $props();
+  const { data }: Props = $props()
 
   export const snapshot = {
     capture: () => {
-      return form;
+      return form
     },
     restore: (value) => {
-      form = value;
+      form = value
     },
-  } satisfies Snapshot<Partial<GetAnnouncementResult>>;
+  } satisfies Snapshot<Partial<GetAnnouncementResult>>
 
-  let form = $state<Partial<GetAnnouncementResult>>({});
-  let titleError = $state(false);
-  let bodyError = $state(false);
-  let { channel, announcement } = $derived(data);
+  let form = $state<Partial<GetAnnouncementResult>>({})
+  let titleError = $state(false)
+  let bodyError = $state(false)
+  const { channel, announcement } = $derived(data)
 
-  let headerImageFileInput: ReturnType<typeof FileInput>;
-  let imagesFileInput: ReturnType<typeof FileInput>;
+  let headerImageFileInput: ReturnType<typeof FileInput>
+  let imagesFileInput: ReturnType<typeof FileInput>
 
   onMount(() => {
-    form = { ...announcement };
-  });
+    form = { ...announcement }
+  })
 
   const previewClickHandler = () => {
-    const { title, body, headerImage, images } = $state.snapshot(form);
+    const { title, body, headerImage, images } = $state.snapshot(form)
     if (!body) {
-      return;
+      return
     }
 
     const announcementPreviewData: AnnouncementPreviewData = {
@@ -80,85 +80,85 @@
         headerImage,
         images,
       },
-    };
+    }
 
     if (announcement) {
       announcementPreviewData.announcement.edit = {
-        announcementID: $page.params['announcementID'] as string,
+        announcementID: $page.params.announcementID as string,
         updatedAt: announcement.updatedAt,
         createdAt: announcement.createdAt,
-      };
+      }
     }
 
     return goto(`${$page.url.pathname}/preview`, {
       state: {
         announcementPreviewData,
       },
-    });
-  };
+    })
+  }
 </script>
 
-<div class="container">
-  <div class="header-image">
+<div class='container'>
+  <div class='header-image'>
     {#if form.headerImage}
       <button
-        class="unstyled"
+        class='unstyled'
         onclick={() => {
-          headerImageFileInput.open();
+          headerImageFileInput.open()
         }}
       >
-        <img class="icon" alt="icon preview" use:imgSrc={form.headerImage} />
+        <img class='icon' alt='icon preview' use:imgSrc={form.headerImage} />
       </button>
       <button
-        type="button"
-        class="small filled"
+        type='button'
+        class='small filled'
         onclick={() => {
-          form.headerImage = undefined;
+          form.headerImage = undefined
         }}>{$LL.removeHeaderImage()}</button
       >
     {:else}
       <button
-        class="small"
+        class='small'
         onclick={() => {
-          headerImageFileInput.open();
+          headerImageFileInput.open()
         }}>{$LL.chooseHeaderImage()}</button
       >
     {/if}
     <FileInput
-      accept="image/jpeg,image/png,image/webp"
+      accept='image/jpeg,image/png,image/webp'
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       bind:this={headerImageFileInput}
       bind:value={form.headerImage}
     />
   </div>
   <Input
-    name="title"
+    name='title'
     label={$LL.title()}
     bind:value={form.title}
     maxBytes={ANNOUNCEMENT_TITLE_MAX_BYTES}
     bind:error={titleError}
   />
   <TextArea
-    name="body"
+    name='body'
     label={$LL.body()}
     bind:value={form.body}
     maxBytes={ANNOUNCEMENT_BODY_MAX_BYTES}
-    maxHeight="40vh"
+    maxHeight='40vh'
     required
     bind:error={bodyError}
   />
-  <div class="images-box">
-    <div class="images">
+  <div class='images-box'>
+    <div class='images'>
       {#if form.images}
         {#each form.images as image}
-          <div class="img-box">
+          <div class='img-box'>
             <img alt="" use:imgSrc={image} />
             <button
-              class="small filled"
+              class='small filled'
               onclick={() => {
                 form.images = form.images?.filter((v) => {
-                  return v !== image;
-                });
+                  return v !== image
+                })
               }}>{$LL.remove()}</button
             >
           </div>
@@ -166,17 +166,17 @@
       {/if}
     </div>
     <button
-      class="small"
+      class='small'
       onclick={() => {
-        imagesFileInput.open();
+        imagesFileInput.open()
       }}
       disabled={form.images?.length === 4}>{$LL.addImage()}</button
     >
-    <div class="desc">{$LL.addImageDescription()}</div>
+    <div class='desc'>{$LL.addImageDescription()}</div>
     <FileInput
       bind:this={imagesFileInput}
       bind:values={form.images}
-      accept="image/jpeg,image/png,image/webp"
+      accept='image/jpeg,image/png,image/webp'
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       filesCount={4}
     />
@@ -186,12 +186,12 @@
 
   <button
     disabled={!isAnnouncement(form, titleError, bodyError)}
-    class="preview-btn"
+    class='preview-btn'
     onclick={previewClickHandler}>{$LL.preview()}</button
   >
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     padding: 16px 8px;
     display: flex;

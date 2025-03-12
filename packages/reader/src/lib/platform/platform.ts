@@ -1,11 +1,11 @@
-export const isIOS = () => {
-  return /iphone|ipad|ipod/i.test(navigator.userAgent);
-};
+export function isIOS() {
+  return /iphone|ipad|ipod/i.test(navigator.userAgent)
+}
 
-export const isStandalone = () => {
+export function isStandalone() {
   interface NavigatorStandalone extends Navigator {
-    standalone?: unknown;
+    standalone?: unknown
   }
 
-  return !!(window.navigator as NavigatorStandalone).standalone;
-};
+  return !!(window.navigator as NavigatorStandalone).standalone
+}

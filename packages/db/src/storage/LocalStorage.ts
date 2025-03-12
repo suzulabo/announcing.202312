@@ -1,36 +1,37 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { getStorageKey } from './getStorageKey';
-import type { Storage } from './storage';
+import type { Storage } from './storage'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { getStorageKey } from './getStorageKey'
 
-export const createLocalStorage = (): Storage => {
+export function createLocalStorage(): Storage {
   const get = (key: string) => {
     try {
-      const res = readFileSync(`../db-dev/storage/${key}`);
+      const res = readFileSync(`../db-dev/storage/${key}`)
       return Promise.resolve({
         contentType: '',
         data: res,
-      });
-    } catch (err: unknown) {
+      })
+    }
+    catch (err: unknown) {
       if (err instanceof Error && 'code' in err) {
         if (err.code === 'ENOENT') {
-          return Promise.resolve(undefined);
+          return Promise.resolve(undefined)
         }
       }
-      throw err;
+      throw err
     }
-  };
+  }
 
   const put = async (blob: Blob) => {
-    const [key, ab] = await getStorageKey(blob);
+    const [key, ab] = await getStorageKey(blob)
 
-    mkdirSync('../db-dev/storage', { recursive: true });
-    writeFileSync(`../db-dev/storage/${key}`, ab);
+    mkdirSync('../db-dev/storage', { recursive: true })
+    writeFileSync(`../db-dev/storage/${key}`, ab)
 
-    return key;
-  };
+    return key
+  }
 
   return {
     get,
     put,
-  };
-};
+  }
+}

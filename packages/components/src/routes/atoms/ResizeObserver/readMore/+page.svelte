@@ -1,27 +1,27 @@
-<script lang="ts">
-  import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
+<script lang='ts'>
+  import ResizeObserver from '$lib/atoms/ResizeObserver.svelte'
 
-  let small = $state(true);
-  let overflow = $state(false);
-  let openReadMore = $state(false);
+  let small = $state(true)
+  let overflow = $state(false)
+  let openReadMore = $state(false)
 </script>
 
-<div class="container">
+<div class='container'>
   <button
     onclick={() => {
-      small = !small;
+      small = !small
     }}>{small ? 'Normal' : 'Small'}</button
   >
-  <div class="wrapper" class:small>
+  <div class='wrapper' class:small>
     <ResizeObserver
       onResize={({ el }) => {
-        overflow = el.scrollHeight > el.clientHeight;
+        overflow = el.scrollHeight > el.clientHeight
         if (openReadMore && el.clientHeight <= 200) {
-          openReadMore = false;
+          openReadMore = false
         }
       }}
     >
-      <div class="overflow-fade" class:overflow class:openReadMore>
+      <div class='overflow-fade' class:overflow class:openReadMore>
         Announcing is the world’s most boring web service, by design. Unlike traditional social
         media platforms, it strips away all the noise—there are no likes, comments, shares, or user
         interactions. It’s a space free from the clutter of social engagement, allowing you to focus
@@ -34,17 +34,17 @@
       </div>
     </ResizeObserver>
     <button
-      class="text"
+      class='text'
       class:overflow
       class:openReadMore
       onclick={() => {
-        openReadMore = !openReadMore;
+        openReadMore = !openReadMore
       }}>{openReadMore ? 'Read less' : 'Read more'}</button
     >
   </div>
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     max-width: 600px;
     margin: 20px auto;

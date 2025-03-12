@@ -1,54 +1,54 @@
-import type { Action } from 'svelte/action';
+import type { Action } from 'svelte/action'
 
-import { loadBlob } from '$lib/utils/idbBlob';
+import { loadBlob } from '$lib/utils/idbBlob'
 
 const env = {
   prefix: '/s',
-};
+}
 
 class SrcSetter {
-  private objectURL: string | undefined = undefined;
-  private serial = 0;
+  private objectURL: string | undefined = undefined
+  private serial = 0
 
   constructor(private img: HTMLImageElement) {
     this.img.addEventListener('load', () => {
-      this.revoke();
-    });
+      this.revoke()
+    })
   }
 
   set(src: string | undefined) {
-    this.revoke();
+    this.revoke()
     if (!src) {
-      this.img.src = '';
-      return;
+      this.img.src = ''
+      return
     }
     // BlobID
     if (!src.includes('/')) {
-      this.img.src = `${env.prefix}/${src}`;
-      return;
+      this.img.src = `${env.prefix}/${src}`
+      return
     }
     if (!src.startsWith('idb://')) {
-      this.img.src = src;
-      return;
+      this.img.src = src
+      return
     }
 
     void (async (curSerial: number) => {
-      const blob = await loadBlob(src);
+      const blob = await loadBlob(src)
       if (!blob) {
-        return;
+        return
       }
       if (this.serial !== curSerial) {
-        return;
+        return
       }
-      this.objectURL = URL.createObjectURL(blob);
-      this.img.src = this.objectURL;
-    })(++this.serial);
+      this.objectURL = URL.createObjectURL(blob)
+      this.img.src = this.objectURL
+    })(++this.serial)
   }
 
   revoke() {
     if (this.objectURL) {
-      URL.revokeObjectURL(this.objectURL);
-      this.objectURL = undefined;
+      URL.revokeObjectURL(this.objectURL)
+      this.objectURL = undefined
     }
   }
 }
@@ -57,16 +57,16 @@ export const imgSrc: Action<HTMLImageElement, string | undefined> = (
   img,
   src: string | undefined,
 ) => {
-  const setter = new SrcSetter(img);
+  const setter = new SrcSetter(img)
 
-  setter.set(src);
+  setter.set(src)
 
   return {
     update: (src) => {
-      setter.set(src);
+      setter.set(src)
     },
     destroy: () => {
-      setter.revoke();
+      setter.revoke()
     },
-  };
-};
+  }
+}

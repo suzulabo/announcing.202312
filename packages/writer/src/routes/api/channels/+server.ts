@@ -1,42 +1,42 @@
-import { createChannel } from '@announcing/db';
-import { error, json } from '@sveltejs/kit';
-import crypto from 'crypto';
+import type { RequestHandler } from './$types'
+import crypto from 'node:crypto'
+import { getFormFile, getFormString } from '$lib/utils/form'
 
-import { getFormFile, getFormString } from '$lib/utils/form';
+import { createChannel } from '@announcing/db'
 
-import type { RequestHandler } from './$types';
+import { error, json } from '@sveltejs/kit'
 
-const invalidChannelIDPattern = /(.)\1\1/;
+const invalidChannelIDPattern = /(.)\1\1/
 
-const genChannelID = () => {
+function genChannelID() {
   for (;;) {
-    const id = crypto.randomInt(10000000, 99999999).toString();
+    const id = crypto.randomInt(10000000, 99999999).toString()
 
     if (!invalidChannelIDPattern.test(id)) {
-      return id;
+      return id
     }
   }
-};
+}
 
 export const POST: RequestHandler = async ({ locals, request }) => {
-  const session = await locals.auth();
-  const userID = session?.user?.id;
+  const session = await locals.auth()
+  const userID = session?.user?.id
   if (!userID) {
-    error(400, 'Missing userID');
+    error(400, 'Missing userID')
   }
 
-  const formData = await request.formData();
+  const formData = await request.formData()
 
-  const name = getFormString(formData, 'name');
+  const name = getFormString(formData, 'name')
   if (!name) {
-    error(400, 'Missing name');
+    error(400, 'Missing name')
   }
-  const desc = getFormString(formData, 'desc');
-  const icon = getFormFile(formData, 'icon');
+  const desc = getFormString(formData, 'desc')
+  const icon = getFormFile(formData, 'icon')
 
-  const channelID = genChannelID();
+  const channelID = genChannelID()
 
-  await createChannel({ userID, channelID, name, desc, icon });
+  await createChannel({ userID, channelID, name, desc, icon })
 
-  return json({});
-};
+  return json({})
+}

@@ -1,20 +1,20 @@
-import type { TokenStore } from '../../core/types';
-import { removeTokens } from './deleteTokens';
-import { getTokensReader } from './getTokensReader';
-import { putToken } from './putToken';
-import type { Config } from './shared';
+import type { TokenStore } from '../../core/types'
+import type { Config } from './shared'
+import { removeTokens } from './deleteTokens'
+import { getTokensReader } from './getTokensReader'
+import { putToken } from './putToken'
 
-export const createLibSqlTokenStore = (config: Config): TokenStore & { config: Config } => {
+export function createLibSqlTokenStore(config: Config): TokenStore & { config: Config } {
   return {
     putToken: (token: string, tags: string[]) => {
-      return putToken(config, token, tags);
+      return putToken(config, token, tags)
     },
     getTokensReader: (tag: string) => {
-      return getTokensReader(config, tag);
+      return getTokensReader(config, tag)
     },
     deleteTokens: (tokens: string[]) => {
-      return removeTokens(config, tokens);
+      return removeTokens(config, tokens)
     },
     config,
-  };
-};
+  }
+}

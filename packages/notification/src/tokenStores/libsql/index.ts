@@ -1,10 +1,10 @@
-import { createLibSqlTokenStore as createLibSqlTokenStoreInternal } from './libsqlTokenStore';
-import type { Config } from './shared';
+import type { Config } from './shared'
+import { createLibSqlTokenStore as createLibSqlTokenStoreInternal } from './libsqlTokenStore'
 
-export const createLibSqlTokenStore = (config: Config) => {
-  const store = createLibSqlTokenStoreInternal(config);
+export function createLibSqlTokenStore(config: Config) {
+  const store = createLibSqlTokenStoreInternal(config)
 
   return {
     putToken: store.putToken,
-  };
-};
+  }
+}

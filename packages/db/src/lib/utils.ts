@@ -1,1 +1,1 @@
-export { base62 } from './base62';
+export { base62 } from './base62'

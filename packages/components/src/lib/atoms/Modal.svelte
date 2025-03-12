@@ -1,18 +1,18 @@
-<script lang="ts" module>
-  export type DismissMode = 'backdrop' | 'anywhere' | 'none';
+<script lang='ts' module>
+  export type DismissMode = 'backdrop' | 'anywhere' | 'none'
 </script>
 
-<script lang="ts">
-  import { type Snippet } from 'svelte';
+<script lang='ts'>
+  import type { Snippet } from 'svelte'
 
-  import { toStyle } from '$lib/utils/toStyle';
+  import { toStyle } from '$lib/utils/toStyle'
 
   interface Props {
-    dismissMode?: 'backdrop' | 'anywhere' | 'none';
-    padding?: string;
-    open?: boolean;
-    onDismiss?: () => void;
-    children?: Snippet;
+    dismissMode?: 'backdrop' | 'anywhere' | 'none'
+    padding?: string
+    open?: boolean
+    onDismiss?: () => void
+    children?: Snippet
   }
 
   let {
@@ -21,28 +21,29 @@
     open = $bindable(false),
     onDismiss,
     children,
-  }: Props = $props();
+  }: Props = $props()
 
   const clickHandler = (event: MouseEvent) => {
     if (dismissMode === 'anywhere') {
-      open = false;
-      onDismiss?.();
-    } else if (dismissMode === 'backdrop' && event.target === event.currentTarget) {
-      open = false;
-      onDismiss?.();
+      open = false
+      onDismiss?.()
     }
-  };
+    else if (dismissMode === 'backdrop' && event.target === event.currentTarget) {
+      open = false
+      onDismiss?.()
+    }
+  }
 </script>
 
 <div
-  role="button"
-  tabindex="0"
-  class="modal"
+  role='button'
+  tabindex='0'
+  class='modal'
   class:open
   style={toStyle({ display: open ? undefined : 'none', padding })}
   onclick={clickHandler}
   onkeydown={() => {
-    // TODO
+  // TODO
   }}
 >
   {@render children?.()}
@@ -51,13 +52,13 @@
 <svelte:window
   onkeydown={(event) => {
     if (event.key === 'Escape') {
-      open = false;
-      onDismiss?.();
+      open = false
+      onDismiss?.()
     }
   }}
 />
 
-<style lang="scss">
+<style lang='scss'>
   :global(body:has(.modal.open)) {
     overflow: hidden;
   }

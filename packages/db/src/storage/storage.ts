@@ -1,28 +1,28 @@
-type GetResult = { contentType: string; data: Uint8Array } | undefined;
+type GetResult = { contentType: string, data: Uint8Array } | undefined
 
-export type Storage = {
-  get: (key: string) => Promise<GetResult>;
-  put: (blob: Blob) => Promise<string>;
-};
+export interface Storage {
+  get: (key: string) => Promise<GetResult>
+  put: (blob: Blob) => Promise<string>
+}
 
-let storage: Storage | undefined = undefined;
+let storage: Storage | undefined
 
-export const setStorage = (v: Storage) => {
-  storage = v;
-};
+export function setStorage(v: Storage) {
+  storage = v
+}
 
-const getStorage = () => {
+function getStorage() {
   if (!storage) {
-    throw new Error('storage is not set');
+    throw new Error('storage is not set')
   }
 
-  return storage;
-};
+  return storage
+}
 
-export const getStorageData = (key: string) => {
-  return getStorage().get(key);
-};
+export function getStorageData(key: string) {
+  return getStorage().get(key)
+}
 
-export const putStorageData = (blob: Blob) => {
-  return getStorage().put(blob);
-};
+export function putStorageData(blob: Blob) {
+  return getStorage().put(blob)
+}

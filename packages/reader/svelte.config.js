@@ -1,22 +1,22 @@
 // @ts-check
 
-import adapter from '@sveltejs/adapter-auto';
-import adapterCF from '@sveltejs/adapter-cloudflare';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import process from 'process';
+import process from 'node:process'
+import adapter from '@sveltejs/adapter-auto'
+import adapterCF from '@sveltejs/adapter-cloudflare'
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
-const getAdapter = () => {
-  if (process.env['CF']) {
+function getAdapter() {
+  if (process.env.CF) {
     return adapterCF({
       routes: {
         include: ['/*'],
         exclude: ['<all>'],
       },
-    });
+    })
   }
 
-  return adapter();
-};
+  return adapter()
+}
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -34,6 +34,6 @@ const config = {
   compilerOptions: {
     runes: true,
   },
-};
+}
 
-export default config;
+export default config

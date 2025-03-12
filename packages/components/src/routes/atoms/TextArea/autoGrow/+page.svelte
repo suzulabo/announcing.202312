@@ -1,5 +1,5 @@
-<script lang="ts">
-  import TextArea from '$lib/atoms/TextArea.svelte';
+<script lang='ts'>
+  import TextArea from '$lib/atoms/TextArea.svelte'
 
   const text = `
 1
@@ -9,14 +9,14 @@
 11111
 222222
 3333333
-  `.trim();
+  `.trim()
 </script>
 
-<div class="container">
-  <TextArea name="test" label="Name" value={text} />
+<div class='container'>
+  <TextArea name='test' label='Name' value={text} />
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     margin: 0 auto;
     padding: 30vh 16px;

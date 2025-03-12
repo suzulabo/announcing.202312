@@ -1,4 +1,4 @@
-import type { createTriggerClient } from './triggerClient';
+import type { createTriggerClient } from './triggerClient'
 
-export { createTriggerClient, type TriggerProcessMessageParams } from './triggerClient';
-export type TriggerClient = ReturnType<typeof createTriggerClient>;
+export { createTriggerClient, type TriggerProcessMessageParams } from './triggerClient'
+export type TriggerClient = ReturnType<typeof createTriggerClient>

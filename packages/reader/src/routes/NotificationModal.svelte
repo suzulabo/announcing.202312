@@ -1,105 +1,108 @@
-<script lang="ts">
-  import { addChannel, removeChannel, requestPermission } from '$lib/notification/notification';
-  import { notificationState } from '$lib/notification/notificationState.svelte';
-  import Loading from '@announcing/components/Loading.svelte';
-  import Modal from '@announcing/components/Modal.svelte';
-  import { LL } from '@announcing/i18n';
-  import type { HeaderNotification } from './+layout.svelte';
+<script lang='ts'>
+  import type { HeaderNotification } from './+layout.svelte'
+  import { addChannel, removeChannel, requestPermission } from '$lib/notification/notification'
+  import { notificationState } from '$lib/notification/notificationState.svelte'
+  import Loading from '@announcing/components/Loading.svelte'
+  import Modal from '@announcing/components/Modal.svelte'
+  import { LL } from '@announcing/i18n'
 
-  let permission = $derived(notificationState.permission);
+  const permission = $derived(notificationState.permission)
 
-  let channel = $state<HeaderNotification>();
-  let open = $state(false);
-  let loading = $state(false);
+  let channel = $state<HeaderNotification>()
+  let open = $state(false)
+  let loading = $state(false)
 
-  let content = $derived.by(() => {
+  const content = $derived.by(() => {
     switch (permission) {
       case 'not-supported':
-        return notSupportedContent;
+        return notSupportedContent
       case 'default':
-        return defaultContent;
+        return defaultContent
       case 'denied':
-        return deniedContent;
+        return deniedContent
       case 'granted':
-        return grantedContent;
+        return grantedContent
     }
-  });
+  })
 
   const requestPermissionClick = async () => {
-    loading = true;
+    loading = true
     try {
-      await requestPermission();
-    } finally {
-      loading = false;
+      await requestPermission()
     }
-  };
+    finally {
+      loading = false
+    }
+  }
 
   const enableClick = async () => {
     if (!channel) {
-      return;
+      return
     }
 
-    loading = true;
+    loading = true
     try {
-      await addChannel(channel.channelID);
-    } finally {
-      loading = false;
+      await addChannel(channel.channelID)
     }
-  };
+    finally {
+      loading = false
+    }
+  }
 
   const disableClick = async () => {
     if (!channel) {
-      return;
+      return
     }
 
-    loading = true;
+    loading = true
     try {
-      await removeChannel(channel.channelID);
-    } finally {
-      loading = false;
+      await removeChannel(channel.channelID)
     }
-  };
+    finally {
+      loading = false
+    }
+  }
 
-  export const openModal = (c: HeaderNotification) => {
-    channel = c;
-    open = true;
-  };
+  export function openModal(c: HeaderNotification) {
+    channel = c
+    open = true
+  }
 </script>
 
-<Modal bind:open dismissMode="backdrop">
-  <div class="modal-body">
+<Modal bind:open dismissMode='backdrop'>
+  <div class='modal-body'>
     {@render content()}
     <button
-      class="close-btn small filled"
+      class='close-btn small filled'
       onclick={() => {
-        open = false;
+        open = false
       }}>{$LL.close()}</button
     >
   </div>
 </Modal>
 
 {#snippet notSupportedContent()}
-  <div class="desc">{$LL.setupNotification.notSupported()}</div>
+  <div class='desc'>{$LL.setupNotification.notSupported()}</div>
 {/snippet}
 
 {#snippet defaultContent()}
-  <div class="desc">{$LL.setupNotification.description()}</div>
+  <div class='desc'>{$LL.setupNotification.description()}</div>
   <button onclick={requestPermissionClick}>{$LL.setupNotification.button()}</button>
 {/snippet}
 
 {#snippet deniedContent()}
-  <div class="desc">{$LL.setupNotification.denied()}</div>
+  <div class='desc'>{$LL.setupNotification.denied()}</div>
 {/snippet}
 
 {#snippet grantedContent()}
   {#if channel}
     {#if notificationState.channels.includes(channel.channelID)}
-      <div class="desc">
+      <div class='desc'>
         {@html $LL.setupNotification.grantedEnabled({ name: channel.name })}
       </div>
       <button onclick={disableClick}>{$LL.setupNotification.toDisabled()}</button>
     {:else}
-      <div class="desc">
+      <div class='desc'>
         {@html $LL.setupNotification.grantedDisabled({ name: channel.name })}
       </div>
       <button onclick={enableClick}>{$LL.setupNotification.toEnabled()}</button>
@@ -109,7 +112,7 @@
 
 <Loading show={loading} />
 
-<style lang="scss">
+<style lang='scss'>
   .modal-body {
     background-color: var(--color-background);
     border-radius: 8px;

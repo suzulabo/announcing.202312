@@ -1,24 +1,24 @@
-<script lang="ts">
-  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
+<script lang='ts'>
+  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte'
 
-  import { items } from './items';
+  import { items } from './items'
 
-  const keys = [...items.keys()];
+  const keys = [...items.keys()]
 </script>
 
-<div class="container">
+<div class='container'>
   <VirtualScrollList {keys} itemMinHeight={100} overScanCount={2} gap={0}>
     {#snippet itemSnippet(key)}
-      <div class="item">
-        <div class="title">{items.get(key)?.title}</div>
-        <div class="body">{items.get(key)?.body}</div>
+      <div class='item'>
+        <div class='title'>{items.get(key)?.title}</div>
+        <div class='body'>{items.get(key)?.body}</div>
         <hr />
       </div>
     {/snippet}
   </VirtualScrollList>
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     max-width: 600px;
     margin: 0 auto;

@@ -3,51 +3,51 @@
 
 /// <reference lib="webworker" />
 
-const sw = self as unknown as ServiceWorkerGlobalScope;
+import { isIOS } from '$lib/platform/platform'
+import { build, files, version } from '$service-worker'
+import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching'
+import { registerRoute, Route } from 'workbox-routing'
+import { CacheFirst } from 'workbox-strategies'
 
-import { isIOS } from '$lib/platform/platform';
-import { build, files, version } from '$service-worker';
-import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
-import { registerRoute, Route } from 'workbox-routing';
-import { CacheFirst } from 'workbox-strategies';
+const sw = self as unknown as ServiceWorkerGlobalScope
 
 {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (self as any).__WB_DISABLE_DEV_LOGS = true;
+  (self as any).__WB_DISABLE_DEV_LOGS = true
 }
 
-const log = async (...args: unknown[]) => {
-  const clients = await sw.clients.matchAll();
+async function log(...args: unknown[]) {
+  const clients = await sw.clients.matchAll()
   clients.forEach((client) => {
-    client.postMessage({ type: 'log', args });
-  });
-};
+    client.postMessage({ type: 'log', args })
+  })
+}
 
 {
   const precacheAssets = [...build, ...files].map((url) => {
-    return { url, revision: version };
-  });
+    return { url, revision: version }
+  })
 
-  precacheAndRoute(precacheAssets);
-  cleanupOutdatedCaches();
+  precacheAndRoute(precacheAssets)
+  cleanupOutdatedCaches()
 }
 
 {
   const imageRoute = new Route(({ sameOrigin, url }) => {
     if (!sameOrigin) {
-      return false;
+      return false
     }
     if (url.pathname.startsWith('/api/channels/')) {
-      return true;
+      return true
     }
     if (url.pathname.startsWith('/s/')) {
-      return true;
+      return true
     }
 
-    return false;
-  }, new CacheFirst());
+    return false
+  }, new CacheFirst())
 
-  registerRoute(imageRoute);
+  registerRoute(imageRoute)
 
   registerRoute(
     ({ url }) => url.pathname === '/ios.webmanifest',
@@ -77,78 +77,79 @@ const log = async (...args: unknown[]) => {
             headers: { 'Content-Type': 'application/manifest+json' },
           },
         ),
-      );
+      )
     },
-  );
+  )
 }
 
 sw.addEventListener('install', (event) => {
-  event.waitUntil(sw.skipWaiting());
-});
+  event.waitUntil(sw.skipWaiting())
+})
 sw.addEventListener('activate', (event) => {
-  event.waitUntil(sw.clients.claim());
-});
+  event.waitUntil(sw.clients.claim())
+})
 sw.addEventListener('message', (event) => {
-  event.waitUntil(log(`Start`));
-});
+  event.waitUntil(log(`Start`))
+})
 
 sw.addEventListener('push', (event) => {
   event.waitUntil(
     (async () => {
       if (!event.data) {
-        return;
+        return
       }
-      const payload = event.data.json();
+      const payload = event.data.json()
 
-      await log('payload', payload);
+      await log('payload', payload)
 
-      const notification = payload.notification;
+      const notification = payload.notification
 
-      await sw.registration.showNotification(notification.title, notification);
+      await sw.registration.showNotification(notification.title, notification)
     })(),
-  );
-});
+  )
+})
 
 sw.addEventListener('notificationclick', (event) => {
   // https://github.com/mdn/browser-compat-data/issues/22959#issuecomment-2336683759
   // https://stackoverflow.com/questions/76399649/why-isnt-the-notificationclick-event-called-on-ios-during-pwa-push-notificati
-  event.preventDefault();
+  event.preventDefault()
 
   event.waitUntil(
     (async () => {
-      await log('notificationclick');
-      event.notification.close();
+      await log('notificationclick')
+      event.notification.close()
 
-      const channelID = event.notification.data.channelID;
+      const channelID = event.notification.data.channelID
 
       if (!channelID) {
-        await log('Missing channelID');
-        return;
+        await log('Missing channelID')
+        return
       }
 
       if (isIOS()) {
-        const url = `x-safari-https://${location.host}/${channelID}`;
-        const clients = await sw.clients.matchAll();
+        const url = `x-safari-https://${location.host}/${channelID}`
+        const clients = await sw.clients.matchAll()
 
         for (const client of clients) {
-          client.postMessage({ type: 'open', url });
-          return;
+          client.postMessage({ type: 'open', url })
+          return
         }
 
-        const client = await sw.clients.openWindow('/ios-pwa');
+        const client = await sw.clients.openWindow('/ios-pwa')
 
         if (client) {
-          client.postMessage({ type: 'open', url });
+          client.postMessage({ type: 'open', url })
         }
-      } else {
-        const clients = await sw.clients.matchAll();
+      }
+      else {
+        const clients = await sw.clients.matchAll()
         for (const client of clients) {
-          client.postMessage({ type: 'open', url: `/${channelID}` });
-          return;
+          client.postMessage({ type: 'open', url: `/${channelID}` })
+          return
         }
 
-        await sw.clients.openWindow(`/${channelID}`);
+        await sw.clients.openWindow(`/${channelID}`)
       }
     })(),
-  );
-});
+  )
+})

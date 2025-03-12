@@ -1,77 +1,81 @@
-<script lang="ts" module>
+<script lang='ts' module>
   export type Channel = {
-    icon?: string | undefined;
-    name?: string | undefined;
-    desc?: string | undefined;
-  };
+    icon?: string | undefined
+    name?: string | undefined
+    desc?: string | undefined
+  }
 </script>
 
-<script lang="ts">
-  import { imgSrc } from '@announcing/components/actions/imgSrc';
-  import FileInput from '@announcing/components/FileInput.svelte';
-  import Input from '@announcing/components/Input.svelte';
-  import Loading from '@announcing/components/Loading.svelte';
-  import Modal from '@announcing/components/Modal.svelte';
-  import TextArea from '@announcing/components/TextArea.svelte';
-  import { loadBlob } from '@announcing/components/utils';
+<script lang='ts'>
+  import { imgSrc } from '@announcing/components/actions/imgSrc'
+  import FileInput from '@announcing/components/FileInput.svelte'
+  import Input from '@announcing/components/Input.svelte'
+  import Loading from '@announcing/components/Loading.svelte'
+  import Modal from '@announcing/components/Modal.svelte'
+  import TextArea from '@announcing/components/TextArea.svelte'
+  import { loadBlob } from '@announcing/components/utils'
   import {
     CHANNEL_DESC_MAX_BYTES,
     CHANNEL_ICON_MAX_SIZE,
     CHANNEL_NAME_MAX_BYTES,
-  } from '@announcing/db/constants';
-  import { LL } from '@announcing/i18n';
+  } from '@announcing/db/constants'
+  import { LL } from '@announcing/i18n'
 
   interface Props {
-    onSubmit: (formData: FormData) => Promise<void>;
+    onSubmit: (formData: FormData) => Promise<void>
   }
 
-  let { onSubmit }: Props = $props();
+  const { onSubmit }: Props = $props()
 
-  export const openEditor = (channel?: Channel) => {
-    form = { ...channel };
-    creating = !channel;
-    open = true;
-  };
+  export function openEditor(channel?: Channel) {
+    form = { ...channel }
+    creating = !channel
+    open = true
+  }
 
   const submitClickHandler = async () => {
-    const formData = new FormData();
-    if (form.name) formData.append('name', form.name);
-    if (form.desc) formData.append('desc', form.desc);
+    const formData = new FormData()
+    if (form.name)
+      formData.append('name', form.name)
+    if (form.desc)
+      formData.append('desc', form.desc)
     if (form.icon) {
-      const blob = await loadBlob(form.icon);
+      const blob = await loadBlob(form.icon)
       if (blob) {
-        formData.append('icon', blob);
-      } else {
-        formData.append('icon', form.icon);
+        formData.append('icon', blob)
+      }
+      else {
+        formData.append('icon', form.icon)
       }
     }
 
-    loading = true;
+    loading = true
     try {
-      await onSubmit(formData);
-      open = false;
-    } finally {
-      loading = false;
+      await onSubmit(formData)
+      open = false
     }
-  };
+    finally {
+      loading = false
+    }
+  }
 
-  let open = $state(false);
-  let loading = $state(false);
-  let creating = $state(false);
-  let form = $state<Channel>({});
-  let nameError = $state(false);
-  let descError = $state(false);
-  let validated = $derived(!!form.name && !nameError && !descError);
+  let open = $state(false)
+  let loading = $state(false)
+  let creating = $state(false)
+  let form = $state<Channel>({})
+  let nameError = $state(false)
+  let descError = $state(false)
+  const validated = $derived(!!form.name && !nameError && !descError)
 
-  let fileInput: ReturnType<typeof FileInput>;
+  let fileInput: ReturnType<typeof FileInput>
 </script>
 
-<Modal bind:open dismissMode="none">
-  <div class="modal-body">
-    <div class="name-box">
-      <div class="input-box">
+<Modal bind:open dismissMode='none'>
+  <div class='modal-body'>
+    <div class='name-box'>
+      <div class='input-box'>
         <Input
-          name="name"
+          name='name'
           label={$LL.channelName()}
           bind:value={form.name}
           maxBytes={CHANNEL_NAME_MAX_BYTES}
@@ -79,36 +83,36 @@
           bind:error={nameError}
         />
       </div>
-      <div class="icon-box">
+      <div class='icon-box'>
         {#if form.icon}
           <button
-            class="unstyled"
+            class='unstyled'
             onclick={() => {
-              fileInput.open();
+              fileInput.open()
             }}
           >
             {#if form.icon}
-              <img class="icon" alt="icon preview" use:imgSrc={form.icon} />
+              <img class='icon' alt='icon preview' use:imgSrc={form.icon} />
             {/if}
           </button>
           <button
-            type="button"
-            class="icon-remove"
+            type='button'
+            class='icon-remove'
             onclick={() => {
-              form.icon = undefined;
+              form.icon = undefined
             }}>{$LL.removeIcon()}</button
           >
         {:else}
           <button
-            type="button"
-            class="icon-select small"
+            type='button'
+            class='icon-select small'
             onclick={() => {
-              fileInput.open();
+              fileInput.open()
             }}>{$LL.selectIcon()}</button
           >
         {/if}
         <FileInput
-          accept="image/jpeg,image/png,image/webp"
+          accept='image/jpeg,image/png,image/webp'
           maxImageSize={CHANNEL_ICON_MAX_SIZE}
           bind:this={fileInput}
           bind:value={form.icon}
@@ -116,20 +120,20 @@
       </div>
     </div>
     <TextArea
-      name="desc"
+      name='desc'
       label={$LL.desc()}
       bind:value={form.desc}
       maxBytes={CHANNEL_DESC_MAX_BYTES}
-      maxHeight="40vh"
+      maxHeight='40vh'
       bind:error={descError}
     />
-    <button disabled={!validated} class="submit-btn" onclick={submitClickHandler}
-      >{creating ? $LL.createChannel() : $LL.updateChannel()}</button
+    <button disabled={!validated} class='submit-btn' onclick={submitClickHandler}
+    >{creating ? $LL.createChannel() : $LL.updateChannel()}</button
     >
     <button
-      class="small filled cancel-btn"
+      class='small filled cancel-btn'
       onclick={() => {
-        open = false;
+        open = false
       }}>{$LL.cancel()}</button
     >
   </div>
@@ -137,7 +141,7 @@
 
 <Loading show={loading} />
 
-<style lang="scss">
+<style lang='scss'>
   .modal-body {
     background-color: var(--color-background);
     border-radius: 8px;

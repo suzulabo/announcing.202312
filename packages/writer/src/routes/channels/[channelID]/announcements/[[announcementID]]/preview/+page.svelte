@@ -1,83 +1,85 @@
-<script lang="ts" module>
+<script lang='ts' module>
   type Announcement = {
-    title: string | undefined;
-    body: string;
-    headerImage: string | undefined;
-    images: string[] | undefined;
+    title: string | undefined
+    body: string
+    headerImage: string | undefined
+    images: string[] | undefined
     edit?: {
-      announcementID: string;
-      updatedAt: number;
-      createdAt: number;
-    };
-  };
+      announcementID: string
+      updatedAt: number
+      createdAt: number
+    }
+  }
 
   export type AnnouncementPreviewData = {
-    channel: { name: string; icon: string | undefined };
-    announcement: Announcement;
-  };
+    channel: { name: string, icon: string | undefined }
+    announcement: Announcement
+  }
 
   const makeFormData = async ({ announcement }: AnnouncementPreviewData) => {
-    const formData = new FormData();
+    const formData = new FormData()
 
-    formData.append('body', announcement.body);
+    formData.append('body', announcement.body)
 
     if (announcement.title) {
-      formData.append('title', announcement.title);
+      formData.append('title', announcement.title)
     }
 
     if (announcement.headerImage) {
-      const headerImage = await loadBlob(announcement.headerImage);
+      const headerImage = await loadBlob(announcement.headerImage)
       if (headerImage) {
-        formData.append('headerImage', headerImage);
-      } else {
-        formData.append('headerImage', announcement.headerImage);
+        formData.append('headerImage', headerImage)
+      }
+      else {
+        formData.append('headerImage', announcement.headerImage)
       }
     }
 
     if (announcement.images) {
       for (const v of announcement.images) {
-        const image = await loadBlob(v);
+        const image = await loadBlob(v)
         if (image) {
-          formData.append('images', image);
-        } else {
-          formData.append('images', v);
+          formData.append('images', image)
+        }
+        else {
+          formData.append('images', v)
         }
       }
     }
 
     if (announcement.edit?.updatedAt) {
-      formData.append('targetUpdatedAt', announcement.edit.updatedAt + '');
+      formData.append('targetUpdatedAt', `${announcement.edit.updatedAt}`)
     }
 
-    return formData;
-  };
+    return formData
+  }
 </script>
 
-<script lang="ts">
-  import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
-  import Loading from '@announcing/components/Loading.svelte';
-  import { loadBlob } from '@announcing/components/utils';
-  import type { GetAnnouncementResult } from '@announcing/db/types';
-  import { LL } from '@announcing/i18n';
+<script lang='ts'>
+  import type { GetAnnouncementResult } from '@announcing/db/types'
+  import type { Snapshot } from './$types'
+  import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
+  import AnnouncementView from '@announcing/components/AnnouncementView.svelte'
 
-  import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
+  import Loading from '@announcing/components/Loading.svelte'
+  import { loadBlob } from '@announcing/components/utils'
 
-  import type { Snapshot } from './$types';
+  import { LL } from '@announcing/i18n'
 
-  let loading = $state(false);
-  let channelID = $derived($page.params['channelID'] as string);
-  let announcementID = $derived($page.params['announcementID']);
+  let loading = $state(false)
+  const channelID = $derived($page.params.channelID as string)
+  const announcementID = $derived($page.params.announcementID)
   let previewData = $state<AnnouncementPreviewData | undefined>(
     $page.state.announcementPreviewData,
-  );
+  )
 
-  let [channel, announcement] = $derived.by(() => {
+  const [channel, announcement] = $derived.by(() => {
     if (!previewData) {
-      return [undefined, undefined];
+      return [undefined, undefined]
     }
 
-    const now = new Date().getTime();
+    const now = new Date().getTime()
     if (!previewData.announcement.edit) {
       return [
         previewData.channel,
@@ -86,12 +88,13 @@
           updatedAt: now,
           createdAt: now,
         } satisfies GetAnnouncementResult,
-      ];
-    } else {
+      ]
+    }
+    else {
       // Just in case
       if (announcementID !== previewData.announcement.edit.announcementID) {
-        void goto('/');
-        return [undefined, undefined];
+        void goto('/')
+        return [undefined, undefined]
       }
       return [
         previewData.channel,
@@ -100,64 +103,66 @@
           updatedAt: now,
           createdAt: previewData.announcement.edit.createdAt,
         } satisfies GetAnnouncementResult,
-      ];
+      ]
     }
-  });
+  })
 
   export const snapshot = {
     capture: () => {
-      return previewData;
+      return previewData
     },
     restore: (value) => {
-      const stateData = $page.state.announcementPreviewData;
+      const stateData = $page.state.announcementPreviewData
       if (!stateData) {
-        previewData = value;
+        previewData = value
       }
     },
-  } satisfies Snapshot<AnnouncementPreviewData | undefined>;
+  } satisfies Snapshot<AnnouncementPreviewData | undefined>
 
   const addAnnouncement = async () => {
     if (!previewData) {
-      return;
+      return
     }
 
-    const formData = await makeFormData(previewData);
-    loading = true;
+    const formData = await makeFormData(previewData)
+    loading = true
     try {
       if (announcementID) {
         await fetch(`/api/channels/${channelID}/announcements/${announcementID}`, {
           method: 'PUT',
           body: formData,
-        });
+        })
 
-        await goto(`/channels/${channelID}/announcements/list`);
-      } else {
+        await goto(`/channels/${channelID}/announcements/list`)
+      }
+      else {
         await fetch(`/api/channels/${channelID}/announcements`, {
           method: 'POST',
           body: formData,
-        });
+        })
 
-        await goto(`/channels/${channelID}`);
+        await goto(`/channels/${channelID}`)
       }
-    } finally {
-      loading = false;
     }
-  };
+    finally {
+      loading = false
+    }
+  }
 </script>
 
 {#if channel && announcement}
-  <div class="container">
+  <div class='container'>
     <AnnouncementView {announcement} />
     <hr />
-    <button class="submit-btn" onclick={addAnnouncement}
-      >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
+    <button class='submit-btn' onclick={addAnnouncement}
+    >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
     >
   </div>
 {/if}
 
 <Loading show={loading} />
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     display: flex;
     flex-direction: column;

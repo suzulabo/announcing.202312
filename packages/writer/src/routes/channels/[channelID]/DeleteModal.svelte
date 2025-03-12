@@ -1,58 +1,59 @@
-<script lang="ts">
-  import Loading from '@announcing/components/Loading.svelte';
-  import Modal from '@announcing/components/Modal.svelte';
-  import { LL } from '@announcing/i18n';
+<script lang='ts'>
+  import Loading from '@announcing/components/Loading.svelte'
+  import Modal from '@announcing/components/Modal.svelte'
+  import { LL } from '@announcing/i18n'
 
   interface Props {
-    name: string;
-    onSubmit: () => Promise<void>;
+    name: string
+    onSubmit: () => Promise<void>
   }
 
-  let { name, onSubmit }: Props = $props();
+  const { name, onSubmit }: Props = $props()
 
-  export const openModal = () => {
-    deleteUnderstand = false;
-    open = true;
-    loading = false;
-  };
+  export function openModal() {
+    deleteUnderstand = false
+    open = true
+    loading = false
+  }
 
-  let open = $state(false);
-  let deleteUnderstand = $state(false);
-  let loading = $state(false);
+  let open = $state(false)
+  let deleteUnderstand = $state(false)
+  let loading = $state(false)
 
   const submitHandler = async () => {
     if (!confirm($LL.deleteChannelConfirmation())) {
-      return;
+      return
     }
 
-    loading = true;
+    loading = true
     try {
-      await onSubmit();
-      open = false;
-    } finally {
-      loading = false;
+      await onSubmit()
+      open = false
     }
-  };
+    finally {
+      loading = false
+    }
+  }
 </script>
 
-<Modal bind:open dismissMode="backdrop">
-  <div class="delete-modal">
+<Modal bind:open dismissMode='backdrop'>
+  <div class='delete-modal'>
     <span>{$LL.deleteChannel()}</span>
     <hr />
-    <div class="warning">{$LL.deleteChannelDescription({ name: name })}</div>
-    <label class="understand-box">
-      <input type="checkbox" bind:checked={deleteUnderstand} />
+    <div class='warning'>{$LL.deleteChannelDescription({ name })}</div>
+    <label class='understand-box'>
+      <input type='checkbox' bind:checked={deleteUnderstand} />
       {$LL.understand()}
     </label>
 
-    <button class="delete-btn" disabled={!deleteUnderstand} onclick={submitHandler}>
+    <button class='delete-btn' disabled={!deleteUnderstand} onclick={submitHandler}>
       {$LL.deleteChannel()}
     </button>
 
     <button
-      class="filled small"
+      class='filled small'
       onclick={() => {
-        open = false;
+        open = false
       }}>{$LL.cancel()}</button
     >
   </div>
@@ -60,7 +61,7 @@
 
 <Loading show={loading} />
 
-<style lang="scss">
+<style lang='scss'>
   .delete-modal {
     background-color: var(--color-background);
     border-radius: 8px;

@@ -1,27 +1,27 @@
-<script lang="ts">
-  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
-  import { toStyle } from '$lib/utils/toStyle';
+<script lang='ts'>
+  import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte'
+  import { toStyle } from '$lib/utils/toStyle'
 
-  const keys = [...Array(20)].map((_, index) => {
-    return index;
-  });
+  const keys = [...Array.from({ length: 20 })].map((_, index) => {
+    return index
+  })
 
-  const expands: Record<number, boolean> = $state({});
+  const expands: Record<number, boolean> = $state({})
 </script>
 
-<div class="container">
+<div class='container'>
   <VirtualScrollList {keys} itemMinHeight={100}>
     {#snippet itemSnippet(key)}
       <div
-        class="item"
+        class='item'
         style={toStyle({ height: `${expands[key] ? 200 : 100}px` })}
-        role="button"
-        tabindex="0"
+        role='button'
+        tabindex='0'
         onclick={() => {
-          expands[key] = !expands[key];
+          expands[key] = !expands[key]
         }}
         onkeydown={() => {
-          //
+        //
         }}
       >
         <div>
@@ -33,7 +33,7 @@
   </VirtualScrollList>
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     max-width: 600px;
     margin: 0 auto;

@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test'
 
 /**
  * Read environment variables from file.
@@ -15,9 +15,9 @@ export default defineConfig({
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env['CI'],
+  forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env['CI'] ? 2 : 0,
+  retries: process.env.CI ? 2 : 0,
 
   /* Opt out of parallel tests on CI. */
   // ### Github runner is not poor.
@@ -81,7 +81,7 @@ export default defineConfig({
   webServer: {
     command: 'pnpm run dev',
     url: 'http://127.0.0.1:5173',
-    reuseExistingServer: !process.env['CI'],
+    reuseExistingServer: !process.env.CI,
   },
 
   snapshotPathTemplate: 'snapshots/{testFileName}/{arg}/{projectName}{ext}',
@@ -89,4 +89,4 @@ export default defineConfig({
   expect: {
     timeout: 100000,
   },
-});
+})

@@ -1,22 +1,22 @@
-<script lang="ts">
-  import IcBaselineRadioButtonChecked from '$lib/icons/IcBaselineRadioButtonChecked.svelte';
-  import IcBaselineRadioButtonUnchecked from '$lib/icons/IcBaselineRadioButtonUnchecked.svelte';
-  import type { Snippet } from 'svelte';
+<script lang='ts'>
+  import type { Snippet } from 'svelte'
+  import IcBaselineRadioButtonChecked from '$lib/icons/IcBaselineRadioButtonChecked.svelte'
+  import IcBaselineRadioButtonUnchecked from '$lib/icons/IcBaselineRadioButtonUnchecked.svelte'
 
   interface Props {
-    value?: string;
-    selectedValue: string;
-    children?: Snippet;
+    value?: string
+    selectedValue: string
+    children?: Snippet
   }
 
-  let { value = $bindable(undefined), selectedValue, children }: Props = $props();
+  let { value = $bindable(undefined), selectedValue, children }: Props = $props()
 
   const click = () => {
-    value = selectedValue;
-  };
+    value = selectedValue
+  }
 </script>
 
-<button class="radio unstyled" onclick={click}>
+<button class='radio unstyled' onclick={click}>
   {#if value === selectedValue}
     <IcBaselineRadioButtonChecked />
   {:else}
@@ -25,7 +25,7 @@
   <div>{@render children?.()}</div></button
 >
 
-<style lang="scss">
+<style lang='scss'>
   button.radio {
     display: flex;
     flex-direction: row;

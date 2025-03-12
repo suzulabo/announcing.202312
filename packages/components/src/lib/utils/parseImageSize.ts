@@ -1,16 +1,16 @@
-const sizePattern = new RegExp('([0-9]+)x([0-9]+)');
+const sizePattern = new RegExp('(\\d+)x(\\d+)')
 
-export const parseImageSize = (src: string) => {
-  const m = sizePattern.exec(src);
+export function parseImageSize(src: string) {
+  const m = sizePattern.exec(src)
   if (!m) {
-    return;
+    return
   }
-  const [, w, h] = m;
+  const [, w, h] = m
   if (!w || !h) {
-    return;
+    return
   }
   return {
     width: +w,
     height: +h,
-  };
-};
+  }
+}

@@ -11,6 +11,6 @@ const config = {
       options: { parser: 'svelte' },
     },
   ],
-};
+}
 
-export default config;
+export default config

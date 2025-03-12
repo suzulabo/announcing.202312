@@ -1,4 +1,4 @@
-import { getIOSBrowserSchema } from './localStorage';
+import { getIOSBrowserSchema } from './localStorage'
 
 // https://qiita.com/bontaro_1/items/ddb3eefa6e7f16b4597f
 export const browserSchemas = [
@@ -8,16 +8,16 @@ export const browserSchemas = [
   ['Edge', 'microsoft-edge-https://@urlBase'],
   ['Opera Touch', 'touch-https://@urlBase'],
   ['Opera Mini', 'opera-https://@urlBase'],
-] as const;
+] as const
 
-export const resolveBrowserSchema = (url: string) => {
-  const schema = getIOSBrowserSchema();
+export function resolveBrowserSchema(url: string) {
+  const schema = getIOSBrowserSchema()
   if (!schema) {
-    return url;
+    return url
   }
 
-  const urlBase = url.replace(new RegExp('^.+://'), '');
-  const urlEncoded = encodeURIComponent(url);
+  const urlBase = url.replace(new RegExp('^.+://'), '')
+  const urlEncoded = encodeURIComponent(url)
 
-  return schema.replace('@urlBase', urlBase).replace('@urlEncoded', urlEncoded);
-};
+  return schema.replace('@urlBase', urlBase).replace('@urlEncoded', urlEncoded)
+}

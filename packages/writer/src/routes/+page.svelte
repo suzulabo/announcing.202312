@@ -1,42 +1,42 @@
-<script lang="ts">
-  import { imgSrc } from '@announcing/components/actions/imgSrc';
-  import { LL } from '@announcing/i18n';
+<script lang='ts'>
+  import type { PageServerData } from './$types'
+  import { invalidateAll } from '$app/navigation'
 
-  import { invalidateAll } from '$app/navigation';
-  import ChannelEditor from '$lib/components/ChannelEditor.svelte';
+  import ChannelEditor from '$lib/components/ChannelEditor.svelte'
+  import { imgSrc } from '@announcing/components/actions/imgSrc'
 
-  import type { PageServerData } from './$types';
+  import { LL } from '@announcing/i18n'
 
   interface Props {
-    data: PageServerData;
+    data: PageServerData
   }
 
-  let { data }: Props = $props();
+  const { data }: Props = $props()
 
-  let createDisabled = $derived(data.channels.length >= 5);
+  const createDisabled = $derived(data.channels.length >= 5)
 
-  let editor: ReturnType<typeof ChannelEditor>;
+  let editor: ReturnType<typeof ChannelEditor>
 
   const submitHandler = async (formData: FormData) => {
     await fetch('/api/channels', {
       method: 'POST',
       body: formData,
-    });
-    await invalidateAll();
-  };
+    })
+    await invalidateAll()
+  }
 </script>
 
-<div class="container">
+<div class='container'>
   {#if data.channels}
-    <div class="channels">
+    <div class='channels'>
       {#each data.channels as channel}
-        <a href={`/channels/${channel.channelID}`} class="channel">
-          <div class="head">
-            <span class="name">
+        <a href={`/channels/${channel.channelID}`} class='channel'>
+          <div class='head'>
+            <span class='name'>
               {channel.name}
             </span>
             {#if channel.icon}
-              <img alt="icon" use:imgSrc={channel.icon} />
+              <img alt='icon' use:imgSrc={channel.icon} />
             {/if}
           </div>
         </a>
@@ -45,19 +45,19 @@
   {/if}
 
   <button
-    class="create-btn"
+    class='create-btn'
     disabled={createDisabled}
     onclick={() => {
-      editor.openEditor();
+      editor.openEditor()
     }}
-    >{$LL.createChannel()}
+  >{$LL.createChannel()}
   </button>
-  <span class="create-btn-desc">{$LL.channelsCanBeCreated()}</span>
+  <span class='create-btn-desc'>{$LL.channelsCanBeCreated()}</span>
 </div>
 
 <ChannelEditor bind:this={editor} onSubmit={submitHandler} />
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     display: flex;
     flex-direction: column;

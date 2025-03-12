@@ -1,4 +1,4 @@
-import { task } from '@trigger.dev/sdk/v3';
+import { task } from '@trigger.dev/sdk/v3'
 
 export const duplicateChildTask = task({
   id: 'retry',
@@ -8,7 +8,7 @@ export const duplicateChildTask = task({
   },
   run: (_, { ctx }) => {
     // ctx.run.id is always the same for retry runs.
-    console.log(ctx);
-    throw new Error('Always error');
+    console.log(ctx)
+    throw new Error('Always error')
   },
-});
+})

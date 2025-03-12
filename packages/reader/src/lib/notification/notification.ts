@@ -1,88 +1,90 @@
-import { browser } from '$app/environment';
-import { postNotification } from '$lib/fetch/postNotification';
-import { getPushToken } from '$lib/firebase/firebase';
+import { browser } from '$app/environment'
+import { postNotification } from '$lib/fetch/postNotification'
+import { getPushToken } from '$lib/firebase/firebase'
 import {
   addNotificationChannelsListener,
   getNotificationChannels,
   setNotificationChannels,
-} from '$lib/platform/localStorage';
-import { notificationState } from './notificationState.svelte';
+} from '$lib/platform/localStorage'
+import { notificationState } from './notificationState.svelte'
 
-const loadChannels = () => {
-  notificationState.channels = getNotificationChannels();
-};
+function loadChannels() {
+  notificationState.channels = getNotificationChannels()
+}
 
-export const initNotification = async () => {
+export async function initNotification() {
   if (!browser) {
-    return;
+    return
   }
 
-  addNotificationChannelsListener(loadChannels);
+  addNotificationChannelsListener(loadChannels)
 
-  loadChannels();
+  loadChannels()
 
   if ('Notification' in window) {
-    notificationState.permission = Notification.permission;
+    notificationState.permission = Notification.permission
   }
   if (localStorage.getItem('ios-token')) {
-    notificationState.permission = 'granted';
+    notificationState.permission = 'granted'
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (navigator.permissions) {
-    const permissionStatus = await navigator.permissions.query({ name: 'notifications' });
+    const permissionStatus = await navigator.permissions.query({ name: 'notifications' })
     permissionStatus.addEventListener('change', () => {
-      notificationState.permission = Notification.permission;
-    });
+      notificationState.permission = Notification.permission
+    })
   }
-};
+}
 
-export const requestPermission = async () => {
-  notificationState.permission = await Notification.requestPermission();
-};
+export async function requestPermission() {
+  notificationState.permission = await Notification.requestPermission()
+}
 
-export const addChannel = async (channelID: string) => {
-  const curChannels = [...notificationState.channels];
-  const newChannels = [...curChannels];
+export async function addChannel(channelID: string) {
+  const curChannels = [...notificationState.channels]
+  const newChannels = [...curChannels]
 
   if (!newChannels.includes(channelID)) {
-    newChannels.push(channelID);
+    newChannels.push(channelID)
   }
 
-  setNotificationChannels(newChannels);
+  setNotificationChannels(newChannels)
 
-  const token = await getPushToken();
+  const token = await getPushToken()
   if (!token) {
-    return;
+    return
   }
 
   try {
-    await postNotification({ token, tags: newChannels });
-    notificationState.channels = newChannels;
-  } catch {
-    setNotificationChannels(curChannels);
+    await postNotification({ token, tags: newChannels })
+    notificationState.channels = newChannels
+  }
+  catch {
+    setNotificationChannels(curChannels)
     // TODO
   }
-};
+}
 
-export const removeChannel = async (channelID: string) => {
-  const curChannels = [...notificationState.channels];
+export async function removeChannel(channelID: string) {
+  const curChannels = [...notificationState.channels]
   const newChannels = curChannels.filter((v) => {
-    return v !== channelID;
-  });
+    return v !== channelID
+  })
 
-  setNotificationChannels(newChannels);
+  setNotificationChannels(newChannels)
 
-  const token = await getPushToken();
+  const token = await getPushToken()
   if (!token) {
-    return;
+    return
   }
 
   try {
-    await postNotification({ token, tags: newChannels });
-    notificationState.channels = newChannels;
-  } catch {
-    setNotificationChannels(curChannels);
+    await postNotification({ token, tags: newChannels })
+    notificationState.channels = newChannels
+  }
+  catch {
+    setNotificationChannels(curChannels)
     // TODO
   }
-};
+}

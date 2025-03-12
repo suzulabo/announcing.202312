@@ -1,7 +1,7 @@
 {
-  "private": true,
   "name": "@announcing/cloudflare",
   "type": "module",
+  "private": true,
   "exports": {
     "./localDB": {
       "types": "./dist/localDB.d.ts",

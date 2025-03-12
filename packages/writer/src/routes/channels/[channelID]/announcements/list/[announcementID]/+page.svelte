@@ -1,36 +1,36 @@
-<script lang="ts">
-  import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
-  import { LL } from '@announcing/i18n';
-  import type { PageData } from './$types';
+<script lang='ts'>
+  import type { PageData } from './$types'
+  import { goto } from '$app/navigation'
+  import AnnouncementView from '@announcing/components/AnnouncementView.svelte'
 
-  import { goto } from '$app/navigation';
-  import DeleteModal from './DeleteModal.svelte';
+  import { LL } from '@announcing/i18n'
+  import DeleteModal from './DeleteModal.svelte'
 
   interface Props {
-    data: PageData;
+    data: PageData
   }
 
-  let { data }: Props = $props();
+  const { data }: Props = $props()
 
-  let deleteModal: ReturnType<typeof DeleteModal>;
+  let deleteModal: ReturnType<typeof DeleteModal>
 
   const deleteAnnouncement = async () => {
     await fetch(`/api/channels/${data.channelID}/announcements/${data.announcementID}`, {
       method: 'DELETE',
       body: JSON.stringify({ updatedAt: data.announcement.updatedAt }),
-    });
+    })
 
-    await goto('../list');
-  };
+    await goto('../list')
+  }
 </script>
 
-<div class="buttons">
-  <a class="button" href={`/channels/${data.channelID}/announcements/${data.announcementID}`}
-    >{$LL.edit()}</a
+<div class='buttons'>
+  <a class='button' href={`/channels/${data.channelID}/announcements/${data.announcementID}`}
+  >{$LL.edit()}</a
   >
   <button
     onclick={() => {
-      deleteModal.openModal();
+      deleteModal.openModal()
     }}>{$LL.delete()}</button
   >
 </div>
@@ -39,7 +39,7 @@
 
 <DeleteModal bind:this={deleteModal} onSubmit={deleteAnnouncement} />
 
-<style lang="scss">
+<style lang='scss'>
   .buttons {
     display: flex;
     justify-content: center;

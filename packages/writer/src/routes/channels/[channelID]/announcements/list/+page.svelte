@@ -1,40 +1,41 @@
-<script lang="ts">
-  import ChannelView, { type ChannelViewProps } from '@announcing/components/ChannelView.svelte';
+<script lang='ts'>
+  import type { ChannelViewProps } from '@announcing/components/ChannelView.svelte'
 
-  import { page } from '$app/stores';
-  import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
+  import type { PageData } from './$types'
+  import { page } from '$app/stores'
 
-  import { createSnapshotContext } from '@announcing/components/utils';
-  import { LL } from '@announcing/i18n';
-  import type { PageData } from './$types';
+  import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement'
+  import ChannelView from '@announcing/components/ChannelView.svelte'
+  import { createSnapshotContext } from '@announcing/components/utils'
+  import { LL } from '@announcing/i18n'
 
   interface Props {
-    data: PageData;
+    data: PageData
   }
 
-  let { data }: Props = $props();
+  const { data }: Props = $props()
 
-  export const snapshot = createSnapshotContext();
+  export const snapshot = createSnapshotContext()
 
-  let channelViewProps = $derived<ChannelViewProps>({
+  const channelViewProps = $derived<ChannelViewProps>({
     channel: data.channel,
     announcementHrefPrefix: $page.url.pathname,
     announcementKeys: data.channel.announcementIDs ?? [],
     announcementLoader: (key: string) => {
       return fetchAnnouncement({
-        channelID: $page.params['channelID'] as string,
+        channelID: $page.params.channelID as string,
         announcementID: key,
-      });
+      })
     },
-  });
+  })
 </script>
 
-<div class="menu">
-  <div class="prompt info">{$LL.announcementListPrompt()}</div>
+<div class='menu'>
+  <div class='prompt info'>{$LL.announcementListPrompt()}</div>
 </div>
 <ChannelView {...channelViewProps} />
 
-<style lang="scss">
+<style lang='scss'>
   .menu {
     display: flex;
     gap: 8px;

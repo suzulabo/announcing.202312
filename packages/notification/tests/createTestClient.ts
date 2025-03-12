@@ -1,16 +1,16 @@
-import { createClient } from '@libsql/client';
-import { readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs'
+import { createClient } from '@libsql/client'
 
 const schemas = readFileSync('src/tokenStores/libsql/schema.sql', 'utf8')
   .split(';')
   .filter((v) => {
-    return !!v.trim();
-  });
+    return !!v.trim()
+  })
 
-export const createTestClient = async () => {
-  const client = createClient({ url: ':memory:' });
+export async function createTestClient() {
+  const client = createClient({ url: ':memory:' })
 
-  await client.migrate(schemas);
+  await client.migrate(schemas)
 
-  return client;
-};
+  return client
+}

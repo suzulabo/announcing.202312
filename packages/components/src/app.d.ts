@@ -8,12 +8,12 @@ declare global {
     // interface PageData {}
     interface PageState {
       announcementViewZoomImage?: {
-        src: string;
-      };
-      fromHref?: string;
+        src: string
+      }
+      fromHref?: string
     }
     // interface Platform {}
   }
 }
 
-export {};
+export {}

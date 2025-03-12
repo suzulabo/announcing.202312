@@ -1,21 +1,22 @@
-<script lang="ts">
-  import ChannelView, { type ChannelViewProps } from '@announcing/components/ChannelView.svelte';
+<script lang='ts'>
+  import type { ChannelViewProps } from '@announcing/components/ChannelView.svelte'
 
-  import { page } from '$app/stores';
-  import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
+  import type { PageData } from './$types'
+  import { page } from '$app/stores'
 
-  import { createSnapshotContext } from '@announcing/components/utils';
-  import type { PageData } from './$types';
+  import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement'
+  import ChannelView from '@announcing/components/ChannelView.svelte'
+  import { createSnapshotContext } from '@announcing/components/utils'
 
   interface Props {
-    data: PageData;
+    data: PageData
   }
 
-  let { data }: Props = $props();
+  const { data }: Props = $props()
 
-  export const snapshot = createSnapshotContext();
+  export const snapshot = createSnapshotContext()
 
-  let channelViewProps = $derived({
+  const channelViewProps = $derived({
     channel: data.channel,
     announcementHrefPrefix: $page.url.pathname,
     announcementKeys: data.channel.announcementIDs ?? [],
@@ -23,9 +24,9 @@
       return fetchAnnouncement({
         channelID: data.channelID,
         announcementID: key,
-      });
+      })
     },
-  } satisfies ChannelViewProps);
+  } satisfies ChannelViewProps)
 </script>
 
 <ChannelView {...channelViewProps} />

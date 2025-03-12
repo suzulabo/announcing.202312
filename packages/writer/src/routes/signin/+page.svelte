@@ -1,31 +1,31 @@
-<script lang="ts">
-  import { signIn } from '@auth/sveltekit/client';
+<script lang='ts'>
+  import { env } from '$env/dynamic/public'
 
-  import { env } from '$env/dynamic/public';
-  import GoogleIcon from '$lib/components/icon/GoogleIcon.svelte';
+  import GoogleIcon from '$lib/components/icon/GoogleIcon.svelte'
+  import { signIn } from '@auth/sveltekit/client'
 </script>
 
-<div class="container">
-  <div class="buttons">
+<div class='container'>
+  <div class='buttons'>
     {#if env.PUBLIC_TEST}
       <button
         onclick={() => {
-          void signIn('credentials', { id: 'test_user01' });
+          void signIn('credentials', { id: 'test_user01' })
         }}>Credentials</button
       >
     {/if}
     <button
       onclick={() => {
-        void signIn('google');
+        void signIn('google')
       }}
-      ><div class="inner">
-        <GoogleIcon /><span class="label"></span>
-      </div></button
+    ><div class='inner'>
+      <GoogleIcon /><span class='label'></span>
+    </div></button
     >
   </div>
 </div>
 
-<style lang="scss">
+<style lang='scss'>
   .container {
     padding: 20px 10px;
 

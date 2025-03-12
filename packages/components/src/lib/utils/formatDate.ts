@@ -1,4 +1,4 @@
-export const formatDate = (n: number) => {
+export function formatDate(n: number) {
   return new Intl.DateTimeFormat(navigator.language, {
     year: 'numeric',
     month: 'short',
@@ -6,5 +6,5 @@ export const formatDate = (n: number) => {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
-  }).format(n);
-};
+  }).format(n)
+}
