@@ -5,6 +5,7 @@ import {
   PUBLIC_FIREBASE_PROJECT_ID,
   PUBLIC_FIREBASE_VAPID_KEY,
 } from '$env/static/public';
+import { getIOSToken } from '$lib/platform/localStorage';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken, isSupported, type Messaging } from 'firebase/messaging';
 
@@ -45,7 +46,8 @@ const initContext = async () => {
     return token;
   };
 
-  return { supported, getPushToken };
+  const iOSToken = getIOSToken();
+  return { supported: !!iOSToken || supported, getPushToken };
 };
 
 let ctx: Awaited<ReturnType<typeof initContext>> | undefined;
@@ -59,5 +61,10 @@ export const isNotificationSupported = () => {
 };
 
 export const getPushToken = () => {
+  const iOSToken = getIOSToken();
+  if (iOSToken) {
+    return iOSToken;
+  }
+
   return ctx?.getPushToken();
 };

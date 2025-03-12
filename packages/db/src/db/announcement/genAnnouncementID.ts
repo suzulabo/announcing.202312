@@ -10,10 +10,10 @@ export const genAnnouncementID = ({
   images,
   createdAt,
 }: {
-  headerImage?: string | null;
-  title?: string | null;
+  headerImage?: string | null | undefined;
+  title?: string | null | undefined;
   body: string;
-  images?: string[] | null;
+  images?: string[] | null | undefined;
   createdAt: number;
 }) => {
   const hash = createHash('sha256');

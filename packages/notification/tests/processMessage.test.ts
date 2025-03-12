@@ -24,6 +24,7 @@ describe('processMessage', () => {
 
     await processMessage(
       {
+        idPrefix: '',
         tokenStore,
         taskManager,
       },
@@ -61,6 +62,7 @@ describe('processMessage', () => {
 
     await processMessage(
       {
+        idPrefix: '',
         tokenStore,
         taskManager,
       },

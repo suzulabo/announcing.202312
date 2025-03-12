@@ -58,7 +58,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
               image: `/s/${announcementValues.headerImage}`,
             }),
             data: {
-              link: `/${channelID}`,
+              channelID,
             },
           },
         },

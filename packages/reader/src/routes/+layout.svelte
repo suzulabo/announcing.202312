@@ -58,6 +58,7 @@
   import { initFirebase } from '$lib/firebase/firebase';
   import { initNotification } from '$lib/notification/notification';
   import { notificationState } from '$lib/notification/notificationState.svelte';
+  import { isIOS, isStandalone } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
@@ -73,6 +74,7 @@
 
   let theme = $state(Cookies.get('theme') ?? getSystemTheme());
   let locale = $state(data.locale);
+  let addManifest = $state(isIOS() && !isStandalone());
   let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
   let headerNotification = $derived<HeaderNotification | undefined>(
     $page.data['headerNotification'],
@@ -82,6 +84,7 @@
   let settingsModal: ReturnType<typeof SettingsModal>;
 
   $effect(() => {
+    document.body.setAttribute('locale', locale);
     void updateLocale(locale);
   });
   $effect(() => {
@@ -97,6 +100,12 @@
 
   const back = setupBack();
 </script>
+
+<svelte:head>
+  {#if addManifest}
+    <link rel="manifest" href={`/ios.webmanifest}`} />
+  {/if}
+</svelte:head>
 
 <div class="container">
   <header>
