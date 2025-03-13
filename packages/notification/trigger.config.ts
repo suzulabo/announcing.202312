@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { defineConfig } from '@trigger.dev/sdk/v3'
 import { configDotenv } from 'dotenv'
 

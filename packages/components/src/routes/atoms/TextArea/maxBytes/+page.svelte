@@ -3,7 +3,7 @@
 </script>
 
 <div class='container'>
-  <TextArea name='test' label='Name' maxBytes={10} value={`1234567890\n1`} />
+  <TextArea name='test' label='Name' maxBytes={10} value='1234567890\n1' />
 </div>
 
 <style lang='scss'>

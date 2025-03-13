@@ -14,11 +14,11 @@ export async function processMessage({ idPrefix, tokenStore, taskManager }: Conf
   const reader = tokenStore.getTokensReader(tag)
 
   const stack: string[] = []
-  let chunk: string[] | undefined
+  let chunk = await reader()
 
   let taskNo = 1
 
-  while ((chunk = await reader()) !== undefined) {
+  while (chunk !== undefined) {
     stack.push(...chunk)
     while (stack.length >= TOKEN_LIMIT) {
       const tokens = stack.splice(0, TOKEN_LIMIT)
@@ -28,6 +28,8 @@ export async function processMessage({ idPrefix, tokenStore, taskManager }: Conf
       })
       taskNo++
     }
+
+    chunk = await reader()
   }
 
   if (stack.length > 0) {

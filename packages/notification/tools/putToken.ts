@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { createClient } from '@libsql/client'
 import { configDotenv } from 'dotenv'
 import { createLibSqlTokenStore } from '../src/tokenStores/libsql/libsqlTokenStore'
@@ -22,6 +23,7 @@ async function main() {
   await tokenStore.putToken(token, tags)
 }
 
+// eslint-disable-next-line antfu/no-top-level-await
 await main()
 
 export {}

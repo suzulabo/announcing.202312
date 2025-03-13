@@ -31,7 +31,6 @@
     error = maxBytes > 0 && bytes > maxBytes
   })
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const autoSizeAction = (el: Element, _: string | undefined) => {
     autosize(el)
 

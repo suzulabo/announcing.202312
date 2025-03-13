@@ -28,7 +28,6 @@ export async function initNotification() {
     notificationState.permission = 'granted'
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (navigator.permissions) {
     const permissionStatus = await navigator.permissions.query({ name: 'notifications' })
     permissionStatus.addEventListener('change', () => {

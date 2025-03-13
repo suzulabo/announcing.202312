@@ -16,7 +16,7 @@ export function resolveBrowserSchema(url: string) {
     return url
   }
 
-  const urlBase = url.replace(new RegExp('^.+://'), '')
+  const urlBase = url.replace(/^.+:\/\//, '')
   const urlEncoded = encodeURIComponent(url)
 
   return schema.replace('@urlBase', urlBase).replace('@urlEncoded', urlEncoded)

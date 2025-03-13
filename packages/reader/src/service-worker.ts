@@ -9,12 +9,9 @@ import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching'
 import { registerRoute, Route } from 'workbox-routing'
 import { CacheFirst } from 'workbox-strategies'
 
-const sw = self as unknown as ServiceWorkerGlobalScope
+const sw = globalThis as unknown as ServiceWorkerGlobalScope
 
-{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (self as any).__WB_DISABLE_DEV_LOGS = true
-}
+(sw as any).__WB_DISABLE_DEV_LOGS = true
 
 async function log(...args: unknown[]) {
   const clients = await sw.clients.matchAll()
@@ -128,11 +125,15 @@ sw.addEventListener('notificationclick', (event) => {
 
       if (isIOS()) {
         const url = `x-safari-https://${location.host}/${channelID}`
-        const clients = await sw.clients.matchAll()
 
-        for (const client of clients) {
-          client.postMessage({ type: 'open', url })
-          return
+        {
+          const clients = await sw.clients.matchAll()
+
+          const client = clients[0]
+          if (client) {
+            client.postMessage({ type: 'open', url })
+            return
+          }
         }
 
         const client = await sw.clients.openWindow('/ios-pwa')
@@ -143,7 +144,8 @@ sw.addEventListener('notificationclick', (event) => {
       }
       else {
         const clients = await sw.clients.matchAll()
-        for (const client of clients) {
+        const client = clients[0]
+        if (client) {
           client.postMessage({ type: 'open', url: `/${channelID}` })
           return
         }

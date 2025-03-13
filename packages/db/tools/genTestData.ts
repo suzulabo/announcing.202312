@@ -90,7 +90,7 @@ async function generate(userID: string, channelID: string, count: number) {
     for (let i = 0; i < count; i++) {
       const channel = await getChannel({ userID, channelID })
       if (!channel) {
-        throw new Error()
+        throw new Error('unexpected')
       }
       const a = genAnnouncement()
 
@@ -144,4 +144,5 @@ async function main() {
   await generate(userID, channelID, count)
 }
 
+// eslint-disable-next-line antfu/no-top-level-await
 await main()

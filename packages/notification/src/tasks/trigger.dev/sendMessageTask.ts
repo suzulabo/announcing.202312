@@ -1,12 +1,16 @@
 import type { Task } from '@trigger.dev/sdk/v3'
 
 import type { Messaging, MulticastMessage } from 'firebase-admin/messaging'
+import { Buffer } from 'node:buffer'
+import process from 'node:process'
 import { schemaTask } from '@trigger.dev/sdk/v3'
 import { cert, initializeApp } from 'firebase-admin/app'
+
 import { getMessaging } from 'firebase-admin/messaging'
 import * as v from 'valibot'
 
 import { sendMessage } from '../../core/sendMessage'
+
 import { tokenStore } from './tokenStore'
 
 let messaging: Messaging | undefined

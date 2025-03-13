@@ -1,4 +1,4 @@
 {
   "extends": ["../../tsconfig.json", "./.svelte-kit/tsconfig.json"],
-  "files": ["playwright.config.ts", "src/service-worker.ts"]
+  "files": ["env.d.ts", "playwright.config.ts", "src/service-worker.ts"]
 }

@@ -65,8 +65,7 @@
     const totalHeight = Math.ceil(
       keys.reduce((p, v) => {
         return p + getItemHeight(v)
-      }, 0)
-        + (keys.length - 1) * gap,
+      }, 0) + (keys.length - 1) * gap,
     )
 
     const visibleKeys = keys.slice(startRow, endRow + 1)

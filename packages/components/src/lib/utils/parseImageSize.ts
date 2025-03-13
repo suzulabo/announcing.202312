@@ -1,4 +1,4 @@
-const sizePattern = new RegExp('(\\d+)x(\\d+)')
+const sizePattern = /(\d+)x(\d+)/
 
 export function parseImageSize(src: string) {
   const m = sizePattern.exec(src)

@@ -19,6 +19,8 @@
   "devDependencies": {
     "@antfu/eslint-config": "^4.9.0",
     "eslint": "^9.18.0",
+    "eslint-plugin-svelte": "^3.1.0",
+    "svelte-eslint-parser": "^1.0.1",
     "typescript": "^5.7.3"
   }
 }

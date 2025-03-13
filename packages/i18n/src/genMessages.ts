@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { writeFileSync } from 'node:fs'
 
 import { messages } from './messages'

@@ -7,10 +7,12 @@ import { createClient } from '@libsql/client'
 
 import { sequence } from '@sveltejs/kit/hooks'
 
-process.env.DB_URL = env.DB_URL
-process.env.DB_AUTH_TOKEN = env.DB_AUTH_TOKEN
+// TODO*
+// process.env.DB_URL = env.DB_URL
+// process.env.DB_AUTH_TOKEN = env.DB_AUTH_TOKEN
 
 if (!CF) {
+  // eslint-disable-next-line antfu/no-top-level-await
   const createLocalStorage = (await import('@announcing/db/LocalStorage')).createLocalStorage
   setStorage(createLocalStorage())
 }

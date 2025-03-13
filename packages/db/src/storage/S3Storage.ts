@@ -1,6 +1,5 @@
 import type { GetObjectCommandOutput, HeadObjectCommandOutput } from '@aws-sdk/client-s3'
 import type { Storage } from './storage'
-import process from 'node:process'
 import {
   GetObjectCommand,
 
@@ -12,9 +11,15 @@ import {
 import { getStorageKey } from './getStorageKey'
 
 export function createS3Storage(): Storage {
+  // TODO*
+  /*
   const params = process.env.S3_CLIENT_PARAMS
   const bucket = process.env.S3_BUCKET
   const prefix = process.env.S3_PREFIX ?? ''
+  */
+  const params = ''
+  const bucket = ''
+  const prefix = ''
   if (!params) {
     throw new Error('S3_CLIENT_PARAMS is not set')
   }
@@ -28,11 +33,11 @@ export function createS3Storage(): Storage {
     key: string,
     head: T,
   ): Promise<(T extends true ? HeadObjectCommandOutput : GetObjectCommandOutput) | undefined> => {
-    const cmd = head ? HeadObjectCommand : GetObjectCommand
+    const Cmd = head ? HeadObjectCommand : GetObjectCommand
 
     try {
       return await client.send(
-        new cmd({
+        new Cmd({
           Bucket: bucket,
           Key: `${prefix}/${key}`,
         }),
