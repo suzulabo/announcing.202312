@@ -1,19 +1,20 @@
-// @ts-check
-
 // [memo] https://github.com/sveltejs/eslint-plugin-svelte/issues/732#issuecomment-2176982343
 
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import svelte from 'eslint-plugin-svelte';
 import svelteParser from 'svelte-eslint-parser';
-import ts from 'typescript-eslint';
+import ts, { type InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 
-const jsConfig = ts.config({
+const jsConfig: InfiniteDepthConfigWithExtends = {
   files: ['**/*.js'],
   extends: [js.configs.recommended],
-});
+  rules: {
+    eqeqeq: 'error',
+  },
+};
 
-const tsConfig = ts.config({
+const tsConfig: InfiniteDepthConfigWithExtends = {
   files: ['**/*.ts', '**/*.svelte', '**/*.svelte.ts'],
   extends: [js.configs.recommended, ...ts.configs.strict, ...ts.configs.stylistic],
   languageOptions: {
@@ -23,6 +24,7 @@ const tsConfig = ts.config({
     },
   },
   rules: {
+    ...jsConfig.rules,
     'require-await': 'off',
     '@typescript-eslint/require-await': 'error',
     '@typescript-eslint/no-floating-promises': 'error',
@@ -35,10 +37,11 @@ const tsConfig = ts.config({
         allowNumber: true,
       },
     ],
+    '@typescript-eslint/no-deprecated': 'error',
   },
-});
+};
 
-const svelteConfig = ts.config({
+const svelteConfig: InfiniteDepthConfigWithExtends = {
   files: ['**/*.svelte', '**/*.svelte.ts'],
   extends: [...svelte.configs['flat/recommended'], ...svelte.configs['flat/prettier']],
   languageOptions: {
@@ -67,7 +70,7 @@ const svelteConfig = ts.config({
     '@typescript-eslint/no-unsafe-member-access': 'off',
     'prefer-const': 'off',
   },
-});
+};
 
 export default ts.config(
   {
@@ -83,8 +86,8 @@ export default ts.config(
       '**/playwright-report',
     ],
   },
-  ...jsConfig,
-  ...tsConfig,
-  ...svelteConfig,
+  jsConfig,
+  tsConfig,
+  svelteConfig,
   prettier,
 );
