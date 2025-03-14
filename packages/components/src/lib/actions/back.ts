@@ -14,6 +14,8 @@ export const setupBack = () => {
   let fromHref: string | undefined;
 
   afterNavigate((params) => {
+    // TODO*
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     const state = get(page).state;
     if (state.fromHref) {
       fromHref = state.fromHref;

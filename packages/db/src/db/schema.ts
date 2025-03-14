@@ -10,6 +10,8 @@ export const channelsTable = sqliteTable('channels', {
   createdAt: integer('createdAt').notNull(),
 });
 
+// TODO*
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 export const ownersTable = sqliteTable(
   'owners',
   {
@@ -26,6 +28,8 @@ export const ownersTable = sqliteTable(
   },
 );
 
+// TODO*
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 export const announcementsTable = sqliteTable(
   'announcements',
   {
