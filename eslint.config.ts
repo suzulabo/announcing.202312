@@ -9,6 +9,9 @@ import ts, { type InfiniteDepthConfigWithExtends } from 'typescript-eslint';
 const jsConfig: InfiniteDepthConfigWithExtends = {
   files: ['**/*.js'],
   extends: [js.configs.recommended],
+  rules: {
+    eqeqeq: 'error',
+  },
 };
 
 const tsConfig: InfiniteDepthConfigWithExtends = {
@@ -21,6 +24,7 @@ const tsConfig: InfiniteDepthConfigWithExtends = {
     },
   },
   rules: {
+    ...jsConfig.rules,
     'require-await': 'off',
     '@typescript-eslint/require-await': 'error',
     '@typescript-eslint/no-floating-promises': 'error',
