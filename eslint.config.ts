@@ -37,6 +37,7 @@ const tsConfig: InfiniteDepthConfigWithExtends = {
         allowNumber: true,
       },
     ],
+    '@typescript-eslint/no-deprecated': 'error',
   },
 };
 
