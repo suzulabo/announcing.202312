@@ -41,7 +41,7 @@
       <MaterialSymbolsLanguage />Language
     </div>
     <div class="language-grid">
-      {#each localeValues as [locale_, label]}
+      {#each localeValues as [locale_, label] (locale_)}
         <button
           class="unstyled"
           onclick={() => {
@@ -66,7 +66,7 @@
     </div>
 
     <div class="theme-buttons">
-      {#each themes as [theme_, label]}
+      {#each themes as [theme_, label] (theme_)}
         <button
           class="unstyled"
           onclick={() => {

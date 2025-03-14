@@ -19,16 +19,16 @@
     "check": "pnpm run build && pnpm run format && pnpm run lint && pnpm -r run test && pnpm -r run check"
   },
   "devDependencies": {
-    "@eslint/js": "^9.18.0",
+    "@eslint/js": "^9.22.0",
     "@types/eslint-config-prettier": "^6.11.3",
-    "eslint": "^9.18.0",
-    "eslint-config-prettier": "^10.0.1",
-    "eslint-plugin-svelte": "^2.46.1",
-    "prettier": "^3.4.2",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-svelte": "^3.1.0",
+    "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-svelte": "^3.3.3",
-    "svelte-eslint-parser": "^0.43.0",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "8.20.0"
+    "svelte-eslint-parser": "^1.0.1",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "8.26.1"
   }
 }
