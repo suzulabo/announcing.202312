@@ -5,7 +5,6 @@
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import svelte from 'eslint-plugin-svelte';
-import globals from 'globals';
 import svelteParser from 'svelte-eslint-parser';
 import ts from 'typescript-eslint';
 
@@ -15,12 +14,12 @@ const jsConfig = ts.config({
 });
 
 const tsConfig = ts.config({
-  files: ['**/*.ts', '**/*.svelte'],
+  files: ['**/*.ts', '**/*.svelte', '**/*.svelte.ts'],
   extends: [js.configs.recommended, ...ts.configs.strict, ...ts.configs.stylistic],
   languageOptions: {
     parserOptions: {
       project: true,
-      extraFileExtensions: ['.svelte'],
+      extraFileExtensions: ['.svelte', '**/*.svelte.ts'],
     },
   },
   rules: {
@@ -40,12 +39,9 @@ const tsConfig = ts.config({
 });
 
 const svelteConfig = ts.config({
-  files: ['**/*.svelte'],
+  files: ['**/*.svelte', '**/*.svelte.ts'],
   extends: [...svelte.configs['flat/recommended'], ...svelte.configs['flat/prettier']],
   languageOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    globals: { ...globals.node, ...globals.browser },
     parser: svelteParser,
     parserOptions: {
       parser: ts.parser,
