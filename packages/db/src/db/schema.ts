@@ -10,8 +10,6 @@ export const channelsTable = sqliteTable('channels', {
   createdAt: integer('createdAt').notNull(),
 });
 
-// TODO*
-// eslint-disable-next-line @typescript-eslint/no-deprecated
 export const ownersTable = sqliteTable(
   'owners',
   {
@@ -22,14 +20,10 @@ export const ownersTable = sqliteTable(
     createdAt: integer('createdAt').notNull(),
   },
   (table) => {
-    return {
-      pk: primaryKey({ columns: [table.channelID, table.userID] }),
-    };
+    return [primaryKey({ columns: [table.channelID, table.userID] })];
   },
 );
 
-// TODO*
-// eslint-disable-next-line @typescript-eslint/no-deprecated
 export const announcementsTable = sqliteTable(
   'announcements',
   {
@@ -46,9 +40,7 @@ export const announcementsTable = sqliteTable(
     createdAt: integer('createdAt').notNull(),
   },
   (table) => {
-    return {
-      pk: primaryKey({ columns: [table.channelID, table.announcementID] }),
-    };
+    return [primaryKey({ columns: [table.channelID, table.announcementID] })];
   },
 );
 
