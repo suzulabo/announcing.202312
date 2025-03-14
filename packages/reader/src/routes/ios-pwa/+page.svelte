@@ -58,7 +58,7 @@
   <div class="desc">{$LL.setupNotification.description()}</div>
 
   <div class="browser-schemas">
-    {#each browserSchemas as [name, schema]}
+    {#each browserSchemas as [name, schema] (name)}
       <Radio bind:value={browserSchema} selectedValue={schema}>{name}</Radio>
     {/each}
   </div>

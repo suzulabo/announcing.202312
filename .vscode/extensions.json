@@ -3,7 +3,6 @@
     "dbaeumer.vscode-eslint",
     "ms-vscode.vscode-typescript-next",
     "esbenp.prettier-vscode",
-    "svelte.svelte-vscode",
-    "editorconfig.editorconfig"
+    "svelte.svelte-vscode"
   ]
 }

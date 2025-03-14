@@ -73,7 +73,7 @@
         </div>
       {:else}
         <div class="images-grid">
-          {#each announcement.images as image}
+          {#each announcement.images as image (image)}
             <div
               role="button"
               tabindex="0"

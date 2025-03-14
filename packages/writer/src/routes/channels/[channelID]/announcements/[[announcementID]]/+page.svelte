@@ -150,7 +150,7 @@
   <div class="images-box">
     <div class="images">
       {#if form.images}
-        {#each form.images as image}
+        {#each form.images as image (image)}
           <div class="img-box">
             <img alt="" use:imgSrc={image} />
             <button

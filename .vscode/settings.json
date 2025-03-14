@@ -1,8 +1,6 @@
 {
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "eslint.validate": ["javascript", "javascriptreact", "svelte"],
-  "eslint.useFlatConfig": true,
-  "svelte.enable-ts-plugin": true,
+  "eslint.validate": ["svelte"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"

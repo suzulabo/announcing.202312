@@ -17,7 +17,7 @@
 
   {#if values}
     <div class="images">
-      {#each values as value}
+      {#each values as value (value)}
         <button
           class="unstyled"
           onclick={() => {
