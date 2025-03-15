@@ -1,29 +1,30 @@
 import { drizzle as drizzleLibSql, type LibSQLDatabase } from 'drizzle-orm/libsql';
-import process from 'node:process';
 
-const createDB = () => {
-  const { DB_URL, DB_AUTH_TOKEN } = process.env;
-  if (!DB_URL) {
-    throw new Error('DB_URL is not set');
-  }
-
-  if (DB_AUTH_TOKEN) {
-    return drizzleLibSql({
-      connection: {
-        url: DB_URL,
-        authToken: DB_AUTH_TOKEN,
-      },
-    });
-  } else {
-    return drizzleLibSql({
-      connection: {
-        url: DB_URL,
-      },
-    });
-  }
+type DBEnv = {
+  url: string;
+  authToken?: string | undefined;
 };
 
+let env: DBEnv | undefined = undefined;
 let db: LibSQLDatabase | undefined;
+
+const createDB = () => {
+  if (!env) {
+    throw new Error('DBEnv is not set');
+  }
+
+  const { url, authToken } = env;
+  return drizzleLibSql({
+    connection: {
+      url,
+      ...(authToken && { authToken }),
+    },
+  });
+};
+
+export const setDBEnv = (v: DBEnv) => {
+  env = v;
+};
 
 export const getDB = (forceCreate = false): LibSQLDatabase => {
   if (!db || forceCreate) {
