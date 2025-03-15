@@ -10,7 +10,7 @@ const runIfEnv = params && bucket ? test : test.skip;
 
 describe('S3Storage Tests', () => {
   runIfEnv('Put and Get', async () => {
-    const storage = createS3Storage();
+    const storage = createS3Storage(params as string, bucket as string);
     const image = toPng(new Date(), 100);
     const blob = new Blob([image], { type: 'image/png' });
 
