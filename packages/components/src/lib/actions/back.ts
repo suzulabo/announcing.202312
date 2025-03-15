@@ -1,6 +1,5 @@
 import { afterNavigate, replaceState } from '$app/navigation';
-import { page } from '$app/stores';
-import { get } from 'svelte/store';
+import { page } from '$app/state';
 
 /*
  Save the 'from' href of afterNavigate in page.state for prioritized use.
@@ -14,9 +13,7 @@ export const setupBack = () => {
   let fromHref: string | undefined;
 
   afterNavigate((params) => {
-    // TODO*
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    const state = get(page).state;
+    const state = page.state;
     if (state.fromHref) {
       fromHref = state.fromHref;
       return;
