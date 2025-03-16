@@ -12,11 +12,9 @@
     "gen-messages": "tsx src/genMessages.ts && prettier --write src/i18n/*/index.ts",
     "build": "pnpm run gen-messages && typesafe-i18n --no-watch && tsc -p tsconfig.build.json"
   },
-  "dependencies": {
-    "typesafe-i18n": "^5.26.2"
-  },
   "devDependencies": {
-    "@types/node": "^22.10.7",
-    "tsx": "^4.19.2"
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typesafe-i18n": "^5.26.2"
   }
 }
