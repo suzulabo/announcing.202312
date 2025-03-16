@@ -27,6 +27,7 @@ const getFirebaseMessaging = () => {
 };
 
 const schema = v.object({
+  // TODO: Add schema
   message: v.custom<MulticastMessage>(() => true),
 });
 const schemaParser = v.parser(schema);
