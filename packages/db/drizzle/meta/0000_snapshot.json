@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "f94be3f7-0681-469e-9446-b49e2f0e5962",
+  "id": "247bc952-8b53-474e-8e19-cab579c16d82",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "announcements": {
@@ -96,44 +96,37 @@
           "name": "announcements_channelID_announcementID_pk"
         }
       },
-      "uniqueConstraints": {}
-    },
-    "blobs": {
-      "name": "blobs",
-      "columns": {
-        "blobID": {
-          "name": "blobID",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "channelID": {
+          "name": "channelID",
+          "value": "octet_length(\"announcements\".\"channelID\") BETWEEN 1 AND 8"
         },
-        "contentType": {
-          "name": "contentType",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+        "userID": {
+          "name": "userID",
+          "value": "octet_length(\"announcements\".\"userID\") BETWEEN 1 AND 256"
         },
-        "blob": {
-          "name": "blob",
-          "type": "blob",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+        "announcementID": {
+          "name": "announcementID",
+          "value": "octet_length(\"announcements\".\"announcementID\") BETWEEN 1 AND 6"
         },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+        "headerImage": {
+          "name": "headerImage",
+          "value": "\"announcements\".\"headerImage\" IS NULL OR octet_length(\"announcements\".\"headerImage\") <= 100"
+        },
+        "title": {
+          "name": "title",
+          "value": "\"announcements\".\"title\" IS NULL OR octet_length(\"announcements\".\"title\") <= 200"
+        },
+        "body": {
+          "name": "body",
+          "value": "octet_length(\"announcements\".\"body\") BETWEEN 1 AND 2000"
+        },
+        "images": {
+          "name": "images",
+          "value": "\"announcements\".\"images\" IS NULL OR json_type(\"announcements\".\"images\") = 'array'"
         }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      }
     },
     "channels": {
       "name": "channels",
@@ -191,7 +184,29 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "channelID": {
+          "name": "channelID",
+          "value": "octet_length(\"channels\".\"channelID\") BETWEEN 1 AND 8"
+        },
+        "name": {
+          "name": "name",
+          "value": "octet_length(\"channels\".\"name\") BETWEEN 1 AND 150"
+        },
+        "desc": {
+          "name": "desc",
+          "value": "\"channels\".\"desc\" IS NULL OR octet_length(\"channels\".\"desc\") <= 1000"
+        },
+        "icon": {
+          "name": "icon",
+          "value": "\"channels\".\"icon\" IS NULL OR octet_length(\"channels\".\"icon\") <= 1000000"
+        },
+        "announcementIDs": {
+          "name": "announcementIDs",
+          "value": "\"channels\".\"announcementIDs\" IS NULL OR json_type(\"channels\".\"announcementIDs\") = 'array'"
+        }
+      }
     },
     "owners": {
       "name": "owners",
@@ -243,9 +258,20 @@
           "name": "owners_channelID_userID_pk"
         }
       },
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "channelID": {
+          "name": "channelID",
+          "value": "octet_length(\"owners\".\"channelID\") BETWEEN 1 AND 8"
+        },
+        "userID": {
+          "name": "userID",
+          "value": "octet_length(\"owners\".\"userID\") BETWEEN 1 AND 256"
+        }
+      }
     }
   },
+  "views": {},
   "enums": {},
   "_meta": {
     "schemas": {},
