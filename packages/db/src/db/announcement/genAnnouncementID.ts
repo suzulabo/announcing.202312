@@ -1,7 +1,7 @@
 import { createHash } from 'crypto';
 
 import { base62 } from '../../lib/base62';
-import { ANNOUNCEMENT_ID_SIZE } from '../../lib/constants';
+import { ANNOUNCEMENT_ID_LENGTH } from '../../lib/constants';
 
 export const genAnnouncementID = ({
   headerImage,
@@ -40,5 +40,5 @@ export const genAnnouncementID = ({
 
   const digest = hash.digest();
 
-  return base62.encode(new Uint8Array(digest.buffer)).substring(0, ANNOUNCEMENT_ID_SIZE);
+  return base62.encode(new Uint8Array(digest.buffer)).substring(0, ANNOUNCEMENT_ID_LENGTH);
 };
