@@ -200,9 +200,6 @@ importers:
       tsx:
         specifier: ^4.19.3
         version: 4.19.3
-      valibot:
-        specifier: 1.0.0-rc.4
-        version: 1.0.0-rc.4(typescript@5.8.2)
       vitest:
         specifier: ^3.0.8
         version: 3.0.8(@types/node@22.13.10)(jiti@2.4.2)(jsdom@24.1.1)(sass@1.83.4)(terser@5.36.0)(tsx@4.19.3)
@@ -5131,14 +5128,6 @@ packages:
       typescript:
         optional: true
 
-  valibot@1.0.0-rc.4:
-    resolution: {integrity: sha512-VRaChgFv7Ab0P54AMLu7+GqoexdTPQ54Plj59X9qV0AFozI3j9CGH43skg+TqgMpXnrW8jxlJ2TTHAtAD3t4qA==}
-    peerDependencies:
-      typescript: '>=5'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
   validate-npm-package-name@4.0.0:
     resolution: {integrity: sha512-mzR0L8ZDktZjpX4OB46KT+56MAhl4EIazWP/+G/HPGuvfdaqg4YsCdtOm6U9+LOFyYDoh4dpnpxZRB9MQQns5Q==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
@@ -8089,7 +8078,7 @@ snapshots:
 
   '@types/better-sqlite3@7.6.12':
     dependencies:
-      '@types/node': 22.10.7
+      '@types/node': 22.13.10
 
   '@types/body-parser@1.19.5':
     dependencies:
@@ -10761,10 +10750,6 @@ snapshots:
   uuid@9.0.1: {}
 
   valibot@1.0.0-beta.12(typescript@5.8.2):
-    optionalDependencies:
-      typescript: 5.8.2
-
-  valibot@1.0.0-rc.4(typescript@5.8.2):
     optionalDependencies:
       typescript: 5.8.2
 

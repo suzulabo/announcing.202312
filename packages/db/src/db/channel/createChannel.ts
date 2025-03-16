@@ -1,37 +1,18 @@
 import { count, eq } from 'drizzle-orm';
 
-import * as v from 'valibot';
-import {
-  CHANNEL_DESC_MAX_BYTES,
-  CHANNEL_ICON_MAX_BYTES,
-  CHANNEL_ID_MAX_BYTES,
-  CHANNEL_NAME_MAX_BYTES,
-  USER_ID_MAX_BYTES,
-} from '../../lib/constants';
 import { putStorageData } from '../../storage/storage';
 import { getDB } from '../db';
 import { channelsTable, ownersTable } from '../schema';
 
-const paramsSchema = v.object({
-  userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
-  channelID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_ID_MAX_BYTES)),
-  name: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_NAME_MAX_BYTES)),
-  desc: v.union([v.pipe(v.string(), v.maxBytes(CHANNEL_DESC_MAX_BYTES)), v.undefined()]),
-  icon: v.union([
-    v.pipe(
-      v.blob(),
-      v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
-      v.maxSize(CHANNEL_ICON_MAX_BYTES),
-    ),
-    v.undefined(),
-  ]),
-});
-
-type Params = v.InferOutput<typeof paramsSchema>;
+type Params = {
+  userID: string;
+  channelID: string;
+  name: string;
+  desc?: string | undefined;
+  icon?: Blob | undefined;
+};
 
 export const createChannel = async (params: Params) => {
-  v.assert(paramsSchema, params);
-
   const { userID, channelID, name, desc, icon } = params;
 
   const db = getDB();
