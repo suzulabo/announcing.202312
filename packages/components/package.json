@@ -99,7 +99,6 @@
     "@types/autosize": "^4.0.3",
     "@types/image-blob-reduce": "^4.1.4",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^22.10.7",
     "autosize": "^6.0.1",
     "base-x": "^5.0.0",
     "date-fns": "^4.1.0",
