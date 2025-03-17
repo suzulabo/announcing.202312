@@ -89,12 +89,12 @@
   "devDependencies": {
     "@announcing/db": "workspace:^",
     "@announcing/i18n": "workspace:^",
-    "@faker-js/faker": "^9.4.0",
+    "@faker-js/faker": "^9.6.0",
     "@kvs/indexeddb": "^2.1.4",
-    "@playwright/test": "^1.49.1",
+    "@playwright/test": "^1.51.0",
     "@sveltejs/adapter-auto": "^4.0.0",
-    "@sveltejs/kit": "^2.16.0",
-    "@sveltejs/package": "^2.3.7",
+    "@sveltejs/kit": "^2.19.2",
+    "@sveltejs/package": "^2.3.10",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
     "@types/autosize": "^4.0.3",
     "@types/image-blob-reduce": "^4.1.4",
@@ -104,12 +104,12 @@
     "image-blob-reduce": "^4.1.0",
     "js-cookie": "^3.0.5",
     "linkify-html": "^4.2.0",
-    "publint": "^0.3.2",
-    "sass": "^1.83.4",
-    "svelte": "^5.19.0",
-    "svelte-check": "^4.1.4",
+    "publint": "^0.3.9",
+    "sass": "^1.85.1",
+    "svelte": "^5.23.1",
+    "svelte-check": "^4.1.5",
     "the-new-css-reset": "^1.11.3",
-    "vite": "^6.0.7",
-    "vitest": "^3.0.2"
+    "vite": "^6.2.2",
+    "vitest": "^3.0.8"
   }
 }
