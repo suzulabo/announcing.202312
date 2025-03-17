@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { imgSrc } from '$lib/actions/imgSrc';
   import FileInput from '$lib/atoms/FileInput.svelte';
+  import { tick } from 'svelte';
 
   let fileInput = $state<ReturnType<typeof FileInput>>();
   let values: string[] | undefined = $state();
@@ -13,7 +13,23 @@
     }}>Open</button
   >
 
-  <FileInput bind:this={fileInput} bind:values accept="*/image" filesCount={4} />
+  <FileInput
+    bind:this={fileInput}
+    accept="image/*"
+    filesCount={4}
+    onInputs={async (inputs) => {
+      values = inputs.map(([, blob]) => {
+        return URL.createObjectURL(blob);
+      });
+      try {
+        await tick();
+      } finally {
+        values.forEach((value) => {
+          URL.revokeObjectURL(value);
+        });
+      }
+    }}
+  />
 
   {#if values}
     <div class="images">
@@ -24,7 +40,7 @@
             values = values?.filter((v) => v !== value);
           }}
         >
-          <img alt="" use:imgSrc={value} />
+          <img alt={value} src={value} />
         </button>
       {/each}
     </div>

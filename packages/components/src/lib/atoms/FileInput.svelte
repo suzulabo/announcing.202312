@@ -1,29 +1,24 @@
 <script lang="ts">
   import reduce from 'image-blob-reduce';
 
-  import { saveBlob } from '$lib/utils/idbBlob';
-
+  import { getBlobHash } from '$lib/utils/getBlobHash';
   import Loading from './Loading.svelte';
 
   interface Props {
-    value?: string | undefined;
-    values?: string[] | undefined;
     accept?: string | undefined;
     maxImageSize?: number | undefined;
     filesCount?: number;
+    onInput?: (blob: Blob, hash: string) => void | Promise<void>;
+    onInputs?: (inputs: [string, Blob][]) => void | Promise<void>;
   }
 
   let {
-    value = $bindable(undefined),
-    values = $bindable(undefined),
     accept = undefined,
     maxImageSize = undefined,
     filesCount = 1,
+    onInput,
+    onInputs,
   }: Props = $props();
-
-  // TODO: https://github.com/sveltejs/svelte/issues/12118
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  value;
 
   let loading = $state(false);
   let fileInput: HTMLInputElement;
@@ -39,9 +34,9 @@
       return;
     }
 
-    const newValues = new Set(values);
-
     loading = true;
+
+    const filesMap = new Map<string, Blob>();
 
     try {
       for (let i = 0; i < filesCount; i++) {
@@ -49,9 +44,10 @@
 
         if (!f) break;
 
+        const hash = await getBlobHash(f);
+
         if (!maxImageSize) {
-          const id = await saveBlob(f);
-          newValues.add(id);
+          filesMap.set(hash, f);
           continue;
         }
 
@@ -64,17 +60,22 @@
           unsharpThreshold: 1,
         });
 
-        newValues.add(await saveBlob(reduced));
+        filesMap.set(hash, reduced);
       }
 
-      if (filesCount > 1) {
-        values = [...newValues.values()].slice(0, filesCount);
-      } else {
-        value = newValues.values().next().value;
+      if (filesCount === 1 && onInput) {
+        const entry = filesMap.entries().next().value;
+        if (entry) {
+          await onInput(entry[1], entry[0]);
+        }
+      } else if (onInputs) {
+        const inputs = [...filesMap.entries()];
+        if (inputs.length > 0) {
+          await onInputs(inputs);
+        }
       }
-
-      fileInput.value = '';
     } finally {
+      fileInput.value = '';
       loading = false;
     }
   };

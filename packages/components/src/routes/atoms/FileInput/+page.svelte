@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { imgSrc } from '$lib/actions/imgSrc';
   import FileInput from '$lib/atoms/FileInput.svelte';
+  import { tick } from 'svelte';
 
   let fileInput = $state<ReturnType<typeof FileInput>>();
 
@@ -14,11 +14,22 @@
     }}>Open</button
   >
 
-  <FileInput bind:this={fileInput} bind:value accept="*/image" />
+  <FileInput
+    bind:this={fileInput}
+    accept="image/*"
+    onInput={async (blob) => {
+      value = URL.createObjectURL(blob);
+      try {
+        await tick();
+      } finally {
+        URL.revokeObjectURL(value);
+      }
+    }}
+  />
 
   {#if value}
     <div>
-      <img alt="" use:imgSrc={value} />
+      <img alt="" src={value} />
     </div>
     <div>
       {value}
