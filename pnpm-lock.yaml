@@ -50,6 +50,9 @@ importers:
 
   packages/components:
     devDependencies:
+      '@announcing/db':
+        specifier: workspace:^
+        version: link:../db
       '@announcing/i18n':
         specifier: workspace:^
         version: link:../i18n
@@ -86,9 +89,6 @@ importers:
       autosize:
         specifier: ^6.0.1
         version: 6.0.1
-      base-x:
-        specifier: ^5.0.0
-        version: 5.0.0
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -2819,9 +2819,6 @@ packages:
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
-
-  base-x@5.0.0:
-    resolution: {integrity: sha512-sMW3VGSX1QWVFA6l8U62MLKz29rRfpTlYdCqLdpLo1/Yd4zZwSbnUaDfciIAowAqvq7YFnWq9hrhdg1KYgc1lQ==}
 
   base-x@5.0.1:
     resolution: {integrity: sha512-M7uio8Zt++eg3jPj+rHMfCC+IuygQHHCOU+IYsVtik6FWjuYpVt/+MRKcgsAMHh8mMFAwnB+Bs+mTrFiXjMzKg==}
@@ -7805,8 +7802,6 @@ snapshots:
   axobject-query@4.1.0: {}
 
   balanced-match@1.0.2: {}
-
-  base-x@5.0.0: {}
 
   base-x@5.0.1: {}
 

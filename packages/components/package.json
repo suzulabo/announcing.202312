@@ -87,6 +87,7 @@
     "svelte": "^4.0.0"
   },
   "devDependencies": {
+    "@announcing/db": "workspace:^",
     "@announcing/i18n": "workspace:^",
     "@faker-js/faker": "^9.4.0",
     "@kvs/indexeddb": "^2.1.4",
@@ -99,7 +100,6 @@
     "@types/image-blob-reduce": "^4.1.4",
     "@types/js-cookie": "^3.0.6",
     "autosize": "^6.0.1",
-    "base-x": "^5.0.0",
     "date-fns": "^4.1.0",
     "image-blob-reduce": "^4.1.0",
     "js-cookie": "^3.0.5",

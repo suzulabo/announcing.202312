@@ -1,6 +1,6 @@
 import { kvsIndexedDB } from '@kvs/indexeddb';
 
-import { base62 } from './base62';
+import { base62 } from '@announcing/db/utils';
 
 const getDB = () => {
   return kvsIndexedDB<Record<string, Blob>>({
