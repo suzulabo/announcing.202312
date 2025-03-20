@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { setupBack } from '$lib/actions/back';
 
   const back = setupBack();
 
-  let id = $derived(+($page.params['id'] ?? '0'));
+  let id = $derived(+(page.params['id'] ?? '0'));
 </script>
 
 <div class="container">
