@@ -2,8 +2,7 @@
   import { LL } from '@announcing/i18n';
 
   import { pushState } from '$app/navigation';
-  import { page } from '$app/stores';
-  import { imgSrc } from '$lib/actions/imgSrc';
+  import { page } from '$app/state';
   import Modal from '$lib/atoms/Modal.svelte';
   import { formatDate } from '$lib/utils/formatDate';
   import { toHtml } from '$lib/utils/toHtml';
@@ -16,10 +15,10 @@
 
   let { announcement }: Props = $props();
 
-  let imageModalSrc: string | undefined = $derived($page.state.announcementViewZoomImage?.src);
+  let imageModalSrc: string | undefined = $derived(page.state.announcementViewZoomImage?.src);
 
   const showImageModal = (src: string) => {
-    pushState('', { ...$page.state, announcementViewZoomImage: { src } });
+    pushState('', { ...page.state, announcementViewZoomImage: { src } });
   };
 </script>
 
@@ -33,7 +32,7 @@
         }
       }}
     >
-      <img class="header-image" alt="" use:imgSrc={announcement.headerImage} />
+      <img class="header-image" alt="" src={announcement.headerImage} />
     </button>
   {/if}
   <div class="date">
@@ -69,7 +68,7 @@
             // TODO
           }}
         >
-          <img class="single-image" use:imgSrc={image} alt="" />
+          <img class="single-image" src={image} alt="" />
         </div>
       {:else}
         <div class="images-grid">
@@ -85,7 +84,7 @@
                 // TODO
               }}
             >
-              <img use:imgSrc={image} alt="" />
+              <img src={image} alt="" />
             </div>
           {/each}
         </div>
@@ -98,13 +97,13 @@
   open={!!imageModalSrc}
   dismissMode="anywhere"
   onDismiss={() => {
-    const src = $page.state.announcementViewZoomImage?.src;
+    const src = page.state.announcementViewZoomImage?.src;
     if (src) {
       history.back();
     }
   }}
 >
-  <div class="zoom-image"><img use:imgSrc={imageModalSrc} alt="" /></div>
+  <div class="zoom-image"><img src={imageModalSrc} alt="" /></div>
 </Modal>
 
 <style lang="scss">

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { imgSrc } from '$lib/actions/imgSrc';
   import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
   import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
   import { formatDate } from '$lib/utils/formatDate';
@@ -22,7 +21,7 @@
     <div class="date">{formatDate(announcement.createdAt)}</div>
     <div class="title-box">
       {#if announcement.headerImage}
-        <img use:imgSrc={announcement.headerImage} alt="" />
+        <img src={announcement.headerImage} alt="" />
       {/if}
       {#if announcement.title}
         <div class="title">{announcement.title}</div>

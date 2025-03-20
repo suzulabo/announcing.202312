@@ -24,10 +24,6 @@
       "types": "./dist/actions/back.d.ts",
       "import": "./dist/actions/back.js"
     },
-    "./actions/imgSrc": {
-      "types": "./dist/actions/imgSrc.d.ts",
-      "import": "./dist/actions/imgSrc.js"
-    },
     "./base.scss": "./dist/base.scss",
     "./AnnouncementView.svelte": {
       "types": "./dist/parts/AnnouncementView/AnnouncementView.svelte.d.ts",

@@ -7,7 +7,6 @@
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
   import type { ChannelViewProps } from '../ChannelView.svelte';
   import Item from './Item.svelte';
-  import { imgSrc } from '$lib/actions/imgSrc';
 
   let { channel, announcementHrefPrefix, announcementKeys, announcementLoader }: ChannelViewProps =
     $props();
@@ -19,7 +18,7 @@
       {channel.name}
     </div>
     {#if channel.icon}
-      <img class="icon" alt={channel.name} use:imgSrc={channel.icon} />
+      <img class="icon" alt={channel.name} src={channel.icon} />
     {/if}
   </div>
   {#if channel.desc}
