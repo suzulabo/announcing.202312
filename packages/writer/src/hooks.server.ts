@@ -1,15 +1,13 @@
 import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-import process from 'node:process';
 
 import { env } from '$env/dynamic/private';
 import { CF } from '$env/static/private';
-import { setStorage } from '@announcing/db';
+import { setDBEnv, setStorage } from '@announcing/db';
 import { createTriggerClient } from '@announcing/notification/tasks/trigger.dev';
 import { handle as authenticationHandle } from './auth';
 
-process.env['DB_URL'] = env.DB_URL;
-process.env['DB_AUTH_TOKEN'] = env.DB_AUTH_TOKEN;
+setDBEnv({ url: env.DB_URL, authToken: env.DB_AUTH_TOKEN });
 
 if (!CF) {
   const createLocalStorage = (await import('@announcing/db/LocalStorage')).createLocalStorage;
