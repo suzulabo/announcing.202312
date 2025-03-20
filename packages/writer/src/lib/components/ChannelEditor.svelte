@@ -1,25 +1,25 @@
-<script lang="ts" module>
-  export type Channel = {
-    icon?: string | undefined;
-    name?: string | undefined;
-    desc?: string | undefined;
-  };
-</script>
-
 <script lang="ts">
-  import { imgSrc } from '@announcing/components/actions/imgSrc';
+  import { resolveStoragePath } from '$lib/utils/resolveStoragePath';
+
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
   import Modal from '@announcing/components/Modal.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
-  import { loadBlob } from '@announcing/components/utils';
   import {
     CHANNEL_DESC_MAX_BYTES,
     CHANNEL_ICON_MAX_SIZE,
     CHANNEL_NAME_MAX_BYTES,
   } from '@announcing/db/constants';
   import { LL } from '@announcing/i18n';
+  import { tick } from 'svelte';
+
+  export type Channel = {
+    icon?: string | undefined;
+    iconBlob?: Blob | undefined;
+    name?: string | undefined;
+    desc?: string | undefined;
+  };
 
   interface Props {
     onSubmit: (formData: FormData) => Promise<void>;
@@ -27,10 +27,31 @@
 
   let { onSubmit }: Props = $props();
 
+  let open = $state(false);
+  let loading = $state(false);
+  let creating = $state(false);
+  let form = $state<Channel>({});
+  let nameError = $state(false);
+  let descError = $state(false);
+  let validated = $derived(!!form.name && !nameError && !descError);
+
+  let fileInput: ReturnType<typeof FileInput>;
+
   export const openEditor = (channel?: Channel) => {
     form = { ...channel };
     creating = !channel;
     open = true;
+  };
+
+  const iconFileInputHandler = async (iconBlob: Blob) => {
+    const icon = URL.createObjectURL(iconBlob);
+
+    try {
+      form = { ...form, icon, iconBlob };
+      await tick();
+    } finally {
+      URL.revokeObjectURL(icon);
+    }
   };
 
   const submitClickHandler = async () => {
@@ -38,7 +59,7 @@
     if (form.name) formData.append('name', form.name);
     if (form.desc) formData.append('desc', form.desc);
     if (form.icon) {
-      const blob = await loadBlob(form.icon);
+      const blob = form.iconBlob;
       if (blob) {
         formData.append('icon', blob);
       } else {
@@ -54,16 +75,6 @@
       loading = false;
     }
   };
-
-  let open = $state(false);
-  let loading = $state(false);
-  let creating = $state(false);
-  let form = $state<Channel>({});
-  let nameError = $state(false);
-  let descError = $state(false);
-  let validated = $derived(!!form.name && !nameError && !descError);
-
-  let fileInput: ReturnType<typeof FileInput>;
 </script>
 
 <Modal bind:open dismissMode="none">
@@ -88,7 +99,7 @@
             }}
           >
             {#if form.icon}
-              <img class="icon" alt="icon preview" use:imgSrc={form.icon} />
+              <img class="icon" alt="icon preview" src={resolveStoragePath(form.icon)} />
             {/if}
           </button>
           <button
@@ -111,7 +122,7 @@
           accept="image/jpeg,image/png,image/webp"
           maxImageSize={CHANNEL_ICON_MAX_SIZE}
           bind:this={fileInput}
-          bind:value={form.icon}
+          onInput={iconFileInputHandler}
         />
       </div>
     </div>

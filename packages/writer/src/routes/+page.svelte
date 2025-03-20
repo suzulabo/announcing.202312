@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { imgSrc } from '@announcing/components/actions/imgSrc';
   import { LL } from '@announcing/i18n';
 
   import { invalidateAll } from '$app/navigation';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
 
   import type { PageServerData } from './$types';
+  import { resolveStoragePath } from '$lib/utils/resolveStoragePath';
 
   interface Props {
     data: PageServerData;
@@ -36,7 +36,7 @@
               {channel.name}
             </span>
             {#if channel.icon}
-              <img alt="icon" use:imgSrc={channel.icon} />
+              <img alt="icon" src={resolveStoragePath(channel.icon)} />
             {/if}
           </div>
         </a>

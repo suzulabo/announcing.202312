@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { imgSrc } from '@announcing/components/actions/imgSrc';
   import { LL } from '@announcing/i18n';
 
   import { goto, invalidateAll } from '$app/navigation';
@@ -16,6 +15,7 @@
   import MaterialSymbolsEditDocumentOutline from '$lib/components/icon/MaterialSymbolsEditDocumentOutline.svelte';
   import MaterialSymbolsBoxEditOutline from '$lib/components/icon/MaterialSymbolsBoxEditOutline.svelte';
   import MaterialSymbolsDangerous from '$lib/components/icon/MaterialSymbolsDangerous.svelte';
+  import { resolveStoragePath } from '$lib/utils/resolveStoragePath';
 
   interface Props {
     data: PageData;
@@ -61,7 +61,7 @@
   <div class="name-box">
     <span class="name">{channel.name}</span>
     {#if channel.icon}
-      <img class="icon" alt="channel icon" use:imgSrc={channel.icon} />
+      <img class="icon" alt="channel icon" src={resolveStoragePath(channel.icon)} />
     {/if}
   </div>
 

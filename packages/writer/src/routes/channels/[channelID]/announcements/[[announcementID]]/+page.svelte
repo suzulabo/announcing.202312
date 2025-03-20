@@ -20,7 +20,6 @@
 </script>
 
 <script lang="ts">
-  import { imgSrc } from '@announcing/components/actions/imgSrc';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
@@ -38,6 +37,7 @@
 
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
+  import { resolveStoragePath } from '$lib/utils/resolveStoragePath';
 
   interface Props {
     data: PageData;
@@ -107,7 +107,7 @@
           headerImageFileInput.open();
         }}
       >
-        <img class="icon" alt="icon preview" use:imgSrc={form.headerImage} />
+        <img class="icon" alt="icon preview" src={resolveStoragePath(form.headerImage)} />
       </button>
       <button
         type="button"
@@ -128,7 +128,6 @@
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       bind:this={headerImageFileInput}
-      bind:value={form.headerImage}
     />
   </div>
   <Input
@@ -152,7 +151,7 @@
       {#if form.images}
         {#each form.images as image (image)}
           <div class="img-box">
-            <img alt="" use:imgSrc={image} />
+            <img alt="" src={resolveStoragePath(image)} />
             <button
               class="small filled"
               onclick={() => {
@@ -175,7 +174,6 @@
     <div class="desc">{$LL.addImageDescription()}</div>
     <FileInput
       bind:this={imagesFileInput}
-      bind:values={form.images}
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       filesCount={4}
