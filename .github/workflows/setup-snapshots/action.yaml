@@ -22,6 +22,6 @@ runs:
     - run: |
         pnpm --filter "@announcing/components"  --filter "@announcing/db" run build
         echo "AUTH_SECRET=$(openssl rand -hex 32)" > packages/writer/.env.local
-        echo "PUBLIC_TEST=1" >> packages/writer/.env.local
+        echo "PUBLIC_AUTH_CARDINALS=1" >> packages/writer/.env.local
       if: inputs.target == 'writer'
       shell: bash

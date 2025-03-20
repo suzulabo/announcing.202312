@@ -7,7 +7,7 @@
 
 <div class="container">
   <div class="buttons">
-    {#if env.PUBLIC_TEST}
+    {#if env.PUBLIC_AUTH_CARDINALS}
       <button
         onclick={() => {
           void signIn('credentials', { id: 'test_user01' });

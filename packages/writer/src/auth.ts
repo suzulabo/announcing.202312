@@ -18,7 +18,7 @@ const providers: SvelteKitAuthConfig['providers'] = [
   }),
 ];
 
-if (env.PUBLIC_TEST) {
+if (env.PUBLIC_AUTH_CARDINALS) {
   providers.push(
     Credentials({
       credentials: {
