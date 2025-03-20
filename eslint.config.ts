@@ -20,7 +20,7 @@ const tsConfig: InfiniteDepthConfigWithExtends = {
   languageOptions: {
     parserOptions: {
       project: true,
-      extraFileExtensions: ['.svelte', '**/*.svelte.ts'],
+      extraFileExtensions: ['.svelte', '.svelte.ts'],
     },
   },
   rules: {
