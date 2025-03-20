@@ -14,7 +14,7 @@ if (!CF) {
   setStorage(createLocalStorage());
 }
 
-const timingHandle: Handle = async ({ event, resolve }) => {
+const performanceHandle: Handle = async ({ event, resolve }) => {
   const start = performance.now();
 
   const response = await resolve(event);
@@ -45,7 +45,7 @@ const triggerClientHandle: Handle = ({ resolve, event }) => {
 };
 
 export const handle = sequence(
-  timingHandle,
+  ...(env.PERFORMANCE_HOOK ? [performanceHandle] : []),
   authenticationHandle,
   authorizationHandle,
   triggerClientHandle,
