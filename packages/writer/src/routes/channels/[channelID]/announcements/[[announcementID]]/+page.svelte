@@ -33,7 +33,7 @@
   import { onMount } from 'svelte';
 
   import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
 
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
@@ -84,13 +84,13 @@
 
     if (announcement) {
       announcementPreviewData.announcement.edit = {
-        announcementID: $page.params['announcementID'] as string,
+        announcementID: page.params['announcementID'] as string,
         updatedAt: announcement.updatedAt,
         createdAt: announcement.createdAt,
       };
     }
 
-    return goto(`${$page.url.pathname}/preview`, {
+    return goto(`${page.url.pathname}/preview`, {
       state: {
         announcementPreviewData,
       },

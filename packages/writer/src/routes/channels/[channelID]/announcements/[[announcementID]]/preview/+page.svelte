@@ -61,16 +61,14 @@
   import { LL } from '@announcing/i18n';
 
   import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
 
   import type { Snapshot } from './$types';
 
   let loading = $state(false);
-  let channelID = $derived($page.params['channelID'] as string);
-  let announcementID = $derived($page.params['announcementID']);
-  let previewData = $state<AnnouncementPreviewData | undefined>(
-    $page.state.announcementPreviewData,
-  );
+  let channelID = $derived(page.params['channelID'] as string);
+  let announcementID = $derived(page.params['announcementID']);
+  let previewData = $state<AnnouncementPreviewData | undefined>(page.state.announcementPreviewData);
 
   let [channel, announcement] = $derived.by(() => {
     if (!previewData) {
@@ -109,7 +107,7 @@
       return previewData;
     },
     restore: (value) => {
-      const stateData = $page.state.announcementPreviewData;
+      const stateData = page.state.announcementPreviewData;
       if (!stateData) {
         previewData = value;
       }

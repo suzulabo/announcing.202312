@@ -42,7 +42,7 @@
   import { LL, setupLocale } from '@announcing/i18n';
 
   import { browser } from '$app/environment';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
 
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import { setupBack } from '@announcing/components/actions/back';
@@ -59,9 +59,9 @@
 
   let theme = $state(Cookies.get('theme') ?? getSystemTheme());
   let locale = $state(data.locale);
-  let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
+  let headerBack = $derived<HeaderBack | undefined>(page.data['headerBack']);
   let siteNameElementAttrs = $derived(
-    data.userID && $page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' },
+    data.userID && page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' },
   );
 
   let settingsModal: ReturnType<typeof SettingsModal>;

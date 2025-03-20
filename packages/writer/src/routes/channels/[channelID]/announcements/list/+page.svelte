@@ -1,7 +1,7 @@
 <script lang="ts">
   import ChannelView, { type ChannelViewProps } from '@announcing/components/ChannelView.svelte';
 
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
 
   import { createSnapshotContext } from '@announcing/components/utils';
@@ -18,11 +18,11 @@
 
   let channelViewProps = $derived<ChannelViewProps>({
     channel: data.channel,
-    announcementHrefPrefix: $page.url.pathname,
+    announcementHrefPrefix: page.url.pathname,
     announcementKeys: data.channel.announcementIDs ?? [],
     announcementLoader: (key: string) => {
       return fetchAnnouncement({
-        channelID: $page.params['channelID'] as string,
+        channelID: page.params['channelID'] as string,
         announcementID: key,
       });
     },
