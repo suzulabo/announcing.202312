@@ -1,8 +1,6 @@
 import type { GetAnnouncementResult } from '@announcing/db/types';
 import { LRUCache } from 'lru-cache';
 
-import { promiseCache } from './promiseCache';
-
 const cache = new LRUCache<string, GetAnnouncementResult>({ max: 100 });
 
 export const fetchAnnouncement = (
@@ -24,7 +22,7 @@ export const fetchAnnouncement = (
 
   const url = `/api/channels/${channelID}/announcements/${announcementID}`;
 
-  return promiseCache(url, async () => {
+  return (async () => {
     const res = await fetch_(url);
     if (res.ok) {
       const data = await res.json();
@@ -33,5 +31,5 @@ export const fetchAnnouncement = (
     }
 
     throw new Error('Fetch Announcement Error');
-  });
+  })();
 };
