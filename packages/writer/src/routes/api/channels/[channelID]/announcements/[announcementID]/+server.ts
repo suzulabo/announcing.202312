@@ -9,6 +9,7 @@ import {
 } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 
+import { resolveAnnouncement } from '$lib/db/resolver';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ params }) => {
@@ -19,7 +20,7 @@ export const GET: RequestHandler = async ({ params }) => {
     error(404, 'Missing announcement');
   }
 
-  return json(result);
+  return json(resolveAnnouncement(result));
 };
 
 export const PUT: RequestHandler = async ({ locals, params, request }) => {

@@ -5,7 +5,6 @@
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
 
   import type { PageServerData } from './$types';
-  import { resolveStoragePath } from '$lib/utils/resolveStoragePath';
 
   interface Props {
     data: PageServerData;
@@ -36,7 +35,7 @@
               {channel.name}
             </span>
             {#if channel.icon}
-              <img alt="icon" src={resolveStoragePath(channel.icon)} />
+              <img alt="icon" src={channel.icon} />
             {/if}
           </div>
         </a>

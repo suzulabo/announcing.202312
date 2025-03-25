@@ -37,7 +37,7 @@
 
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
-  import { resolveStoragePath } from '$lib/utils/resolveStoragePath';
+  import { resolveStoragePath } from '$lib/db/resolver';
 
   interface Props {
     data: PageData;

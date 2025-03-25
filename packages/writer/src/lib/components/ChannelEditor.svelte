@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { resolveStoragePath } from '$lib/utils/resolveStoragePath';
-
+  import { resolveStoragePath } from '$lib/db/resolver';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';

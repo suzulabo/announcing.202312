@@ -15,7 +15,6 @@
   import MaterialSymbolsEditDocumentOutline from '$lib/components/icon/MaterialSymbolsEditDocumentOutline.svelte';
   import MaterialSymbolsBoxEditOutline from '$lib/components/icon/MaterialSymbolsBoxEditOutline.svelte';
   import MaterialSymbolsDangerous from '$lib/components/icon/MaterialSymbolsDangerous.svelte';
-  import { resolveStoragePath } from '$lib/utils/resolveStoragePath';
 
   interface Props {
     data: PageData;
@@ -61,7 +60,7 @@
   <div class="name-box">
     <span class="name">{channel.name}</span>
     {#if channel.icon}
-      <img class="icon" alt="channel icon" src={resolveStoragePath(channel.icon)} />
+      <img class="icon" alt="channel icon" src={channel.icon} />
     {/if}
   </div>
 
