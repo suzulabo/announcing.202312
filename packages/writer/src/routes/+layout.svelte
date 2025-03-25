@@ -29,13 +29,6 @@
 
     return 'light';
   };
-
-  type BackLabelKeys = 'back';
-
-  export type HeaderBack = {
-    href: string;
-    labelKey: BackLabelKeys;
-  };
 </script>
 
 <script lang="ts">
@@ -49,6 +42,7 @@
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
   import SettingsModal from './SettingsModal.svelte';
+  import type { HeaderBack } from './+layout';
 
   interface Props {
     data: LayoutData;

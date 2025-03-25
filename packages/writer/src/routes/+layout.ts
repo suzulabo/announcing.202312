@@ -17,3 +17,10 @@ export const load: LayoutLoad = async ({ data }) => {
 };
 
 export const prerender = false;
+
+type BackLabelKeys = 'back';
+
+export type HeaderBack = {
+  href: string;
+  labelKey: BackLabelKeys;
+};

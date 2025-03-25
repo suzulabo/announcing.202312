@@ -1,4 +1,4 @@
-import type { HeaderBack } from '../../../../../+layout.svelte';
+import type { HeaderBack } from '../../../../../+layout';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ url }) => {
