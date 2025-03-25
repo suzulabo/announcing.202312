@@ -23,13 +23,13 @@ export const fetchAnnouncement = (
   const url = `/api/channels/${channelID}/announcements/${announcementID}`;
 
   return (async () => {
-    const res = await fetch_(url);
+    const res = await fetch_(url, { cache: 'force-cache' });
     if (res.ok) {
-      const data = await res.json();
+      const data = (await res.json()) as GetAnnouncementResult;
       cache.set(cacheKey, data);
-      return data as GetAnnouncementResult;
+      return data;
     }
 
-    throw new Error('Fetch Announcement Error');
+    throw new Error(`Fetch Announcement Error: ${cacheKey}`);
   })();
 };
