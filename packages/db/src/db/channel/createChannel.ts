@@ -8,8 +8,8 @@ type Params = {
   userID: string;
   channelID: string;
   name: string;
-  desc?: string | undefined;
-  icon?: Blob | undefined;
+  desc: string | undefined;
+  icon: Blob | undefined;
 };
 
 export const createChannel = async (params: Params) => {
