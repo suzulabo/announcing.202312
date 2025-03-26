@@ -13,13 +13,6 @@
   import { LL } from '@announcing/i18n';
   import { tick } from 'svelte';
 
-  export type Channel = {
-    icon?: string | undefined;
-    iconBlob?: Blob | undefined;
-    name?: string | undefined;
-    desc?: string | undefined;
-  };
-
   interface Props {
     onSubmit: (formData: FormData) => Promise<void>;
   }
@@ -29,14 +22,23 @@
   let open = $state(false);
   let loading = $state(false);
   let creating = $state(false);
-  let form = $state<Channel>({});
+  let form = $state<{
+    name?: string;
+    desc?: string | undefined;
+    icon?: string | undefined;
+    iconBlob?: Blob | undefined;
+  }>({});
   let nameError = $state(false);
   let descError = $state(false);
   let validated = $derived(!!form.name && !nameError && !descError);
 
   let fileInput: ReturnType<typeof FileInput>;
 
-  export const openEditor = (channel?: Channel) => {
+  export const openEditor = (channel?: {
+    name: string;
+    desc: string | undefined;
+    icon: string | undefined;
+  }) => {
     form = { ...channel };
     creating = !channel;
     open = true;
