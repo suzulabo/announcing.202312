@@ -329,6 +329,9 @@ importers:
       typesafe-i18n:
         specifier: ^5.26.2
         version: 5.26.2(typescript@5.8.2)
+      valibot:
+        specifier: ^1.0.0
+        version: 1.0.0(typescript@5.8.2)
       vite:
         specifier: ^6.0.7
         version: 6.0.7(@types/node@22.13.10)(jiti@2.4.2)(sass@1.85.1)(terser@5.36.0)(tsx@4.19.3)
@@ -4761,6 +4764,14 @@ packages:
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
+
+  valibot@1.0.0:
+    resolution: {integrity: sha512-1Hc0ihzWxBar6NGeZv7fPLY0QuxFMyxwYR2sF1Blu7Wq7EnremwY2W02tit2ij2VJT8HcSkHAQqmFfl77f73Yw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   valibot@1.0.0-beta.12:
     resolution: {integrity: sha512-j3WIxJ0pmUFMfdfUECn3YnZPYOiG0yHYcFEa/+RVgo0I+MXE3ToLt7gNRLtY5pwGfgNmsmhenGZfU5suu9ijUA==}
@@ -10091,6 +10102,10 @@ snapshots:
     optional: true
 
   uuid@9.0.1: {}
+
+  valibot@1.0.0(typescript@5.8.2):
+    optionalDependencies:
+      typescript: 5.8.2
 
   valibot@1.0.0-beta.12(typescript@5.8.2):
     optionalDependencies:

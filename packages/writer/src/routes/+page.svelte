@@ -1,7 +1,7 @@
 <script lang="ts">
   import { LL } from '@announcing/i18n';
 
-  import { invalidateAll } from '$app/navigation';
+  import { goto, invalidateAll } from '$app/navigation';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
 
   import type { PageServerData } from './$types';
@@ -17,10 +17,16 @@
   let editor: ReturnType<typeof ChannelEditor>;
 
   const submitHandler = async (formData: FormData) => {
-    await fetch('/api/channels', {
+    const res = await fetch('/api/channels', {
       method: 'POST',
       body: formData,
     });
+
+    if (!res.ok) {
+      await goto('/error');
+      return;
+    }
+
     await invalidateAll();
   };
 </script>
