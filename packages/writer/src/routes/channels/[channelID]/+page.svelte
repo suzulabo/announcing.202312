@@ -32,10 +32,16 @@
 
   const updateChannel = async (formData: FormData) => {
     formData.append('updatedAt', channel.updatedAt + '');
-    await fetch(`/api/channels/${channelID}`, {
+    const res = await fetch(`/api/channels/${channelID}`, {
       method: 'PUT',
       body: formData,
     });
+
+    if (!res.ok) {
+      await goto('/error');
+      return;
+    }
+
     await invalidateAll();
   };
 
