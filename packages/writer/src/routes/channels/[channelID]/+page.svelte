@@ -150,6 +150,7 @@
         height: 64px;
         margin: 0 0 0 auto;
         border-radius: 8px;
+        object-fit: contain;
       }
     }
 
