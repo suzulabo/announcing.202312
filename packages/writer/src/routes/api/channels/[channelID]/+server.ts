@@ -26,7 +26,7 @@ const putSchema = v.object({
     v.pipe(v.string(), v.nonEmpty(), v.maxBytes(STORAGE_ID_MAX_BYTES)),
     v.undefined(),
   ]),
-  updatedAt: v.pipe(v.number(), v.integer(), v.toMinValue(0)),
+  updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
 export const PUT: RequestHandler = async ({ locals, params, request }) => {
@@ -55,11 +55,9 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
   return json({});
 };
 
-type DeleteRequestData =
-  | {
-      updatedAt?: number;
-    }
-  | undefined;
+const deleteSchema = v.object({
+  updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
+});
 
 export const DELETE: RequestHandler = async ({ locals, params, request }) => {
   const userID = await getUserIDNoRedirect(locals);
@@ -67,9 +65,9 @@ export const DELETE: RequestHandler = async ({ locals, params, request }) => {
     error(400, 'Missing userID');
   }
 
-  const data = (await request.json()) as DeleteRequestData;
-  if (!data || typeof data.updatedAt !== 'number') {
-    error(400, 'Invalid request data.');
+  const data = await request.json();
+  if (!v.is(deleteSchema, data)) {
+    error(400, 'Schema Error');
   }
 
   const channelID = params.channelID;

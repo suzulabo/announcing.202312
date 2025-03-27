@@ -46,13 +46,19 @@
   };
 
   const deleteChannel = async () => {
-    await fetch(`/api/channels/${channelID}`, {
+    const res = await fetch(`/api/channels/${channelID}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ updatedAt: channel.updatedAt }),
     });
+
+    if (!res.ok) {
+      await goto('/error');
+      return;
+    }
+
     await goto('/');
   };
 
