@@ -24,7 +24,7 @@ const genChannelID = () => {
   }
 };
 
-const createChannelSchema = v.object({
+const postSchema = v.object({
   name: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_NAME_MAX_BYTES)),
   desc: v.union([
     v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_DESC_MAX_BYTES)),
@@ -55,7 +55,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
     icon: getFormFile(formData, 'icon'),
   };
 
-  if (!v.is(createChannelSchema, data)) {
+  if (!v.is(postSchema, data)) {
     error(400, 'Schema Error');
   }
 
