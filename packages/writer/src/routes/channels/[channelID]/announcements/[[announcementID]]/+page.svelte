@@ -38,6 +38,7 @@
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
   import { resolveStoragePath } from '$lib/db/resolver';
+  import { putBlob } from '$lib/cacheStorage/cacheStorage';
 
   interface Props {
     data: PageData;
@@ -128,6 +129,9 @@
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       bind:this={headerImageFileInput}
+      onInput={async (blob, hash) => {
+        form.headerImage = await putBlob(window.caches, hash, blob);
+      }}
     />
   </div>
   <Input
