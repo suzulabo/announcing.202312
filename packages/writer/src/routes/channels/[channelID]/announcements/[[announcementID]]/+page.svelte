@@ -35,10 +35,10 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
 
+  import { putBlob } from '$lib/cacheStorage/cacheStorage';
+  import { resolveStoragePath } from '$lib/db/resolver';
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
-  import { resolveStoragePath } from '$lib/db/resolver';
-  import { putBlob } from '$lib/cacheStorage/cacheStorage';
 
   interface Props {
     data: PageData;
@@ -181,6 +181,21 @@
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       filesCount={4}
+      onInputs={async (inputs) => {
+        const images = form.images ? [...form.images] : [];
+        for (const [hash, blob] of inputs) {
+          if (images.length === 4) {
+            break;
+          }
+          const exists = !!images.find((v) => v.endsWith(hash));
+          if (exists) {
+            continue;
+          }
+          images.push(await putBlob(window.caches, hash, blob));
+        }
+
+        form.images = images;
+      }}
     />
   </div>
 
