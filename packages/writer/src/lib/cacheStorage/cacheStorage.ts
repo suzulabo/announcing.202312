@@ -12,6 +12,23 @@ export const putBlob = async (caches: CacheStorage, id: string, blob: Blob) => {
   return url;
 };
 
+const getBlob = async (caches: CacheStorage, url: string) => {
+  const cache = await open(caches);
+  const res = await cache.match(url);
+  if (!res) {
+    return;
+  }
+  return await res.blob();
+};
+
+export const getBlobOrThrow = async (caches: CacheStorage, url: string) => {
+  const result = await getBlob(caches, url);
+  if (!result) {
+    throw new Error(`Missing ${url}`);
+  }
+  return result;
+};
+
 export const getResponse = async (caches: CacheStorage, url: string) => {
   const cache = await open(caches);
   return cache.match(url);

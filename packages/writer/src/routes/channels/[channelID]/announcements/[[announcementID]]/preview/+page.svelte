@@ -26,9 +26,9 @@
     }
 
     if (announcement.headerImage) {
-      const headerImage = await loadBlob(announcement.headerImage);
-      if (headerImage) {
-        formData.append('headerImage', headerImage);
+      if (announcement.headerImage.startsWith(APP_CACHES_PREFIX)) {
+        const blob = await getBlobOrThrow(window.caches, announcement.headerImage);
+        formData.append('headerImage', blob);
       } else {
         formData.append('headerImage', announcement.headerImage);
       }
@@ -36,9 +36,9 @@
 
     if (announcement.images) {
       for (const v of announcement.images) {
-        const image = await loadBlob(v);
-        if (image) {
-          formData.append('images', image);
+        if (v.startsWith(APP_CACHES_PREFIX)) {
+          const blob = await getBlobOrThrow(window.caches, v);
+          formData.append('images', blob);
         } else {
           formData.append('images', v);
         }
@@ -56,14 +56,15 @@
 <script lang="ts">
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
   import Loading from '@announcing/components/Loading.svelte';
-  import { loadBlob } from '@announcing/components/utils';
   import type { GetAnnouncementResult } from '@announcing/db/types';
   import { LL } from '@announcing/i18n';
 
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
 
+  import { APP_CACHES_PREFIX, getBlobOrThrow } from '$lib/cacheStorage/cacheStorage';
   import type { Snapshot } from './$types';
+  import { resolveStoragePath } from '$lib/db/resolver';
 
   let loading = $state(false);
   let channelID = $derived(page.params['channelID'] as string);
@@ -101,6 +102,18 @@
       ];
     }
   });
+
+  const toAnnouncementViewData = (v: Exclude<typeof announcement, undefined>) => {
+    const result = { ...v };
+    if (result.headerImage) {
+      result.headerImage = resolveStoragePath(result.headerImage);
+    }
+    if (result.images) {
+      result.images = result.images.map((v) => resolveStoragePath(v));
+    }
+
+    return result;
+  };
 
   export const snapshot = {
     capture: () => {
@@ -145,7 +158,7 @@
 
 {#if channel && announcement}
   <div class="container">
-    <AnnouncementView {announcement} />
+    <AnnouncementView announcement={toAnnouncementViewData(announcement)} />
     <hr />
     <button class="submit-btn" onclick={addAnnouncement}
       >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
