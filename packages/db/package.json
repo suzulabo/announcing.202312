@@ -48,6 +48,7 @@
     "image-dimensions": "^2.3.0",
     "image-type": "^5.2.0",
     "jdenticon": "^3.3.0",
+    "js-xxhash": "^4.0.0",
     "mockdate": "^3.0.5",
     "tsx": "^4.19.3",
     "vitest": "^3.0.8"

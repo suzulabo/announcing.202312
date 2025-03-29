@@ -1,7 +1,6 @@
-import { createHash } from 'crypto';
-
-import { base62 } from '../../lib/base62';
-import { ANNOUNCEMENT_ID_LENGTH } from '../../lib/constants';
+import { xxHash32 } from 'js-xxhash';
+import { encodeBase62FromNumber } from '../../lib/base62';
+import { genDatePrefix } from '../../lib/genDatePrefix';
 
 export const genAnnouncementID = ({
   headerImage,
@@ -16,29 +15,8 @@ export const genAnnouncementID = ({
   images?: string[] | null | undefined;
   createdAt: number;
 }) => {
-  const hash = createHash('sha256');
+  const list = [headerImage, title, body, ...(images ?? [])];
+  const data = list.map((s) => (typeof s === 'string' ? s : '\0')).join('');
 
-  const createdDate = new Date(createdAt);
-
-  const list = [
-    headerImage,
-    title,
-    body,
-    ...(images ?? []),
-    new Date(createdDate.getFullYear(), createdDate.getMonth(), createdDate.getDate())
-      .getTime()
-      .toString(),
-  ];
-
-  for (const s of list) {
-    if (typeof s === 'string') {
-      hash.update(s);
-    } else {
-      hash.update('\0');
-    }
-  }
-
-  const digest = hash.digest();
-
-  return base62.encode(new Uint8Array(digest.buffer)).substring(0, ANNOUNCEMENT_ID_LENGTH);
+  return `${genDatePrefix(createdAt)}${encodeBase62FromNumber(xxHash32(data))}`;
 };

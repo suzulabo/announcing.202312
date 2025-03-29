@@ -33,3 +33,9 @@ export const getResponse = async (caches: CacheStorage, url: string) => {
   const cache = await open(caches);
   return cache.match(url);
 };
+
+const APP_CACHES_PREFIX_LENGTH = APP_CACHES_PREFIX.length;
+
+export const stripPrefix = (s: string) => {
+  return s.startsWith(APP_CACHES_PREFIX) ? s.substring(APP_CACHES_PREFIX_LENGTH) : s;
+};

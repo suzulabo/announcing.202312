@@ -1,24 +1,3 @@
-<script lang="ts" module>
-  const isAnnouncement = (
-    arg: Partial<GetAnnouncementResult>,
-    titleError: boolean,
-    bodyError: boolean,
-  ): arg is Exclude<App.PageState['announcementPreviewData'], undefined>['announcement'] => {
-    if (titleError) {
-      return false;
-    }
-
-    if (bodyError) {
-      return false;
-    }
-
-    if (!arg.body) {
-      return false;
-    }
-    return true;
-  };
-</script>
-
 <script lang="ts">
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
@@ -35,8 +14,9 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
 
-  import { putBlob } from '$lib/cacheStorage/cacheStorage';
+  import { putBlob, stripPrefix } from '$lib/cacheStorage/cacheStorage';
   import { resolveStoragePath } from '$lib/db/resolver';
+  import { genAnnouncementID } from '@announcing/db/utils';
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
 
@@ -59,6 +39,35 @@
   let titleError = $state(false);
   let bodyError = $state(false);
   let { channel, announcement } = $derived(data);
+  let validated = $derived.by(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (titleError || bodyError) {
+      return false;
+    }
+
+    const body = form.body;
+
+    if (!body) {
+      return false;
+    }
+
+    const data = { ...form, body, createdAt: form.createdAt ?? new Date().getTime() };
+
+    if (data.headerImage) {
+      data.headerImage = stripPrefix(data.headerImage);
+    }
+    if (data.images) {
+      data.images = data.images.map((v) => stripPrefix(v));
+    }
+
+    const id = genAnnouncementID(data);
+
+    if (channel.announcementIDs && channel.announcementIDs.indexOf(id) >= 0) {
+      return false;
+    }
+
+    return true;
+  });
 
   let headerImageFileInput: ReturnType<typeof FileInput>;
   let imagesFileInput: ReturnType<typeof FileInput>;
@@ -201,10 +210,8 @@
 
   <hr />
 
-  <button
-    disabled={!isAnnouncement(form, titleError, bodyError)}
-    class="preview-btn"
-    onclick={previewClickHandler}>{$LL.preview()}</button
+  <button disabled={!validated} class="preview-btn" onclick={previewClickHandler}
+    >{$LL.preview()}</button
   >
 </div>
 
