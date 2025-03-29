@@ -136,17 +136,25 @@
     loading = true;
     try {
       if (announcementID) {
-        await fetch(`/api/channels/${channelID}/announcements/${announcementID}`, {
+        const res = await fetch(`/api/channels/${channelID}/announcements/${announcementID}`, {
           method: 'PUT',
           body: formData,
         });
+        if (!res.ok) {
+          await goto('/error');
+          return;
+        }
 
         await goto(`/channels/${channelID}/announcements/list`);
       } else {
-        await fetch(`/api/channels/${channelID}/announcements`, {
+        const res = await fetch(`/api/channels/${channelID}/announcements`, {
           method: 'POST',
           body: formData,
         });
+        if (!res.ok) {
+          await goto('/error');
+          return;
+        }
 
         await goto(`/channels/${channelID}`);
       }
