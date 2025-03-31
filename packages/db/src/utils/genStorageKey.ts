@@ -18,7 +18,7 @@ const imageSize = async (ab: Uint8Array) => {
   };
 };
 
-export const getStorageKey = async (blob: Blob) => {
+export const genStorageKey = async (blob: Blob) => {
   const ab = new Uint8Array(await blob.arrayBuffer());
 
   const digest = await crypto.subtle.digest('SHA-256', ab);

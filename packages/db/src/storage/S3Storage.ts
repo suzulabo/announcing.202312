@@ -6,7 +6,7 @@ import {
   type GetObjectCommandOutput,
   type HeadObjectCommandOutput,
 } from '@aws-sdk/client-s3';
-import { getStorageKey } from './getStorageKey';
+import { genStorageKey } from '../utils/genStorageKey';
 import type { Storage } from './storage';
 
 export const createS3Storage = (params: string, bucket: string, prefix = ''): Storage => {
@@ -57,7 +57,7 @@ export const createS3Storage = (params: string, bucket: string, prefix = ''): St
   };
 
   const put = async (blob: Blob) => {
-    const [key, ab, mimeType] = await getStorageKey(blob);
+    const [key, ab, mimeType] = await genStorageKey(blob);
 
     {
       const res = await getObject(key, true);

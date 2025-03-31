@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { genDatePrefix } from '../src/lib/genDatePrefix';
+import { genDatePrefix } from '../src/utils/genDatePrefix';
 
 test('sort order', () => {
   const d = new Date('2025-01-01T00:00:00Z');

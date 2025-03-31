@@ -1,10 +1,10 @@
 import { and, eq } from 'drizzle-orm';
 
 import { putStorageData } from '../../storage/storage';
+import { genAnnouncementID } from '../../utils/genAnnouncementID';
 import { getChannel } from '../channel/getChannel';
 import { getDB } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
-import { genAnnouncementID } from './genAnnouncementID';
 
 type Params = {
   userID: string;

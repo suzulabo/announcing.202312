@@ -1,6 +1,12 @@
+import { Buffer } from 'buffer';
 import { xxHash32 } from 'js-xxhash';
-import { encodeBase62FromNumber } from '../../lib/base62';
-import { genDatePrefix } from '../../lib/genDatePrefix';
+import { genDatePrefix } from './genDatePrefix';
+
+const toBase64 = (n: number) => {
+  const buf = Buffer.alloc(4);
+  buf.writeUint32BE(n);
+  return buf.toString('base64url');
+};
 
 export const genAnnouncementID = ({
   headerImage,
@@ -18,5 +24,5 @@ export const genAnnouncementID = ({
   const list = [headerImage, title, body, ...(images ?? [])];
   const data = list.map((s) => (typeof s === 'string' ? s : '\0')).join('');
 
-  return `${genDatePrefix(createdAt)}${encodeBase62FromNumber(xxHash32(data))}`;
+  return `${genDatePrefix(createdAt)}${toBase64(xxHash32(data))}`;
 };

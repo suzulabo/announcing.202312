@@ -3,9 +3,9 @@ import { and, eq } from 'drizzle-orm';
 import { getChannel } from '../channel/getChannel';
 import { getDB } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
-import { genAnnouncementID } from './genAnnouncementID';
 
 import { putStorageData } from '../../storage/storage';
+import { genAnnouncementID } from '../../utils/genAnnouncementID';
 
 type Params = {
   userID: string;
