@@ -19,6 +19,7 @@
   import { genAnnouncementID } from '@announcing/db/utils';
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
+  import { getBlobHash } from '$lib/utils/getBlobHash';
 
   interface Props {
     data: PageData;
@@ -138,8 +139,9 @@
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       bind:this={headerImageFileInput}
-      onInput={async (blob, hash) => {
-        form.headerImage = await putBlob(window.caches, hash, blob);
+      onInput={async (blob) => {
+        const key = await getBlobHash(blob);
+        form.headerImage = await putBlob(window.caches, key, blob);
       }}
     />
   </div>
@@ -190,17 +192,18 @@
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       filesCount={4}
-      onInputs={async (inputs) => {
+      onInputs={async (blobs) => {
         const images = form.images ? [...form.images] : [];
-        for (const [hash, blob] of inputs) {
+        for (const blob of blobs) {
           if (images.length === 4) {
             break;
           }
-          const exists = !!images.find((v) => v.endsWith(hash));
+          const key = await getBlobHash(blob);
+          const exists = !!images.find((v) => v.endsWith(key));
           if (exists) {
             continue;
           }
-          images.push(await putBlob(window.caches, hash, blob));
+          images.push(await putBlob(window.caches, key, blob));
         }
 
         form.images = images;

@@ -1,6 +1,6 @@
-import { Buffer } from 'buffer';
 import { imageDimensionsFromData } from 'image-dimensions';
 import imageType from 'image-type';
+import { encodeBase64Url } from './encodeBase64Url';
 
 const imageSize = async (ab: Uint8Array) => {
   const d = imageDimensionsFromData(ab);
@@ -22,7 +22,7 @@ export const genStorageKey = async (blob: Blob) => {
   const ab = new Uint8Array(await blob.arrayBuffer());
 
   const digest = await crypto.subtle.digest('SHA-256', ab);
-  const hash = Buffer.from(digest).toString('base64url');
+  const hash = encodeBase64Url(new Uint8Array(digest));
 
   const size = await imageSize(ab);
 

@@ -1,11 +1,12 @@
-import { Buffer } from 'buffer';
 import { xxHash32 } from 'js-xxhash';
+import { encodeBase64Url } from './encodeBase64Url';
 import { genDatePrefix } from './genDatePrefix';
 
 const toBase64 = (n: number) => {
-  const buf = Buffer.alloc(4);
-  buf.writeUint32BE(n);
-  return buf.toString('base64url');
+  const a = new Uint8Array(4);
+  const view = new DataView(a.buffer);
+  view.setUint32(0, n, false);
+  return encodeBase64Url(a);
 };
 
 export const genAnnouncementID = ({

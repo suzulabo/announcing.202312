@@ -1,15 +1,14 @@
 <script lang="ts">
   import reduce from 'image-blob-reduce';
 
-  import { getBlobHash } from '$lib/utils/getBlobHash';
   import Loading from './Loading.svelte';
 
   interface Props {
     accept?: string | undefined;
     maxImageSize?: number | undefined;
     filesCount?: number;
-    onInput?: (blob: Blob, hash: string) => void | Promise<void>;
-    onInputs?: (inputs: [string, Blob][]) => void | Promise<void>;
+    onInput?: (blob: Blob) => void | Promise<void>;
+    onInputs?: (blobs: Blob[]) => void | Promise<void>;
   }
 
   let {
@@ -36,7 +35,7 @@
 
     loading = true;
 
-    const filesMap = new Map<string, Blob>();
+    const blobs: Blob[] = [];
 
     try {
       for (let i = 0; i < filesCount; i++) {
@@ -44,10 +43,8 @@
 
         if (!f) break;
 
-        const hash = await getBlobHash(f);
-
         if (!maxImageSize) {
-          filesMap.set(hash, f);
+          blobs.push(f);
           continue;
         }
 
@@ -60,19 +57,17 @@
           unsharpThreshold: 1,
         });
 
-        filesMap.set(hash, reduced);
+        blobs.push(reduced);
       }
 
-      if (filesCount === 1 && onInput) {
-        const entry = filesMap.entries().next().value;
-        if (entry) {
-          await onInput(entry[1], entry[0]);
+      if (onInput) {
+        const blob = blobs[0];
+        if (blob) {
+          await onInput(blob);
         }
-      } else if (onInputs) {
-        const inputs = [...filesMap.entries()];
-        if (inputs.length > 0) {
-          await onInputs(inputs);
-        }
+      }
+      if (onInputs) {
+        await onInputs(blobs);
       }
     } finally {
       fileInput.value = '';

@@ -17,8 +17,8 @@
     bind:this={fileInput}
     accept="image/*"
     filesCount={4}
-    onInputs={async (inputs) => {
-      values = inputs.map(([, blob]) => {
+    onInputs={async (blobs) => {
+      values = blobs.map((blob) => {
         return URL.createObjectURL(blob);
       });
       try {
