@@ -9,16 +9,16 @@
       "import": "./dist/index.js"
     },
     "./constants": {
-      "types": "./dist/lib/constants.d.ts",
-      "import": "./dist/lib/constants.js"
+      "types": "./dist/constants.d.ts",
+      "import": "./dist/constants.js"
     },
     "./types": {
-      "types": "./dist/lib/types.d.ts",
-      "import": "./dist/lib/types.js"
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
     },
     "./utils": {
-      "types": "./dist/lib/utils.d.ts",
-      "import": "./dist/lib/utils.js"
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
     },
     "./LocalStorage": {
       "types": "./dist/storage/LocalStorage.d.ts",

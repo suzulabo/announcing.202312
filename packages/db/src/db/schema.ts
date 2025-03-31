@@ -10,7 +10,7 @@ import {
   CHANNEL_NAME_MAX_BYTES,
   STORAGE_ID_MAX_BYTES,
   USER_ID_MAX_BYTES,
-} from '../lib/constants';
+} from '../constants';
 
 export const channelsTable = sqliteTable(
   'channels',
