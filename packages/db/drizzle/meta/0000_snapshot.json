@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "247bc952-8b53-474e-8e19-cab579c16d82",
+  "id": "b87fbff0-871c-45f4-8ae6-28d442f6c5a0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "announcements": {
@@ -108,7 +108,7 @@
         },
         "announcementID": {
           "name": "announcementID",
-          "value": "octet_length(\"announcements\".\"announcementID\") BETWEEN 1 AND 6"
+          "value": "octet_length(\"announcements\".\"announcementID\") BETWEEN 1 AND 10"
         },
         "headerImage": {
           "name": "headerImage",

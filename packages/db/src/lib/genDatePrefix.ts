@@ -10,7 +10,7 @@ const toBase62 = (num: number) => {
     num = Math.floor(num / 62);
   }
 
-  return result || '0';
+  return result;
 };
 
 export const genDatePrefix = (v: number) => {

@@ -134,6 +134,9 @@ importers:
       base-x:
         specifier: ^5.0.1
         version: 5.0.1
+      buffer:
+        specifier: ^6.0.3
+        version: 6.0.3
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7

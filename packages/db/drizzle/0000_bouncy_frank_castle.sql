@@ -12,7 +12,7 @@ CREATE TABLE `announcements` (
 	FOREIGN KEY (`channelID`) REFERENCES `channels`(`channelID`) ON UPDATE no action ON DELETE cascade,
 	CONSTRAINT "channelID" CHECK(octet_length("announcements"."channelID") BETWEEN 1 AND 8),
 	CONSTRAINT "userID" CHECK(octet_length("announcements"."userID") BETWEEN 1 AND 256),
-	CONSTRAINT "announcementID" CHECK(octet_length("announcements"."announcementID") BETWEEN 1 AND 6),
+	CONSTRAINT "announcementID" CHECK(octet_length("announcements"."announcementID") BETWEEN 1 AND 10),
 	CONSTRAINT "headerImage" CHECK("announcements"."headerImage" IS NULL OR octet_length("announcements"."headerImage") <= 100),
 	CONSTRAINT "title" CHECK("announcements"."title" IS NULL OR octet_length("announcements"."title") <= 200),
 	CONSTRAINT "body" CHECK(octet_length("announcements"."body") BETWEEN 1 AND 2000),
