@@ -1,11 +1,41 @@
-import { addAnnouncement, getChannel } from '@announcing/db';
-import { error, json } from '@sveltejs/kit';
-
 import { getFormFile, getFormFiles, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
-
+import { addAnnouncement, getChannel } from '@announcing/db';
+import {
+  ANNOUNCEMENT_BODY_MAX_BYTES,
+  ANNOUNCEMENT_IMAGE_MAX_BYTES,
+  ANNOUNCEMENT_TITLE_MAX_BYTES,
+} from '@announcing/db/constants';
 import { type TriggerProcessMessageParams } from '@announcing/notification/tasks/trigger.dev';
+import { error, json } from '@sveltejs/kit';
+import * as v from 'valibot';
 import type { RequestHandler } from './$types';
+
+const postSchema = v.strictObject({
+  title: v.union([
+    v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_TITLE_MAX_BYTES)),
+    v.undefined(),
+  ]),
+  body: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_BODY_MAX_BYTES)),
+  headerImage: v.union([
+    v.pipe(
+      v.blob(),
+      v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
+      v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES),
+    ),
+    v.undefined(),
+  ]),
+  images: v.union([
+    v.array(
+      v.pipe(
+        v.blob(),
+        v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
+        v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES),
+      ),
+    ),
+    v.undefined(),
+  ]),
+});
 
 export const POST: RequestHandler = async ({ locals, params, request }) => {
   const userID = await getUserIDNoRedirect(locals);
@@ -15,13 +45,16 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
 
   const formData = await request.formData();
 
-  const body = getFormString(formData, 'body');
-  if (!body) {
-    error(400, 'Missing body');
+  const data = {
+    title: getFormString(formData, 'title'),
+    body: getFormString(formData, 'body'),
+    headerImage: getFormFile(formData, 'headerImage'),
+    images: getFormFiles(formData, 'images'),
+  };
+
+  if (!v.is(postSchema, data)) {
+    error(400, 'Schema Error');
   }
-  const title = getFormString(formData, 'title');
-  const headerImage = getFormFile(formData, 'headerImage');
-  const images = getFormFiles(formData, 'images');
 
   const channelID = params.channelID;
 
@@ -33,10 +66,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
   const announcementValues = await addAnnouncement({
     userID,
     channelID,
-    headerImage,
-    title,
-    body,
-    images,
+    ...data,
     createdAt: new Date().getTime(),
   });
 
@@ -50,7 +80,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
           },
           notification: {
             title: channel.name,
-            body: title ?? body,
+            body: data.title ?? data.body.substring(0, 200),
             tag: channelID,
             ...(channel.icon && { icon: `/s/${channel.icon}` }),
             ...(channel.icon && { badge: `/s/${channel.icon}` }),
