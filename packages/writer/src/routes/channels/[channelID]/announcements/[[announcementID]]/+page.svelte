@@ -16,10 +16,9 @@
 
   import { putBlob, stripPrefix } from '$lib/cacheStorage/cacheStorage';
   import { resolveStoragePath } from '$lib/db/resolver';
-  import { genAnnouncementID } from '@announcing/db/utils';
+  import { genAnnouncementID, genStorageKey } from '@announcing/db/utils';
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
-  import { getBlobHash } from '$lib/utils/getBlobHash';
 
   interface Props {
     data: PageData;
@@ -60,6 +59,8 @@
     if (data.images) {
       data.images = data.images.map((v) => stripPrefix(v));
     }
+
+    console.log({ data });
 
     const id = genAnnouncementID(data);
 
@@ -140,7 +141,7 @@
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       bind:this={headerImageFileInput}
       onInput={async (blob) => {
-        const key = await getBlobHash(blob);
+        const [key] = await genStorageKey(blob);
         form.headerImage = await putBlob(window.caches, key, blob);
       }}
     />
@@ -198,7 +199,7 @@
           if (images.length === 4) {
             break;
           }
-          const key = await getBlobHash(blob);
+          const [key] = await genStorageKey(blob);
           const exists = !!images.find((v) => v.endsWith(key));
           if (exists) {
             continue;
