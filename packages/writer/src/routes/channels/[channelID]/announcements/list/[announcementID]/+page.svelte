@@ -15,10 +15,17 @@
   let deleteModal: ReturnType<typeof DeleteModal>;
 
   const deleteAnnouncement = async () => {
-    await fetch(`/api/channels/${data.channelID}/announcements/${data.announcementID}`, {
-      method: 'DELETE',
-      body: JSON.stringify({ updatedAt: data.announcement.updatedAt }),
-    });
+    const res = await fetch(
+      `/api/channels/${data.channelID}/announcements/${data.announcementID}`,
+      {
+        method: 'DELETE',
+        body: JSON.stringify({ updatedAt: data.announcement.updatedAt }),
+      },
+    );
+    if (!res.ok) {
+      await goto('/error');
+      return;
+    }
 
     await goto('../list');
   };
