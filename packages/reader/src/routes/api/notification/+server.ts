@@ -5,7 +5,7 @@ import type { RequestHandler } from './$types';
 import { error } from '@sveltejs/kit';
 import * as v from 'valibot';
 
-const postSchema = v.object({
+const postSchema = v.strictObject({
   token: v.pipe(v.string(), v.nonEmpty()),
   tags: v.array(v.pipe(v.string(), v.nonEmpty(), v.maxLength(100))),
 });

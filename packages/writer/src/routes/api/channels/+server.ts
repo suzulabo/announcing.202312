@@ -24,7 +24,7 @@ const genChannelID = () => {
   }
 };
 
-const postSchema = v.object({
+const postSchema = v.strictObject({
   name: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_NAME_MAX_BYTES)),
   desc: v.union([
     v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_DESC_MAX_BYTES)),

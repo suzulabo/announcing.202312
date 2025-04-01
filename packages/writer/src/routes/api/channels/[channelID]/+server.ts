@@ -11,7 +11,7 @@ import { error, json } from '@sveltejs/kit';
 import * as v from 'valibot';
 import type { RequestHandler } from './$types';
 
-const putSchema = v.object({
+const putSchema = v.strictObject({
   name: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_NAME_MAX_BYTES)),
   desc: v.union([
     v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_DESC_MAX_BYTES)),
@@ -55,7 +55,7 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
   return json({});
 };
 
-const deleteSchema = v.object({
+const deleteSchema = v.strictObject({
   updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
