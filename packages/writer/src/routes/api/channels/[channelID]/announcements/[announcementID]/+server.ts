@@ -7,6 +7,12 @@ import {
 } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 import { getAnnouncement, removeAnnouncement, updateAnnouncement } from '@announcing/db';
+import {
+  ANNOUNCEMENT_BODY_MAX_BYTES,
+  ANNOUNCEMENT_IMAGE_MAX_BYTES,
+  ANNOUNCEMENT_TITLE_MAX_BYTES,
+  STORAGE_ID_MAX_BYTES,
+} from '@announcing/db/constants';
 import { error, json } from '@sveltejs/kit';
 import * as v from 'valibot';
 import type { RequestHandler } from './$types';
@@ -22,6 +28,37 @@ export const GET: RequestHandler = async ({ params }) => {
   return json(resolveAnnouncement(result));
 };
 
+const putSchema = v.strictObject({
+  title: v.union([
+    v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_TITLE_MAX_BYTES)),
+    v.undefined(),
+  ]),
+  body: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_BODY_MAX_BYTES)),
+  headerImage: v.union([
+    v.pipe(
+      v.blob(),
+      v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
+      v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES),
+    ),
+    v.pipe(v.string(), v.nonEmpty(), v.maxBytes(STORAGE_ID_MAX_BYTES)),
+    v.undefined(),
+  ]),
+  images: v.union([
+    v.array(
+      v.union([
+        v.pipe(
+          v.blob(),
+          v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
+          v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES),
+        ),
+        v.pipe(v.string(), v.nonEmpty(), v.maxBytes(STORAGE_ID_MAX_BYTES)),
+      ]),
+    ),
+    v.undefined(),
+  ]),
+  targetUpdatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
+});
+
 export const PUT: RequestHandler = async ({ locals, params, request }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
@@ -30,20 +67,17 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
 
   const formData = await request.formData();
 
-  const body = getFormString(formData, 'body');
-  if (!body) {
-    error(400, 'Missing body');
+  const data = {
+    title: getFormString(formData, 'title'),
+    body: getFormString(formData, 'body'),
+    headerImage: getFormFileOrString(formData, 'headerImage'),
+    images: getFormFilesOrStrings(formData, 'images'),
+    targetUpdatedAt: getFormNumber(formData, 'targetUpdatedAt'),
+  };
+
+  if (!v.is(putSchema, data)) {
+    error(400, 'Schema Error');
   }
-  const targetUpdatedAt = getFormNumber(formData, 'targetUpdatedAt');
-  if (!targetUpdatedAt) {
-    error(400, 'Missing targetUpdatedAt');
-  }
-
-  const title = getFormString(formData, 'title');
-
-  const headerImage = getFormFileOrString(formData, 'headerImage');
-
-  const images = getFormFilesOrStrings(formData, 'images');
 
   const channelID = params.channelID;
   const targetAnnouncementID = params.announcementID;
@@ -52,11 +86,7 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
     userID,
     channelID,
     targetAnnouncementID,
-    targetUpdatedAt,
-    headerImage,
-    title,
-    body,
-    images,
+    ...data,
   });
 
   return json({});
