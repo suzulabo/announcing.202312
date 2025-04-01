@@ -60,8 +60,6 @@
       data.images = data.images.map((v) => stripPrefix(v));
     }
 
-    console.log({ data });
-
     const id = genAnnouncementID(data);
 
     if (channel.announcementIDs && channel.announcementIDs.indexOf(id) >= 0) {
