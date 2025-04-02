@@ -53,10 +53,6 @@
       "types": "./dist/atoms/Modal.svelte.d.ts",
       "svelte": "./dist/atoms/Modal.svelte"
     },
-    "./Radio.svelte": {
-      "types": "./dist/atoms/Radio.svelte.d.ts",
-      "svelte": "./dist/atoms/Radio.svelte"
-    },
     "./ResizeObserver.svelte": {
       "types": "./dist/atoms/ResizeObserver.svelte.d.ts",
       "svelte": "./dist/atoms/ResizeObserver.svelte"
