@@ -4,6 +4,7 @@
 <ul class="links">
   <li><a href="./atoms/button">button</a></li>
   <li><a href="./atoms/anchor">anchor</a></li>
+  <li><a href="./atoms/radio">radio</a></li>
   <li><a href="./atoms/Input">Input</a></li>
   <li><a href="./atoms/Input/maxBytes">Input - max bytes</a></li>
   <li><a href="./atoms/TextArea">TextArea</a></li>
@@ -11,7 +12,6 @@
   <li><a href="./atoms/TextArea/autoGrow">TextArea - auto grow</a></li>
   <li><a href="./atoms/FileInput">FileInput</a></li>
   <li><a href="./atoms/FileInput/multiple">FileInput - multiple</a></li>
-  <li><a href="./atoms/Radio">Radio</a></li>
   <li><a href="./atoms/Modal">Modal</a></li>
   <li><a href="./atoms/Loading">Loading</a></li>
   <li><a href="./atoms/Logo">Logo</a></li>
