@@ -32,17 +32,17 @@
 </script>
 
 <script lang="ts">
-  import { LL, setupLocale } from '@announcing/i18n';
+  import '../app.scss';
 
   import { browser } from '$app/environment';
   import { page } from '$app/state';
-
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import { setupBack } from '@announcing/components/actions/back';
+  import { LL, setupLocale } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
-  import SettingsModal from './SettingsModal.svelte';
   import type { HeaderBack } from './+layout';
+  import SettingsModal from './SettingsModal.svelte';
 
   interface Props {
     data: LayoutData;
@@ -74,66 +74,59 @@
   const back = setupBack();
 </script>
 
-<div class="container">
-  <header>
-    {#if headerBack}
-      <a href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
-    {:else}
-      <svelte:element
-        this={siteNameElementAttrs.this}
-        class="site-name-box unstyled"
-        {...siteNameElementAttrs}
-      >
-        <span class="site-name">Announcing</span>
-        <span class="sub-title">{$LL.writer.subTitle()}</span>
-      </svelte:element>
-    {/if}
+<header>
+  {#if headerBack}
+    <a href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
+  {:else}
+    <svelte:element
+      this={siteNameElementAttrs.this}
+      class="site-name-box unstyled"
+      {...siteNameElementAttrs}
+    >
+      <span class="site-name">Announcing</span>
+      <span class="sub-title">{$LL.writer.subTitle()}</span>
+    </svelte:element>
+  {/if}
 
-    <button
-      class="small settings-btn"
-      onclick={() => {
-        settingsModal.openModal();
-      }}
-    >
-      <MaterialSymbolsSettingsOutline />
-      <span>{$LL.settings()}</span></button
-    >
-  </header>
-  <hr />
-  {@render children?.()}
-</div>
+  <button
+    class="small settings-btn"
+    onclick={() => {
+      settingsModal.openModal();
+    }}
+  >
+    <MaterialSymbolsSettingsOutline />
+    <span>{$LL.settings()}</span></button
+  >
+</header>
+<hr />
+{@render children?.()}
 
 <SettingsModal bind:this={settingsModal} bind:locale bind:theme showSignOut={!!data.userID} />
 
 <style lang="scss">
-  .container {
-    max-width: 600px;
-    margin: 0 auto 100px;
+  header {
+    padding: 16px 8px;
+    display: flex;
+    align-items: center;
 
-    header {
-      padding: 16px 8px;
+    .site-name-box {
+      .site-name {
+        font-size: 20px;
+      }
+      .sub-title {
+        background-color: var(--color-background-highlight);
+        padding: 4px;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    .settings-btn {
+      margin-left: auto;
       display: flex;
       align-items: center;
-
-      .site-name-box {
-        .site-name {
-          font-size: 20px;
-        }
-        .sub-title {
-          background-color: var(--color-background-highlight);
-          padding: 4px;
-          border-radius: 4px;
-          font-size: 14px;
-          font-weight: 500;
-        }
-      }
-
-      .settings-btn {
-        margin-left: auto;
-        display: flex;
-        align-items: center;
-        gap: 2px;
-      }
+      gap: 2px;
     }
   }
 </style>

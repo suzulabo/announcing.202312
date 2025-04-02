@@ -1,0 +1,23 @@
+@use '@announcing/components/base.scss';
+
+html {
+  height: 100dvh;
+}
+
+body {
+  min-height: 100dvh;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (width > 600px) {
+  html {
+    background-color: var(--color-background-light);
+  }
+  body {
+    background-color: var(--color-background);
+    margin: 8px auto;
+    border-radius: 8px;
+    min-height: calc(100dvh - 16px);
+  }
+}
