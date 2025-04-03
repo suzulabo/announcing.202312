@@ -6,8 +6,6 @@
 </script>
 
 <script lang="ts">
-  import IcBaselineRadioButtonChecked from '$lib/components/icon/IcBaselineRadioButtonChecked.svelte';
-  import IcBaselineRadioButtonUnchecked from '$lib/components/icon/IcBaselineRadioButtonUnchecked.svelte';
   import MaterialSymbolsLanguage from '$lib/components/icon/MaterialSymbolsLanguage.svelte';
   import MaterialSymbolsLogout from '$lib/components/icon/MaterialSymbolsLogout.svelte';
   import MdiThemeLightDark from '$lib/components/icon/MdiThemeLightDark.svelte';
@@ -41,20 +39,11 @@
       <MaterialSymbolsLanguage />Language
     </div>
     <div class="language-grid">
-      {#each localeValues as [locale_, label] (locale_)}
-        <button
-          class="unstyled"
-          onclick={() => {
-            locale = locale_;
-          }}
-        >
-          {#if locale_ === locale}
-            <IcBaselineRadioButtonChecked />
-          {:else}
-            <IcBaselineRadioButtonUnchecked />
-          {/if}
-          {label}</button
-        >
+      {#each localeValues as [value, label] (value)}
+        <label>
+          <input type="radio" name="locale" {value} bind:group={locale} />
+          {label}
+        </label>
       {/each}
     </div>
 
@@ -66,20 +55,11 @@
     </div>
 
     <div class="theme-buttons">
-      {#each themes as [theme_, label] (theme_)}
-        <button
-          class="unstyled"
-          onclick={() => {
-            theme = theme_;
-          }}
-        >
-          {#if theme === theme_}
-            <IcBaselineRadioButtonChecked />
-          {:else}
-            <IcBaselineRadioButtonUnchecked />
-          {/if}
+      {#each themes as [value, label] (value)}
+        <label>
+          <input type="radio" name="theme" {value} bind:group={theme} />
           {label}
-        </button>
+        </label>
       {/each}
     </div>
 
@@ -126,19 +106,13 @@
       align-items: center;
       gap: 4px;
     }
+
     .language-grid {
       margin-top: 8px;
       display: grid;
-      gap: 4px;
+      gap: 16px;
       justify-content: center;
       grid-template-columns: repeat(auto-fit, 80px);
-      button {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-      }
     }
 
     .theme-buttons {
@@ -146,11 +120,6 @@
       display: flex;
       justify-content: center;
       gap: 16px;
-      button {
-        display: flex;
-        align-items: center;
-        gap: 2px;
-      }
     }
 
     .logout-btn {
