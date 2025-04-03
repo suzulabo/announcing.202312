@@ -1,10 +1,3 @@
-<script lang="ts" module>
-  const localeValues = [
-    ['en', 'English'],
-    ['ja', '日本語'],
-  ] satisfies [Locales, string][];
-</script>
-
 <script lang="ts">
   import MaterialSymbolsLanguage from '$lib/components/icon/MaterialSymbolsLanguage.svelte';
   import MaterialSymbolsLogout from '$lib/components/icon/MaterialSymbolsLogout.svelte';
@@ -12,6 +5,11 @@
   import Modal from '@announcing/components/Modal.svelte';
   import { LL, type Locales } from '@announcing/i18n';
   import { signOut } from '@auth/sveltekit/client';
+
+  const localeValues = [
+    ['en', 'English'],
+    ['ja', '日本語'],
+  ] satisfies [Locales, string][];
 
   interface Props {
     locale: Locales;
