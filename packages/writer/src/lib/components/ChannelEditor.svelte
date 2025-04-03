@@ -156,7 +156,7 @@
     width: 100%;
     max-width: 600px;
     margin: auto;
-    padding: 8px 8px 16px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;
