@@ -51,11 +51,11 @@ type RootTranslation = {
 	 */
 	theme: string
 	/**
-	 * D​e​f​a​u​l​t
+	 * L​i​g​h​t
 	 */
-	'default': string
+	lightMode: string
 	/**
-	 * D​a​r​k​ ​M​o​d​e
+	 * D​a​r​k
 	 */
 	darkMode: string
 	/**
@@ -305,11 +305,11 @@ export type TranslationFunctions = {
 	 */
 	theme: () => LocalizedString
 	/**
-	 * Default
+	 * Light
 	 */
-	'default': () => LocalizedString
+	lightMode: () => LocalizedString
 	/**
-	 * Dark Mode
+	 * Dark
 	 */
 	darkMode: () => LocalizedString
 	/**

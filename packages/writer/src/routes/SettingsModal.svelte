@@ -28,7 +28,7 @@
   };
 
   let themes = $derived([
-    ['light', $LL.default()],
+    ['light', $LL.lightMode()],
     ['dark', $LL.darkMode()],
   ] as const);
 </script>
