@@ -36,14 +36,12 @@
     <div class="channels">
       {#each data.channels as channel (channel.channelID)}
         <a href={`/channels/${channel.channelID}`} class="channel">
-          <div class="head">
-            <span class="name">
-              {channel.name}
-            </span>
-            {#if channel.icon}
-              <img alt="icon" src={channel.icon} />
-            {/if}
-          </div>
+          <span class="name">
+            {channel.name}
+          </span>
+          {#if channel.icon}
+            <img alt="icon" src={channel.icon} />
+          {/if}
         </a>
       {/each}
     </div>
@@ -66,41 +64,40 @@
   .container {
     display: flex;
     flex-direction: column;
-    margin: 20px 0;
 
     .channels {
-      margin: 0 0 20px;
+      margin: 16px 16px 0;
       display: grid;
-      gap: 15px;
+      gap: 16px;
       justify-content: center;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
       .channel {
         border: 1px solid var(--color-border);
         border-radius: 8px;
         padding: 8px;
-        min-height: 100px;
+        min-height: 82px;
 
-        .head {
-          display: flex;
-          align-items: center;
+        display: flex;
+        align-items: center;
+        gap: 8px;
 
-          .name {
-            flex-grow: 1;
-          }
-
-          img {
-            width: 64px;
-            height: 64px;
-            border-radius: 8px;
-            object-fit: contain;
-          }
+        .name {
+          flex-grow: 1;
+          word-break: break-word;
+          overflow-wrap: break-word;
+        }
+        img {
+          width: 64px;
+          height: 64px;
+          border-radius: 8px;
+          object-fit: contain;
         }
       }
     }
 
     .create-btn {
-      margin: 0 auto;
+      margin: 16px auto 0;
     }
     .create-btn-desc {
       margin: 8px auto;
