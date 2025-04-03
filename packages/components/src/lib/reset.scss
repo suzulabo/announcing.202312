@@ -139,6 +139,10 @@ i {
   font-style: italic;
 }
 
+div {
+  overflow-wrap: anywhere;
+}
+
 div.info {
   border-radius: 4px;
   background-color: var(--color-background-light);

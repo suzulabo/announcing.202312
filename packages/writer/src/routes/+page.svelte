@@ -84,8 +84,6 @@
 
         .name {
           flex-grow: 1;
-          word-break: break-word;
-          overflow-wrap: break-word;
         }
         img {
           width: 64px;
