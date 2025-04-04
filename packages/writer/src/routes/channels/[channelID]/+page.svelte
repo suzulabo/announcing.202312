@@ -147,9 +147,11 @@
     .name-box {
       display: flex;
       align-items: center;
+      gap: 16px;
+      padding: 0 8px;
       min-height: 64px;
       .name {
-        font-size: 22px;
+        font-size: 20px;
       }
       .icon {
         width: 64px;
