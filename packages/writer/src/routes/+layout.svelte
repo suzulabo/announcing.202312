@@ -98,7 +98,6 @@
     <span>{$LL.settings()}</span></button
   >
 </header>
-<hr />
 {@render children?.()}
 
 <SettingsModal bind:this={settingsModal} bind:locale bind:theme showSignOut={!!data.userID} />
@@ -108,6 +107,8 @@
     padding: 16px 8px;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 16px;
 
     .site-name-box {
       .site-name {

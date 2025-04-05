@@ -69,15 +69,6 @@
 </script>
 
 <div class="container">
-  <div class="name-box">
-    <span class="name">{channel.name}</span>
-    {#if channel.icon}
-      <img class="icon" alt="channel icon" src={channel.icon} />
-    {/if}
-  </div>
-
-  <hr />
-
   <ul class="actions">
     <li>
       <a href={readerURL}>
@@ -142,25 +133,7 @@
 
 <style lang="scss">
   .container {
-    padding: 16px 8px;
-
-    .name-box {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 0 8px;
-      min-height: 64px;
-      .name {
-        font-size: 20px;
-      }
-      .icon {
-        width: 64px;
-        height: 64px;
-        margin: 0 0 0 auto;
-        border-radius: 8px;
-        object-fit: contain;
-      }
-    }
+    padding: 0 8px;
 
     hr {
       margin: 16px 0;
