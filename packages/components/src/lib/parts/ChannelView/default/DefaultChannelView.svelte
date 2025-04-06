@@ -34,7 +34,7 @@
       {$LL.noAnnouncements()}
     </div>
   {:else}
-    <VirtualScrollList keys={announcementKeys} itemMinHeight={200} gap={8}>
+    <VirtualScrollList keys={announcementKeys} itemMinHeight={200} gap={0}>
       {#snippet itemSnippet(key)}
         <a class="item unstyled" href={`${announcementHrefPrefix}/${key}`}>
           {#await announcementLoader(key)}
@@ -54,7 +54,7 @@
 
 <style lang="scss">
   .channel-box {
-    padding: 8px 8px 16px;
+    padding: 0 16px 8px;
   }
 
   .name-line {
@@ -83,28 +83,18 @@
   }
 
   .item {
+    border-top: 1px solid var(--color-border);
+    padding: 8px 0;
+    position: relative;
     display: flex;
     flex-direction: column;
     min-height: 200px;
-    max-height: 50svh;
-    background-color: var(--color-background-light);
-    margin: 0 8px;
-    padding: 8px;
-    border-radius: 8px;
+    max-height: 50dvh;
     overflow: hidden;
     cursor: pointer;
 
-    --color-gradient: var(--color-background-light);
-
     .loading {
       margin: auto;
-    }
-
-    @media (hover: hover) {
-      &:hover {
-        background-color: var(--color-hover-light);
-        --color-gradient: var(--color-hover-light);
-      }
     }
   }
 </style>

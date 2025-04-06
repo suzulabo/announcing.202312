@@ -2,11 +2,11 @@
   import { faker } from '@faker-js/faker';
   import { addDays } from 'date-fns';
 
-  import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
+  import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView';
   import type {
     AnnouncementLoaderFunction,
     ChannelViewProps,
-  } from '$lib/parts/ChannelView/ChannelView.svelte';
+  } from '$lib/parts/ChannelView/ChannelView';
   import ChannelView from '$lib/parts/ChannelView/ChannelView.svelte';
   import { page } from '$app/state';
   import { createSnapshotContext } from '$lib/utils/snapshotContext.js';
@@ -82,6 +82,6 @@
   .container {
     max-width: 600px;
     margin: 0 auto;
-    padding: 8px;
+    padding: 8px 0;
   }
 </style>

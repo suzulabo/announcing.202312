@@ -1,6 +1,6 @@
 <script lang="ts">
   import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
-  import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
+  import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView';
   import { formatDate } from '$lib/utils/formatDate';
 
   interface Props {
@@ -18,11 +18,11 @@
   }}
 >
   <div class="container" class:overflow>
+    {#if announcement.headerImage}
+      <img class="header-image" src={announcement.headerImage} alt="" />
+    {/if}
     <div class="date">{formatDate(announcement.createdAt)}</div>
     <div class="title-box">
-      {#if announcement.headerImage}
-        <img src={announcement.headerImage} alt="" />
-      {/if}
       {#if announcement.title}
         <div class="title">{announcement.title}</div>
       {/if}
@@ -33,14 +33,21 @@
 
 <style lang="scss">
   .container {
-    flex-grow: 1;
     max-height: 100%;
-    margin: 8px 0 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    position: relative;
+    padding: 0 8px;
+
+    .header-image {
+      display: block;
+      aspect-ratio: unset;
+      max-height: 30dvh;
+      object-fit: cover;
+      border: none;
+      border-radius: 4px;
+    }
 
     &.overflow:after {
       position: absolute;
@@ -49,7 +56,7 @@
       left: 0;
       right: 0;
       content: '';
-      background: linear-gradient(to top, var(--color-gradient), transparent 10%);
+      background: linear-gradient(to top, var(--color-background), transparent 10%);
       pointer-events: none;
     }
 
@@ -62,13 +69,6 @@
       display: flex;
       align-items: center;
       gap: 16px;
-
-      img {
-        margin: auto;
-        max-height: 100px;
-        max-width: 30%;
-        border-radius: 4px;
-      }
 
       .title {
         font-size: 18px;
