@@ -1,32 +1,32 @@
 <script lang="ts">
-  import { LL } from '@announcing/i18n';
-
   import Spinner from '$lib/atoms/Spinner.svelte';
-  import { toHtml } from '$lib/utils/toHtml';
-
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
-  import type { ChannelViewProps } from '../ChannelView.svelte';
+  import { toHtml } from '$lib/utils/toHtml';
+  import { LL } from '@announcing/i18n';
+  import type { ChannelViewProps } from '../ChannelView';
   import Item from './Item.svelte';
 
   let { channel, announcementHrefPrefix, announcementKeys, announcementLoader }: ChannelViewProps =
     $props();
 </script>
 
-<div class="channel-box">
-  <div class="name-line">
-    <div class="name">
-      {channel.name}
+{#if channel}
+  <div class="channel-box">
+    <div class="name-line">
+      <div class="name">
+        {channel.name}
+      </div>
+      {#if channel.icon}
+        <img class="icon" alt={channel.name} src={channel.icon} />
+      {/if}
     </div>
-    {#if channel.icon}
-      <img class="icon" alt={channel.name} src={channel.icon} />
+    {#if channel.desc}
+      <div class="desc">
+        {@html toHtml(channel.desc)}
+      </div>
     {/if}
   </div>
-  {#if channel.desc}
-    <div class="desc">
-      {@html toHtml(channel.desc)}
-    </div>
-  {/if}
-</div>
+{/if}
 
 {#if announcementKeys && announcementLoader}
   {#if announcementKeys.length === 0}
