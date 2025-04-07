@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { LL } from '@announcing/i18n';
-
   import { pushState } from '$app/navigation';
   import { page } from '$app/state';
   import Modal from '$lib/atoms/Modal.svelte';
   import { formatDate } from '$lib/utils/formatDate';
   import { toHtml } from '$lib/utils/toHtml';
-
-  import type { Announcement } from '../AnnouncementView.svelte';
+  import { LL } from '@announcing/i18n';
+  import type { Announcement } from '../AnnouncementView';
 
   interface Props {
     announcement: Announcement;
