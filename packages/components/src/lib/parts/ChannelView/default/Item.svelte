@@ -36,11 +36,9 @@
       />
     {/if}
     <div class="date">{formatDate(announcement.createdAt)}</div>
-    <div class="title-box">
-      {#if announcement.title}
-        <div class="title">{announcement.title}</div>
-      {/if}
-    </div>
+    {#if announcement.title}
+      <div class="title">{announcement.title}</div>
+    {/if}
     <div class="body">{announcement.body}</div>
   </div>
 </ResizeObserver>
@@ -80,15 +78,9 @@
       font-size: 15px;
     }
 
-    .title-box {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-
-      .title {
-        font-size: 18px;
-        font-weight: bold;
-      }
+    .title {
+      font-size: 18px;
+      font-weight: bold;
     }
 
     .body {
