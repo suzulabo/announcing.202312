@@ -1,8 +1,11 @@
 <script lang="ts">
   import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
-  import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView';
+  import AnnouncementView from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
   import { formatDate } from '$lib/utils/formatDate';
   import { parseImageSize } from '$lib/utils/parseImageSize';
+  import type { ComponentProps } from 'svelte';
+
+  type Announcement = ComponentProps<typeof AnnouncementView>['announcement'];
 
   interface Props {
     announcement: Announcement;

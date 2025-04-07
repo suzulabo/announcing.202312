@@ -3,11 +3,16 @@
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
   import { toHtml } from '$lib/utils/toHtml';
   import { LL } from '@announcing/i18n';
-  import type { ChannelViewProps } from '../ChannelView';
   import Item from './Item.svelte';
+  import type { ComponentProps } from 'svelte';
+  import ChannelView from '../ChannelView.svelte';
 
-  let { channel, announcementHrefPrefix, announcementKeys, announcementLoader }: ChannelViewProps =
-    $props();
+  let {
+    channel,
+    announcementHrefPrefix,
+    announcementKeys,
+    announcementLoader,
+  }: ComponentProps<typeof ChannelView> = $props();
 </script>
 
 {#if channel}

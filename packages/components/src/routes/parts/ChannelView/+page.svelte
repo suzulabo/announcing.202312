@@ -1,30 +1,29 @@
 <script lang="ts">
+  import { page } from '$app/state';
+  import ChannelView from '$lib/parts/ChannelView/ChannelView.svelte';
+  import { createSnapshotContext } from '$lib/utils/snapshotContext.js';
   import { faker } from '@faker-js/faker';
   import { addDays } from 'date-fns';
-
-  import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView';
-  import type {
-    AnnouncementLoaderFunction,
-    ChannelViewProps,
-  } from '$lib/parts/ChannelView/ChannelView';
-  import ChannelView from '$lib/parts/ChannelView/ChannelView.svelte';
-  import { page } from '$app/state';
-  import { createSnapshotContext } from '$lib/utils/snapshotContext.js';
+  import type { ComponentProps } from 'svelte';
 
   export const snapshot = createSnapshotContext();
 
+  type ChannelViewProps = ComponentProps<typeof ChannelView>;
+
   const loaded = new Set<string>();
   const announcementKeys = Array.from({ length: 100 }, (_, i) => (i + 1).toString());
-  const announcementLoader: AnnouncementLoaderFunction = (key: string) => {
+  const announcementLoader: ChannelViewProps['announcementLoader'] = (key: string) => {
     const keyNum = +key;
     faker.seed(keyNum + 100);
     const date = addDays('2023-12-31T00:11:22', keyNum * -1).getTime();
-    const result: Announcement = {
+    const result = {
+      headerImage: undefined as string | undefined,
       title: `[${key}] ${faker.lorem.sentence()}`,
       body: faker.lorem.paragraphs({
         min: 1,
         max: 6,
       }),
+      images: undefined as string[] | undefined,
       updatedAt: date,
       createdAt: date,
     };

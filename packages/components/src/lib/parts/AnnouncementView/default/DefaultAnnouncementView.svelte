@@ -5,7 +5,10 @@
   import { formatDate } from '$lib/utils/formatDate';
   import { toHtml } from '$lib/utils/toHtml';
   import { LL } from '@announcing/i18n';
-  import type { Announcement } from '../AnnouncementView';
+  import type { ComponentProps } from 'svelte';
+  import AnnouncementView from '../AnnouncementView.svelte';
+
+  type Announcement = ComponentProps<typeof AnnouncementView>['announcement'];
 
   interface Props {
     announcement: Announcement;
