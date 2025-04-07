@@ -19,6 +19,12 @@
 
   let { locale = $bindable(), theme = $bindable(), showSignOut }: Props = $props();
 
+  // TODO: https://github.com/sveltejs/language-tools/issues/2268
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  locale;
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  theme;
+
   let open = $state(false);
 
   export const openModal = () => {
