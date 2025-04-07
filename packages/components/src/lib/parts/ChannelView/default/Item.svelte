@@ -2,6 +2,7 @@
   import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
   import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView';
   import { formatDate } from '$lib/utils/formatDate';
+  import { parseImageSize } from '$lib/utils/parseImageSize';
 
   interface Props {
     announcement: Announcement;
@@ -10,6 +11,11 @@
   let { announcement }: Props = $props();
 
   let overflow = $state(false);
+
+  const getAspectRatio = (src: string) => {
+    const size = parseImageSize(src);
+    return size ? `${size.width}/${size.height}` : 'auto';
+  };
 </script>
 
 <ResizeObserver
@@ -19,7 +25,12 @@
 >
   <div class="container" class:overflow>
     {#if announcement.headerImage}
-      <img class="header-image" src={announcement.headerImage} alt="" />
+      <img
+        class="header-image"
+        src={announcement.headerImage}
+        style={`--aspect-radio: ${getAspectRatio(announcement.headerImage)}`}
+        alt=""
+      />
     {/if}
     <div class="date">{formatDate(announcement.createdAt)}</div>
     <div class="title-box">
@@ -38,15 +49,16 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 0 8px;
+    padding: 8px 8px 0;
 
     .header-image {
       display: block;
-      aspect-ratio: unset;
       max-height: 30dvh;
-      object-fit: cover;
+      aspect-ratio: var(--aspect-radio);
+      object-fit: contain;
       border: none;
       border-radius: 4px;
+      margin: 0 auto;
     }
 
     &.overflow:after {

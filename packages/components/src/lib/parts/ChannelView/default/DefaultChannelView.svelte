@@ -34,7 +34,7 @@
       {$LL.noAnnouncements()}
     </div>
   {:else}
-    <VirtualScrollList keys={announcementKeys} itemMinHeight={200} gap={0}>
+    <VirtualScrollList keys={announcementKeys} itemMinHeight={200} gap={8}>
       {#snippet itemSnippet(key)}
         <a class="item unstyled" href={`${announcementHrefPrefix}/${key}`}>
           {#await announcementLoader(key)}
@@ -83,15 +83,17 @@
   }
 
   .item {
-    border-top: 1px solid var(--color-border);
-    padding: 8px 0;
-    position: relative;
+    margin: 0 8px;
+    padding: 0 0 8px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 4px;
     display: flex;
     flex-direction: column;
     min-height: 200px;
     max-height: 50dvh;
-    overflow: hidden;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
 
     .loading {
       margin: auto;
