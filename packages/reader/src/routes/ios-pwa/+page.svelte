@@ -6,7 +6,6 @@
   import { setIOSBrowserSchema } from '$lib/platform/localStorage';
   import { resolveBrowserSchema } from '$lib/platform/resolveBrowserSchema';
   import Loading from '@announcing/components/Loading.svelte';
-  import Radio from '@announcing/components/Radio.svelte';
   import { LL } from '@announcing/i18n';
 
   let browserSchema = $state('x-safari-https://@urlBase');
@@ -59,7 +58,9 @@
 
   <div class="browser-schemas">
     {#each browserSchemas as [name, schema] (name)}
-      <Radio bind:value={browserSchema} selectedValue={schema}>{name}</Radio>
+      <label>
+        <input type="radio" name="browser-schema" value={schema} bind:group={browserSchema} />{name}
+      </label>
     {/each}
   </div>
 

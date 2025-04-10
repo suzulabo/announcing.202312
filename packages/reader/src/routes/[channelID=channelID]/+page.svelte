@@ -1,11 +1,12 @@
 <script lang="ts">
-  import ChannelView, { type ChannelViewProps } from '@announcing/components/ChannelView.svelte';
+  import ChannelView from '@announcing/components/ChannelView.svelte';
 
   import { page } from '$app/stores';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
 
   import { createSnapshotContext } from '@announcing/components/utils';
   import type { PageData } from './$types';
+  import type { ComponentProps } from 'svelte';
 
   interface Props {
     data: PageData;
@@ -25,7 +26,7 @@
         announcementID: key,
       });
     },
-  } satisfies ChannelViewProps);
+  } satisfies ComponentProps<typeof ChannelView>);
 </script>
 
 <ChannelView {...channelViewProps} />
