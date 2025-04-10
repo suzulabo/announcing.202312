@@ -33,6 +33,10 @@
       "types": "./dist/parts/ChannelView/ChannelView.svelte.d.ts",
       "svelte": "./dist/parts/ChannelView/ChannelView.svelte"
     },
+    "./SettingsModal.svelte": {
+      "types": "./dist/parts/SettingsModal/SettingsModal.svelte.d.ts",
+      "svelte": "./dist/parts/SettingsModal/SettingsModal.svelte"
+    },
     "./FileInput.svelte": {
       "types": "./dist/atoms/FileInput.svelte.d.ts",
       "svelte": "./dist/atoms/FileInput.svelte"
