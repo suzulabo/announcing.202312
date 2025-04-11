@@ -30,7 +30,6 @@
   <li>
     <a href="./parts/AnnouncementView/default/singleImage">AnnouncementView - single image</a>
   </li>
-  <li><a href="./parts/SettingsModal">SettingsModal</a></li>
 </ul>
 
 <style lang="scss">

@@ -29,6 +29,9 @@
   bind:this={settingsModal}
   requestLocale={data.requestLocale}
   requestTheme={data.requestTheme}
+  onSignOut={() => {
+    alert('Sign out');
+  }}
 />
 
 <style lang="scss">
