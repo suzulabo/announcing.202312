@@ -9,7 +9,6 @@
   import { signOut } from '@auth/sveltekit/client';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
-  import type { HeaderBack } from './+layout';
 
   interface Props {
     data: LayoutData;
@@ -18,7 +17,7 @@
 
   let { data, children }: Props = $props();
 
-  let headerBack = $derived<HeaderBack | undefined>(page.data['headerBack']);
+  let headerBack = $derived(page.data.headerBack);
   let siteNameElementAttrs = $derived(
     data.userID && page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' },
   );

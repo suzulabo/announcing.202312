@@ -1,5 +1,4 @@
 import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
-import type { HeaderBack } from '../../../../../+layout';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ params, fetch }) => {
@@ -14,6 +13,6 @@ export const load: PageLoad = async ({ params, fetch }) => {
     headerBack: {
       href: '../list',
       labelKey: 'back',
-    } satisfies HeaderBack,
+    },
   };
 };
