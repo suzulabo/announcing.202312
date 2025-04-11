@@ -1,25 +1,7 @@
-<script lang="ts" module>
-  import Logo from '@announcing/components/Logo.svelte';
-
-  type BackLabelKeys = 'back';
-
-  export type HeaderBack = {
-    href: string;
-    labelKey: BackLabelKeys;
-  };
-
-  export type HeaderNotification = {
-    channelID: string;
-    name: string;
-    icon?: string;
-  };
-</script>
-
 <script lang="ts">
+  import Logo from '@announcing/components/Logo.svelte';
   import { LL } from '@announcing/i18n';
-
-  import { page } from '$app/stores';
-
+  import { page } from '$app/state';
   import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
   import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
   import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
@@ -42,10 +24,8 @@
   let { data, children }: Props = $props();
 
   let addManifest = $state(isIOS() && !isStandalone());
-  let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
-  let headerNotification = $derived<HeaderNotification | undefined>(
-    $page.data['headerNotification'],
-  );
+  let headerBack = $derived(page.data.headerBack);
+  let headerNotification = $derived(page.data.headerNotification);
 
   let notificationModal: NotificationModal;
   let settingsModal: SettingsModal;

@@ -4,7 +4,8 @@
   import Loading from '@announcing/components/Loading.svelte';
   import Modal from '@announcing/components/Modal.svelte';
   import { LL } from '@announcing/i18n';
-  import type { HeaderNotification } from './+layout.svelte';
+
+  type HeaderNotification = App.PageData['headerNotification'];
 
   let permission = $derived(notificationState.permission);
 
