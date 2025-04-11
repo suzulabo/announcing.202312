@@ -1,35 +1,5 @@
 <script lang="ts" module>
   import Logo from '@announcing/components/Logo.svelte';
-  import type { Locales } from '@announcing/i18n';
-  import Cookies from 'js-cookie';
-
-  const updateLocale = (locale: Locales) => {
-    if (browser) {
-      Cookies.set('locale', locale);
-      return setupLocale(locale);
-    }
-    return;
-  };
-
-  const updateTheme = (theme: string) => {
-    if (!browser) {
-      return;
-    }
-
-    Cookies.set('theme', theme);
-    document.documentElement.setAttribute('data-color-scheme', theme);
-  };
-
-  const getSystemTheme = () => {
-    if (browser && 'matchMedia' in window) {
-      const m = window.matchMedia('(prefers-color-scheme: dark)');
-      if (m.matches) {
-        return 'dark';
-      }
-    }
-
-    return 'light';
-  };
 
   type BackLabelKeys = 'back';
 
@@ -46,9 +16,8 @@
 </script>
 
 <script lang="ts">
-  import { LL, setupLocale } from '@announcing/i18n';
+  import { LL } from '@announcing/i18n';
 
-  import { browser } from '$app/environment';
   import { page } from '$app/stores';
 
   import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
@@ -60,10 +29,10 @@
   import { notificationState } from '$lib/notification/notificationState.svelte';
   import { isIOS, isStandalone } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
+  import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
   import NotificationModal from './NotificationModal.svelte';
-  import SettingsModal from './SettingsModal.svelte';
 
   interface Props {
     data: LayoutData;
@@ -72,24 +41,14 @@
 
   let { data, children }: Props = $props();
 
-  let theme = $state(Cookies.get('theme') ?? getSystemTheme());
-  let locale = $state(data.locale);
   let addManifest = $state(isIOS() && !isStandalone());
   let headerBack = $derived<HeaderBack | undefined>($page.data['headerBack']);
   let headerNotification = $derived<HeaderNotification | undefined>(
     $page.data['headerNotification'],
   );
 
-  let notificationModal: ReturnType<typeof NotificationModal>;
-  let settingsModal: ReturnType<typeof SettingsModal>;
-
-  $effect(() => {
-    document.body.setAttribute('locale', locale);
-    void updateLocale(locale);
-  });
-  $effect(() => {
-    updateTheme(theme);
-  });
+  let notificationModal: NotificationModal;
+  let settingsModal: SettingsModal;
 
   onMount(async () => {
     await initFirebase();
@@ -152,7 +111,11 @@
 </div>
 
 <NotificationModal bind:this={notificationModal} />
-<SettingsModal bind:this={settingsModal} bind:locale bind:theme />
+<SettingsModal
+  bind:this={settingsModal}
+  requestLocale={data.requestLocale}
+  requestTheme={data.requestTheme}
+/>
 
 <style lang="scss">
   .container {
