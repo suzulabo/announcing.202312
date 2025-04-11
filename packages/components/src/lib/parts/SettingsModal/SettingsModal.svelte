@@ -3,7 +3,9 @@
   import MaterialSymbolsLanguage from '$lib/icons/MaterialSymbolsLanguage.svelte';
   import MaterialSymbolsLogout from '$lib/icons/MaterialSymbolsLogout.svelte';
   import MdiThemeLightDark from '$lib/icons/MdiThemeLightDark.svelte';
+  import { getTheme, initTheme, setTheme, type Themes } from '$lib/utils/settings';
   import { LL, type Locales } from '@announcing/i18n';
+  import { onMount } from 'svelte';
 
   const localeValues = [
     ['en', 'English'],
@@ -11,32 +13,44 @@
   ] satisfies [Locales, string][];
 
   interface Props {
-    locale: Locales;
-    theme: string;
+    requestTheme: Themes | undefined;
+    onLocaleChange: (locale: Locales) => Promise<void>;
     onSignOut?: () => void;
   }
 
-  let { locale = $bindable(), theme = $bindable(), onSignOut }: Props = $props();
+  let { requestTheme, onLocaleChange, onSignOut }: Props = $props();
 
-  // TODO: https://github.com/sveltejs/language-tools/issues/2268
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  locale;
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  theme;
+  let theme = $state(requestTheme ?? getTheme());
 
-  let open = $state(false);
+  let values = $state<{
+    open: boolean;
+    locale?: Locales;
+  }>({ open: false });
 
-  export const openModal = () => {
-    open = true;
-  };
-
-  let themes = $derived([
+  let themes = $derived<[Themes, string][]>([
     ['light', $LL.lightMode()],
     ['dark', $LL.darkMode()],
-  ] as const);
+  ]);
+
+  onMount(() => {
+    initTheme();
+  });
+
+  $effect(() => {
+    setTheme(theme);
+  });
+
+  export const openModal = (locale: Locales) => {
+    values = {
+      open: true,
+      locale,
+    };
+  };
 </script>
 
-<Modal bind:open dismissMode="backdrop">
+<div id="settings" data-theme={theme}></div>
+
+<Modal bind:open={values.open} dismissMode="backdrop">
   <div class="modal-body">
     <div class="language-title">
       <MaterialSymbolsLanguage />Language
@@ -44,7 +58,15 @@
     <div class="language-grid">
       {#each localeValues as [value, label] (value)}
         <label>
-          <input type="radio" name="locale" {value} bind:group={locale} />
+          <input
+            type="radio"
+            name="locale"
+            {value}
+            bind:group={values.locale}
+            onchange={() => {
+              void onLocaleChange(value);
+            }}
+          />
           {label}
         </label>
       {/each}
@@ -84,13 +106,17 @@
     <button
       class="close-btn small filled"
       onclick={() => {
-        open = false;
+        values.open = false;
       }}>{$LL.close()}</button
     >
   </div>
 </Modal>
 
 <style lang="scss">
+  #settings {
+    display: none;
+  }
+
   .modal-body {
     background-color: var(--color-background);
     border-radius: 8px;

@@ -76,13 +76,12 @@ html {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 
   @media (prefers-color-scheme: dark) {
-    &:not([data-color-scheme='light']):not(.light) {
+    &:not(:has(#settings[data-theme='light'])) {
       @include dark-mode;
     }
   }
 
-  &[data-color-scheme='dark'],
-  &.dark {
+  &:has(#settings[data-theme='dark']) {
     @include dark-mode;
   }
 }
