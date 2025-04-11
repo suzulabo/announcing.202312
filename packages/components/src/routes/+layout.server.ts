@@ -1,6 +1,6 @@
 import { detectLocale } from '@announcing/i18n';
 
-import { detectRequestTheme } from '$lib/utils/settings';
+import { getRequestTheme } from '$lib/utils/settings';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = ({ cookies, request }) => {
@@ -8,7 +8,7 @@ export const load: LayoutServerLoad = ({ cookies, request }) => {
     cookie: cookies.get('locale'),
     acceptLanguage: request.headers.get('accept-language') ?? undefined,
   });
-  const requestTheme = detectRequestTheme(cookies);
+  const requestTheme = getRequestTheme(cookies);
 
   return {
     locale,

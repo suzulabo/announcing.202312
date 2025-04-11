@@ -30,7 +30,7 @@ export const initTheme = () => {
   setTheme(getTheme());
 };
 
-export const detectRequestTheme = (cookies: Cookies): Themes | undefined => {
+export const getRequestTheme = (cookies: Cookies): Themes | undefined => {
   const theme = cookies.get('theme');
   if (theme === 'light' || theme === 'dark') {
     return theme;
