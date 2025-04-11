@@ -1,48 +1,15 @@
-<script lang="ts" module>
-  import type { Locales } from '@announcing/i18n';
-  import Cookies from 'js-cookie';
-
-  const updateLocale = (locale: Locales) => {
-    if (browser) {
-      Cookies.set('locale', locale);
-      return setupLocale(locale);
-    }
-    return;
-  };
-
-  const updateTheme = (theme: string) => {
-    if (!browser) {
-      return;
-    }
-
-    Cookies.set('theme', theme);
-    document.documentElement.setAttribute('data-color-scheme', theme);
-  };
-
-  const getSystemTheme = () => {
-    if (browser && 'matchMedia' in window) {
-      const m = window.matchMedia('(prefers-color-scheme: dark)');
-      if (m.matches) {
-        return 'dark';
-      }
-    }
-
-    return 'light';
-  };
-</script>
-
 <script lang="ts">
   import '../app.scss';
 
-  import { browser } from '$app/environment';
   import { page } from '$app/state';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import { setupBack } from '@announcing/components/actions/back';
-  import { LL, setupLocale } from '@announcing/i18n';
+  import SettingsModal from '@announcing/components/SettingsModal.svelte';
+  import { LL } from '@announcing/i18n';
+  import { signOut } from '@auth/sveltekit/client';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
   import type { HeaderBack } from './+layout';
-  import SettingsModal from './SettingsModal.svelte';
 
   interface Props {
     data: LayoutData;
@@ -51,21 +18,12 @@
 
   let { data, children }: Props = $props();
 
-  let theme = $state(Cookies.get('theme') ?? getSystemTheme());
-  let locale = $state(data.locale);
   let headerBack = $derived<HeaderBack | undefined>(page.data['headerBack']);
   let siteNameElementAttrs = $derived(
     data.userID && page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' },
   );
 
-  let settingsModal: ReturnType<typeof SettingsModal>;
-
-  $effect(() => {
-    void updateLocale(locale);
-  });
-  $effect(() => {
-    updateTheme(theme);
-  });
+  let settingsModal: SettingsModal;
 
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
@@ -100,7 +58,16 @@
 </header>
 {@render children?.()}
 
-<SettingsModal bind:this={settingsModal} bind:locale bind:theme showSignOut={!!data.userID} />
+<SettingsModal
+  bind:this={settingsModal}
+  requestLocale={data.requestLocale}
+  requestTheme={data.requestTheme}
+  onSignOut={data.userID
+    ? () => {
+        void signOut();
+      }
+    : undefined}
+/>
 
 <style lang="scss">
   header {

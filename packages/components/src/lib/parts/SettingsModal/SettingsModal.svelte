@@ -16,7 +16,7 @@
   interface Props {
     requestLocale: Locales;
     requestTheme: Themes | undefined;
-    onSignOut?: () => void;
+    onSignOut?: (() => void) | undefined;
   }
 
   let { requestLocale, requestTheme, onSignOut }: Props = $props();

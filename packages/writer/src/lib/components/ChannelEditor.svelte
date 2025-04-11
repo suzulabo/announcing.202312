@@ -178,16 +178,16 @@
         button.icon-select {
           width: 64px;
           height: 64px;
-          :global(body[locale='ja']) & {
+          white-space: normal;
+          :global(:has(#settings[data-locale='ja'])) & {
             font-size: 12px;
-            white-space: normal;
           }
         }
         button.icon-remove {
           font-size: 12px;
           padding: 4px;
           width: 64px;
-          :global(body[locale='ja']) & {
+          :global(:has(#settings[data-locale='ja'])) & {
             font-size: 11px;
           }
         }
