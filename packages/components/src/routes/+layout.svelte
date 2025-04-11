@@ -1,9 +1,6 @@
 <script lang="ts">
   import SettingsModal from '$lib/parts/SettingsModal/SettingsModal.svelte';
-  import type { Locales } from '@announcing/i18n';
-  import { LL, setupLocale } from '@announcing/i18n';
-  import Cookies from 'js-cookie';
-  import { onMount } from 'svelte';
+  import { LL } from '@announcing/i18n';
   import type { LayoutData } from './$types';
 
   interface Props {
@@ -13,17 +10,7 @@
 
   let { data, children }: Props = $props();
 
-  let locale = $state(data.locale);
   let settingsModal = $state<SettingsModal>();
-
-  const onLocaleChange = (locale: Locales) => {
-    Cookies.set('locale', locale);
-    return setupLocale(locale);
-  };
-
-  onMount(async () => {
-    await onLocaleChange(locale);
-  });
 </script>
 
 <div class="tool-bar">
@@ -31,14 +18,18 @@
   <button
     class="settings-btn"
     onclick={() => {
-      settingsModal?.openModal(locale);
+      settingsModal?.openModal();
     }}>{$LL.settings()}</button
   >
 </div>
 
 {@render children?.()}
 
-<SettingsModal bind:this={settingsModal} requestTheme={data.requestTheme} {onLocaleChange} />
+<SettingsModal
+  bind:this={settingsModal}
+  requestLocale={data.requestLocale}
+  requestTheme={data.requestTheme}
+/>
 
 <style lang="scss">
   .tool-bar {

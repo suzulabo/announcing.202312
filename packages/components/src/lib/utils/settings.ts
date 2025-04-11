@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { type Cookies } from '@sveltejs/kit';
+import { setupLocale, type Locales } from '@announcing/i18n';
 import jsCookies from 'js-cookie';
 
 export type Themes = 'light' | 'dark';
@@ -30,10 +30,7 @@ export const initTheme = () => {
   setTheme(getTheme());
 };
 
-export const getRequestTheme = (cookies: Cookies): Themes | undefined => {
-  const theme = cookies.get('theme');
-  if (theme === 'light' || theme === 'dark') {
-    return theme;
-  }
-  return;
+export const setLocale = async (locale: Locales) => {
+  jsCookies.set('locale', locale);
+  await setupLocale(locale);
 };

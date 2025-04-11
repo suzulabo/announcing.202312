@@ -1,9 +1,10 @@
 <script lang="ts">
+  import Loading from '$lib/atoms/Loading.svelte';
   import Modal from '$lib/atoms/Modal.svelte';
   import MaterialSymbolsLanguage from '$lib/icons/MaterialSymbolsLanguage.svelte';
   import MaterialSymbolsLogout from '$lib/icons/MaterialSymbolsLogout.svelte';
   import MdiThemeLightDark from '$lib/icons/MdiThemeLightDark.svelte';
-  import { getTheme, initTheme, setTheme, type Themes } from '$lib/utils/settings';
+  import { getTheme, initTheme, setLocale, setTheme, type Themes } from '$lib/utils/settings';
   import { LL, type Locales } from '@announcing/i18n';
   import { onMount } from 'svelte';
 
@@ -13,19 +14,17 @@
   ] satisfies [Locales, string][];
 
   interface Props {
+    requestLocale: Locales;
     requestTheme: Themes | undefined;
-    onLocaleChange: (locale: Locales) => Promise<void>;
     onSignOut?: () => void;
   }
 
-  let { requestTheme, onLocaleChange, onSignOut }: Props = $props();
+  let { requestLocale, requestTheme, onSignOut }: Props = $props();
 
+  let open = $state(false);
+  let loading = $state(false);
+  let locale = $state(requestLocale);
   let theme = $state(requestTheme ?? getTheme());
-
-  let values = $state<{
-    open: boolean;
-    locale?: Locales;
-  }>({ open: false });
 
   let themes = $derived<[Themes, string][]>([
     ['light', $LL.lightMode()],
@@ -37,20 +36,28 @@
   });
 
   $effect(() => {
+    loading = true;
+    setLocale(locale)
+      .catch(() => {
+        //
+      })
+      .finally(() => {
+        loading = false;
+      });
+  });
+
+  $effect(() => {
     setTheme(theme);
   });
 
-  export const openModal = (locale: Locales) => {
-    values = {
-      open: true,
-      locale,
-    };
+  export const openModal = () => {
+    open = true;
   };
 </script>
 
-<div id="settings" data-theme={theme}></div>
+<div id="settings" data-locale={locale} data-theme={theme}></div>
 
-<Modal bind:open={values.open} dismissMode="backdrop">
+<Modal bind:open dismissMode="backdrop">
   <div class="modal-body">
     <div class="language-title">
       <MaterialSymbolsLanguage />Language
@@ -58,15 +65,7 @@
     <div class="language-grid">
       {#each localeValues as [value, label] (value)}
         <label>
-          <input
-            type="radio"
-            name="locale"
-            {value}
-            bind:group={values.locale}
-            onchange={() => {
-              void onLocaleChange(value);
-            }}
-          />
+          <input type="radio" name="locale" {value} bind:group={locale} />
           {label}
         </label>
       {/each}
@@ -106,11 +105,13 @@
     <button
       class="close-btn small filled"
       onclick={() => {
-        values.open = false;
+        open = false;
       }}>{$LL.close()}</button
     >
   </div>
 </Modal>
+
+<Loading show={loading} showDelay="0.5s" />
 
 <style lang="scss">
   #settings {
