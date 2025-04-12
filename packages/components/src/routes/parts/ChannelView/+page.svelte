@@ -1,3 +1,7 @@
+<script lang="ts" module>
+  const loaded = new Set<string>();
+</script>
+
 <script lang="ts">
   import { page } from '$app/state';
   import ChannelView from '$lib/parts/ChannelView/ChannelView.svelte';
@@ -9,7 +13,6 @@
 
   type ChannelViewProps = ComponentProps<typeof ChannelView>;
 
-  const loaded = new Set<string>();
   const announcementLoader: ChannelViewProps['announcementLoader'] = (key: string) => {
     const result = channelData.get(key);
 
