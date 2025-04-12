@@ -1,7 +1,6 @@
+import { resolveAnnouncement } from '$lib/db/resolver';
 import type { GetAnnouncementResult } from '@announcing/db/types';
 import { LRUCache } from 'lru-cache';
-
-import { promiseCache } from './promiseCache';
 
 const cache = new LRUCache<string, GetAnnouncementResult>({ max: 100 });
 
@@ -14,7 +13,7 @@ export const fetchAnnouncement = (
     announcementID: string;
   },
   fetch_ = fetch,
-): (GetAnnouncementResult | undefined) | Promise<GetAnnouncementResult | undefined> => {
+): GetAnnouncementResult | Promise<GetAnnouncementResult> => {
   const cacheKey = `${channelID}-${announcementID}`;
 
   const cached = cache.get(cacheKey);
@@ -24,20 +23,14 @@ export const fetchAnnouncement = (
 
   const url = `/api/channels/${channelID}/announcements/${announcementID}`;
 
-  return promiseCache(url, async () => {
-    const res = await fetch_(url);
+  return (async () => {
+    const res = await fetch_(url, { cache: 'force-cache' });
     if (res.ok) {
-      const data = await res.json();
+      const data = resolveAnnouncement(await res.json());
       cache.set(cacheKey, data);
-      return data as GetAnnouncementResult;
+      return data;
     }
 
-    console.log('res', { res });
-
-    if (res.status === 404) {
-      return;
-    }
-
-    throw new Error('Fetch Announcement Error');
-  });
+    throw new Error(`Fetch Announcement Error: ${cacheKey}`);
+  })();
 };
