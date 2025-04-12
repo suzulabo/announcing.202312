@@ -1,3 +1,4 @@
+import { resolveAnnouncement } from '$lib/db/resolver';
 import type { GetAnnouncementResult } from '@announcing/db/types';
 import { LRUCache } from 'lru-cache';
 
@@ -25,7 +26,7 @@ export const fetchAnnouncement = (
   return (async () => {
     const res = await fetch_(url, { cache: 'force-cache' });
     if (res.ok) {
-      const data = (await res.json()) as GetAnnouncementResult;
+      const data = resolveAnnouncement(await res.json());
       cache.set(cacheKey, data);
       return data;
     }

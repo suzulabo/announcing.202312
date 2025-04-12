@@ -1,4 +1,3 @@
-import { resolveAnnouncement } from '$lib/db/resolver';
 import {
   getFormFileOrString,
   getFormFilesOrStrings,
@@ -25,7 +24,7 @@ export const GET: RequestHandler = async ({ params }) => {
     error(404, 'Missing announcement');
   }
 
-  return json(resolveAnnouncement(result));
+  return json(result);
 };
 
 const putSchema = v.strictObject({
