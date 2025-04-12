@@ -35,6 +35,14 @@ const genData = (): Map<string, Announcement> => {
     createdAt: genDate(2),
   });
 
+  data.set('3', {
+    headerImage: '/assets/ducklings-1853178_1280x989.jpg',
+    title: 'Portrait header is more boxy',
+    body: faker.lorem.paragraphs(),
+    updatedAt: genDate(3),
+    createdAt: genDate(3),
+  });
+
   return data;
 };
 

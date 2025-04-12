@@ -14,11 +14,6 @@
   let { announcement }: Props = $props();
 
   let overflow = $state(false);
-
-  const getAspectRatio = (src: string) => {
-    const size = parseImageSize(src);
-    return size ? `${size.width}/${size.height}` : 'auto';
-  };
 </script>
 
 <ResizeObserver
@@ -28,11 +23,14 @@
 >
   <div class="container" class:overflow>
     {#if announcement.headerImage}
+      {@const size = parseImageSize(announcement.headerImage)}
       <img
         class="header-image"
         src={announcement.headerImage}
-        style={`--aspect-radio: ${getAspectRatio(announcement.headerImage)}`}
         alt=""
+        width={size?.width}
+        height={size?.height}
+        class:portrait={size ? size.height > size.width : false}
       />
     {/if}
     <div class="date">{formatDate(announcement.createdAt)}</div>
@@ -55,11 +53,14 @@
     .header-image {
       display: block;
       max-height: 30dvh;
-      aspect-ratio: var(--aspect-radio);
-      object-fit: contain;
+      object-fit: cover;
       border: none;
       border-radius: 4px;
       margin: 0 auto;
+      &.portrait {
+        object-fit: contain;
+        width: fit-content;
+      }
     }
 
     &.overflow:after {
