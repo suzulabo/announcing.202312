@@ -1,9 +1,9 @@
 <script lang="ts">
   import { page } from '$app/state';
   import ChannelView from '$lib/parts/ChannelView/ChannelView.svelte';
-  import { createSnapshotContext } from '$lib/utils/snapshotContext.js';
+  import { createSnapshotContext } from '$lib/utils/snapshotContext';
   import type { ComponentProps } from 'svelte';
-  import { channelData } from './channelData.js';
+  import { channelData } from './channelData';
 
   export const snapshot = createSnapshotContext();
 
