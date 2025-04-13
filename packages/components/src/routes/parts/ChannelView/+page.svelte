@@ -20,8 +20,12 @@
       return result;
     }
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
+        if (!result) {
+          reject('No data');
+          return;
+        }
         loaded.add(key);
         resolve(result);
       }, 1000);

@@ -99,6 +99,10 @@ export const messages = {
     en: 'No announcements yet.',
     ja: 'アナウンスはまだありません',
   },
+  failedToDataLoad: {
+    en: 'Failed to data load',
+    ja: 'データの読み込みに失敗しました',
+  },
   createChannel: {
     en: 'Create Channel',
     ja: 'チャンネルを作成',

@@ -50,6 +50,8 @@
             {#if announcement}
               <Item {announcement} />
             {/if}
+          {:catch}
+            <div class="error">{$LL.failedToDataLoad()}</div>
           {/await}
         </a>
       {/snippet}
@@ -100,8 +102,14 @@
     position: relative;
     overflow: hidden;
 
-    .loading {
+    .loading,
+    .error {
       margin: auto;
+    }
+
+    &:has(.error) {
+      cursor: default;
+      pointer-events: none;
     }
   }
 </style>

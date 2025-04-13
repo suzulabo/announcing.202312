@@ -26,6 +26,7 @@ const en = {
   removeIcon: 'Remove',
   textTooLong: 'Your input exceeds the character limit.',
   noAnnouncements: 'No announcements yet.',
+  failedToDataLoad: 'Failed to data load',
   createChannel: 'Create Channel',
   updateChannel: 'Update Channel',
   channelsCanBeCreated: 'Up to five channels can be created.',

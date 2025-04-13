@@ -26,6 +26,7 @@ const ja = {
   removeIcon: '選択解除',
   textTooLong: '入力が文字数制限を超えています',
   noAnnouncements: 'アナウンスはまだありません',
+  failedToDataLoad: 'データの読み込みに失敗しました',
   createChannel: 'チャンネルを作成',
   updateChannel: 'チャンネルを更新',
   channelsCanBeCreated: 'チャンネルは5つまで作れます',

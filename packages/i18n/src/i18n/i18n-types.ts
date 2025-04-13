@@ -115,6 +115,10 @@ type RootTranslation = {
 	 */
 	noAnnouncements: string
 	/**
+	 * F​a​i​l​e​d​ ​t​o​ ​d​a​t​a​ ​l​o​a​d
+	 */
+	failedToDataLoad: string
+	/**
 	 * C​r​e​a​t​e​ ​C​h​a​n​n​e​l
 	 */
 	createChannel: string
@@ -368,6 +372,10 @@ export type TranslationFunctions = {
 	 * No announcements yet.
 	 */
 	noAnnouncements: () => LocalizedString
+	/**
+	 * Failed to data load
+	 */
+	failedToDataLoad: () => LocalizedString
 	/**
 	 * Create Channel
 	 */

@@ -16,8 +16,8 @@ const genDate = (n: number) => {
   return addDays('2025-01-01T00:11:22', n).getTime();
 };
 
-const genData = (): Map<string, Announcement> => {
-  const data = new Map<string, Announcement>();
+const genData = (): Map<string, Announcement | undefined> => {
+  const data = new Map<string, Announcement | undefined>();
 
   data.set('1', {
     headerImage: '/assets/duck-7713310_1280x853.jpg',
@@ -42,6 +42,8 @@ const genData = (): Map<string, Announcement> => {
     updatedAt: genDate(3),
     createdAt: genDate(3),
   });
+
+  data.set('4', undefined);
 
   return data;
 };
