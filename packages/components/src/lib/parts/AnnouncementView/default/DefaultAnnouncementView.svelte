@@ -110,7 +110,7 @@
     }
   }}
 >
-  <div class="zoom-image"><img src={imageModalSrc} alt="" /></div>
+  <img class="zoom-image" src={imageModalSrc} alt="" {...parseImageSize(imageModalSrc as string)} />
 </Modal>
 
 <style lang="scss">
@@ -177,15 +177,11 @@
   }
 
   .zoom-image {
-    display: flex;
     margin: auto;
-    width: fit-content;
-    height: fit-content;
     max-width: 100%;
     max-height: 100%;
-    overflow: hidden;
-    img {
-      object-fit: contain;
-    }
+    object-fit: contain;
+    width: fit-content;
+    height: fit-content;
   }
 </style>
