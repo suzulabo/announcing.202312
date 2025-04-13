@@ -123,6 +123,9 @@
       max-height: 40vh;
       align-self: center;
       margin: 0 0 8px 0;
+      object-fit: contain;
+      width: fit-content;
+      height: fit-content;
     }
     .date {
       padding: 0 8px;
@@ -151,9 +154,9 @@
       .single-image {
         margin: 0 auto;
         object-fit: contain;
-        border-radius: 4px;
         max-height: 50vh;
         width: fit-content;
+        height: fit-content;
       }
 
       .images-grid {
