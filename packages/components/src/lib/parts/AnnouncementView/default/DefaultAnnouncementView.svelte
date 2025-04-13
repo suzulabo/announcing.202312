@@ -7,6 +7,7 @@
   import { LL } from '@announcing/i18n';
   import type { ComponentProps } from 'svelte';
   import AnnouncementView from '../AnnouncementView.svelte';
+  import { parseImageSize } from '$lib/utils/parseImageSize';
 
   type Announcement = ComponentProps<typeof AnnouncementView>['announcement'];
 
@@ -33,7 +34,12 @@
         }
       }}
     >
-      <img class="header-image" alt="" src={announcement.headerImage} />
+      <img
+        class="header-image"
+        alt=""
+        src={announcement.headerImage}
+        {...parseImageSize(announcement.headerImage)}
+      />
     </button>
   {/if}
   <div class="date">
@@ -55,7 +61,7 @@
   {#if announcement.images}
     <div class="images-box">
       {#if announcement.images.length === 1}
-        {@const image = announcement.images[0]}
+        {@const image = announcement.images[0] as string}
         <div
           class="image-box"
           role="button"
@@ -69,7 +75,7 @@
             // TODO
           }}
         >
-          <img class="single-image" src={image} alt="" />
+          <img class="single-image" src={image} alt="" {...parseImageSize(image)} />
         </div>
       {:else}
         <div class="images-grid">
@@ -85,7 +91,7 @@
                 // TODO
               }}
             >
-              <img src={image} alt="" />
+              <img src={image} alt="" {...parseImageSize(image)} />
             </div>
           {/each}
         </div>
@@ -145,20 +151,26 @@
       .single-image {
         margin: 0 auto;
         object-fit: contain;
-        border-radius: 8px;
+        border-radius: 4px;
         max-height: 50vh;
         width: fit-content;
       }
+
       .images-grid {
         display: grid;
         grid-template-columns: auto auto;
         gap: 4px;
 
+        .image-box {
+          aspect-ratio: 1;
+          display: flex;
+        }
+
         img {
-          aspect-ratio: 5/4;
+          aspect-ratio: 1;
           object-fit: cover;
+          border-radius: 4px;
           margin: auto;
-          border-radius: 8px;
         }
       }
     }
