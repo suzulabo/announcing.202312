@@ -45,6 +45,19 @@ const genData = (): Map<string, Announcement | undefined> => {
 
   data.set('4', undefined);
 
+  data.set('5', {
+    title: 'Images',
+    body: faker.lorem.paragraphs(),
+    images: [
+      '/assets/lemons-2039830_1280× 848.jpg',
+      '/assets/lime-6215762_854x1280.jpg',
+      '/assets/lemon-8293725_1280x1280.jpg',
+      '/assets/lemon-25342_150x150.png',
+    ],
+    updatedAt: genDate(3),
+    createdAt: genDate(3),
+  });
+
   return data;
 };
 
