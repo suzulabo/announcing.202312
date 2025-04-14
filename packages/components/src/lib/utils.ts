@@ -1,3 +1,2 @@
-export { formatDate } from './utils/formatDate';
+export { parseImageSize } from './utils/parseImageSize';
 export { createSnapshotContext } from './utils/snapshotContext';
-export { toHtml } from './utils/toHtml';

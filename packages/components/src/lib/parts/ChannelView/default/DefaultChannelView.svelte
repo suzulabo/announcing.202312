@@ -1,11 +1,12 @@
 <script lang="ts">
   import Spinner from '$lib/atoms/Spinner.svelte';
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
+  import { parseImageSize } from '$lib/utils/parseImageSize';
   import { toHtml } from '$lib/utils/toHtml';
   import { LL } from '@announcing/i18n';
-  import Item from './Item.svelte';
   import type { ComponentProps } from 'svelte';
   import ChannelView from '../ChannelView.svelte';
+  import Item from './Item.svelte';
 
   let {
     channel,
@@ -22,7 +23,7 @@
         {channel.name}
       </div>
       {#if channel.icon}
-        <img class="icon" alt={channel.name} src={channel.icon} />
+        <img class="icon" alt={channel.name} src={channel.icon} {...parseImageSize(channel.icon)} />
       {/if}
     </div>
     {#if channel.desc}
