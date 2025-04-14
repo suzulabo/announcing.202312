@@ -13,7 +13,7 @@ type Announcement = {
 };
 
 const genDate = (n: number) => {
-  return addDays('2025-01-01T00:11:22', n).getTime();
+  return addDays('2026-01-01T00:11:22', n * -1).getTime();
 };
 
 const genData = (): Map<string, Announcement | undefined> => {
