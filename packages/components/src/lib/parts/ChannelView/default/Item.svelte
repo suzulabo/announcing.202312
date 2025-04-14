@@ -13,6 +13,8 @@
 
   let { announcement }: Props = $props();
 
+  let firstImage = $derived(announcement.images?.[0]);
+
   let overflow = $state(false);
 </script>
 
@@ -38,6 +40,9 @@
       <div class="title">{announcement.title}</div>
     {/if}
     <div class="body">{announcement.body}</div>
+    {#if firstImage}
+      <img class="first-image" src={firstImage} alt="" {...parseImageSize(firstImage)} />
+    {/if}
   </div>
 </ResizeObserver>
 
@@ -86,6 +91,15 @@
 
     .body {
       white-space: pre-wrap;
+    }
+
+    .first-image {
+      border: none;
+      border-radius: 4px;
+      object-fit: contain;
+      width: fit-content;
+      height: fit-content;
+      margin: 0 auto;
     }
   }
 </style>
