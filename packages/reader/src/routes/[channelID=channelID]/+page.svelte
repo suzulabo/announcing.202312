@@ -4,7 +4,7 @@
   import { page } from '$app/stores';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
 
-  import { createSnapshotContext } from '@announcing/components/utils';
+  import { createSnapshotContext } from '@announcing/components/snapshotContext';
   import type { PageData } from './$types';
   import type { ComponentProps } from 'svelte';
 

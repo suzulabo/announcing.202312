@@ -16,13 +16,13 @@
   },
   "type": "module",
   "exports": {
-    "./utils": {
-      "types": "./dist/utils.d.ts",
-      "import": "./dist/utils.js"
-    },
     "./settings.server": {
       "types": "./dist/utils/settings.server.d.ts",
       "import": "./dist/utils/settings.server.js"
+    },
+    "./snapshotContext": {
+      "types": "./dist/utils/snapshotContext.d.ts",
+      "import": "./dist/utils/snapshotContext.js"
     },
     "./actions/back": {
       "types": "./dist/actions/back.d.ts",
