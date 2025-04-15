@@ -71,7 +71,7 @@
 <div class="container">
   <ul class="actions">
     <li>
-      <a href={readerURL}>
+      <a class="button text" href={readerURL}>
         <MdiExternalLink {...iconProps} />
         {$LL.channelActions.viewChannel()}</a
       >
@@ -89,13 +89,13 @@
     </li>
     <hr />
     <li>
-      <a href={`${page.url.pathname}/announcements`}>
+      <a class="button text" href={`${page.url.pathname}/announcements`}>
         <MaterialSymbolsPostAdd {...iconProps} />
         {$LL.channelActions.createAnnouncement()}
       </a>
     </li>
     <li>
-      <a href={`${page.url.pathname}/announcements/list`}>
+      <a class="button text" href={`${page.url.pathname}/announcements/list`}>
         <MaterialSymbolsEditDocumentOutline {...iconProps} />
         {$LL.channelActions.editAnnouncement()}</a
       >
@@ -147,9 +147,6 @@
           display: inline-flex;
           align-items: center;
           gap: 4px;
-        }
-        button {
-          padding: 0;
         }
       }
     }
