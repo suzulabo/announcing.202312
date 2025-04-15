@@ -120,7 +120,7 @@
     gap: 8px;
 
     .header-image {
-      max-height: 40vh;
+      max-height: 50vh;
       align-self: center;
       margin: 0 0 8px 0;
       object-fit: contain;
@@ -154,7 +154,7 @@
       .single-image {
         margin: 0 auto;
         object-fit: contain;
-        max-height: 50vh;
+        max-height: 90vh;
         width: fit-content;
         height: fit-content;
       }
