@@ -26,10 +26,6 @@
 <hr />
 <ul class="links">
   <li><a href="./parts/ChannelView">ChannelView - default</a></li>
-  <li><a href="./parts/AnnouncementView/default">AnnouncementView - default</a></li>
-  <li>
-    <a href="./parts/AnnouncementView/default/singleImage">AnnouncementView - single image</a>
-  </li>
 </ul>
 
 <style lang="scss">
