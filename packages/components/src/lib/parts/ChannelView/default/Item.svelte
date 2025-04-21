@@ -1,14 +1,19 @@
 <script lang="ts">
-  import { imgSrc } from '$lib/actions/imgSrc';
   import ResizeObserver from '$lib/atoms/ResizeObserver.svelte';
-  import type { Announcement } from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
+  import AnnouncementView from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
   import { formatDate } from '$lib/utils/formatDate';
+  import { parseImageSize } from '$lib/utils/parseImageSize';
+  import type { ComponentProps } from 'svelte';
+
+  type Announcement = ComponentProps<typeof AnnouncementView>['announcement'];
 
   interface Props {
     announcement: Announcement;
   }
 
   let { announcement }: Props = $props();
+
+  let firstImage = $derived(announcement.images?.[0]);
 
   let overflow = $state(false);
 </script>
@@ -19,29 +24,49 @@
   }}
 >
   <div class="container" class:overflow>
+    {#if announcement.headerImage}
+      {@const size = parseImageSize(announcement.headerImage)}
+      <img
+        class="header-image"
+        src={announcement.headerImage}
+        alt=""
+        width={size?.width}
+        height={size?.height}
+        class:portrait={size ? size.height > size.width : false}
+      />
+    {/if}
     <div class="date">{formatDate(announcement.createdAt)}</div>
-    <div class="title-box">
-      {#if announcement.headerImage}
-        <img use:imgSrc={announcement.headerImage} alt="" />
-      {/if}
-      {#if announcement.title}
-        <div class="title">{announcement.title}</div>
-      {/if}
-    </div>
+    {#if announcement.title}
+      <div class="title">{announcement.title}</div>
+    {/if}
     <div class="body">{announcement.body}</div>
+    {#if firstImage}
+      <img class="first-image" src={firstImage} alt="" {...parseImageSize(firstImage)} />
+    {/if}
   </div>
 </ResizeObserver>
 
 <style lang="scss">
   .container {
-    flex-grow: 1;
     max-height: 100%;
-    margin: 8px 0 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    position: relative;
+    padding: 8px 8px 0;
+
+    .header-image {
+      display: block;
+      max-height: 30dvh;
+      object-fit: cover;
+      border: none;
+      border-radius: 4px;
+      margin: 0 auto;
+      &.portrait {
+        object-fit: contain;
+        width: fit-content;
+      }
+    }
 
     &.overflow:after {
       position: absolute;
@@ -50,7 +75,7 @@
       left: 0;
       right: 0;
       content: '';
-      background: linear-gradient(to top, var(--color-gradient), transparent 10%);
+      background: linear-gradient(to top, var(--color-background), transparent 10%);
       pointer-events: none;
     }
 
@@ -59,26 +84,22 @@
       font-size: 15px;
     }
 
-    .title-box {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-
-      img {
-        margin: auto;
-        max-height: 100px;
-        max-width: 30%;
-        border-radius: 4px;
-      }
-
-      .title {
-        font-size: 18px;
-        font-weight: bold;
-      }
+    .title {
+      font-size: 18px;
+      font-weight: bold;
     }
 
     .body {
       white-space: pre-wrap;
+    }
+
+    .first-image {
+      border: none;
+      border-radius: 4px;
+      object-fit: contain;
+      width: fit-content;
+      height: fit-content;
+      margin: 0 auto;
     }
   }
 </style>

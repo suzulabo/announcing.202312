@@ -26,14 +26,13 @@
     "putToken": "tsx tools/putToken"
   },
   "devDependencies": {
-    "@libsql/client": "^0.14.0",
-    "@trigger.dev/sdk": "3.3.16",
-    "@types/node": "^22.10.7",
-    "@vitest/coverage-v8": "2.1.8",
-    "dotenv": "^16.4.7",
-    "firebase-admin": "^13.0.2",
-    "tsx": "^4.19.2",
-    "valibot": "1.0.0-beta.12",
-    "vitest": "^3.0.2"
+    "@libsql/client": "0.15.4",
+    "@trigger.dev/sdk": "3.3.17",
+    "@vitest/coverage-v8": "3.1.1",
+    "dotenv": "16.5.0",
+    "firebase-admin": "13.2.0",
+    "tsx": "4.19.3",
+    "valibot": "1.0.0",
+    "vitest": "3.1.1"
   }
 }

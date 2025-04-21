@@ -3,43 +3,21 @@ import { and, eq } from 'drizzle-orm';
 import { getChannel } from '../channel/getChannel';
 import { getDB } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
-import { genAnnouncementID } from './genAnnouncementID';
 
-import * as v from 'valibot';
-import {
-  ANNOUNCEMENT_BODY_MAX_BYTES,
-  ANNOUNCEMENT_IMAGE_MAX_BYTES,
-  ANNOUNCEMENT_TITLE_MAX_BYTES,
-  CHANNEL_ID_MAX_BYTES,
-  USER_ID_MAX_BYTES,
-} from '../../lib/constants';
 import { putStorageData } from '../../storage/storage';
+import { genAnnouncementID } from '../../utils/genAnnouncementID';
 
-const paramsSchema = v.object({
-  userID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(USER_ID_MAX_BYTES)),
-  channelID: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_ID_MAX_BYTES)),
-  headerImage: v.union([
-    v.pipe(
-      v.blob(),
-      v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
-      v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES),
-    ),
-    v.undefined(),
-  ]),
-  title: v.union([v.pipe(v.string(), v.maxBytes(ANNOUNCEMENT_TITLE_MAX_BYTES)), v.undefined()]),
-  body: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(ANNOUNCEMENT_BODY_MAX_BYTES)),
-  images: v.union([
-    v.array(v.pipe(v.blob(), v.maxSize(ANNOUNCEMENT_IMAGE_MAX_BYTES))),
-    v.undefined(),
-  ]),
-  createdAt: v.number(),
-});
-
-type Params = v.InferOutput<typeof paramsSchema>;
+type Params = {
+  userID: string;
+  channelID: string;
+  headerImage?: Blob | undefined;
+  title?: string | undefined;
+  body: string;
+  images?: Blob[] | undefined;
+  createdAt: number;
+};
 
 export const addAnnouncement = async (params: Params) => {
-  v.assert(paramsSchema, params);
-
   const { userID, channelID, headerImage, title, body, images, createdAt } = params;
 
   const channel = await getChannel({ userID, channelID });

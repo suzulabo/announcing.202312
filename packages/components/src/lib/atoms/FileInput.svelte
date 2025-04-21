@@ -1,29 +1,23 @@
 <script lang="ts">
   import reduce from 'image-blob-reduce';
 
-  import { saveBlob } from '$lib/utils/idbBlob';
-
   import Loading from './Loading.svelte';
 
   interface Props {
-    value?: string | undefined;
-    values?: string[] | undefined;
     accept?: string | undefined;
     maxImageSize?: number | undefined;
     filesCount?: number;
+    onInput?: (blob: Blob) => void | Promise<void>;
+    onInputs?: (blobs: Blob[]) => void | Promise<void>;
   }
 
   let {
-    value = $bindable(undefined),
-    values = $bindable(undefined),
     accept = undefined,
     maxImageSize = undefined,
     filesCount = 1,
+    onInput,
+    onInputs,
   }: Props = $props();
-
-  // TODO: https://github.com/sveltejs/svelte/issues/12118
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  value;
 
   let loading = $state(false);
   let fileInput: HTMLInputElement;
@@ -39,9 +33,9 @@
       return;
     }
 
-    const newValues = new Set(values);
-
     loading = true;
+
+    const blobs: Blob[] = [];
 
     try {
       for (let i = 0; i < filesCount; i++) {
@@ -50,8 +44,7 @@
         if (!f) break;
 
         if (!maxImageSize) {
-          const id = await saveBlob(f);
-          newValues.add(id);
+          blobs.push(f);
           continue;
         }
 
@@ -64,17 +57,20 @@
           unsharpThreshold: 1,
         });
 
-        newValues.add(await saveBlob(reduced));
+        blobs.push(reduced);
       }
 
-      if (filesCount > 1) {
-        values = [...newValues.values()].slice(0, filesCount);
-      } else {
-        value = newValues.values().next().value;
+      if (onInput) {
+        const blob = blobs[0];
+        if (blob) {
+          await onInput(blob);
+        }
       }
-
-      fileInput.value = '';
+      if (onInputs) {
+        await onInputs(blobs);
+      }
     } finally {
+      fileInput.value = '';
       loading = false;
     }
   };

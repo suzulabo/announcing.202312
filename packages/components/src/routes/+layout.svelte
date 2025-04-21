@@ -1,64 +1,38 @@
-<script lang="ts" module>
-  import { browser } from '$app/environment';
-  import type { Locales } from '@announcing/i18n';
-  import { setupLocale } from '@announcing/i18n';
-  import Cookies from 'js-cookie';
-
-  const updateLocale = (locale: Locales) => {
-    if (browser) {
-      Cookies.set('locale', locale);
-      return setupLocale(locale);
-    }
-    return;
-  };
-
-  const updateColorScheme = (colorScheme: string) => {
-    if (browser) {
-      if (colorScheme === 'light' || colorScheme === 'dark') {
-        Cookies.set('color-scheme', colorScheme);
-        document.documentElement.setAttribute('data-color-scheme', colorScheme);
-        return;
-      }
-      Cookies.remove('color-scheme');
-      document.documentElement.removeAttribute('data-color-scheme');
-    }
-  };
-</script>
-
 <script lang="ts">
-  import type { LayoutServerData } from './$types';
+  import SettingsModal from '$lib/parts/SettingsModal/SettingsModal.svelte';
+  import { LL } from '@announcing/i18n';
+  import type { LayoutData } from './$types';
 
   interface Props {
-    data: LayoutServerData;
+    data: LayoutData;
     children?: import('svelte').Snippet;
   }
 
-  let { data = $bindable(), children }: Props = $props();
+  let { data, children }: Props = $props();
 
-  let colorScheme = $state(Cookies.get('color-scheme') ?? '');
-
-  let locale = $state(data.locale);
-
-  $effect(() => {
-    void updateLocale(locale);
-    updateColorScheme(colorScheme);
-  });
+  let settingsModal = $state<SettingsModal>();
 </script>
 
 <div class="tool-bar">
   <a href="/">Announcing Components</a>
-  <select class="color-mode" bind:value={colorScheme}>
-    <option value="">Default</option>
-    <option value="light">Light</option>
-    <option value="dark">Dark</option>
-  </select>
-  <select class="lang" bind:value={locale}>
-    <option value="en">English</option>
-    <option value="ja">日本語</option>
-  </select>
+  <button
+    class="settings-btn"
+    onclick={() => {
+      settingsModal?.openModal();
+    }}>{$LL.settings()}</button
+  >
 </div>
 
 {@render children?.()}
+
+<SettingsModal
+  bind:this={settingsModal}
+  requestLocale={data.requestLocale}
+  requestTheme={data.requestTheme}
+  onSignOut={() => {
+    alert('Sign out');
+  }}
+/>
 
 <style lang="scss">
   .tool-bar {
@@ -69,12 +43,7 @@
     border-bottom: 1px solid var(--color-border);
     margin-bottom: 8px;
 
-    select {
-      all: revert;
-      height: 30px;
-    }
-
-    .color-mode {
+    .settings-btn {
       margin-left: auto;
     }
   }

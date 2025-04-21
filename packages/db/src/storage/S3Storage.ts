@@ -6,14 +6,10 @@ import {
   type GetObjectCommandOutput,
   type HeadObjectCommandOutput,
 } from '@aws-sdk/client-s3';
-import process from 'node:process';
-import { getStorageKey } from './getStorageKey';
+import { genStorageKey } from '../utils/genStorageKey';
 import type { Storage } from './storage';
 
-export const createS3Storage = (): Storage => {
-  const params = process.env['S3_CLIENT_PARAMS'];
-  const bucket = process.env['S3_BUCKET'];
-  const prefix = process.env['S3_PREFIX'] ?? '';
+export const createS3Storage = (params: string, bucket: string, prefix = ''): Storage => {
   if (!params) {
     throw new Error('S3_CLIENT_PARAMS is not set');
   }
@@ -61,7 +57,7 @@ export const createS3Storage = (): Storage => {
   };
 
   const put = async (blob: Blob) => {
-    const [key, ab, mimeType] = await getStorageKey(blob);
+    const [key, ab, mimeType] = await genStorageKey(blob);
 
     {
       const res = await getObject(key, true);

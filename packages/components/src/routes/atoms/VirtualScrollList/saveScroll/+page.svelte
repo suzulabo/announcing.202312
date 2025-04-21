@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import VirtualScrollList from '$lib/atoms/VirtualScrollList.svelte';
   import { createSnapshotContext } from '$lib/utils/snapshotContext.js';
   import { items } from './items';
@@ -11,7 +11,7 @@
 
 <div class="container">
   <div class="forward-box">
-    <a href={`${$page.url.href}/back`}>Forward</a>
+    <a href={`${page.url.href}/back`}>Forward</a>
   </div>
   <VirtualScrollList {keys} itemMinHeight={100}>
     {#snippet itemSnippet(key)}

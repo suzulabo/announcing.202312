@@ -8,6 +8,7 @@ import { tokenStore } from './tokenStore';
 
 const schema = v.object({
   tag: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(10)),
+  // TODO: Add schema
   message: v.custom<BaseMessage>(() => true),
 });
 

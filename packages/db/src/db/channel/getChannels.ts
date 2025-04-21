@@ -14,7 +14,7 @@ export const getChannels = async ({ userID }: { userID: string }) => {
       name: channelsTable.name,
       desc: channelsTable.desc,
       icon: channelsTable.icon,
-      announcementIDs: channelsTable.icon,
+      announcementIDs: channelsTable.announcementIDs,
       updatedAt: channelsTable.updatedAt,
       createdAt: channelsTable.createdAt,
     })

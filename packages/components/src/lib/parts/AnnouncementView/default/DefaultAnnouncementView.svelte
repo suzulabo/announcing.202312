@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { LL } from '@announcing/i18n';
-
   import { pushState } from '$app/navigation';
-  import { page } from '$app/stores';
-  import { imgSrc } from '$lib/actions/imgSrc';
+  import { page } from '$app/state';
   import Modal from '$lib/atoms/Modal.svelte';
   import { formatDate } from '$lib/utils/formatDate';
   import { toHtml } from '$lib/utils/toHtml';
+  import { LL } from '@announcing/i18n';
+  import type { ComponentProps } from 'svelte';
+  import AnnouncementView from '../AnnouncementView.svelte';
+  import { parseImageSize } from '$lib/utils/parseImageSize';
 
-  import type { Announcement } from '../AnnouncementView.svelte';
+  type Announcement = ComponentProps<typeof AnnouncementView>['announcement'];
 
   interface Props {
     announcement: Announcement;
@@ -16,10 +17,10 @@
 
   let { announcement }: Props = $props();
 
-  let imageModalSrc: string | undefined = $derived($page.state.announcementViewZoomImage?.src);
+  let imageModalSrc: string | undefined = $derived(page.state.announcementViewZoomImage?.src);
 
   const showImageModal = (src: string) => {
-    pushState('', { ...$page.state, announcementViewZoomImage: { src } });
+    pushState('', { ...page.state, announcementViewZoomImage: { src } });
   };
 </script>
 
@@ -33,7 +34,12 @@
         }
       }}
     >
-      <img class="header-image" alt="" use:imgSrc={announcement.headerImage} />
+      <img
+        class="header-image"
+        alt=""
+        src={announcement.headerImage}
+        {...parseImageSize(announcement.headerImage)}
+      />
     </button>
   {/if}
   <div class="date">
@@ -55,7 +61,7 @@
   {#if announcement.images}
     <div class="images-box">
       {#if announcement.images.length === 1}
-        {@const image = announcement.images[0]}
+        {@const image = announcement.images[0] as string}
         <div
           class="image-box"
           role="button"
@@ -69,7 +75,7 @@
             // TODO
           }}
         >
-          <img class="single-image" use:imgSrc={image} alt="" />
+          <img class="single-image" src={image} alt="" {...parseImageSize(image)} />
         </div>
       {:else}
         <div class="images-grid">
@@ -85,7 +91,7 @@
                 // TODO
               }}
             >
-              <img use:imgSrc={image} alt="" />
+              <img src={image} alt="" {...parseImageSize(image)} />
             </div>
           {/each}
         </div>
@@ -98,13 +104,13 @@
   open={!!imageModalSrc}
   dismissMode="anywhere"
   onDismiss={() => {
-    const src = $page.state.announcementViewZoomImage?.src;
+    const src = page.state.announcementViewZoomImage?.src;
     if (src) {
       history.back();
     }
   }}
 >
-  <div class="zoom-image"><img use:imgSrc={imageModalSrc} alt="" /></div>
+  <img class="zoom-image" src={imageModalSrc} alt="" {...parseImageSize(imageModalSrc as string)} />
 </Modal>
 
 <style lang="scss">
@@ -114,9 +120,12 @@
     gap: 8px;
 
     .header-image {
-      max-height: 40vh;
+      max-height: 50vh;
       align-self: center;
       margin: 0 0 8px 0;
+      object-fit: contain;
+      width: fit-content;
+      height: fit-content;
     }
     .date {
       padding: 0 8px;
@@ -145,35 +154,37 @@
       .single-image {
         margin: 0 auto;
         object-fit: contain;
-        border-radius: 8px;
-        max-height: 50vh;
+        max-height: 90vh;
         width: fit-content;
+        height: fit-content;
       }
+
       .images-grid {
         display: grid;
         grid-template-columns: auto auto;
         gap: 4px;
 
+        .image-box {
+          aspect-ratio: 1;
+          display: flex;
+        }
+
         img {
-          aspect-ratio: 5/4;
+          aspect-ratio: 1;
           object-fit: cover;
+          border-radius: 4px;
           margin: auto;
-          border-radius: 8px;
         }
       }
     }
   }
 
   .zoom-image {
-    display: flex;
     margin: auto;
-    width: fit-content;
-    height: fit-content;
     max-width: 100%;
     max-height: 100%;
-    overflow: hidden;
-    img {
-      object-fit: contain;
-    }
+    object-fit: contain;
+    width: fit-content;
+    height: fit-content;
   }
 </style>

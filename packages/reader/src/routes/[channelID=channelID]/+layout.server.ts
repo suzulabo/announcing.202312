@@ -1,3 +1,4 @@
+import { resolveChannel } from '$lib/db/resolver';
 import { getChannel, READER } from '@announcing/db';
 import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
@@ -12,7 +13,7 @@ export const load: LayoutServerLoad = async ({ params }) => {
   }
 
   return {
-    channel,
+    channel: resolveChannel(channel),
     channelID,
     headerNotification: {
       channelID,

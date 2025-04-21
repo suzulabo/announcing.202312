@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { toHtml } from '$lib/utils';
+  import { toHtml } from '$lib/utils/toHtml';
 
   const text = `If you’re interested in exploring open-source projects, visit https://github.com to find repositories on nearly every topic imaginable, from software development to data science.`;
 </script>

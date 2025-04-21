@@ -1,10 +1,33 @@
-import { deleteChannel, updateChannel } from '@announcing/db';
-import { error, json } from '@sveltejs/kit';
-
 import { getFormFileOrString, getFormNumber, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
-
+import { deleteChannel, updateChannel } from '@announcing/db';
+import {
+  CHANNEL_DESC_MAX_BYTES,
+  CHANNEL_ICON_MAX_BYTES,
+  CHANNEL_NAME_MAX_BYTES,
+  STORAGE_ID_MAX_BYTES,
+} from '@announcing/db/constants';
+import { error, json } from '@sveltejs/kit';
+import * as v from 'valibot';
 import type { RequestHandler } from './$types';
+
+const putSchema = v.strictObject({
+  name: v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_NAME_MAX_BYTES)),
+  desc: v.union([
+    v.pipe(v.string(), v.nonEmpty(), v.maxBytes(CHANNEL_DESC_MAX_BYTES)),
+    v.undefined(),
+  ]),
+  icon: v.union([
+    v.pipe(
+      v.blob(),
+      v.mimeType(['image/jpeg', 'image/png', 'image/webp']),
+      v.maxSize(CHANNEL_ICON_MAX_BYTES),
+    ),
+    v.pipe(v.string(), v.nonEmpty(), v.maxBytes(STORAGE_ID_MAX_BYTES)),
+    v.undefined(),
+  ]),
+  updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
+});
 
 export const PUT: RequestHandler = async ({ locals, params, request }) => {
   const userID = await getUserIDNoRedirect(locals);
@@ -14,30 +37,27 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
 
   const formData = await request.formData();
 
-  const name = getFormString(formData, 'name');
-  if (!name) {
-    error(400, 'Missing name');
-  }
-  const updatedAt = getFormNumber(formData, 'updatedAt');
-  if (!updatedAt) {
-    error(400, 'Missing updatedAt');
-  }
+  const data = {
+    name: getFormString(formData, 'name'),
+    desc: getFormString(formData, 'desc'),
+    icon: getFormFileOrString(formData, 'icon'),
+    updatedAt: getFormNumber(formData, 'updatedAt'),
+  };
 
-  const desc = getFormString(formData, 'desc');
-  const icon = getFormFileOrString(formData, 'icon');
+  if (!v.is(putSchema, data)) {
+    error(400, 'Schema Error');
+  }
 
   const channelID = params.channelID;
 
-  await updateChannel({ userID, updatedAt, channelID, name, desc, icon });
+  await updateChannel({ ...data, userID, channelID });
 
   return json({});
 };
 
-type DeleteRequestData =
-  | {
-      updatedAt?: number;
-    }
-  | undefined;
+const deleteSchema = v.strictObject({
+  updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
+});
 
 export const DELETE: RequestHandler = async ({ locals, params, request }) => {
   const userID = await getUserIDNoRedirect(locals);
@@ -45,9 +65,9 @@ export const DELETE: RequestHandler = async ({ locals, params, request }) => {
     error(400, 'Missing userID');
   }
 
-  const data = (await request.json()) as DeleteRequestData;
-  if (!data || typeof data.updatedAt !== 'number') {
-    error(400, 'Invalid request data.');
+  const data = await request.json();
+  if (!v.is(deleteSchema, data)) {
+    error(400, 'Schema Error');
   }
 
   const channelID = params.channelID;

@@ -9,16 +9,16 @@
       "import": "./dist/index.js"
     },
     "./constants": {
-      "types": "./dist/lib/constants.d.ts",
-      "import": "./dist/lib/constants.js"
+      "types": "./dist/constants.d.ts",
+      "import": "./dist/constants.js"
     },
     "./types": {
-      "types": "./dist/lib/types.d.ts",
-      "import": "./dist/lib/types.js"
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
     },
     "./utils": {
-      "types": "./dist/lib/utils.d.ts",
-      "import": "./dist/lib/utils.js"
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
     },
     "./LocalStorage": {
       "types": "./dist/storage/LocalStorage.d.ts",
@@ -38,22 +38,17 @@
     "genTestData": "tsx tools/genTestData.ts"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.731.1",
-    "@cloudflare/workers-types": "^4.20250109.0",
-    "@faker-js/faker": "^9.4.0",
-    "@libsql/client": "^0.14.0",
-    "@types/node": "^22.10.7",
-    "base-x": "^5.0.0",
-    "date-fns": "^4.1.0",
-    "dotenv": "^16.4.7",
-    "drizzle-kit": "^0.30.2",
-    "drizzle-orm": "^0.38.4",
-    "image-dimensions": "^2.3.0",
-    "image-type": "^5.2.0",
-    "jdenticon": "^3.3.0",
-    "mockdate": "^3.0.5",
-    "tsx": "^4.19.2",
-    "valibot": "1.0.0-beta.12",
-    "vitest": "^3.0.2"
+    "@aws-sdk/client-s3": "3.787.0",
+    "@faker-js/faker": "9.7.0",
+    "@libsql/client": "0.15.4",
+    "dotenv": "16.5.0",
+    "drizzle-kit": "0.31.0",
+    "drizzle-orm": "0.42.0",
+    "image-size": "2.0.2",
+    "jdenticon": "3.3.0",
+    "js-xxhash": "4.0.0",
+    "mockdate": "3.0.5",
+    "tsx": "4.19.3",
+    "vitest": "3.1.1"
   }
 }

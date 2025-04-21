@@ -35,13 +35,13 @@ export const messages = {
     en: 'Theme',
     ja: '表示設定',
   },
-  default: {
-    en: 'Default',
-    ja: '標準',
+  lightMode: {
+    en: 'Light',
+    ja: '明るい',
   },
   darkMode: {
-    en: 'Dark Mode',
-    ja: 'ダークモード',
+    en: 'Dark',
+    ja: '暗い',
   },
   copy: {
     en: 'Copy',
@@ -98,6 +98,10 @@ export const messages = {
   noAnnouncements: {
     en: 'No announcements yet.',
     ja: 'アナウンスはまだありません',
+  },
+  failedToDataLoad: {
+    en: 'Failed to data load',
+    ja: 'データの読み込みに失敗しました',
   },
   createChannel: {
     en: 'Create Channel',

@@ -1,8 +1,10 @@
 import '$lib/base.scss';
 
 import { setupLocale } from '@announcing/i18n';
-import type { Load } from '@sveltejs/kit';
+import type { LayoutLoad } from './$types';
 
-export const load: Load = async () => {
-  await setupLocale('ja');
+export const load: LayoutLoad = async ({ data }) => {
+  await setupLocale(data.requestLocale);
+
+  return data;
 };

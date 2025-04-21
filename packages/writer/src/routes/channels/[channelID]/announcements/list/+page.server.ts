@@ -3,6 +3,7 @@ import { redirect } from '@sveltejs/kit';
 
 import { getUserID } from '$lib/utils/getUserID';
 
+import { resolveChannel } from '$lib/db/resolver';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
@@ -15,6 +16,6 @@ export const load: PageServerLoad = async ({ params, locals }) => {
   }
 
   return {
-    channel,
+    channel: resolveChannel(channel),
   };
 };

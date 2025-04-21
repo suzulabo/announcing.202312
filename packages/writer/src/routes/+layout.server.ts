@@ -1,17 +1,15 @@
-import { detectLocale } from '@announcing/i18n';
-
+import { getRequestLocale, getRequestTheme } from '@announcing/components/settings.server';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals, cookies, request }) => {
   const userID = (await locals.auth())?.user?.id;
 
-  const locale = detectLocale({
-    cookie: cookies.get('locale'),
-    acceptLanguage: request.headers.get('accept-language') ?? undefined,
-  });
+  const requestLocale = getRequestLocale(cookies, request);
+  const requestTheme = getRequestTheme(cookies);
 
   return {
     userID,
-    locale,
+    requestLocale,
+    requestTheme,
   };
 };

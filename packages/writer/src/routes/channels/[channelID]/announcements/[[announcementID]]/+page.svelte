@@ -1,26 +1,4 @@
-<script lang="ts" module>
-  const isAnnouncement = (
-    arg: Partial<GetAnnouncementResult>,
-    titleError: boolean,
-    bodyError: boolean,
-  ): arg is Exclude<App.PageState['announcementPreviewData'], undefined>['announcement'] => {
-    if (titleError) {
-      return false;
-    }
-
-    if (bodyError) {
-      return false;
-    }
-
-    if (!arg.body) {
-      return false;
-    }
-    return true;
-  };
-</script>
-
 <script lang="ts">
-  import { imgSrc } from '@announcing/components/actions/imgSrc';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
   import TextArea from '@announcing/components/TextArea.svelte';
@@ -34,8 +12,11 @@
   import { onMount } from 'svelte';
 
   import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
 
+  import { putBlob, stripPrefix } from '$lib/cacheStorage/cacheStorage';
+  import { resolveStoragePath } from '$lib/db/resolver';
+  import { genAnnouncementID, genStorageKey } from '@announcing/db/utils';
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
 
@@ -58,6 +39,35 @@
   let titleError = $state(false);
   let bodyError = $state(false);
   let { channel, announcement } = $derived(data);
+  let validated = $derived.by(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (titleError || bodyError) {
+      return false;
+    }
+
+    const body = form.body;
+
+    if (!body) {
+      return false;
+    }
+
+    const data = { ...form, body, createdAt: form.createdAt ?? new Date().getTime() };
+
+    if (data.headerImage) {
+      data.headerImage = stripPrefix(data.headerImage);
+    }
+    if (data.images) {
+      data.images = data.images.map((v) => stripPrefix(v));
+    }
+
+    const id = genAnnouncementID(data);
+
+    if (channel.announcementIDs && channel.announcementIDs.indexOf(id) >= 0) {
+      return false;
+    }
+
+    return true;
+  });
 
   let headerImageFileInput: ReturnType<typeof FileInput>;
   let imagesFileInput: ReturnType<typeof FileInput>;
@@ -84,13 +94,13 @@
 
     if (announcement) {
       announcementPreviewData.announcement.edit = {
-        announcementID: $page.params['announcementID'] as string,
+        announcementID: page.params['announcementID'] as string,
         updatedAt: announcement.updatedAt,
         createdAt: announcement.createdAt,
       };
     }
 
-    return goto(`${$page.url.pathname}/preview`, {
+    return goto(`${page.url.pathname}/preview`, {
       state: {
         announcementPreviewData,
       },
@@ -107,7 +117,7 @@
           headerImageFileInput.open();
         }}
       >
-        <img class="icon" alt="icon preview" use:imgSrc={form.headerImage} />
+        <img class="icon" alt="icon preview" src={resolveStoragePath(form.headerImage)} />
       </button>
       <button
         type="button"
@@ -128,7 +138,10 @@
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       bind:this={headerImageFileInput}
-      bind:value={form.headerImage}
+      onInput={async (blob) => {
+        const [key] = await genStorageKey(blob);
+        form.headerImage = await putBlob(window.caches, key, blob);
+      }}
     />
   </div>
   <Input
@@ -152,7 +165,7 @@
       {#if form.images}
         {#each form.images as image (image)}
           <div class="img-box">
-            <img alt="" use:imgSrc={image} />
+            <img alt="" src={resolveStoragePath(image)} />
             <button
               class="small filled"
               onclick={() => {
@@ -175,19 +188,32 @@
     <div class="desc">{$LL.addImageDescription()}</div>
     <FileInput
       bind:this={imagesFileInput}
-      bind:values={form.images}
       accept="image/jpeg,image/png,image/webp"
       maxImageSize={ANNOUNCEMENT_IMAGE_MAX_SIZE}
       filesCount={4}
+      onInputs={async (blobs) => {
+        const images = form.images ? [...form.images] : [];
+        for (const blob of blobs) {
+          if (images.length === 4) {
+            break;
+          }
+          const [key] = await genStorageKey(blob);
+          const exists = !!images.find((v) => v.endsWith(key));
+          if (exists) {
+            continue;
+          }
+          images.push(await putBlob(window.caches, key, blob));
+        }
+
+        form.images = images;
+      }}
     />
   </div>
 
   <hr />
 
-  <button
-    disabled={!isAnnouncement(form, titleError, bodyError)}
-    class="preview-btn"
-    onclick={previewClickHandler}>{$LL.preview()}</button
+  <button disabled={!validated} class="preview-btn" onclick={previewClickHandler}
+    >{$LL.preview()}</button
   >
 </div>
 

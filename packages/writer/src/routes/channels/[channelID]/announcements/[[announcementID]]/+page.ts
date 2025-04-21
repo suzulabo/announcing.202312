@@ -1,4 +1,3 @@
-import type { HeaderBack } from '../../../../+layout.svelte';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ data }) => {
@@ -11,6 +10,6 @@ export const load: PageLoad = ({ data }) => {
     headerBack: {
       href: backHref,
       labelKey: 'back',
-    } satisfies HeaderBack,
+    },
   };
 };

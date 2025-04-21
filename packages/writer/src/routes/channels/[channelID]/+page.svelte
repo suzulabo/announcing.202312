@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { imgSrc } from '@announcing/components/actions/imgSrc';
   import { LL } from '@announcing/i18n';
 
   import { goto, invalidateAll } from '$app/navigation';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import { PUBLIC_READER_PREFIX } from '$env/static/public';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
 
@@ -33,21 +32,33 @@
 
   const updateChannel = async (formData: FormData) => {
     formData.append('updatedAt', channel.updatedAt + '');
-    await fetch(`/api/channels/${channelID}`, {
+    const res = await fetch(`/api/channels/${channelID}`, {
       method: 'PUT',
       body: formData,
     });
+
+    if (!res.ok) {
+      await goto('/error');
+      return;
+    }
+
     await invalidateAll();
   };
 
   const deleteChannel = async () => {
-    await fetch(`/api/channels/${channelID}`, {
+    const res = await fetch(`/api/channels/${channelID}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ updatedAt: channel.updatedAt }),
     });
+
+    if (!res.ok) {
+      await goto('/error');
+      return;
+    }
+
     await goto('/');
   };
 
@@ -58,18 +69,9 @@
 </script>
 
 <div class="container">
-  <div class="name-box">
-    <span class="name">{channel.name}</span>
-    {#if channel.icon}
-      <img class="icon" alt="channel icon" use:imgSrc={channel.icon} />
-    {/if}
-  </div>
-
-  <hr />
-
   <ul class="actions">
     <li>
-      <a href={readerURL}>
+      <a class="button text" href={readerURL}>
         <MdiExternalLink {...iconProps} />
         {$LL.channelActions.viewChannel()}</a
       >
@@ -87,13 +89,13 @@
     </li>
     <hr />
     <li>
-      <a href={`${$page.url.pathname}/announcements`}>
+      <a class="button text" href={`${page.url.pathname}/announcements`}>
         <MaterialSymbolsPostAdd {...iconProps} />
         {$LL.channelActions.createAnnouncement()}
       </a>
     </li>
     <li>
-      <a href={`${$page.url.pathname}/announcements/list`}>
+      <a class="button text" href={`${page.url.pathname}/announcements/list`}>
         <MaterialSymbolsEditDocumentOutline {...iconProps} />
         {$LL.channelActions.editAnnouncement()}</a
       >
@@ -131,22 +133,7 @@
 
 <style lang="scss">
   .container {
-    padding: 16px 8px;
-
-    .name-box {
-      display: flex;
-      align-items: center;
-      min-height: 64px;
-      .name {
-        font-size: 22px;
-      }
-      .icon {
-        width: 64px;
-        height: 64px;
-        margin: 0 0 0 auto;
-        border-radius: 8px;
-      }
-    }
+    padding: 0 8px;
 
     hr {
       margin: 16px 0;
@@ -160,9 +147,6 @@
           display: inline-flex;
           align-items: center;
           gap: 4px;
-        }
-        button {
-          padding: 0;
         }
       }
     }

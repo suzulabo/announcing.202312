@@ -1,26 +1,26 @@
-<script lang="ts" module>
-  import type { Announcement } from '../AnnouncementView/AnnouncementView.svelte';
+<script lang="ts">
+  import type { ComponentProps } from 'svelte';
+  import AnnouncementView from '../AnnouncementView/AnnouncementView.svelte';
+  import DefaultChannelView from './default/DefaultChannelView.svelte';
 
-  export type Channel = {
+  type Channel = {
     name: string;
     desc: string | undefined;
     icon: string | undefined;
   };
 
-  export type AnnouncementLoaderFunction = (
+  type Announcement = ComponentProps<typeof AnnouncementView>['announcement'];
+
+  type AnnouncementLoaderFunction = (
     key: string,
   ) => Promise<Announcement | undefined> | Announcement | undefined;
 
-  export type ChannelViewProps = {
-    channel: Channel;
+  type ChannelViewProps = {
+    channel?: Channel;
     announcementHrefPrefix: string;
     announcementKeys?: string[];
     announcementLoader?: AnnouncementLoaderFunction;
   };
-</script>
-
-<script lang="ts">
-  import DefaultChannelView from './default/DefaultChannelView.svelte';
 
   let props: ChannelViewProps = $props();
 </script>

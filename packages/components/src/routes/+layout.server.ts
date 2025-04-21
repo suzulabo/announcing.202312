@@ -1,14 +1,12 @@
-import { detectLocale } from '@announcing/i18n';
-
+import { getRequestLocale, getRequestTheme } from '$lib/utils/settings.server';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = ({ cookies, request }) => {
-  const locale = detectLocale({
-    cookie: cookies.get('locale'),
-    acceptLanguage: request.headers.get('accept-language') ?? undefined,
-  });
+  const requestLocale = getRequestLocale(cookies, request);
+  const requestTheme = getRequestTheme(cookies);
 
   return {
-    locale,
+    requestLocale,
+    requestTheme,
   };
 };

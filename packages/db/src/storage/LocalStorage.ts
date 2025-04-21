@@ -1,5 +1,5 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { getStorageKey } from './getStorageKey';
+import { genStorageKey } from '../utils/genStorageKey';
 import type { Storage } from './storage';
 
 export const createLocalStorage = (): Storage => {
@@ -21,7 +21,7 @@ export const createLocalStorage = (): Storage => {
   };
 
   const put = async (blob: Blob) => {
-    const [key, ab] = await getStorageKey(blob);
+    const [key, ab] = await genStorageKey(blob);
 
     mkdirSync('../db-dev/storage', { recursive: true });
     writeFileSync(`../db-dev/storage/${key}`, ab);

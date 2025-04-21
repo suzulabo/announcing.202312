@@ -51,11 +51,11 @@ type RootTranslation = {
 	 */
 	theme: string
 	/**
-	 * D​e​f​a​u​l​t
+	 * L​i​g​h​t
 	 */
-	'default': string
+	lightMode: string
 	/**
-	 * D​a​r​k​ ​M​o​d​e
+	 * D​a​r​k
 	 */
 	darkMode: string
 	/**
@@ -114,6 +114,10 @@ type RootTranslation = {
 	 * N​o​ ​a​n​n​o​u​n​c​e​m​e​n​t​s​ ​y​e​t​.
 	 */
 	noAnnouncements: string
+	/**
+	 * F​a​i​l​e​d​ ​t​o​ ​d​a​t​a​ ​l​o​a​d
+	 */
+	failedToDataLoad: string
 	/**
 	 * C​r​e​a​t​e​ ​C​h​a​n​n​e​l
 	 */
@@ -305,11 +309,11 @@ export type TranslationFunctions = {
 	 */
 	theme: () => LocalizedString
 	/**
-	 * Default
+	 * Light
 	 */
-	'default': () => LocalizedString
+	lightMode: () => LocalizedString
 	/**
-	 * Dark Mode
+	 * Dark
 	 */
 	darkMode: () => LocalizedString
 	/**
@@ -368,6 +372,10 @@ export type TranslationFunctions = {
 	 * No announcements yet.
 	 */
 	noAnnouncements: () => LocalizedString
+	/**
+	 * Failed to data load
+	 */
+	failedToDataLoad: () => LocalizedString
 	/**
 	 * Create Channel
 	 */

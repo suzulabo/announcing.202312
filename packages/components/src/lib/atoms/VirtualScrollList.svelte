@@ -20,7 +20,7 @@
   let heightMap = $state({} as Record<T, number>);
   let itemsElement: HTMLDivElement;
 
-  let { topHeight, totalHeight, visibleKeys } = $derived.by<{
+  let visibleState = $derived.by<{
     topHeight: number;
     totalHeight: number;
     visibleKeys: T[];
@@ -154,13 +154,13 @@
   bind:this={itemsElement}
   class="items"
   style={toStyle({
-    'height': `${totalHeight}px`,
+    'height': `${visibleState.totalHeight}px`,
     'gap': `${gap}px`,
-    'padding-top': `${topHeight}px`,
+    'padding-top': `${visibleState.topHeight}px`,
   })}
 >
-  {#if visibleKeys}
-    {#each visibleKeys as key (key)}
+  {#if visibleState.visibleKeys}
+    {#each visibleState.visibleKeys as key (key)}
       <div class="item-box" use:itemResize={key}>
         {@render itemSnippet(key)}
       </div>
