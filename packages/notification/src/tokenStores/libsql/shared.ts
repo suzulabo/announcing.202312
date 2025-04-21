@@ -1,4 +1,4 @@
-import { type Client } from '@libsql/client';
+import { type Client, type InStatement } from '@libsql/client';
 
 export type Config = {
   client: Client;
@@ -34,14 +34,14 @@ export const debugClient = (client: Client): Client => {
       console.dir(args, { depth: null });
     }
   };
-  const execute: Client['execute'] = async (...args) => {
+  const execute: Client['execute'] = async (stmt: InStatement) => {
     const start = performance.now();
     try {
-      return await client.execute(...args);
+      return await client.execute(stmt);
     } finally {
       const end = performance.now();
       console.log(`[PERF] execute ${end - start}ms`);
-      console.dir(args, { depth: null });
+      console.dir(stmt, { depth: null });
     }
   };
 
