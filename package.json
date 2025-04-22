@@ -14,8 +14,8 @@
     "lint": "eslint",
     "lint:fix": "pnpm eslint --fix",
     "build": "pnpm -r build",
-    "build:cf:writer": "pnpm --filter @announcing/writer... build && pnpm --filter @announcing/writer build:cf",
-    "build:cf:reader": "pnpm --filter @announcing/reader... build && pnpm --filter @announcing/reader build:cf",
+    "build:writer": "pnpm --filter @announcing/writer... build && pnpm --filter @announcing/writer build",
+    "build:reader": "pnpm --filter @announcing/reader... build && pnpm --filter @announcing/reader build",
     "check": "pnpm run build && pnpm run format && pnpm run lint && pnpm -r run test && pnpm -r run check"
   },
   "devDependencies": {

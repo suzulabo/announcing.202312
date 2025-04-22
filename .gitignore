@@ -3,7 +3,6 @@ dist
 .svelte-kit
 .env.local
 .env.test
-.wrangler
 .trigger
 coverage
 
@@ -11,6 +10,3 @@ test-results
 playwright-report
 
 packages/db-dev
-
-packages/cloudflare/wrangler.toml
-packages/cloudflare/.dev.vars

@@ -3,9 +3,7 @@
   "name": "@announcing/writer",
   "scripts": {
     "dev": "vite dev --port 5174",
-    "dev:cf": "wrangler pages dev .svelte-kit/cloudflare",
     "build": "vite build",
-    "build:cf": "CF=1 vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
