@@ -10,6 +10,7 @@
     "src/constants.ts",
     "src/types.ts",
     "src/utils/index.ts",
-    "src/storage/LocalStorage.ts"
+    "src/storage/LocalStorage.ts",
+    "src/storage/S3Storage.ts"
   ]
 }

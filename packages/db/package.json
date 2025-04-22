@@ -23,6 +23,10 @@
     "./LocalStorage": {
       "types": "./dist/storage/LocalStorage.d.ts",
       "import": "./dist/storage/LocalStorage.js"
+    },
+    "./S3Storage": {
+      "types": "./dist/storage/S3Storage.d.ts",
+      "import": "./dist/storage/S3Storage.js"
     }
   },
   "files": [
