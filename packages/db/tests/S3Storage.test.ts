@@ -21,4 +21,10 @@ describe('S3Storage Tests', () => {
     expect(res.contentType).toEqual('image/png');
     expect(res.data).toEqual(new Uint8Array(image));
   });
+
+  runIfEnv('Not found', async () => {
+    const storage = createS3Storage(params as string, bucket as string);
+    const res = await storage.get('?');
+    expect(res).toBeUndefined();
+  });
 });

@@ -1,6 +1,7 @@
 import {
   GetObjectCommand,
   HeadObjectCommand,
+  NoSuchKey,
   PutObjectCommand,
   S3Client,
   type GetObjectCommandOutput,
@@ -33,10 +34,8 @@ export const createS3Storage = (params: string, bucket: string, prefix = ''): St
         }),
       );
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        if (error.name === 'NotFound') {
-          return Promise.resolve(undefined);
-        }
+      if (error instanceof NoSuchKey) {
+        return;
       }
       throw error;
     }
@@ -47,8 +46,6 @@ export const createS3Storage = (params: string, bucket: string, prefix = ''): St
     if (!res || !res.Body) {
       return;
     }
-
-    console.log({ res });
 
     return {
       contentType: res.Metadata?.['content-type'] ?? '',
