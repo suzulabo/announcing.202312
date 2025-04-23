@@ -39,10 +39,12 @@
     "build:watch": "tsc -w -p tsconfig.build.json",
     "generate": "drizzle-kit generate",
     "migrate:local": "drizzle-kit migrate",
-    "genTestData": "tsx tools/genTestData.ts"
+    "genTestData": "tsx tools/genTestData.ts",
+    "wrangler": "cd tests/wrangler && wrangler pages dev . --r2=BUCKET"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.787.0",
+    "@cloudflare/workers-types": "4.20250423.0",
     "@faker-js/faker": "9.7.0",
     "@libsql/client": "0.15.4",
     "dotenv": "16.5.0",
@@ -53,6 +55,7 @@
     "js-xxhash": "4.0.0",
     "mockdate": "3.0.5",
     "tsx": "4.19.3",
-    "vitest": "3.1.1"
+    "vitest": "3.1.1",
+    "wrangler": "4.12.1"
   }
 }
