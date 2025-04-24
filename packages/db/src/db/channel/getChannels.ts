@@ -1,11 +1,8 @@
 import { eq } from 'drizzle-orm';
-
-import { getDB } from '../db';
+import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import { channelsTable, ownersTable } from '../schema';
 
-export const getChannels = async ({ userID }: { userID: string }) => {
-  const db = getDB();
-
+export const getChannels = async (db: LibSQLDatabase, { userID }: { userID: string }) => {
   const start = performance.now();
 
   const channels = await db

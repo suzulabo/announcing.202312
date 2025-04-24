@@ -1,18 +1,18 @@
 import { and, eq } from 'drizzle-orm';
-
-import { getDB } from '../db';
+import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import { announcementsTable } from '../schema';
 
-export const getAnnouncement = async ({
-  channelID,
-  announcementID,
-}: {
-  channelID: string;
-  announcementID: string;
-}) => {
+export const getAnnouncement = async (
+  db: LibSQLDatabase,
+  {
+    channelID,
+    announcementID,
+  }: {
+    channelID: string;
+    announcementID: string;
+  },
+) => {
   const { title, body, headerImage, images, updatedAt, createdAt } = announcementsTable;
-
-  const db = getDB();
 
   const announcement = (
     await db

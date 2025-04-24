@@ -1,22 +1,24 @@
 import { and, eq } from 'drizzle-orm';
-
+import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import { getChannel } from '../channel/getChannel';
-import { getDB } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
 import { getAnnouncement } from './getAnnouncement';
 
-export const removeAnnouncement = async ({
-  userID,
-  channelID,
-  targetAnnouncementID,
-  targetUpdatedAt,
-}: {
-  userID: string;
-  channelID: string;
-  targetAnnouncementID: string;
-  targetUpdatedAt: number;
-}) => {
-  const channel = await getChannel({ userID, channelID });
+export const removeAnnouncement = async (
+  db: LibSQLDatabase,
+  {
+    userID,
+    channelID,
+    targetAnnouncementID,
+    targetUpdatedAt,
+  }: {
+    userID: string;
+    channelID: string;
+    targetAnnouncementID: string;
+    targetUpdatedAt: number;
+  },
+) => {
+  const channel = await getChannel(db, { userID, channelID });
   if (!channel) {
     return;
   }
@@ -31,7 +33,10 @@ export const removeAnnouncement = async ({
   }
 
   {
-    const announcement = await getAnnouncement({ channelID, announcementID: targetAnnouncementID });
+    const announcement = await getAnnouncement(db, {
+      channelID,
+      announcementID: targetAnnouncementID,
+    });
     if (!announcement) {
       return;
     }
@@ -41,8 +46,6 @@ export const removeAnnouncement = async ({
   }
 
   announcementIDs.splice(index, 1);
-
-  const db = getDB();
 
   const result = await db
     .update(channelsTable)

@@ -1,9 +1,9 @@
 import { and, eq } from 'drizzle-orm';
 
-import { putStorageData } from '../../storage/storage';
+import type { LibSQLDatabase } from 'drizzle-orm/libsql';
+import { type Storage } from '../../storage/storage';
 import { genAnnouncementID } from '../../utils/genAnnouncementID';
 import { getChannel } from '../channel/getChannel';
-import { getDB } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
 
 type Params = {
@@ -17,7 +17,7 @@ type Params = {
   images?: (string | Blob)[] | undefined;
 };
 
-export const updateAnnouncement = async (params: Params) => {
+export const updateAnnouncement = async (db: LibSQLDatabase, storage: Storage, params: Params) => {
   const {
     userID,
     channelID,
@@ -29,7 +29,7 @@ export const updateAnnouncement = async (params: Params) => {
     images,
   } = params;
 
-  const channel = await getChannel({ userID, channelID });
+  const channel = await getChannel(db, { userID, channelID });
   if (!channel) {
     return;
   }
@@ -41,8 +41,6 @@ export const updateAnnouncement = async (params: Params) => {
   if (index < 0) {
     return;
   }
-
-  const db = getDB();
 
   const targetAnnouncement = (
     await db
@@ -89,7 +87,7 @@ export const updateAnnouncement = async (params: Params) => {
     values.headerImage = headerImage;
   } else if (headerImage instanceof Blob) {
     storagePuts.push(
-      putStorageData(headerImage).then((v) => {
+      storage.put(headerImage).then((v) => {
         values.headerImage = v;
       }),
     );
@@ -105,7 +103,7 @@ export const updateAnnouncement = async (params: Params) => {
         a[i] = image;
       } else if (image instanceof Blob) {
         storagePuts.push(
-          putStorageData(image).then((v) => {
+          storage.put(image).then((v) => {
             a[i] = v;
           }),
         );

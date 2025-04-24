@@ -1,4 +1,4 @@
-import { assert, beforeEach, describe, expect, test } from 'vitest';
+import { assert, describe, expect, test } from 'vitest';
 
 import { openAsBlob } from 'fs';
 import {
@@ -6,19 +6,16 @@ import {
   createChannel,
   getAnnouncement,
   getChannel,
-  getStorageData,
   removeAnnouncement,
   updateAnnouncement,
 } from '../src';
 import { setupDB } from './setupDB';
 
 describe('Announcement', () => {
-  beforeEach(async () => {
-    await setupDB();
-  });
-
   test('add, update and remove', async () => {
-    await createChannel({
+    const { db, storage } = await setupDB();
+
+    await createChannel(db, storage, {
       userID: 'u1',
       channelID: 'a1',
       name: 'announcement test channel',
@@ -26,7 +23,7 @@ describe('Announcement', () => {
       icon: undefined,
     });
 
-    await addAnnouncement({
+    await addAnnouncement(db, storage, {
       userID: 'u1',
       channelID: 'a1',
       headerImage: await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' }),
@@ -37,12 +34,12 @@ describe('Announcement', () => {
     });
 
     {
-      const c = await getChannel({ userID: 'u1', channelID: 'a1' });
+      const c = await getChannel(db, { userID: 'u1', channelID: 'a1' });
       assert(c);
 
       const announcementID = c.announcementIDs?.shift() ?? '';
 
-      const a = await getAnnouncement({
+      const a = await getAnnouncement(db, {
         channelID: 'a1',
         announcementID,
       });
@@ -53,10 +50,10 @@ describe('Announcement', () => {
         body: 'This is test',
       });
 
-      const b = await getStorageData(a.headerImage ?? '');
+      const b = await storage.get(a.headerImage ?? '');
       assert(b);
 
-      await updateAnnouncement({
+      await updateAnnouncement(db, storage, {
         userID: 'u1',
         channelID: 'a1',
         targetAnnouncementID: announcementID,
@@ -69,12 +66,12 @@ describe('Announcement', () => {
     }
 
     {
-      const c = await getChannel({ userID: 'u1', channelID: 'a1' });
+      const c = await getChannel(db, { userID: 'u1', channelID: 'a1' });
       assert(c);
 
       const announcementID = c.announcementIDs?.shift() ?? '';
 
-      const a = await getAnnouncement({
+      const a = await getAnnouncement(db, {
         channelID: 'a1',
         announcementID,
       });
@@ -86,7 +83,7 @@ describe('Announcement', () => {
         images: undefined,
       });
 
-      await removeAnnouncement({
+      await removeAnnouncement(db, {
         userID: 'u1',
         channelID: 'a1',
         targetAnnouncementID: announcementID,
@@ -94,7 +91,7 @@ describe('Announcement', () => {
       });
 
       expect(
-        await getAnnouncement({
+        await getAnnouncement(db, {
           channelID: 'a1',
           announcementID,
         }),

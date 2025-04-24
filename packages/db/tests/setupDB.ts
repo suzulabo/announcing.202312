@@ -1,6 +1,6 @@
 import { migrate } from 'drizzle-orm/libsql/migrator';
-import { getDB, setDBEnv } from '../src/db/db';
-import { setStorage, type Storage } from '../src/storage/storage';
+import { createDB } from '../src';
+import { type Storage } from '../src/storage/storage';
 
 const createMemoryStorage = (): Storage => {
   let index = 1;
@@ -31,9 +31,10 @@ const createMemoryStorage = (): Storage => {
 };
 
 export const setupDB = async () => {
-  setDBEnv({ url: ':memory:' });
-  const db = getDB(true);
+  const db = createDB({ url: ':memory:' });
   await migrate(db, { migrationsFolder: './drizzle' });
 
-  setStorage(createMemoryStorage());
+  const storage = createMemoryStorage();
+
+  return { db, storage };
 };
