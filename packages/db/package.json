@@ -24,9 +24,9 @@
       "types": "./dist/storage/LocalStorage.d.ts",
       "import": "./dist/storage/LocalStorage.js"
     },
-    "./S3Storage": {
-      "types": "./dist/storage/S3Storage.d.ts",
-      "import": "./dist/storage/S3Storage.js"
+    "./R2Storage": {
+      "types": "./dist/storage/R2Storage.d.ts",
+      "import": "./dist/storage/R2Storage.js"
     }
   },
   "files": [

@@ -1,3 +1,4 @@
+import { db, getStorage } from '$lib/db/db';
 import { getFormFileOrString, getFormNumber, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 import { deleteChannel, updateChannel } from '@announcing/db';
@@ -29,7 +30,7 @@ const putSchema = v.strictObject({
   updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
-export const PUT: RequestHandler = async ({ locals, params, request }) => {
+export const PUT: RequestHandler = async ({ locals, params, request, platform }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -50,7 +51,9 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
-  await updateChannel({ ...data, userID, channelID });
+  const storage = await getStorage(platform?.env.bucket);
+
+  await updateChannel(db, storage, { ...data, userID, channelID });
 
   return json({});
 };
@@ -72,7 +75,7 @@ export const DELETE: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
-  await deleteChannel({ userID, channelID, updatedAt: data.updatedAt });
+  await deleteChannel(db, { userID, channelID, updatedAt: data.updatedAt });
 
   return json({});
 };

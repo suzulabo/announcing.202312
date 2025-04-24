@@ -9,6 +9,7 @@ import * as v from 'valibot';
 
 import { getFormFile, getFormString } from '$lib/utils/form';
 
+import { db, getStorage } from '$lib/db/db';
 import { createChannel } from '@announcing/db';
 import type { RequestHandler } from './$types';
 
@@ -40,7 +41,7 @@ const postSchema = v.strictObject({
   ]),
 });
 
-export const POST: RequestHandler = async ({ locals, request }) => {
+export const POST: RequestHandler = async ({ locals, request, platform }) => {
   const session = await locals.auth();
   const userID = session?.user?.id;
   if (!userID) {
@@ -61,7 +62,9 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 
   const channelID = genChannelID();
 
-  await createChannel({ ...data, channelID, userID });
+  const storage = await getStorage(platform?.env.bucket);
+
+  await createChannel(db, storage, { ...data, channelID, userID });
   console.log({ ...data, channelID, userID });
 
   return json({});

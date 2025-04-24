@@ -1,3 +1,4 @@
+import { db, getStorage } from '$lib/db/db';
 import { getFormFile, getFormFiles, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 import { addAnnouncement, getChannel } from '@announcing/db';
@@ -37,7 +38,7 @@ const postSchema = v.strictObject({
   ]),
 });
 
-export const POST: RequestHandler = async ({ locals, params, request }) => {
+export const POST: RequestHandler = async ({ locals, params, request, platform }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -58,12 +59,14 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
-  const channel = await getChannel({ userID, channelID });
+  const channel = await getChannel(db, { userID, channelID });
   if (!channel) {
     error(404, 'Missing channel');
   }
 
-  const announcementValues = await addAnnouncement({
+  const storage = await getStorage(platform?.env.bucket);
+
+  const announcementValues = await addAnnouncement(db, storage, {
     userID,
     channelID,
     ...data,

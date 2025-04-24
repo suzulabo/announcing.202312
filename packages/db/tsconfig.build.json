@@ -11,6 +11,6 @@
     "src/types.ts",
     "src/utils/index.ts",
     "src/storage/LocalStorage.ts",
-    "src/storage/S3Storage.ts"
+    "src/storage/R2Storage.ts"
   ]
 }
