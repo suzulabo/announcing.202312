@@ -1,8 +1,8 @@
 import { and, eq } from 'drizzle-orm';
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import { type Storage } from '../../storage/storage';
 import { genAnnouncementID } from '../../utils/genAnnouncementID';
 import { getChannel } from '../channel/getChannel';
+import type { DB } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
 
 type Params = {
@@ -15,7 +15,7 @@ type Params = {
   createdAt: number;
 };
 
-export const addAnnouncement = async (db: LibSQLDatabase, storage: Storage, params: Params) => {
+export const addAnnouncement = async (db: DB, storage: Storage, params: Params) => {
   const { userID, channelID, headerImage, title, body, images, createdAt } = params;
 
   const channel = await getChannel(db, { userID, channelID });

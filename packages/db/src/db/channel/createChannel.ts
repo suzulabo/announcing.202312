@@ -1,7 +1,7 @@
 import { count, eq } from 'drizzle-orm';
 
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import type { Storage } from '../../storage/storage';
+import type { DB } from '../db';
 import { channelsTable, ownersTable } from '../schema';
 
 type Params = {
@@ -12,7 +12,7 @@ type Params = {
   icon: Blob | undefined;
 };
 
-export const createChannel = async (db: LibSQLDatabase, storage: Storage, params: Params) => {
+export const createChannel = async (db: DB, storage: Storage, params: Params) => {
   const { userID, channelID, name, desc, icon } = params;
 
   {

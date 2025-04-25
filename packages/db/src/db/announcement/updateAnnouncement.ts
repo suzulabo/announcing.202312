@@ -1,9 +1,9 @@
 import { and, eq } from 'drizzle-orm';
 
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import { type Storage } from '../../storage/storage';
 import { genAnnouncementID } from '../../utils/genAnnouncementID';
 import { getChannel } from '../channel/getChannel';
+import type { DB } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
 
 type Params = {
@@ -17,7 +17,7 @@ type Params = {
   images?: (string | Blob)[] | undefined;
 };
 
-export const updateAnnouncement = async (db: LibSQLDatabase, storage: Storage, params: Params) => {
+export const updateAnnouncement = async (db: DB, storage: Storage, params: Params) => {
   const {
     userID,
     channelID,

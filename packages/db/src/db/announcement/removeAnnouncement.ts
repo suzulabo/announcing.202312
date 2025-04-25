@@ -1,11 +1,11 @@
 import { and, eq } from 'drizzle-orm';
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import { getChannel } from '../channel/getChannel';
+import type { DB } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
 import { getAnnouncement } from './getAnnouncement';
 
 export const removeAnnouncement = async (
-  db: LibSQLDatabase,
+  db: DB,
   {
     userID,
     channelID,
@@ -57,7 +57,7 @@ export const removeAnnouncement = async (
       and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
     );
 
-  if (result.rowsAffected === 1) {
+  if (result.meta.changes === 1) {
     await db
       .delete(announcementsTable)
       .where(

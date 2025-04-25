@@ -1,7 +1,7 @@
 import { and, eq, exists } from 'drizzle-orm';
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import type { SQLiteUpdateSetSource } from 'drizzle-orm/sqlite-core';
 import { type Storage } from '../../storage/storage';
+import type { DB } from '../db';
 import { channelsTable, ownersTable } from '../schema';
 
 type Params = {
@@ -13,7 +13,7 @@ type Params = {
   icon?: string | Blob | undefined;
 };
 
-export const updateChannel = async (db: LibSQLDatabase, storage: Storage, params: Params) => {
+export const updateChannel = async (db: DB, storage: Storage, params: Params) => {
   const { userID, updatedAt, channelID, name, desc, icon } = params;
 
   const values: SQLiteUpdateSetSource<typeof channelsTable> = {
