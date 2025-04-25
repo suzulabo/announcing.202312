@@ -4,7 +4,6 @@
   "scripts": {
     "dev": "vite dev --port 5175",
     "build": "vite build",
-    "build:cf": "CF=1 vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -16,6 +15,7 @@
     "@announcing/i18n": "workspace:*",
     "@announcing/notification": "workspace:*",
     "@auth/sveltekit": "1.9.0",
+    "@cloudflare/workers-types": "4.20250423.0",
     "@libsql/client": "0.15.4",
     "@playwright/test": "1.52.0",
     "@sveltejs/adapter-cloudflare": "7.0.1",

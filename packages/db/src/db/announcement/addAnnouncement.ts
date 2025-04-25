@@ -1,11 +1,9 @@
 import { and, eq } from 'drizzle-orm';
-
-import { getChannel } from '../channel/getChannel';
-import { getDB } from '../db';
-import { announcementsTable, channelsTable } from '../schema';
-
-import { putStorageData } from '../../storage/storage';
+import type { LibSQLDatabase } from 'drizzle-orm/libsql';
+import { type Storage } from '../../storage/storage';
 import { genAnnouncementID } from '../../utils/genAnnouncementID';
+import { getChannel } from '../channel/getChannel';
+import { announcementsTable, channelsTable } from '../schema';
 
 type Params = {
   userID: string;
@@ -17,10 +15,10 @@ type Params = {
   createdAt: number;
 };
 
-export const addAnnouncement = async (params: Params) => {
+export const addAnnouncement = async (db: LibSQLDatabase, storage: Storage, params: Params) => {
   const { userID, channelID, headerImage, title, body, images, createdAt } = params;
 
-  const channel = await getChannel({ userID, channelID });
+  const channel = await getChannel(db, { userID, channelID });
   if (!channel) {
     return;
   }
@@ -41,7 +39,7 @@ export const addAnnouncement = async (params: Params) => {
 
   if (headerImage) {
     storagePuts.push(
-      putStorageData(headerImage).then((v) => {
+      storage.put(headerImage).then((v) => {
         values.headerImage = v;
       }),
     );
@@ -52,7 +50,7 @@ export const addAnnouncement = async (params: Params) => {
     values.images = a;
     images.forEach((image, i) => {
       storagePuts.push(
-        putStorageData(image).then((v) => {
+        storage.put(image).then((v) => {
           a[i] = v;
         }),
       );
@@ -62,8 +60,6 @@ export const addAnnouncement = async (params: Params) => {
   await Promise.all(storagePuts);
 
   const announcementID = genAnnouncementID(values);
-
-  const db = getDB();
 
   const announcementIDs = [announcementID, ...(channel.announcementIDs ?? [])];
 

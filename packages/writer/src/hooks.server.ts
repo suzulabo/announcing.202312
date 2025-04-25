@@ -1,18 +1,8 @@
+import { env } from '$env/dynamic/private';
+import { createTriggerClient } from '@announcing/notification/tasks/trigger.dev';
 import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-
-import { env } from '$env/dynamic/private';
-import { CF } from '$env/static/private';
-import { setDBEnv, setStorage } from '@announcing/db';
-import { createTriggerClient } from '@announcing/notification/tasks/trigger.dev';
 import { handle as authenticationHandle } from './auth';
-
-setDBEnv({ url: env.DB_URL, authToken: env.DB_AUTH_TOKEN });
-
-if (!CF) {
-  const createLocalStorage = (await import('@announcing/db/LocalStorage')).createLocalStorage;
-  setStorage(createLocalStorage());
-}
 
 const performanceHandle: Handle = async ({ event, resolve }) => {
   const start = performance.now();

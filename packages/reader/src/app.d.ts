@@ -1,6 +1,7 @@
 /// <reference types="@sveltejs/kit" />
 
 import { TokenStore } from '@announcing/notification/core';
+import type { R2Bucket } from '@cloudflare/workers-types';
 
 type BackLabelKeys = 'back';
 
@@ -23,7 +24,11 @@ declare global {
     interface PageState {
       fromPage?: string;
     }
-    // interface Platform {}
+    interface Platform {
+      env: {
+        bucket: R2Bucket;
+      };
+    }
   }
 }
 

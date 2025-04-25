@@ -1,15 +1,14 @@
+import { db } from '$lib/db/db';
+import { getUserID } from '$lib/utils/getUserID';
 import { getAnnouncement, getChannel } from '@announcing/db';
 import { redirect } from '@sveltejs/kit';
-
-import { getUserID } from '$lib/utils/getUserID';
-
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, locals }) => {
   const userID = await getUserID(locals);
   const { channelID, announcementID } = params;
 
-  const channel = await getChannel({ userID, channelID });
+  const channel = await getChannel(db, { userID, channelID });
 
   if (!channel) {
     redirect(303, '/');
@@ -29,7 +28,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
   }
 
   const announcement = announcementID
-    ? await getAnnouncement({ channelID, announcementID })
+    ? await getAnnouncement(db, { channelID, announcementID })
     : undefined;
 
   if (!announcement) {

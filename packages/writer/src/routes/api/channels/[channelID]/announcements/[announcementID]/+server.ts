@@ -1,3 +1,4 @@
+import { db, getStorage } from '$lib/db/db';
 import {
   getFormFileOrString,
   getFormFilesOrStrings,
@@ -19,7 +20,7 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async ({ params }) => {
   const { channelID, announcementID } = params;
 
-  const result = await getAnnouncement({ channelID, announcementID });
+  const result = await getAnnouncement(db, { channelID, announcementID });
   if (!result) {
     error(404, 'Missing announcement');
   }
@@ -58,7 +59,7 @@ const putSchema = v.strictObject({
   targetUpdatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
-export const PUT: RequestHandler = async ({ locals, params, request }) => {
+export const PUT: RequestHandler = async ({ locals, params, request, platform }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -81,7 +82,9 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
   const channelID = params.channelID;
   const targetAnnouncementID = params.announcementID;
 
-  await updateAnnouncement({
+  const storage = await getStorage(platform?.env.bucket);
+
+  await updateAnnouncement(db, storage, {
     userID,
     channelID,
     targetAnnouncementID,
@@ -108,7 +111,7 @@ export const DELETE: RequestHandler = async ({ locals, params, request }) => {
 
   const { channelID, announcementID } = params;
 
-  await removeAnnouncement({
+  await removeAnnouncement(db, {
     userID,
     channelID,
     targetAnnouncementID: announcementID,

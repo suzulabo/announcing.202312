@@ -5,24 +5,10 @@ export type Storage = {
   put: (blob: Blob) => Promise<string>;
 };
 
-let storage: Storage | undefined = undefined;
-
-export const setStorage = (v: Storage) => {
-  storage = v;
+export const getStorageData = (storage: Storage, key: string) => {
+  return storage.get(key);
 };
 
-const getStorage = () => {
-  if (!storage) {
-    throw new Error('storage is not set');
-  }
-
-  return storage;
-};
-
-export const getStorageData = (key: string) => {
-  return getStorage().get(key);
-};
-
-export const putStorageData = (blob: Blob) => {
-  return getStorage().put(blob);
+export const putStorageData = (storage: Storage, blob: Blob) => {
+  return storage.put(blob);
 };

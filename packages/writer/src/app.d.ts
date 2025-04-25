@@ -1,6 +1,7 @@
 /// <reference types="@sveltejs/kit" />
 
 import type { TriggerClient } from '@announcing/notification/tasks/trigger.dev';
+import type { R2Bucket } from '@cloudflare/workers-types';
 import type { AnnouncementPreviewData } from './routes/channels/[channelID]/announcements/[[announcementID]]/preview/+page.svelte';
 
 type BackLabelKeys = 'back';
@@ -22,8 +23,7 @@ declare global {
     }
     interface Platform {
       env: {
-        DB: D1Database;
-        Storage: R2Bucket;
+        bucket: R2Bucket;
       };
     }
   }

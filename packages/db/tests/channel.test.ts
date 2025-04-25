@@ -10,19 +10,19 @@ describe('Channel', () => {
   });
 
   test('create, update and delete', async () => {
-    await setupDB();
+    const { db, storage } = await setupDB();
 
-    await createChannel({
+    await createChannel(db, storage, {
       userID: 'u1',
       channelID: '1',
       name: 'test channel',
       desc: 'This is test',
       icon: await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' }),
     });
-    expect(await getChannel({ userID: 'u2', channelID: '1' })).toBeUndefined();
+    expect(await getChannel(db, { userID: 'u2', channelID: '1' })).toBeUndefined();
 
     {
-      const c = await getChannel({ userID: 'u1', channelID: '1' });
+      const c = await getChannel(db, { userID: 'u1', channelID: '1' });
 
       assert(c);
 
@@ -32,7 +32,7 @@ describe('Channel', () => {
         desc: 'This is test',
       });
 
-      await updateChannel({
+      await updateChannel(db, storage, {
         userID: 'u2',
         updatedAt: c.updatedAt,
         channelID: '1',
@@ -40,13 +40,13 @@ describe('Channel', () => {
         desc: c.desc,
         icon: c.icon,
       });
-      expect(await getChannel({ userID: 'u1', channelID: '1' })).toMatchObject({
+      expect(await getChannel(db, { userID: 'u1', channelID: '1' })).toMatchObject({
         channelID: '1',
         name: 'test channel',
         desc: 'This is test',
       });
 
-      await updateChannel({
+      await updateChannel(db, storage, {
         userID: 'u1',
         updatedAt: c.updatedAt,
         channelID: '1',
@@ -56,7 +56,7 @@ describe('Channel', () => {
       });
     }
     {
-      const c = await getChannel({ userID: 'u1', channelID: '1' });
+      const c = await getChannel(db, { userID: 'u1', channelID: '1' });
 
       assert(c);
 
@@ -67,22 +67,23 @@ describe('Channel', () => {
         icon: undefined,
       });
 
-      await deleteChannel({ userID: 'u2', channelID: '1', updatedAt: c.updatedAt });
-      expect(await getChannel({ userID: 'u1', channelID: '1' })).toMatchObject({
+      await deleteChannel(db, { userID: 'u2', channelID: '1', updatedAt: c.updatedAt });
+      expect(await getChannel(db, { userID: 'u1', channelID: '1' })).toMatchObject({
         channelID: '1',
         name: 'update channel',
         desc: 'updated',
         icon: undefined,
       });
 
-      await deleteChannel({ userID: 'u1', channelID: '1', updatedAt: c.updatedAt });
-      expect(await getChannel({ userID: 'u1', channelID: '1' })).toBeUndefined();
+      await deleteChannel(db, { userID: 'u1', channelID: '1', updatedAt: c.updatedAt });
+      expect(await getChannel(db, { userID: 'u1', channelID: '1' })).toBeUndefined();
     }
   });
 
   test('Too many channels', async () => {
+    const { db, storage } = await setupDB();
     for (let i = 1; i <= 6; i++) {
-      await createChannel({
+      await createChannel(db, storage, {
         userID: 'u1',
         channelID: i.toString(),
         name: `channel${i}`,
@@ -91,13 +92,14 @@ describe('Channel', () => {
       });
     }
 
-    const channels = await getChannels({ userID: 'u1' });
+    const channels = await getChannels(db, { userID: 'u1' });
     expect(channels.length).toEqual(5);
   });
 
   test('empty name', async () => {
+    const { db, storage } = await setupDB();
     await expect(
-      createChannel({
+      createChannel(db, storage, {
         userID: '1',
         channelID: '1',
         name: '',
@@ -108,7 +110,8 @@ describe('Channel', () => {
   });
 
   test('check channel left', async () => {
-    const c = await getChannel({ userID: 'u1', channelID: '1' });
+    const { db } = await setupDB();
+    const c = await getChannel(db, { userID: 'u1', channelID: '1' });
     expect(c).toBeUndefined();
   });
 });
