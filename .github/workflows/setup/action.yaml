@@ -10,5 +10,7 @@ runs:
         node-version: '22.14.0'
         cache: 'pnpm'
 
-    - run: pnpm install --frozen-lockfile
+    - run: |
+        pnpm install --frozen-lockfile
+        mkdir -p packages/db-dev
       shell: bash
