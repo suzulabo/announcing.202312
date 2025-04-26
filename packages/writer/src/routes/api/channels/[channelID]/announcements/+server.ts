@@ -1,7 +1,6 @@
-import { db, getStorage } from '$lib/db/db';
+import { db } from '$lib/db/db';
 import { getFormFile, getFormFiles, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
-import { addAnnouncement, getChannel } from '@announcing/db';
 import {
   ANNOUNCEMENT_BODY_MAX_BYTES,
   ANNOUNCEMENT_IMAGE_MAX_BYTES,
@@ -59,19 +58,20 @@ export const POST: RequestHandler = async ({ locals, params, request, platform }
 
   const channelID = params.channelID;
 
-  const channel = await getChannel(db, { userID, channelID });
+  const channel = await db.getChannel({ userID, channelID }, platform?.env);
   if (!channel) {
     error(404, 'Missing channel');
   }
 
-  const storage = await getStorage(platform?.env.bucket);
-
-  const announcementValues = await addAnnouncement(db, storage, {
-    userID,
-    channelID,
-    ...data,
-    createdAt: new Date().getTime(),
-  });
+  const announcementValues = await db.addAnnouncement(
+    {
+      userID,
+      channelID,
+      ...data,
+      createdAt: new Date().getTime(),
+    },
+    platform?.env,
+  );
 
   if (announcementValues) {
     const triggerParams: TriggerProcessMessageParams = {

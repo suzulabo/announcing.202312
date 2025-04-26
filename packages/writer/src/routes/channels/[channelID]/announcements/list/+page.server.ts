@@ -1,14 +1,13 @@
 import { db } from '$lib/db/db';
 import { resolveChannel } from '$lib/db/resolver';
 import { getUserID } from '$lib/utils/getUserID';
-import { getChannel } from '@announcing/db';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, locals }) => {
+export const load: PageServerLoad = async ({ params, locals, platform }) => {
   const userID = await getUserID(locals);
 
-  const channel = await getChannel(db, { userID, channelID: params.channelID });
+  const channel = await db.getChannel({ userID, channelID: params.channelID }, platform?.env);
 
   if (!channel) {
     redirect(303, '/');

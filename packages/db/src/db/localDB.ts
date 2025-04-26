@@ -1,12 +1,14 @@
 import type { R2Bucket } from '@cloudflare/workers-types';
+import { drizzle } from 'drizzle-orm/d1';
 import { Miniflare } from 'miniflare';
 import { readdir, readFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
+import { createAPI, createDB, type DBContext } from './db';
 
 const LOCAL_DIR = '../db-local';
 const DRRIZLE_DIR = '../db/drizzle';
 
-export const createLocalBindings = async (memory = false) => {
+export const createLocalDB = async (memory = false): Promise<ReturnType<typeof createDB>> => {
   const path = memory ? 'memory:' : `file://${resolve(LOCAL_DIR)}`;
 
   const mf = new Miniflare({
@@ -41,5 +43,15 @@ export const createLocalBindings = async (memory = false) => {
     await d1.batch([d1.prepare(sql), d1.prepare('INSERT INTO __migrations VALUES(?)').bind(file)]);
   }
 
-  return { d1, r2 };
+  const db = drizzle(d1);
+
+  const makeContext = (): DBContext => {
+    return {
+      db,
+      r2,
+      bucketPrefix: '',
+    };
+  };
+
+  return createAPI(makeContext);
 };

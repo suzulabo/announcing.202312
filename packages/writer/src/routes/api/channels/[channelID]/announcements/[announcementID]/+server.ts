@@ -1,4 +1,4 @@
-import { db, getStorage } from '$lib/db/db';
+import { db } from '$lib/db/db';
 import {
   getFormFileOrString,
   getFormFilesOrStrings,
@@ -6,7 +6,6 @@ import {
   getFormString,
 } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
-import { getAnnouncement, removeAnnouncement, updateAnnouncement } from '@announcing/db';
 import {
   ANNOUNCEMENT_BODY_MAX_BYTES,
   ANNOUNCEMENT_IMAGE_MAX_BYTES,
@@ -17,10 +16,10 @@ import { error, json } from '@sveltejs/kit';
 import * as v from 'valibot';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ params }) => {
+export const GET: RequestHandler = async ({ params, platform }) => {
   const { channelID, announcementID } = params;
 
-  const result = await getAnnouncement(db, { channelID, announcementID });
+  const result = await db.getAnnouncement({ channelID, announcementID }, platform?.env);
   if (!result) {
     error(404, 'Missing announcement');
   }
@@ -82,14 +81,15 @@ export const PUT: RequestHandler = async ({ locals, params, request, platform })
   const channelID = params.channelID;
   const targetAnnouncementID = params.announcementID;
 
-  const storage = await getStorage(platform?.env.bucket);
-
-  await updateAnnouncement(db, storage, {
-    userID,
-    channelID,
-    targetAnnouncementID,
-    ...data,
-  });
+  await db.updateAnnouncement(
+    {
+      userID,
+      channelID,
+      targetAnnouncementID,
+      ...data,
+    },
+    platform?.env,
+  );
 
   return json({});
 };
@@ -98,7 +98,7 @@ const deleteSchema = v.strictObject({
   updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
-export const DELETE: RequestHandler = async ({ locals, params, request }) => {
+export const DELETE: RequestHandler = async ({ locals, params, request, platform }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -111,12 +111,15 @@ export const DELETE: RequestHandler = async ({ locals, params, request }) => {
 
   const { channelID, announcementID } = params;
 
-  await removeAnnouncement(db, {
-    userID,
-    channelID,
-    targetAnnouncementID: announcementID,
-    targetUpdatedAt: data.updatedAt,
-  });
+  await db.removeAnnouncement(
+    {
+      userID,
+      channelID,
+      targetAnnouncementID: announcementID,
+      targetUpdatedAt: data.updatedAt,
+    },
+    platform?.env,
+  );
 
   return json({});
 };

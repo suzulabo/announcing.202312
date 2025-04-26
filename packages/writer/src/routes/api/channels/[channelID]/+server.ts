@@ -1,7 +1,6 @@
-import { db, getStorage } from '$lib/db/db';
+import { db } from '$lib/db/db';
 import { getFormFileOrString, getFormNumber, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
-import { deleteChannel, updateChannel } from '@announcing/db';
 import {
   CHANNEL_DESC_MAX_BYTES,
   CHANNEL_ICON_MAX_BYTES,
@@ -51,9 +50,7 @@ export const PUT: RequestHandler = async ({ locals, params, request, platform })
 
   const channelID = params.channelID;
 
-  const storage = await getStorage(platform?.env.bucket);
-
-  await updateChannel(db, storage, { ...data, userID, channelID });
+  await db.updateChannel({ ...data, userID, channelID }, platform?.env);
 
   return json({});
 };
@@ -62,7 +59,7 @@ const deleteSchema = v.strictObject({
   updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
-export const DELETE: RequestHandler = async ({ locals, params, request }) => {
+export const DELETE: RequestHandler = async ({ locals, params, request, platform }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -75,7 +72,7 @@ export const DELETE: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
-  await deleteChannel(db, { userID, channelID, updatedAt: data.updatedAt });
+  await db.deleteChannel({ userID, channelID, updatedAt: data.updatedAt }, platform?.env);
 
   return json({});
 };

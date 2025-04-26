@@ -1,6 +1,6 @@
 import { createDB } from '../src';
 import { createStorage } from '../src/db/db';
-import { createLocalBindings } from '../src/db/localBindings';
+import { createLocalBindings } from '../src/db/localDB';
 
 export const setupDB = async () => {
   const { d1, r2 } = await createLocalBindings(true);

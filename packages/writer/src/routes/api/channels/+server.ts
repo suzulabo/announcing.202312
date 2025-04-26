@@ -9,8 +9,7 @@ import * as v from 'valibot';
 
 import { getFormFile, getFormString } from '$lib/utils/form';
 
-import { db, getStorage } from '$lib/db/db';
-import { createChannel } from '@announcing/db';
+import { db } from '$lib/db/db';
 import type { RequestHandler } from './$types';
 
 const invalidChannelIDPattern = /(.)\1\1/;
@@ -62,10 +61,7 @@ export const POST: RequestHandler = async ({ locals, request, platform }) => {
 
   const channelID = genChannelID();
 
-  const storage = await getStorage(platform?.env.bucket);
-
-  await createChannel(db, storage, { ...data, channelID, userID });
-  console.log({ ...data, channelID, userID });
+  await db.createChannel({ ...data, channelID, userID }, platform?.env);
 
   return json({});
 };
