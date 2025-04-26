@@ -10,8 +10,6 @@
     "src/db/localDB.ts",
     "src/constants.ts",
     "src/types.ts",
-    "src/utils/index.ts",
-    "src/storage/LocalStorage.ts",
-    "src/storage/R2Storage.ts"
+    "src/utils/index.ts"
   ]
 }

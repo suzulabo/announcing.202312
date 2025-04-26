@@ -161,9 +161,6 @@ importers:
       vitest:
         specifier: 3.1.1
         version: 3.1.1(@types/node@22.14.1)(jiti@2.4.2)(jsdom@24.1.1)(sass@1.86.3)(terser@5.36.0)(tsx@4.19.3)
-      wrangler:
-        specifier: 4.12.1
-        version: 4.12.1(@cloudflare/workers-types@4.20250425.0)
 
   packages/i18n:
     devDependencies:
@@ -3389,7 +3386,6 @@ packages:
 
   libsql@0.5.7:
     resolution: {integrity: sha512-YbWW3YsGZl6PrBRNAtUVuMLqKRqYcYPa/QqhQCuR67SlcOHIhJ11ksTLAHxXkDRJs6kSrzr9JgGJGJQ91e1Bww==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lilconfig@2.1.0:
@@ -9228,24 +9224,6 @@ snapshots:
       workerd: 1.20250417.0
     optionalDependencies:
       '@cloudflare/workers-types': 4.20250423.0
-      fsevents: 2.3.3
-      sharp: 0.33.5
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
-  wrangler@4.12.1(@cloudflare/workers-types@4.20250425.0):
-    dependencies:
-      '@cloudflare/kv-asset-handler': 0.4.0
-      '@cloudflare/unenv-preset': 2.3.1(unenv@2.0.0-rc.15)(workerd@1.20250417.0)
-      blake3-wasm: 2.1.5
-      esbuild: 0.25.2
-      miniflare: 4.20250417.0
-      path-to-regexp: 6.3.0
-      unenv: 2.0.0-rc.15
-      workerd: 1.20250417.0
-    optionalDependencies:
-      '@cloudflare/workers-types': 4.20250425.0
       fsevents: 2.3.3
       sharp: 0.33.5
     transitivePeerDependencies:
