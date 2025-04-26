@@ -1,9 +1,9 @@
 import { and, eq } from 'drizzle-orm';
-import { type Storage } from '../../storage/storage';
 import { genAnnouncementID } from '../../utils/genAnnouncementID';
 import { getChannel } from '../channel/getChannel';
-import type { DB } from '../db';
+import type { DBContext } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
+import { putStorage } from '../storage/putStorage';
 
 type Params = {
   userID: string;
@@ -15,10 +15,11 @@ type Params = {
   createdAt: number;
 };
 
-export const addAnnouncement = async (db: DB, storage: Storage, params: Params) => {
-  const { userID, channelID, headerImage, title, body, images, createdAt } = params;
-
-  const channel = await getChannel(db, { userID, channelID });
+export const addAnnouncement = async (
+  ctx: DBContext,
+  { userID, channelID, headerImage, title, body, images, createdAt }: Params,
+) => {
+  const channel = await getChannel(ctx, { userID, channelID });
   if (!channel) {
     return;
   }
@@ -39,7 +40,7 @@ export const addAnnouncement = async (db: DB, storage: Storage, params: Params) 
 
   if (headerImage) {
     storagePuts.push(
-      storage.put(headerImage).then((v) => {
+      putStorage(ctx, headerImage).then((v) => {
         values.headerImage = v;
       }),
     );
@@ -50,7 +51,7 @@ export const addAnnouncement = async (db: DB, storage: Storage, params: Params) 
     values.images = a;
     images.forEach((image, i) => {
       storagePuts.push(
-        storage.put(image).then((v) => {
+        putStorage(ctx, image).then((v) => {
           a[i] = v;
         }),
       );
@@ -60,8 +61,9 @@ export const addAnnouncement = async (db: DB, storage: Storage, params: Params) 
   await Promise.all(storagePuts);
 
   const announcementID = genAnnouncementID(values);
-
   const announcementIDs = [announcementID, ...(channel.announcementIDs ?? [])];
+
+  const db = ctx.db;
 
   const updateChannel = db
     .update(channelsTable)

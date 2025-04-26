@@ -1,21 +1,15 @@
 import { assert, describe, expect, test } from 'vitest';
 
 import { openAsBlob } from 'fs';
-import {
-  addAnnouncement,
-  createChannel,
-  getAnnouncement,
-  getChannel,
-  removeAnnouncement,
-  updateAnnouncement,
-} from '../src';
-import { setupDB } from './setupDB';
+import { createDB } from '../src';
+import { createLocalBindings } from '../src/db/localBindings';
 
 describe('Announcement', () => {
   test('add, update and remove', async () => {
-    const { db, storage } = await setupDB();
+    const db = await createDB('', false);
+    const bindings = await createLocalBindings(true);
 
-    await createChannel(db, storage, {
+    await db.createChannel(bindings, {
       userID: 'u1',
       channelID: 'a1',
       name: 'announcement test channel',
@@ -23,7 +17,7 @@ describe('Announcement', () => {
       icon: undefined,
     });
 
-    await addAnnouncement(db, storage, {
+    await db.addAnnouncement(bindings, {
       userID: 'u1',
       channelID: 'a1',
       headerImage: await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' }),
@@ -34,12 +28,12 @@ describe('Announcement', () => {
     });
 
     {
-      const c = await getChannel(db, { userID: 'u1', channelID: 'a1' });
+      const c = await db.getChannel(bindings, { userID: 'u1', channelID: 'a1' });
       assert(c);
 
       const announcementID = c.announcementIDs?.shift() ?? '';
 
-      const a = await getAnnouncement(db, {
+      const a = await db.getAnnouncement(bindings, {
         channelID: 'a1',
         announcementID,
       });
@@ -50,10 +44,10 @@ describe('Announcement', () => {
         body: 'This is test',
       });
 
-      const b = await storage.get(a.headerImage ?? '');
+      const b = await db.getStorage(bindings, a.headerImage ?? '');
       assert(b);
 
-      await updateAnnouncement(db, storage, {
+      await db.updateAnnouncement(bindings, {
         userID: 'u1',
         channelID: 'a1',
         targetAnnouncementID: announcementID,
@@ -66,12 +60,12 @@ describe('Announcement', () => {
     }
 
     {
-      const c = await getChannel(db, { userID: 'u1', channelID: 'a1' });
+      const c = await db.getChannel(bindings, { userID: 'u1', channelID: 'a1' });
       assert(c);
 
       const announcementID = c.announcementIDs?.shift() ?? '';
 
-      const a = await getAnnouncement(db, {
+      const a = await db.getAnnouncement(bindings, {
         channelID: 'a1',
         announcementID,
       });
@@ -83,7 +77,7 @@ describe('Announcement', () => {
         images: undefined,
       });
 
-      await removeAnnouncement(db, {
+      await db.removeAnnouncement(bindings, {
         userID: 'u1',
         channelID: 'a1',
         targetAnnouncementID: announcementID,
@@ -91,7 +85,7 @@ describe('Announcement', () => {
       });
 
       expect(
-        await getAnnouncement(db, {
+        await db.getAnnouncement(bindings, {
           channelID: 'a1',
           announcementID,
         }),

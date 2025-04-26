@@ -1,10 +1,10 @@
 import { and, eq } from 'drizzle-orm';
 
-import { type Storage } from '../../storage/storage';
 import { genAnnouncementID } from '../../utils/genAnnouncementID';
 import { getChannel } from '../channel/getChannel';
-import type { DB } from '../db';
+import type { DBContext } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
+import { putStorage } from '../storage/putStorage';
 
 type Params = {
   userID: string;
@@ -17,8 +17,9 @@ type Params = {
   images?: (string | Blob)[] | undefined;
 };
 
-export const updateAnnouncement = async (db: DB, storage: Storage, params: Params) => {
-  const {
+export const updateAnnouncement = async (
+  ctx: DBContext,
+  {
     userID,
     channelID,
     targetAnnouncementID,
@@ -27,9 +28,9 @@ export const updateAnnouncement = async (db: DB, storage: Storage, params: Param
     title,
     body,
     images,
-  } = params;
-
-  const channel = await getChannel(db, { userID, channelID });
+  }: Params,
+) => {
+  const channel = await getChannel(ctx, { userID, channelID });
   if (!channel) {
     return;
   }
@@ -41,6 +42,8 @@ export const updateAnnouncement = async (db: DB, storage: Storage, params: Param
   if (index < 0) {
     return;
   }
+
+  const db = ctx.db;
 
   const targetAnnouncement = (
     await db
@@ -87,7 +90,7 @@ export const updateAnnouncement = async (db: DB, storage: Storage, params: Param
     values.headerImage = headerImage;
   } else if (headerImage instanceof Blob) {
     storagePuts.push(
-      storage.put(headerImage).then((v) => {
+      putStorage(ctx, headerImage).then((v) => {
         values.headerImage = v;
       }),
     );
@@ -103,7 +106,7 @@ export const updateAnnouncement = async (db: DB, storage: Storage, params: Param
         a[i] = image;
       } else if (image instanceof Blob) {
         storagePuts.push(
-          storage.put(image).then((v) => {
+          putStorage(ctx, image).then((v) => {
             a[i] = v;
           }),
         );

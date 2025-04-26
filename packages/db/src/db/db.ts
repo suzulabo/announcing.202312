@@ -1,33 +1,78 @@
 import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
 import { drizzle, DrizzleD1Database } from 'drizzle-orm/d1';
-import { createR2Storage } from '../storage/R2Storage';
-import type { Storage } from '../storage/storage';
+import { addAnnouncement } from './announcement/addAnnouncement';
+import { getAnnouncement } from './announcement/getAnnouncement';
+import { removeAnnouncement } from './announcement/removeAnnouncement';
+import { updateAnnouncement } from './announcement/updateAnnouncement';
+import { createChannel } from './channel/createChannel';
+import { deleteChannel } from './channel/deleteChannel';
+import { getChannel } from './channel/getChannel';
+import { getChannels } from './channel/getChannels';
+import { updateChannel } from './channel/updateChannel';
+import { getStorage } from './storage/getStorage';
 
-export type DB = DrizzleD1Database;
+type CFBindings = {
+  d1: D1Database;
+  r2: R2Bucket;
+};
+type OptionalCFBindings = CFBindings | undefined;
 
-let localBindings: { d1: D1Database; r2: R2Bucket } | undefined;
-
-export const createDB = async (d1: D1Database | undefined): Promise<DB> => {
-  if (d1) {
-    console.log('check1');
-    return drizzle(d1);
-  }
-
-  if (!localBindings) {
-    localBindings = await (await import('./localBindings')).createLocalBindings();
-  }
-
-  return drizzle(localBindings.d1);
+export type DBContext = {
+  db: DrizzleD1Database;
+  r2: R2Bucket;
+  bucketPrefix: string;
 };
 
-export const createStorage = async (r2: R2Bucket | undefined, prefix = ''): Promise<Storage> => {
-  if (r2) {
-    return createR2Storage(r2, prefix);
-  }
+export const createDB = async (bucketPrefix: string, useLocal: boolean) => {
+  const localBindings = useLocal
+    ? await (await import('./localBindings')).createLocalBindings()
+    : undefined;
 
-  if (!localBindings) {
-    localBindings = await (await import('./localBindings')).createLocalBindings();
-  }
+  const makeContext = (b: OptionalCFBindings): DBContext => {
+    const bindings = b ?? localBindings ?? ({} as CFBindings);
+    return {
+      db: drizzle(bindings.d1),
+      r2: bindings.r2,
+      bucketPrefix,
+    };
+  };
 
-  return createR2Storage(localBindings.r2, prefix);
+  return {
+    createChannel: (b: OptionalCFBindings, params: Parameters<typeof createChannel>[1]) => {
+      return createChannel(makeContext(b), params);
+    },
+    updateChannel: (b: OptionalCFBindings, params: Parameters<typeof updateChannel>[1]) => {
+      return updateChannel(makeContext(b), params);
+    },
+    deleteChannel: (b: OptionalCFBindings, params: Parameters<typeof deleteChannel>[1]) => {
+      return deleteChannel(makeContext(b), params);
+    },
+    getChannel: (b: OptionalCFBindings, params: Parameters<typeof getChannel>[1]) => {
+      return getChannel(makeContext(b), params);
+    },
+    getChannels: (b: OptionalCFBindings, params: Parameters<typeof getChannels>[1]) => {
+      return getChannels(makeContext(b), params);
+    },
+    addAnnouncement: (b: OptionalCFBindings, params: Parameters<typeof addAnnouncement>[1]) => {
+      return addAnnouncement(makeContext(b), params);
+    },
+    updateAnnouncement: (
+      b: OptionalCFBindings,
+      params: Parameters<typeof updateAnnouncement>[1],
+    ) => {
+      return updateAnnouncement(makeContext(b), params);
+    },
+    removeAnnouncement: (
+      b: OptionalCFBindings,
+      params: Parameters<typeof removeAnnouncement>[1],
+    ) => {
+      return removeAnnouncement(makeContext(b), params);
+    },
+    getAnnouncement: (b: OptionalCFBindings, params: Parameters<typeof getAnnouncement>[1]) => {
+      return getAnnouncement(makeContext(b), params);
+    },
+    getStorage: (b: OptionalCFBindings, params: Parameters<typeof getStorage>[1]) => {
+      return getStorage(makeContext(b), params);
+    },
+  };
 };

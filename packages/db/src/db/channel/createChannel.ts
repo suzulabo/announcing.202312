@@ -1,8 +1,8 @@
 import { count, eq } from 'drizzle-orm';
 
-import type { Storage } from '../../storage/storage';
-import type { DB } from '../db';
+import type { DBContext } from '../db';
 import { channelsTable, ownersTable } from '../schema';
+import { putStorage } from '../storage/putStorage';
 
 type Params = {
   userID: string;
@@ -12,8 +12,11 @@ type Params = {
   icon: Blob | undefined;
 };
 
-export const createChannel = async (db: DB, storage: Storage, params: Params) => {
-  const { userID, channelID, name, desc, icon } = params;
+export const createChannel = async (
+  ctx: DBContext,
+  { userID, channelID, name, desc, icon }: Params,
+) => {
+  const db = ctx.db;
 
   {
     // This should ideally be enforced by a database trigger.
@@ -36,7 +39,7 @@ export const createChannel = async (db: DB, storage: Storage, params: Params) =>
   };
 
   if (icon) {
-    values.icon = await storage.put(icon);
+    values.icon = await putStorage(ctx, icon);
   }
 
   await db.batch([

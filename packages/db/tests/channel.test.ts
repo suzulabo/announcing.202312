@@ -1,28 +1,25 @@
-import { assert, beforeEach, describe, expect, test } from 'vitest';
+import { assert, describe, expect, test } from 'vitest';
 
 import { openAsBlob } from 'fs';
-import { createChannel, deleteChannel, getChannel, getChannels, updateChannel } from '../src';
-import { setupDB } from './setupDB';
+import { createDB } from '../src';
+import { createLocalBindings } from '../src/db/localBindings';
 
 describe('Channel', () => {
-  beforeEach(async () => {
-    await setupDB();
-  });
-
   test('create, update and delete', async () => {
-    const { db, storage } = await setupDB();
+    const db = await createDB('', false);
+    const bindings = await createLocalBindings(true);
 
-    await createChannel(db, storage, {
+    await db.createChannel(bindings, {
       userID: 'u1',
       channelID: '1',
       name: 'test channel',
       desc: 'This is test',
       icon: await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' }),
     });
-    expect(await getChannel(db, { userID: 'u2', channelID: '1' })).toBeUndefined();
+    expect(await db.getChannel(bindings, { userID: 'u2', channelID: '1' })).toBeUndefined();
 
     {
-      const c = await getChannel(db, { userID: 'u1', channelID: '1' });
+      const c = await db.getChannel(bindings, { userID: 'u1', channelID: '1' });
 
       assert(c);
 
@@ -32,7 +29,7 @@ describe('Channel', () => {
         desc: 'This is test',
       });
 
-      await updateChannel(db, storage, {
+      await db.updateChannel(bindings, {
         userID: 'u2',
         updatedAt: c.updatedAt,
         channelID: '1',
@@ -40,13 +37,13 @@ describe('Channel', () => {
         desc: c.desc,
         icon: c.icon,
       });
-      expect(await getChannel(db, { userID: 'u1', channelID: '1' })).toMatchObject({
+      expect(await db.getChannel(bindings, { userID: 'u1', channelID: '1' })).toMatchObject({
         channelID: '1',
         name: 'test channel',
         desc: 'This is test',
       });
 
-      await updateChannel(db, storage, {
+      await db.updateChannel(bindings, {
         userID: 'u1',
         updatedAt: c.updatedAt,
         channelID: '1',
@@ -56,7 +53,7 @@ describe('Channel', () => {
       });
     }
     {
-      const c = await getChannel(db, { userID: 'u1', channelID: '1' });
+      const c = await db.getChannel(bindings, { userID: 'u1', channelID: '1' });
 
       assert(c);
 
@@ -67,23 +64,25 @@ describe('Channel', () => {
         icon: undefined,
       });
 
-      await deleteChannel(db, { userID: 'u2', channelID: '1', updatedAt: c.updatedAt });
-      expect(await getChannel(db, { userID: 'u1', channelID: '1' })).toMatchObject({
+      await db.deleteChannel(bindings, { userID: 'u2', channelID: '1', updatedAt: c.updatedAt });
+      expect(await db.getChannel(bindings, { userID: 'u1', channelID: '1' })).toMatchObject({
         channelID: '1',
         name: 'update channel',
         desc: 'updated',
         icon: undefined,
       });
 
-      await deleteChannel(db, { userID: 'u1', channelID: '1', updatedAt: c.updatedAt });
-      expect(await getChannel(db, { userID: 'u1', channelID: '1' })).toBeUndefined();
+      await db.deleteChannel(bindings, { userID: 'u1', channelID: '1', updatedAt: c.updatedAt });
+      expect(await db.getChannel(bindings, { userID: 'u1', channelID: '1' })).toBeUndefined();
     }
   });
 
   test('Too many channels', async () => {
-    const { db, storage } = await setupDB();
+    const db = await createDB('', false);
+    const bindings = await createLocalBindings(true);
+
     for (let i = 1; i <= 6; i++) {
-      await createChannel(db, storage, {
+      await db.createChannel(bindings, {
         userID: 'u1',
         channelID: i.toString(),
         name: `channel${i}`,
@@ -92,14 +91,16 @@ describe('Channel', () => {
       });
     }
 
-    const channels = await getChannels(db, { userID: 'u1' });
+    const channels = await db.getChannels(bindings, { userID: 'u1' });
     expect(channels.length).toEqual(5);
   });
 
   test('empty name', async () => {
-    const { db, storage } = await setupDB();
+    const db = await createDB('', false);
+    const bindings = await createLocalBindings(true);
+
     await expect(
-      createChannel(db, storage, {
+      db.createChannel(bindings, {
         userID: '1',
         channelID: '1',
         name: '',
@@ -110,8 +111,10 @@ describe('Channel', () => {
   });
 
   test('check channel left', async () => {
-    const { db } = await setupDB();
-    const c = await getChannel(db, { userID: 'u1', channelID: '1' });
+    const db = await createDB('', false);
+    const bindings = await createLocalBindings(true);
+
+    const c = await db.getChannel(bindings, { userID: 'u1', channelID: '1' });
     expect(c).toBeUndefined();
   });
 });

@@ -1,9 +1,9 @@
 import { and, eq } from 'drizzle-orm';
-import type { DB } from '../db';
+import type { DBContext } from '../db';
 import { announcementsTable } from '../schema';
 
 export const getAnnouncement = async (
-  db: DB,
+  { db }: DBContext,
   {
     channelID,
     announcementID,
