@@ -1,13 +1,13 @@
 import { db } from '$lib/db/db';
 import { resolveChannel } from '$lib/db/resolver';
-import { getChannel, READER } from '@announcing/db';
+import { READER } from '@announcing/db';
 import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ params }) => {
+export const load: LayoutServerLoad = async ({ params, platform }) => {
   const { channelID } = params;
 
-  const channel = await getChannel(db, { userID: READER, channelID });
+  const channel = await db.getChannel({ userID: READER, channelID }, platform?.env);
 
   if (!channel) {
     error(404);

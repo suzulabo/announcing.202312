@@ -1,7 +1,7 @@
 /// <reference types="@sveltejs/kit" />
 
 import { TokenStore } from '@announcing/notification/core';
-import type { R2Bucket } from '@cloudflare/workers-types';
+import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
 
 type BackLabelKeys = 'back';
 
@@ -26,7 +26,8 @@ declare global {
     }
     interface Platform {
       env: {
-        bucket: R2Bucket;
+        d1: D1Database;
+        r2: R2Bucket;
       };
     }
   }
