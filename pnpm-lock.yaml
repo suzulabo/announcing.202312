@@ -179,6 +179,12 @@ importers:
       '@cloudflare/workers-types':
         specifier: 4.20250427.0
         version: 4.20250427.0
+      drizzle-kit:
+        specifier: 0.31.0
+        version: 0.31.0
+      drizzle-orm:
+        specifier: 0.42.0
+        version: 0.42.0(@cloudflare/workers-types@4.20250427.0)(@libsql/client-wasm@0.14.0)(@libsql/client@0.15.4)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.12)(better-sqlite3@11.6.0)(gel@2.0.1)
       firebase-admin:
         specifier: 13.2.0
         version: 13.2.0
@@ -7202,6 +7208,16 @@ snapshots:
   drizzle-orm@0.42.0(@cloudflare/workers-types@4.20250425.0)(@libsql/client-wasm@0.14.0)(@libsql/client@0.15.4)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.12)(better-sqlite3@11.6.0)(gel@2.0.1):
     optionalDependencies:
       '@cloudflare/workers-types': 4.20250425.0
+      '@libsql/client': 0.15.4
+      '@libsql/client-wasm': 0.14.0
+      '@opentelemetry/api': 1.9.0
+      '@types/better-sqlite3': 7.6.12
+      better-sqlite3: 11.6.0
+      gel: 2.0.1
+
+  drizzle-orm@0.42.0(@cloudflare/workers-types@4.20250427.0)(@libsql/client-wasm@0.14.0)(@libsql/client@0.15.4)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.12)(better-sqlite3@11.6.0)(gel@2.0.1):
+    optionalDependencies:
+      '@cloudflare/workers-types': 4.20250427.0
       '@libsql/client': 0.15.4
       '@libsql/client-wasm': 0.14.0
       '@opentelemetry/api': 1.9.0
