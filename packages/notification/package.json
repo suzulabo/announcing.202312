@@ -1,0 +1,15 @@
+{
+  "name": "@announcing/notification",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "wrangler": "wrangler"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "4.20250427.0",
+    "firebase-admin": "13.2.0",
+    "valibot": "1.0.0",
+    "wrangler": "4.13.2"
+  }
+}
