@@ -1,9 +1,9 @@
 import { and, eq } from 'drizzle-orm';
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
+import type { DBContext } from '../db';
 import { announcementsTable } from '../schema';
 
 export const getAnnouncement = async (
-  db: LibSQLDatabase,
+  { db }: DBContext,
   {
     channelID,
     announcementID,

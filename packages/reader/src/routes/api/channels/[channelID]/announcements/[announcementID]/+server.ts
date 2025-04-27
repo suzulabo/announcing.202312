@@ -1,13 +1,12 @@
-import { getAnnouncement } from '@announcing/db';
 import { error, json } from '@sveltejs/kit';
 
 import { db } from '$lib/db/db';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ params }) => {
+export const GET: RequestHandler = async ({ params, platform }) => {
   const { channelID, announcementID } = params;
 
-  const result = await getAnnouncement(db, { channelID, announcementID });
+  const result = await db.getAnnouncement({ channelID, announcementID }, platform?.env);
   if (!result) {
     error(404, 'Missing announcement');
   }

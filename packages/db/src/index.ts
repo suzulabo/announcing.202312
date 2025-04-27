@@ -1,11 +1,2 @@
-export { addAnnouncement } from './db/announcement/addAnnouncement';
-export { getAnnouncement } from './db/announcement/getAnnouncement';
-export { removeAnnouncement } from './db/announcement/removeAnnouncement';
-export { updateAnnouncement } from './db/announcement/updateAnnouncement';
-export { createChannel } from './db/channel/createChannel';
-export { deleteChannel } from './db/channel/deleteChannel';
-export { READER, getChannel } from './db/channel/getChannel';
-export { getChannels } from './db/channel/getChannels';
-export { updateChannel } from './db/channel/updateChannel';
+export { READER } from './db/channel/getChannel';
 export { createDB } from './db/db';
-export { getStorageData } from './storage/storage';

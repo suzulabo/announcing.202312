@@ -1,8 +1,8 @@
 import { and, eq, exists } from 'drizzle-orm';
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import type { SQLiteUpdateSetSource } from 'drizzle-orm/sqlite-core';
-import { type Storage } from '../../storage/storage';
+import type { DBContext } from '../db';
 import { channelsTable, ownersTable } from '../schema';
+import { putStorage } from '../storage/putStorage';
 
 type Params = {
   userID: string;
@@ -13,8 +13,11 @@ type Params = {
   icon?: string | Blob | undefined;
 };
 
-export const updateChannel = async (db: LibSQLDatabase, storage: Storage, params: Params) => {
-  const { userID, updatedAt, channelID, name, desc, icon } = params;
+export const updateChannel = async (
+  ctx: DBContext,
+  { userID, updatedAt, channelID, name, desc, icon }: Params,
+) => {
+  const db = ctx.db;
 
   const values: SQLiteUpdateSetSource<typeof channelsTable> = {
     name,
@@ -27,7 +30,7 @@ export const updateChannel = async (db: LibSQLDatabase, storage: Storage, params
   } else if (typeof icon === 'string') {
     values.icon = icon;
   } else if (icon instanceof Blob) {
-    values.icon = await storage.put(icon);
+    values.icon = await putStorage(ctx, icon);
   }
 
   await db.batch([

@@ -1,11 +1,11 @@
 import { and, eq, exists } from 'drizzle-orm';
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
+import type { DBContext } from '../db';
 import { channelsTable, ownersTable } from '../schema';
 
 export const READER = Symbol('READER');
 
 export const getChannel = async (
-  db: LibSQLDatabase,
+  { db }: DBContext,
   {
     userID,
     channelID,
