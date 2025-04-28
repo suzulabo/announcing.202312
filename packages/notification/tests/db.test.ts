@@ -40,12 +40,22 @@ test('exceed maxTokens', async () => {
     { sub: 4, count: 1, tail: 1 },
   ]);
 
-  const reader = db.getTokenReader({ tag: '123' }, undefined);
-  expect((await reader())?.length).toEqual(10);
-  expect((await reader())?.length).toEqual(10);
-  expect((await reader())?.length).toEqual(10);
-  expect((await reader())?.length).toEqual(1);
-  expect(await reader()).toBeUndefined();
+  const cbInfo = {
+    called: 0,
+    tokens: 0,
+  };
+  await db.readTokens(
+    {
+      tag: '123',
+      callback: (tokens) => {
+        cbInfo.called++;
+        cbInfo.tokens += tokens.length;
+      },
+      chunkSize: 5,
+    },
+    undefined,
+  );
+  expect(cbInfo).toStrictEqual({ called: 7, tokens: 31 });
 });
 
 test('delete tokens', async () => {

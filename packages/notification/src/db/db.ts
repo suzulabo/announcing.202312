@@ -2,6 +2,7 @@ import { drizzle, DrizzleD1Database } from 'drizzle-orm/d1';
 import { deleteTokens } from './tokens/deleteTokens';
 import { getTokenReader } from './tokens/getTokenReader';
 import { putToken } from './tokens/putToken';
+import { readTokens } from './tokens/readTokens';
 
 type CFBindings = {
   notificationD1: D1Database;
@@ -22,6 +23,9 @@ export const createAPI = (makeContext: (b: OptionalCFBindings) => DBContext) => 
     },
     deleteTokens: (params: Parameters<typeof deleteTokens>[1], b: OptionalCFBindings) => {
       return deleteTokens(makeContext(b), params);
+    },
+    readTokens: (params: Parameters<typeof readTokens>[1], b: OptionalCFBindings) => {
+      return readTokens(makeContext(b), params);
     },
     getTokenReader: (params: Parameters<typeof getTokenReader>[1], b: OptionalCFBindings) => {
       return getTokenReader(makeContext(b), params);
