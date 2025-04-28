@@ -16,11 +16,11 @@ export const createLocalDB = async (
   const mf = new Miniflare({
     modules: true,
     script: '',
-    d1Databases: ['d1-notification'],
+    d1Databases: ['notificationD1'],
     d1Persist: `${path}/d1-notification`,
   });
 
-  const d1 = await mf.getD1Database('d1-notification');
+  const d1 = await mf.getD1Database('notificationD1');
 
   const db = drizzle(d1);
 

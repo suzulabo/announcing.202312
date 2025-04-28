@@ -4,7 +4,7 @@ import { getTokenReader } from './tokens/getTokenReader';
 import { putToken } from './tokens/putToken';
 
 type CFBindings = {
-  'd1-notification': D1Database;
+  notificationD1: D1Database;
 };
 type OptionalCFBindings = CFBindings | undefined;
 
@@ -32,7 +32,7 @@ export const createAPI = (makeContext: (b: OptionalCFBindings) => DBContext) => 
 export const createDB = () => {
   const makeContext = (b: OptionalCFBindings): DBContext => {
     return {
-      db: drizzle(b?.['d1-notification'] as D1Database),
+      db: drizzle(b?.notificationD1 as D1Database),
       maxTokens: MAX_TOKENS,
     };
   };
