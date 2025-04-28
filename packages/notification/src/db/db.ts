@@ -1,0 +1,41 @@
+import { drizzle, DrizzleD1Database } from 'drizzle-orm/d1';
+import { deleteTokens } from './tokens/deleteTokens';
+import { getTokenReader } from './tokens/getTokenReader';
+import { putToken } from './tokens/putToken';
+
+type CFBindings = {
+  'd1-notification': D1Database;
+};
+type OptionalCFBindings = CFBindings | undefined;
+
+const MAX_TOKENS = 50000;
+
+export type DBContext = {
+  db: DrizzleD1Database;
+  maxTokens: number;
+};
+
+export const createAPI = (makeContext: (b: OptionalCFBindings) => DBContext) => {
+  return {
+    putToken: (params: Parameters<typeof putToken>[1], b: OptionalCFBindings) => {
+      return putToken(makeContext(b), params);
+    },
+    deleteTokens: (params: Parameters<typeof deleteTokens>[1], b: OptionalCFBindings) => {
+      return deleteTokens(makeContext(b), params);
+    },
+    getTokenReader: (params: Parameters<typeof getTokenReader>[1], b: OptionalCFBindings) => {
+      return getTokenReader(makeContext(b), params);
+    },
+  };
+};
+
+export const createDB = () => {
+  const makeContext = (b: OptionalCFBindings): DBContext => {
+    return {
+      db: drizzle(b?.['d1-notification'] as D1Database),
+      maxTokens: MAX_TOKENS,
+    };
+  };
+
+  return createAPI(makeContext);
+};
