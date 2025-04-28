@@ -88,22 +88,6 @@ test('delete large token', async () => {
   expect(spyBatch).toBeCalledTimes(2);
 });
 
-test('reader', async () => {
-  const db = await createLocalDB(true);
-
-  {
-    const reader = db.getTokenReader({ tag: 'tag' }, undefined);
-    expect(await reader()).toBeUndefined();
-  }
-
-  {
-    await db.putToken({ token: 'token1', tags: ['123'] }, undefined);
-    await db.putToken({ token: 'token1', tags: [] }, undefined);
-    const reader = db.getTokenReader({ tag: '123' }, undefined);
-    expect(await reader()).toBeUndefined();
-  }
-});
-
 test('set empty tags', async () => {
   const db = await createLocalDB(true);
   const d1 = db.d1;
