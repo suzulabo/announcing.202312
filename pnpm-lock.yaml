@@ -176,12 +176,15 @@ importers:
 
   packages/notification:
     devDependencies:
+      '@cloudflare/workers-types':
+        specifier: 4.20250429.0
+        version: 4.20250429.0
       drizzle-kit:
         specifier: 0.31.0
         version: 0.31.0
       drizzle-orm:
         specifier: 0.42.0
-        version: 0.42.0(@cloudflare/workers-types@4.20250427.0)(@libsql/client-wasm@0.14.0)(@libsql/client@0.15.4)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.12)(better-sqlite3@11.6.0)(gel@2.0.1)
+        version: 0.42.0(@cloudflare/workers-types@4.20250429.0)(@libsql/client-wasm@0.14.0)(@libsql/client@0.15.4)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.12)(better-sqlite3@11.6.0)(gel@2.0.1)
       firebase-admin:
         specifier: 13.2.0
         version: 13.2.0
@@ -196,7 +199,7 @@ importers:
         version: 3.1.1(@types/node@22.14.1)(jiti@2.4.2)(jsdom@24.1.1)(sass@1.86.3)(terser@5.36.0)(tsx@4.19.3)
       wrangler:
         specifier: 4.13.2
-        version: 4.13.2(@cloudflare/workers-types@4.20250427.0)
+        version: 4.13.2(@cloudflare/workers-types@4.20250429.0)
 
   packages/notification-trigger.dev:
     devDependencies:
@@ -665,8 +668,8 @@ packages:
   '@cloudflare/workers-types@4.20250425.0':
     resolution: {integrity: sha512-BOU4hbK7Bhcxhmjuk/FcDopWvdvuCLMIanHjNxI0UflPhsFJj5se224iNluw8T5pROA0NFAYhBd3Up784p2/Jw==}
 
-  '@cloudflare/workers-types@4.20250427.0':
-    resolution: {integrity: sha512-5RLld1Bf5W2EE06bnE5qdicx1AtfF3LT+YD93cR32yKDNridHeBriWO8/pMZG7JmURdHEwyXyIV4gtdPzDPNdw==}
+  '@cloudflare/workers-types@4.20250429.0':
+    resolution: {integrity: sha512-NoIo8fxVxwhzftxVVeE6bZYAQmQfgZq5VSP0GUmUW5CYq5L4mttzewm2vX5cfaRzMkFxb7Z8Q0YjSMm3Y+Dpsg==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -5067,8 +5070,7 @@ snapshots:
 
   '@cloudflare/workers-types@4.20250425.0': {}
 
-  '@cloudflare/workers-types@4.20250427.0':
-    optional: true
+  '@cloudflare/workers-types@4.20250429.0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -7219,9 +7221,9 @@ snapshots:
       better-sqlite3: 11.6.0
       gel: 2.0.1
 
-  drizzle-orm@0.42.0(@cloudflare/workers-types@4.20250427.0)(@libsql/client-wasm@0.14.0)(@libsql/client@0.15.4)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.12)(better-sqlite3@11.6.0)(gel@2.0.1):
+  drizzle-orm@0.42.0(@cloudflare/workers-types@4.20250429.0)(@libsql/client-wasm@0.14.0)(@libsql/client@0.15.4)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.12)(better-sqlite3@11.6.0)(gel@2.0.1):
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20250427.0
+      '@cloudflare/workers-types': 4.20250429.0
       '@libsql/client': 0.15.4
       '@libsql/client-wasm': 0.14.0
       '@opentelemetry/api': 1.9.0
@@ -9227,7 +9229,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  wrangler@4.13.2(@cloudflare/workers-types@4.20250427.0):
+  wrangler@4.13.2(@cloudflare/workers-types@4.20250429.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.0
       '@cloudflare/unenv-preset': 2.3.1(unenv@2.0.0-rc.15)(workerd@1.20250424.0)
@@ -9238,7 +9240,7 @@ snapshots:
       unenv: 2.0.0-rc.15
       workerd: 1.20250424.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20250427.0
+      '@cloudflare/workers-types': 4.20250429.0
       fsevents: 2.3.3
       sharp: 0.33.5
     transitivePeerDependencies:

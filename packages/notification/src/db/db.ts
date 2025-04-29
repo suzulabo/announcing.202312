@@ -6,7 +6,6 @@ import { readTokens } from './tokens/readTokens';
 type CFBindings = {
   D1_NOTIFICATION: D1Database;
 };
-type OptionalCFBindings = CFBindings | undefined;
 
 const MAX_TOKENS = 50000;
 
@@ -15,25 +14,25 @@ export type DBContext = {
   maxTokens: number;
 };
 
-export const createAPI = (makeContext: (b: OptionalCFBindings) => DBContext) => {
+export const createAPI = (makeContext: (b: CFBindings) => DBContext) => {
   return {
-    putToken: (params: Parameters<typeof putToken>[1], b: OptionalCFBindings) => {
+    putToken: (params: Parameters<typeof putToken>[1], b: CFBindings) => {
       return putToken(makeContext(b), params);
     },
-    deleteTokens: (params: Parameters<typeof deleteTokens>[1], b: OptionalCFBindings) => {
+    deleteTokens: (params: Parameters<typeof deleteTokens>[1], b: CFBindings) => {
       return deleteTokens(makeContext(b), params);
     },
-    readTokens: (params: Parameters<typeof readTokens>[1], b: OptionalCFBindings) => {
+    readTokens: (params: Parameters<typeof readTokens>[1], b: CFBindings) => {
       return readTokens(makeContext(b), params);
     },
   };
 };
 
-export const createDB = () => {
-  const makeContext = (b: OptionalCFBindings): DBContext => {
+export const createDB = (maxTokens = MAX_TOKENS) => {
+  const makeContext = (b: CFBindings): DBContext => {
     return {
-      db: drizzle(b?.D1_NOTIFICATION as D1Database),
-      maxTokens: MAX_TOKENS,
+      db: drizzle(b.D1_NOTIFICATION as D1Database),
+      maxTokens,
     };
   };
 

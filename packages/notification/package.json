@@ -10,6 +10,7 @@
     "wrangler": "wrangler"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "4.20250429.0",
     "drizzle-kit": "0.31.0",
     "drizzle-orm": "0.42.0",
     "firebase-admin": "13.2.0",

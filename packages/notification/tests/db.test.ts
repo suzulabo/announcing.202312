@@ -1,11 +1,13 @@
-import { expect, test, vi } from 'vitest';
-import { createLocalDB } from '../src/db/localDB';
+import { expect, test } from 'vitest';
+import { createDB } from '../src/db/db';
+import { createLocalBindings } from '../src/local/localBindings';
 
 test('set and unset', async () => {
-  const db = await createLocalDB(true);
-  const d1 = db.d1;
+  const db = createDB();
+  const bindings = await createLocalBindings(true);
+  const d1 = bindings.D1_NOTIFICATION;
 
-  await db.putToken({ token: 'token1', tags: ['123', '456'] }, undefined);
+  await db.putToken({ token: 'token1', tags: ['123', '456'] }, bindings);
   expect((await d1.prepare('SELECT * FROM tokens').all()).results).toStrictEqual([
     { token: 'token1', tags: '123:1 456:1' },
   ]);
@@ -13,7 +15,7 @@ test('set and unset', async () => {
     { tag: '123', sub: 1, tokens: 'token1 ', count: 1, tail: 1 },
     { tag: '456', sub: 1, tokens: 'token1 ', count: 1, tail: 1 },
   ]);
-  await db.putToken({ token: 'token1', tags: ['123'] }, undefined);
+  await db.putToken({ token: 'token1', tags: ['123'] }, bindings);
   expect((await d1.prepare('SELECT * FROM tokens').all()).results).toStrictEqual([
     { token: 'token1', tags: '123:1' },
   ]);
@@ -24,11 +26,12 @@ test('set and unset', async () => {
 });
 
 test('exceed maxTokens', async () => {
-  const db = await createLocalDB(true, 10);
-  const d1 = db.d1;
+  const db = createDB(10);
+  const bindings = await createLocalBindings(true);
+  const d1 = bindings.D1_NOTIFICATION;
 
   for (let i = 1; i <= 31; i++) {
-    await db.putToken({ token: `token${i}`, tags: ['123'] }, undefined);
+    await db.putToken({ token: `token${i}`, tags: ['123'] }, bindings);
   }
 
   expect(
@@ -53,18 +56,19 @@ test('exceed maxTokens', async () => {
       },
       chunkSize: 5,
     },
-    undefined,
+    bindings,
   );
   expect(cbInfo).toStrictEqual({ called: 7, tokens: 31 });
 });
 
 test('delete tokens', async () => {
-  const db = await createLocalDB(true);
-  const d1 = db.d1;
+  const db = createDB();
+  const bindings = await createLocalBindings(true);
+  const d1 = bindings.D1_NOTIFICATION;
 
-  await db.putToken({ token: 'token1', tags: ['123', '456'] }, undefined);
-  await db.putToken({ token: 'token2', tags: ['456', '789'] }, undefined);
-  await db.deleteTokens({ tokens: ['token1', 'token2'] }, undefined);
+  await db.putToken({ token: 'token1', tags: ['123', '456'] }, bindings);
+  await db.putToken({ token: 'token2', tags: ['456', '789'] }, bindings);
+  await db.deleteTokens({ tokens: ['token1', 'token2'] }, bindings);
 
   expect((await d1.prepare('SELECT * FROM tokens').all()).results).toStrictEqual([]);
   expect(
@@ -77,23 +81,25 @@ test('delete tokens', async () => {
 });
 
 test('delete large token', async () => {
-  const db = await createLocalDB(true);
+  const db = createDB();
+  const bindings = await createLocalBindings(true);
+  const d1 = bindings.D1_NOTIFICATION;
 
   const tags = Array.from({ length: 30 }, (_, i) => (i + 1).toString());
 
-  await db.putToken({ token: 'token1', tags }, undefined);
-  await db.putToken({ token: 'token2', tags }, undefined);
-  const spyBatch = vi.spyOn(db.drizzleDB, 'batch');
-  await db.deleteTokens({ tokens: ['token1', 'token2'] }, undefined);
-  expect(spyBatch).toBeCalledTimes(2);
+  await db.putToken({ token: 'token1', tags }, bindings);
+  await db.putToken({ token: 'token2', tags }, bindings);
+  await db.deleteTokens({ tokens: ['token1', 'token2'] }, bindings);
+  expect((await d1.prepare('SELECT * FROM tags WHERE count > 0').all()).results).toStrictEqual([]);
 });
 
 test('set empty tags', async () => {
-  const db = await createLocalDB(true);
-  const d1 = db.d1;
+  const db = createDB();
+  const bindings = await createLocalBindings(true);
+  const d1 = bindings.D1_NOTIFICATION;
 
-  await db.putToken({ token: 'token1', tags: ['123', '456'] }, undefined);
-  await db.putToken({ token: 'token1', tags: [] }, undefined);
+  await db.putToken({ token: 'token1', tags: ['123', '456'] }, bindings);
+  await db.putToken({ token: 'token1', tags: [] }, bindings);
   expect((await d1.prepare('SELECT * FROM tokens').all()).results).toStrictEqual([]);
 });
 
@@ -102,37 +108,38 @@ test.skip('put performance', async () => {
   const TOKEN =
     'TEXGe2qhWK1KhcFcRPB3QUDh9MizZPQzzT8Y07X27H5Dbpp8BA6zXB23NPKHt353tUESBFwUy56KffRJx4XZPqA6fC2qUEV3aree370ZVDPLEzPvyv6mJ9C8jbdhZEUBxxYiGA0n5QbzrJgda2TWfV';
 
-  const db = await createLocalDB(false);
+  const db = createDB();
+  const bindings = await createLocalBindings(false);
 
   {
     const start = performance.now();
-    await db.putToken({ token: `${TOKEN}A`, tags: ['123'] }, undefined);
+    await db.putToken({ token: `${TOKEN}A`, tags: ['123'] }, bindings);
     const end = performance.now();
     console.log(`[PERF] tokenA ${end - start}ms`);
   }
 
   {
     const start = performance.now();
-    await db.putToken({ token: `${TOKEN}B`, tags: ['123'] }, undefined);
+    await db.putToken({ token: `${TOKEN}B`, tags: ['123'] }, bindings);
     const end = performance.now();
     console.log(`[PERF] tokenB ${end - start}ms`);
   }
 
   for (let i = 1; i <= 100000; i++) {
-    await db.putToken({ token: `${TOKEN}${i}`, tags: ['123'] }, undefined);
+    await db.putToken({ token: `${TOKEN}${i}`, tags: ['123'] }, bindings);
   }
 
   {
     //store.config.debug = true;
     const start = performance.now();
-    await db.putToken({ token: `${TOKEN}Z`, tags: ['123'] }, undefined);
+    await db.putToken({ token: `${TOKEN}Z`, tags: ['123'] }, bindings);
     const end = performance.now();
     console.log(`[PERF] tokenZ ${end - start}ms`);
   }
 
   {
     const start = performance.now();
-    await db.putToken({ token: `${TOKEN}A`, tags: ['123', '456'] }, undefined);
+    await db.putToken({ token: `${TOKEN}A`, tags: ['123', '456'] }, bindings);
     const end = performance.now();
     console.log(`[PERF] tokenA2 ${end - start}ms`);
   }
