@@ -4,10 +4,10 @@ import { db } from '$lib/db/db';
 import { resolveChannel } from '$lib/db/resolver';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals, platform }) => {
+export const load: PageServerLoad = async ({ locals }) => {
   const userID = await getUserID(locals);
 
-  const channels = (await db.getChannels({ userID }, platform?.env)).map((v) => {
+  const channels = (await db.getChannels({ userID }, locals.cf)).map((v) => {
     return resolveChannel(v);
   });
 

@@ -40,7 +40,7 @@ const postSchema = v.strictObject({
   ]),
 });
 
-export const POST: RequestHandler = async ({ locals, request, platform }) => {
+export const POST: RequestHandler = async ({ locals, request }) => {
   const session = await locals.auth();
   const userID = session?.user?.id;
   if (!userID) {
@@ -61,7 +61,7 @@ export const POST: RequestHandler = async ({ locals, request, platform }) => {
 
   const channelID = genChannelID();
 
-  await db.createChannel({ ...data, channelID, userID }, platform?.env);
+  await db.createChannel({ ...data, channelID, userID }, locals.cf);
 
   return json({});
 };

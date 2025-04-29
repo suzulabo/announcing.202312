@@ -1,14 +1,15 @@
-import type { R2Bucket } from '@cloudflare/workers-types';
+import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
 import { drizzle } from 'drizzle-orm/d1';
 import { migrate } from 'drizzle-orm/d1/migrator';
 import { Miniflare } from 'miniflare';
 import { resolve } from 'node:path';
-import { createAPI, createDB, type DBContext } from './db';
 
 const LOCAL_DIR = '../db-local';
 const DRRIZLE_DIR = '../db/drizzle';
 
-export const createLocalDB = async (memory = false): Promise<ReturnType<typeof createDB>> => {
+export const createLocalBindings = async (
+  memory = false,
+): Promise<{ D1: D1Database; R2: R2Bucket }> => {
   const path = memory ? 'memory:' : `file://${resolve(LOCAL_DIR)}`;
 
   const mf = new Miniflare({
@@ -20,20 +21,12 @@ export const createLocalDB = async (memory = false): Promise<ReturnType<typeof c
     r2Persist: `${path}/r2`,
   });
 
-  const d1 = await mf.getD1Database('d1');
-  const r2 = (await mf.getR2Bucket('r2')) as unknown as R2Bucket;
+  const D1 = await mf.getD1Database('d1');
+  const R2 = (await mf.getR2Bucket('r2')) as unknown as R2Bucket;
 
-  const db = drizzle(d1);
+  const db = drizzle(D1);
 
   await migrate(db, { migrationsFolder: DRRIZLE_DIR });
 
-  const makeContext = (): DBContext => {
-    return {
-      db,
-      r2,
-      bucketPrefix: '',
-    };
-  };
-
-  return createAPI(makeContext);
+  return { D1, R2 };
 };
