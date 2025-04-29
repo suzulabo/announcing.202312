@@ -8,10 +8,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./localDB": {
-      "types": "./dist/db/localDB.d.ts",
-      "import": "./dist/db/localDB.js"
-    },
     "./constants": {
       "types": "./dist/constants.d.ts",
       "import": "./dist/constants.js"
@@ -23,6 +19,10 @@
     "./utils": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
+    },
+    "./localBindings": {
+      "types": "./dist/local/localBindings.d.ts",
+      "import": "./dist/local/localBindings.js"
     }
   },
   "files": [

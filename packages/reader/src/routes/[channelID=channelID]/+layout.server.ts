@@ -4,10 +4,10 @@ import { READER } from '@announcing/db';
 import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ params, platform }) => {
+export const load: LayoutServerLoad = async ({ params, locals }) => {
   const { channelID } = params;
 
-  const channel = await db.getChannel({ userID: READER, channelID }, platform?.env);
+  const channel = await db.getChannel({ userID: READER, channelID }, locals.cf);
 
   if (!channel) {
     error(404);

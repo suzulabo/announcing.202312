@@ -12,10 +12,9 @@ import { updateChannel } from './channel/updateChannel';
 import { getStorage } from './storage/getStorage';
 
 type CFBindings = {
-  d1: D1Database;
-  r2: R2Bucket;
+  D1: D1Database;
+  R2: R2Bucket;
 };
-type OptionalCFBindings = CFBindings | undefined;
 
 export type DBContext = {
   db: DrizzleD1Database;
@@ -23,52 +22,46 @@ export type DBContext = {
   bucketPrefix: string;
 };
 
-export const createAPI = (makeContext: (b: OptionalCFBindings) => DBContext) => {
+export const createAPI = (makeContext: (b: CFBindings) => DBContext) => {
   return {
-    createChannel: (params: Parameters<typeof createChannel>[1], b: OptionalCFBindings) => {
+    createChannel: (params: Parameters<typeof createChannel>[1], b: CFBindings) => {
       return createChannel(makeContext(b), params);
     },
-    updateChannel: (params: Parameters<typeof updateChannel>[1], b: OptionalCFBindings) => {
+    updateChannel: (params: Parameters<typeof updateChannel>[1], b: CFBindings) => {
       return updateChannel(makeContext(b), params);
     },
-    deleteChannel: (params: Parameters<typeof deleteChannel>[1], b: OptionalCFBindings) => {
+    deleteChannel: (params: Parameters<typeof deleteChannel>[1], b: CFBindings) => {
       return deleteChannel(makeContext(b), params);
     },
-    getChannel: (params: Parameters<typeof getChannel>[1], b: OptionalCFBindings) => {
+    getChannel: (params: Parameters<typeof getChannel>[1], b: CFBindings) => {
       return getChannel(makeContext(b), params);
     },
-    getChannels: (params: Parameters<typeof getChannels>[1], b: OptionalCFBindings) => {
+    getChannels: (params: Parameters<typeof getChannels>[1], b: CFBindings) => {
       return getChannels(makeContext(b), params);
     },
-    addAnnouncement: (params: Parameters<typeof addAnnouncement>[1], b: OptionalCFBindings) => {
+    addAnnouncement: (params: Parameters<typeof addAnnouncement>[1], b: CFBindings) => {
       return addAnnouncement(makeContext(b), params);
     },
-    updateAnnouncement: (
-      params: Parameters<typeof updateAnnouncement>[1],
-      b: OptionalCFBindings,
-    ) => {
+    updateAnnouncement: (params: Parameters<typeof updateAnnouncement>[1], b: CFBindings) => {
       return updateAnnouncement(makeContext(b), params);
     },
-    removeAnnouncement: (
-      params: Parameters<typeof removeAnnouncement>[1],
-      b: OptionalCFBindings,
-    ) => {
+    removeAnnouncement: (params: Parameters<typeof removeAnnouncement>[1], b: CFBindings) => {
       return removeAnnouncement(makeContext(b), params);
     },
-    getAnnouncement: (params: Parameters<typeof getAnnouncement>[1], b: OptionalCFBindings) => {
+    getAnnouncement: (params: Parameters<typeof getAnnouncement>[1], b: CFBindings) => {
       return getAnnouncement(makeContext(b), params);
     },
-    getStorage: (params: Parameters<typeof getStorage>[1], b: OptionalCFBindings) => {
+    getStorage: (params: Parameters<typeof getStorage>[1], b: CFBindings) => {
       return getStorage(makeContext(b), params);
     },
   };
 };
 
 export const createDB = (bucketPrefix: string) => {
-  const makeContext = (b: OptionalCFBindings): DBContext => {
+  const makeContext = (b: CFBindings): DBContext => {
     return {
-      db: drizzle(b?.d1),
-      r2: b?.r2 as R2Bucket,
+      db: drizzle(b.D1),
+      r2: b.R2 as R2Bucket,
       bucketPrefix,
     };
   };

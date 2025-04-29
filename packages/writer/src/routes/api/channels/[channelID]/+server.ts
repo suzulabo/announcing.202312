@@ -29,7 +29,7 @@ const putSchema = v.strictObject({
   updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
-export const PUT: RequestHandler = async ({ locals, params, request, platform }) => {
+export const PUT: RequestHandler = async ({ locals, params, request }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -50,7 +50,7 @@ export const PUT: RequestHandler = async ({ locals, params, request, platform })
 
   const channelID = params.channelID;
 
-  await db.updateChannel({ ...data, userID, channelID }, platform?.env);
+  await db.updateChannel({ ...data, userID, channelID }, locals.cf);
 
   return json({});
 };
@@ -59,7 +59,7 @@ const deleteSchema = v.strictObject({
   updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
-export const DELETE: RequestHandler = async ({ locals, params, request, platform }) => {
+export const DELETE: RequestHandler = async ({ locals, params, request }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -72,7 +72,7 @@ export const DELETE: RequestHandler = async ({ locals, params, request, platform
 
   const channelID = params.channelID;
 
-  await db.deleteChannel({ userID, channelID, updatedAt: data.updatedAt }, platform?.env);
+  await db.deleteChannel({ userID, channelID, updatedAt: data.updatedAt }, locals.cf);
 
   return json({});
 };

@@ -1,11 +1,13 @@
 import { assert, describe, expect, test } from 'vitest';
 
 import { openAsBlob } from 'fs';
-import { createLocalDB } from '../src/db/localDB';
+import { createDB } from '../src';
+import { createLocalBindings } from '../src/local/localBindings';
 
 describe('Announcement', () => {
   test('add, update and remove', async () => {
-    const db = await createLocalDB(true);
+    const db = createDB('');
+    const bindings = await createLocalBindings(true);
 
     await db.createChannel(
       {
@@ -15,7 +17,7 @@ describe('Announcement', () => {
         desc: undefined,
         icon: undefined,
       },
-      undefined,
+      bindings,
     );
 
     await db.addAnnouncement(
@@ -28,11 +30,11 @@ describe('Announcement', () => {
         images: [await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' })],
         createdAt: new Date().getTime(),
       },
-      undefined,
+      bindings,
     );
 
     {
-      const c = await db.getChannel({ userID: 'u1', channelID: 'a1' }, undefined);
+      const c = await db.getChannel({ userID: 'u1', channelID: 'a1' }, bindings);
       assert(c);
 
       const announcementID = c.announcementIDs?.shift() ?? '';
@@ -42,7 +44,7 @@ describe('Announcement', () => {
           channelID: 'a1',
           announcementID,
         },
-        undefined,
+        bindings,
       );
       assert(a);
 
@@ -51,7 +53,7 @@ describe('Announcement', () => {
         body: 'This is test',
       });
 
-      const b = await db.getStorage(a.headerImage ?? '', undefined);
+      const b = await db.getStorage(a.headerImage ?? '', bindings);
       assert(b);
 
       await db.updateAnnouncement(
@@ -65,12 +67,12 @@ describe('Announcement', () => {
           headerImage: undefined,
           images: undefined,
         },
-        undefined,
+        bindings,
       );
     }
 
     {
-      const c = await db.getChannel({ userID: 'u1', channelID: 'a1' }, undefined);
+      const c = await db.getChannel({ userID: 'u1', channelID: 'a1' }, bindings);
       assert(c);
 
       const announcementID = c.announcementIDs?.shift() ?? '';
@@ -80,7 +82,7 @@ describe('Announcement', () => {
           channelID: 'a1',
           announcementID,
         },
-        undefined,
+        bindings,
       );
       assert(a);
       expect(a).toMatchObject({
@@ -97,7 +99,7 @@ describe('Announcement', () => {
           targetAnnouncementID: announcementID,
           targetUpdatedAt: a.updatedAt,
         },
-        undefined,
+        bindings,
       );
 
       expect(
@@ -106,7 +108,7 @@ describe('Announcement', () => {
             channelID: 'a1',
             announcementID,
           },
-          undefined,
+          bindings,
         ),
       ).toBeUndefined();
     }

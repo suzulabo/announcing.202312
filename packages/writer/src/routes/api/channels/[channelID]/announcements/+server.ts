@@ -37,7 +37,7 @@ const postSchema = v.strictObject({
   ]),
 });
 
-export const POST: RequestHandler = async ({ locals, params, request, platform }) => {
+export const POST: RequestHandler = async ({ locals, params, request }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -58,7 +58,7 @@ export const POST: RequestHandler = async ({ locals, params, request, platform }
 
   const channelID = params.channelID;
 
-  const channel = await db.getChannel({ userID, channelID }, platform?.env);
+  const channel = await db.getChannel({ userID, channelID }, locals.cf);
   if (!channel) {
     error(404, 'Missing channel');
   }
@@ -70,7 +70,7 @@ export const POST: RequestHandler = async ({ locals, params, request, platform }
       ...data,
       createdAt: new Date().getTime(),
     },
-    platform?.env,
+    locals.cf,
   );
 
   if (announcementValues) {

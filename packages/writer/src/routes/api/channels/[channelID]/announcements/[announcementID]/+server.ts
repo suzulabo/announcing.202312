@@ -16,10 +16,10 @@ import { error, json } from '@sveltejs/kit';
 import * as v from 'valibot';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ params, platform }) => {
+export const GET: RequestHandler = async ({ params, locals }) => {
   const { channelID, announcementID } = params;
 
-  const result = await db.getAnnouncement({ channelID, announcementID }, platform?.env);
+  const result = await db.getAnnouncement({ channelID, announcementID }, locals.cf);
   if (!result) {
     error(404, 'Missing announcement');
   }
@@ -58,7 +58,7 @@ const putSchema = v.strictObject({
   targetUpdatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
-export const PUT: RequestHandler = async ({ locals, params, request, platform }) => {
+export const PUT: RequestHandler = async ({ locals, params, request }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -88,7 +88,7 @@ export const PUT: RequestHandler = async ({ locals, params, request, platform })
       targetAnnouncementID,
       ...data,
     },
-    platform?.env,
+    locals.cf,
   );
 
   return json({});
@@ -98,7 +98,7 @@ const deleteSchema = v.strictObject({
   updatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
-export const DELETE: RequestHandler = async ({ locals, params, request, platform }) => {
+export const DELETE: RequestHandler = async ({ locals, params, request }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -118,7 +118,7 @@ export const DELETE: RequestHandler = async ({ locals, params, request, platform
       targetAnnouncementID: announcementID,
       targetUpdatedAt: data.updatedAt,
     },
-    platform?.env,
+    locals.cf,
   );
 
   return json({});
