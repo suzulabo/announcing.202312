@@ -2,10 +2,10 @@ import { db } from '$lib/db/db';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ params, platform }) => {
+export const GET: RequestHandler = async ({ params, locals }) => {
   const id = params.id;
 
-  const res = await db.getStorage(id, platform?.env);
+  const res = await db.getStorage(id, locals.cf);
 
   if (!res) {
     return error(404);

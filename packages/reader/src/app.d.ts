@@ -12,6 +12,10 @@ declare global {
     // interface Error {}
     interface Locals {
       tokenStore: TokenStore;
+      cf: {
+        D1: D1Database;
+        R2: R2Bucket;
+      };
     }
     interface PageData {
       headerBack?: { href: string; labelKey: BackLabelKeys };
@@ -26,8 +30,8 @@ declare global {
     }
     interface Platform {
       env: {
-        d1: D1Database;
-        r2: R2Bucket;
+        D1: D1Database;
+        R2: R2Bucket;
       };
     }
   }
