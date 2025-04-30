@@ -3,7 +3,7 @@ import { deleteTokens } from './tokens/deleteTokens';
 import { putToken } from './tokens/putToken';
 import { readTokens } from './tokens/readTokens';
 
-type CFBindings = {
+export type CFBindings = {
   D1_NOTIFICATION: D1Database;
 };
 

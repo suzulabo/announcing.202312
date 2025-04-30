@@ -1,9 +1,7 @@
-import { json } from '@sveltejs/kit';
-
-import type { RequestHandler } from './$types';
-
-import { error } from '@sveltejs/kit';
+import { notificationDB } from '$lib/db/db';
+import { error, json } from '@sveltejs/kit';
 import * as v from 'valibot';
+import type { RequestHandler } from './$types';
 
 const postSchema = v.strictObject({
   token: v.pipe(v.string(), v.nonEmpty()),
@@ -17,7 +15,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
     error(400);
   }
 
-  await locals.tokenStore.putToken(data.token, data.tags);
+  await notificationDB.putToken(data, locals.cf);
 
   return json({});
 };

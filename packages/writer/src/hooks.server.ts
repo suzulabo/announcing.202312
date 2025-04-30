@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
-import { createTriggerClient } from '@announcing/notification/tasks/trigger.dev';
+import { GOOGLE_CREDENTIALS_BASE64 } from '$env/static/private';
 import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { handle as authenticationHandle } from './auth';
@@ -21,7 +21,11 @@ const performanceHandle: Handle = async ({ event, resolve }) => {
 let localBindings: App.Platform['env'];
 
 if (dev) {
-  localBindings = await (await import('@announcing/db/localBindings')).createLocalBindings();
+  const dbLocal = await (await import('@announcing/db/localBindings')).createLocalBindings();
+  const notificationLocal = await (
+    await import('@announcing/notification/localBindings')
+  ).createLocalBindings(false, GOOGLE_CREDENTIALS_BASE64);
+  localBindings = { ...dbLocal, ...notificationLocal };
 }
 
 const authorizationHandle: Handle = async ({ resolve, event }) => {
@@ -33,11 +37,6 @@ const authorizationHandle: Handle = async ({ resolve, event }) => {
     }
   }
 
-  return resolve(event);
-};
-
-const triggerClientHandle: Handle = ({ resolve, event }) => {
-  event.locals.triggerClient = createTriggerClient(env.TRIGGER_SECRET_KEY);
   return resolve(event);
 };
 
@@ -55,6 +54,5 @@ export const handle = sequence(
   ...(env.PERFORMANCE_HOOK ? [performanceHandle] : []),
   authenticationHandle,
   authorizationHandle,
-  triggerClientHandle,
   cloudflareHandle,
 );

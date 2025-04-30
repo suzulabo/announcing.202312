@@ -14,12 +14,12 @@
     {
       "name": "ProcessMessage",
       "binding": "WF_PROCESS_MESSAGE",
-      "class_name": "ProcessMessageWorkflow"
+      "class_name": "ProcessMessageWorkflowEntrypoint"
     },
     {
       "name": "SendMessage",
       "binding": "WF_SEND_MESSAGE",
-      "class_name": "SendMessageWorkflow"
+      "class_name": "SendMessageWorkflowEntrypoint"
     }
   ]
 }

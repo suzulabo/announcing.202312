@@ -1,7 +1,7 @@
 /// <reference types="@sveltejs/kit" />
 
-import type { TriggerClient } from '@announcing/notification/tasks/trigger.dev';
-import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
+import type { DBBindings } from '@announcing/db';
+import type { NotificationBindings } from '@announcing/notification';
 import type { AnnouncementPreviewData } from './routes/channels/[channelID]/announcements/[[announcementID]]/preview/+page.svelte';
 
 type BackLabelKeys = 'back';
@@ -12,11 +12,7 @@ declare global {
   namespace App {
     // interface Error {}
     interface Locals {
-      triggerClient: TriggerClient;
-      cf: {
-        D1: D1Database;
-        R2: R2Bucket;
-      };
+      cf: DBBindings & NotificationBindings;
     }
     interface PageData {
       headerBack?: { href: string; labelKey: BackLabelKeys };
@@ -26,10 +22,7 @@ declare global {
       announcementPreviewData?: AnnouncementPreviewData;
     }
     interface Platform {
-      env: {
-        D1: D1Database;
-        R2: R2Bucket;
-      };
+      env: DBBindings & NotificationBindings;
     }
   }
 }

@@ -6,7 +6,7 @@ import {
   ANNOUNCEMENT_IMAGE_MAX_BYTES,
   ANNOUNCEMENT_TITLE_MAX_BYTES,
 } from '@announcing/db/constants';
-import { type TriggerProcessMessageParams } from '@announcing/notification/tasks/trigger.dev';
+import type { ProcessMessageParams } from '@announcing/notification';
 import { error, json } from '@sveltejs/kit';
 import * as v from 'valibot';
 import type { RequestHandler } from './$types';
@@ -74,7 +74,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
   );
 
   if (announcementValues) {
-    const triggerParams: TriggerProcessMessageParams = {
+    const params: ProcessMessageParams = {
       tag: channelID,
       message: {
         webpush: {
@@ -98,7 +98,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
       },
     };
 
-    await locals.triggerClient.triggerProcessMessage(triggerParams);
+    await locals.cf.WF_PROCESS_MESSAGE.create({ params });
   }
 
   return json({});
