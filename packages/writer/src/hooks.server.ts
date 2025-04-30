@@ -44,6 +44,9 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
   if (dev) {
     event.locals.cf = localBindings;
   } else {
+    console.log('Platform Bindings:', event.platform?.env);
+    console.log('Workflow create: ', 'create' in (event.platform?.env.WF_PROCESS_MESSAGE ?? {}));
+
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     event.locals.cf = event.platform!.env;
   }
