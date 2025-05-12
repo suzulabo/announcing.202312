@@ -3,6 +3,8 @@ import { drizzle } from 'drizzle-orm/d1';
 import { migrate } from 'drizzle-orm/d1/migrator';
 import { Miniflare } from 'miniflare';
 import { resolve } from 'node:path';
+import type { NotificationBindings } from '..';
+import type { ProcessMessageWorkflowRunEntrypoint } from '../worker';
 import { processMessageRun } from '../workflows/processMessageRun';
 import { sendMessageRun } from '../workflows/sendMessageRun';
 import type { ProcessMessageParams, SendMessageParams, WorkerEnv } from '../workflows/types';
@@ -71,7 +73,10 @@ class SendMessageWorkflowLocal extends WorkflowLocal<SendMessageParams> {
   }
 }
 
-export const createLocalBindings = async (memory = false, googleCredentials = '') => {
+export const createLocalBindings = async (
+  memory = false,
+  googleCredentials = '',
+): Promise<NotificationBindings> => {
   const path = memory ? 'memory:' : `file://${resolve(LOCAL_DIR)}`;
 
   const mf = new Miniflare({
@@ -87,16 +92,24 @@ export const createLocalBindings = async (memory = false, googleCredentials = ''
 
   await migrate(db, { migrationsFolder: MIGRATIONS_DIR });
 
-  const bindings: WorkerEnv = {
+  const workerEnv: WorkerEnv = {
     D1_NOTIFICATION,
     WF_PROCESS_MESSAGE: new ProcessMessageWorkflowLocal(() => {
-      return bindings;
+      return workerEnv;
     }),
     WF_SEND_MESSAGE: new SendMessageWorkflowLocal(() => {
-      return bindings;
+      return workerEnv;
     }),
     GOOGLE_CREDENTIALS_BASE64: googleCredentials,
   };
 
-  return bindings;
+  return {
+    D1_NOTIFICATION,
+    WF_PROCESS_MESSAGE_RUN: {
+      async createInstance(params: ProcessMessageParams) {
+        await workerEnv.WF_PROCESS_MESSAGE.create({ params });
+        return { id: 'local' };
+      },
+    } as ProcessMessageWorkflowRunEntrypoint,
+  };
 };

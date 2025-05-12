@@ -98,7 +98,7 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
       },
     };
 
-    await locals.cf.WF_PROCESS_MESSAGE.create({ params });
+    await locals.cf.WF_PROCESS_MESSAGE_RUN.createInstance(params);
   }
 
   return json({});
