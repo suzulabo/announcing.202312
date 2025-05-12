@@ -22,7 +22,7 @@
     "build:watch": "tsc -w -p tsconfig.build.json",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
-    "wrangler": "wrangler"
+    "deploy": "wrangler deploy"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20250429.0",
