@@ -10,6 +10,12 @@ const config = {
       files: '*.svelte',
       options: { parser: 'svelte' },
     },
+    {
+      files: ['**/*.jsonc'],
+      options: {
+        parser: 'json',
+      },
+    },
   ],
 };
 

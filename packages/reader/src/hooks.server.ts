@@ -1,30 +1,16 @@
 import { dev } from '$app/environment';
-import { env } from '$env/dynamic/private';
-import { createLibSqlTokenStore } from '@announcing/notification/tokenStores/libsql';
-import { createClient } from '@libsql/client';
 import { type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 let localBindings: App.Platform['env'];
 
 if (dev) {
-  localBindings = await (await import('@announcing/db/localBindings')).createLocalBindings();
+  const dbLocal = await (await import('@announcing/db/localBindings')).createLocalBindings();
+  const notificationLocal = await (
+    await import('@announcing/notification/localBindings')
+  ).createLocalBindings(false, '');
+  localBindings = { ...dbLocal, ...notificationLocal };
 }
-
-const notificationTokenStoreHandle: Handle = ({ resolve, event }) => {
-  const client = createClient({
-    url: env.NOTIFICATION_DB_URL,
-    authToken: env.NOTIFICATION_DB_AUTH_TOKEN,
-  });
-
-  const notificationTokenStore = createLibSqlTokenStore({
-    client,
-  });
-
-  event.locals.tokenStore = notificationTokenStore;
-
-  return resolve(event);
-};
 
 const cloudflareHandle: Handle = ({ resolve, event }) => {
   if (dev) {
@@ -36,4 +22,4 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
   return resolve(event);
 };
 
-export const handle = sequence(notificationTokenStoreHandle, cloudflareHandle);
+export const handle = sequence(cloudflareHandle);

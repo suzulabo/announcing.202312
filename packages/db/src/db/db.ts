@@ -11,7 +11,7 @@ import { getChannels } from './channel/getChannels';
 import { updateChannel } from './channel/updateChannel';
 import { getStorage } from './storage/getStorage';
 
-type CFBindings = {
+export type CFBindings = {
   D1: D1Database;
   R2: R2Bucket;
 };

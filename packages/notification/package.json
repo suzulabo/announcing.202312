@@ -4,35 +4,35 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./core": {
-      "types": "./dist/core/index.d.ts",
-      "import": "./dist/core/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     },
-    "./tokenStores/libsql": {
-      "types": "./dist/tokenStores/libsql/index.d.ts",
-      "import": "./dist/tokenStores/libsql/index.js"
-    },
-    "./tasks/trigger.dev": {
-      "types": "./dist/tasks/trigger.dev/index.d.ts",
-      "import": "./dist/tasks/trigger.dev/index.js"
+    "./localBindings": {
+      "types": "./dist/local/localBindings.d.ts",
+      "import": "./dist/local/localBindings.js"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest watch",
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
-    "dev": "pnpm dlx trigger.dev@latest dev",
-    "putToken": "tsx tools/putToken"
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate",
+    "deploy": "wrangler deploy"
   },
   "devDependencies": {
-    "@libsql/client": "0.15.4",
-    "@trigger.dev/sdk": "3.3.17",
-    "@vitest/coverage-v8": "3.1.1",
+    "@cloudflare/workers-types": "4.20250429.0",
     "dotenv": "16.5.0",
+    "drizzle-kit": "0.31.0",
+    "drizzle-orm": "0.42.0",
     "firebase-admin": "13.2.0",
-    "tsx": "4.19.3",
+    "miniflare": "4.20250424.0",
     "valibot": "1.0.0",
-    "vitest": "3.1.1"
+    "vitest": "3.1.1",
+    "wrangler": "4.13.2"
   }
 }

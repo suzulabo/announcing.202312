@@ -5,9 +5,5 @@
     "declaration": true,
     "outDir": "dist"
   },
-  "include": [
-    "src/core/index.ts",
-    "src/tokenStores/libsql/index.ts",
-    "src/tasks/trigger.dev/index.ts"
-  ]
+  "include": ["src/app.d.ts", "src/index.ts", "src/local/localBindings.ts"]
 }

@@ -1,7 +1,7 @@
 /// <reference types="@sveltejs/kit" />
 
-import { TokenStore } from '@announcing/notification/core';
-import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
+import type { DBBindings } from '@announcing/db';
+import type { NotificationDBBindings } from '@announcing/notification';
 
 type BackLabelKeys = 'back';
 
@@ -11,11 +11,7 @@ declare global {
   namespace App {
     // interface Error {}
     interface Locals {
-      tokenStore: TokenStore;
-      cf: {
-        D1: D1Database;
-        R2: R2Bucket;
-      };
+      cf: DBBindings & NotificationDBBindings;
     }
     interface PageData {
       headerBack?: { href: string; labelKey: BackLabelKeys };
@@ -29,10 +25,7 @@ declare global {
       fromPage?: string;
     }
     interface Platform {
-      env: {
-        D1: D1Database;
-        R2: R2Bucket;
-      };
+      env: DBBindings & NotificationDBBindings;
     }
   }
 }

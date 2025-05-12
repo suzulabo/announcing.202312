@@ -1,12 +1,12 @@
 node_modules
 dist
 .svelte-kit
-.env.local
-.env.test
 .trigger
 coverage
 test-results
 playwright-report
 .wrangler
+*.local
+*.test
 
 packages/db-local
