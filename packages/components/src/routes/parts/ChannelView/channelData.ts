@@ -90,6 +90,15 @@ const genData = (): Map<string, Announcement | undefined> => {
     createdAt: genDate(9),
   });
 
+  for (let i = 0; i < 100; i++) {
+    data.set(10 + i + '', {
+      title: faker.lorem.paragraph(),
+      body: faker.lorem.paragraphs(),
+      updatedAt: genDate(i + 10),
+      createdAt: genDate(i + 10),
+    });
+  }
+
   return data;
 };
 
