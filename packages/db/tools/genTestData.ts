@@ -53,129 +53,86 @@ const generate = async (userID: string, channelID: string) => {
       );
     }
 
-    await db.addAnnouncement(
-      {
-        userID,
-        channelID,
-        headerImage: await loadBlob('duck-7713310_1280x853.jpg'),
-        title: 'Landscape header',
-        body: faker.lorem.paragraphs(),
-        createdAt: genDate(1),
-      },
-      b,
-    );
+    type Announcement = {
+      headerImage?: Blob | undefined;
+      title?: string | undefined;
+      body: string;
+      images?: Blob[] | undefined;
+      createdAt: number;
+    };
+    const data = new Map<string, Announcement>();
 
-    await db.addAnnouncement(
-      {
-        userID,
-        channelID,
-        headerImage: await loadBlob('duck-7713310_1280x853.jpg'),
-        title: 'Landscape header',
-        body: faker.lorem.paragraphs(),
-        createdAt: genDate(2),
-      },
-      b,
-    );
+    data.set('1', {
+      headerImage: await loadBlob('duck-7713310_1280x853.jpg'),
+      title: 'Landscape header',
+      body: faker.lorem.paragraphs(),
+      createdAt: genDate(1),
+    });
 
-    await db.addAnnouncement(
-      {
-        userID,
-        channelID,
-        headerImage: await loadBlob('duck-7829778_960x1280.jpg'),
-        title: 'Portrait header',
-        body: faker.lorem.paragraphs(),
-        createdAt: genDate(2),
-      },
-      b,
-    );
+    data.set('2', {
+      headerImage: await loadBlob('duck-7829778_960x1280.jpg'),
+      title: 'Portrait header',
+      body: faker.lorem.paragraphs(),
+      createdAt: genDate(2),
+    });
 
-    await db.addAnnouncement(
-      {
-        userID,
-        channelID,
-        headerImage: await loadBlob('ducklings-1853178_1280x989.jpg'),
-        title: 'Landscape header is more boxy',
-        body: faker.lorem.paragraphs(),
-        createdAt: genDate(3),
-      },
-      b,
-    );
+    data.set('3', {
+      headerImage: await loadBlob('ducklings-1853178_1280x989.jpg'),
+      title: 'Landscape header is more boxy',
+      body: faker.lorem.paragraphs(),
+      createdAt: genDate(3),
+    });
 
-    await db.addAnnouncement(
-      {
-        userID,
-        channelID,
-        title: 'Images',
-        body: faker.lorem.paragraphs(),
-        images: [
-          await loadBlob('lemons-2039830_1280x848.jpg'),
-          await loadBlob('lime-6215762_854x1280.jpg'),
-          await loadBlob('lemon-8293725_1280x1280.jpg'),
-          await loadBlob('lemon-25342_150x150.png'),
-        ],
-        createdAt: genDate(5),
-      },
-      b,
-    );
+    data.set('5', {
+      title: 'Images',
+      body: faker.lorem.paragraphs(),
+      images: [
+        await loadBlob('lemons-2039830_1280x848.jpg'),
+        await loadBlob('lime-6215762_854x1280.jpg'),
+        await loadBlob('lemon-8293725_1280x1280.jpg'),
+        await loadBlob('lemon-25342_150x150.png'),
+      ],
+      createdAt: genDate(5),
+    });
 
-    await db.addAnnouncement(
-      {
-        userID,
-        channelID,
-        title: 'Landscape single image',
-        body: faker.lorem.paragraphs(),
-        images: [await loadBlob('duck-7713310_1280x853.jpg')],
-        createdAt: genDate(6),
-      },
-      b,
-    );
+    data.set('6', {
+      title: 'Landscape single image',
+      body: faker.lorem.paragraphs(),
+      images: [await loadBlob('duck-7713310_1280x853.jpg')],
+      createdAt: genDate(6),
+    });
 
-    await db.addAnnouncement(
-      {
-        userID,
-        channelID,
-        title: 'Portrait single image',
-        body: faker.lorem.paragraphs(),
-        images: [await loadBlob('duck-7829778_960x1280.jpg')],
-        createdAt: genDate(7),
-      },
-      b,
-    );
+    data.set('7', {
+      title: 'Portrait single image',
+      body: faker.lorem.paragraphs(),
+      images: [await loadBlob('duck-7829778_960x1280.jpg')],
+      createdAt: genDate(7),
+    });
 
-    await db.addAnnouncement(
-      {
-        userID,
-        channelID,
-        title: 'Landscape single image is more boxy',
-        body: faker.lorem.paragraphs(),
-        images: [await loadBlob('ducklings-1853178_1280x989.jpg')],
-        createdAt: genDate(8),
-      },
-      b,
-    );
+    data.set('8', {
+      title: 'Landscape single image is more boxy',
+      body: faker.lorem.paragraphs(),
+      images: [await loadBlob('ducklings-1853178_1280x989.jpg')],
+      createdAt: genDate(8),
+    });
 
-    await db.addAnnouncement(
-      {
-        userID,
-        channelID,
-        title: 'Small single image',
-        body: faker.lorem.paragraphs(),
-        images: [await loadBlob('lemon-25342_150x150.png')],
-        createdAt: genDate(9),
-      },
-      b,
-    );
+    data.set('9', {
+      title: 'Small single image',
+      body: faker.lorem.paragraphs(),
+      images: [await loadBlob('lemon-25342_150x150.png')],
+      createdAt: genDate(9),
+    });
 
     for (let i = 0; i < 100; i++) {
-      const data = {
-        userID,
-        channelID,
+      data.set(10 + i + '', {
         title: faker.lorem.sentence(),
         body: faker.lorem.lines(),
         createdAt: genDate(i + 10),
-      };
+      });
+    }
 
-      await db.addAnnouncement(data, b);
+    for (const a of [...data.values()].reverse()) {
+      await db.addAnnouncement({ userID, channelID, ...a }, b);
     }
   } finally {
     await b.mf.dispose();
