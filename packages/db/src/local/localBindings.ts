@@ -9,7 +9,7 @@ const MIGRATIONS_DIR = '../db/migrations';
 
 export const createLocalBindings = async (
   memory = false,
-): Promise<{ D1: D1Database; R2: R2Bucket }> => {
+): Promise<{ D1: D1Database; R2: R2Bucket; mf: Miniflare }> => {
   const path = memory ? 'memory:' : `file://${resolve(LOCAL_DIR)}`;
 
   const mf = new Miniflare({
@@ -28,5 +28,5 @@ export const createLocalBindings = async (
 
   await migrate(db, { migrationsFolder: MIGRATIONS_DIR });
 
-  return { D1, R2 };
+  return { D1, R2, mf };
 };
