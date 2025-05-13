@@ -1,4 +1,4 @@
 pnpm-lock.yaml
-packages/db/drizzle/**/*
+packages/db/migrations/**/*
 packages/notification/migrations/**/*
 packages/i18n/src/i18n/*.ts
