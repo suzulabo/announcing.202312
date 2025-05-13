@@ -5,7 +5,7 @@ import { Miniflare } from 'miniflare';
 import { resolve } from 'node:path';
 
 const LOCAL_DIR = '../db-local';
-const DRRIZLE_DIR = '../db/drizzle';
+const MIGRATIONS_DIR = '../db/migrations';
 
 export const createLocalBindings = async (
   memory = false,
@@ -26,7 +26,7 @@ export const createLocalBindings = async (
 
   const db = drizzle(D1);
 
-  await migrate(db, { migrationsFolder: DRRIZLE_DIR });
+  await migrate(db, { migrationsFolder: MIGRATIONS_DIR });
 
   return { D1, R2 };
 };
