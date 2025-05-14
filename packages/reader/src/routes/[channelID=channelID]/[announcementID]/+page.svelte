@@ -9,6 +9,10 @@
   let { data }: Props = $props();
 </script>
 
+<svelte:head>
+  <title>{data.announcement.title ?? data.announcement.body}</title>
+</svelte:head>
+
 <div class="container">
   <AnnouncementView announcement={data.announcement} />
 </div>
