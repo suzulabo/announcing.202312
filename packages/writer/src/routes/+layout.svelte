@@ -31,6 +31,10 @@
   const back = setupBack();
 </script>
 
+<svelte:head>
+  <title>Announcing - {$LL.writer.subTitle()}</title>
+</svelte:head>
+
 <header>
   {#if headerBack}
     <a href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>

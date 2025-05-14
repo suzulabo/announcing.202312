@@ -29,6 +29,10 @@
   } satisfies ComponentProps<typeof ChannelView>);
 </script>
 
+<svelte:head>
+  <title>{data.channel.name}</title>
+</svelte:head>
+
 <div class="container">
   <ChannelView {...channelViewProps} />
 </div>
