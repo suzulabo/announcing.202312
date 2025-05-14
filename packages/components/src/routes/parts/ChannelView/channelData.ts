@@ -49,7 +49,7 @@ const genData = (): Map<string, Announcement | undefined> => {
     title: 'Images',
     body: faker.lorem.paragraphs(),
     images: [
-      '/assets/lemons-2039830_1280× 848.jpg',
+      '/assets/lemons-2039830_1280x848.jpg',
       '/assets/lime-6215762_854x1280.jpg',
       '/assets/lemon-8293725_1280x1280.jpg',
       '/assets/lemon-25342_150x150.png',
@@ -89,6 +89,15 @@ const genData = (): Map<string, Announcement | undefined> => {
     updatedAt: genDate(9),
     createdAt: genDate(9),
   });
+
+  for (let i = 0; i < 100; i++) {
+    data.set(10 + i + '', {
+      title: faker.lorem.paragraph(),
+      body: faker.lorem.paragraphs(),
+      updatedAt: genDate(i + 10),
+      createdAt: genDate(i + 10),
+    });
+  }
 
   return data;
 };

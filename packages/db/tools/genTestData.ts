@@ -1,114 +1,141 @@
+import { faker } from '@faker-js/faker';
+import { addDays } from 'date-fns';
+import MockDate from 'mockdate';
 import { openAsBlob } from 'node:fs';
 import { parseArgs } from 'node:util';
+import { createDB } from '../src';
+import { createLocalBindings } from '../src/local/localBindings';
 
-import { faker } from '@faker-js/faker';
-import MockDate from 'mockdate';
-
-import { configDotenv } from 'dotenv';
-import { addAnnouncement, createChannel, deleteChannel, getChannel, setStorage } from '../src/';
-import { createLocalStorage } from '../src/storage/LocalStorage';
-
-configDotenv({ path: '.env.local' });
-
-setStorage(createLocalStorage());
+const IMAGE_DIR = '../components/public/assets/';
 
 const channelData = {
   name: 'Aether Dynamics Corporation',
   desc: 'Aether Dynamics Corporation is at the forefront of cutting-edge technology, pioneering advancements in energy solutions and sustainable innovation.\nJoin us as we transform the future with dynamic, visionary science.',
 };
 
-faker.seed(1192);
+faker.seed(100);
 
-const genAnnouncement = () => {
-  const title = faker.lorem.sentence({ min: 5, max: 10 });
-  const body = faker.lorem.paragraphs({ min: 1, max: 10 });
+const loadBlob = (name: string) => {
+  const type = name.endsWith('.png') ? 'image/png' : 'image/jpeg';
 
-  return {
-    title,
-    body,
-  };
+  return openAsBlob(`${IMAGE_DIR}/${name}`, { type });
 };
 
-const generate = async (userID: string, channelID: string, count: number) => {
-  {
-    const channel = await getChannel({ userID, channelID });
-    if (channel) {
-      await deleteChannel({ userID, channelID, updatedAt: channel.updatedAt });
+const genDate = (n: number) => {
+  return addDays('2026-01-01T00:11:22', n * -1).getTime();
+};
+
+const generate = async (userID: string, channelID: string) => {
+  const b = await createLocalBindings(false);
+  const db = createDB('');
+
+  try {
+    {
+      const channel = await db.getChannel({ userID, channelID }, b);
+      if (channel) {
+        await db.deleteChannel({ userID, channelID, updatedAt: channel.updatedAt }, b);
+      }
     }
-  }
 
-  let date = new Date('2024-08-08T11:59:00Z').getTime();
-  {
-    MockDate.set(date);
-    const icon = await openAsBlob('./tools/assets/cat-1484725_256.png', { type: 'image/png' });
-    await createChannel({
-      userID,
-      channelID,
-      name: channelData.name,
-      desc: channelData.desc,
-      icon,
-    });
-  }
-
-  {
-    const getHeaderImage = async (i: number) => {
-      switch (i % 13) {
-        case 0:
-          return await openAsBlob('./tools/assets/gecko-8483282_640.png', { type: 'image/png' });
-        case 1:
-          return await openAsBlob('./tools/assets/cat-8575641_640.jpg', { type: 'image/jpeg' });
-      }
-      return;
-    };
-
-    const getImages = async (i: number) => {
-      switch (i % 8) {
-        case 2:
-          return Promise.all([
-            openAsBlob('./tools/assets/chicks-8782391_640.jpg', { type: 'image/jpeg' }),
-          ]);
-        case 3:
-          return Promise.all([
-            openAsBlob('./tools/assets/chicks-8782391_640.jpg', { type: 'image/jpeg' }),
-            openAsBlob('./tools/assets/leaves-8846763_640.jpg', { type: 'image/jpeg' }),
-          ]);
-        case 4:
-          return Promise.all([
-            openAsBlob('./tools/assets/chicks-8782391_640.jpg', { type: 'image/jpeg' }),
-            openAsBlob('./tools/assets/leaves-8846763_640.jpg', { type: 'image/jpeg' }),
-            openAsBlob('./tools/assets/cat-8612685_640_small.jpg', { type: 'image/jpeg' }),
-          ]);
-        case 5:
-          return Promise.all([
-            openAsBlob('./tools/assets/chicks-8782391_640.jpg', { type: 'image/jpeg' }),
-            openAsBlob('./tools/assets/leaves-8846763_640.jpg', { type: 'image/jpeg' }),
-            openAsBlob('./tools/assets/cat-8612685_640_small.jpg', { type: 'image/jpeg' }),
-            openAsBlob('./tools/assets/music-8559592_640.jpg', { type: 'image/jpeg' }),
-          ]);
-      }
-      return;
-    };
-
-    for (let i = 0; i < count; i++) {
-      const channel = await getChannel({ userID, channelID });
-      if (!channel) {
-        throw new Error();
-      }
-      const a = genAnnouncement();
-
-      date += 60 * 60 * 24 * 1000;
+    {
+      const date = new Date('2024-08-08T11:59:00Z').getTime();
       MockDate.set(date);
+      const icon = await loadBlob('logo.png');
+      await db.createChannel(
+        {
+          userID,
+          channelID,
+          name: channelData.name,
+          desc: channelData.desc,
+          icon,
+        },
+        b,
+      );
+    }
 
-      await addAnnouncement({
-        userID,
-        channelID,
-        headerImage: await getHeaderImage(i),
-        title: a.title,
-        body: a.body,
-        images: await getImages(i),
-        createdAt: new Date().getTime(),
+    type Announcement = {
+      headerImage?: Blob | undefined;
+      title?: string | undefined;
+      body: string;
+      images?: Blob[] | undefined;
+      createdAt: number;
+    };
+    const data = new Map<string, Announcement>();
+
+    data.set('1', {
+      headerImage: await loadBlob('duck-7713310_1280x853.jpg'),
+      title: 'Landscape header',
+      body: faker.lorem.paragraphs(),
+      createdAt: genDate(1),
+    });
+
+    data.set('2', {
+      headerImage: await loadBlob('duck-7829778_960x1280.jpg'),
+      title: 'Portrait header',
+      body: faker.lorem.paragraphs(),
+      createdAt: genDate(2),
+    });
+
+    data.set('3', {
+      headerImage: await loadBlob('ducklings-1853178_1280x989.jpg'),
+      title: 'Landscape header is more boxy',
+      body: faker.lorem.paragraphs(),
+      createdAt: genDate(3),
+    });
+
+    data.set('5', {
+      title: 'Images',
+      body: faker.lorem.paragraphs(),
+      images: [
+        await loadBlob('lemons-2039830_1280x848.jpg'),
+        await loadBlob('lime-6215762_854x1280.jpg'),
+        await loadBlob('lemon-8293725_1280x1280.jpg'),
+        await loadBlob('lemon-25342_150x150.png'),
+      ],
+      createdAt: genDate(5),
+    });
+
+    data.set('6', {
+      title: 'Landscape single image',
+      body: faker.lorem.paragraphs(),
+      images: [await loadBlob('duck-7713310_1280x853.jpg')],
+      createdAt: genDate(6),
+    });
+
+    data.set('7', {
+      title: 'Portrait single image',
+      body: faker.lorem.paragraphs(),
+      images: [await loadBlob('duck-7829778_960x1280.jpg')],
+      createdAt: genDate(7),
+    });
+
+    data.set('8', {
+      title: 'Landscape single image is more boxy',
+      body: faker.lorem.paragraphs(),
+      images: [await loadBlob('ducklings-1853178_1280x989.jpg')],
+      createdAt: genDate(8),
+    });
+
+    data.set('9', {
+      title: 'Small single image',
+      body: faker.lorem.paragraphs(),
+      images: [await loadBlob('lemon-25342_150x150.png')],
+      createdAt: genDate(9),
+    });
+
+    for (let i = 0; i < 100; i++) {
+      data.set(10 + i + '', {
+        title: faker.lorem.sentence(),
+        body: faker.lorem.lines(),
+        createdAt: genDate(i + 10),
       });
     }
+
+    for (const a of [...data.values()].reverse()) {
+      await db.addAnnouncement({ userID, channelID, ...a }, b);
+    }
+  } finally {
+    await b.mf.dispose();
   }
 };
 
@@ -127,23 +154,17 @@ const main = async () => {
         type: 'string',
         default: '9901',
       },
-      count: {
-        type: 'string',
-        short: 'c',
-        default: '100',
-      },
     },
   });
 
   const { userID, channelID } = parsed.values;
-  const count = parseInt(parsed.values.count);
 
   if (!userID || !channelID) {
     printUsage();
     return;
   }
 
-  await generate(userID, channelID, count);
+  await generate(userID, channelID);
 };
 
 await main();
