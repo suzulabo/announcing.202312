@@ -1,9 +1,9 @@
 <script lang="ts">
   import { goto, invalidateAll } from '$app/navigation';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
+  import { clearChannelCache } from '$lib/fetch/channelCache';
   import { LL } from '@announcing/i18n';
   import type { PageData } from './$types';
-  import { clearFetchChannelsCache } from '$lib/fetch/fetchChannels';
 
   interface Props {
     data: PageData;
@@ -26,7 +26,7 @@
       return;
     }
 
-    clearFetchChannelsCache();
+    clearChannelCache();
 
     await invalidateAll();
   };

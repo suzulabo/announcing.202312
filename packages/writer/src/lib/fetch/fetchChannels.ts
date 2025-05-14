@@ -1,10 +1,9 @@
 import { browser } from '$app/environment';
 import { resolveChannel } from '$lib/db/resolver';
-import type { GetChannelResult } from '@announcing/db/types';
-
-let cache: GetChannelResult[] | undefined;
+import { getChannelsCache, setChannelsCache } from './channelCache';
 
 export const fetchChannels = async (fetch_ = fetch) => {
+  const cache = getChannelsCache();
   if (cache) {
     return cache;
   }
@@ -18,15 +17,11 @@ export const fetchChannels = async (fetch_ = fetch) => {
     });
 
     if (browser) {
-      cache = result;
+      setChannelsCache(result);
     }
 
     return result;
   }
 
   throw new Error(`Fetch Channels Error`);
-};
-
-export const clearFetchChannelsCache = () => {
-  cache = undefined;
 };
