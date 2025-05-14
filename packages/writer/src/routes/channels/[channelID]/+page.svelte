@@ -15,6 +15,7 @@
   import MaterialSymbolsEditDocumentOutline from '$lib/components/icon/MaterialSymbolsEditDocumentOutline.svelte';
   import MaterialSymbolsBoxEditOutline from '$lib/components/icon/MaterialSymbolsBoxEditOutline.svelte';
   import MaterialSymbolsDangerous from '$lib/components/icon/MaterialSymbolsDangerous.svelte';
+  import { clearFetchChannelsCache } from '$lib/fetch/fetchChannels';
 
   interface Props {
     data: PageData;
@@ -42,6 +43,8 @@
       return;
     }
 
+    clearFetchChannelsCache();
+
     await invalidateAll();
   };
 
@@ -58,6 +61,8 @@
       await goto('/error');
       return;
     }
+
+    clearFetchChannelsCache();
 
     await goto('/');
   };
