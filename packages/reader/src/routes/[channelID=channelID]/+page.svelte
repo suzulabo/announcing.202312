@@ -29,4 +29,12 @@
   } satisfies ComponentProps<typeof ChannelView>);
 </script>
 
-<ChannelView {...channelViewProps} />
+<div class="container">
+  <ChannelView {...channelViewProps} />
+</div>
+
+<style lang="scss">
+  .container {
+    margin: 16px 0;
+  }
+</style>

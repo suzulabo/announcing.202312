@@ -6,15 +6,16 @@
   import { PUBLIC_READER_PREFIX } from '$env/static/public';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
 
+  import MaterialSymbolsBoxEditOutline from '$lib/components/icon/MaterialSymbolsBoxEditOutline.svelte';
   import MaterialSymbolsContentCopyOutline from '$lib/components/icon/MaterialSymbolsContentCopyOutline.svelte';
+  import MaterialSymbolsDangerous from '$lib/components/icon/MaterialSymbolsDangerous.svelte';
+  import MaterialSymbolsEditDocumentOutline from '$lib/components/icon/MaterialSymbolsEditDocumentOutline.svelte';
+  import MaterialSymbolsPostAdd from '$lib/components/icon/MaterialSymbolsPostAdd.svelte';
   import MdiExternalLink from '$lib/components/icon/MdiExternalLink.svelte';
+  import { clearChannelCache } from '$lib/fetch/channelCache';
   import type { PageData } from './$types';
   import DeleteModal from './DeleteModal.svelte';
   import UrlCopyModal from './UrlCopyModal.svelte';
-  import MaterialSymbolsPostAdd from '$lib/components/icon/MaterialSymbolsPostAdd.svelte';
-  import MaterialSymbolsEditDocumentOutline from '$lib/components/icon/MaterialSymbolsEditDocumentOutline.svelte';
-  import MaterialSymbolsBoxEditOutline from '$lib/components/icon/MaterialSymbolsBoxEditOutline.svelte';
-  import MaterialSymbolsDangerous from '$lib/components/icon/MaterialSymbolsDangerous.svelte';
 
   interface Props {
     data: PageData;
@@ -42,6 +43,8 @@
       return;
     }
 
+    clearChannelCache();
+
     await invalidateAll();
   };
 
@@ -58,6 +61,8 @@
       await goto('/error');
       return;
     }
+
+    clearChannelCache();
 
     await goto('/');
   };

@@ -1,10 +1,14 @@
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = ({ data }) => {
+export const load: PageLoad = async ({ params, parent }) => {
+  const { channelID } = params;
+  const parentData = await parent();
+  const channel = parentData.channel;
+
   return {
-    ...data,
+    channel,
     headerBack: {
-      href: `/channels/${data.channel.channelID}`,
+      href: `/channels/${channelID}`,
       labelKey: 'back',
     },
   };

@@ -1,15 +1,17 @@
 import type { WorkflowStep } from 'cloudflare:workers';
-import { cert, initializeApp } from 'firebase-admin/app';
+import { cert, initializeApp, type App } from 'firebase-admin/app';
 import { getMessaging } from 'firebase-admin/messaging';
 import { createDB } from '../db/db';
 import type { SendMessageParams, WorkerEnv } from './types';
 
+let app: App | undefined;
+
 const getFirebaseMessaging = (credentialsBase64: string) => {
-  const serviceAccount = JSON.parse(Buffer.from(credentialsBase64, 'base64').toString('utf8'));
-
-  const credential = cert(serviceAccount);
-
-  const app = initializeApp({ credential });
+  if (!app) {
+    const serviceAccount = JSON.parse(Buffer.from(credentialsBase64, 'base64').toString('utf8'));
+    const credential = cert(serviceAccount);
+    app = initializeApp({ credential });
+  }
 
   return getMessaging(app);
 };

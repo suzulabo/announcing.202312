@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { LL } from '@announcing/i18n';
-
   import { goto, invalidateAll } from '$app/navigation';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
-
-  import type { PageServerData } from './$types';
+  import { clearChannelCache } from '$lib/fetch/channelCache';
+  import { LL } from '@announcing/i18n';
+  import type { PageData } from './$types';
 
   interface Props {
-    data: PageServerData;
+    data: PageData;
   }
 
   let { data }: Props = $props();
@@ -26,6 +25,8 @@
       await goto('/error');
       return;
     }
+
+    clearChannelCache();
 
     await invalidateAll();
   };

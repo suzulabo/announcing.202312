@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 
-import type { PageServerLoad } from '../$types';
+import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
   const userID = (await locals.auth())?.user?.id;
