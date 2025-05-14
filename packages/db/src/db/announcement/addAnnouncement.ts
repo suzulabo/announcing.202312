@@ -61,6 +61,12 @@ export const addAnnouncement = async (
   await Promise.all(storagePuts);
 
   const announcementID = genAnnouncementID(values);
+
+  // Check duplicated
+  if (channel.announcementIDs?.includes(announcementID)) {
+    return;
+  }
+
   const announcementIDs = [announcementID, ...(channel.announcementIDs ?? [])];
 
   const db = ctx.db;
