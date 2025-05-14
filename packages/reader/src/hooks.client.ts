@@ -24,7 +24,3 @@ navigator.serviceWorker.addEventListener('message', (event) => {
     }
   }
 });
-
-navigator.serviceWorker.addEventListener('controllerchange', () => {
-  location.reload();
-});
