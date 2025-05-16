@@ -1,6 +1,7 @@
 import { PUBLIC_SENTRY_DSN } from '$env/static/public';
 import * as Sentry from '@sentry/sveltekit';
 import { handleErrorWithSentry } from '@sentry/sveltekit';
+import type { HandleClientError } from '@sveltejs/kit';
 
 if (PUBLIC_SENTRY_DSN) {
   Sentry.init({
@@ -9,4 +10,8 @@ if (PUBLIC_SENTRY_DSN) {
   });
 }
 
-export const handleError = handleErrorWithSentry();
+const errorHandler: HandleClientError = (input) => {
+  console.error('Unhandled error: ', input);
+};
+
+export const handleError = handleErrorWithSentry(errorHandler);
