@@ -1,9 +1,17 @@
 import { dev } from '$app/environment';
-import { env } from '$env/dynamic/private';
-import { GOOGLE_CREDENTIALS_BASE64 } from '$env/static/private';
+import { GOOGLE_CREDENTIALS_BASE64, PERFORMANCE_HOOK } from '$env/static/private';
+import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import * as Sentry from '@sentry/sveltekit';
 import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { handle as authenticationHandle } from './auth';
+
+if (PUBLIC_SENTRY_DSN) {
+  Sentry.init({
+    dsn: PUBLIC_SENTRY_DSN,
+    tracesSampleRate: 1.0,
+  });
+}
 
 const performanceHandle: Handle = async ({ event, resolve }) => {
   const start = performance.now();
@@ -51,8 +59,11 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
 };
 
 export const handle = sequence(
-  ...(env.PERFORMANCE_HOOK ? [performanceHandle] : []),
+  ...(PERFORMANCE_HOOK ? [performanceHandle] : []),
+  ...(PUBLIC_SENTRY_DSN ? [Sentry.sentryHandle()] : []),
   authenticationHandle,
   authorizationHandle,
   cloudflareHandle,
 );
+
+export const handleError = Sentry.handleErrorWithSentry();
