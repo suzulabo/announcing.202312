@@ -1,17 +1,15 @@
 import { dev } from '$app/environment';
 import { GOOGLE_CREDENTIALS_BASE64, PERFORMANCE_HOOK } from '$env/static/private';
 import { PUBLIC_SENTRY_DSN } from '$env/static/public';
-import * as Sentry from '@sentry/sveltekit';
+import {
+  handleErrorWithSentry,
+  initCloudflareSentryHandle,
+  sentryHandle,
+  init as sentryInit,
+} from '@sentry/sveltekit';
 import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { handle as authenticationHandle } from './auth';
-
-if (PUBLIC_SENTRY_DSN) {
-  Sentry.init({
-    dsn: PUBLIC_SENTRY_DSN,
-    tracesSampleRate: 1.0,
-  });
-}
 
 const performanceHandle: Handle = async ({ event, resolve }) => {
   const start = performance.now();
@@ -58,12 +56,28 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
   return resolve(event);
 };
 
-export const handle = sequence(
-  ...(PERFORMANCE_HOOK ? [performanceHandle] : []),
-  ...(PUBLIC_SENTRY_DSN ? [Sentry.sentryHandle()] : []),
-  authenticationHandle,
-  authorizationHandle,
-  cloudflareHandle,
-);
+const handlers = [];
+if (PERFORMANCE_HOOK) {
+  handlers.push(performanceHandle);
+}
+if (PUBLIC_SENTRY_DSN) {
+  if (!dev) {
+    handlers.push(
+      initCloudflareSentryHandle({
+        dsn: PUBLIC_SENTRY_DSN,
+        tracesSampleRate: 1.0,
+      }),
+    );
+  } else {
+    sentryInit({
+      dsn: PUBLIC_SENTRY_DSN,
+      tracesSampleRate: 1.0,
+    });
+  }
+  handlers.push(sentryHandle());
+}
+handlers.push(authenticationHandle, authorizationHandle, cloudflareHandle);
 
-export const handleError = Sentry.handleErrorWithSentry();
+export const handle = sequence(...handlers);
+
+export const handleError = handleErrorWithSentry();
