@@ -1,0 +1,8 @@
+//$schema: "node_modules/wrangler/config-schema.json"
+{
+  "pages_build_output_dir": ".svelte-kit/cloudflare",
+  "compatibility_date": "2025-05-11",
+  "compatibility_flags": ["nodejs_compat"]
+}
+
+// TODO: Setup Bindings

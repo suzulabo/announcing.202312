@@ -1,4 +1,7 @@
+import { PUBLIC_SENTRY_DSN } from '$env/static/public';
 import { resolveBrowserSchema } from '$lib/platform/resolveBrowserSchema';
+import { handleErrorWithSentry, init as sentryInit } from '@sentry/sveltekit';
+import type { HandleClientError } from '@sveltejs/kit';
 
 type SWMessageData =
   | {
@@ -24,3 +27,16 @@ navigator.serviceWorker.addEventListener('message', (event) => {
     }
   }
 });
+
+if (PUBLIC_SENTRY_DSN) {
+  sentryInit({
+    dsn: PUBLIC_SENTRY_DSN,
+    tracesSampleRate: 1.0,
+  });
+}
+
+const errorHandler: HandleClientError = (input) => {
+  console.error('Unhandled error: ', input);
+};
+
+export const handleError = handleErrorWithSentry(errorHandler);
