@@ -1,13 +1,12 @@
 <script lang="ts">
   import { signIn } from '@auth/sveltekit/client';
-
-  import { env } from '$env/dynamic/public';
+  import { PUBLIC_AUTH_CARDINALS } from '$env/static/public';
   import GoogleIcon from '$lib/components/icon/GoogleIcon.svelte';
 </script>
 
 <div class="container">
   <div class="buttons">
-    {#if env.PUBLIC_AUTH_CARDINALS}
+    {#if PUBLIC_AUTH_CARDINALS}
       <button
         onclick={() => {
           void signIn('credentials', { id: 'test_user01' });

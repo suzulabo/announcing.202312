@@ -1,8 +1,27 @@
 //$schema: "node_modules/wrangler/config-schema.json"
 {
-  "pages_build_output_dir": ".svelte-kit/cloudflare",
-  "compatibility_date": "2025-05-11",
-  "compatibility_flags": ["nodejs_compat"]
-}
+  "name": "${PROJECT_NAME}",
+  "main": ".svelte-kit/cloudflare/_worker.js",
+  "compatibility_date": "2025-05-05",
+  "compatibility_flags": ["nodejs_compat_v2"],
+  "upload_source_maps": true,
 
-// TODO: Setup Bindings
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".svelte-kit/cloudflare"
+  },
+
+  "d1_databases": [
+    {
+      "binding": "D1",
+      "database_name": "D1",
+      "database_id": "${D1_ID}"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "R2",
+      "bucket_name": "${R2_BUCKET_NAME}"
+    }
+  ]
+}

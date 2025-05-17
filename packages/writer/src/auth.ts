@@ -1,9 +1,8 @@
+import { AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_SECRET } from '$env/static/private';
+import { PUBLIC_AUTH_CARDINALS } from '$env/static/public';
 import { SvelteKitAuth, type SvelteKitAuthConfig } from '@auth/sveltekit';
 import Credentials from '@auth/sveltekit/providers/credentials';
 import Google from '@auth/sveltekit/providers/google';
-
-import { env } from '$env/dynamic/public';
-import { AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_SECRET } from '$env/static/private';
 
 const providers: SvelteKitAuthConfig['providers'] = [
   Google({
@@ -18,7 +17,7 @@ const providers: SvelteKitAuthConfig['providers'] = [
   }),
 ];
 
-if (env.PUBLIC_AUTH_CARDINALS) {
+if (PUBLIC_AUTH_CARDINALS) {
   providers.push(
     Credentials({
       credentials: {

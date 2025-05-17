@@ -8,5 +8,6 @@ playwright-report
 .wrangler
 *.local
 *.test
+wrangler.*.jsonc
 
 packages/db-local
