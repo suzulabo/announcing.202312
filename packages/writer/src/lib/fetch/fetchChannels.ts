@@ -1,5 +1,6 @@
 import { browser } from '$app/environment';
 import { resolveChannel } from '$lib/db/resolver';
+import type { GetChannelResult } from '@announcing/db/types';
 import { getChannelsCache, setChannelsCache } from './channelCache';
 
 export const fetchChannels = async (fetch_ = fetch) => {
@@ -10,7 +11,7 @@ export const fetchChannels = async (fetch_ = fetch) => {
 
   const res = await fetch_('/api/channels');
   if (res.ok) {
-    const json = (await res.json()) as [];
+    const json: GetChannelResult[] = await res.json();
 
     const result = json.map((v) => {
       return resolveChannel(v);
