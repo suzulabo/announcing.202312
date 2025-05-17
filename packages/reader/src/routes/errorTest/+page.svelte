@@ -6,9 +6,10 @@
 
 <button
   onclick={async () => {
-    await new Promise((resolve) => {
-      window.setTimeout(resolve, 1000);
+    await new Promise((resolve, reject) => {
+      window.setTimeout(() => {
+        reject("new Error('Client Promise Error Test')");
+      }, 100);
     });
-    throw new Error('Client Promise Error Test');
   }}>Raise Promise Error</button
 >

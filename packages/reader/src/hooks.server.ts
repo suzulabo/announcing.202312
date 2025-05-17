@@ -1,4 +1,11 @@
 import { dev } from '$app/environment';
+import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import {
+  handleErrorWithSentry,
+  initCloudflareSentryHandle,
+  sentryHandle,
+  init as sentryInit,
+} from '@sentry/sveltekit';
 import { type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
@@ -22,4 +29,25 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
   return resolve(event);
 };
 
-export const handle = sequence(cloudflareHandle);
+const handlers = [];
+if (PUBLIC_SENTRY_DSN) {
+  if (!dev) {
+    handlers.push(
+      initCloudflareSentryHandle({
+        dsn: PUBLIC_SENTRY_DSN,
+        tracesSampleRate: 1.0,
+      }),
+    );
+  } else {
+    sentryInit({
+      dsn: PUBLIC_SENTRY_DSN,
+      tracesSampleRate: 1.0,
+    });
+  }
+  handlers.push(sentryHandle());
+}
+handlers.push(cloudflareHandle);
+
+export const handle = sequence(...handlers);
+
+export const handleError = handleErrorWithSentry();
