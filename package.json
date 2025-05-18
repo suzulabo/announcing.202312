@@ -16,6 +16,10 @@
     "build": "pnpm -r build",
     "build:writer": "pnpm --filter @announcing/writer... build",
     "build:reader": "pnpm --filter @announcing/reader... build",
+    "deploy:writer": "pnpm --filter @announcing/writer run deploy",
+    "deploy:reader": "pnpm --filter @announcing/reader run deploy",
+    "deploy:preview:writer": "pnpm --filter @announcing/writer run deploy:preview",
+    "deploy:preview:reader": "pnpm --filter @announcing/reader run deploy:preview",
     "check": "pnpm run build && pnpm run format && pnpm run lint && pnpm -r run test && pnpm -r run check"
   },
   "devDependencies": {

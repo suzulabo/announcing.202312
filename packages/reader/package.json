@@ -1,13 +1,18 @@
 {
   "private": true,
   "name": "@announcing/reader",
+  "type": "module",
   "scripts": {
+    "postinstall": "jiti postinstall.ts",
     "dev": "vite dev --port 5175",
+    "dev:worker": "wrangler dev -c wrangler.local.jsonc --persist-to ../db-local",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "playwright": "echo TODO: refactor playwright test"
+    "playwright": "echo TODO: refactor playwright test",
+    "deploy": "wrangler deploy -c wrangler.remote.jsonc",
+    "deploy:preview": "wrangler versions upload -c wrangler.remote.jsonc"
   },
   "devDependencies": {
     "@announcing/components": "workspace:*",
@@ -16,13 +21,13 @@
     "@announcing/notification": "workspace:*",
     "@auth/sveltekit": "1.9.0",
     "@cloudflare/workers-types": "4.20250423.0",
-    "@libsql/client": "0.15.4",
     "@playwright/test": "1.52.0",
     "@sentry/sveltekit": "9.19.0",
     "@sveltejs/adapter-cloudflare": "7.0.1",
     "@sveltejs/kit": "2.20.7",
     "@sveltejs/vite-plugin-svelte": "5.0.3",
     "@types/js-cookie": "3.0.6",
+    "dotenv": "16.5.0",
     "firebase": "11.6.0",
     "js-cookie": "3.0.5",
     "lru-cache": "11.1.0",
@@ -33,10 +38,7 @@
     "vitest": "3.1.1",
     "workbox-precaching": "7.3.0",
     "workbox-routing": "7.3.0",
-    "workbox-strategies": "7.3.0"
-  },
-  "type": "module",
-  "msw": {
-    "workerDirectory": "static"
+    "workbox-strategies": "7.3.0",
+    "wrangler": "4.15.2"
   }
 }

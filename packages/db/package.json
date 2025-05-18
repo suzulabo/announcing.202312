@@ -35,6 +35,7 @@
     "build:watch": "tsc -w -p tsconfig.build.json",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
+    "migrate:local": "wrangler d1 migrations apply D1-local --local --persist-to ../db-local",
     "genTestData": "tsx tools/genTestData.ts",
     "wrangler": "wrangler"
   },

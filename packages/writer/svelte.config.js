@@ -9,6 +9,7 @@ const config = {
 
   kit: {
     adapter: adapterCF({
+      config: 'wrangler.remote.jsonc',
       routes: {
         include: ['/*'],
         exclude: ['<all>'],
