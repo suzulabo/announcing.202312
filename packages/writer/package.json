@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "@announcing/writer",
+  "type": "module",
   "scripts": {
     "postinstall": "jiti postinstall.ts",
     "dev": "vite dev --port 5174",
@@ -41,9 +42,5 @@
     "workbox-routing": "7.3.0",
     "workbox-strategies": "7.3.0",
     "wrangler": "4.15.2"
-  },
-  "type": "module",
-  "msw": {
-    "workerDirectory": "static"
   }
 }
