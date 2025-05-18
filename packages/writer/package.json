@@ -21,7 +21,6 @@
     "@auth/core": "0.39.0",
     "@auth/sveltekit": "1.7.4",
     "@cloudflare/workers-types": "4.20250429.0",
-    "@libsql/client": "0.15.4",
     "@playwright/test": "1.52.0",
     "@sentry/sveltekit": "9.19.0",
     "@sveltejs/adapter-cloudflare": "7.0.1",
