@@ -33,11 +33,17 @@ const config: Unstable_RawEnvironment = {
 const main = async () => {
   await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
 
-  config.name = process.env['PROJECT_NAME'] ?? '';
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  config.d1_databases![0]!.database_id = process.env['D1_ID'] ?? '';
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  config.r2_buckets![0]!.bucket_name = process.env['R2_BUCKET_NAME'] ?? '';
+  const { PROJECT_NAME, D1_ID, R2_BUCKET_NAME } = process.env;
+
+  if (PROJECT_NAME) {
+    config.name = PROJECT_NAME;
+  }
+  if (D1_ID && config.d1_databases?.[0]) {
+    config.d1_databases[0].database_id = D1_ID;
+  }
+  if (R2_BUCKET_NAME && config.r2_buckets?.[0]) {
+    config.r2_buckets[0].bucket_name = R2_BUCKET_NAME;
+  }
 
   await writeFile('wrangler.remote.jsonc', JSON.stringify(config, undefined, 2));
 };
