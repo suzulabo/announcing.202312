@@ -10,8 +10,9 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "playwright": "playwright test",
     "deploy": "pnpm wrangler:remote deploy -c wrangler.deploy.jsonc",
-    "wrangler:local": "envsub -f .wrangler.env wrangler.jsonc wrangler.local.jsonc && wrangler -c wrangler.local.jsonc",
-    "wrangler:remote": "envsub -f .wrangler.env.deploy wrangler.jsonc wrangler.deploy.jsonc && wrangler -c wrangler.deploy.jsonc"
+    "deploy:preview": "pnpm wrangler:remote versions upload -c wrangler.deploy.jsonc",
+    "wrangler:local": "envsub -f .wrangler.env .wrangler.jsonc wrangler.local.jsonc && wrangler -c wrangler.local.jsonc",
+    "wrangler:remote": "envsub -f .wrangler.env.deploy .wrangler.jsonc wrangler.deploy.jsonc && wrangler -c wrangler.deploy.jsonc"
   },
   "devDependencies": {
     "@announcing/components": "workspace:*",
