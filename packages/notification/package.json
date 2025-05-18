@@ -17,12 +17,14 @@
     "dist"
   ],
   "scripts": {
+    "postinstall": "jiti postinstall.ts",
     "test": "vitest run",
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
     "generate": "drizzle-kit generate",
-    "migrate": "drizzle-kit migrate",
-    "deploy": "wrangler deploy"
+    "migrate:local": "wrangler d1 migrations apply D1_NOTIFICATION -c wrangler.local.jsonc --local --persist-to ../db-local/notification",
+    "migrate:remote": "wrangler d1 migrations apply D1_NOTIFICATION -c wrangler.remote.jsonc --remote",
+    "deploy": "wrangler deploy -c wrangler.remote.jsonc"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20250429.0",

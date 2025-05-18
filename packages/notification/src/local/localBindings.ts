@@ -104,7 +104,6 @@ export const createLocalBindings = async (
   };
 
   return {
-    D1_NOTIFICATION,
     WF_PROCESS_MESSAGE_RUN: {
       async createInstance(params: ProcessMessageParams) {
         await workerEnv.WF_PROCESS_MESSAGE.create({ params });
