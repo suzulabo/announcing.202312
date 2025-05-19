@@ -1,43 +1,50 @@
 import { configDotenv } from 'dotenv';
 import { writeFile } from 'node:fs/promises';
-import type { Unstable_RawEnvironment } from 'wrangler';
+import type { Unstable_RawConfig } from 'wrangler';
 
 configDotenv({ path: '.wrangler.env.remote' });
 
-const config: Unstable_RawEnvironment = {
+const { PROJECT_NAME, D1_NOTIFICATION_ID } = process.env;
+
+const d1Notification = {
+  binding: 'D1_NOTIFICATION',
+  database_name: 'D1_NOTIFICATION',
+  database_id: 'D1_NOTIFICATION_LOCAL',
+  migrations_dir: './migrations',
+};
+
+const workflows = [
+  {
+    name: 'ProcessMessage',
+    binding: 'WF_PROCESS_MESSAGE',
+    class_name: 'ProcessMessageWorkflowEntrypoint',
+  },
+  {
+    name: 'SendMessage',
+    binding: 'WF_SEND_MESSAGE',
+    class_name: 'SendMessageWorkflowEntrypoint',
+  },
+];
+
+const config: Unstable_RawConfig = {
+  ...(PROJECT_NAME && { name: PROJECT_NAME }),
   main: '.svelte-kit/cloudflare/_worker.js',
   compatibility_date: '2025-05-05',
   compatibility_flags: ['nodejs_compat_v2'],
   upload_source_maps: true,
 
-  assets: {
-    binding: 'ASSETS',
-    directory: '.svelte-kit/cloudflare',
-  },
-
-  d1_databases: [
-    {
-      binding: 'D1_NOTIFICATION',
-      database_name: 'D1_NOTIFICATION',
-      database_id: 'local',
-      migrations_dir: './migrations',
+  env: {
+    local: {
+      d1_databases: [d1Notification],
+      workflows,
     },
-  ],
+    remote: {
+      d1_databases: [
+        { ...d1Notification, database_id: D1_NOTIFICATION_ID ?? 'D1_NOTIFICATION_REMOTE' },
+      ],
+      workflows,
+    },
+  },
 };
 
-const main = async () => {
-  await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
-
-  const { PROJECT_NAME, D1_NOTIFICATION_ID } = process.env;
-
-  if (PROJECT_NAME) {
-    config.name = PROJECT_NAME;
-  }
-  if (D1_NOTIFICATION_ID && config.d1_databases?.[0]) {
-    config.d1_databases[0].database_id = D1_NOTIFICATION_ID;
-  }
-
-  await writeFile('wrangler.remote.jsonc', JSON.stringify(config, undefined, 2));
-};
-
-await main();
+await writeFile('wrangler.jsonc', JSON.stringify(config, undefined, 2));

@@ -29,15 +29,15 @@
     "dist"
   ],
   "scripts": {
+    "postinstall": "jiti postinstall.ts",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
     "generate": "drizzle-kit generate",
-    "migrate": "drizzle-kit migrate",
-    "migrate:local": "wrangler d1 migrations apply D1-local --local --persist-to ../db-local",
-    "genTestData": "tsx tools/genTestData.ts",
-    "wrangler": "wrangler"
+    "migrate:remote": "wrangler d1 migrations apply D1 -e remote --remote",
+    "migrate:local": "wrangler d1 migrations apply D1 -e local --local --persist-to ../db-local",
+    "genTestData": "tsx tools/genTestData.ts"
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.787.0",

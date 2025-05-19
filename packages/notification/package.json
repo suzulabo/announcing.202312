@@ -22,8 +22,8 @@
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
     "generate": "drizzle-kit generate",
-    "migrate:local": "wrangler d1 migrations apply D1_NOTIFICATION -c wrangler.local.jsonc --local --persist-to ../db-local/notification",
-    "migrate:remote": "wrangler d1 migrations apply D1_NOTIFICATION -c wrangler.remote.jsonc --remote",
+    "migrate:local": "wrangler d1 migrations apply D1_NOTIFICATION -e local --local --persist-to ../db-local",
+    "migrate:remote": "wrangler d1 migrations apply D1_NOTIFICATION -e local --remote",
     "deploy": "wrangler deploy -c wrangler.remote.jsonc"
   },
   "devDependencies": {

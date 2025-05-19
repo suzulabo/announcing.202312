@@ -4,7 +4,7 @@ import { migrate } from 'drizzle-orm/d1/migrator';
 import { Miniflare } from 'miniflare';
 import { resolve } from 'node:path';
 
-const LOCAL_DIR = '../db-local';
+const LOCAL_DIR = '../db-local/v3';
 const MIGRATIONS_DIR = '../db/migrations';
 
 export const createLocalBindings = async (
@@ -15,18 +15,19 @@ export const createLocalBindings = async (
   const mf = new Miniflare({
     modules: true,
     script: '',
-    d1Databases: ['d1'],
+    d1Databases: { D1: 'D1_LOCAL' },
     d1Persist: `${path}/d1`,
-    r2Buckets: ['r2'],
+    r2Buckets: { R2: 'R2_LOCAL' },
     r2Persist: `${path}/r2`,
   });
 
-  const D1 = await mf.getD1Database('d1');
-  const R2 = (await mf.getR2Bucket('r2')) as unknown as R2Bucket;
+  const D1 = await mf.getD1Database('D1');
+  const R2 = (await mf.getR2Bucket('R2')) as unknown as R2Bucket;
 
-  const db = drizzle(D1);
-
-  await migrate(db, { migrationsFolder: MIGRATIONS_DIR });
+  if (memory) {
+    const db = drizzle(D1);
+    await migrate(db, { migrationsFolder: MIGRATIONS_DIR });
+  }
 
   return { D1, R2, mf };
 };

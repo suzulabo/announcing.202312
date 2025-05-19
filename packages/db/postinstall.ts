@@ -4,7 +4,7 @@ import type { Unstable_RawConfig } from 'wrangler';
 
 configDotenv({ path: '.wrangler.env.remote' });
 
-const { PROJECT_NAME, D1_ID, R2_BUCKET_NAME } = process.env;
+const { D1_ID, R2_BUCKET_NAME } = process.env;
 
 const d1 = {
   binding: 'D1',
@@ -19,17 +19,6 @@ const r2 = {
 };
 
 const config: Unstable_RawConfig = {
-  ...(PROJECT_NAME && { name: PROJECT_NAME }),
-  main: '.svelte-kit/cloudflare/_worker.js',
-  compatibility_date: '2025-05-05',
-  compatibility_flags: ['nodejs_compat_v2'],
-  upload_source_maps: true,
-
-  assets: {
-    binding: 'ASSETS',
-    directory: '.svelte-kit/cloudflare',
-  },
-
   env: {
     local: {
       d1_databases: [d1],

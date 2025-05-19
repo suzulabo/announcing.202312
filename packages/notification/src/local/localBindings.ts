@@ -9,7 +9,7 @@ import { processMessageRun } from '../workflows/processMessageRun';
 import { sendMessageRun } from '../workflows/sendMessageRun';
 import type { ProcessMessageParams, SendMessageParams, WorkerEnv } from '../workflows/types';
 
-const LOCAL_DIR = '../db-local';
+const LOCAL_DIR = '../db-local/v3';
 const MIGRATIONS_DIR = '../notification/migrations';
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
@@ -82,15 +82,16 @@ export const createLocalBindings = async (
   const mf = new Miniflare({
     modules: true,
     script: '',
-    d1Databases: ['D1_NOTIFICATION'],
-    d1Persist: `${path}/d1-notification`,
+    d1Databases: { D1_NOTIFICATION: 'D1_NOTIFICATION_LOCAL' },
+    d1Persist: `${path}/d1`,
   });
 
   const D1_NOTIFICATION = await mf.getD1Database('D1_NOTIFICATION');
 
-  const db = drizzle(D1_NOTIFICATION);
-
-  await migrate(db, { migrationsFolder: MIGRATIONS_DIR });
+  if (memory) {
+    const db = drizzle(D1_NOTIFICATION);
+    await migrate(db, { migrationsFolder: MIGRATIONS_DIR });
+  }
 
   const workerEnv: WorkerEnv = {
     D1_NOTIFICATION,
