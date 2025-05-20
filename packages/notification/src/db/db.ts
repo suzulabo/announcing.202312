@@ -14,27 +14,27 @@ export type DBContext = {
   maxTokens: number;
 };
 
-export const createAPI = (makeContext: (b: CFBindings) => DBContext) => {
+export const createDB = ({
+  D1_NOTIFICATION,
+  maxTokens,
+}: {
+  D1_NOTIFICATION: D1Database;
+  maxTokens?: number | undefined;
+}) => {
+  const ctx: DBContext = {
+    db: drizzle(D1_NOTIFICATION),
+    maxTokens: maxTokens ?? MAX_TOKENS,
+  };
+
   return {
-    putToken: (params: Parameters<typeof putToken>[1], b: CFBindings) => {
-      return putToken(makeContext(b), params);
+    putToken: (params: Parameters<typeof putToken>[1]) => {
+      return putToken(ctx, params);
     },
-    deleteTokens: (params: Parameters<typeof deleteTokens>[1], b: CFBindings) => {
-      return deleteTokens(makeContext(b), params);
+    deleteTokens: (params: Parameters<typeof deleteTokens>[1]) => {
+      return deleteTokens(ctx, params);
     },
-    readTokens: (params: Parameters<typeof readTokens>[1], b: CFBindings) => {
-      return readTokens(makeContext(b), params);
+    readTokens: (params: Parameters<typeof readTokens>[1]) => {
+      return readTokens(ctx, params);
     },
   };
-};
-
-export const createDB = (maxTokens = MAX_TOKENS) => {
-  const makeContext = (b: CFBindings): DBContext => {
-    return {
-      db: drizzle(b.D1_NOTIFICATION as D1Database),
-      maxTokens,
-    };
-  };
-
-  return createAPI(makeContext);
 };

@@ -8,8 +8,8 @@ const { PROJECT_NAME, D1_NOTIFICATION_ID } = process.env;
 
 const d1Notification = {
   binding: 'D1_NOTIFICATION',
-  database_name: 'D1_NOTIFICATION',
-  database_id: 'D1_NOTIFICATION_LOCAL',
+  database_name: 'd1-notification',
+  database_id: 'd1-notification-local',
   migrations_dir: './migrations',
 };
 
@@ -28,7 +28,7 @@ const workflows = [
 
 const config: Unstable_RawConfig = {
   ...(PROJECT_NAME && { name: PROJECT_NAME }),
-  main: '.svelte-kit/cloudflare/_worker.js',
+  main: 'src/workers/index.ts',
   compatibility_date: '2025-05-05',
   compatibility_flags: ['nodejs_compat_v2'],
   upload_source_maps: true,
@@ -40,7 +40,7 @@ const config: Unstable_RawConfig = {
     },
     remote: {
       d1_databases: [
-        { ...d1Notification, database_id: D1_NOTIFICATION_ID ?? 'D1_NOTIFICATION_REMOTE' },
+        { ...d1Notification, database_id: D1_NOTIFICATION_ID ?? 'd1-notification-remote' },
       ],
       workflows,
     },

@@ -8,7 +8,7 @@ const { D1_ID, R2_BUCKET_NAME } = process.env;
 
 const d1 = {
   binding: 'D1',
-  database_name: 'D1',
+  database_name: 'd1',
   database_id: 'd1-local',
   migrations_dir: './migrations',
 };

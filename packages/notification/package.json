@@ -8,9 +8,9 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./localBindings": {
-      "types": "./dist/local/localBindings.d.ts",
-      "import": "./dist/local/localBindings.js"
+    "./workers": {
+      "types": "./dist/workers/index.d.ts",
+      "import": "./dist/workers/index.js"
     }
   },
   "files": [
@@ -18,13 +18,14 @@
   ],
   "scripts": {
     "postinstall": "jiti postinstall.ts",
+    "dev:workers": "wrangler dev -e local --persist-to ../db-local",
     "test": "vitest run",
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
     "generate": "drizzle-kit generate",
     "migrate:local": "wrangler d1 migrations apply D1_NOTIFICATION -e local --local --persist-to ../db-local",
     "migrate:remote": "wrangler d1 migrations apply D1_NOTIFICATION -e local --remote",
-    "deploy": "wrangler deploy -c wrangler.remote.jsonc"
+    "deploy": "wrangler deploy"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20250429.0",
