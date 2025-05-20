@@ -1,4 +1,3 @@
-import { db } from '$lib/db/db';
 import { getFormFileOrString, getFormNumber, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 import {
@@ -50,7 +49,7 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
-  await db.updateChannel({ ...data, userID, channelID }, locals.cf);
+  await locals.db.updateChannel({ ...data, userID, channelID });
 
   return json({});
 };

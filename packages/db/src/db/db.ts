@@ -11,60 +11,46 @@ import { getChannels } from './channel/getChannels';
 import { updateChannel } from './channel/updateChannel';
 import { getStorage } from './storage/getStorage';
 
-export type CFBindings = {
-  D1: D1Database;
-  R2: R2Bucket;
-};
-
 export type DBContext = {
   db: DrizzleD1Database;
   r2: R2Bucket;
-  bucketPrefix: string;
 };
+export const createDB = ({ D1, R2 }: { D1: D1Database; R2: R2Bucket }) => {
+  const ctx: DBContext = {
+    db: drizzle(D1),
+    r2: R2,
+  };
 
-export const createAPI = (makeContext: (b: CFBindings) => DBContext) => {
   return {
-    createChannel: (params: Parameters<typeof createChannel>[1], b: CFBindings) => {
-      return createChannel(makeContext(b), params);
+    createChannel: (params: Parameters<typeof createChannel>[1]) => {
+      return createChannel(ctx, params);
     },
-    updateChannel: (params: Parameters<typeof updateChannel>[1], b: CFBindings) => {
-      return updateChannel(makeContext(b), params);
+    updateChannel: (params: Parameters<typeof updateChannel>[1]) => {
+      return updateChannel(ctx, params);
     },
-    deleteChannel: (params: Parameters<typeof deleteChannel>[1], b: CFBindings) => {
-      return deleteChannel(makeContext(b), params);
+    deleteChannel: (params: Parameters<typeof deleteChannel>[1]) => {
+      return deleteChannel(ctx, params);
     },
-    getChannel: (params: Parameters<typeof getChannel>[1], b: CFBindings) => {
-      return getChannel(makeContext(b), params);
+    getChannel: (params: Parameters<typeof getChannel>[1]) => {
+      return getChannel(ctx, params);
     },
-    getChannels: (params: Parameters<typeof getChannels>[1], b: CFBindings) => {
-      return getChannels(makeContext(b), params);
+    getChannels: (params: Parameters<typeof getChannels>[1]) => {
+      return getChannels(ctx, params);
     },
-    addAnnouncement: (params: Parameters<typeof addAnnouncement>[1], b: CFBindings) => {
-      return addAnnouncement(makeContext(b), params);
+    addAnnouncement: (params: Parameters<typeof addAnnouncement>[1]) => {
+      return addAnnouncement(ctx, params);
     },
-    updateAnnouncement: (params: Parameters<typeof updateAnnouncement>[1], b: CFBindings) => {
-      return updateAnnouncement(makeContext(b), params);
+    updateAnnouncement: (params: Parameters<typeof updateAnnouncement>[1]) => {
+      return updateAnnouncement(ctx, params);
     },
-    removeAnnouncement: (params: Parameters<typeof removeAnnouncement>[1], b: CFBindings) => {
-      return removeAnnouncement(makeContext(b), params);
+    removeAnnouncement: (params: Parameters<typeof removeAnnouncement>[1]) => {
+      return removeAnnouncement(ctx, params);
     },
-    getAnnouncement: (params: Parameters<typeof getAnnouncement>[1], b: CFBindings) => {
-      return getAnnouncement(makeContext(b), params);
+    getAnnouncement: (params: Parameters<typeof getAnnouncement>[1]) => {
+      return getAnnouncement(ctx, params);
     },
-    getStorage: (params: Parameters<typeof getStorage>[1], b: CFBindings) => {
-      return getStorage(makeContext(b), params);
+    getStorage: (params: Parameters<typeof getStorage>[1]) => {
+      return getStorage(ctx, params);
     },
   };
-};
-
-export const createDB = (bucketPrefix: string) => {
-  const makeContext = (b: CFBindings): DBContext => {
-    return {
-      db: drizzle(b.D1),
-      r2: b.R2 as R2Bucket,
-      bucketPrefix,
-    };
-  };
-
-  return createAPI(makeContext);
 };

@@ -1,8 +1,9 @@
 /// <reference types="@sveltejs/kit" />
 
+import type { createDB } from '@announcing/db';
 import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
 import type { AnnouncementPreviewData } from './routes/channels/[channelID]/announcements/[[announcementID]]/preview/+page.svelte';
-import type { StorePostLogWorkflow } from './workers/storePostLogWorkflow';
+import type { StorePostLogParams, StorePostLogWorkflow } from './workers/storePostLogWorkflow';
 
 type BackLabelKeys = 'back';
 
@@ -12,7 +13,8 @@ declare global {
   namespace App {
     // interface Error {}
     interface Locals {
-      cf: App.Platform['env'];
+      db: ReturnType<typeof createDB>;
+      storePostLog: (params: StorePostLogParams) => Promise<void>;
     }
     interface PageData {
       headerBack?: { href: string; labelKey: BackLabelKeys };

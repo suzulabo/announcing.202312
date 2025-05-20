@@ -3,7 +3,7 @@
 import type { WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
 import { WorkflowEntrypoint } from 'cloudflare:workers';
 
-type StorePostLogParams = {
+export type StorePostLogParams = {
   announcement: {
     userID: string;
     channelID: string;

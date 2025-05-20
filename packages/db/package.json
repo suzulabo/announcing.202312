@@ -19,10 +19,6 @@
     "./utils": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"
-    },
-    "./localBindings": {
-      "types": "./dist/local/localBindings.d.ts",
-      "import": "./dist/local/localBindings.js"
     }
   },
   "files": [

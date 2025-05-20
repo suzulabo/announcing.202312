@@ -1,17 +1,15 @@
 import { genStorageKey } from '../../utils';
 import type { DBContext } from '../db';
 
-export const putStorage = async ({ r2, bucketPrefix }: DBContext, blob: Blob) => {
+export const putStorage = async ({ r2 }: DBContext, blob: Blob) => {
   const [key, ab] = await genStorageKey(blob);
 
-  const objKey = `${bucketPrefix}/${key}`;
-
-  const res = await r2.head(objKey);
+  const res = await r2.head(key);
   if (res) {
     return key;
   }
 
-  await r2.put(objKey, ab, {
+  await r2.put(key, ab, {
     httpMetadata: {
       contentType: blob.type,
     },

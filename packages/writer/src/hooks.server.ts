@@ -1,6 +1,7 @@
 import { dev } from '$app/environment';
 import { PERFORMANCE_HOOK } from '$env/static/private';
 import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import { createDB } from '@announcing/db';
 import {
   handleErrorWithSentry,
   initCloudflareSentryHandle,
@@ -24,7 +25,7 @@ const performanceHandle: Handle = async ({ event, resolve }) => {
   return response;
 };
 
-let localBindings: App.Locals['cf'];
+let localBindings: App.Platform['env'];
 
 if (dev) {
   localBindings = await (await import('$lib/local/localBinding')).createLocalBindings();
@@ -44,10 +45,26 @@ const authorizationHandle: Handle = async ({ resolve, event }) => {
 
 const cloudflareHandle: Handle = ({ resolve, event }) => {
   if (dev) {
-    event.locals.cf = localBindings;
+    event.locals = {
+      ...event.locals,
+      db: createDB(localBindings),
+      storePostLog: async (params) => {
+        await localBindings.WF_STORE_POST_LOG.create({ params });
+      },
+    };
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    event.locals.cf = event.platform!.env;
+    const env = event.platform?.env;
+    if (!env) {
+      throw new Error('Missing platform.env');
+    }
+
+    event.locals = {
+      ...event.locals,
+      db: createDB(env),
+      storePostLog: async (params) => {
+        await env.WF_STORE_POST_LOG.create({ params });
+      },
+    };
   }
   return resolve(event);
 };

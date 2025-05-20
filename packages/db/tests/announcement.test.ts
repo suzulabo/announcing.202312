@@ -1,51 +1,40 @@
 import { assert, describe, expect, test } from 'vitest';
 
 import { openAsBlob } from 'fs';
-import { createDB } from '../src';
-import { createLocalBindings } from '../src/local/localBindings';
+import { createTestDB } from './testDB';
 
 describe('Announcement', () => {
   test('add, update and remove', async () => {
-    const db = createDB('');
-    const bindings = await createLocalBindings(true);
+    const db = await createTestDB();
 
-    await db.createChannel(
-      {
-        userID: 'u1',
-        channelID: 'a1',
-        name: 'announcement test channel',
-        desc: undefined,
-        icon: undefined,
-      },
-      bindings,
-    );
+    await db.createChannel({
+      userID: 'u1',
+      channelID: 'a1',
+      name: 'announcement test channel',
+      desc: undefined,
+      icon: undefined,
+    });
 
-    await db.addAnnouncement(
-      {
-        userID: 'u1',
-        channelID: 'a1',
-        headerImage: await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' }),
-        title: 'test',
-        body: 'This is test',
-        images: [await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' })],
-        createdAt: new Date().getTime(),
-      },
-      bindings,
-    );
+    await db.addAnnouncement({
+      userID: 'u1',
+      channelID: 'a1',
+      headerImage: await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' }),
+      title: 'test',
+      body: 'This is test',
+      images: [await openAsBlob('tests/board-361516_1280.jpg', { type: 'image/jpeg' })],
+      createdAt: new Date().getTime(),
+    });
 
     {
-      const c = await db.getChannel({ userID: 'u1', channelID: 'a1' }, bindings);
+      const c = await db.getChannel({ userID: 'u1', channelID: 'a1' });
       assert(c);
 
       const announcementID = c.announcementIDs?.shift() ?? '';
 
-      const a = await db.getAnnouncement(
-        {
-          channelID: 'a1',
-          announcementID,
-        },
-        bindings,
-      );
+      const a = await db.getAnnouncement({
+        channelID: 'a1',
+        announcementID,
+      });
       assert(a);
 
       expect(a).toMatchObject({
@@ -53,37 +42,31 @@ describe('Announcement', () => {
         body: 'This is test',
       });
 
-      const b = await db.getStorage(a.headerImage ?? '', bindings);
+      const b = await db.getStorage(a.headerImage ?? '');
       assert(b);
 
-      await db.updateAnnouncement(
-        {
-          userID: 'u1',
-          channelID: 'a1',
-          targetAnnouncementID: announcementID,
-          targetUpdatedAt: a.updatedAt,
-          title: 'updated',
-          body: 'This is updated',
-          headerImage: undefined,
-          images: undefined,
-        },
-        bindings,
-      );
+      await db.updateAnnouncement({
+        userID: 'u1',
+        channelID: 'a1',
+        targetAnnouncementID: announcementID,
+        targetUpdatedAt: a.updatedAt,
+        title: 'updated',
+        body: 'This is updated',
+        headerImage: undefined,
+        images: undefined,
+      });
     }
 
     {
-      const c = await db.getChannel({ userID: 'u1', channelID: 'a1' }, bindings);
+      const c = await db.getChannel({ userID: 'u1', channelID: 'a1' });
       assert(c);
 
       const announcementID = c.announcementIDs?.shift() ?? '';
 
-      const a = await db.getAnnouncement(
-        {
-          channelID: 'a1',
-          announcementID,
-        },
-        bindings,
-      );
+      const a = await db.getAnnouncement({
+        channelID: 'a1',
+        announcementID,
+      });
       assert(a);
       expect(a).toMatchObject({
         title: 'updated',
@@ -92,24 +75,18 @@ describe('Announcement', () => {
         images: undefined,
       });
 
-      await db.removeAnnouncement(
-        {
-          userID: 'u1',
-          channelID: 'a1',
-          targetAnnouncementID: announcementID,
-          targetUpdatedAt: a.updatedAt,
-        },
-        bindings,
-      );
+      await db.removeAnnouncement({
+        userID: 'u1',
+        channelID: 'a1',
+        targetAnnouncementID: announcementID,
+        targetUpdatedAt: a.updatedAt,
+      });
 
       expect(
-        await db.getAnnouncement(
-          {
-            channelID: 'a1',
-            announcementID,
-          },
-          bindings,
-        ),
+        await db.getAnnouncement({
+          channelID: 'a1',
+          announcementID,
+        }),
       ).toBeUndefined();
     }
   });
