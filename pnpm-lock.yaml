@@ -329,6 +329,9 @@ importers:
       dotenv:
         specifier: 16.5.0
         version: 16.5.0
+      esbuild:
+        specifier: 0.25.4
+        version: 0.25.4
       js-cookie:
         specifier: 3.0.5
         version: 3.0.5
@@ -338,6 +341,9 @@ importers:
       lru-cache:
         specifier: 11.1.0
         version: 11.1.0
+      miniflare:
+        specifier: 4.20250424.0
+        version: 4.20250424.0
       svelte:
         specifier: 5.28.1
         version: 5.28.1
@@ -4827,18 +4833,6 @@ packages:
       utf-8-validate:
         optional: true
 
-  ws@8.18.1:
-    resolution: {integrity: sha512-RKW2aJZMXeMxVpnZ6bck+RswznaxmzdULiBr6KY7XkTnW8uvt0iT9H5DkHUChXrc+uurzwa0rVI16n/Xzjdz1w==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-
   ws@8.18.2:
     resolution: {integrity: sha512-DMricUmwGZUVr++AEAe2uiVM7UoO9MAVZMDu05UQOaUII0lp+zOzLLU4Xqh/JvTqklB1T4uELaaPBKyjE1r4fQ==}
     engines: {node: '>=10.0.0'}
@@ -6425,7 +6419,7 @@ snapshots:
   '@libsql/isomorphic-ws@0.1.5':
     dependencies:
       '@types/ws': 8.5.13
-      ws: 8.18.1
+      ws: 8.18.2
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -8017,8 +8011,8 @@ snapshots:
     dependencies:
       '@drizzle-team/brocli': 0.10.2
       '@esbuild-kit/esm-loader': 2.6.5
-      esbuild: 0.25.2
-      esbuild-register: 3.6.0(esbuild@0.25.2)
+      esbuild: 0.25.4
+      esbuild-register: 3.6.0(esbuild@0.25.4)
     transitivePeerDependencies:
       - supports-color
 
@@ -8099,10 +8093,10 @@ snapshots:
       hasown: 2.0.2
     optional: true
 
-  esbuild-register@3.6.0(esbuild@0.25.2):
+  esbuild-register@3.6.0(esbuild@0.25.4):
     dependencies:
       debug: 4.4.0
-      esbuild: 0.25.2
+      esbuild: 0.25.4
     transitivePeerDependencies:
       - supports-color
 
@@ -9839,7 +9833,7 @@ snapshots:
 
   vite@6.3.2(@types/node@22.14.1)(jiti@2.4.2)(sass@1.86.3)(terser@5.36.0)(tsx@4.19.3):
     dependencies:
-      esbuild: 0.25.2
+      esbuild: 0.25.4
       fdir: 6.4.4(picomatch@4.0.2)
       picomatch: 4.0.2
       postcss: 8.5.3
@@ -10079,10 +10073,7 @@ snapshots:
 
   ws@8.18.0: {}
 
-  ws@8.18.1: {}
-
-  ws@8.18.2:
-    optional: true
+  ws@8.18.2: {}
 
   xml-name-validator@5.0.0:
     optional: true

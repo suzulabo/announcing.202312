@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import { GOOGLE_CREDENTIALS_BASE64, PERFORMANCE_HOOK } from '$env/static/private';
+import { PERFORMANCE_HOOK } from '$env/static/private';
 import { PUBLIC_SENTRY_DSN } from '$env/static/public';
 import {
   handleErrorWithSentry,
@@ -24,14 +24,10 @@ const performanceHandle: Handle = async ({ event, resolve }) => {
   return response;
 };
 
-let localBindings: App.Platform['env'];
+let localBindings: App.Locals['cf'];
 
 if (dev) {
-  const dbLocal = await (await import('@announcing/db/localBindings')).createLocalBindings();
-  const notificationLocal = await (
-    await import('@announcing/notification/localBindings')
-  ).createLocalBindings(false, GOOGLE_CREDENTIALS_BASE64);
-  localBindings = { ...dbLocal, ...notificationLocal };
+  localBindings = await (await import('$lib/local/localBinding')).createLocalBindings();
 }
 
 const authorizationHandle: Handle = async ({ resolve, event }) => {

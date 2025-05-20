@@ -1,8 +1,8 @@
 /// <reference types="@sveltejs/kit" />
 
-import type { DBBindings } from '@announcing/db';
-import type { NotificationBindings } from '@announcing/notification';
+import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
 import type { AnnouncementPreviewData } from './routes/channels/[channelID]/announcements/[[announcementID]]/preview/+page.svelte';
+import type { StorePostLogWorkflow } from './workers/storePostLogWorkflow';
 
 type BackLabelKeys = 'back';
 
@@ -12,7 +12,7 @@ declare global {
   namespace App {
     // interface Error {}
     interface Locals {
-      cf: DBBindings & NotificationBindings;
+      cf: App.Platform['env'];
     }
     interface PageData {
       headerBack?: { href: string; labelKey: BackLabelKeys };
@@ -22,7 +22,11 @@ declare global {
       announcementPreviewData?: AnnouncementPreviewData;
     }
     interface Platform {
-      env: DBBindings & NotificationBindings;
+      env: {
+        D1: D1Database;
+        R2: R2Bucket;
+        WF_STORE_POST_LOG: StorePostLogWorkflow;
+      };
     }
   }
 }
