@@ -1,1 +1,0 @@
-export { StorePostLogWorkflowEntrypoint } from './storePostLogWorkflow';
