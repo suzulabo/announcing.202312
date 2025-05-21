@@ -57,7 +57,7 @@ const putSchema = v.strictObject({
   targetUpdatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
-export const PUT: RequestHandler = async ({ locals, params, request }) => {
+export const PUT: RequestHandler = async ({ locals, params, request, getClientAddress }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -80,12 +80,20 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
   const channelID = params.channelID;
   const targetAnnouncementID = params.announcementID;
 
-  await locals.db.updateAnnouncement({
+  const announcementValues = await locals.db.updateAnnouncement({
     userID,
     channelID,
     targetAnnouncementID,
     ...data,
   });
+
+  if (announcementValues) {
+    await locals.storePostLog({
+      ...announcementValues,
+      ip: getClientAddress(),
+      prevAnnouncementID: targetAnnouncementID,
+    });
+  }
 
   return json({});
 };

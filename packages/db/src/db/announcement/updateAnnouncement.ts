@@ -130,9 +130,11 @@ export const updateAnnouncement = async (
       and(eq(channelsTable.channelID, channelID), eq(channelsTable.updatedAt, channel.updatedAt)),
     );
 
+  const announcementValues = { announcementID, ...values };
+
   const batchResults = await db.batch([
     updateChannel,
-    db.insert(announcementsTable).values({ ...values, announcementID }),
+    db.insert(announcementsTable).values(announcementValues),
   ]);
   if (batchResults[0].rowsAffected === 1) {
     await db
@@ -143,5 +145,9 @@ export const updateAnnouncement = async (
           eq(announcementsTable.announcementID, targetAnnouncementID),
         ),
       );
+
+    return announcementValues;
   }
+
+  return;
 };

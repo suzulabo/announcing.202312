@@ -23,7 +23,7 @@ export const createLocalBindings = async (): Promise<App.Platform['env']> => {
     script,
     d1Databases: { D1: 'd1-local' },
     d1Persist: `${path}/d1`,
-    r2Buckets: { R2: 'r2-local' },
+    r2Buckets: { R2: 'r2-local', R2_POST_LOG: 'r2-post-log-local' },
     r2Persist: `${path}/r2`,
     workflows: {
       WF_STORE_POST_LOG: {
