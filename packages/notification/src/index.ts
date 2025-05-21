@@ -1,1 +1,2 @@
-export type { ProcessMessageWorkflow } from './workers/types';
+export type { ProcessMessageWorkflowRunEntrypoint } from './workers/processMessageRun';
+export type { ProcessMessageParams } from './workers/types';

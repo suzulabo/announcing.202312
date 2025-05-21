@@ -94,8 +94,7 @@ export const POST: RequestHandler = async ({ locals, params, request, getClientA
       },
     };
 
-    // TODO
-    console.log(params);
+    await locals.processMessage(params);
 
     await locals.storePostLog({ ...announcementValues, ip: getClientAddress() });
   }

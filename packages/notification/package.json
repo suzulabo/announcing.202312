@@ -18,14 +18,14 @@
   ],
   "scripts": {
     "postinstall": "jiti postinstall.ts",
-    "dev:workers": "wrangler dev -e local --persist-to ../db-local",
+    "dev:workers": "wrangler dev --persist-to ../db-local",
     "test": "vitest run",
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
     "generate": "drizzle-kit generate",
-    "migrate:local": "wrangler d1 migrations apply D1_NOTIFICATION -e local --local --persist-to ../db-local",
-    "migrate:remote": "wrangler d1 migrations apply D1_NOTIFICATION -e local --remote",
-    "deploy": "wrangler deploy"
+    "migrate:local": "wrangler d1 migrations apply D1_NOTIFICATION --local --persist-to ../db-local",
+    "migrate:remote": "wrangler d1 migrations apply D1_NOTIFICATION -e remote --remote",
+    "deploy": "wrangler deploy -e remote"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20250429.0",
@@ -36,6 +36,6 @@
     "miniflare": "4.20250424.0",
     "valibot": "1.0.0",
     "vitest": "3.1.1",
-    "wrangler": "4.13.2"
+    "wrangler": "4.16.0"
   }
 }

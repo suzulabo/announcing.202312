@@ -33,11 +33,10 @@ const config: Unstable_RawConfig = {
   compatibility_flags: ['nodejs_compat_v2'],
   upload_source_maps: true,
 
+  d1_databases: [d1Notification],
+  workflows,
+
   env: {
-    local: {
-      d1_databases: [d1Notification],
-      workflows,
-    },
     remote: {
       d1_databases: [
         { ...d1Notification, database_id: D1_NOTIFICATION_ID ?? 'd1-notification-remote' },

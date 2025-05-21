@@ -64,6 +64,9 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
       storePostLog: async (params) => {
         await env.WF_STORE_POST_LOG.create({ params });
       },
+      processMessage: async (params) => {
+        await env.WF_PROCESS_MESSAGE_RUN.createInstance(params);
+      },
     };
   }
   return resolve(event);

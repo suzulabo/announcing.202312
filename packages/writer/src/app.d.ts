@@ -1,6 +1,10 @@
 /// <reference types="@sveltejs/kit" />
 
 import type { createDB } from '@announcing/db';
+import type {
+  ProcessMessageParams,
+  ProcessMessageWorkflowRunEntrypoint,
+} from '@announcing/notification';
 import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
 import type { AnnouncementPreviewData } from './routes/channels/[channelID]/announcements/[[announcementID]]/preview/+page.svelte';
 import type { StorePostLogParams, StorePostLogWorkflow } from './workers/storePostLogWorkflow';
@@ -15,6 +19,7 @@ declare global {
     interface Locals {
       db: ReturnType<typeof createDB>;
       storePostLog: (params: StorePostLogParams) => Promise<void>;
+      processMessage: (params: ProcessMessageParams) => Promise<void>;
     }
     interface PageData {
       headerBack?: { href: string; labelKey: BackLabelKeys };
@@ -28,6 +33,7 @@ declare global {
         D1: D1Database;
         R2: R2Bucket;
         WF_STORE_POST_LOG: StorePostLogWorkflow;
+        WF_PROCESS_MESSAGE_RUN: ProcessMessageWorkflowRunEntrypoint;
       };
     }
   }
