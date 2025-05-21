@@ -51,6 +51,10 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
       storePostLog: async (params) => {
         await localBindings.WF_STORE_POST_LOG.create({ params });
       },
+      processMessage: () => {
+        console.log('Run ProcessMessage');
+        return Promise.resolve();
+      },
     };
   } else {
     const env = event.platform?.env;
