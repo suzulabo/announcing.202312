@@ -53,21 +53,20 @@ const config: Unstable_RawConfig = {
   r2_buckets: [r2, r2PostsLog],
   workflows,
   services,
-
-  env: {
-    remote: {
-      d1_databases: [{ ...d1, database_id: D1_ID ?? 'd1-remote' }],
-      r2_buckets: [
-        { ...r2, bucket_name: R2_BUCKET_NAME ?? 'r2-remote' },
-        {
-          ...r2PostsLog,
-          bucket_name: R2_POST_LOG_BUCKET_NAME ?? 'r2-post-log-remote',
-        },
-      ],
-      workflows,
-      services,
-    },
-  },
 };
 
-await writeFile('wrangler.jsonc', JSON.stringify(config, undefined, 2));
+await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
+
+const remoteConfig: Unstable_RawConfig = {
+  ...config,
+  d1_databases: [{ ...d1, database_id: D1_ID ?? 'd1-remote' }],
+  r2_buckets: [
+    { ...r2, bucket_name: R2_BUCKET_NAME ?? 'r2-remote' },
+    {
+      ...r2PostsLog,
+      bucket_name: R2_POST_LOG_BUCKET_NAME ?? 'r2-post-log-remote',
+    },
+  ],
+};
+
+await writeFile('wrangler.remote.jsonc', JSON.stringify(remoteConfig, undefined, 2));

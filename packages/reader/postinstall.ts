@@ -30,16 +30,16 @@ const config: Unstable_RawConfig = {
     directory: '.svelte-kit/cloudflare',
   },
 
-  env: {
-    local: {
-      d1_databases: [d1],
-      r2_buckets: [r2],
-    },
-    remote: {
-      d1_databases: [{ ...d1, database_id: D1_ID ?? 'D1_REMOTE' }],
-      r2_buckets: [{ ...r2, bucket_name: R2_BUCKET_NAME ?? 'R2_REMOTE' }],
-    },
-  },
+  d1_databases: [d1],
+  r2_buckets: [r2],
 };
 
-await writeFile('wrangler.jsonc', JSON.stringify(config, undefined, 2));
+await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
+
+const remoteConfig: Unstable_RawConfig = {
+  ...config,
+  d1_databases: [{ ...d1, database_id: D1_ID ?? 'D1_REMOTE' }],
+  r2_buckets: [{ ...r2, bucket_name: R2_BUCKET_NAME ?? 'R2_REMOTE' }],
+};
+
+await writeFile('wrangler.remote.jsonc', JSON.stringify(remoteConfig, undefined, 2));

@@ -35,15 +35,15 @@ const config: Unstable_RawConfig = {
 
   d1_databases: [d1Notification],
   workflows,
-
-  env: {
-    remote: {
-      d1_databases: [
-        { ...d1Notification, database_id: D1_NOTIFICATION_ID ?? 'd1-notification-remote' },
-      ],
-      workflows,
-    },
-  },
 };
 
-await writeFile('wrangler.jsonc', JSON.stringify(config, undefined, 2));
+await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
+
+const remoteConfig = {
+  ...config,
+  d1_databases: [
+    { ...d1Notification, database_id: D1_NOTIFICATION_ID ?? 'd1-notification-remote' },
+  ],
+};
+
+await writeFile('wrangler.remote.jsonc', JSON.stringify(remoteConfig, undefined, 2));

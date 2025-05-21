@@ -19,16 +19,16 @@ const r2 = {
 };
 
 const config: Unstable_RawConfig = {
-  env: {
-    local: {
-      d1_databases: [d1],
-      r2_buckets: [r2],
-    },
-    remote: {
-      d1_databases: [{ ...d1, database_id: D1_ID ?? 'd1-remote' }],
-      r2_buckets: [{ ...r2, bucket_name: R2_BUCKET_NAME ?? 'r2-remote' }],
-    },
-  },
+  d1_databases: [d1],
+  r2_buckets: [r2],
 };
 
-await writeFile('wrangler.jsonc', JSON.stringify(config, undefined, 2));
+await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
+
+const remoteConfig: Unstable_RawConfig = {
+  ...config,
+  d1_databases: [{ ...d1, database_id: D1_ID ?? 'd1-remote' }],
+  r2_buckets: [{ ...r2, bucket_name: R2_BUCKET_NAME ?? 'r2-remote' }],
+};
+
+await writeFile('wrangler.remote.jsonc', JSON.stringify(remoteConfig, undefined, 2));

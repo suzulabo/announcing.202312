@@ -5,14 +5,14 @@
   "scripts": {
     "postinstall": "jiti postinstall.ts",
     "dev": "vite dev --port 5174",
-    "dev:workers": "wrangler dev src/workers/index.ts -c wrangler.jsonc -c ../notification/wrangler.jsonc --persist-to ../db-local",
+    "dev:workers": "wrangler dev src/workers/index.ts -c wrangler.local.jsonc -c ../notification/wrangler.local.jsonc --persist-to ../db-local",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "playwright": "playwright test",
-    "deploy": "wrangler deploy -e remote",
-    "deploy:preview": "wrangler versions upload -e remote"
+    "deploy": "wrangler deploy -c wrangler.remote.jsonc",
+    "deploy:preview": "wrangler versions upload -c wrangler.remote.jsonc"
   },
   "devDependencies": {
     "@announcing/components": "workspace:*",
