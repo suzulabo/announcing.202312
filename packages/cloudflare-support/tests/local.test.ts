@@ -1,6 +1,11 @@
-import { WorkflowEntrypoint, WorkflowStep, type WorkflowEvent } from 'cloudflare:workers';
+import {
+  WorkerEntrypoint,
+  WorkflowEntrypoint,
+  WorkflowStep,
+  type WorkflowEvent,
+} from 'cloudflare:workers';
 import { expect, it } from 'vitest';
-import { createWorkflowLocal } from '../src/local';
+import { createWorkerEntrypointLocal, createWorkflowLocal } from '../src/local';
 
 it('workflow', async () => {
   let a = 0;
@@ -18,4 +23,15 @@ it('workflow', async () => {
   const workflow = createWorkflowLocal(TestWorkflowEntrypoint, { INC: (n) => n + 1 });
   await workflow.create({ params });
   expect(a).toBe(2);
+});
+
+it('workerEntrypoint', () => {
+  class TestWorkerEntrypoint extends WorkerEntrypoint<{ INC: (n: number) => number }> {
+    inc(n: number) {
+      return this.env.INC(n);
+    }
+  }
+
+  const entrypoint = createWorkerEntrypointLocal(TestWorkerEntrypoint, { INC: (n) => n + 1 });
+  expect(entrypoint.inc(1)).toBe(2);
 });

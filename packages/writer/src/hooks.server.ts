@@ -51,9 +51,8 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
       storePostLog: async (params) => {
         await localBindings.WF_STORE_POST_LOG.create({ params });
       },
-      processMessage: (params) => {
-        console.log('Run ProcessMessage', params);
-        return Promise.resolve();
+      processMessage: async (params) => {
+        await localBindings.WF_PROCESS_MESSAGE_RUN.createInstance(params);
       },
     };
   } else {
@@ -68,8 +67,8 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
       storePostLog: async (params) => {
         await env.WF_STORE_POST_LOG.create({ params });
       },
-      processMessage: async () => {
-        //await env.WF_PROCESS_MESSAGE_RUN.createInstance(params);
+      processMessage: async (params) => {
+        await env.WF_PROCESS_MESSAGE_RUN.createInstance(params);
       },
     };
   }

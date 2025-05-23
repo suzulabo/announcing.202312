@@ -3,7 +3,7 @@ import { WorkflowEntrypoint } from 'cloudflare:workers';
 import { cert, initializeApp, type App } from 'firebase-admin/app';
 import { getMessaging } from 'firebase-admin/messaging';
 import { createDB } from '../db/db';
-import type { SendMessageParams, WorkerEnv } from './types';
+import type { SendMessageParams } from './types';
 
 let app: App | undefined;
 
@@ -18,7 +18,7 @@ const getFirebaseMessaging = (credentialsBase64: string) => {
 };
 
 export class SendMessageWorkflowEntrypoint extends WorkflowEntrypoint<
-  WorkerEnv,
+  { D1_NOTIFICATION: D1Database; GOOGLE_CREDENTIALS_BASE64: string },
   SendMessageParams
 > {
   override async run(event: WorkflowEvent<SendMessageParams>, step: WorkflowStep) {

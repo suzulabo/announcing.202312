@@ -11,7 +11,11 @@ export const virtualCloudflareWorkers: PluginOption = {
   },
   load(id) {
     if (id === '\0cloudflare:workers') {
-      return ['export class WorkflowEntrypoint {}', 'export class WorkflowStep {}'].join('\n');
+      return [
+        'export class WorkflowEntrypoint {}',
+        'export class WorkflowStep {}',
+        'export class WorkerEntrypoint {}',
+      ].join('\n');
     }
     return;
   },

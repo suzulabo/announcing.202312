@@ -1,4 +1,9 @@
-import { WorkflowEntrypoint, WorkflowStep, type WorkflowStepConfig } from 'cloudflare:workers';
+import {
+  WorkerEntrypoint,
+  WorkflowEntrypoint,
+  WorkflowStep,
+  type WorkflowStepConfig,
+} from 'cloudflare:workers';
 
 class WorkflowStepLocal extends WorkflowStep {
   override do<T extends Rpc.Serializable<T>>(name: string, callback: () => Promise<T>): Promise<T>;
@@ -54,10 +59,19 @@ class WorkflowLocal<PARAMS = unknown> implements Workflow<PARAMS> {
 }
 
 export const createWorkflowLocal = <Env>(
-  entrypointClass: new (ctx: ExecutionContext, env: Env) => WorkflowEntrypoint,
+  entrypointClass: new (ctx: ExecutionContext, env: Env) => WorkflowEntrypoint<Env>,
   env: Env,
 ) => {
   const entryPoint = new entrypointClass({} as ExecutionContext, env);
   entryPoint['env'] = env;
-  return new WorkflowLocal(entryPoint);
+  return new WorkflowLocal(entryPoint) as Workflow;
+};
+
+export const createWorkerEntrypointLocal = <Env, T extends WorkerEntrypoint<Env>>(
+  entrypointClass: new (ctx: ExecutionContext, env: Env) => T,
+  env: Env,
+) => {
+  const entryPoint = new entrypointClass({} as ExecutionContext, env);
+  entryPoint['env'] = env;
+  return entryPoint;
 };

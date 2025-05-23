@@ -7,10 +7,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    },
-    "./workers": {
-      "types": "./dist/workers/index.d.ts",
-      "import": "./dist/workers/index.js"
     }
   },
   "files": [

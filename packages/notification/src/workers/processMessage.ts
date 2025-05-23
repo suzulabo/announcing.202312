@@ -1,10 +1,10 @@
 import type { WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
 import { WorkflowEntrypoint } from 'cloudflare:workers';
 import { createDB } from '../db/db';
-import type { ProcessMessageParams, WorkerEnv } from './types';
+import type { ProcessMessageParams, SendMessageWorkflow } from './types';
 
 export class ProcessMessageWorkflowEntrypoint extends WorkflowEntrypoint<
-  WorkerEnv,
+  { D1_NOTIFICATION: D1Database; WF_SEND_MESSAGE: SendMessageWorkflow },
   ProcessMessageParams
 > {
   override async run(event: WorkflowEvent<ProcessMessageParams>, step: WorkflowStep) {
