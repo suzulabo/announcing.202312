@@ -1,5 +1,3 @@
-/// <reference types="@cloudflare/workers-types" />
-
 import { drizzle, DrizzleD1Database } from 'drizzle-orm/d1';
 import { addAnnouncement } from './announcement/addAnnouncement';
 import { getAnnouncement } from './announcement/getAnnouncement';

@@ -1,5 +1,3 @@
-/// <reference types="@cloudflare/workers-types" />
-
 import { WorkflowEntrypoint, WorkflowStep, type WorkflowStepConfig } from 'cloudflare:workers';
 
 class WorkflowStepLocal extends WorkflowStep {
