@@ -1,7 +1,9 @@
 /// <reference types="@cloudflare/workers-types" />
 
 export type {
+  D1Database,
   ExecutionContext,
+  R2Bucket,
   Rpc,
   Workflow,
   WorkflowInstance,

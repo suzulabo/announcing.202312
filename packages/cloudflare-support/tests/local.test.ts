@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
-import { WorkflowLocal } from '../src/local';
-import type { ExecutionContext, WorkflowEvent, WorkflowStep } from '../src/types';
+import { createExecutionContext, WorkflowLocal } from '../src/local';
+import type { WorkflowEvent, WorkflowStep } from '../src/types';
 import { WorkflowEntrypoint } from '../src/types';
 
 it('workflow', async () => {
@@ -16,7 +16,7 @@ it('workflow', async () => {
   }
 
   const params = { n: 1 };
-  const entrypoint = new TestWorkflowEntrypoint({} as ExecutionContext, {});
+  const entrypoint = new TestWorkflowEntrypoint(createExecutionContext(), {});
   const workflow = new WorkflowLocal(entrypoint);
   await workflow.create({ params });
   expect(a).toBe(1);

@@ -1,2 +1,5 @@
 packages:
   - 'packages/**/*'
+
+catalog:
+  vite: 6.3.2

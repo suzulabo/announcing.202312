@@ -8,7 +8,7 @@ import type {
 } from './types';
 import { WorkflowStep } from './types';
 
-export class WorkflowStepLocal extends WorkflowStep {
+class WorkflowStepLocal extends WorkflowStep {
   override do<T extends Rpc.Serializable<T>>(name: string, callback: () => Promise<T>): Promise<T>;
   override do<T extends Rpc.Serializable<T>>(
     name: string,
@@ -60,3 +60,7 @@ export class WorkflowLocal<PARAMS = unknown> implements Workflow<PARAMS> {
     throw new Error('Method not implemented.');
   }
 }
+
+export const createExecutionContext = () => {
+  return {} as ExecutionContext;
+};

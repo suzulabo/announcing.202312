@@ -29,7 +29,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "4.20250522.0",
     "esbuild": "0.25.4",
-    "vite": "6.3.5",
+    "vite": "catalog:",
     "vitest": "3.1.4"
   }
 }
