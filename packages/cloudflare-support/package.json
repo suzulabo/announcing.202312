@@ -1,0 +1,35 @@
+{
+  "name": "@announcing/cloudflare-support",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    },
+    "./local": {
+      "types": "./dist/local.d.ts",
+      "import": "./dist/local.js"
+    },
+    "./vitePlugin": {
+      "types": "./dist/vitePlugin.d.ts",
+      "import": "./dist/vitePlugin.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "build:watch": "tsc -w -p tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "4.20250522.0",
+    "esbuild": "0.25.4",
+    "vite": "6.3.5",
+    "vitest": "3.1.4"
+  }
+}
