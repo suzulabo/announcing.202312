@@ -1,10 +1,8 @@
 import { WorkflowEntrypoint } from 'cloudflare:workers';
-import { WorkflowLocal, WorkflowStepLocal } from '../src/local';
+import { createWorkflowLocal } from '../src/local';
 
-class TestWorkflowEntryPoint extends WorkflowEntrypoint {}
+class TestWorkflowEntrypoint extends WorkflowEntrypoint {}
 
 export const main = () => {
-  new WorkflowStepLocal();
-  const entrypoint = new TestWorkflowEntryPoint({} as ExecutionContext, {});
-  return new WorkflowLocal(entrypoint);
+  createWorkflowLocal(TestWorkflowEntrypoint, {});
 };

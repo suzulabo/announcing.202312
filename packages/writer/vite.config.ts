@@ -1,3 +1,4 @@
+import { virtualCloudflareWorkers } from '@announcing/cloudflare-support/vitePlugin';
 import { sentrySvelteKit } from '@sentry/sveltekit';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
@@ -14,6 +15,7 @@ const sourceMapsUploadOptions = (() => {
 
 export default defineConfig({
   plugins: [
+    virtualCloudflareWorkers,
     sentrySvelteKit({
       ...(sourceMapsUploadOptions && { sourceMapsUploadOptions }),
     }),

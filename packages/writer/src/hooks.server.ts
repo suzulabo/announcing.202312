@@ -2,7 +2,6 @@ import { dev } from '$app/environment';
 import { PERFORMANCE_HOOK } from '$env/static/private';
 import { PUBLIC_SENTRY_DSN } from '$env/static/public';
 import { createDB } from '@announcing/db';
-import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
 import {
   handleErrorWithSentry,
   initCloudflareSentryHandle,
@@ -26,10 +25,7 @@ const performanceHandle: Handle = async ({ event, resolve }) => {
   return response;
 };
 
-let localBindings: {
-  D1: D1Database;
-  R2: R2Bucket;
-};
+let localBindings: App.Platform['env'];
 
 if (dev) {
   localBindings = await (await import('$lib/local/localBinding')).createLocalBindings();
@@ -53,8 +49,7 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
       ...event.locals,
       db: createDB(localBindings),
       storePostLog: async (params) => {
-        console.log('Run storePostLog', params);
-        return Promise.resolve();
+        await localBindings.WF_STORE_POST_LOG.create({ params });
       },
       processMessage: (params) => {
         console.log('Run ProcessMessage', params);
@@ -73,8 +68,8 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
       storePostLog: async (params) => {
         await env.WF_STORE_POST_LOG.create({ params });
       },
-      processMessage: async (params) => {
-        await env.WF_PROCESS_MESSAGE_RUN.createInstance(params);
+      processMessage: async () => {
+        //await env.WF_PROCESS_MESSAGE_RUN.createInstance(params);
       },
     };
   }

@@ -1,7 +1,4 @@
-/// <reference types="@cloudflare/workers-types" />
-
-import type { WorkflowEvent, WorkflowStep } from 'cloudflare:workers';
-import { WorkflowEntrypoint } from 'cloudflare:workers';
+import { WorkflowEntrypoint, WorkflowStep, type WorkflowEvent } from 'cloudflare:workers';
 
 export type StorePostLogParams = {
   userID: string;
@@ -19,13 +16,10 @@ export type StorePostLogParams = {
 
 export type StorePostLogWorkflow = Workflow<StorePostLogParams>;
 
-type WorkerEnv = {
-  R2_POST_LOG: R2Bucket;
-  WF_STORE_POST_LOG: StorePostLogWorkflow;
-};
-
 export class StorePostLogWorkflowEntrypoint extends WorkflowEntrypoint<
-  WorkerEnv,
+  {
+    R2_POST_LOG: R2Bucket;
+  },
   StorePostLogParams
 > {
   override async run({ payload }: WorkflowEvent<StorePostLogParams>, step: WorkflowStep) {

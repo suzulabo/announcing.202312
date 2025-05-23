@@ -136,7 +136,10 @@ export const updateAnnouncement = async (
     updateChannel,
     db.insert(announcementsTable).values(announcementValues),
   ]);
-  if (batchResults[0].rowsAffected === 1) {
+
+  const updateResult = batchResults[0];
+
+  if (updateResult.meta.rows_written > 0) {
     await db
       .delete(announcementsTable)
       .where(
