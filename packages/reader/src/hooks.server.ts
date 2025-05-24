@@ -1,5 +1,6 @@
 import { dev } from '$app/environment';
 import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import { createDB } from '@announcing/db';
 import {
   handleErrorWithSentry,
   initCloudflareSentryHandle,
@@ -12,19 +13,30 @@ import { sequence } from '@sveltejs/kit/hooks';
 let localBindings: App.Platform['env'];
 
 if (dev) {
-  const dbLocal = await (await import('@announcing/db/localBindings')).createLocalBindings();
-  const notificationLocal = await (
-    await import('@announcing/notification/localBindings')
-  ).createLocalBindings(false, '');
-  localBindings = { ...dbLocal, ...notificationLocal };
+  localBindings = await (await import('$lib/local/localBinding')).createLocalBindings();
 }
 
 const cloudflareHandle: Handle = ({ resolve, event }) => {
   if (dev) {
-    event.locals.cf = localBindings;
+    event.locals = {
+      ...event.locals,
+      db: createDB(localBindings),
+      putToken: async (params) => {
+        await localBindings.WK_PUT_TOKEN.putToken(params);
+      },
+    };
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    event.locals.cf = event.platform!.env;
+    const env = event.platform?.env;
+    if (!env) {
+      throw new Error('Missing platform.env');
+    }
+    event.locals = {
+      ...event.locals,
+      db: createDB(env),
+      putToken: async (params) => {
+        await env.WK_PUT_TOKEN.putToken(params);
+      },
+    };
   }
   return resolve(event);
 };

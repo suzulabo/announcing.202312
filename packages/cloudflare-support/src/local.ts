@@ -67,7 +67,10 @@ export const createWorkflowLocal = <Env>(
   return new WorkflowLocal(entryPoint) as Workflow;
 };
 
-export const createWorkerEntrypointLocal = <Env, T extends WorkerEntrypoint<Env>>(
+export const createWorkerEntrypointLocal = <
+  T extends WorkerEntrypoint<unknown>,
+  Env extends ConstructorParameters<new (...args: unknown[]) => T>[1],
+>(
   entrypointClass: new (ctx: ExecutionContext, env: Env) => T,
   env: Env,
 ) => {

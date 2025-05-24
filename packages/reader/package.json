@@ -15,6 +15,7 @@
     "deploy:preview": "wrangler versions upload -c wrangler.remote.jsonc"
   },
   "devDependencies": {
+    "@announcing/cloudflare-support": "workspace:*",
     "@announcing/components": "workspace:*",
     "@announcing/db": "workspace:*",
     "@announcing/i18n": "workspace:*",
@@ -31,6 +32,7 @@
     "firebase": "11.6.0",
     "js-cookie": "3.0.5",
     "lru-cache": "11.1.0",
+    "miniflare": "4.20250424.0",
     "svelte": "5.28.1",
     "svelte-check": "4.1.6",
     "valibot": "1.0.0",

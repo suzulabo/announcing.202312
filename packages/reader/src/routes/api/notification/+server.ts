@@ -1,4 +1,3 @@
-import { notificationDB } from '$lib/db/db';
 import { error, json } from '@sveltejs/kit';
 import * as v from 'valibot';
 import type { RequestHandler } from './$types';
@@ -15,7 +14,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
     error(400);
   }
 
-  await notificationDB.putToken(data, locals.cf);
+  await locals.putToken(data);
 
   return json({});
 };

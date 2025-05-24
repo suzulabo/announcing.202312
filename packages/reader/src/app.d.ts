@@ -1,7 +1,7 @@
 /// <reference types="@sveltejs/kit" />
 
-import type { DBBindings } from '@announcing/db';
-import type { NotificationDBBindings } from '@announcing/notification';
+import type { createDB } from '@announcing/db';
+import type { PutTokenEntrypoint, PutTokenParams } from '@announcing/notification';
 
 type BackLabelKeys = 'back';
 
@@ -11,7 +11,8 @@ declare global {
   namespace App {
     // interface Error {}
     interface Locals {
-      cf: DBBindings & NotificationDBBindings;
+      db: ReturnType<typeof createDB>;
+      putToken: (params: PutTokenParams) => Promise<void>;
     }
     interface PageData {
       headerBack?: { href: string; labelKey: BackLabelKeys };
@@ -25,7 +26,11 @@ declare global {
       fromPage?: string;
     }
     interface Platform {
-      env: DBBindings & NotificationDBBindings;
+      env: {
+        D1: D1Database;
+        R2: R2Bucket;
+        WK_PUT_TOKEN: PutTokenEntrypoint;
+      };
     }
   }
 }

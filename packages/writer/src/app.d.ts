@@ -32,6 +32,7 @@ declare global {
         D1: D1Database;
         R2: R2Bucket;
         WF_STORE_POST_LOG: StorePostLogWorkflow;
+        // TODO: rename
         WF_PROCESS_MESSAGE_RUN: ProcessMessageWorkflowRunEntrypoint;
       };
     }

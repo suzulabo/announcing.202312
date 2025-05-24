@@ -10,5 +10,7 @@ export type SendMessageParams = {
   message: BaseMessage;
 };
 
+export type PutTokenParams = { token: string; tags: string[] };
+
 export type ProcessMessageWorkflow = Workflow<ProcessMessageParams>;
 export type SendMessageWorkflow = Workflow<SendMessageParams>;
