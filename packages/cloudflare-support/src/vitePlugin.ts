@@ -2,7 +2,6 @@ import type { PluginOption } from 'vite';
 
 export const virtualCloudflareWorkers: PluginOption = {
   name: 'virtual-cloudflare-workers',
-  enforce: 'pre',
   resolveId(id) {
     if (id === 'cloudflare:workers') {
       return '\0cloudflare:workers';

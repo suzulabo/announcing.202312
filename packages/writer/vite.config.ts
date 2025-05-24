@@ -15,11 +15,11 @@ const sourceMapsUploadOptions = (() => {
 
 export default defineConfig({
   plugins: [
-    virtualCloudflareWorkers,
     sentrySvelteKit({
       ...(sourceMapsUploadOptions && { sourceMapsUploadOptions }),
     }),
     sveltekit(),
+    virtualCloudflareWorkers,
   ],
   build: {
     minify: true,
