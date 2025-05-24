@@ -1,20 +1,22 @@
-import { configDotenv } from 'dotenv';
+import {
+  getWranglerLocalEnv,
+  getWranglerRemoteEnv,
+} from '@announcing/cloudflare-support/wranglerEnv';
 import { writeFile } from 'node:fs/promises';
 import type { Unstable_RawConfig } from 'wrangler';
 
-configDotenv({ path: '.wrangler.env.remote' });
-
-const { PROJECT_NAME, D1_ID, R2_BUCKET_NAME } = process.env;
+const localEnv = getWranglerLocalEnv();
+const remoteEnv = getWranglerRemoteEnv();
 
 const d1 = {
   binding: 'D1',
   database_name: 'D1',
-  database_id: 'd1-local',
+  database_id: localEnv.D1_ID,
 };
 
 const r2 = {
   binding: 'R2',
-  bucket_name: 'r2-local',
+  bucket_name: localEnv.R2_BUCKET_NAME,
 };
 
 const services = [
@@ -26,7 +28,7 @@ const services = [
 ];
 
 const config: Unstable_RawConfig = {
-  ...(PROJECT_NAME && { name: PROJECT_NAME }),
+  name: localEnv.READER_PROJECT_NAME,
   main: '.svelte-kit/cloudflare/_worker.js',
   compatibility_date: '2025-05-05',
   compatibility_flags: ['nodejs_compat_v2'],
@@ -46,8 +48,9 @@ await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
 
 const remoteConfig: Unstable_RawConfig = {
   ...config,
-  d1_databases: [{ ...d1, database_id: D1_ID ?? 'D1_REMOTE' }],
-  r2_buckets: [{ ...r2, bucket_name: R2_BUCKET_NAME ?? 'R2_REMOTE' }],
+  name: remoteEnv.READER_PROJECT_NAME,
+  d1_databases: [{ ...d1, database_id: remoteEnv.D1_ID }],
+  r2_buckets: [{ ...r2, bucket_name: remoteEnv.R2_BUCKET_NAME }],
 };
 
 await writeFile('wrangler.remote.jsonc', JSON.stringify(remoteConfig, undefined, 2));

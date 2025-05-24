@@ -3,6 +3,7 @@ import {
   createWorkerEntrypointLocal,
   createWorkflowLocal,
 } from '@announcing/cloudflare-support/local';
+import { getWranglerLocalEnv } from '@announcing/cloudflare-support/wranglerEnv';
 import {
   ProcessMessageWorkflowEntrypoint,
   ProcessMessageWorkflowRunEntrypoint,
@@ -14,6 +15,8 @@ import { StorePostLogWorkflowEntrypoint } from '../../workers/storePostLogWorkfl
 
 const LOCAL_DIR = '../db-local/v3';
 
+const localEnv = getWranglerLocalEnv();
+
 export const createLocalBindings = async () => {
   const path = `file://${resolve(LOCAL_DIR)}`;
 
@@ -22,8 +25,8 @@ export const createLocalBindings = async () => {
     script: '',
     d1Persist: `${path}/d1`,
     r2Persist: `${path}/r2`,
-    d1Databases: { D1: 'd1-local', D1_NOTIFICATION: 'd1-notification-local' },
-    r2Buckets: { R2: 'r2-local', R2_POST_LOG: 'r2-post-log-local' },
+    d1Databases: { D1: localEnv.D1_ID, D1_NOTIFICATION: localEnv.D1_NOTIFICATION_ID },
+    r2Buckets: { R2: localEnv.R2_BUCKET_NAME, R2_POST_LOG: localEnv.R2_POST_LOG_BUCKET_NAME },
   });
 
   const bindings = await mf.getBindings<{

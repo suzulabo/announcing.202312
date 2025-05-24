@@ -1,15 +1,17 @@
-import { configDotenv } from 'dotenv';
+import {
+  getWranglerLocalEnv,
+  getWranglerRemoteEnv,
+} from '@announcing/cloudflare-support/wranglerEnv';
 import { writeFile } from 'node:fs/promises';
 import type { Unstable_RawConfig } from 'wrangler';
 
-configDotenv({ path: '.wrangler.env.remote' });
-
-const { PROJECT_NAME, D1_NOTIFICATION_ID } = process.env;
+const localEnv = getWranglerLocalEnv();
+const remoteEnv = getWranglerRemoteEnv();
 
 const d1Notification = {
   binding: 'D1_NOTIFICATION',
   database_name: 'd1-notification',
-  database_id: 'd1-notification-local',
+  database_id: localEnv.D1_NOTIFICATION_ID,
   migrations_dir: './migrations',
 };
 
@@ -27,7 +29,7 @@ const workflows = [
 ];
 
 const config: Unstable_RawConfig = {
-  ...(PROJECT_NAME && { name: PROJECT_NAME }),
+  name: localEnv.NOTIFICATION_PROJECT_NAME,
   main: 'src/workers/index.ts',
   compatibility_date: '2025-05-05',
   compatibility_flags: ['nodejs_compat_v2'],
@@ -41,9 +43,8 @@ await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
 
 const remoteConfig = {
   ...config,
-  d1_databases: [
-    { ...d1Notification, database_id: D1_NOTIFICATION_ID ?? 'd1-notification-remote' },
-  ],
+  name: remoteEnv.NOTIFICATION_PROJECT_NAME,
+  d1_databases: [{ ...d1Notification, database_id: remoteEnv.D1_NOTIFICATION_ID }],
 };
 
 await writeFile('wrangler.remote.jsonc', JSON.stringify(remoteConfig, undefined, 2));

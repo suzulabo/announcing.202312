@@ -36,12 +36,11 @@
     "genTestData": "tsx tools/genTestData.ts"
   },
   "devDependencies": {
+    "@announcing/cloudflare-support": "workspace:*",
     "@aws-sdk/client-s3": "3.787.0",
     "@cloudflare/workers-types": "catalog:",
     "@faker-js/faker": "9.7.0",
-    "@libsql/client": "0.15.4",
     "date-fns": "4.1.0",
-    "dotenv": "16.5.0",
     "drizzle-kit": "0.31.0",
     "drizzle-orm": "0.42.0",
     "image-size": "2.0.2",
