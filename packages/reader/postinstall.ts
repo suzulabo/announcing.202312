@@ -9,14 +9,21 @@ const { PROJECT_NAME, D1_ID, R2_BUCKET_NAME } = process.env;
 const d1 = {
   binding: 'D1',
   database_name: 'D1',
-  database_id: 'D1_LOCAL',
-  migrations_dir: './migrations',
+  database_id: 'd1-local',
 };
 
 const r2 = {
   binding: 'R2',
-  bucket_name: 'R2_LOCAL',
+  bucket_name: 'r2-local',
 };
+
+const services = [
+  {
+    binding: 'WK_PUT_TOKEN',
+    service: 'announcing-notification',
+    entrypoint: 'PutTokenEntrypoint',
+  },
+];
 
 const config: Unstable_RawConfig = {
   ...(PROJECT_NAME && { name: PROJECT_NAME }),
@@ -32,6 +39,7 @@ const config: Unstable_RawConfig = {
 
   d1_databases: [d1],
   r2_buckets: [r2],
+  services,
 };
 
 await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
