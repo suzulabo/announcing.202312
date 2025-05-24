@@ -44,6 +44,11 @@ const config: Unstable_RawConfig = {
   compatibility_flags: ['nodejs_compat_v2'],
   upload_source_maps: true,
 
+  observability: {
+    enabled: true,
+    head_sampling_rate: 1,
+  },
+
   assets: {
     binding: 'ASSETS',
     directory: '.svelte-kit/cloudflare',
