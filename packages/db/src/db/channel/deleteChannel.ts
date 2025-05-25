@@ -14,7 +14,7 @@ export const deleteChannel = async (
     updatedAt: number;
   },
 ) => {
-  const result = await db.delete(channelsTable).where(
+  await db.delete(channelsTable).where(
     and(
       eq(channelsTable.channelID, channelID),
       eq(channelsTable.updatedAt, updatedAt),
@@ -26,6 +26,4 @@ export const deleteChannel = async (
       ),
     ),
   );
-
-  return result.rowsAffected;
 };

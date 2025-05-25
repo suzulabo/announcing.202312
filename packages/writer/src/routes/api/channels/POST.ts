@@ -1,4 +1,3 @@
-import { db } from '$lib/db/db';
 import { getFormFile, getFormString } from '$lib/utils/form';
 import {
   CHANNEL_DESC_MAX_BYTES,
@@ -59,7 +58,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 
   const channelID = genChannelID();
 
-  await db.createChannel({ ...data, channelID, userID }, locals.cf);
+  await locals.db.createChannel({ ...data, channelID, userID });
 
   return json({});
 };

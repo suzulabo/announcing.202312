@@ -1,4 +1,4 @@
-import { AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, AUTH_SECRET } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { PUBLIC_AUTH_CARDINALS } from '$env/static/public';
 import { SvelteKitAuth, type SvelteKitAuthConfig } from '@auth/sveltekit';
 import Credentials from '@auth/sveltekit/providers/credentials';
@@ -6,8 +6,8 @@ import Google from '@auth/sveltekit/providers/google';
 
 const providers: SvelteKitAuthConfig['providers'] = [
   Google({
-    clientId: AUTH_GOOGLE_ID,
-    clientSecret: AUTH_GOOGLE_SECRET,
+    clientId: env.AUTH_GOOGLE_ID,
+    clientSecret: env.AUTH_GOOGLE_SECRET,
     authorization: {
       params: {
         scope: 'openid',
@@ -48,6 +48,6 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
       return session;
     },
   },
-  secret: AUTH_SECRET,
+  secret: env.AUTH_SECRET,
   trustHost: true,
 });

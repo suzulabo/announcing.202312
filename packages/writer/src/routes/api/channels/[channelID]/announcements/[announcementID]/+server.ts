@@ -1,4 +1,3 @@
-import { db } from '$lib/db/db';
 import {
   getFormFileOrString,
   getFormFilesOrStrings,
@@ -19,7 +18,7 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async ({ params, locals }) => {
   const { channelID, announcementID } = params;
 
-  const result = await db.getAnnouncement({ channelID, announcementID }, locals.cf);
+  const result = await locals.db.getAnnouncement({ channelID, announcementID });
   if (!result) {
     error(404, 'Missing announcement');
   }
@@ -58,7 +57,7 @@ const putSchema = v.strictObject({
   targetUpdatedAt: v.pipe(v.number(), v.integer(), v.minValue(0)),
 });
 
-export const PUT: RequestHandler = async ({ locals, params, request }) => {
+export const PUT: RequestHandler = async ({ locals, params, request, getClientAddress }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -81,15 +80,20 @@ export const PUT: RequestHandler = async ({ locals, params, request }) => {
   const channelID = params.channelID;
   const targetAnnouncementID = params.announcementID;
 
-  await db.updateAnnouncement(
-    {
-      userID,
-      channelID,
-      targetAnnouncementID,
-      ...data,
-    },
-    locals.cf,
-  );
+  const announcementValues = await locals.db.updateAnnouncement({
+    userID,
+    channelID,
+    targetAnnouncementID,
+    ...data,
+  });
+
+  if (announcementValues) {
+    await locals.storePostLog({
+      ...announcementValues,
+      ip: getClientAddress(),
+      prevAnnouncementID: targetAnnouncementID,
+    });
+  }
 
   return json({});
 };
@@ -111,15 +115,12 @@ export const DELETE: RequestHandler = async ({ locals, params, request }) => {
 
   const { channelID, announcementID } = params;
 
-  await db.removeAnnouncement(
-    {
-      userID,
-      channelID,
-      targetAnnouncementID: announcementID,
-      targetUpdatedAt: data.updatedAt,
-    },
-    locals.cf,
-  );
+  await locals.db.removeAnnouncement({
+    userID,
+    channelID,
+    targetAnnouncementID: announcementID,
+    targetUpdatedAt: data.updatedAt,
+  });
 
   return json({});
 };

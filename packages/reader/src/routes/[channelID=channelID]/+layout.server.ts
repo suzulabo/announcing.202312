@@ -1,4 +1,3 @@
-import { db } from '$lib/db/db';
 import { resolveChannel } from '$lib/db/resolver';
 import { READER } from '@announcing/db';
 import { error } from '@sveltejs/kit';
@@ -7,7 +6,7 @@ import type { LayoutServerLoad } from './$types';
 export const load: LayoutServerLoad = async ({ params, locals }) => {
   const { channelID } = params;
 
-  const channel = await db.getChannel({ userID: READER, channelID }, locals.cf);
+  const channel = await locals.db.getChannel({ userID: READER, channelID });
 
   if (!channel) {
     error(404);

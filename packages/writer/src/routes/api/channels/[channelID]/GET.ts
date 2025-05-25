@@ -1,4 +1,3 @@
-import { db } from '$lib/db/db';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
@@ -9,7 +8,7 @@ export const GET: RequestHandler = async ({ locals, params }) => {
   }
 
   const channelID = params.channelID;
-  const channel = await db.getChannel({ userID, channelID }, locals.cf);
+  const channel = await locals.db.getChannel({ userID, channelID });
   if (!channel) {
     return error(404);
   }

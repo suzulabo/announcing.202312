@@ -1,6 +1,7 @@
 import { dev } from '$app/environment';
-import { GOOGLE_CREDENTIALS_BASE64, PERFORMANCE_HOOK } from '$env/static/private';
+import { PERFORMANCE_HOOK } from '$env/static/private';
 import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import { createDB } from '@announcing/db';
 import {
   handleErrorWithSentry,
   initCloudflareSentryHandle,
@@ -27,11 +28,7 @@ const performanceHandle: Handle = async ({ event, resolve }) => {
 let localBindings: App.Platform['env'];
 
 if (dev) {
-  const dbLocal = await (await import('@announcing/db/localBindings')).createLocalBindings();
-  const notificationLocal = await (
-    await import('@announcing/notification/localBindings')
-  ).createLocalBindings(false, GOOGLE_CREDENTIALS_BASE64);
-  localBindings = { ...dbLocal, ...notificationLocal };
+  localBindings = await (await import('$lib/local/localBinding')).createLocalBindings();
 }
 
 const authorizationHandle: Handle = async ({ resolve, event }) => {
@@ -48,10 +45,32 @@ const authorizationHandle: Handle = async ({ resolve, event }) => {
 
 const cloudflareHandle: Handle = ({ resolve, event }) => {
   if (dev) {
-    event.locals.cf = localBindings;
+    event.locals = {
+      ...event.locals,
+      db: createDB(localBindings),
+      storePostLog: async (params) => {
+        await localBindings.WF_STORE_POST_LOG.create({ params });
+      },
+      processMessage: async (params) => {
+        await localBindings.WF_PROCESS_MESSAGE_RUN.createInstance(params);
+      },
+    };
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    event.locals.cf = event.platform!.env;
+    const env = event.platform?.env;
+    if (!env) {
+      throw new Error('Missing platform.env');
+    }
+
+    event.locals = {
+      ...event.locals,
+      db: createDB(env),
+      storePostLog: async (params) => {
+        await env.WF_STORE_POST_LOG.create({ params });
+      },
+      processMessage: async (params) => {
+        await env.WF_PROCESS_MESSAGE_RUN.createInstance(params);
+      },
+    };
   }
   return resolve(event);
 };

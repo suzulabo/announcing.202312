@@ -1,21 +1,9 @@
-import {
-  PUBLIC_FIREBASE_API_KEY,
-  PUBLIC_FIREBASE_APP_ID,
-  PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  PUBLIC_FIREBASE_PROJECT_ID,
-  PUBLIC_FIREBASE_VAPID_KEY,
-} from '$env/static/public';
+import { PUBLIC_FIREBASE_CONFIG_JSON, PUBLIC_FIREBASE_VAPID_KEY } from '$env/static/public';
 import { getIOSToken } from '$lib/platform/localStorage';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, type FirebaseOptions } from 'firebase/app';
 import { getMessaging, getToken, isSupported, type Messaging } from 'firebase/messaging';
 
-const firebaseConfig = {
-  apiKey: PUBLIC_FIREBASE_API_KEY,
-  projectId: PUBLIC_FIREBASE_PROJECT_ID,
-  messagingSenderId: PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: PUBLIC_FIREBASE_APP_ID,
-};
-
+const firebaseConfig: FirebaseOptions = JSON.parse(PUBLIC_FIREBASE_CONFIG_JSON);
 const vapidKey = PUBLIC_FIREBASE_VAPID_KEY;
 
 const initContext = async () => {

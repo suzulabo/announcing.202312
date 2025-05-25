@@ -1,4 +1,3 @@
-import { db } from '$lib/db/db';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 import { error, json } from '@sveltejs/kit';
 import * as v from 'valibot';
@@ -21,7 +20,7 @@ export const DELETE: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
-  await db.deleteChannel({ userID, channelID, updatedAt: data.updatedAt }, locals.cf);
+  await locals.db.deleteChannel({ userID, channelID, updatedAt: data.updatedAt });
 
   return json({});
 };

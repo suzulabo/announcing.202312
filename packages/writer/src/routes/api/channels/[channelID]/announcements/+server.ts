@@ -1,4 +1,3 @@
-import { db } from '$lib/db/db';
 import { getFormFile, getFormFiles, getFormString } from '$lib/utils/form';
 import { getUserIDNoRedirect } from '$lib/utils/getUserID';
 import {
@@ -37,7 +36,7 @@ const postSchema = v.strictObject({
   ]),
 });
 
-export const POST: RequestHandler = async ({ locals, params, request }) => {
+export const POST: RequestHandler = async ({ locals, params, request, getClientAddress }) => {
   const userID = await getUserIDNoRedirect(locals);
   if (!userID) {
     error(400, 'Missing userID');
@@ -58,20 +57,17 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
 
   const channelID = params.channelID;
 
-  const channel = await db.getChannel({ userID, channelID }, locals.cf);
+  const channel = await locals.db.getChannel({ userID, channelID });
   if (!channel) {
     error(404, 'Missing channel');
   }
 
-  const announcementValues = await db.addAnnouncement(
-    {
-      userID,
-      channelID,
-      ...data,
-      createdAt: new Date().getTime(),
-    },
-    locals.cf,
-  );
+  const announcementValues = await locals.db.addAnnouncement({
+    userID,
+    channelID,
+    ...data,
+    createdAt: new Date().getTime(),
+  });
 
   if (announcementValues) {
     const params: ProcessMessageParams = {
@@ -98,7 +94,9 @@ export const POST: RequestHandler = async ({ locals, params, request }) => {
       },
     };
 
-    await locals.cf.WF_PROCESS_MESSAGE_RUN.createInstance(params);
+    await locals.processMessage(params);
+
+    await locals.storePostLog({ ...announcementValues, ip: getClientAddress() });
   }
 
   return json({});
