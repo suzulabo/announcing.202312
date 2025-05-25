@@ -15,7 +15,9 @@ jobs:
 
       - uses: ./.github/workflows/setup
 
-      - run: echo ${VALUES_YAML} yq yq eval '.[] | "\(key)=\(.)"' - >> ${GITHUB_ENV}
+      - run: |
+          echo ${VALUES_YAML} | yq eval '.[] | "\(key)=\(.)"' -
+          echo ${VALUES_YAML} | yq eval '.[] | "\(key)=\(.)"' - >> ${GITHUB_ENV}
         env:
           VALUES_YAML: ${{ vars.VALUES_YAML }}
 
