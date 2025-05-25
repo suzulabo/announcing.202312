@@ -15,6 +15,8 @@
     "lint:fix": "pnpm eslint --fix",
     "genWranglerJsonc": "pnpm -r run genWranglerJsonc",
     "build": "pnpm -r run build",
+    "migrate:remote": "pnpm -r run migrate:remote",
+    "deploy": "pnpm -r run deploy",
     "build:writer": "pnpm --filter @announcing/writer... build",
     "build:reader": "pnpm --filter @announcing/reader... build",
     "deploy:writer": "pnpm --filter @announcing/writer run deploy",
