@@ -20,9 +20,11 @@ jobs:
           echo ${VALUES_YAML} >> values.yaml
           cat values.yaml
           echo === try 1 ===
-          yq "." values.yaml
+          yq '.' values.yaml
           echo === try 2 ===
-          yq '.[] | "\(key)=\(.)"' values.yaml
+          yq '.[]' values.yaml
+          echo === try 3 ===
+          yq '.[] | "\(key)"' values.yaml
         env:
           VALUES_YAML: ${{ vars.VALUES_YAML }}
 
