@@ -14,15 +14,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: ./.github/workflows/setup
-        if: false
 
       - run: echo ${VALUES_JSON} | jq -r 'to_entries | map("\(.key)=\(.value)") | join("\n")' >> ${GITHUB_ENV}
         env:
           VALUES_JSON: ${{ vars.VALUES_JSON }}
-
-      - run: |
-          echo WRITER_PROJECT_NAME = [${WRITER_PROJECT_NAME}]
-          echo PUBLIC_FIREBASE_CONFIG_JSON = [${PUBLIC_FIREBASE_CONFIG_JSON}]
 
       - run: |
           echo pnpm run build

@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 import { PERFORMANCE_HOOK } from '$env/static/private';
-import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import { PUBLIC_WRITER_SENTRY_DSN } from '$env/static/public';
 import { createDB } from '@announcing/db';
 import {
   handleErrorWithSentry,
@@ -79,17 +79,17 @@ const handlers = [];
 if (PERFORMANCE_HOOK) {
   handlers.push(performanceHandle);
 }
-if (PUBLIC_SENTRY_DSN) {
+if (PUBLIC_WRITER_SENTRY_DSN) {
   if (!dev) {
     handlers.push(
       initCloudflareSentryHandle({
-        dsn: PUBLIC_SENTRY_DSN,
+        dsn: PUBLIC_WRITER_SENTRY_DSN,
         tracesSampleRate: 1.0,
       }),
     );
   } else {
     sentryInit({
-      dsn: PUBLIC_SENTRY_DSN,
+      dsn: PUBLIC_WRITER_SENTRY_DSN,
       tracesSampleRate: 1.0,
     });
   }
