@@ -17,6 +17,20 @@ jobs:
         if: false
 
       - run: |
+          cat ${VALUES_YAML_BASE64} | base64 -d > values.yaml
+          cat values.yaml
+          echo === try 1 ===
+          yq '.' values.yaml
+          echo === try 2 ===
+          yq '.[]' values.yaml
+          echo === try 3 ===
+          yq '.[] | "\(key)"' values.yaml
+          echo === try 4 ===
+          yq 'to_entries[] | "\(.key)=\(.value)"' values.yaml
+        env:
+          VALUES_YAML_BASE64: ${{ vars.VALUES_YAML_BASE64 }}
+
+      - run: |
           yq -V
           echo ${VALUES_YAML} >> values.yaml
           cat values.yaml
@@ -30,6 +44,7 @@ jobs:
           yq 'to_entries[] | "\(.key)=\(.value)"' values.yaml
         env:
           VALUES_YAML: ${{ vars.VALUES_YAML }}
+        if: false
 
       - run: echo WRITER_PROJECT_NAME = [${WRITER_PROJECT_NAME}]
 
