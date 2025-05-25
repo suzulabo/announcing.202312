@@ -3,7 +3,7 @@
   "name": "@announcing/writer",
   "type": "module",
   "scripts": {
-    "postinstall": "jiti postinstall.ts",
+    "genWranglerJsonc": "jiti genWranglerJsonc.ts",
     "dev": "vite dev --port 5174",
     "dev:workers": "wrangler dev -c wrangler.local.jsonc -c ../notification/wrangler.local.jsonc --persist-to ../db-local",
     "build": "vite build",

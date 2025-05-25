@@ -13,7 +13,7 @@
     "dist"
   ],
   "scripts": {
-    "postinstall": "jiti postinstall.ts",
+    "genWranglerJsonc": "jiti genWranglerJsonc.ts",
     "dev:workers": "wrangler dev -c wrangler.local.jsonc --persist-to ../db-local",
     "test": "vitest run",
     "build": "tsc -p tsconfig.build.json",

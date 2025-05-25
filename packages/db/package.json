@@ -25,7 +25,7 @@
     "dist"
   ],
   "scripts": {
-    "postinstall": "jiti postinstall.ts",
+    "genWranglerJsonc": "jiti genWranglerJsonc.ts",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "build": "tsc -p tsconfig.build.json",
