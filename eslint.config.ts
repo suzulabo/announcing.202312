@@ -19,7 +19,7 @@ const tsConfig: InfiniteDepthConfigWithExtends = {
   extends: [js.configs.recommended, ...ts.configs.strict, ...ts.configs.stylistic],
   languageOptions: {
     parserOptions: {
-      project: true,
+      projectService: true,
       extraFileExtensions: ['.svelte', '.svelte.ts'],
     },
   },
