@@ -17,7 +17,7 @@ jobs:
         if: false
 
       - run: |
-          cat ${VALUES_YAML_BASE64} | base64 -d > values.yaml
+          echo ${VALUES_YAML_BASE64} | base64 -d > values.yaml
           cat values.yaml
           echo === try 1 ===
           yq '.' values.yaml
