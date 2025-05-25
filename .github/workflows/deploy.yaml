@@ -16,7 +16,8 @@ jobs:
       - uses: ./.github/workflows/setup
 
       - run: echo ${VALUES_YAML} yq yq eval '.[] | "\(key)=\(.)"' - >> ${GITHUB_ENV}
-        env: VALUES_YAML:${{ vars.VALUES_YAML }}
+        env:
+          VALUES_YAML: ${{ vars.VALUES_YAML }}
 
       - run: echo WRITER_PROJECT_NAME = [${WRITER_PROJECT_NAME}]
 
