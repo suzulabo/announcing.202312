@@ -16,9 +16,9 @@ jobs:
       - uses: ./.github/workflows/setup
         if: false
 
-      - run: echo ${VALUES_YAML_BASE64} | base64 -d | yq '.[] | "\(key)=\(.)"' >> ${GITHUB_ENV}
+      - run: echo ${VALUES_JSON} | jq -r 'to_entries | map("\(.key)=\(.value)") | join("\n")' >> ${GITHUB_ENV}
         env:
-          VALUES_YAML_BASE64: ${{ vars.VALUES_YAML_BASE64 }}
+          VALUES_JSON: ${{ vars.VALUES_JSON }}
 
       - run: |
           echo WRITER_PROJECT_NAME = [${WRITER_PROJECT_NAME}]
