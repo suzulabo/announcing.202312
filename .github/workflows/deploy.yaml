@@ -16,6 +16,10 @@ jobs:
       - uses: ./.github/workflows/setup
         if: false
 
+      - run: echo ${VALUES_YAML} | tr '\r' '\n' | yq '.[] | "\(key)=\(.)"'
+        env:
+          VALUES_YAML: ${{ vars.VALUES_YAML }}
+
       - run: |
           echo ${VALUES_YAML_BASE64} | base64 -d > values.yaml
           cat values.yaml
@@ -29,6 +33,7 @@ jobs:
           yq 'to_entries[] | "\(.key)=\(.value)"' values.yaml
         env:
           VALUES_YAML_BASE64: ${{ vars.VALUES_YAML_BASE64 }}
+        if: false
 
       - run: |
           yq -V
