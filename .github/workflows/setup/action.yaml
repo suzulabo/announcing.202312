@@ -12,5 +12,4 @@ runs:
 
     - run: |
         pnpm install --frozen-lockfile
-        mkdir -p packages/db-dev
       shell: bash
