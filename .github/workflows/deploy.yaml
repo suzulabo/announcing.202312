@@ -21,37 +21,8 @@ jobs:
           VALUES_YAML: ${{ vars.VALUES_YAML }}
 
       - run: |
-          echo ${VALUES_YAML_BASE64} | base64 -d > values.yaml
-          cat values.yaml
-          echo === try 1 ===
-          yq '.' values.yaml
-          echo === try 2 ===
-          yq '.[]' values.yaml
-          echo === try 3 ===
-          yq '.[] | "\(key)"' values.yaml
-          echo === try 4 ===
-          yq 'to_entries[] | "\(.key)=\(.value)"' values.yaml
-        env:
-          VALUES_YAML_BASE64: ${{ vars.VALUES_YAML_BASE64 }}
-        if: false
-
-      - run: |
-          yq -V
-          echo ${VALUES_YAML} >> values.yaml
-          cat values.yaml
-          echo === try 1 ===
-          yq '.' values.yaml
-          echo === try 2 ===
-          yq '.[]' values.yaml
-          echo === try 3 ===
-          yq '.[] | "\(key)"' values.yaml
-          echo === try 4 ===
-          yq 'to_entries[] | "\(.key)=\(.value)"' values.yaml
-        env:
-          VALUES_YAML: ${{ vars.VALUES_YAML }}
-        if: false
-
-      - run: echo WRITER_PROJECT_NAME = [${WRITER_PROJECT_NAME}]
+          echo WRITER_PROJECT_NAME = [${WRITER_PROJECT_NAME}]
+          echo PUBLIC_FIREBASE_CONFIG_JSON = [${PUBLIC_FIREBASE_CONFIG_JSON}]
 
       - run: |
           echo pnpm run build
