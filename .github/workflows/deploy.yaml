@@ -17,7 +17,8 @@ jobs:
         if: false
 
       - run: |
-          echo ${VALUES_YAML}
+          echo ${VALUES_YAML} >> values.yaml
+          yq eval '.[] | "\(key)=\(.)"' values.yaml
         env:
           VALUES_YAML: ${{ vars.VALUES_YAML }}
 
