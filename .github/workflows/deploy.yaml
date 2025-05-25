@@ -20,10 +20,9 @@ jobs:
           VALUES_JSON: ${{ vars.VALUES_JSON }}
 
       - run: |
-          pnpm -r run genWranglerJsonc
           pnpm -r run build
+          pnpm -r run genWranglerJsonc
 
       - run: |
-          pnpm -r run genWranglerJsonc
           pnpm -r run migrate:remote
           pnpm -r run deploy
