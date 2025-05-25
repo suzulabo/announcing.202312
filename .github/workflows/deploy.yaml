@@ -17,6 +17,7 @@ jobs:
         if: false
 
       - run: |
+          yq -V
           echo ${VALUES_YAML} >> values.yaml
           cat values.yaml
           echo === try 1 ===
