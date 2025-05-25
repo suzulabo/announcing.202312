@@ -26,6 +26,8 @@ jobs:
           yq '.[]' values.yaml
           echo === try 3 ===
           yq '.[] | "\(key)"' values.yaml
+          echo === try 4 ===
+          yq 'to_entries[] | "\(.key)=\(.value)"' values.yaml
         env:
           VALUES_YAML: ${{ vars.VALUES_YAML }}
 
