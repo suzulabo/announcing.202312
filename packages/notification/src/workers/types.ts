@@ -1,13 +1,13 @@
-import type { BaseMessage } from 'firebase-admin/messaging';
+import type { EnhancedFcmMessage } from 'fcm-cloudflare-workers';
 
 export type ProcessMessageParams = {
   tag: string;
-  message: BaseMessage;
+  message: EnhancedFcmMessage;
 };
 
 export type SendMessageParams = {
   tokens: string[];
-  message: BaseMessage;
+  message: EnhancedFcmMessage;
 };
 
 export type PutTokenParams = { token: string; tags: string[] };
