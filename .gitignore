@@ -10,5 +10,6 @@ playwright-report
 *.test
 wrangler.*.jsonc
 .wrangler.env.*
+.dev.vars
 
 packages/db-local

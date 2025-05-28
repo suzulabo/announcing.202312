@@ -119,7 +119,7 @@ sw.addEventListener('notificationclick', (event) => {
       await log('notificationclick');
       event.notification.close();
 
-      const channelID = event.notification.data.channelID;
+      const channelID = event.notification.tag;
 
       if (!channelID) {
         await log('Missing channelID');

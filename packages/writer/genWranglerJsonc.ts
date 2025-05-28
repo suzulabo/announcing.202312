@@ -24,18 +24,10 @@ const r2PostsLog = {
   bucket_name: localEnv.R2_POST_LOG_BUCKET_NAME,
 };
 
-const workflows = [
-  {
-    binding: 'WF_STORE_POST_LOG',
-    name: 'StorePostLogWorkflow',
-    class_name: 'StorePostLogWorkflowEntrypoint',
-  },
-];
-
-const servicesProcessMessageRun = {
-  binding: 'WF_PROCESS_MESSAGE_RUN',
+const servicesSendNotification = {
+  binding: 'SEND_NOTIFICATION',
   service: localEnv.NOTIFICATION_PROJECT_NAME,
-  entrypoint: 'ProcessMessageWorkflowRunEntrypoint',
+  entrypoint: 'SendNotificationEntrypoint',
 };
 const config: Unstable_RawConfig = {
   name: localEnv.WRITER_PROJECT_NAME,
@@ -56,8 +48,7 @@ const config: Unstable_RawConfig = {
 
   d1_databases: [d1],
   r2_buckets: [r2, r2PostsLog],
-  workflows,
-  services: [servicesProcessMessageRun],
+  services: [servicesSendNotification],
 };
 
 await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
@@ -73,7 +64,7 @@ const remoteConfig: Unstable_RawConfig = {
       bucket_name: remoteEnv.R2_POST_LOG_BUCKET_NAME,
     },
   ],
-  services: [{ ...servicesProcessMessageRun, service: remoteEnv.NOTIFICATION_PROJECT_NAME }],
+  services: [{ ...servicesSendNotification, service: remoteEnv.NOTIFICATION_PROJECT_NAME }],
 };
 
 await writeFile('wrangler.remote.jsonc', JSON.stringify(remoteConfig, undefined, 2));

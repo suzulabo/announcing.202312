@@ -1,6 +1,7 @@
 import { WorkerEntrypoint } from 'cloudflare:workers';
 import { createDB } from '../db/db';
-import type { PutTokenParams } from './types';
+
+export type PutTokenParams = { token: string; tags: string[] };
 
 export class PutTokenEntrypoint extends WorkerEntrypoint<{
   D1_NOTIFICATION: D1Database;

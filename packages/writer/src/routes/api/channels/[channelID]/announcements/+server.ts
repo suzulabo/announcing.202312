@@ -5,7 +5,7 @@ import {
   ANNOUNCEMENT_IMAGE_MAX_BYTES,
   ANNOUNCEMENT_TITLE_MAX_BYTES,
 } from '@announcing/db/constants';
-import type { ProcessMessageParams } from '@announcing/notification';
+import type { SendNotificationParams } from '@announcing/notification';
 import { error, json } from '@sveltejs/kit';
 import * as v from 'valibot';
 import type { RequestHandler } from './$types';
@@ -70,7 +70,7 @@ export const POST: RequestHandler = async ({ locals, params, request, getClientA
   });
 
   if (announcementValues) {
-    const params: ProcessMessageParams = {
+    const params: SendNotificationParams = {
       tag: channelID,
       message: {
         webpush: {
@@ -86,17 +86,17 @@ export const POST: RequestHandler = async ({ locals, params, request, getClientA
             ...(announcementValues.headerImage && {
               image: `/s/${announcementValues.headerImage}`,
             }),
-            data: {
-              channelID,
-            },
           },
         },
       },
     };
 
-    await locals.processMessage(params);
-
-    await locals.storePostLog({ ...announcementValues, ip: getClientAddress() });
+    locals.waitUntil(
+      Promise.allSettled([
+        locals.storePostLog({ ...announcementValues, ip: getClientAddress() }),
+        locals.sendNotification(params),
+      ]),
+    );
   }
 
   return json({});

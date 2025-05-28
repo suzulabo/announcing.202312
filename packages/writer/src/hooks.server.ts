@@ -51,14 +51,21 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
       storePostLog: async (params) => {
         await localBindings.WF_STORE_POST_LOG.create({ params });
       },
-      processMessage: async (params) => {
-        await localBindings.WF_PROCESS_MESSAGE_RUN.createInstance(params);
+      sendNotification: async (params) => {
+        await localBindings.SEND_NOTIFICATION.sendNotification(params);
+      },
+      waitUntil: () => {
+        //
       },
     };
   } else {
     const env = event.platform?.env;
     if (!env) {
       throw new Error('Missing platform.env');
+    }
+    const context = event.platform?.context;
+    if (!context) {
+      throw new Error('Missing platform.context');
     }
 
     event.locals = {
@@ -67,8 +74,11 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
       storePostLog: async (params) => {
         await env.WF_STORE_POST_LOG.create({ params });
       },
-      processMessage: async (params) => {
-        await env.WF_PROCESS_MESSAGE_RUN.createInstance(params);
+      sendNotification: async (params) => {
+        await env.SEND_NOTIFICATION.sendNotification(params);
+      },
+      waitUntil: (promise: Promise<unknown>) => {
+        context.waitUntil(promise);
       },
     };
   }

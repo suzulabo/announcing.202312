@@ -24,7 +24,6 @@ export class StorePostLogWorkflowEntrypoint extends WorkflowEntrypoint<
 > {
   override async run({ payload }: WorkflowEvent<StorePostLogParams>, step: WorkflowStep) {
     await step.do('Store post log', async () => {
-      console.log('Store post log', payload);
       const { channelID, announcementID, updatedAt } = payload;
       const key = `${channelID}-${announcementID}-${updatedAt}.json`;
       await this.env.R2_POST_LOG.put(key, JSON.stringify(payload));
