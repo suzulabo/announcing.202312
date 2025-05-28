@@ -1,11 +1,11 @@
-import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import { PUBLIC_WRITER_SENTRY_DSN } from '$env/static/public';
 import * as Sentry from '@sentry/sveltekit';
 import { handleErrorWithSentry } from '@sentry/sveltekit';
 import type { HandleClientError } from '@sveltejs/kit';
 
-if (PUBLIC_SENTRY_DSN) {
+if (PUBLIC_WRITER_SENTRY_DSN) {
   Sentry.init({
-    dsn: PUBLIC_SENTRY_DSN,
+    dsn: PUBLIC_WRITER_SENTRY_DSN,
     tracesSampleRate: 1.0,
   });
 }

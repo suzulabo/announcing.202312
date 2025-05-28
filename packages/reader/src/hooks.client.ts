@@ -1,4 +1,4 @@
-import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import { PUBLIC_READER_SENTRY_DSN } from '$env/static/public';
 import { resolveBrowserSchema } from '$lib/platform/resolveBrowserSchema';
 import { handleErrorWithSentry, init as sentryInit } from '@sentry/sveltekit';
 import type { HandleClientError } from '@sveltejs/kit';
@@ -28,9 +28,9 @@ navigator.serviceWorker.addEventListener('message', (event) => {
   }
 });
 
-if (PUBLIC_SENTRY_DSN) {
+if (PUBLIC_READER_SENTRY_DSN) {
   sentryInit({
-    dsn: PUBLIC_SENTRY_DSN,
+    dsn: PUBLIC_READER_SENTRY_DSN,
     tracesSampleRate: 1.0,
   });
 }

@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import { PUBLIC_SENTRY_DSN } from '$env/static/public';
+import { PUBLIC_READER_SENTRY_DSN } from '$env/static/public';
 import { createDB } from '@announcing/db';
 import {
   handleErrorWithSentry,
@@ -42,17 +42,17 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
 };
 
 const handlers = [];
-if (PUBLIC_SENTRY_DSN) {
+if (PUBLIC_READER_SENTRY_DSN) {
   if (!dev) {
     handlers.push(
       initCloudflareSentryHandle({
-        dsn: PUBLIC_SENTRY_DSN,
+        dsn: PUBLIC_READER_SENTRY_DSN,
         tracesSampleRate: 1.0,
       }),
     );
   } else {
     sentryInit({
-      dsn: PUBLIC_SENTRY_DSN,
+      dsn: PUBLIC_READER_SENTRY_DSN,
       tracesSampleRate: 1.0,
     });
   }
