@@ -77,7 +77,9 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
       sendNotification: async (params) => {
         await env.SEND_NOTIFICATION.sendNotification(params);
       },
-      waitUntil: context.waitUntil,
+      waitUntil: (promise: Promise<unknown>) => {
+        context.waitUntil(promise);
+      },
     };
   }
   return resolve(event);
