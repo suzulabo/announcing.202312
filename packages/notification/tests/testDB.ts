@@ -13,9 +13,15 @@ export const createTestDB = async (maxTokens?: number) => {
     script: '',
     d1Databases: ['D1_NOTIFICATION'],
     d1Persist: `${path}/d1`,
+    kvNamespaces: ['KV_NOTIFICATION'],
+    kvPersist: `${path}/kv`,
   });
 
-  const bindings = await mf.getBindings<{ D1_NOTIFICATION: D1Database }>();
+  const bindings = await mf.getBindings<{
+    D1_NOTIFICATION: D1Database;
+    KV_NOTIFICATION: KVNamespace;
+  }>();
+
   const d1 = bindings.D1_NOTIFICATION;
 
   {
@@ -23,5 +29,5 @@ export const createTestDB = async (maxTokens?: number) => {
     await migrate(db, { migrationsFolder: MIGRATIONS_DIR });
   }
 
-  return { db: createDB({ ...bindings, maxTokens }), d1 };
+  return { db: createDB({ ...bindings, maxTokens }), d1, kv: bindings.KV_NOTIFICATION };
 };

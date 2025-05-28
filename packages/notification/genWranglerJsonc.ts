@@ -15,19 +15,6 @@ const d1Notification = {
   migrations_dir: './migrations',
 };
 
-const workflows = [
-  {
-    name: 'ProcessMessage',
-    binding: 'WF_PROCESS_MESSAGE',
-    class_name: 'ProcessMessageWorkflowEntrypoint',
-  },
-  {
-    name: 'SendMessage',
-    binding: 'WF_SEND_MESSAGE',
-    class_name: 'SendMessageWorkflowEntrypoint',
-  },
-];
-
 const config: Unstable_RawConfig = {
   name: localEnv.NOTIFICATION_PROJECT_NAME,
   main: 'src/workers/index.ts',
@@ -36,7 +23,6 @@ const config: Unstable_RawConfig = {
   upload_source_maps: true,
 
   d1_databases: [d1Notification],
-  workflows,
 };
 
 await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
