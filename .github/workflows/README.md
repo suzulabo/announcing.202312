@@ -9,6 +9,7 @@ Register the following JSON in an environment variable named VALUES_JSON.
   "D1_NOTIFICATION_ID": "xxx-xxx-xxx-xxx",
   "R2_BUCKET_NAME": "announcing",
   "R2_POST_LOG_BUCKET_NAME": "announcing-post-log",
+  "KV_NOTIFICATION_ID": "xxxxxxxxxxx",
   "PUBLIC_FIREBASE_CONFIG_JSON": {
     "apiKey": "xxxx",
     "projectId": "xxx",
