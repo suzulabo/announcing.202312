@@ -24,14 +24,6 @@ const r2PostsLog = {
   bucket_name: localEnv.R2_POST_LOG_BUCKET_NAME,
 };
 
-const workflows = [
-  {
-    binding: 'WF_STORE_POST_LOG',
-    name: 'StorePostLogWorkflow',
-    class_name: 'StorePostLogWorkflowEntrypoint',
-  },
-];
-
 const servicesProcessMessageRun = {
   binding: 'WF_PROCESS_MESSAGE_RUN',
   service: localEnv.NOTIFICATION_PROJECT_NAME,
@@ -56,7 +48,6 @@ const config: Unstable_RawConfig = {
 
   d1_databases: [d1],
   r2_buckets: [r2, r2PostsLog],
-  workflows,
   services: [servicesProcessMessageRun],
 };
 

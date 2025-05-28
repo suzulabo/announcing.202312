@@ -4,11 +4,7 @@ import {
   createWorkflowLocal,
 } from '@announcing/cloudflare-support/local';
 import { getWranglerLocalEnv } from '@announcing/cloudflare-support/wranglerEnv';
-import {
-  ProcessMessageWorkflowEntrypoint,
-  ProcessMessageWorkflowRunEntrypoint,
-  SendMessageWorkflowEntrypoint,
-} from '@announcing/notification';
+import { SendNotificationEntrypoint } from '@announcing/notification';
 import { Miniflare } from 'miniflare';
 import { resolve } from 'node:path';
 import { StorePostLogWorkflowEntrypoint } from '../../workers/storePostLogWorkflow';
@@ -25,8 +21,10 @@ export const createLocalBindings = async () => {
     script: '',
     d1Persist: `${path}/d1`,
     r2Persist: `${path}/r2`,
+    kvPersist: `${path}/kv`,
     d1Databases: { D1: localEnv.D1_ID, D1_NOTIFICATION: localEnv.D1_NOTIFICATION_ID },
     r2Buckets: { R2: localEnv.R2_BUCKET_NAME, R2_POST_LOG: localEnv.R2_POST_LOG_BUCKET_NAME },
+    kvNamespaces: { KV_NOTIFICATION: localEnv.KV_NOTIFICATION_ID },
   });
 
   const bindings = await mf.getBindings<{
@@ -34,31 +32,25 @@ export const createLocalBindings = async () => {
     D1_NOTIFICATION: D1Database;
     R2: R2Bucket;
     R2_POST_LOG: R2Bucket;
+    KV_NOTIFICATION: KVNamespace;
   }>();
 
   const WF_STORE_POST_LOG = createWorkflowLocal(StorePostLogWorkflowEntrypoint, bindings);
 
-  const WF_PROCESS_MESSAGE_RUN = ((): ProcessMessageWorkflowRunEntrypoint => {
+  const SEND_NOTIFICATION = ((): SendNotificationEntrypoint => {
     if (!GOOGLE_CREDENTIALS_BASE64) {
       return {
-        createInstance: () => {
+        sendNotification: () => {
           return Promise.resolve({ id: '' });
         },
-      } as unknown as ProcessMessageWorkflowRunEntrypoint;
+      } as unknown as SendNotificationEntrypoint;
     }
 
-    const WF_SEND_MESSAGE = createWorkflowLocal(SendMessageWorkflowEntrypoint, {
-      D1_NOTIFICATION: bindings.D1_NOTIFICATION,
+    return createWorkerEntrypointLocal(SendNotificationEntrypoint, {
+      ...bindings,
       GOOGLE_CREDENTIALS_BASE64,
-    });
-    const WF_PROCESS_MESSAGE = createWorkflowLocal(ProcessMessageWorkflowEntrypoint, {
-      D1_NOTIFICATION: bindings.D1_NOTIFICATION,
-      WF_SEND_MESSAGE,
-    });
-    return createWorkerEntrypointLocal(ProcessMessageWorkflowRunEntrypoint, {
-      WF_PROCESS_MESSAGE,
     });
   })();
 
-  return { ...bindings, WF_STORE_POST_LOG, WF_PROCESS_MESSAGE_RUN };
+  return { ...bindings, WF_STORE_POST_LOG, SEND_NOTIFICATION };
 };
