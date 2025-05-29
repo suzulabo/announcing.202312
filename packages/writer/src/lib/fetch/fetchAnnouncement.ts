@@ -13,7 +13,7 @@ export const fetchAnnouncement = (
     announcementID: string;
   },
   fetch_ = fetch,
-): GetAnnouncementResult | Promise<GetAnnouncementResult> => {
+): GetAnnouncementResult | Promise<GetAnnouncementResult | undefined> => {
   const cacheKey = `${channelID}-${announcementID}`;
 
   const cached = cache.get(cacheKey);
@@ -29,6 +29,10 @@ export const fetchAnnouncement = (
       const data = resolveAnnouncement(await res.json());
       cache.set(cacheKey, data);
       return data;
+    }
+
+    if (res.status === 404) {
+      return;
     }
 
     throw new Error(`Fetch Announcement Error: ${cacheKey}`);
