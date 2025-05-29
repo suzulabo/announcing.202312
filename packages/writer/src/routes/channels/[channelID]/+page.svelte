@@ -1,7 +1,7 @@
 <script lang="ts">
   import { LL } from '@announcing/i18n';
 
-  import { goto, invalidateAll } from '$app/navigation';
+  import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import { PUBLIC_READER_PREFIX } from '$env/static/public';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
@@ -43,9 +43,7 @@
       return;
     }
 
-    clearChannelCache();
-
-    await invalidateAll();
+    await clearChannelCache();
   };
 
   const deleteChannel = async () => {
@@ -62,7 +60,7 @@
       return;
     }
 
-    clearChannelCache();
+    await clearChannelCache();
 
     await goto('/');
   };

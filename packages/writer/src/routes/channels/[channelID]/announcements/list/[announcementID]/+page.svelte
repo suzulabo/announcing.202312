@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
+  import { clearChannelCache } from '$lib/fetch/channelCache';
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
   import { LL } from '@announcing/i18n';
   import type { PageData } from './$types';
-
-  import { goto } from '$app/navigation';
   import DeleteModal from './DeleteModal.svelte';
 
   interface Props {
@@ -26,6 +26,8 @@
       await goto('/error');
       return;
     }
+
+    await clearChannelCache();
 
     await goto('../list');
   };
