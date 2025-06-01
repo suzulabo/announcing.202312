@@ -46,6 +46,27 @@ describe('Announcement', () => {
       assert(b);
 
       await db.updateAnnouncement({
+        userID: 'u2',
+        channelID: 'a1',
+        targetAnnouncementID: announcementID,
+        targetUpdatedAt: a.updatedAt,
+        title: 'updated',
+        body: 'This is updated',
+        headerImage: undefined,
+        images: undefined,
+      });
+
+      expect(
+        await db.getAnnouncement({
+          channelID: 'a1',
+          announcementID,
+        }),
+      ).toMatchObject({
+        title: 'test',
+        body: 'This is test',
+      });
+
+      await db.updateAnnouncement({
         userID: 'u1',
         channelID: 'a1',
         targetAnnouncementID: announcementID,
@@ -69,6 +90,25 @@ describe('Announcement', () => {
       });
       assert(a);
       expect(a).toMatchObject({
+        title: 'updated',
+        body: 'This is updated',
+        headerImage: undefined,
+        images: undefined,
+      });
+
+      await db.removeAnnouncement({
+        userID: 'u2',
+        channelID: 'a1',
+        targetAnnouncementID: announcementID,
+        targetUpdatedAt: a.updatedAt,
+      });
+
+      expect(
+        await db.getAnnouncement({
+          channelID: 'a1',
+          announcementID,
+        }),
+      ).toMatchObject({
         title: 'updated',
         body: 'This is updated',
         headerImage: undefined,
