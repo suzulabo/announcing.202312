@@ -62,7 +62,7 @@
         }}
       >
         {#if notificationState.permission === 'granted'}
-          {#if notificationState.channels.includes(headerNotification.channelID)}
+          {#if headerNotification.channelID in notificationState.channels}
             <MaterialSymbolsNotificationsRounded />
           {:else}
             <MaterialSymbolsNotificationsOutlineRounded />

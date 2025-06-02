@@ -1,9 +1,11 @@
+import type { NotificationChannelsValue } from '$lib/platform/localStorage';
+
 type NotificationState = {
-  channels: string[];
+  channels: NotificationChannelsValue;
   permission: NotificationPermission | 'not-supported';
 };
 
 export const notificationState = $state<NotificationState>({
-  channels: [],
+  channels: {},
   permission: 'not-supported',
 });

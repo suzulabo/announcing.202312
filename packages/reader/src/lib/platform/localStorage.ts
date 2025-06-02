@@ -2,19 +2,21 @@ const KEY_NOTIFICATION_CHANNELS = 'notification-channels';
 const KEY_IOS_TOKEN = 'ios-token';
 const KEY_IOS_BROWSER_SCHEMA = 'ios-browser-schema';
 
-export const setNotificationChannels = (v: string[]) => {
+export type NotificationChannelsValue = Record<string, { name: string }>;
+
+export const setNotificationChannels = (v: NotificationChannelsValue) => {
   localStorage.setItem(KEY_NOTIFICATION_CHANNELS, JSON.stringify(v));
 };
 
-export const getNotificationChannels = (): string[] => {
+export const getNotificationChannels = (): NotificationChannelsValue => {
   const s = localStorage.getItem(KEY_NOTIFICATION_CHANNELS);
   if (!s) {
-    return [];
+    return {};
   } else {
     try {
       return JSON.parse(s);
     } catch {
-      return [];
+      return {};
     }
   }
 };

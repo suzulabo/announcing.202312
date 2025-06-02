@@ -6,6 +6,7 @@ import {
   getNotificationChannels,
   setNotificationChannels,
 } from '$lib/platform/localStorage';
+import type { GetChannelResult } from '@announcing/db/types';
 import { notificationState } from './notificationState.svelte';
 
 const loadChannels = () => {
@@ -41,13 +42,9 @@ export const requestPermission = async () => {
   notificationState.permission = await Notification.requestPermission();
 };
 
-export const addChannel = async (channelID: string) => {
-  const curChannels = [...notificationState.channels];
-  const newChannels = [...curChannels];
-
-  if (!newChannels.includes(channelID)) {
-    newChannels.push(channelID);
-  }
+export const addChannel = async (channel: GetChannelResult) => {
+  const curChannels = { ...notificationState.channels };
+  const newChannels = { ...curChannels, [channel.channelID]: { name: channel.name } };
 
   setNotificationChannels(newChannels);
 
@@ -57,7 +54,7 @@ export const addChannel = async (channelID: string) => {
   }
 
   try {
-    await postNotification({ token, tags: newChannels });
+    await postNotification({ token, tags: Object.keys(newChannels) });
     notificationState.channels = newChannels;
   } catch {
     setNotificationChannels(curChannels);
@@ -66,10 +63,11 @@ export const addChannel = async (channelID: string) => {
 };
 
 export const removeChannel = async (channelID: string) => {
-  const curChannels = [...notificationState.channels];
-  const newChannels = curChannels.filter((v) => {
-    return v !== channelID;
-  });
+  const curChannels = { ...notificationState.channels };
+  const newChannels = { ...curChannels };
+
+  // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+  delete newChannels[channelID];
 
   setNotificationChannels(newChannels);
 
@@ -79,7 +77,7 @@ export const removeChannel = async (channelID: string) => {
   }
 
   try {
-    await postNotification({ token, tags: newChannels });
+    await postNotification({ token, tags: Object.keys(newChannels) });
     notificationState.channels = newChannels;
   } catch {
     setNotificationChannels(curChannels);
