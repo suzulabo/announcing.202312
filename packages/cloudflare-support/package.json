@@ -12,6 +12,10 @@
       "types": "./dist/local.d.ts",
       "import": "./dist/local.js"
     },
+    "./localBindings": {
+      "types": "./dist/localBindings.d.ts",
+      "import": "./dist/localBindings.js"
+    },
     "./vitePlugin": {
       "types": "./dist/vitePlugin.d.ts",
       "import": "./dist/vitePlugin.js"

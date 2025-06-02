@@ -1,10 +1,10 @@
+import { createLocalBindings } from '@announcing/cloudflare-support/localBindings';
 import { faker } from '@faker-js/faker';
 import { addDays } from 'date-fns';
 import MockDate from 'mockdate';
 import { openAsBlob } from 'node:fs';
 import { parseArgs } from 'node:util';
 import { createDB } from '../src';
-import { createLocalBindings } from '../src/local/localBindings';
 
 const IMAGE_DIR = '../components/public/assets/';
 
@@ -26,14 +26,14 @@ const genDate = (n: number) => {
 };
 
 const generate = async (userID: string, channelID: string) => {
-  const b = await createLocalBindings(false);
-  const db = createDB('');
+  const b = await createLocalBindings();
+  const db = createDB(b);
 
   try {
     {
-      const channel = await db.getChannel({ userID, channelID }, b);
+      const channel = await db.getChannel({ userID, channelID });
       if (channel) {
-        await db.deleteChannel({ userID, channelID, updatedAt: channel.updatedAt }, b);
+        await db.deleteChannel({ userID, channelID, updatedAt: channel.updatedAt });
       }
     }
 
@@ -41,16 +41,13 @@ const generate = async (userID: string, channelID: string) => {
       const date = new Date('2024-08-08T11:59:00Z').getTime();
       MockDate.set(date);
       const icon = await loadBlob('logo.png');
-      await db.createChannel(
-        {
-          userID,
-          channelID,
-          name: channelData.name,
-          desc: channelData.desc,
-          icon,
-        },
-        b,
-      );
+      await db.createChannel({
+        userID,
+        channelID,
+        name: channelData.name,
+        desc: channelData.desc,
+        icon,
+      });
     }
 
     type Announcement = {
@@ -132,7 +129,7 @@ const generate = async (userID: string, channelID: string) => {
     }
 
     for (const a of [...data.values()].reverse()) {
-      await db.addAnnouncement({ userID, channelID, ...a }, b);
+      await db.addAnnouncement({ userID, channelID, ...a });
     }
   } finally {
     await b.mf.dispose();
