@@ -1,3 +1,4 @@
+import { invalidateAll } from '$app/navigation';
 import type { GetChannelResult } from '@announcing/db/types';
 
 let channels: GetChannelResult[] | undefined;
@@ -27,7 +28,8 @@ export const setChannelCache = (v: GetChannelResult) => {
   channelMap.set(v.channelID, v);
 };
 
-export const clearChannelCache = () => {
+export const clearChannelCache = async () => {
   channels = undefined;
   channelMap = undefined;
+  await invalidateAll();
 };

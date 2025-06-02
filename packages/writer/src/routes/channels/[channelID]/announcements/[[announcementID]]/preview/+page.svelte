@@ -63,8 +63,9 @@
   import { page } from '$app/state';
 
   import { APP_CACHES_PREFIX, getBlobOrThrow } from '$lib/cacheStorage/cacheStorage';
-  import type { Snapshot } from './$types';
   import { resolveStoragePath } from '$lib/db/resolver';
+  import { clearChannelCache } from '$lib/fetch/channelCache';
+  import type { Snapshot } from './$types';
 
   let loading = $state(false);
   let channelID = $derived(page.params['channelID'] as string);
@@ -145,6 +146,8 @@
           return;
         }
 
+        await clearChannelCache();
+
         await goto(`/channels/${channelID}/announcements/list`);
       } else {
         const res = await fetch(`/api/channels/${channelID}/announcements`, {
@@ -155,6 +158,8 @@
           await goto('/error');
           return;
         }
+
+        await clearChannelCache();
 
         await goto(`/channels/${channelID}`);
       }

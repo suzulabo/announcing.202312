@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { goto, invalidateAll } from '$app/navigation';
+  import { goto } from '$app/navigation';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
   import { clearChannelCache } from '$lib/fetch/channelCache';
   import { LL } from '@announcing/i18n';
@@ -26,9 +26,7 @@
       return;
     }
 
-    clearChannelCache();
-
-    await invalidateAll();
+    await clearChannelCache();
   };
 </script>
 

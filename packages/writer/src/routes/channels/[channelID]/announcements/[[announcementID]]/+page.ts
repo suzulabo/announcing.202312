@@ -2,7 +2,7 @@ import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ params, parent }) => {
+export const load: PageLoad = async ({ params, parent, fetch }) => {
   const { channelID, announcementID } = params;
   const parentData = await parent();
   const channel = parentData.channel;
@@ -17,7 +17,7 @@ export const load: PageLoad = async ({ params, parent }) => {
   }
 
   if (!channel.announcementIDs || channel.announcementIDs.indexOf(announcementID) < 0) {
-    redirect(303, '/');
+    redirect(303, `/channels/${channelID}/announcements/list`);
   }
 
   const announcement = announcementID
@@ -25,7 +25,7 @@ export const load: PageLoad = async ({ params, parent }) => {
     : undefined;
 
   if (!announcement) {
-    redirect(303, '/');
+    redirect(303, `/channels/${channelID}/announcements/list`);
   }
 
   const backHref = announcementID

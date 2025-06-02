@@ -23,10 +23,20 @@ export class StorePostLogWorkflowEntrypoint extends WorkflowEntrypoint<
   StorePostLogParams
 > {
   override async run({ payload }: WorkflowEvent<StorePostLogParams>, step: WorkflowStep) {
-    await step.do('Store post log', async () => {
-      const { channelID, announcementID, updatedAt } = payload;
-      const key = `${channelID}-${announcementID}-${updatedAt}.json`;
-      await this.env.R2_POST_LOG.put(key, JSON.stringify(payload));
-    });
+    await step.do(
+      'Store post log',
+      {
+        retries: {
+          limit: 10,
+          delay: '1 hour',
+          backoff: 'exponential',
+        },
+      },
+      async () => {
+        const { channelID, announcementID, updatedAt } = payload;
+        const key = `${channelID}/${new Date(updatedAt).toISOString()}-${announcementID}.json`;
+        await this.env.R2_POST_LOG.put(key, JSON.stringify(payload));
+      },
+    );
   }
 }
