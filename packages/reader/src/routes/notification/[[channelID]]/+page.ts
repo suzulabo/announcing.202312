@@ -5,7 +5,7 @@ import type { GetChannelResult } from '@announcing/db/types';
 import type { PageLoad } from './$types';
 
 type Channel =
-  | (GetChannelResult & { status: 'enabled' | 'disabled' })
+  | (GetChannelResult & { status: boolean })
   | { channelID: string; name: string; status: 'deleted' };
 
 export const load: PageLoad = async ({ params, fetch }) => {
@@ -19,7 +19,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
     Object.entries(notificationChannels).map(async ([channelID, { name }]) => {
       const channel = await fetchChannel(channelID, fetch);
       if (channel) {
-        return { ...channel, status: 'enabled' };
+        return { ...channel, status: true };
       } else {
         return { channelID, name, status: 'deleted' } as const;
       }
@@ -32,7 +32,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
     if (!(focusChannelID in notificationChannels)) {
       const channel = await fetchChannel(focusChannelID, fetch);
       if (channel) {
-        channels.push({ ...channel, status: 'disabled' });
+        channels.push({ ...channel, status: false });
       }
     }
   }

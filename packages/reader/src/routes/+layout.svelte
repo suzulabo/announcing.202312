@@ -26,6 +26,11 @@
   let addManifest = $state(isIOS() && !isStandalone());
   let headerBack = $derived(page.data.headerBack);
   let headerNotification = $derived(page.data.headerNotification);
+  let notificationHref = $derived(
+    headerNotification?.channelID
+      ? `/notification/${headerNotification.channelID}`
+      : '/notification',
+  );
 
   let notificationModal: NotificationModal;
   let settingsModal: SettingsModal;
@@ -54,13 +59,8 @@
       <a href="/" class="site-name"><Logo /></a>
     {/if}
 
-    {#if headerNotification}
-      <button
-        class="small notification-btn"
-        onclick={() => {
-          notificationModal.openModal(headerNotification);
-        }}
-      >
+    <a class="button small notification-btn" href={notificationHref}>
+      {#if headerNotification}
         {#if notificationState.permission === 'granted'}
           {#if headerNotification.channelID in notificationState.channels}
             <MaterialSymbolsNotificationsRounded />
@@ -72,9 +72,9 @@
         {:else}
           <MaterialSymbolsNotificationImportantOutlineRounded />
         {/if}
-        <span>{$LL.notification()}</span></button
-      >
-    {/if}
+      {/if}
+      <span>{$LL.notification()}</span></a
+    >
 
     <button
       class="small settings-btn"
