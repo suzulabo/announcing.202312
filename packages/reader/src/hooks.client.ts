@@ -1,5 +1,4 @@
 import { PUBLIC_READER_SENTRY_DSN } from '$env/static/public';
-import { resolveBrowserSchema } from '$lib/platform/resolveBrowserSchema';
 import { handleErrorWithSentry, init as sentryInit } from '@sentry/sveltekit';
 import type { HandleClientError } from '@sveltejs/kit';
 
@@ -21,8 +20,7 @@ navigator.serviceWorker.addEventListener('message', (event) => {
       break;
     case 'openChannel': {
       const url = `${location.origin}/${data.channelID}`;
-      const urlResolved = resolveBrowserSchema(url);
-      location.href = urlResolved;
+      location.href = url;
       break;
     }
   }

@@ -1,20 +1,17 @@
 <script lang="ts">
-  import Logo from '@announcing/components/Logo.svelte';
-  import { LL } from '@announcing/i18n';
   import { page } from '$app/state';
   import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
   import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
   import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import { initFirebase } from '$lib/firebase/firebase';
-  import { initNotification } from '$lib/notification/notification';
-  import { notificationState } from '$lib/notification/notificationState.svelte';
+  import { getNotificationChannels } from '$lib/notification/localStorage';
   import { isIOS, isStandalone } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
+  import Logo from '@announcing/components/Logo.svelte';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
+  import { LL } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
-  import NotificationModal from './NotificationModal.svelte';
 
   interface Props {
     data: LayoutData;
@@ -31,14 +28,12 @@
       ? `/notification/${headerNotification.channelID}`
       : '/notification',
   );
+  let notificationPermission = $state(Notification.permission);
+  let notificationChannels = $state(getNotificationChannels());
 
-  let notificationModal: NotificationModal;
   let settingsModal: SettingsModal;
 
-  onMount(async () => {
-    await initFirebase();
-    await initNotification();
-
+  onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
   });
 
@@ -61,13 +56,13 @@
 
     <a class="button small notification-btn" href={notificationHref}>
       {#if headerNotification}
-        {#if notificationState.permission === 'granted'}
-          {#if headerNotification.channelID in notificationState.channels}
+        {#if notificationPermission === 'granted'}
+          {#if headerNotification.channelID in notificationChannels}
             <MaterialSymbolsNotificationsRounded />
           {:else}
             <MaterialSymbolsNotificationsOutlineRounded />
           {/if}
-        {:else if notificationState.permission === 'default'}
+        {:else if notificationPermission === 'default'}
           <MaterialSymbolsNotificationsOutlineRounded />
         {:else}
           <MaterialSymbolsNotificationImportantOutlineRounded />
@@ -90,7 +85,6 @@
   {@render children?.()}
 </div>
 
-<NotificationModal bind:this={notificationModal} />
 <SettingsModal
   bind:this={settingsModal}
   requestLocale={data.requestLocale}

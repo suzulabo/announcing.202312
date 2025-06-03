@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
 import { fetchChannel } from '$lib/fetch/fetchChannel';
-import { getNotificationChannels } from '$lib/platform/localStorage';
+import { getNotificationChannels } from '$lib/notification/localStorage';
 import type { GetChannelResult } from '@announcing/db/types';
 import { isSupported } from 'firebase/messaging';
 import type { PageLoad } from './$types';

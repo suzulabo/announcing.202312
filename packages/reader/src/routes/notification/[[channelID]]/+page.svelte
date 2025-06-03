@@ -1,7 +1,7 @@
 <script lang="ts">
   import { postNotification } from '$lib/fetch/postNotification';
   import { getNotificationToken } from '$lib/notification/firebase';
-  import { setNotificationChannels } from '$lib/platform/localStorage';
+  import { saveNotificationChannels } from '$lib/notification/localStorage';
   import Loading from '@announcing/components/Loading.svelte';
   import type { PageData } from './$types';
 
@@ -29,7 +29,7 @@
           }),
       );
 
-      setNotificationChannels(enabledChannels);
+      saveNotificationChannels(enabledChannels);
 
       await postNotification({ token, tags: Object.keys(enabledChannels) });
     } finally {
