@@ -12,19 +12,21 @@ type SWMessageData =
       channelID: string;
     };
 
-navigator.serviceWorker.addEventListener('message', (event) => {
-  const data = event.data as SWMessageData;
-  switch (data.type) {
-    case 'log':
-      console.log('SW:', ...data.args);
-      break;
-    case 'openChannel': {
-      const url = `${location.origin}/${data.channelID}`;
-      location.href = url;
-      break;
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    const data = event.data as SWMessageData;
+    switch (data.type) {
+      case 'log':
+        console.log('SW:', ...data.args);
+        break;
+      case 'openChannel': {
+        const url = `${location.origin}/${data.channelID}`;
+        location.href = url;
+        break;
+      }
     }
-  }
-});
+  });
+}
 
 if (PUBLIC_READER_SENTRY_DSN) {
   sentryInit({

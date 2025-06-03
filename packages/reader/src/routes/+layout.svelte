@@ -4,7 +4,10 @@
   import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
   import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import { getNotificationChannels } from '$lib/notification/localStorage';
+  import {
+    getNotificationChannels,
+    type NotificationLocalStorageValue,
+  } from '$lib/notification/localStorage';
   import { isIOS, isStandalone } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
   import Logo from '@announcing/components/Logo.svelte';
@@ -28,13 +31,15 @@
       ? `/notification/${headerNotification.channelID}`
       : '/notification',
   );
-  let notificationPermission = $state(Notification.permission);
-  let notificationChannels = $state(getNotificationChannels());
+  let notificationPermission = $state<NotificationPermission>('default');
+  let notificationChannels = $state<NotificationLocalStorageValue>({});
 
   let settingsModal: SettingsModal;
 
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
+    notificationPermission = Notification.permission;
+    notificationChannels = getNotificationChannels();
   });
 
   const back = setupBack();
