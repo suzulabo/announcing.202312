@@ -1,6 +1,6 @@
 <script lang="ts">
   import { postNotification } from '$lib/fetch/postNotification';
-  import { getPushToken } from '$lib/firebase/firebase';
+  import { getNotificationToken } from '$lib/notification/firebase';
   import { setNotificationChannels } from '$lib/platform/localStorage';
   import Loading from '@announcing/components/Loading.svelte';
   import type { PageData } from './$types';
@@ -12,15 +12,12 @@
   let { data }: Props = $props();
 
   let loading = $state(false);
-  let channels = $derived([...data.channels]);
+  let channels = $derived(data.supported ? [...data.channels] : []);
 
   const updateClickHandler = async () => {
     loading = true;
     try {
-      const token = await getPushToken();
-      if (!token) {
-        return;
-      }
+      const token = await getNotificationToken();
 
       const enabledChannels = Object.fromEntries(
         channels
@@ -41,33 +38,37 @@
   };
 </script>
 
-{#if channels.length === 0}
-  no notification
+{#if !data.supported}
+  not supported
+{:else}
+  {#if channels.length === 0}
+    no notification
+  {/if}
+
+  <ul class="channels">
+    {#each channels as channel (channel.channelID)}
+      <li>
+        {#if channel.status === 'deleted'}
+          {channel.name}<span>(deleted)</span>
+        {:else}
+          <label>
+            <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
+            <!-- svelte-ignore binding_property_non_reactive -->
+            <input type="checkbox" value={channel.channelID} bind:checked={channel.status} />
+            <span>{channel.name}</span>
+            {#if channel.icon}
+              <img src={channel.icon} alt="icon" />
+            {/if}
+          </label>
+        {/if}
+      </li>
+    {/each}
+  </ul>
+
+  <div>
+    <button onclick={updateClickHandler}>Update</button>
+  </div>
 {/if}
-
-<ul class="channels">
-  {#each channels as channel (channel.channelID)}
-    <li>
-      {#if channel.status === 'deleted'}
-        {channel.name}<span>(deleted)</span>
-      {:else}
-        <label>
-          <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
-          <!-- svelte-ignore binding_property_non_reactive -->
-          <input type="checkbox" value={channel.channelID} bind:checked={channel.status} />
-          <span>{channel.name}</span>
-          {#if channel.icon}
-            <img src={channel.icon} alt="icon" />
-          {/if}
-        </label>
-      {/if}
-    </li>
-  {/each}
-</ul>
-
-<div>
-  <button onclick={updateClickHandler}>Update</button>
-</div>
 
 <Loading show={loading} />
 

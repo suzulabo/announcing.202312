@@ -57,8 +57,7 @@ const log = async (...args: unknown[]) => {
           JSON.stringify({
             name: 'Announcing',
             short_name: 'Announcing',
-            start_url: `/ios-pwa`,
-            scope: '/ios-pwa',
+            start_url: `/notification`,
             display: 'standalone',
             icons: [
               {
