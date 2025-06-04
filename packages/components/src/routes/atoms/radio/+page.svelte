@@ -15,6 +15,22 @@
     <input type="radio" name="radio" />
     Hippopotamus
   </label>
+  <label>
+    <input type="checkbox" name="check" />
+    🐈️
+  </label>
+  <label>
+    <input type="checkbox" name="check" />
+    🐕️
+  </label>
+  <label>
+    <input type="checkbox" name="check" />
+    🦆
+  </label>
+  <label>
+    <input type="checkbox" name="check" />
+    🦛
+  </label>
 </div>
 
 <style lang="scss">
@@ -25,5 +41,6 @@
     max-width: 600px;
     width: fit-content;
     margin: 10vh auto;
+    //font-size: 50px;
   }
 </style>
