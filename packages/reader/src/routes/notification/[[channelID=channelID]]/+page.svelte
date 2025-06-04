@@ -60,7 +60,9 @@
     {#each channels as channel (channel.channelID)}
       <li>
         {#if channel.status === 'deleted'}
-          {channel.name}<span>(deleted)</span>
+          <label>
+            <input type="checkbox" disabled />{channel.name}<span>(deleted)</span>
+          </label>
         {:else}
           <label>
             <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
