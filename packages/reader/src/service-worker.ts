@@ -8,8 +8,8 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 import { isIOS } from '$lib/platform/platform';
 import { build, files, version } from '$service-worker';
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
-import { registerRoute, Route } from 'workbox-routing';
-import { CacheFirst } from 'workbox-strategies';
+import { registerRoute } from 'workbox-routing';
+import { CacheFirst, NetworkFirst } from 'workbox-strategies';
 
 {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,22 +33,29 @@ const log = async (...args: unknown[]) => {
 }
 
 {
-  const imageRoute = new Route(({ sameOrigin, url }) => {
-    if (!sameOrigin) {
-      return false;
-    }
-    if (url.pathname.startsWith('/api/channels/')) {
-      return true;
-    }
-    if (url.pathname.startsWith('/s/')) {
-      return true;
-    }
+  const cacheFirstStrategy = new CacheFirst();
+  const networkFirstStrategy = new NetworkFirst();
 
-    return false;
-  }, new CacheFirst());
+  const createRegexMatcher = (regex: RegExp) => {
+    return ({ url }: { url: URL }) => {
+      return regex.test(url.pathname);
+    };
+  };
 
-  registerRoute(imageRoute);
+  // CacheFirst: /api/channels/{channelID}/announcements/{announcementID}
+  registerRoute(
+    createRegexMatcher(/^\/api\/channels\/[^/]+\/announcements\/[^/]+$/),
+    cacheFirstStrategy,
+  );
 
+  // CacheFirst: /s/{objectKey}
+  registerRoute(createRegexMatcher(/^\/s\/[^/]+$/), cacheFirstStrategy);
+
+  // NetworkFirst: /api/channels/{channelID}
+  registerRoute(createRegexMatcher(/^\/api\/channels\/[^/]+$/), networkFirstStrategy);
+}
+
+{
   registerRoute(
     ({ url }) => url.pathname === '/ios.webmanifest',
     () => {
