@@ -41,6 +41,5 @@
     max-width: 600px;
     width: fit-content;
     margin: 10vh auto;
-    //font-size: 50px;
   }
 </style>
