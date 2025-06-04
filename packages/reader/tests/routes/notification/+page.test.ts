@@ -2,7 +2,7 @@
 import { fetchChannel } from '$lib/fetch/fetchChannel';
 import { getNotificationChannels } from '$lib/notification/localStorage';
 import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
-import { load } from '../../../src/routes/notification/[[channelID]]/+page';
+import { load } from '../../../src/routes/notification/[[channelID=channelID]]/+page';
 
 vi.mock('$app/environment', () => ({
   browser: true,
