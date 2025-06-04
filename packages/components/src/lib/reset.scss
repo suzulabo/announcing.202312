@@ -99,6 +99,10 @@ label:has(input[type='radio'], input[type='checkbox']) {
   align-items: center;
   cursor: pointer;
 }
+label:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 
 input[type='radio'] {
   display: inline-block;
