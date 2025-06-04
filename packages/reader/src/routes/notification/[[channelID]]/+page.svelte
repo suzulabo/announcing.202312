@@ -4,6 +4,7 @@
   import { saveNotificationChannels } from '$lib/notification/localStorage';
   import Loading from '@announcing/components/Loading.svelte';
   import type { PageData } from './$types';
+  import { onMount } from 'svelte';
 
   interface Props {
     data: PageData;
@@ -13,10 +14,20 @@
 
   let loading = $state(false);
   let channels = $derived(data.supported ? [...data.channels] : []);
+  let permission = $state<NotificationPermission>('granted');
+
+  onMount(() => {
+    permission = Notification.permission;
+  });
 
   const updateClickHandler = async () => {
     loading = true;
     try {
+      permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        return;
+      }
+
       const token = await getNotificationToken();
 
       const enabledChannels = Object.fromEntries(
@@ -67,6 +78,11 @@
 
   <div>
     <button onclick={updateClickHandler}>Update</button>
+    {#if permission === 'default'}
+      Prompt warning
+    {:else if permission === 'denied'}
+      Permission error
+    {/if}
   </div>
 {/if}
 
