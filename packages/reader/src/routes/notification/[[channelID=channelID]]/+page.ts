@@ -9,16 +9,20 @@ type Channel =
   | (GetChannelResult & { status: boolean })
   | { channelID: string; name: string; status: 'deleted' };
 
-type NotificationInfo =
+type NotificationStatus =
   | {
       supported: false;
     }
   | {
       supported: true;
       channels: Channel[];
+      focusChannelID: string | undefined;
     };
 
-export const load: PageLoad = async ({ params, fetch }): Promise<NotificationInfo> => {
+const loadNotificationStatus = async (
+  fetch_: typeof fetch,
+  focusChannelID: string | undefined,
+): Promise<NotificationStatus> => {
   if (!browser) {
     return { supported: false };
   }
@@ -31,7 +35,7 @@ export const load: PageLoad = async ({ params, fetch }): Promise<NotificationInf
 
   const channels: Channel[] = await Promise.all(
     Object.entries(notificationChannels).map(async ([channelID, { name }]) => {
-      const channel = await fetchChannel(channelID, fetch);
+      const channel = await fetchChannel(channelID, fetch_);
       if (channel) {
         return { ...channel, status: true };
       } else {
@@ -40,11 +44,9 @@ export const load: PageLoad = async ({ params, fetch }): Promise<NotificationInf
     }),
   );
 
-  const focusChannelID = params.channelID;
-
   if (focusChannelID) {
     if (!(focusChannelID in notificationChannels)) {
-      const channel = await fetchChannel(focusChannelID, fetch);
+      const channel = await fetchChannel(focusChannelID, fetch_);
       if (channel) {
         channels.push({ ...channel, status: false });
       }
@@ -68,5 +70,22 @@ export const load: PageLoad = async ({ params, fetch }): Promise<NotificationInf
   return {
     supported: true,
     channels,
+    focusChannelID,
+  };
+};
+
+export const load: PageLoad = async ({ params, fetch }) => {
+  const channelID = params.channelID;
+
+  const notificationStatus = await loadNotificationStatus(fetch, channelID);
+
+  return {
+    notificationStatus,
+    ...(channelID && {
+      headerBack: {
+        href: `/${channelID}`,
+        labelKey: 'back',
+      },
+    }),
   };
 };

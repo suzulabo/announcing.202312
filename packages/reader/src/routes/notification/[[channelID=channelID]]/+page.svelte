@@ -3,17 +3,18 @@
   import { getNotificationToken } from '$lib/notification/firebase';
   import { saveNotificationChannels } from '$lib/notification/localStorage';
   import Loading from '@announcing/components/Loading.svelte';
-  import type { PageData } from './$types';
   import { onMount } from 'svelte';
+  import type { PageData } from './$types';
 
   interface Props {
     data: PageData;
   }
 
   let { data }: Props = $props();
+  let notificationStatus = $derived(data.notificationStatus);
 
   let loading = $state(false);
-  let channels = $derived(data.supported ? [...data.channels] : []);
+  let channels = $derived(notificationStatus.supported ? [...notificationStatus.channels] : []);
   let permission = $state<NotificationPermission>('granted');
 
   onMount(() => {
@@ -49,7 +50,7 @@
   };
 </script>
 
-{#if !data.supported}
+{#if !notificationStatus.supported}
   not supported
 {:else}
   {#if channels.length === 0}
@@ -100,6 +101,8 @@
         img {
           width: 64px;
           height: 64px;
+          border-radius: 8px;
+          object-fit: contain;
         }
       }
     }
