@@ -47,7 +47,7 @@
 
 <svelte:head>
   {#if addManifest}
-    <link rel="manifest" href="/ios.webmanifest" />
+    <link rel="manifest" href="/ios.webmanifest" crossorigin="use-credentials" />
   {/if}
 </svelte:head>
 

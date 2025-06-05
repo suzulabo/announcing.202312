@@ -55,39 +55,6 @@ const log = async (...args: unknown[]) => {
   registerRoute(createRegexMatcher(/^\/api\/channels\/[^/]+$/), networkFirstStrategy);
 }
 
-{
-  registerRoute(
-    ({ url }) => url.pathname === '/ios.webmanifest',
-    () => {
-      return Promise.resolve(
-        new Response(
-          JSON.stringify({
-            name: 'Announcing',
-            short_name: 'Announcing',
-            start_url: `/notification`,
-            display: 'standalone',
-            icons: [
-              {
-                src: '/logo_192.png',
-                sizes: '192x192',
-                type: 'image/png',
-              },
-              {
-                src: '/logo_512.png',
-                sizes: '512x512',
-                type: 'image/png',
-              },
-            ],
-          }),
-          {
-            headers: { 'Content-Type': 'application/manifest+json' },
-          },
-        ),
-      );
-    },
-  );
-}
-
 sw.addEventListener('install', (event) => {
   event.waitUntil(sw.skipWaiting());
 });
