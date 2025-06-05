@@ -57,54 +57,73 @@
     no notification
   {/if}
 
-  <ul class="channels">
+  <div class="channels">
     {#each channels as channel (channel.channelID)}
-      <li>
+      <label class="channel">
         {#if channel.status === 'deleted'}
-          <label>
-            <input type="checkbox" disabled />{channel.name}<span>(deleted)</span>
-          </label>
+          <input type="checkbox" disabled /><span class="name">{channel.name}</span><span
+            >(deleted)</span
+          >
         {:else}
-          <label>
-            <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
-            <!-- svelte-ignore binding_property_non_reactive -->
-            <input type="checkbox" value={channel.channelID} bind:checked={channel.status} />
-            <span>{channel.name}</span>
-            {#if channel.icon}
-              <img src={channel.icon} alt="icon" />
-            {/if}
-          </label>
+          <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
+          <!-- svelte-ignore binding_property_non_reactive -->
+          <input type="checkbox" value={channel.channelID} bind:checked={channel.status} />
+          <span class="name">{channel.name}</span>
+          {#if channel.icon}
+            <img src={channel.icon} alt="icon" />
+          {/if}
+          <a href={`/${channel.channelID}`} class="button small" target="_blank">表示</a>
         {/if}
-      </li>
+      </label>
     {/each}
-  </ul>
-
-  <div>
-    <button onclick={updateClickHandler}>Update</button>
-    {#if permission === 'default'}
-      Prompt warning
-    {:else if permission === 'denied'}
-      Permission error
-    {/if}
   </div>
+
+  <button class="update-btn" onclick={updateClickHandler}>Update</button>
+  {#if permission === 'default'}
+    Prompt warning
+  {:else if permission === 'denied'}
+    Permission error
+  {/if}
 {/if}
 
 <Loading show={loading} />
 
 <style lang="scss">
   .channels {
-    li {
-      label {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        img {
-          width: 64px;
-          height: 64px;
-          border-radius: 8px;
-          object-fit: contain;
-        }
+    margin: 16px 8px 0;
+    display: grid;
+    gap: 4px;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+    .channel {
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 8px;
+      min-height: 82px;
+
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      input {
+        flex-shrink: 0;
+      }
+
+      .name {
+        flex-grow: 1;
+      }
+      img {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        object-fit: contain;
       }
     }
+  }
+
+  .update-btn {
+    display: block;
+    margin: 16px auto;
   }
 </style>
