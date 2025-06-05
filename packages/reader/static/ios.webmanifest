@@ -2,6 +2,7 @@
   "name": "Announcing",
   "short_name": "Announcing",
   "start_url": "/notification",
+  "scope": "/notification",
   "display": "standalone",
   "icons": [
     {

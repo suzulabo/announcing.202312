@@ -10,7 +10,6 @@
   } from '$lib/notification/localStorage';
   import { isIOS, isStandalone } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
-  import Logo from '@announcing/components/Logo.svelte';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
@@ -56,7 +55,12 @@
     {#if headerBack}
       <a class="back" href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
     {:else}
-      <a href="/" class="site-name"><Logo /></a>
+      <button
+        class="small back"
+        onclick={() => {
+          location.reload();
+        }}>reload</button
+      >
     {/if}
 
     <a class="button small notification-btn" href={notificationHref}>

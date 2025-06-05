@@ -5,6 +5,9 @@
   import Loading from '@announcing/components/Loading.svelte';
   import { onMount } from 'svelte';
   import type { PageData } from './$types';
+  import { isIOS, isStandalone } from '$lib/platform/platform';
+  import { fetchChannel } from '$lib/fetch/fetchChannel';
+  import { dev } from '$app/environment';
 
   interface Props {
     data: PageData;
@@ -16,10 +19,57 @@
   let loading = $state(false);
   let channels = $derived(notificationStatus.supported ? [...notificationStatus.channels] : []);
   let permission = $state<NotificationPermission>('granted');
+  let isPWA = $state(true);
+  let searchText = $state('');
+  let searchChannelID = $derived.by(() => {
+    const channelIDRegex = /^[0-9]{4,8}$/;
+    if (channelIDRegex.test(searchText)) {
+      return searchText;
+    }
+
+    try {
+      const url = new URL(searchText);
+      const p = url.pathname.substring(1);
+      if (channelIDRegex.test(p)) {
+        return p;
+      }
+    } catch {
+      //
+    }
+    return;
+  });
+  let channelNotFound = $state(false);
 
   onMount(() => {
-    permission = Notification.permission;
+    if (data.notificationStatus.supported) {
+      permission = Notification.permission;
+    }
+    isPWA = (isIOS() && isStandalone()) || dev;
   });
+
+  const searchClickHandler = async () => {
+    channelNotFound = false;
+
+    if (!searchChannelID) {
+      return;
+    }
+    if (channels.find((v) => v.channelID === searchChannelID)) {
+      searchText = '';
+      return;
+    }
+    loading = true;
+    try {
+      const channel = await fetchChannel(searchChannelID);
+      if (!channel) {
+        channelNotFound = true;
+        return;
+      }
+      channels = [{ ...channel, status: false }, ...channels];
+    } finally {
+      searchText = '';
+      loading = false;
+    }
+  };
 
   const updateClickHandler = async () => {
     loading = true;
@@ -53,6 +103,21 @@
 {#if !notificationStatus.supported}
   not supported
 {:else}
+  {#if isPWA}
+    <div class="search-box">
+      <div class="info">Input Channel URL or number</div>
+      <div class="input-box">
+        <input bind:value={searchText} /><button
+          onclick={searchClickHandler}
+          disabled={!searchChannelID}>Search</button
+        >
+      </div>
+      {#if channelNotFound}
+        <div class="error">Channel not found.</div>
+      {/if}
+    </div>
+  {/if}
+
   {#if channels.length === 0}
     no notification
   {/if}
@@ -89,6 +154,19 @@
 <Loading show={loading} />
 
 <style lang="scss">
+  .search-box {
+    padding: 16px 8px 8px;
+
+    .info {
+      text-align: center;
+    }
+
+    .input-box {
+      margin-top: 8px;
+      display: flex;
+    }
+  }
+
   .channels {
     margin: 16px 8px 0;
     display: grid;
