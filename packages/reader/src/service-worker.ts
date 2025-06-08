@@ -62,7 +62,7 @@ sw.addEventListener('activate', (event) => {
   event.waitUntil(sw.clients.claim());
 });
 sw.addEventListener('message', (event) => {
-  event.waitUntil(log(`Start`));
+  event.waitUntil(log('Start'));
 });
 
 sw.addEventListener('push', (event) => {
@@ -99,28 +99,28 @@ sw.addEventListener('notificationclick', (event) => {
         return;
       }
 
+      const url = `/${channelID}`;
       if (isIOS()) {
-        const url = `x-safari-https://${location.host}/${channelID}`;
-        const clients = await sw.clients.matchAll();
+        const clients = await sw.clients.matchAll({ includeUncontrolled: true, type: 'all' });
 
         for (const client of clients) {
           client.postMessage({ type: 'open', url });
           return;
         }
 
-        const client = await sw.clients.openWindow('/ios-pwa');
+        const client = await sw.clients.openWindow('/notification');
 
         if (client) {
           client.postMessage({ type: 'open', url });
         }
       } else {
-        const clients = await sw.clients.matchAll();
+        const clients = await sw.clients.matchAll({ includeUncontrolled: true, type: 'all' });
         for (const client of clients) {
-          client.postMessage({ type: 'open', url: `/${channelID}` });
+          client.postMessage({ type: 'open', url });
           return;
         }
 
-        await sw.clients.openWindow(`/${channelID}`);
+        await sw.clients.openWindow(url);
       }
     })(),
   );

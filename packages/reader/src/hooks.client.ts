@@ -8,8 +8,8 @@ type SWMessageData =
       args: unknown[];
     }
   | {
-      type: 'openChannel';
-      channelID: string;
+      type: 'open';
+      url: string;
     };
 
 if ('serviceWorker' in navigator) {
@@ -19,13 +19,17 @@ if ('serviceWorker' in navigator) {
       case 'log':
         console.log('SW:', ...data.args);
         break;
-      case 'openChannel': {
-        const url = `${location.origin}/${data.channelID}`;
-        location.href = url;
+      case 'open': {
+        console.log('SW open: ', data.url);
+        location.href = data.url;
         break;
       }
     }
   });
+
+  const sw = await navigator.serviceWorker.ready;
+  console.debug('sw.active', !!sw.active);
+  sw.active?.postMessage('hello');
 }
 
 if (PUBLIC_READER_SENTRY_DSN) {
