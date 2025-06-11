@@ -8,7 +8,7 @@
     getNotificationChannels,
     type NotificationLocalStorageValue,
   } from '$lib/notification/localStorage';
-  import { isIOS, isStandalone } from '$lib/platform/platform';
+  import { isIOS } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
@@ -22,7 +22,7 @@
 
   let { data, children }: Props = $props();
 
-  let addManifest = $state(isIOS() && !isStandalone());
+  let addManifest = $state(isIOS());
   let headerBack = $derived(page.data.headerBack);
   let headerNotification = $derived(page.data.headerNotification);
   let notificationHref = $derived(
@@ -37,8 +37,10 @@
 
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
-    notificationPermission = Notification.permission;
-    notificationChannels = getNotificationChannels();
+    if ('Notification' in window) {
+      notificationPermission = Notification.permission;
+      notificationChannels = getNotificationChannels();
+    }
   });
 
   const back = setupBack();
