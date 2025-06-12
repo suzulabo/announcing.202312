@@ -8,7 +8,6 @@
     getNotificationChannels,
     type NotificationLocalStorageValue,
   } from '$lib/notification/localStorage';
-  import { isIOS } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
@@ -22,7 +21,6 @@
 
   let { data, children }: Props = $props();
 
-  let addManifest = $state(isIOS());
   let headerBack = $derived(page.data.headerBack);
   let headerNotification = $derived(page.data.headerNotification);
   let notificationHref = $derived(
@@ -45,12 +43,6 @@
 
   const back = setupBack();
 </script>
-
-<svelte:head>
-  {#if addManifest}
-    <link rel="manifest" href="/ios.webmanifest" crossorigin="use-credentials" />
-  {/if}
-</svelte:head>
 
 <div class="container">
   <header>

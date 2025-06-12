@@ -21,7 +21,6 @@ import { CacheFirst, NetworkFirst } from 'workbox-strategies';
 if (PUBLIC_READER_SENTRY_DSN) {
   Sentry.init({
     dsn: PUBLIC_READER_SENTRY_DSN,
-    _experiments: { enableLogs: !!PUBLIC_LOG },
   });
 }
 
@@ -102,9 +101,8 @@ const onNotificationClick = async (event: NotificationEvent) => {
   event.stopImmediatePropagation();
   event.notification.close();
 
-  const payload = event.notification;
-  await log({ payload });
-  const tag = payload.tag;
+  const notification = event.notification;
+  const tag = notification.tag;
   if (!tag) {
     await log('no tag');
     return;

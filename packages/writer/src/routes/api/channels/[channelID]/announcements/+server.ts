@@ -62,6 +62,8 @@ export const POST: RequestHandler = async ({ locals, params, request, getClientA
     error(404, 'Missing channel');
   }
 
+  console.log({ channel });
+
   const announcementValues = await locals.db.addAnnouncement({
     userID,
     channelID,
@@ -81,14 +83,11 @@ export const POST: RequestHandler = async ({ locals, params, request, getClientA
             title: channel.name,
             body: data.title ?? data.body.substring(0, 200),
             tag: channelID,
-            ...(channel.icon && { icon: `${channel.icon}` }),
-            ...(channel.icon && { badge: `${channel.icon}` }),
+            ...(channel.icon && { icon: `/s/${channel.icon}` }),
+            ...(channel.icon && { badge: `/s/${channel.icon}` }),
             ...(announcementValues.headerImage && {
               image: `/s/${announcementValues.headerImage}`,
             }),
-          },
-          fcm_options: {
-            link: `/${channelID}`,
           },
         },
       },
