@@ -5,8 +5,10 @@
 
 const sw = self as unknown as ServiceWorkerGlobalScope;
 
+import { PUBLIC_LOG, PUBLIC_READER_SENTRY_DSN } from '$env/static/public';
 import { isIOS } from '$lib/platform/platform';
 import { build, files, version } from '$service-worker';
+import * as Sentry from '@sentry/browser';
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { CacheFirst, NetworkFirst } from 'workbox-strategies';
@@ -16,12 +18,29 @@ import { CacheFirst, NetworkFirst } from 'workbox-strategies';
   (self as any).__WB_DISABLE_DEV_LOGS = true;
 }
 
-const log = async (...args: unknown[]) => {
-  const clients = await sw.clients.matchAll();
-  clients.forEach((client) => {
-    client.postMessage({ type: 'log', args });
+if (PUBLIC_READER_SENTRY_DSN) {
+  Sentry.init({
+    dsn: PUBLIC_READER_SENTRY_DSN,
+    _experiments: { enableLogs: !!PUBLIC_LOG },
   });
-};
+}
+
+const log: (data: unknown) => Promise<void> = (() => {
+  if (PUBLIC_LOG) {
+    return async (data: unknown) => {
+      await sw.fetch(`/api/log`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ua: sw.navigator.userAgent, log: data }),
+      });
+    };
+  }
+  return () => {
+    return Promise.resolve();
+  };
+})();
 
 {
   const precacheAssets = [...build, ...files].map((url) => {
@@ -61,67 +80,62 @@ sw.addEventListener('install', (event) => {
 sw.addEventListener('activate', (event) => {
   event.waitUntil(sw.clients.claim());
 });
-sw.addEventListener('message', (event) => {
-  event.waitUntil(log('Start'));
-});
+
+// https://github.com/firebase/firebase-js-sdk/blob/23069208726dc1924011eb84c8bf34d6f914a3a9/packages/messaging/src/listeners/sw-listeners.ts
+const onPush = async (event: PushEvent) => {
+  await log('push event');
+
+  if (!event.data) {
+    return;
+  }
+  const payload = event.data.json();
+
+  await log({ payload });
+
+  const notification = payload.notification;
+
+  await sw.registration.showNotification(notification.title, notification);
+};
+
+const onNotificationClick = async (event: NotificationEvent) => {
+  await log('notificationclick event');
+  event.stopImmediatePropagation();
+  event.notification.close();
+
+  const payload = event.notification;
+  await log({ payload });
+  const tag = payload.tag;
+  if (!tag) {
+    await log('no tag');
+    return;
+  }
+
+  const link = `/${tag}`;
+
+  if (!isIOS()) {
+    await sw.clients.openWindow(link);
+    return;
+  }
+
+  const clientList = (await sw.clients.matchAll({})) as WindowClient[];
+  let client = clientList.shift();
+  if (!client) {
+    await log('create client');
+    client = (await sw.clients.openWindow('/notification')) ?? undefined;
+  }
+
+  if (client) {
+    await client.focus();
+    await client.navigate(link);
+  } else {
+    await log('no client');
+  }
+};
 
 sw.addEventListener('push', (event) => {
-  event.waitUntil(
-    (async () => {
-      if (!event.data) {
-        return;
-      }
-      const payload = event.data.json();
-
-      await log('payload', payload);
-
-      const notification = payload.notification;
-
-      await sw.registration.showNotification(notification.title, notification);
-    })(),
-  );
+  event.waitUntil(onPush(event));
 });
 
 sw.addEventListener('notificationclick', (event) => {
-  // https://github.com/mdn/browser-compat-data/issues/22959#issuecomment-2336683759
-  // https://stackoverflow.com/questions/76399649/why-isnt-the-notificationclick-event-called-on-ios-during-pwa-push-notificati
-  event.preventDefault();
-
-  event.waitUntil(
-    (async () => {
-      await log('notificationclick');
-      event.notification.close();
-
-      const channelID = event.notification.tag;
-
-      if (!channelID) {
-        await log('Missing channelID');
-        return;
-      }
-
-      const url = `/${channelID}`;
-      if (isIOS()) {
-        const clients = await sw.clients.matchAll({ includeUncontrolled: true, type: 'all' });
-
-        for (const client of clients) {
-          client.postMessage({ type: 'open', url });
-          return;
-        }
-
-        const client = await sw.clients.openWindow('/notification');
-
-        if (client) {
-          client.postMessage({ type: 'open', url });
-        }
-      } else {
-        const clients = await sw.clients.matchAll({ includeUncontrolled: true, type: 'all' });
-        for (const client of clients) {
-          client.postMessage({ type: 'open', url });
-          return;
-        }
-
-        await sw.clients.openWindow(url);
-      }
-    })(),
-  );
+  event.waitUntil(onNotificationClick(event));
 });

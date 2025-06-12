@@ -114,20 +114,8 @@
       gap: 4px;
       height: 60px;
 
-      .site-name,
       .back {
         margin-right: auto;
-      }
-
-      .site-name {
-        font-size: 28px;
-        border-radius: 50%;
-        background-color: var(--color-background-light);
-        height: 36px;
-        width: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
       }
 
       .settings-btn,

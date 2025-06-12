@@ -81,11 +81,14 @@ export const POST: RequestHandler = async ({ locals, params, request, getClientA
             title: channel.name,
             body: data.title ?? data.body.substring(0, 200),
             tag: channelID,
-            ...(channel.icon && { icon: `/s/${channel.icon}` }),
-            ...(channel.icon && { badge: `/s/${channel.icon}` }),
+            ...(channel.icon && { icon: `${channel.icon}` }),
+            ...(channel.icon && { badge: `${channel.icon}` }),
             ...(announcementValues.headerImage && {
               image: `/s/${announcementValues.headerImage}`,
             }),
+          },
+          fcm_options: {
+            link: `/${channelID}`,
           },
         },
       },
