@@ -30,7 +30,7 @@
         const blob = await getBlobOrThrow(window.caches, announcement.headerImage);
         formData.append('headerImage', blob);
       } else {
-        formData.append('headerImage', announcement.headerImage);
+        formData.append('headerImage', stripStoragePath(announcement.headerImage));
       }
     }
 
@@ -40,7 +40,7 @@
           const blob = await getBlobOrThrow(window.caches, v);
           formData.append('images', blob);
         } else {
-          formData.append('images', v);
+          formData.append('images', stripStoragePath(v));
         }
       }
     }
@@ -63,7 +63,7 @@
   import { page } from '$app/state';
 
   import { APP_CACHES_PREFIX, getBlobOrThrow } from '$lib/cacheStorage/cacheStorage';
-  import { resolveStoragePath } from '$lib/db/resolver';
+  import { resolveStoragePath, stripStoragePath } from '$lib/db/resolver';
   import { clearChannelCache } from '$lib/fetch/channelCache';
   import type { Snapshot } from './$types';
 

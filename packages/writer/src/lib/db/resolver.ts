@@ -7,6 +7,10 @@ export const resolveStoragePath = (s: string) => {
   return s;
 };
 
+export const stripStoragePath = (s: string) => {
+  return s.replace('/s/', '');
+};
+
 export const resolveChannel = (result: GetChannelResult): GetChannelResult => {
   if (result.icon) {
     result.icon = resolveStoragePath(result.icon);
