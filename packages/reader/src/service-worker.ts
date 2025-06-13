@@ -32,7 +32,7 @@ const log: (data: unknown) => Promise<void> = (() => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ua: sw.navigator.userAgent, log: data }),
+        body: JSON.stringify({ ua: `SW: ${sw.navigator.userAgent}`, log: data }),
       });
     };
   }
@@ -80,6 +80,55 @@ sw.addEventListener('activate', (event) => {
   event.waitUntil(sw.clients.claim());
 });
 
+const readyClients = new Set<string>();
+
+const onMessage = async (event: ExtendableMessageEvent) => {
+  // clean up
+  await Promise.allSettled(
+    [...readyClients.values()].map(async (id) => {
+      const c = await sw.clients.get(id);
+      if (!c) {
+        await log({ 'delete client': id });
+        readyClients.delete(id);
+      }
+    }),
+  );
+
+  if (event.source && 'id' in event.source) {
+    readyClients.add(event.source.id);
+  }
+
+  await log({ readyClients: [...readyClients.values()] });
+};
+
+sw.addEventListener('message', (event) => {
+  event.waitUntil(onMessage(event));
+});
+
+const waitForClient = (id: string): Promise<boolean> => {
+  if (readyClients.has(id)) {
+    void log('already');
+    return Promise.resolve(true);
+  }
+
+  return new Promise<boolean>((resolve) => {
+    const timer = sw.setTimeout(() => {
+      resolve(false);
+      sw.removeEventListener('message', handler);
+    }, 5000);
+
+    const handler = (event: ExtendableMessageEvent) => {
+      if (event.source && 'id' in event.source && event.source.id === id) {
+        sw.removeEventListener('message', handler);
+        sw.clearTimeout(timer);
+        resolve(true);
+      }
+    };
+
+    sw.addEventListener('message', handler);
+  });
+};
+
 // https://github.com/firebase/firebase-js-sdk/blob/23069208726dc1924011eb84c8bf34d6f914a3a9/packages/messaging/src/listeners/sw-listeners.ts
 const onPush = async (event: PushEvent) => {
   await log('push event');
@@ -93,7 +142,9 @@ const onPush = async (event: PushEvent) => {
 
   const notification = payload.notification;
 
-  await sw.registration.showNotification(notification.title, notification);
+  await sw.registration.showNotification(notification.title, {
+    ...notification,
+  });
 };
 
 const onNotificationClick = async (event: NotificationEvent) => {
@@ -102,29 +153,42 @@ const onNotificationClick = async (event: NotificationEvent) => {
   event.notification.close();
 
   const notification = event.notification;
-  const tag = notification.tag;
-  if (!tag) {
-    await log('no tag');
+
+  await log({ notification: { body: notification.body, data: notification.data } });
+
+  const channelID = notification.tag;
+  if (!channelID) {
+    await log('no channelID');
     return;
   }
 
-  const link = `/${tag}`;
+  const link = `/${channelID}`;
 
   if (!isIOS()) {
     await sw.clients.openWindow(link);
     return;
   }
 
-  const clientList = (await sw.clients.matchAll({})) as WindowClient[];
-  let client = clientList.shift();
+  const clientList = await sw.clients.matchAll({ type: 'window' });
+  await log({ clientList: clientList.map((c) => c.id) });
+  let client = clientList[0];
   if (!client) {
     await log('create client');
     client = (await sw.clients.openWindow('/notification')) ?? undefined;
   }
 
   if (client) {
+    await log({ client });
     await client.focus();
-    await client.navigate(link);
+    const ready = await waitForClient(client.id);
+    await log({ ready });
+    if (ready) {
+      await log({ 'post message': client.id });
+      client.postMessage({ type: 'openChannel', channelID });
+    } else {
+      await log('no ready');
+      await client.navigate(link);
+    }
   } else {
     await log('no client');
   }
