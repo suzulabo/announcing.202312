@@ -99,7 +99,39 @@ const wrapPromise = async (label: string, p: Promise<unknown>) => {
   }
 };
 
-// https://github.com/firebase/firebase-js-sdk/blob/23069208726dc1924011eb84c8bf34d6f914a3a9/packages/messaging/src/listeners/sw-listeners.ts
+const getClient = async () => {
+  const clients = await sw.clients.matchAll({ type: 'window', includeUncontrolled: true });
+  for (const client of clients) {
+    try {
+      await client.focus();
+      return client;
+    } catch (err) {
+      await log({ 'focus error': err instanceof Error ? err.message : new String(err) });
+    }
+  }
+  return;
+};
+
+const waitForClient = async () => {
+  for (let i = 0; i < 8; i++) {
+    const client = await getClient();
+    if (client) {
+      return client;
+    }
+
+    await log('no client');
+
+    await new Promise<void>((resolve) => {
+      sw.setTimeout(() => {
+        resolve();
+      }, 250);
+    });
+  }
+
+  await log('create client');
+  return await sw.clients.openWindow('/notification');
+};
+
 const onPush = async (event: PushEvent) => {
   await log('push event');
 
@@ -117,7 +149,6 @@ const onPush = async (event: PushEvent) => {
 
 const onNotificationClick = async (event: NotificationEvent) => {
   await log('notificationclick event');
-  event.stopImmediatePropagation();
   event.notification.close();
 
   const notification = event.notification;
@@ -135,7 +166,7 @@ const onNotificationClick = async (event: NotificationEvent) => {
     return;
   }
 
-  const client = await sw.clients.openWindow('/notification');
+  const client = await waitForClient();
   if (!client) {
     await log('no client');
     return;
