@@ -62,8 +62,6 @@ export const POST: RequestHandler = async ({ locals, params, request, getClientA
     error(404, 'Missing channel');
   }
 
-  console.log({ channel });
-
   const announcementValues = await locals.db.addAnnouncement({
     userID,
     channelID,
