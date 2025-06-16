@@ -8,11 +8,15 @@ vi.mock('$app/environment', () => ({
   browser: true,
 }));
 
+vi.mock('firebase/messaging', () => ({
+  isSupported: () => true,
+}));
+
 vi.mock('$lib/fetch/fetchChannel', () => ({
   fetchChannel: vi.fn(),
 }));
 
-vi.mock('$lib/platform/localStorage', () => ({
+vi.mock('$lib/notification/localStorage', () => ({
   getNotificationChannels: vi.fn(),
 }));
 
@@ -42,24 +46,24 @@ describe('load function', () => {
 
     const result: any = await load({ params } as any);
 
-    expect(result.channels).toEqual([
+    expect(result.notificationStatus.channels).toEqual([
       {
         channelID: 'c2',
         name: 'Channel 2',
         updatedAt: 200,
-        status: 'disabled',
+        status: false,
       },
       {
         channelID: 'c3',
         name: 'Channel 3',
         updatedAt: 50,
-        status: 'enabled',
+        status: true,
       },
       {
         channelID: 'c1',
         name: 'Channel 1',
         updatedAt: 100,
-        status: 'enabled',
+        status: true,
       },
     ]);
   });
@@ -82,12 +86,12 @@ describe('load function', () => {
 
     const result: any = await load({ params } as any);
 
-    expect(result.channels).toEqual([
+    expect(result.notificationStatus.channels).toEqual([
       {
         channelID: 'c1',
         name: 'Channel 1',
         updatedAt: 100,
-        status: 'enabled',
+        status: true,
       },
       {
         channelID: 'c2',
