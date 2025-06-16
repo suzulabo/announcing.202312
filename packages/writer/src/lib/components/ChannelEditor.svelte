@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { resolveStoragePath } from '$lib/db/resolver';
+  import { stripStoragePath } from '$lib/db/resolver';
   import FileInput from '@announcing/components/FileInput.svelte';
   import Input from '@announcing/components/Input.svelte';
   import Loading from '@announcing/components/Loading.svelte';
@@ -64,7 +64,7 @@
       if (blob) {
         formData.append('icon', blob);
       } else {
-        formData.append('icon', form.icon);
+        formData.append('icon', stripStoragePath(form.icon));
       }
     }
 
@@ -100,7 +100,7 @@
             }}
           >
             {#if form.icon}
-              <img class="icon" alt="icon preview" src={resolveStoragePath(form.icon)} />
+              <img class="icon" alt="icon preview" src={form.icon} />
             {/if}
           </button>
           <button

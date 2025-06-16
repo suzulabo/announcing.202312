@@ -15,6 +15,30 @@
     <input type="radio" name="radio" />
     Hippopotamus
   </label>
+  <label>
+    <input type="checkbox" name="check" />
+    🐈️
+  </label>
+  <label>
+    <input type="checkbox" name="check" />
+    🐕️
+  </label>
+  <label>
+    <input type="checkbox" name="check" />
+    🦆
+  </label>
+  <label>
+    <input type="checkbox" name="check" />
+    🦛
+  </label>
+  <label>
+    <input type="radio" name="radio" disabled />
+    Disabled
+  </label>
+  <label>
+    <input type="checkbox" name="check" disabled />
+    Disabled
+  </label>
 </div>
 
 <style lang="scss">

@@ -5,23 +5,44 @@
 
 const sw = self as unknown as ServiceWorkerGlobalScope;
 
+import { PUBLIC_LOG, PUBLIC_READER_SENTRY_DSN } from '$env/static/public';
 import { isIOS } from '$lib/platform/platform';
 import { build, files, version } from '$service-worker';
+import * as Sentry from '@sentry/browser';
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
-import { registerRoute, Route } from 'workbox-routing';
-import { CacheFirst } from 'workbox-strategies';
+import { registerRoute } from 'workbox-routing';
+import { CacheFirst, NetworkFirst } from 'workbox-strategies';
 
 {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (self as any).__WB_DISABLE_DEV_LOGS = true;
 }
 
-const log = async (...args: unknown[]) => {
-  const clients = await sw.clients.matchAll();
-  clients.forEach((client) => {
-    client.postMessage({ type: 'log', args });
+if (PUBLIC_READER_SENTRY_DSN) {
+  Sentry.init({
+    dsn: PUBLIC_READER_SENTRY_DSN,
+    _experiments: {
+      enableLogs: true,
+    },
   });
-};
+}
+
+const log: (data: unknown) => Promise<void> = (() => {
+  if (PUBLIC_LOG) {
+    return async (data: unknown) => {
+      await sw.fetch(`/api/log`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ua: `SW: ${sw.navigator.userAgent}`, log: data }),
+      });
+    };
+  }
+  return () => {
+    return Promise.resolve();
+  };
+})();
 
 {
   const precacheAssets = [...build, ...files].map((url) => {
@@ -33,53 +54,26 @@ const log = async (...args: unknown[]) => {
 }
 
 {
-  const imageRoute = new Route(({ sameOrigin, url }) => {
-    if (!sameOrigin) {
-      return false;
-    }
-    if (url.pathname.startsWith('/api/channels/')) {
-      return true;
-    }
-    if (url.pathname.startsWith('/s/')) {
-      return true;
-    }
+  const cacheFirstStrategy = new CacheFirst();
+  const networkFirstStrategy = new NetworkFirst();
 
-    return false;
-  }, new CacheFirst());
+  const createRegexMatcher = (regex: RegExp) => {
+    return ({ url }: { url: URL }) => {
+      return regex.test(url.pathname);
+    };
+  };
 
-  registerRoute(imageRoute);
-
+  // CacheFirst: /api/channels/{channelID}/announcements/{announcementID}
   registerRoute(
-    ({ url }) => url.pathname === '/ios.webmanifest',
-    () => {
-      return Promise.resolve(
-        new Response(
-          JSON.stringify({
-            name: 'Announcing',
-            short_name: 'Announcing',
-            start_url: `/ios-pwa`,
-            scope: '/ios-pwa',
-            display: 'standalone',
-            icons: [
-              {
-                src: '/logo_192.png',
-                sizes: '192x192',
-                type: 'image/png',
-              },
-              {
-                src: '/logo_512.png',
-                sizes: '512x512',
-                type: 'image/png',
-              },
-            ],
-          }),
-          {
-            headers: { 'Content-Type': 'application/manifest+json' },
-          },
-        ),
-      );
-    },
+    createRegexMatcher(/^\/api\/channels\/[^/]+\/announcements\/[^/]+$/),
+    cacheFirstStrategy,
   );
+
+  // CacheFirst: /s/{objectKey}
+  registerRoute(createRegexMatcher(/^\/s\/[^/]+$/), cacheFirstStrategy);
+
+  // NetworkFirst: /api/channels/{channelID}
+  registerRoute(createRegexMatcher(/^\/api\/channels\/[^/]+$/), networkFirstStrategy);
 }
 
 sw.addEventListener('install', (event) => {
@@ -88,67 +82,105 @@ sw.addEventListener('install', (event) => {
 sw.addEventListener('activate', (event) => {
   event.waitUntil(sw.clients.claim());
 });
-sw.addEventListener('message', (event) => {
-  event.waitUntil(log(`Start`));
-});
+
+const wrapPromise = async (label: string, p: Promise<unknown>) => {
+  try {
+    await p;
+  } catch (error) {
+    const data = {
+      'SW Unhandled Error': label,
+      error,
+      ...(error instanceof Error && { message: error.message }),
+    };
+    if (PUBLIC_READER_SENTRY_DSN) {
+      Sentry.logger.error(JSON.stringify(data));
+    }
+    await log(data);
+  }
+};
+
+const getClient = async () => {
+  const clients = await sw.clients.matchAll({ type: 'window', includeUncontrolled: true });
+  for (const client of clients) {
+    try {
+      await client.focus();
+      return client;
+    } catch (err) {
+      await log({ 'focus error': err instanceof Error ? err.message : new String(err) });
+    }
+  }
+  return;
+};
+
+const waitForClient = async () => {
+  for (let i = 0; i < 8; i++) {
+    const client = await getClient();
+    if (client) {
+      return client;
+    }
+
+    await log('no client');
+
+    await new Promise<void>((resolve) => {
+      sw.setTimeout(() => {
+        resolve();
+      }, 250);
+    });
+  }
+
+  await log('create client');
+  return await sw.clients.openWindow('/notification');
+};
+
+const onPush = async (event: PushEvent) => {
+  await log('push event');
+
+  if (!event.data) {
+    return;
+  }
+  const payload = event.data.json();
+
+  await log({ payload });
+
+  const notification = payload.notification;
+
+  await sw.registration.showNotification(notification.title, notification);
+};
+
+const onNotificationClick = async (event: NotificationEvent) => {
+  await log('notificationclick event');
+  event.notification.close();
+
+  const notification = event.notification;
+
+  const channelID = notification.tag;
+  if (!channelID) {
+    await log('no channelID');
+    return;
+  }
+
+  const link = `/${channelID}`;
+
+  if (!isIOS()) {
+    await sw.clients.openWindow(link);
+    return;
+  }
+
+  const client = await waitForClient();
+  if (!client) {
+    await log('no client');
+    return;
+  }
+
+  const openLink = `x-safari-https://${location.host}${link}`;
+
+  await client.navigate(openLink);
+};
 
 sw.addEventListener('push', (event) => {
-  event.waitUntil(
-    (async () => {
-      if (!event.data) {
-        return;
-      }
-      const payload = event.data.json();
-
-      await log('payload', payload);
-
-      const notification = payload.notification;
-
-      await sw.registration.showNotification(notification.title, notification);
-    })(),
-  );
+  event.waitUntil(wrapPromise('onPush', onPush(event)));
 });
 
 sw.addEventListener('notificationclick', (event) => {
-  // https://github.com/mdn/browser-compat-data/issues/22959#issuecomment-2336683759
-  // https://stackoverflow.com/questions/76399649/why-isnt-the-notificationclick-event-called-on-ios-during-pwa-push-notificati
-  event.preventDefault();
-
-  event.waitUntil(
-    (async () => {
-      await log('notificationclick');
-      event.notification.close();
-
-      const channelID = event.notification.tag;
-
-      if (!channelID) {
-        await log('Missing channelID');
-        return;
-      }
-
-      if (isIOS()) {
-        const url = `x-safari-https://${location.host}/${channelID}`;
-        const clients = await sw.clients.matchAll();
-
-        for (const client of clients) {
-          client.postMessage({ type: 'open', url });
-          return;
-        }
-
-        const client = await sw.clients.openWindow('/ios-pwa');
-
-        if (client) {
-          client.postMessage({ type: 'open', url });
-        }
-      } else {
-        const clients = await sw.clients.matchAll();
-        for (const client of clients) {
-          client.postMessage({ type: 'open', url: `/${channelID}` });
-          return;
-        }
-
-        await sw.clients.openWindow(`/${channelID}`);
-      }
-    })(),
-  );
+  event.waitUntil(wrapPromise('onNotificationClick', onNotificationClick(event)));
 });
