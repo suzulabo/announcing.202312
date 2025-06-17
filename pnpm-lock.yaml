@@ -9,6 +9,9 @@ catalogs:
     '@auth/core':
       specifier: 0.39.0
       version: 0.39.0
+    '@auth/sveltekit':
+      specifier: 1.7.4
+      version: 1.7.4
     '@cloudflare/workers-types':
       specifier: 4.20250614.0
       version: 4.20250614.0
@@ -171,6 +174,9 @@ catalogs:
     workbox-strategies:
       specifier: 7.3.0
       version: 7.3.0
+    wrangler:
+      specifier: 4.20.0
+      version: 4.20.0
 
 patchedDependencies:
   fcm-cloudflare-workers:
@@ -347,7 +353,7 @@ importers:
         specifier: 'catalog:'
         version: 3.2.3(@types/node@24.0.3)(jiti@2.4.2)(jsdom@24.1.1)(sass@1.89.2)(terser@5.36.0)(tsx@4.19.3)(yaml@2.8.0)
       wrangler:
-        specifier: 4.20.0
+        specifier: 'catalog:'
         version: 4.20.0(@cloudflare/workers-types@4.20250614.0)
 
   packages/i18n:
@@ -386,7 +392,7 @@ importers:
         specifier: 'catalog:'
         version: 3.2.3(@types/node@24.0.3)(jiti@2.4.2)(jsdom@24.1.1)(sass@1.89.2)(terser@5.36.0)(tsx@4.19.3)(yaml@2.8.0)
       wrangler:
-        specifier: 4.20.0
+        specifier: 'catalog:'
         version: 4.20.0(@cloudflare/workers-types@4.20250614.0)
 
   packages/reader:
@@ -467,7 +473,7 @@ importers:
         specifier: 'catalog:'
         version: 7.3.0
       wrangler:
-        specifier: 4.20.0
+        specifier: 'catalog:'
         version: 4.20.0(@cloudflare/workers-types@4.20250614.0)
 
   packages/writer:
@@ -491,7 +497,7 @@ importers:
         specifier: 'catalog:'
         version: 0.39.0
       '@auth/sveltekit':
-        specifier: 1.7.4
+        specifier: 'catalog:'
         version: 1.7.4(@sveltejs/kit@2.21.5(@sveltejs/vite-plugin-svelte@5.1.0(svelte@5.34.3)(vite@6.3.5(@types/node@24.0.3)(jiti@2.4.2)(sass@1.89.2)(terser@5.36.0)(tsx@4.19.3)(yaml@2.8.0)))(svelte@5.34.3)(vite@6.3.5(@types/node@24.0.3)(jiti@2.4.2)(sass@1.89.2)(terser@5.36.0)(tsx@4.19.3)(yaml@2.8.0)))(svelte@5.34.3)
       '@cloudflare/workers-types':
         specifier: 'catalog:'
@@ -554,7 +560,7 @@ importers:
         specifier: 'catalog:'
         version: 7.3.0
       wrangler:
-        specifier: 4.20.0
+        specifier: 'catalog:'
         version: 4.20.0(@cloudflare/workers-types@4.20250614.0)
 
 packages:
@@ -3589,9 +3595,6 @@ packages:
   nwsapi@2.2.20:
     resolution: {integrity: sha512-/ieB+mDe4MrrKMT8z+mQL8klXydZWGR5Dowt4RAGKbJ3kIGEx3X4ljUo+6V73IXtUPWgfOlU5B9MlGxFO5T+cA==}
 
-  oauth4webapi@3.5.0:
-    resolution: {integrity: sha512-DF3mLWNuxPkxJkHmWxbSFz4aE5CjWOsm465VBfBdWzmzX4Mg3vF8icxK+iKqfdWrIumBJ2TaoNQWx+SQc2bsPQ==}
-
   oauth4webapi@3.5.2:
     resolution: {integrity: sha512-VYz5BaP3izIrUc1GAVzIoz4JnljiW0YAUFObMBwsqDnfHxz2sjLu3W7/8vE8Ms9IbMewN9+1kcvhY3tMscAeGQ==}
 
@@ -4458,7 +4461,7 @@ snapshots:
     dependencies:
       '@panva/hkdf': 1.2.1
       jose: 5.10.0
-      oauth4webapi: 3.5.0
+      oauth4webapi: 3.5.2
       preact: 10.24.3
       preact-render-to-string: 6.5.11(preact@10.24.3)
 
@@ -7480,8 +7483,6 @@ snapshots:
 
   nwsapi@2.2.20:
     optional: true
-
-  oauth4webapi@3.5.0: {}
 
   oauth4webapi@3.5.2: {}
 

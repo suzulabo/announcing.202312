@@ -48,6 +48,6 @@
     "miniflare": "catalog:",
     "mockdate": "catalog:",
     "vitest": "catalog:",
-    "wrangler": "4.20.0"
+    "wrangler": "catalog:"
   }
 }

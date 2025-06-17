@@ -41,6 +41,6 @@
     "workbox-precaching": "catalog:",
     "workbox-routing": "catalog:",
     "workbox-strategies": "catalog:",
-    "wrangler": "4.20.0"
+    "wrangler": "catalog:"
   }
 }
