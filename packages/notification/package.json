@@ -27,12 +27,12 @@
   "devDependencies": {
     "@announcing/cloudflare-support": "workspace:*",
     "@cloudflare/workers-types": "catalog:",
-    "drizzle-kit": "0.31.0",
-    "drizzle-orm": "0.42.0",
-    "fcm-cloudflare-workers": "2.0.1",
-    "miniflare": "4.20250424.0",
-    "valibot": "1.0.0",
-    "vitest": "3.1.1",
-    "wrangler": "4.16.0"
+    "drizzle-kit": "catalog:",
+    "drizzle-orm": "catalog:",
+    "fcm-cloudflare-workers": "catalog:",
+    "miniflare": "catalog:",
+    "valibot": "catalog:",
+    "vitest": "catalog:",
+    "wrangler": "catalog:"
   }
 }

@@ -24,6 +24,11 @@ export default defineConfig({
   build: {
     minify: true,
     sourcemap: true,
+
+    // https://github.com/sveltejs/kit/issues/11416#issuecomment-2338417698
+    rollupOptions: {
+      external: ['fsevents'],
+    },
   },
   server: {
     host: '0.0.0.0',

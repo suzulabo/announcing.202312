@@ -32,10 +32,9 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "catalog:",
-    "dotenv": "16.5.0",
-    "esbuild": "0.25.4",
-    "miniflare": "4.20250424.0",
+    "dotenv": "catalog:",
+    "miniflare": "catalog:",
     "vite": "catalog:",
-    "vitest": "3.1.4"
+    "vitest": "catalog:"
   }
 }

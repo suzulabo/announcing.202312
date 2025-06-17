@@ -1,20 +1,8 @@
 <script lang="ts">
   import DefaultAnnouncementView from './default/DefaultAnnouncementView.svelte';
+  import type { AnnouncementViewProps } from './types';
 
-  type Announcement = {
-    headerImage?: string | undefined;
-    title?: string | undefined;
-    body: string;
-    images?: string[] | undefined;
-    updatedAt: number;
-    createdAt: number;
-  };
-
-  interface Props {
-    announcement: Announcement;
-  }
-
-  let { announcement }: Props = $props();
+  let { announcement }: AnnouncementViewProps = $props();
 </script>
 
 <DefaultAnnouncementView {announcement} />
