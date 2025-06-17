@@ -4,16 +4,11 @@
   import { parseImageSize } from '$lib/utils/parseImageSize';
   import { toHtml } from '$lib/utils/toHtml';
   import { LL } from '@announcing/i18n';
-  import type { ComponentProps } from 'svelte';
-  import ChannelView from '../ChannelView.svelte';
+  import type { ChannelViewProps } from '../types';
   import Item from './Item.svelte';
 
-  let {
-    channel,
-    announcementHrefPrefix,
-    announcementKeys,
-    announcementLoader,
-  }: ComponentProps<typeof ChannelView> = $props();
+  let { channel, announcementHrefPrefix, announcementKeys, announcementLoader }: ChannelViewProps =
+    $props();
 </script>
 
 {#if channel}
