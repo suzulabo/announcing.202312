@@ -11,13 +11,14 @@ hr {
 
 button {
   cursor: pointer;
-}
-button:disabled {
-  cursor: default;
-}
 
-button.unstyled {
-  display: contents;
+  &:disabled {
+    cursor: default;
+  }
+
+  &.unstyled {
+    display: contents;
+  }
 }
 
 button:not(.unstyled),
@@ -38,28 +39,18 @@ a.button {
     left: 1px;
   }
 
-  &:disabled {
-    color: var(--color-text-disable);
-    border-color: var(--color-border-disable);
-  }
-
   &.small {
     padding: 8px 12px;
     font-size: 15px;
   }
 
+  &:disabled {
+    opacity: 0.5;
+  }
+
   @media (hover: hover) {
     &:hover:not(:disabled) {
       background-color: var(--color-accent-hover);
-    }
-  }
-}
-
-a:not(.unstyled) {
-  font-weight: 600;
-  @media (hover: hover) {
-    &:hover {
-      background-color: var(--color-hover);
     }
   }
 }
