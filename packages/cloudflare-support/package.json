@@ -33,7 +33,6 @@
   "devDependencies": {
     "@cloudflare/workers-types": "catalog:",
     "dotenv": "catalog:",
-    "esbuild": "catalog:",
     "miniflare": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"

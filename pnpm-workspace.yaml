@@ -1,29 +1,28 @@
 packages:
   - packages/**/*
 catalog:
-  "@auth/core": 0.39.0
-  "@aws-sdk/client-s3": 3.787.0
-  "@cloudflare/workers-types": 4.20250525.0
-  "@eslint/js": 9.29.0
-  "@faker-js/faker": 9.7.0
-  "@playwright/test": 1.52.0
-  "@sentry/browser": 9.28.0
-  "@sentry/sveltekit": 9.19.0
-  "@sveltejs/adapter-cloudflare": 7.0.1
-  "@sveltejs/kit": 2.21.5
-  "@sveltejs/package": 2.3.11
-  "@sveltejs/vite-plugin-svelte": 5.1.0
-  "@types/autosize": 4.0.3
-  "@types/eslint-config-prettier": 6.11.3
-  "@types/image-blob-reduce": 4.1.4
-  "@types/js-cookie": 3.0.6
-  "@types/node": 24.0.3
+  '@auth/core': 0.39.0
+  '@aws-sdk/client-s3': 3.787.0
+  '@cloudflare/workers-types': 4.20250614.0
+  '@eslint/js': 9.29.0
+  '@faker-js/faker': 9.8.0
+  '@playwright/test': 1.53.0
+  '@sentry/browser': 9.28.0
+  '@sentry/sveltekit': 9.19.0
+  '@sveltejs/adapter-cloudflare': 7.0.1
+  '@sveltejs/kit': 2.21.5
+  '@sveltejs/package': 2.3.11
+  '@sveltejs/vite-plugin-svelte': 5.1.0
+  '@types/autosize': 4.0.3
+  '@types/eslint-config-prettier': 6.11.3
+  '@types/image-blob-reduce': 4.1.4
+  '@types/js-cookie': 3.0.6
+  '@types/node': 24.0.3
   autosize: 6.0.1
   date-fns: 4.1.0
   dotenv: 16.5.0
   drizzle-kit: 0.31.0
   drizzle-orm: 0.42.0
-  esbuild: 0.25.4
   eslint: 9.29.0
   eslint-config-prettier: 10.1.5
   eslint-plugin-svelte: 3.9.2
@@ -35,17 +34,17 @@ catalog:
   jiti: 2.4.2
   js-cookie: 3.0.5
   js-xxhash: 4.0.0
-  linkify-html: 4.2.0
+  linkify-html: 4.3.1
   lru-cache: 11.1.0
-  miniflare: 4.20250424.0
+  miniflare: 4.20250604.1
   mockdate: 3.0.5
   prettier: 3.5.3
   prettier-plugin-organize-imports: 4.1.0
   prettier-plugin-svelte: 3.4.0
   publint: 0.3.12
-  sass: 1.86.3
-  svelte: 5.28.1
-  svelte-check: 4.1.6
+  sass: 1.89.2
+  svelte: 5.34.3
+  svelte-check: 4.2.1
   svelte-eslint-parser: 1.2.0
   the-new-css-reset: 1.11.3
   tsx: 4.19.3
