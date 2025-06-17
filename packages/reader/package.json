@@ -21,7 +21,6 @@
     "@announcing/db": "workspace:*",
     "@announcing/i18n": "workspace:*",
     "@announcing/notification": "workspace:*",
-    "@auth/sveltekit": "1.9.0",
     "@cloudflare/workers-types": "catalog:",
     "@playwright/test": "catalog:",
     "@sentry/browser": "catalog:",
@@ -42,6 +41,6 @@
     "workbox-precaching": "catalog:",
     "workbox-routing": "catalog:",
     "workbox-strategies": "catalog:",
-    "wrangler": "4.15.2"
+    "wrangler": "4.20.0"
   }
 }

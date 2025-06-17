@@ -33,6 +33,6 @@
     "miniflare": "catalog:",
     "valibot": "catalog:",
     "vitest": "catalog:",
-    "wrangler": "4.16.0"
+    "wrangler": "4.20.0"
   }
 }

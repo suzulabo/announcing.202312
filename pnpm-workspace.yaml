@@ -1,8 +1,8 @@
 packages:
   - packages/**/*
+
 catalog:
   '@auth/core': 0.39.0
-  '@aws-sdk/client-s3': 3.787.0
   '@cloudflare/workers-types': 4.20250614.0
   '@eslint/js': 9.29.0
   '@faker-js/faker': 9.8.0
@@ -21,8 +21,8 @@ catalog:
   autosize: 6.0.1
   date-fns: 4.1.0
   dotenv: 16.5.0
-  drizzle-kit: 0.31.0
-  drizzle-orm: 0.42.0
+  drizzle-kit: 0.31.1
+  drizzle-orm: 0.44.2
   eslint: 9.29.0
   eslint-config-prettier: 10.1.5
   eslint-plugin-svelte: 3.9.2
