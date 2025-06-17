@@ -34,7 +34,7 @@
   {#if data.channels}
     <div class="channels">
       {#each data.channels as channel (channel.channelID)}
-        <a href={`/channels/${channel.channelID}`} class="channel">
+        <a href={`/channels/${channel.channelID}`} class="card channel">
           <span class="name">
             {channel.name}
           </span>
@@ -72,9 +72,6 @@
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
       .channel {
-        border: 1px solid var(--color-border);
-        border-radius: 8px;
-        padding: 8px;
         min-height: 82px;
 
         display: flex;

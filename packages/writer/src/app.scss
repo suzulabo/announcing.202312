@@ -13,11 +13,7 @@ body {
 }
 
 @media (width > 600px) {
-  html {
-    background-color: var(--color-background-light);
-  }
   body {
-    background-color: var(--color-background);
     margin: 0 auto;
   }
 }

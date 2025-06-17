@@ -84,8 +84,6 @@
     padding: 16px 8px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--color-border);
-    margin-bottom: 16px;
 
     .site-name-box {
       .site-name {

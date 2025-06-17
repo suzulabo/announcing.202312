@@ -5,36 +5,17 @@ I used the Material Theme Builder (https://material-foundation.github.io/materia
 */
 
 html {
-  $color-text: #171d1e; // On Surface (N-10)
-  --color-text: #{$color-text};
-  --color-text-disable: #{rgba($color-text, 0.5)};
+  --color-background: #e6f4ea;
+  --color-surface: #ffffff;
+  --color-border: #c8dccf;
+  --color-text: #1c1c1c;
 
-  --color-text-light: #3f484a; // On Surface Variant (NV-30)
-
-  --color-error: #ba1a1a; // Error (E-40)
-
-  --color-background: #ffffff; // Container Lowest (N-100)
-
-  --color-background-light: #eff5f6; // Container Low (N-96)
-
-  --color-background-highlight: #e3e9ea; // Container High (N-92)
-
-  --color-background-image: #ffffff; // Container Lowest (N-100)
-
-  $color-border: #6f797a; // Outline (NV-50)
-  --color-border: #{$color-border};
-  --color-border-disable: #{rgba($color-border, 0.5)};
-
-  --color-border-light: #bfc8ca; // OUtline Variant (NV-80)
-
-  --color-hover: #e9eff0; // Container (N-94)
-  --color-hover-light: #e3e9ea; // Container High(N-92)
-
-  --color-background-modal: #{rgba(#2b3133, 0.8)}; // Inverse Surface (N-20)
-
-  --color-background-loading: #{rgba(#eff5f6, 0.6)}; // Container Low (N-96)
-
-  --color-border-image: #e3e9ea; // Container High (N-92)
+  --color-text-subtle: #5a5a5a;
+  --color-accent: #5bbf91;
+  --color-accent-text: #ffffff;
+  --color-accent-hover: #3a8f6b;
+  --color-success: #6fcf97;
+  --color-error: #f98080;
 
   @mixin dark-mode {
     $color-text: #dee3e5; // On Surface (N-90)
