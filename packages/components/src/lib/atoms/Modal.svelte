@@ -71,7 +71,7 @@
     left: 0;
     right: 0;
     margin: 0;
-    background-color: var(--color-background-modal);
+    background-color: rgba(0, 0, 0, 0.4);
     z-index: var(--modal-z-index, 999);
   }
 </style>
