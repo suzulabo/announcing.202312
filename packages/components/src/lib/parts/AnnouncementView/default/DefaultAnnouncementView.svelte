@@ -117,7 +117,7 @@
   .container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 
     .header-image {
       max-height: 50vh;
@@ -128,13 +128,13 @@
       height: fit-content;
     }
     .date {
-      padding: 0 8px;
-      color: var(--color-text-light);
-      font-size: 14px;
+      padding: 0 16px;
+      color: var(--color-text-subtle);
+      font-size: 15px;
     }
     .title {
       font-size: 24px;
-      padding: 0 8px;
+      padding: 0 16px;
     }
     .body {
       padding: 0 16px;
