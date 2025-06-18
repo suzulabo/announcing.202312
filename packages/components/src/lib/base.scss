@@ -5,18 +5,23 @@ I used the Material Theme Builder (https://material-foundation.github.io/materia
 */
 
 html {
-  --color-background: #e6f4ea;
+  --color-background: #f8fff8;
   --color-surface: #ffffff;
-  --color-border: #c8dccf;
-  --color-text: #1c1c1c;
+  --color-border: #cfe3d1;
 
+  --color-text: #1c1c1c;
   --color-text-subtle: #5a5a5a;
+
   --color-accent: #5bbf91;
-  --color-accent-text: #ffffff;
   --color-accent-hover: #3a8f6b;
+  --color-accent-text: #ffffff;
+
+  --color-background-modal: rgba(0, 0, 0, 0.4);
 
   --color-success: #6fcf97;
   --color-error: #f98080;
+  --color-disabled-bg: #e0eee4;
+  --color-disabled-text: #a0a0a0;
 
   @mixin dark-mode {
     $color-text: #dee3e5; // On Surface (N-90)
