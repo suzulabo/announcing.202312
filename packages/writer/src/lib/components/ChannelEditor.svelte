@@ -179,8 +179,9 @@
           width: 64px;
           height: 64px;
           white-space: normal;
+          font-size: 12px;
           :global(:has(#settings[data-locale='ja'])) & {
-            font-size: 12px;
+            font-size: 10px;
           }
         }
         button.icon-remove {
