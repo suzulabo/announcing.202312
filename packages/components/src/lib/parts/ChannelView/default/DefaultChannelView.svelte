@@ -37,6 +37,7 @@
   {:else}
     <VirtualScrollList keys={announcementKeys} itemMinHeight={200} gap={8}>
       {#snippet itemSnippet(key)}
+        <hr />
         <a class="item unstyled" href={`${announcementHrefPrefix}/${key}`}>
           {#await announcementLoader(key)}
             <div class="loading">
@@ -57,7 +58,7 @@
 
 <style lang="scss">
   .channel-box {
-    padding: 0 16px 8px;
+    padding: 0 16px 16px;
   }
 
   .name-line {
@@ -85,11 +86,13 @@
     text-align: center;
   }
 
+  hr {
+    border-top: 1px solid var(--color-border);
+    margin-bottom: 16px;
+  }
+
   .item {
-    margin: 0 8px;
-    padding: 0 0 8px;
-    border: 1px solid var(--color-border-light);
-    border-radius: 4px;
+    padding: 0 16px 8px;
     display: flex;
     flex-direction: column;
     min-height: 200px;
