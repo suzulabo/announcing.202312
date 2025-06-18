@@ -64,6 +64,7 @@
   .name-line {
     display: flex;
     align-items: center;
+    gap: 8px;
     .name {
       font-weight: bold;
       font-size: 20px;

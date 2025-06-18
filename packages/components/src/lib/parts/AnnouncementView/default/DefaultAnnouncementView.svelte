@@ -134,6 +134,7 @@
     }
     .title {
       font-size: 24px;
+      font-weight: bold;
       padding: 0 16px;
     }
     .body {
