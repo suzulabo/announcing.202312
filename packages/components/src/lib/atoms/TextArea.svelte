@@ -1,6 +1,7 @@
 <script lang="ts">
   import { LL } from '@announcing/i18n';
   import autosize from 'autosize';
+  import { onMount } from 'svelte';
 
   interface Props {
     name: string;
@@ -24,24 +25,19 @@
     required = false,
   }: Props = $props();
 
+  let textArea: HTMLTextAreaElement;
+
   const encoder = new TextEncoder();
 
   let bytes = $derived(encoder.encode(value).length);
   $effect(() => {
     error = maxBytes > 0 && bytes > maxBytes;
+    autosize.update(textArea);
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const autoSizeAction = (el: Element, _: string | undefined) => {
-    autosize(el);
-
-    return {
-      // When the value is updated from the parent component, the height is not updated, so it will be updated here.
-      update: () => {
-        autosize.update(el);
-      },
-    };
-  };
+  onMount(() => {
+    autosize(textArea);
+  });
 </script>
 
 <label>
@@ -51,12 +47,7 @@
       <span class="required">{$LL.required()}</span>
     {/if}
   </div>
-  <textarea
-    {name}
-    {placeholder}
-    bind:value
-    style={`--max-height:${maxHeight}`}
-    use:autoSizeAction={value}
+  <textarea bind:this={textArea} {name} {placeholder} bind:value style={`--max-height:${maxHeight}`}
   ></textarea>
   {#if error}
     <div class="error">
