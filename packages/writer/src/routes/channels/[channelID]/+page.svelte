@@ -112,6 +112,7 @@
       <MaterialSymbolsDangerous {...iconProps} />
       {$LL.channelActions.deleteChannel()}</button
     >
+    <a class="button small back" href="/">{$LL.back()}</a>
   </div>
 </div>
 
@@ -135,6 +136,10 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
+      }
+
+      .back {
+        margin: 0 auto;
       }
     }
   }
