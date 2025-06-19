@@ -14,6 +14,9 @@ const config = {
         exclude: ['<all>'],
       },
     }),
+    csrf: {
+      checkOrigin: false,
+    },
   },
 
   compilerOptions: {

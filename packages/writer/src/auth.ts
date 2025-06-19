@@ -50,4 +50,6 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   },
   secret: env.AUTH_SECRET,
   trustHost: true,
+  //https://github.com/nextauthjs/next-auth/issues/6451
+  useSecureCookies: !!process.env['__VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS'],
 });
