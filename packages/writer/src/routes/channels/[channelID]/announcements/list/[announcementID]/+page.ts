@@ -14,9 +14,5 @@ export const load: PageLoad = async ({ params, fetch }) => {
     channelID,
     announcementID,
     announcement,
-    headerBack: {
-      href: '../list',
-      labelKey: 'back',
-    },
   };
 };

@@ -214,7 +214,7 @@
     >{$LL.preview()}</button
   >
 
-  <a class="button small back-btn" href={data.headerBack?.href}>{$LL.cancel()}</a>
+  <a class="button small back-btn" href={data.backHref}>{$LL.cancel()}</a>
 </div>
 
 <style lang="scss">

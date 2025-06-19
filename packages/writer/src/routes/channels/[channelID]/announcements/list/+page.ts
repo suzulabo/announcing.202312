@@ -7,9 +7,6 @@ export const load: PageLoad = async ({ params, parent }) => {
 
   return {
     channel,
-    headerBack: {
-      href: `/channels/${channelID}`,
-      labelKey: 'back',
-    },
+    backHref: `/channels/${channelID}`,
   };
 };

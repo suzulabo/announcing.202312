@@ -3,7 +3,6 @@
 
   import { page } from '$app/state';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import { setupBack } from '@announcing/components/actions/back';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
   import { signOut } from '@auth/sveltekit/client';
@@ -17,7 +16,6 @@
 
   let { data, children }: Props = $props();
 
-  let headerBack = $derived(page.data.headerBack);
   let siteNameElementAttrs = $derived(
     data.userID && page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' },
   );
@@ -27,8 +25,6 @@
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
   });
-
-  const back = setupBack();
 </script>
 
 <svelte:head>
@@ -36,18 +32,14 @@
 </svelte:head>
 
 <header>
-  {#if headerBack}
-    <a href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
-  {:else}
-    <svelte:element
-      this={siteNameElementAttrs.this}
-      class="site-name-box unstyled"
-      {...siteNameElementAttrs}
-    >
-      <span class="site-name">Announcing</span>
-      <span class="sub-title">{$LL.writer.subTitle()}</span>
-    </svelte:element>
-  {/if}
+  <svelte:element
+    this={siteNameElementAttrs.this}
+    class="site-name-box unstyled"
+    {...siteNameElementAttrs}
+  >
+    <span class="site-name">Announcing</span>
+    <span class="sub-title">{$LL.writer.subTitle()}</span>
+  </svelte:element>
 
   <button
     class="small settings-btn"

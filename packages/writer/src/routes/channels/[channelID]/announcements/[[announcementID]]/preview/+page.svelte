@@ -65,7 +65,13 @@
   import { APP_CACHES_PREFIX, getBlobOrThrow } from '$lib/cacheStorage/cacheStorage';
   import { resolveStoragePath, stripStoragePath } from '$lib/db/resolver';
   import { clearChannelCache } from '$lib/fetch/channelCache';
-  import type { Snapshot } from './$types';
+  import type { PageData, Snapshot } from './$types';
+
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 
   let loading = $state(false);
   let channelID = $derived(page.params['channelID'] as string);
@@ -176,6 +182,7 @@
     <button class="submit-btn" onclick={addAnnouncement}
       >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
     >
+    <a class="button small cancel" href={data.backHref}>{$LL.cancel()}</a>
   </div>
 {/if}
 
@@ -189,6 +196,10 @@
     padding: 0 16px;
 
     .submit-btn {
+      align-self: center;
+    }
+
+    .cancel {
       align-self: center;
     }
   }

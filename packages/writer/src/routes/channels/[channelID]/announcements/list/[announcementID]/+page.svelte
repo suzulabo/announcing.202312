@@ -46,6 +46,8 @@
   >
 </div>
 
+<a class="button small back" href="../list">{$LL.back()}</a>
+
 <DeleteModal bind:this={deleteModal} onSubmit={deleteAnnouncement} />
 
 <style lang="scss">
@@ -56,5 +58,8 @@
     align-items: center;
     padding: 0 8px;
     margin-top: 32px;
+  }
+  .back {
+    margin: 32px auto 0;
   }
 </style>

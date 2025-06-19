@@ -13,6 +13,7 @@ export const load: PageLoad = async ({ params, parent, fetch }) => {
       channel,
       channelID,
       announcement: undefined,
+      backHref: `/channels/${channelID}`,
     };
   }
 
@@ -28,18 +29,11 @@ export const load: PageLoad = async ({ params, parent, fetch }) => {
     redirect(303, `/channels/${channelID}/announcements/list`);
   }
 
-  const backHref = announcementID
-    ? `/channels/${channelID}/announcements/list/${announcementID}`
-    : `/channels/${channelID}`;
-
   return {
     channel,
     channelID,
     announcementID,
     announcement,
-    headerBack: {
-      href: backHref,
-      labelKey: 'back',
-    },
+    backHref: `/channels/${channelID}/announcements/list/${announcementID}`,
   };
 };

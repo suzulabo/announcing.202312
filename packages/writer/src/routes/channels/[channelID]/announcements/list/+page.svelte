@@ -34,6 +34,10 @@
 </div>
 <ChannelView {...channelViewProps} />
 
+<div class="back-box">
+  <a class="button small back" href={data.backHref}>{$LL.back()}</a>
+</div>
+
 <style lang="scss">
   .menu {
     display: flex;
@@ -44,5 +48,11 @@
     .prompt {
       margin: auto;
     }
+  }
+
+  .back-box {
+    position: sticky;
+    bottom: 32px;
+    margin: 32px auto 0;
   }
 </style>
