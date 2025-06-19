@@ -39,7 +39,7 @@
     display: flex;
     gap: 8px;
     align-items: center;
-    padding: 16px 8px;
+    padding: 0 8px;
     margin-bottom: 16px;
     .prompt {
       margin: auto;

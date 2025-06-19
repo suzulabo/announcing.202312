@@ -12,12 +12,12 @@
   let { channel } = $derived(data);
 </script>
 
-<div class="channel-box">
+<a class="channel-box" href={`/channels/${data.channel.channelID}`}>
   <span class="name">{channel.name}</span>
   {#if channel.icon}
     <img class="icon" alt="channel icon" src={channel.icon} />
   {/if}
-</div>
+</a>
 {@render children?.()}
 
 <style lang="scss">
@@ -27,9 +27,8 @@
     justify-content: center;
     gap: 16px;
     min-height: 64px;
-    padding: 0 16px 16px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid var(--color-border-light);
+    padding: 0 16px;
+    margin: 0 auto 32px;
 
     .name {
       font-size: 20px;

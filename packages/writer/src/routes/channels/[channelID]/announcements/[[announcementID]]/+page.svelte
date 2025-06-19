@@ -219,7 +219,7 @@
 
 <style lang="scss">
   .container {
-    padding: 16px;
+    padding: 0 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;

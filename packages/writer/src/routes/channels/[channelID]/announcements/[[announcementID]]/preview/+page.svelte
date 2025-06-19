@@ -186,7 +186,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 8px 0 16px;
+    padding: 0 16px;
 
     .submit-btn {
       align-self: center;

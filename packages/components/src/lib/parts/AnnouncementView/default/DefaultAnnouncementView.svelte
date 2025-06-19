@@ -144,7 +144,7 @@
     }
 
     .images-box {
-      margin: 8px 4px;
+      margin: 8px 4px 0;
       display: flex;
 
       .image-box {

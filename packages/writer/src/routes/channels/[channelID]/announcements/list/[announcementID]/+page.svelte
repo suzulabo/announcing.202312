@@ -33,6 +33,8 @@
   };
 </script>
 
+<AnnouncementView announcement={data.announcement} />
+
 <div class="buttons">
   <a class="button" href={`/channels/${data.channelID}/announcements/${data.announcementID}`}
     >{$LL.edit()}</a
@@ -44,8 +46,6 @@
   >
 </div>
 
-<AnnouncementView announcement={data.announcement} />
-
 <DeleteModal bind:this={deleteModal} onSubmit={deleteAnnouncement} />
 
 <style lang="scss">
@@ -54,8 +54,7 @@
     justify-content: center;
     gap: 24px;
     align-items: center;
-    padding: 16px 8px;
-    border-bottom: 1px solid var(--color-border-light);
-    margin-bottom: 16px;
+    padding: 0 8px;
+    margin-top: 32px;
   }
 </style>
