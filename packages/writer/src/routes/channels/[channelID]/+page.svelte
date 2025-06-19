@@ -66,68 +66,53 @@
   };
 
   const iconProps = {
-    width: '20px',
-    height: '20px',
+    width: '24px',
+    height: '24px',
   };
 </script>
 
 <div class="container">
-  <ul class="actions">
-    <li>
-      <a class="button text" href={readerURL}>
-        <MdiExternalLink {...iconProps} />
-        {$LL.channelActions.viewChannel()}</a
-      >
-    </li>
-    <li>
-      <button
-        class="text"
-        onclick={() => {
-          urlCopyModal.openModal(readerURL);
-        }}
-      >
-        <MaterialSymbolsContentCopyOutline {...iconProps} />
-        {$LL.channelActions.copyURL()}</button
-      >
-    </li>
-    <hr />
-    <li>
-      <a class="button text" href={`${page.url.pathname}/announcements`}>
-        <MaterialSymbolsPostAdd {...iconProps} />
-        {$LL.channelActions.createAnnouncement()}
-      </a>
-    </li>
-    <li>
-      <a class="button text" href={`${page.url.pathname}/announcements/list`}>
-        <MaterialSymbolsEditDocumentOutline {...iconProps} />
-        {$LL.channelActions.editAnnouncement()}</a
-      >
-    </li>
-    <hr />
-    <li>
-      <button
-        class="text"
-        onclick={() => {
-          channelEditor.openEditor(channel);
-        }}
-      >
-        <MaterialSymbolsBoxEditOutline {...iconProps} />
-        {$LL.channelActions.editChannel()}</button
-      >
-    </li>
-    <hr />
-    <li>
-      <button
-        class="text"
-        onclick={() => {
-          deleteModal.openModal();
-        }}
-      >
-        <MaterialSymbolsDangerous {...iconProps} />
-        {$LL.channelActions.deleteChannel()}</button
-      >
-    </li>
-  </ul>
+  <div class="actions">
+    <a class="action card" href={`${page.url.pathname}/announcements`}>
+      <MaterialSymbolsPostAdd {...iconProps} />
+      {$LL.channelActions.createAnnouncement()}
+    </a>
+    <a class="action card" href={`${page.url.pathname}/announcements/list`}>
+      <MaterialSymbolsEditDocumentOutline {...iconProps} />
+      {$LL.channelActions.editAnnouncement()}</a
+    >
+    <a class="action card" href={readerURL}>
+      <MdiExternalLink {...iconProps} />
+      {$LL.channelActions.viewChannel()}</a
+    >
+    <button
+      class="action unstyled card"
+      onclick={() => {
+        urlCopyModal.openModal(readerURL);
+      }}
+    >
+      <MaterialSymbolsContentCopyOutline {...iconProps} />
+      {$LL.channelActions.copyURL()}</button
+    >
+    <button
+      class="action unstyled card"
+      onclick={() => {
+        channelEditor.openEditor(channel);
+      }}
+    >
+      <MaterialSymbolsBoxEditOutline {...iconProps} />
+      {$LL.channelActions.editChannel()}</button
+    >
+    <button
+      class="action unstyled card"
+      onclick={() => {
+        deleteModal.openModal();
+      }}
+    >
+      <MaterialSymbolsDangerous {...iconProps} />
+      {$LL.channelActions.deleteChannel()}</button
+    >
+  </div>
 </div>
 
 <UrlCopyModal bind:this={urlCopyModal} />
@@ -136,21 +121,20 @@
 
 <style lang="scss">
   .container {
-    padding: 0 8px;
-
-    hr {
-      margin: 16px 0;
-    }
+    padding: 0 16px;
 
     .actions {
-      li {
-        margin: 8px 24px;
-        a,
-        button {
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-        }
+      display: flex;
+      gap: 24px;
+      flex-direction: column;
+      max-width: 320px;
+      margin: 0 auto;
+
+      .action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
       }
     }
   }

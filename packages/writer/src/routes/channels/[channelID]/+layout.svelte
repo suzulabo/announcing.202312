@@ -24,9 +24,10 @@
   .channel-box {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 16px;
     min-height: 64px;
-    padding: 0 8px 16px;
+    padding: 0 16px 16px;
     margin-bottom: 16px;
     border-bottom: 1px solid var(--color-border-light);
 
@@ -34,9 +35,8 @@
       font-size: 20px;
     }
     .icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 0 0 auto;
+      width: 48px;
+      height: 48px;
       border-radius: 8px;
       object-fit: contain;
     }

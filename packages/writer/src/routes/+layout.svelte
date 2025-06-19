@@ -84,6 +84,7 @@
     padding: 16px 8px;
     display: flex;
     align-items: center;
+    margin-bottom: 16px;
 
     .site-name-box {
       .site-name {
@@ -111,7 +112,6 @@
 
     div {
       margin: 16px 0 0;
-      border-top: 1px solid var(--color-border);
       padding: 16px;
       display: flex;
 

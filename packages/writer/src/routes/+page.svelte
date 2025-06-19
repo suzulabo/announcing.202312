@@ -65,7 +65,7 @@
     flex-direction: column;
 
     .channels {
-      margin: 16px 16px 0;
+      margin: 0 16px;
       display: grid;
       gap: 16px;
       justify-content: center;
