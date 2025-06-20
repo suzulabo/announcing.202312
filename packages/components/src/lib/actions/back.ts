@@ -1,5 +1,5 @@
-import { afterNavigate, replaceState } from '$app/navigation';
-import { page } from '$app/state';
+import { afterNavigate } from '$app/navigation';
+import type { Action } from 'svelte/action';
 
 /*
  Save the 'from' href of afterNavigate in page.state for prioritized use.
@@ -10,35 +10,37 @@ import { page } from '$app/state';
  This allows the code to correctly judge when history.back can be used to navigate back to `/1` from `/2`.
 */
 export const setupBack = () => {
-  let fromHref: string | undefined;
-
   afterNavigate((params) => {
-    const state = page.state;
-    if (state.fromHref) {
-      fromHref = state.fromHref;
+    const fromHref: string | undefined = history.state?.fromHref;
+    console.log('afterNavigate', { fromHref });
+    if (fromHref) {
       return;
     }
 
     if (params.from) {
-      replaceState('', { ...state, fromHref: params.from.url.href });
-      fromHref = params.from.url.href;
+      // Sveltekit state does not load after reload
+      // https://github.com/sveltejs/kit/issues/11956
+      history.replaceState({ ...history.state, fromHref: params.from.url.href }, '');
     }
   });
+};
 
-  return (el: HTMLAnchorElement) => {
-    const clickHandler = (event: MouseEvent) => {
-      if (fromHref && fromHref === el.href) {
-        event.preventDefault();
-        history.back();
-      }
-    };
+export const back: Action<HTMLAnchorElement> = (el) => {
+  const clickHandler = (event: MouseEvent) => {
+    const fromHref: string | undefined = history.state?.fromHref;
+    console.log({ fromHref, 'el.href': el.href });
+    if (fromHref && fromHref === el.href) {
+      console.log('back');
+      event.preventDefault();
+      history.back();
+    }
+  };
 
-    el.addEventListener('click', clickHandler);
+  el.addEventListener('click', clickHandler);
 
-    return {
-      destroy: () => {
-        el.removeEventListener('click', clickHandler);
-      },
-    };
+  return {
+    destroy: () => {
+      el.removeEventListener('click', clickHandler);
+    },
   };
 };

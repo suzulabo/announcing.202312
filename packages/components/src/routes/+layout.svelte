@@ -2,6 +2,7 @@
   import SettingsModal from '$lib/parts/SettingsModal/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
   import type { LayoutData } from './$types';
+  import { setupBack } from '$lib/actions/back';
 
   interface Props {
     data: LayoutData;
@@ -11,6 +12,8 @@
   let { data, children }: Props = $props();
 
   let settingsModal = $state<SettingsModal>();
+
+  setupBack();
 </script>
 
 <div class="tool-bar">

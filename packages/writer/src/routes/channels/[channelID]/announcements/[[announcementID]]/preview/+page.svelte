@@ -65,6 +65,7 @@
   import { APP_CACHES_PREFIX, getBlobOrThrow } from '$lib/cacheStorage/cacheStorage';
   import { resolveStoragePath, stripStoragePath } from '$lib/db/resolver';
   import { clearChannelCache } from '$lib/fetch/channelCache';
+  import { back } from '@announcing/components/actions/back';
   import type { PageData, Snapshot } from './$types';
 
   interface Props {
@@ -182,7 +183,7 @@
     <button class="submit-btn" onclick={addAnnouncement}
       >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
     >
-    <a class="button small cancel" href={data.backHref}>{$LL.cancel()}</a>
+    <a class="button small cancel" href={data.backHref} use:back>{$LL.cancel()}</a>
   </div>
 {/if}
 

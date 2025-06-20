@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { clearChannelCache } from '$lib/fetch/channelCache';
+  import { back } from '@announcing/components/actions/back';
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
   import { LL } from '@announcing/i18n';
   import type { PageData } from './$types';
@@ -46,7 +47,7 @@
   >
 </div>
 
-<a class="button small back" href="../list">{$LL.back()}</a>
+<a class="button small back" href="../list" use:back>{$LL.back()}</a>
 
 <DeleteModal bind:this={deleteModal} onSubmit={deleteAnnouncement} />
 

@@ -16,6 +16,7 @@
 
   import { putBlob, stripPrefix } from '$lib/cacheStorage/cacheStorage';
   import { resolveStoragePath } from '$lib/db/resolver';
+  import { back } from '@announcing/components/actions/back';
   import { genAnnouncementID, genStorageKey } from '@announcing/db/utils';
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
@@ -214,7 +215,7 @@
     >{$LL.preview()}</button
   >
 
-  <a class="button small back-btn" href={data.backHref}>{$LL.cancel()}</a>
+  <a class="button small back-btn" href={data.backHref} use:back>{$LL.cancel()}</a>
 </div>
 
 <style lang="scss">

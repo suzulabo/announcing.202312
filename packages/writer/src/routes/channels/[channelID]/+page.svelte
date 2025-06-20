@@ -16,6 +16,7 @@
   import type { PageData } from './$types';
   import DeleteModal from './DeleteModal.svelte';
   import UrlCopyModal from './UrlCopyModal.svelte';
+  import { back } from '@announcing/components/actions/back';
 
   interface Props {
     data: PageData;
@@ -112,7 +113,7 @@
       <MaterialSymbolsDangerous {...iconProps} />
       {$LL.channelActions.deleteChannel()}</button
     >
-    <a class="button small back" href="/">{$LL.back()}</a>
+    <a class="button small back" href="/" use:back>{$LL.back()}</a>
   </div>
 </div>
 
