@@ -20,10 +20,6 @@
   let loading = $state(false);
 
   const submitHandler = async () => {
-    if (!confirm($LL.deleteAnnouncement.confirmation())) {
-      return;
-    }
-
     loading = true;
     try {
       await onSubmit();
@@ -34,9 +30,9 @@
   };
 </script>
 
-<Modal bind:open dismissMode="none">
+<Modal bind:open dismissMode="backdrop">
   <div class="delete-modal">
-    <span>{$LL.deleteAnnouncement.title()}</span>
+    <span class="title">{$LL.deleteAnnouncement.title()}</span>
     <div class="warning">{$LL.deleteAnnouncement.description()}</div>
     <label class="understand-box">
       <input type="checkbox" bind:checked={deleteUnderstand} />
@@ -61,16 +57,22 @@
 <style lang="scss">
   .delete-modal {
     background-color: var(--color-background);
-    border-radius: 8px;
+    border-radius: 16px;
     margin: auto;
-    padding: 8px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 32px;
+
+    .title {
+      font-size: 20px;
+      color: var(--color-text-subtle);
+    }
 
     .warning {
       font-weight: bold;
+      font-size: 18px;
       color: var(--color-error);
       padding: 0 8px;
     }

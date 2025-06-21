@@ -54,13 +54,14 @@
 <style lang="scss">
   .buttons {
     display: flex;
-    justify-content: center;
     gap: 24px;
-    align-items: center;
     padding: 0 8px;
-    margin-top: 32px;
+    margin: 32px auto;
+    * {
+      width: 120px;
+    }
   }
   .back {
-    margin: 32px auto 0;
+    margin: 0 auto;
   }
 </style>
