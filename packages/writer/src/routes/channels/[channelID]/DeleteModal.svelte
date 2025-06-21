@@ -38,7 +38,6 @@
 <Modal bind:open dismissMode="backdrop">
   <div class="delete-modal">
     <span>{$LL.deleteChannel()}</span>
-    <hr />
     <div class="warning">{$LL.deleteChannelDescription({ name: name })}</div>
     <label class="understand-box">
       <input type="checkbox" bind:checked={deleteUnderstand} />
@@ -70,10 +69,6 @@
     flex-direction: column;
     align-items: center;
     gap: 16px;
-
-    hr {
-      margin: -8px 0 0;
-    }
 
     .warning {
       font-weight: bold;

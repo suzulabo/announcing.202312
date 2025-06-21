@@ -37,7 +37,6 @@
 <Modal bind:open dismissMode="none">
   <div class="delete-modal">
     <span>{$LL.deleteAnnouncement.title()}</span>
-    <hr />
     <div class="warning">{$LL.deleteAnnouncement.description()}</div>
     <label class="understand-box">
       <input type="checkbox" bind:checked={deleteUnderstand} />
@@ -69,10 +68,6 @@
     flex-direction: column;
     align-items: center;
     gap: 16px;
-
-    hr {
-      margin: -8px 0 0;
-    }
 
     .warning {
       font-weight: bold;

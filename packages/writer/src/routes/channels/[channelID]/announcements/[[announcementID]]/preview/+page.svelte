@@ -179,7 +179,6 @@
 {#if channel && announcement}
   <div class="container">
     <AnnouncementView announcement={toAnnouncementViewData(announcement)} />
-    <hr />
     <button class="submit-btn" onclick={addAnnouncement}
       >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
     >
