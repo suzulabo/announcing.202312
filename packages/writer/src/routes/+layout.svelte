@@ -4,7 +4,6 @@
   import { setupBack } from '@announcing/components/actions/back';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
-  import { signOut } from '@auth/sveltekit/client';
   import { onMount, type Snippet } from 'svelte';
   import '../app.scss';
   import type { LayoutData } from './$types';
@@ -66,11 +65,6 @@
   bind:this={settingsModal}
   requestLocale={data.requestLocale}
   requestTheme={data.requestTheme}
-  onSignOut={data.userID
-    ? () => {
-        void signOut();
-      }
-    : undefined}
 />
 
 <style lang="scss">

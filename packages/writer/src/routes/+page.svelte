@@ -3,6 +3,7 @@
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
   import { clearChannelCache } from '$lib/fetch/channelCache';
   import { LL } from '@announcing/i18n';
+  import { signOut } from '@auth/sveltekit/client';
   import type { PageData } from './$types';
 
   interface Props {
@@ -55,6 +56,15 @@
     >{$LL.createChannel()}
   </button>
   <span class="create-btn-desc">{$LL.channelsCanBeCreated()}</span>
+
+  <button
+    class="small"
+    onclick={() => {
+      void signOut();
+    }}
+  >
+    {$LL.signOut()}
+  </button>
 </div>
 
 <ChannelEditor bind:this={editor} onSubmit={submitHandler} />
@@ -63,6 +73,7 @@
   .container {
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     .channels {
       margin: 0 16px;
@@ -94,9 +105,9 @@
       margin: 16px auto 0;
     }
     .create-btn-desc {
-      margin: 8px auto;
-      font-size: 13px;
-      font-style: italic;
+      margin: 8px auto 32px;
+      color: var(--color-text-subtle);
+      font-size: 15px;
     }
   }
 </style>
