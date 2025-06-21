@@ -37,7 +37,7 @@
 
 <Modal bind:open dismissMode="backdrop">
   <div class="delete-modal">
-    <span>{$LL.deleteChannel()}</span>
+    <span class="title">{$LL.deleteChannel()}</span>
     <div class="warning">{$LL.deleteChannelDescription({ name: name })}</div>
     <label class="understand-box">
       <input type="checkbox" bind:checked={deleteUnderstand} />
@@ -62,16 +62,22 @@
 <style lang="scss">
   .delete-modal {
     background-color: var(--color-background);
-    border-radius: 8px;
+    border-radius: 16px;
     margin: auto;
-    padding: 8px 8px 16px;
+    padding: 32px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 32px;
+
+    .title {
+      font-size: 20px;
+      color: var(--color-text-subtle);
+    }
 
     .warning {
       font-weight: bold;
+      font-size: 18px;
       color: var(--color-error);
       padding: 0 8px;
     }
