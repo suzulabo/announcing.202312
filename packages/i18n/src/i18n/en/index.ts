@@ -1,17 +1,18 @@
 import type { BaseTranslation } from '../i18n-types';
 
 const en = {
-  edit: 'Edit',
-  delete: 'Delete',
-  cancel: 'Cancel',
-  close: 'Close',
-  remove: 'Remove',
-  back: 'Back',
-  preview: 'Preview',
   settings: 'Settings',
   theme: 'Theme',
   lightMode: 'Light',
   darkMode: 'Dark',
+  close: 'Close',
+  signIn: { google: 'Sign in with Google' },
+  edit: 'Edit',
+  delete: 'Delete',
+  cancel: 'Cancel',
+  remove: 'Remove',
+  back: 'Back',
+  preview: 'Preview',
   copy: 'Copy',
   copied: 'Copied to clipboard.',
   copyError: 'Unable to copy to clipboard.',
@@ -49,7 +50,6 @@ const en = {
   addImage: 'Add Image',
   addImageDescription: 'You can add up to 4 images.',
   announcementView: { created: 'Created: ', updated: 'Updated: ' },
-  writer: { subTitle: 'Author Site' },
   deleteAnnouncement: {
     title: 'Delete Announcement',
     description: 'You are about to delete the announcement. This action cannot be undone.',

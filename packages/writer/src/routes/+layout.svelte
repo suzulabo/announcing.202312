@@ -29,7 +29,7 @@
 </script>
 
 <svelte:head>
-  <title>Announcing - {$LL.writer.subTitle()}</title>
+  <title>Announcing</title>
 </svelte:head>
 
 <header>
@@ -39,7 +39,6 @@
     {...siteNameElementAttrs}
   >
     <span class="site-name">Announcing</span>
-    <span class="sub-title">{$LL.writer.subTitle()}</span>
   </svelte:element>
 
   <button
@@ -77,13 +76,6 @@
     .site-name-box {
       .site-name {
         font-size: 20px;
-      }
-      .sub-title {
-        background-color: var(--color-background-highlight);
-        padding: 4px;
-        border-radius: 4px;
-        font-size: 14px;
-        font-weight: 500;
       }
     }
 

@@ -1,32 +1,4 @@
 export const messages = {
-  edit: {
-    en: 'Edit',
-    ja: '編集',
-  },
-  delete: {
-    en: 'Delete',
-    ja: '削除',
-  },
-  cancel: {
-    en: 'Cancel',
-    ja: 'キャンセル',
-  },
-  close: {
-    en: 'Close',
-    ja: '閉じる',
-  },
-  remove: {
-    en: 'Remove',
-    ja: '削除',
-  },
-  back: {
-    en: 'Back',
-    ja: '戻る',
-  },
-  preview: {
-    en: 'Preview',
-    ja: '表示を確認',
-  },
   settings: {
     en: 'Settings',
     ja: '設定',
@@ -42,6 +14,40 @@ export const messages = {
   darkMode: {
     en: 'Dark',
     ja: '暗い',
+  },
+  close: {
+    en: 'Close',
+    ja: '閉じる',
+  },
+  signIn: {
+    google: {
+      en: 'Sign in with Google',
+      ja: 'Googleでログイン',
+    },
+  },
+  edit: {
+    en: 'Edit',
+    ja: '編集',
+  },
+  delete: {
+    en: 'Delete',
+    ja: '削除',
+  },
+  cancel: {
+    en: 'Cancel',
+    ja: 'キャンセル',
+  },
+  remove: {
+    en: 'Remove',
+    ja: '削除',
+  },
+  back: {
+    en: 'Back',
+    ja: '戻る',
+  },
+  preview: {
+    en: 'Preview',
+    ja: '表示を確認',
   },
   copy: {
     en: 'Copy',
@@ -185,12 +191,6 @@ export const messages = {
     updated: {
       en: 'Updated: ',
       ja: '更新: ',
-    },
-  },
-  writer: {
-    subTitle: {
-      en: 'Author Site',
-      ja: '投稿者用サイト',
     },
   },
   deleteAnnouncement: {

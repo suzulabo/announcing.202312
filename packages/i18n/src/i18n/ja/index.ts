@@ -1,17 +1,18 @@
 import type { Translation } from '../i18n-types';
 
 const ja = {
-  edit: '編集',
-  delete: '削除',
-  cancel: 'キャンセル',
-  close: '閉じる',
-  remove: '削除',
-  back: '戻る',
-  preview: '表示を確認',
   settings: '設定',
   theme: '表示設定',
   lightMode: '明るい',
   darkMode: '暗い',
+  close: '閉じる',
+  signIn: { google: 'Googleでログイン' },
+  edit: '編集',
+  delete: '削除',
+  cancel: 'キャンセル',
+  remove: '削除',
+  back: '戻る',
+  preview: '表示を確認',
   copy: 'コピー',
   copied: 'コピーしました',
   copyError: 'コピーできませんでした',
@@ -48,7 +49,6 @@ const ja = {
   addImage: '画像を追加',
   addImageDescription: '画像は4枚まで追加できます',
   announcementView: { created: '作成: ', updated: '更新: ' },
-  writer: { subTitle: '投稿者用サイト' },
   deleteAnnouncement: {
     title: 'お知らせの削除',
     description: '選択したお知らせを削除します。この操作は元に戻せません。',

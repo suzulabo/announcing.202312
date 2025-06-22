@@ -2,49 +2,40 @@
   import { signIn } from '@auth/sveltekit/client';
   import { PUBLIC_AUTH_CARDINALS } from '$env/static/public';
   import GoogleIcon from '$lib/components/icon/GoogleIcon.svelte';
+  import { LL } from '@announcing/i18n';
 </script>
 
-<div class="container">
-  <div class="buttons">
-    {#if PUBLIC_AUTH_CARDINALS}
-      <button
-        onclick={() => {
-          void signIn('credentials', { id: 'test_user01' });
-        }}>Credentials</button
-      >
-    {/if}
+<div class="buttons">
+  {#if PUBLIC_AUTH_CARDINALS}
     <button
       onclick={() => {
-        void signIn('google');
-      }}
-      ><div class="inner">
-        <GoogleIcon /><span class="label"></span>
-      </div></button
+        void signIn('credentials', { id: 'test_user01' });
+      }}>Credentials</button
     >
-  </div>
+  {/if}
+  <button
+    onclick={() => {
+      void signIn('google');
+    }}
+  >
+    <GoogleIcon />
+    {$LL.signIn.google()}
+  </button>
 </div>
 
 <style lang="scss">
-  .container {
-    padding: 20px 10px;
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: auto;
 
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 8px;
-
-      button {
-        width: 100%;
-        height: 55px;
-
-        .inner {
-          display: inline-flex;
-          align-items: center;
-          .label {
-            margin-left: 10px;
-          }
-        }
-      }
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      max-width: 300px;
     }
   }
 </style>

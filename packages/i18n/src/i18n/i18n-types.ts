@@ -15,34 +15,6 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * E​d​i​t
-	 */
-	edit: string
-	/**
-	 * D​e​l​e​t​e
-	 */
-	'delete': string
-	/**
-	 * C​a​n​c​e​l
-	 */
-	cancel: string
-	/**
-	 * C​l​o​s​e
-	 */
-	close: string
-	/**
-	 * R​e​m​o​v​e
-	 */
-	remove: string
-	/**
-	 * B​a​c​k
-	 */
-	back: string
-	/**
-	 * P​r​e​v​i​e​w
-	 */
-	preview: string
-	/**
 	 * S​e​t​t​i​n​g​s
 	 */
 	settings: string
@@ -58,6 +30,40 @@ type RootTranslation = {
 	 * D​a​r​k
 	 */
 	darkMode: string
+	/**
+	 * C​l​o​s​e
+	 */
+	close: string
+	signIn: {
+		/**
+		 * S​i​g​n​ ​i​n​ ​w​i​t​h​ ​G​o​o​g​l​e
+		 */
+		google: string
+	}
+	/**
+	 * E​d​i​t
+	 */
+	edit: string
+	/**
+	 * D​e​l​e​t​e
+	 */
+	'delete': string
+	/**
+	 * C​a​n​c​e​l
+	 */
+	cancel: string
+	/**
+	 * R​e​m​o​v​e
+	 */
+	remove: string
+	/**
+	 * B​a​c​k
+	 */
+	back: string
+	/**
+	 * P​r​e​v​i​e​w
+	 */
+	preview: string
 	/**
 	 * C​o​p​y
 	 */
@@ -203,12 +209,6 @@ type RootTranslation = {
 		 */
 		updated: string
 	}
-	writer: {
-		/**
-		 * A​u​t​h​o​r​ ​S​i​t​e
-		 */
-		subTitle: string
-	}
 	deleteAnnouncement: {
 		/**
 		 * D​e​l​e​t​e​ ​A​n​n​o​u​n​c​e​m​e​n​t
@@ -273,34 +273,6 @@ type RootTranslation = {
 
 export type TranslationFunctions = {
 	/**
-	 * Edit
-	 */
-	edit: () => LocalizedString
-	/**
-	 * Delete
-	 */
-	'delete': () => LocalizedString
-	/**
-	 * Cancel
-	 */
-	cancel: () => LocalizedString
-	/**
-	 * Close
-	 */
-	close: () => LocalizedString
-	/**
-	 * Remove
-	 */
-	remove: () => LocalizedString
-	/**
-	 * Back
-	 */
-	back: () => LocalizedString
-	/**
-	 * Preview
-	 */
-	preview: () => LocalizedString
-	/**
 	 * Settings
 	 */
 	settings: () => LocalizedString
@@ -316,6 +288,40 @@ export type TranslationFunctions = {
 	 * Dark
 	 */
 	darkMode: () => LocalizedString
+	/**
+	 * Close
+	 */
+	close: () => LocalizedString
+	signIn: {
+		/**
+		 * Sign in with Google
+		 */
+		google: () => LocalizedString
+	}
+	/**
+	 * Edit
+	 */
+	edit: () => LocalizedString
+	/**
+	 * Delete
+	 */
+	'delete': () => LocalizedString
+	/**
+	 * Cancel
+	 */
+	cancel: () => LocalizedString
+	/**
+	 * Remove
+	 */
+	remove: () => LocalizedString
+	/**
+	 * Back
+	 */
+	back: () => LocalizedString
+	/**
+	 * Preview
+	 */
+	preview: () => LocalizedString
 	/**
 	 * Copy
 	 */
@@ -459,12 +465,6 @@ export type TranslationFunctions = {
 		 * Updated: 
 		 */
 		updated: () => LocalizedString
-	}
-	writer: {
-		/**
-		 * Author Site
-		 */
-		subTitle: () => LocalizedString
 	}
 	deleteAnnouncement: {
 		/**
