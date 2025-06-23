@@ -108,7 +108,7 @@
             class="icon-remove"
             onclick={() => {
               form.icon = undefined;
-            }}>{$LL.removeIcon()}</button
+            }}>{$LL.remove()}</button
           >
         {:else}
           <button

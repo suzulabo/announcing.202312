@@ -125,7 +125,7 @@
         class="small filled"
         onclick={() => {
           form.headerImage = undefined;
-        }}>{$LL.removeHeaderImage()}</button
+        }}>{$LL.remove()}</button
       >
     {:else}
       <button

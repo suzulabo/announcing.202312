@@ -23,7 +23,6 @@ export const messages = {
     en: 'Failed to data load',
     ja: 'データの読み込みに失敗しました',
   },
-
   theme: {
     en: 'Theme',
     ja: '表示設定',
@@ -40,7 +39,6 @@ export const messages = {
     en: 'Close',
     ja: '閉じる',
   },
-
   settings: {
     en: 'Settings',
     ja: '設定',
@@ -75,10 +73,6 @@ export const messages = {
     en: 'Select icon',
     ja: 'アイコンを選択',
   },
-  removeIcon: {
-    en: 'Remove',
-    ja: '選択解除',
-  },
   cancel: {
     en: 'Cancel',
     ja: 'キャンセル',
@@ -111,15 +105,17 @@ export const messages = {
     en: 'Back',
     ja: '戻る',
   },
-
-  // -------------------------------------------------
-  edit: {
-    en: 'Edit',
-    ja: '編集',
+  chooseHeaderImage: {
+    en: 'Choose Header Image',
+    ja: '見出し画像を選択',
   },
-  delete: {
-    en: 'Delete',
-    ja: '削除',
+  addImage: {
+    en: 'Add Image',
+    ja: '画像を追加',
+  },
+  addImageDescription: {
+    en: 'You can add up to 4 images.',
+    ja: '画像は4枚まで追加できます',
   },
   remove: {
     en: 'Remove',
@@ -129,6 +125,36 @@ export const messages = {
     en: 'Preview',
     ja: '表示を確認',
   },
+  postAnnouncement: {
+    en: 'Post announcement',
+    ja: 'お知らせを投稿',
+  },
+  updateAnnouncement: {
+    en: 'Update announcement',
+    ja: 'お知らせを更新',
+  },
+  announcementListPrompt: {
+    en: 'Open the announcement you want to edit or delete.',
+    ja: '編集または削除するお知らせを開いてください',
+  },
+  edit: {
+    en: 'Edit',
+    ja: '編集',
+  },
+  delete: {
+    en: 'Delete',
+    ja: '削除',
+  },
+  deleteAnnouncement: {
+    en: 'Delete Announcement',
+    ja: 'お知らせの削除',
+  },
+  deleteAnnouncementDesc: {
+    en: 'You are about to delete the announcement. This action cannot be undone.',
+    ja: '選択したお知らせを削除します。この操作は元に戻せません。',
+  },
+
+  // -------------------------------------------------
   copy: {
     en: 'Copy',
     ja: 'コピー',
@@ -168,48 +194,6 @@ export const messages = {
   deleteChannelConfirmation: {
     en: 'Are you sure you want to delete the channel?',
     ja: 'チャンネルを削除します。よろしいですか？',
-  },
-  postAnnouncement: {
-    en: 'Post announcement',
-    ja: 'お知らせを投稿',
-  },
-  updateAnnouncement: {
-    en: 'Edit announcement',
-    ja: 'お知らせを編集',
-  },
-  chooseHeaderImage: {
-    en: 'Choose Header Image',
-    ja: '見出し画像を選択',
-  },
-  removeHeaderImage: {
-    en: 'Remove',
-    ja: '選択解除',
-  },
-  addImage: {
-    en: 'Add Image',
-    ja: '画像を追加',
-  },
-  addImageDescription: {
-    en: 'You can add up to 4 images.',
-    ja: '画像は4枚まで追加できます',
-  },
-  deleteAnnouncement: {
-    title: {
-      en: 'Delete Announcement',
-      ja: 'お知らせの削除',
-    },
-    description: {
-      en: 'You are about to delete the announcement. This action cannot be undone.',
-      ja: '選択したお知らせを削除します。この操作は元に戻せません。',
-    },
-    confirmation: {
-      en: 'Are you sure you want to delete the announcement?',
-      ja: 'お知らせを削除します。よろしいですか？',
-    },
-  },
-  announcementListPrompt: {
-    en: 'Open the announcement you want to edit or delete.',
-    ja: '編集または削除するお知らせを開いてください',
   },
   notification: {
     en: 'Notification',

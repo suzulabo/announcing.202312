@@ -32,15 +32,15 @@
 
 <Modal bind:open dismissMode="backdrop">
   <div class="delete-modal">
-    <span class="title">{$LL.deleteAnnouncement.title()}</span>
-    <div class="warning">{$LL.deleteAnnouncement.description()}</div>
+    <span class="title">{$LL.deleteAnnouncement()}</span>
+    <div class="warning">{$LL.deleteAnnouncementDesc()}</div>
     <label class="understand-box">
       <input type="checkbox" bind:checked={deleteUnderstand} />
       {$LL.understand()}
     </label>
 
     <button class="delete-btn" disabled={!deleteUnderstand} onclick={submitHandler}>
-      {$LL.deleteAnnouncement.title()}
+      {$LL.deleteAnnouncement()}
     </button>
 
     <button

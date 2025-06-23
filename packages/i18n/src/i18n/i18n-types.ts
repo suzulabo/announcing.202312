@@ -89,10 +89,6 @@ type RootTranslation = {
 	 */
 	selectIcon: string
 	/**
-	 * R​e​m​o​v​e
-	 */
-	removeIcon: string
-	/**
 	 * C​a​n​c​e​l
 	 */
 	cancel: string
@@ -125,13 +121,17 @@ type RootTranslation = {
 	 */
 	back: string
 	/**
-	 * E​d​i​t
+	 * C​h​o​o​s​e​ ​H​e​a​d​e​r​ ​I​m​a​g​e
 	 */
-	edit: string
+	chooseHeaderImage: string
 	/**
-	 * D​e​l​e​t​e
+	 * A​d​d​ ​I​m​a​g​e
 	 */
-	'delete': string
+	addImage: string
+	/**
+	 * Y​o​u​ ​c​a​n​ ​a​d​d​ ​u​p​ ​t​o​ ​4​ ​i​m​a​g​e​s​.
+	 */
+	addImageDescription: string
 	/**
 	 * R​e​m​o​v​e
 	 */
@@ -140,6 +140,34 @@ type RootTranslation = {
 	 * P​r​e​v​i​e​w
 	 */
 	preview: string
+	/**
+	 * P​o​s​t​ ​a​n​n​o​u​n​c​e​m​e​n​t
+	 */
+	postAnnouncement: string
+	/**
+	 * U​p​d​a​t​e​ ​a​n​n​o​u​n​c​e​m​e​n​t
+	 */
+	updateAnnouncement: string
+	/**
+	 * O​p​e​n​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​e​d​i​t​ ​o​r​ ​d​e​l​e​t​e​.
+	 */
+	announcementListPrompt: string
+	/**
+	 * E​d​i​t
+	 */
+	edit: string
+	/**
+	 * D​e​l​e​t​e
+	 */
+	'delete': string
+	/**
+	 * D​e​l​e​t​e​ ​A​n​n​o​u​n​c​e​m​e​n​t
+	 */
+	deleteAnnouncement: string
+	/**
+	 * Y​o​u​ ​a​r​e​ ​a​b​o​u​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​.​ ​T​h​i​s​ ​a​c​t​i​o​n​ ​c​a​n​n​o​t​ ​b​e​ ​u​n​d​o​n​e​.
+	 */
+	deleteAnnouncementDesc: string
 	/**
 	 * C​o​p​y
 	 */
@@ -181,48 +209,6 @@ type RootTranslation = {
 	 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​c​h​a​n​n​e​l​?
 	 */
 	deleteChannelConfirmation: string
-	/**
-	 * P​o​s​t​ ​a​n​n​o​u​n​c​e​m​e​n​t
-	 */
-	postAnnouncement: string
-	/**
-	 * E​d​i​t​ ​a​n​n​o​u​n​c​e​m​e​n​t
-	 */
-	updateAnnouncement: string
-	/**
-	 * C​h​o​o​s​e​ ​H​e​a​d​e​r​ ​I​m​a​g​e
-	 */
-	chooseHeaderImage: string
-	/**
-	 * R​e​m​o​v​e
-	 */
-	removeHeaderImage: string
-	/**
-	 * A​d​d​ ​I​m​a​g​e
-	 */
-	addImage: string
-	/**
-	 * Y​o​u​ ​c​a​n​ ​a​d​d​ ​u​p​ ​t​o​ ​4​ ​i​m​a​g​e​s​.
-	 */
-	addImageDescription: string
-	deleteAnnouncement: {
-		/**
-		 * D​e​l​e​t​e​ ​A​n​n​o​u​n​c​e​m​e​n​t
-		 */
-		title: string
-		/**
-		 * Y​o​u​ ​a​r​e​ ​a​b​o​u​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​.​ ​T​h​i​s​ ​a​c​t​i​o​n​ ​c​a​n​n​o​t​ ​b​e​ ​u​n​d​o​n​e​.
-		 */
-		description: string
-		/**
-		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​?
-		 */
-		confirmation: string
-	}
-	/**
-	 * O​p​e​n​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​e​d​i​t​ ​o​r​ ​d​e​l​e​t​e​.
-	 */
-	announcementListPrompt: string
 	/**
 	 * N​o​t​i​f​i​c​a​t​i​o​n
 	 */
@@ -343,10 +329,6 @@ export type TranslationFunctions = {
 	 */
 	selectIcon: () => LocalizedString
 	/**
-	 * Remove
-	 */
-	removeIcon: () => LocalizedString
-	/**
 	 * Cancel
 	 */
 	cancel: () => LocalizedString
@@ -379,13 +361,17 @@ export type TranslationFunctions = {
 	 */
 	back: () => LocalizedString
 	/**
-	 * Edit
+	 * Choose Header Image
 	 */
-	edit: () => LocalizedString
+	chooseHeaderImage: () => LocalizedString
 	/**
-	 * Delete
+	 * Add Image
 	 */
-	'delete': () => LocalizedString
+	addImage: () => LocalizedString
+	/**
+	 * You can add up to 4 images.
+	 */
+	addImageDescription: () => LocalizedString
 	/**
 	 * Remove
 	 */
@@ -394,6 +380,34 @@ export type TranslationFunctions = {
 	 * Preview
 	 */
 	preview: () => LocalizedString
+	/**
+	 * Post announcement
+	 */
+	postAnnouncement: () => LocalizedString
+	/**
+	 * Update announcement
+	 */
+	updateAnnouncement: () => LocalizedString
+	/**
+	 * Open the announcement you want to edit or delete.
+	 */
+	announcementListPrompt: () => LocalizedString
+	/**
+	 * Edit
+	 */
+	edit: () => LocalizedString
+	/**
+	 * Delete
+	 */
+	'delete': () => LocalizedString
+	/**
+	 * Delete Announcement
+	 */
+	deleteAnnouncement: () => LocalizedString
+	/**
+	 * You are about to delete the announcement. This action cannot be undone.
+	 */
+	deleteAnnouncementDesc: () => LocalizedString
 	/**
 	 * Copy
 	 */
@@ -434,48 +448,6 @@ export type TranslationFunctions = {
 	 * Are you sure you want to delete the channel?
 	 */
 	deleteChannelConfirmation: () => LocalizedString
-	/**
-	 * Post announcement
-	 */
-	postAnnouncement: () => LocalizedString
-	/**
-	 * Edit announcement
-	 */
-	updateAnnouncement: () => LocalizedString
-	/**
-	 * Choose Header Image
-	 */
-	chooseHeaderImage: () => LocalizedString
-	/**
-	 * Remove
-	 */
-	removeHeaderImage: () => LocalizedString
-	/**
-	 * Add Image
-	 */
-	addImage: () => LocalizedString
-	/**
-	 * You can add up to 4 images.
-	 */
-	addImageDescription: () => LocalizedString
-	deleteAnnouncement: {
-		/**
-		 * Delete Announcement
-		 */
-		title: () => LocalizedString
-		/**
-		 * You are about to delete the announcement. This action cannot be undone.
-		 */
-		description: () => LocalizedString
-		/**
-		 * Are you sure you want to delete the announcement?
-		 */
-		confirmation: () => LocalizedString
-	}
-	/**
-	 * Open the announcement you want to edit or delete.
-	 */
-	announcementListPrompt: () => LocalizedString
 	/**
 	 * Notification
 	 */
