@@ -15,9 +15,29 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * S​e​t​t​i​n​g​s
+	 * (​R​e​q​u​i​r​e​d​)
 	 */
-	settings: string
+	required: string
+	/**
+	 * Y​o​u​r​ ​i​n​p​u​t​ ​e​x​c​e​e​d​s​ ​t​h​e​ ​c​h​a​r​a​c​t​e​r​ ​l​i​m​i​t​.
+	 */
+	textTooLong: string
+	/**
+	 * C​r​e​a​t​e​d​:​ 
+	 */
+	createdAtPrefix: string
+	/**
+	 * U​p​d​a​t​e​d​:​ 
+	 */
+	updatedAtPrefix: string
+	/**
+	 * N​o​ ​a​n​n​o​u​n​c​e​m​e​n​t​s​ ​y​e​t​.
+	 */
+	noAnnouncements: string
+	/**
+	 * F​a​i​l​e​d​ ​t​o​ ​d​a​t​a​ ​l​o​a​d
+	 */
+	failedToDataLoad: string
 	/**
 	 * T​h​e​m​e
 	 */
@@ -34,6 +54,10 @@ type RootTranslation = {
 	 * C​l​o​s​e
 	 */
 	close: string
+	/**
+	 * S​e​t​t​i​n​g​s
+	 */
+	settings: string
 	signIn: {
 		/**
 		 * S​i​g​n​ ​i​n​ ​w​i​t​h​ ​G​o​o​g​l​e
@@ -53,10 +77,6 @@ type RootTranslation = {
 	 */
 	signOut: string
 	/**
-	 * (​R​e​q​u​i​r​e​d​)
-	 */
-	required: string
-	/**
 	 * C​h​a​n​n​e​l​ ​n​a​m​e
 	 */
 	channelName: string
@@ -68,6 +88,10 @@ type RootTranslation = {
 	 * S​e​l​e​c​t​ ​i​c​o​n
 	 */
 	selectIcon: string
+	/**
+	 * R​e​m​o​v​e
+	 */
+	removeIcon: string
 	/**
 	 * C​a​n​c​e​l
 	 */
@@ -141,22 +165,6 @@ type RootTranslation = {
 	 */
 	body: string
 	/**
-	 * R​e​m​o​v​e
-	 */
-	removeIcon: string
-	/**
-	 * Y​o​u​r​ ​i​n​p​u​t​ ​e​x​c​e​e​d​s​ ​t​h​e​ ​c​h​a​r​a​c​t​e​r​ ​l​i​m​i​t​.
-	 */
-	textTooLong: string
-	/**
-	 * N​o​ ​a​n​n​o​u​n​c​e​m​e​n​t​s​ ​y​e​t​.
-	 */
-	noAnnouncements: string
-	/**
-	 * F​a​i​l​e​d​ ​t​o​ ​d​a​t​a​ ​l​o​a​d
-	 */
-	failedToDataLoad: string
-	/**
 	 * U​p​d​a​t​e​ ​C​h​a​n​n​e​l
 	 */
 	updateChannel: string
@@ -197,16 +205,6 @@ type RootTranslation = {
 	 * Y​o​u​ ​c​a​n​ ​a​d​d​ ​u​p​ ​t​o​ ​4​ ​i​m​a​g​e​s​.
 	 */
 	addImageDescription: string
-	announcementView: {
-		/**
-		 * C​r​e​a​t​e​d​:​ 
-		 */
-		created: string
-		/**
-		 * U​p​d​a​t​e​d​:​ 
-		 */
-		updated: string
-	}
 	deleteAnnouncement: {
 		/**
 		 * D​e​l​e​t​e​ ​A​n​n​o​u​n​c​e​m​e​n​t
@@ -271,9 +269,29 @@ type RootTranslation = {
 
 export type TranslationFunctions = {
 	/**
-	 * Settings
+	 * (Required)
 	 */
-	settings: () => LocalizedString
+	required: () => LocalizedString
+	/**
+	 * Your input exceeds the character limit.
+	 */
+	textTooLong: () => LocalizedString
+	/**
+	 * Created: 
+	 */
+	createdAtPrefix: () => LocalizedString
+	/**
+	 * Updated: 
+	 */
+	updatedAtPrefix: () => LocalizedString
+	/**
+	 * No announcements yet.
+	 */
+	noAnnouncements: () => LocalizedString
+	/**
+	 * Failed to data load
+	 */
+	failedToDataLoad: () => LocalizedString
 	/**
 	 * Theme
 	 */
@@ -290,6 +308,10 @@ export type TranslationFunctions = {
 	 * Close
 	 */
 	close: () => LocalizedString
+	/**
+	 * Settings
+	 */
+	settings: () => LocalizedString
 	signIn: {
 		/**
 		 * Sign in with Google
@@ -309,10 +331,6 @@ export type TranslationFunctions = {
 	 */
 	signOut: () => LocalizedString
 	/**
-	 * (Required)
-	 */
-	required: () => LocalizedString
-	/**
 	 * Channel name
 	 */
 	channelName: () => LocalizedString
@@ -324,6 +342,10 @@ export type TranslationFunctions = {
 	 * Select icon
 	 */
 	selectIcon: () => LocalizedString
+	/**
+	 * Remove
+	 */
+	removeIcon: () => LocalizedString
 	/**
 	 * Cancel
 	 */
@@ -397,22 +419,6 @@ export type TranslationFunctions = {
 	 */
 	body: () => LocalizedString
 	/**
-	 * Remove
-	 */
-	removeIcon: () => LocalizedString
-	/**
-	 * Your input exceeds the character limit.
-	 */
-	textTooLong: () => LocalizedString
-	/**
-	 * No announcements yet.
-	 */
-	noAnnouncements: () => LocalizedString
-	/**
-	 * Failed to data load
-	 */
-	failedToDataLoad: () => LocalizedString
-	/**
 	 * Update Channel
 	 */
 	updateChannel: () => LocalizedString
@@ -452,16 +458,6 @@ export type TranslationFunctions = {
 	 * You can add up to 4 images.
 	 */
 	addImageDescription: () => LocalizedString
-	announcementView: {
-		/**
-		 * Created: 
-		 */
-		created: () => LocalizedString
-		/**
-		 * Updated: 
-		 */
-		updated: () => LocalizedString
-	}
 	deleteAnnouncement: {
 		/**
 		 * Delete Announcement

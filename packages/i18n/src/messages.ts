@@ -1,8 +1,29 @@
 export const messages = {
-  settings: {
-    en: 'Settings',
-    ja: '設定',
+  required: {
+    en: '(Required)',
+    ja: '(必須)',
   },
+  textTooLong: {
+    en: 'Your input exceeds the character limit.',
+    ja: '入力が文字数制限を超えています',
+  },
+  createdAtPrefix: {
+    en: 'Created: ',
+    ja: '作成: ',
+  },
+  updatedAtPrefix: {
+    en: 'Updated: ',
+    ja: '更新: ',
+  },
+  noAnnouncements: {
+    en: 'No announcements yet.',
+    ja: 'アナウンスはまだありません',
+  },
+  failedToDataLoad: {
+    en: 'Failed to data load',
+    ja: 'データの読み込みに失敗しました',
+  },
+
   theme: {
     en: 'Theme',
     ja: '表示設定',
@@ -18,6 +39,11 @@ export const messages = {
   close: {
     en: 'Close',
     ja: '閉じる',
+  },
+
+  settings: {
+    en: 'Settings',
+    ja: '設定',
   },
   signIn: {
     google: {
@@ -37,10 +63,6 @@ export const messages = {
     en: 'Sign Out',
     ja: 'ログアウト',
   },
-  required: {
-    en: '(Required)',
-    ja: '(必須)',
-  },
   channelName: {
     en: 'Channel name',
     ja: 'チャンネル名',
@@ -52,6 +74,10 @@ export const messages = {
   selectIcon: {
     en: 'Select icon',
     ja: 'アイコンを選択',
+  },
+  removeIcon: {
+    en: 'Remove',
+    ja: '選択解除',
   },
   cancel: {
     en: 'Cancel',
@@ -86,6 +112,7 @@ export const messages = {
     ja: '戻る',
   },
 
+  // -------------------------------------------------
   edit: {
     en: 'Edit',
     ja: '編集',
@@ -126,22 +153,6 @@ export const messages = {
     en: 'Body',
     ja: '本文',
   },
-  removeIcon: {
-    en: 'Remove',
-    ja: '選択解除',
-  },
-  textTooLong: {
-    en: 'Your input exceeds the character limit.',
-    ja: '入力が文字数制限を超えています',
-  },
-  noAnnouncements: {
-    en: 'No announcements yet.',
-    ja: 'アナウンスはまだありません',
-  },
-  failedToDataLoad: {
-    en: 'Failed to data load',
-    ja: 'データの読み込みに失敗しました',
-  },
   updateChannel: {
     en: 'Update Channel',
     ja: 'チャンネルを更新',
@@ -181,16 +192,6 @@ export const messages = {
   addImageDescription: {
     en: 'You can add up to 4 images.',
     ja: '画像は4枚まで追加できます',
-  },
-  announcementView: {
-    created: {
-      en: 'Created: ',
-      ja: '作成: ',
-    },
-    updated: {
-      en: 'Updated: ',
-      ja: '更新: ',
-    },
   },
   deleteAnnouncement: {
     title: {

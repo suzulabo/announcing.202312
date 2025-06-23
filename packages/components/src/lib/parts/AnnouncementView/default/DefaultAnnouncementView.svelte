@@ -46,8 +46,8 @@
     {#if announcement.createdAt === announcement.updatedAt}
       <div>{formatDate(announcement.createdAt)}</div>
     {:else}
-      <div>{$LL.announcementView.created()}{formatDate(announcement.createdAt)}</div>
-      <div>{$LL.announcementView.updated()}{formatDate(announcement.updatedAt)}</div>
+      <div>{$LL.createdAtPrefix()}{formatDate(announcement.createdAt)}</div>
+      <div>{$LL.updatedAtPrefix()}{formatDate(announcement.updatedAt)}</div>
     {/if}
   </div>
   {#if announcement.title}
