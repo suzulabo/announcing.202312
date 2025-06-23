@@ -12,9 +12,3 @@ body {
   display: flex;
   flex-direction: column;
 }
-
-@media (width > 600px) {
-  body {
-    margin: 0 auto;
-  }
-}

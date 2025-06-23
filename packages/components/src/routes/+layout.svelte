@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { navigating } from '$app/state';
+  import { setupBack } from '$lib/actions/back';
+  import Navigating from '$lib/atoms/Navigating.svelte';
   import SettingsModal from '$lib/parts/SettingsModal/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
   import type { LayoutData } from './$types';
-  import { setupBack } from '$lib/actions/back';
 
   interface Props {
     data: LayoutData;
@@ -25,6 +27,8 @@
     }}>{$LL.settings()}</button
   >
 </div>
+
+<Navigating show={!!navigating.from} />
 
 {@render children?.()}
 

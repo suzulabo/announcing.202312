@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { page } from '$app/state';
+  import { navigating, page } from '$app/state';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import { setupBack } from '@announcing/components/actions/back';
+  import Navigating from '@announcing/components/Navigating.svelte';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
@@ -59,6 +60,8 @@
     <span class="copyright">&copy;Announcing</span>
   </div>
 </footer>
+
+<Navigating show={!!navigating.from} />
 
 <SettingsModal
   bind:this={settingsModal}
