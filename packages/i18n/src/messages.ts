@@ -25,6 +25,67 @@ export const messages = {
       ja: 'Googleでログイン',
     },
   },
+  createChannel: {
+    en: 'Create Channel',
+    ja: 'チャンネルを作成',
+  },
+  channelsCanBeCreated: {
+    en: 'Up to five channels can be created.',
+    ja: 'チャンネルは5つまで作れます',
+  },
+  signOut: {
+    en: 'Sign Out',
+    ja: 'ログアウト',
+  },
+  required: {
+    en: '(Required)',
+    ja: '(必須)',
+  },
+  channelName: {
+    en: 'Channel name',
+    ja: 'チャンネル名',
+  },
+  desc: {
+    en: 'Description',
+    ja: '説明文',
+  },
+  selectIcon: {
+    en: 'Select icon',
+    ja: 'アイコンを選択',
+  },
+  cancel: {
+    en: 'Cancel',
+    ja: 'キャンセル',
+  },
+  createAnnouncement: {
+    en: 'Create a new announcement',
+    ja: '新しいお知らせを書く',
+  },
+  editAnnouncement: {
+    en: 'Edit or delete past announcements',
+    ja: '過去のお知らせを編集・削除する',
+  },
+  viewChannel: {
+    en: 'View this channel',
+    ja: 'チャンネルの表示を確認する',
+  },
+  copyChannelURL: {
+    en: 'Copy channel URL',
+    ja: 'チャンネルのURLをコピーする',
+  },
+  editChannel: {
+    en: 'Edit channel name, etc.',
+    ja: 'チャンネルの名前などを編集する',
+  },
+  deleteChannel: {
+    en: 'Delete this channel',
+    ja: 'チャンネルを削除する',
+  },
+  back: {
+    en: 'Back',
+    ja: '戻る',
+  },
+
   edit: {
     en: 'Edit',
     ja: '編集',
@@ -33,17 +94,9 @@ export const messages = {
     en: 'Delete',
     ja: '削除',
   },
-  cancel: {
-    en: 'Cancel',
-    ja: 'キャンセル',
-  },
   remove: {
     en: 'Remove',
     ja: '削除',
-  },
-  back: {
-    en: 'Back',
-    ja: '戻る',
   },
   preview: {
     en: 'Preview',
@@ -61,25 +114,9 @@ export const messages = {
     en: 'Unable to copy to clipboard.',
     ja: 'コピーできませんでした',
   },
-  required: {
-    en: '(Required)',
-    ja: '(必須)',
-  },
-  signOut: {
-    en: 'Sign Out',
-    ja: 'ログアウト',
-  },
   understand: {
     en: 'I understand.',
     ja: '問題ありません',
-  },
-  channelName: {
-    en: 'Channel name',
-    ja: 'チャンネル名',
-  },
-  desc: {
-    en: 'Description',
-    ja: '説明文',
   },
   title: {
     en: 'Title',
@@ -88,10 +125,6 @@ export const messages = {
   body: {
     en: 'Body',
     ja: '本文',
-  },
-  selectIcon: {
-    en: 'Select icon',
-    ja: 'アイコンを選択',
   },
   removeIcon: {
     en: 'Remove',
@@ -109,45 +142,11 @@ export const messages = {
     en: 'Failed to data load',
     ja: 'データの読み込みに失敗しました',
   },
-  createChannel: {
-    en: 'Create Channel',
-    ja: 'チャンネルを作成',
-  },
   updateChannel: {
     en: 'Update Channel',
     ja: 'チャンネルを更新',
   },
-  channelsCanBeCreated: {
-    en: 'Up to five channels can be created.',
-    ja: 'チャンネルは5つまで作れます',
-  },
-  channelActions: {
-    viewChannel: {
-      en: 'View this channel',
-      ja: 'チャンネルの表示を確認する',
-    },
-    copyURL: {
-      en: 'Copy channel URL',
-      ja: 'チャンネルのURLをコピーする',
-    },
-    createAnnouncement: {
-      en: 'Create a new announcement',
-      ja: '新しいお知らせを書く',
-    },
-    editAnnouncement: {
-      en: 'Edit or delete past announcements',
-      ja: '過去のお知らせを編集・削除する',
-    },
-    editChannel: {
-      en: 'Edit channel name, etc.',
-      ja: 'チャンネルの名前などを編集する',
-    },
-    deleteChannel: {
-      en: 'Delete this channel',
-      ja: 'チャンネルを削除する',
-    },
-  },
-  deleteChannel: {
+  deleteChannelTitle: {
     en: 'Delete Channel',
     ja: 'チャンネルの削除',
   },

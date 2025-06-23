@@ -37,7 +37,7 @@
 
 <Modal bind:open dismissMode="backdrop">
   <div class="delete-modal">
-    <span class="title">{$LL.deleteChannel()}</span>
+    <span class="title">{$LL.deleteChannelTitle()}</span>
     <div class="warning">{$LL.deleteChannelDescription({ name: name })}</div>
     <label class="understand-box">
       <input type="checkbox" bind:checked={deleteUnderstand} />

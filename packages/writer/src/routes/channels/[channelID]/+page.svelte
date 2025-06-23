@@ -76,15 +76,15 @@
   <div class="actions">
     <a class="action card" href={`${page.url.pathname}/announcements`}>
       <MaterialSymbolsPostAdd {...iconProps} />
-      {$LL.channelActions.createAnnouncement()}
+      {$LL.createAnnouncement()}
     </a>
     <a class="action card" href={`${page.url.pathname}/announcements/list`}>
       <MaterialSymbolsEditDocumentOutline {...iconProps} />
-      {$LL.channelActions.editAnnouncement()}</a
+      {$LL.editAnnouncement()}</a
     >
     <a class="action card" href={readerURL}>
       <MdiExternalLink {...iconProps} />
-      {$LL.channelActions.viewChannel()}</a
+      {$LL.viewChannel()}</a
     >
     <button
       class="action unstyled card"
@@ -93,7 +93,7 @@
       }}
     >
       <MaterialSymbolsContentCopyOutline {...iconProps} />
-      {$LL.channelActions.copyURL()}</button
+      {$LL.copyChannelURL()}</button
     >
     <button
       class="action unstyled card"
@@ -102,7 +102,7 @@
       }}
     >
       <MaterialSymbolsBoxEditOutline {...iconProps} />
-      {$LL.channelActions.editChannel()}</button
+      {$LL.editChannel()}</button
     >
     <button
       class="action unstyled card"
@@ -111,7 +111,7 @@
       }}
     >
       <MaterialSymbolsDangerous {...iconProps} />
-      {$LL.channelActions.deleteChannel()}</button
+      {$LL.deleteChannel()}</button
     >
     <a class="button small back" href="/" use:back>{$LL.back()}</a>
   </div>
