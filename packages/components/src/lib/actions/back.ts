@@ -12,7 +12,6 @@ import type { Action } from 'svelte/action';
 export const setupBack = () => {
   afterNavigate((params) => {
     const fromHref: string | undefined = history.state?.fromHref;
-    console.log('afterNavigate', { fromHref });
     if (fromHref) {
       return;
     }
@@ -28,9 +27,7 @@ export const setupBack = () => {
 export const back: Action<HTMLAnchorElement> = (el) => {
   const clickHandler = (event: MouseEvent) => {
     const fromHref: string | undefined = history.state?.fromHref;
-    console.log({ fromHref, 'el.href': el.href });
     if (fromHref && fromHref === el.href) {
-      console.log('back');
       event.preventDefault();
       history.back();
     }
