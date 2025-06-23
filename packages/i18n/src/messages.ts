@@ -53,6 +53,10 @@ export const messages = {
     en: 'Create Channel',
     ja: 'チャンネルを作成',
   },
+  updateChannel: {
+    en: 'Update Channel',
+    ja: 'チャンネルを更新',
+  },
   channelsCanBeCreated: {
     en: 'Up to five channels can be created.',
     ja: 'チャンネルは5つまで作れます',
@@ -101,6 +105,10 @@ export const messages = {
     en: 'Delete this channel',
     ja: 'チャンネルを削除する',
   },
+  understand: {
+    en: 'I understand.',
+    ja: '問題ありません',
+  },
   back: {
     en: 'Back',
     ja: '戻る',
@@ -120,6 +128,14 @@ export const messages = {
   remove: {
     en: 'Remove',
     ja: '削除',
+  },
+  title: {
+    en: 'Title',
+    ja: 'タイトル',
+  },
+  body: {
+    en: 'Body',
+    ja: '本文',
   },
   preview: {
     en: 'Preview',
@@ -153,8 +169,6 @@ export const messages = {
     en: 'You are about to delete the announcement. This action cannot be undone.',
     ja: '選択したお知らせを削除します。この操作は元に戻せません。',
   },
-
-  // -------------------------------------------------
   copy: {
     en: 'Copy',
     ja: 'コピー',
@@ -166,22 +180,6 @@ export const messages = {
   copyError: {
     en: 'Unable to copy to clipboard.',
     ja: 'コピーできませんでした',
-  },
-  understand: {
-    en: 'I understand.',
-    ja: '問題ありません',
-  },
-  title: {
-    en: 'Title',
-    ja: 'タイトル',
-  },
-  body: {
-    en: 'Body',
-    ja: '本文',
-  },
-  updateChannel: {
-    en: 'Update Channel',
-    ja: 'チャンネルを更新',
   },
   deleteChannelTitle: {
     en: 'Delete Channel',
@@ -195,6 +193,8 @@ export const messages = {
     en: 'Are you sure you want to delete the channel?',
     ja: 'チャンネルを削除します。よろしいですか？',
   },
+
+  // -------------------------------------------------
   notification: {
     en: 'Notification',
     ja: '新着通知',
