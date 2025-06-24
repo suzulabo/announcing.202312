@@ -31,21 +31,19 @@
     {:else}
       <div class="copy-box">
         <input value={url} readonly onfocus={onFocus} />
-        {#if navigator.clipboard}
-          <button
-            class="small"
-            onclick={() => {
-              navigator.clipboard
-                .writeText(url)
-                .then(() => {
-                  copied = 'copied';
-                })
-                .catch(() => {
-                  copied = 'error';
-                });
-            }}>{$LL.copy()}</button
-          >
-        {/if}
+        <button
+          class="small"
+          onclick={() => {
+            navigator.clipboard
+              .writeText(url)
+              .then(() => {
+                copied = 'copied';
+              })
+              .catch(() => {
+                copied = 'error';
+              });
+          }}>{$LL.copy()}</button
+        >
       </div>
       <button
         class="close-btn filled small"
@@ -69,6 +67,8 @@
     .copy-box {
       display: flex;
       input {
+        width: auto;
+        flex-grow: 1;
         text-align: center;
         border-radius: 16px 0 0 16px;
       }
