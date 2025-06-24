@@ -1,9 +1,5 @@
 @use './reset.scss';
 
-/*
-I used the Material Theme Builder (https://material-foundation.github.io/material-theme-builder/) and generated the color codes based on a Source Color of #FFFFFF.
-*/
-
 html {
   --color-background: #e6f4ea;
   --color-surface: #ffffff;
@@ -22,41 +18,28 @@ html {
 
   --color-success: #6fcf97;
   --color-error: #f98080;
-  --color-disabled-bg: #e0eee4;
-  --color-disabled-text: #a0a0a0;
 
   @mixin dark-mode {
-    $color-text: #dee3e5; // On Surface (N-90)
-    --color-text: #{$color-text};
-    --color-text-disable: #{rgba($color-text, 0.5)};
+    --color-background: #111c17;
+    --color-surface: #1b2a24;
+    --color-border: #3a4a42;
 
-    --color-text-light: #bfc8ca; // On Surface Variant (NV-90)
+    --color-text: #f1f1f1;
+    --color-text-subtle: #bbbbbb;
 
-    --color-error: #ffb4ab; // Error (E-80)
+    --color-accent: #6fd8a5;
+    --color-accent-hover: #4db688;
+    --color-accent-text: #0f2b20;
 
-    --color-background: #090f10; // Container Lowest (N-4)
+    --color-background-modal: rgba(0, 0, 0, 0.6);
 
-    --color-background-light: #252b2c; // Container High (N-17)
+    --color-background-image: #ffffff;
 
-    --color-background-highlight: #303637; // Container Highest (N-24)
+    --color-success: #81dba8;
+    --color-error: #f88c8c;
 
-    // background-color of img is always white.
-    // --color-background-image: #ffffff; // Container Lowest (N-100)
-
-    $color-border: #899294; // Outline (NV-60)
-    --color-border: #{$color-border};
-    --color-border-disable: #{rgba($color-border, 0.5)};
-
-    --color-border-light: #3f484a; // OUtline Variant (NV-30)
-
-    --color-hover: #1b2122; // Container (N-12)
-    --color-hover-light: #3f484a; // Outline variant(NV-30)
-
-    --color-background-modal: #{rgba(#dee3e5, 0.8)}; // Inverse Surface (N-90)
-
-    --color-background-loading: #{rgba(#3f484a, 0.6)}; // OUtline Variant (NV-30)
-
-    --color-border-image: #252b2c; // Container High (N-17)
+    --color-disabled-bg: #2e3d38;
+    --color-disabled-text: #777777;
   }
 
   color: var(--color-text);
