@@ -18,11 +18,12 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    bottom: 0;
     z-index: 9999;
+
     .bar {
       width: 50%;
-      height: 100%;
+      height: 4px;
       background-color: var(--color-accent);
       animation: progress 5s infinite ease-in;
 
