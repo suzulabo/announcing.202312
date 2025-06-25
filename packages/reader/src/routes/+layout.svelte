@@ -83,6 +83,12 @@
 <hr />
 {@render children?.()}
 
+<footer>
+  <div>
+    <span class="copyright">&copy;Announcing</span>
+  </div>
+</footer>
+
 <SettingsModal
   bind:this={settingsModal}
   requestLocale={data.requestLocale}
@@ -106,6 +112,20 @@
       display: flex;
       align-items: center;
       gap: 2px;
+    }
+  }
+
+  footer {
+    margin-top: auto;
+
+    div {
+      margin: 16px 0 0;
+      padding: 16px;
+      display: flex;
+
+      .copyright {
+        margin: auto;
+      }
     }
   }
 </style>
