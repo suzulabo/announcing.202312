@@ -124,8 +124,8 @@
       align-self: center;
       margin: 0 0 8px 0;
       object-fit: contain;
-      width: fit-content;
-      height: fit-content;
+      width: auto;
+      height: auto;
     }
     .date {
       padding: 0 16px;
