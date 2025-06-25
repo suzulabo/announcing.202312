@@ -1,7 +1,7 @@
 <script lang="ts">
   import '../app.scss';
 
-  import { page } from '$app/state';
+  import { navigating, page } from '$app/state';
   import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
   import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
   import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
@@ -12,6 +12,7 @@
   } from '$lib/notification/localStorage';
   import { setupBack } from '@announcing/components/actions/back';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
+  import Navigating from '@announcing/components/Navigating.svelte';
   import { LL } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
@@ -95,6 +96,8 @@
   requestLocale={data.requestLocale}
   requestTheme={data.requestTheme}
 />
+
+<Navigating show={!!navigating.from} />
 
 <style lang="scss">
   header {
