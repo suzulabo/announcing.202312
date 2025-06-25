@@ -97,7 +97,7 @@
     display: flex;
     flex-direction: column;
     min-height: 200px;
-    max-height: 50dvh;
+    max-height: 50svh;
     cursor: pointer;
     position: relative;
     overflow: hidden;
