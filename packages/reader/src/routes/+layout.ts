@@ -1,5 +1,3 @@
-import '@announcing/components/base.scss';
-
 import { setupLocale } from '@announcing/i18n';
 
 import type { LayoutLoad } from './$types';
