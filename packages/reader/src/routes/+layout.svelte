@@ -15,6 +15,7 @@
   import { LL } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
+  import MdiReload from '$lib/components/icon/MdiReload.svelte';
 
   interface Props {
     data: LayoutData;
@@ -47,10 +48,10 @@
 
 <header>
   <button
-    class="small reload"
+    class="unstyled reload"
     onclick={() => {
       location.reload();
-    }}>reload</button
+    }}><MdiReload /></button
   >
 
   <a class="button small notification-btn" href={notificationHref}>
@@ -104,7 +105,9 @@
     gap: 8px;
 
     .reload {
+      display: flex;
       margin-right: auto;
+      font-size: 18px;
     }
 
     .settings-btn,
