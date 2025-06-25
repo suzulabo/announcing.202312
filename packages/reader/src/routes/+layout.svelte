@@ -105,9 +105,16 @@
     gap: 8px;
 
     .reload {
-      display: flex;
-      margin-right: auto;
-      font-size: 18px;
+      display: none;
+    }
+
+    @media (display-mode: standalone) {
+      .reload {
+        display: flex;
+        margin: 0 auto 0 4px;
+        font-size: 18px;
+        color: var(--color-text-subtle);
+      }
     }
 
     .settings-btn,
