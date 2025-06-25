@@ -152,17 +152,21 @@
 
       .images-grid {
         display: grid;
-        grid-template-columns: auto auto;
+        width: 100%;
+        // https://ishadeed.com/article/min-content-size-css-grid/
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         gap: 4px;
 
         .image-box {
-          display: block;
+          display: flex;
           aspect-ratio: 1;
           img {
+            aspect-ratio: 1;
             object-fit: cover;
-            border-radius: 4px;
-            width: 100%;
-            height: 100%;
+            border-radius: 16px;
+            margin: auto;
+            width: fit-content;
+            height: fit-content;
           }
         }
       }
