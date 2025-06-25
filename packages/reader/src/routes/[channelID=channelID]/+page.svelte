@@ -33,12 +33,4 @@
   <title>{data.channel.name}</title>
 </svelte:head>
 
-<div class="container">
-  <ChannelView {...channelViewProps} />
-</div>
-
-<style lang="scss">
-  .container {
-    margin: 16px 0;
-  }
-</style>
+<ChannelView {...channelViewProps} />

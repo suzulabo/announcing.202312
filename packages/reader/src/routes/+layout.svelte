@@ -45,45 +45,43 @@
   setupBack();
 </script>
 
-<div class="container">
-  <header>
-    <button
-      class="small back"
-      onclick={() => {
-        location.reload();
-      }}>reload</button
-    >
+<header>
+  <button
+    class="small reload"
+    onclick={() => {
+      location.reload();
+    }}>reload</button
+  >
 
-    <a class="button small notification-btn" href={notificationHref}>
-      {#if headerNotification}
-        {#if notificationPermission === 'granted'}
-          {#if headerNotification.channelID in notificationChannels}
-            <MaterialSymbolsNotificationsRounded />
-          {:else}
-            <MaterialSymbolsNotificationsOutlineRounded />
-          {/if}
-        {:else if notificationPermission === 'default'}
-          <MaterialSymbolsNotificationsOutlineRounded />
+  <a class="button small notification-btn" href={notificationHref}>
+    {#if headerNotification}
+      {#if notificationPermission === 'granted'}
+        {#if headerNotification.channelID in notificationChannels}
+          <MaterialSymbolsNotificationsRounded />
         {:else}
-          <MaterialSymbolsNotificationImportantOutlineRounded />
+          <MaterialSymbolsNotificationsOutlineRounded />
         {/if}
+      {:else if notificationPermission === 'default'}
+        <MaterialSymbolsNotificationsOutlineRounded />
+      {:else}
+        <MaterialSymbolsNotificationImportantOutlineRounded />
       {/if}
-      <span>{$LL.notification()}</span></a
-    >
+    {/if}
+    <span>{$LL.notification()}</span></a
+  >
 
-    <button
-      class="small settings-btn"
-      onclick={() => {
-        settingsModal.openModal();
-      }}
-    >
-      <MaterialSymbolsSettingsOutline />
-      <span>{$LL.settings()}</span></button
-    >
-  </header>
-  <hr />
-  {@render children?.()}
-</div>
+  <button
+    class="small settings-btn"
+    onclick={() => {
+      settingsModal.openModal();
+    }}
+  >
+    <MaterialSymbolsSettingsOutline />
+    <span>{$LL.settings()}</span></button
+  >
+</header>
+<hr />
+{@render children?.()}
 
 <SettingsModal
   bind:this={settingsModal}
@@ -92,27 +90,22 @@
 />
 
 <style lang="scss">
-  .container {
-    max-width: 600px;
-    margin: 0 auto 100px;
+  header {
+    padding: 16px 8px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 8px;
 
-    header {
-      padding: 0 8px;
+    .reload {
+      margin-right: auto;
+    }
+
+    .settings-btn,
+    .notification-btn {
       display: flex;
       align-items: center;
-      gap: 4px;
-      height: 60px;
-
-      .back {
-        margin-right: auto;
-      }
-
-      .settings-btn,
-      .notification-btn {
-        display: flex;
-        align-items: center;
-        gap: 2px;
-      }
+      gap: 2px;
     }
   }
 </style>

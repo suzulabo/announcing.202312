@@ -13,12 +13,4 @@
   <title>{data.announcement.title ?? data.announcement.body}</title>
 </svelte:head>
 
-<div class="container">
-  <AnnouncementView announcement={data.announcement} />
-</div>
-
-<style lang="scss">
-  .container {
-    margin: 16px 0;
-  }
-</style>
+<AnnouncementView announcement={data.announcement} />
