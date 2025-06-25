@@ -69,6 +69,10 @@ type RootTranslation = {
 	 */
 	createChannel: string
 	/**
+	 * U​p​d​a​t​e​ ​C​h​a​n​n​e​l
+	 */
+	updateChannel: string
+	/**
 	 * U​p​ ​t​o​ ​f​i​v​e​ ​c​h​a​n​n​e​l​s​ ​c​a​n​ ​b​e​ ​c​r​e​a​t​e​d​.
 	 */
 	channelsCanBeCreated: string
@@ -117,6 +121,10 @@ type RootTranslation = {
 	 */
 	deleteChannel: string
 	/**
+	 * I​ ​u​n​d​e​r​s​t​a​n​d​.
+	 */
+	understand: string
+	/**
 	 * B​a​c​k
 	 */
 	back: string
@@ -136,6 +144,14 @@ type RootTranslation = {
 	 * R​e​m​o​v​e
 	 */
 	remove: string
+	/**
+	 * T​i​t​l​e
+	 */
+	title: string
+	/**
+	 * B​o​d​y
+	 */
+	body: string
 	/**
 	 * P​r​e​v​i​e​w
 	 */
@@ -180,22 +196,6 @@ type RootTranslation = {
 	 * U​n​a​b​l​e​ ​t​o​ ​c​o​p​y​ ​t​o​ ​c​l​i​p​b​o​a​r​d​.
 	 */
 	copyError: string
-	/**
-	 * I​ ​u​n​d​e​r​s​t​a​n​d​.
-	 */
-	understand: string
-	/**
-	 * T​i​t​l​e
-	 */
-	title: string
-	/**
-	 * B​o​d​y
-	 */
-	body: string
-	/**
-	 * U​p​d​a​t​e​ ​C​h​a​n​n​e​l
-	 */
-	updateChannel: string
 	/**
 	 * D​e​l​e​t​e​ ​C​h​a​n​n​e​l
 	 */
@@ -309,6 +309,10 @@ export type TranslationFunctions = {
 	 */
 	createChannel: () => LocalizedString
 	/**
+	 * Update Channel
+	 */
+	updateChannel: () => LocalizedString
+	/**
 	 * Up to five channels can be created.
 	 */
 	channelsCanBeCreated: () => LocalizedString
@@ -357,6 +361,10 @@ export type TranslationFunctions = {
 	 */
 	deleteChannel: () => LocalizedString
 	/**
+	 * I understand.
+	 */
+	understand: () => LocalizedString
+	/**
 	 * Back
 	 */
 	back: () => LocalizedString
@@ -376,6 +384,14 @@ export type TranslationFunctions = {
 	 * Remove
 	 */
 	remove: () => LocalizedString
+	/**
+	 * Title
+	 */
+	title: () => LocalizedString
+	/**
+	 * Body
+	 */
+	body: () => LocalizedString
 	/**
 	 * Preview
 	 */
@@ -420,22 +436,6 @@ export type TranslationFunctions = {
 	 * Unable to copy to clipboard.
 	 */
 	copyError: () => LocalizedString
-	/**
-	 * I understand.
-	 */
-	understand: () => LocalizedString
-	/**
-	 * Title
-	 */
-	title: () => LocalizedString
-	/**
-	 * Body
-	 */
-	body: () => LocalizedString
-	/**
-	 * Update Channel
-	 */
-	updateChannel: () => LocalizedString
 	/**
 	 * Delete Channel
 	 */

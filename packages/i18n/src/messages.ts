@@ -193,12 +193,12 @@ export const messages = {
     en: 'Are you sure you want to delete the channel?',
     ja: 'チャンネルを削除します。よろしいですか？',
   },
-
-  // -------------------------------------------------
   notification: {
     en: 'Notification',
-    ja: '新着通知',
+    ja: '通知',
   },
+
+  // -------------------------------------------------
   setupNotification: {
     description: {
       en: 'Prepare to receive notifications when new notices are posted. \nPress the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.',
