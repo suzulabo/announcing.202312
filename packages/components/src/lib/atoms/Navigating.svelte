@@ -25,7 +25,7 @@
       width: 50%;
       height: 4px;
       background-color: var(--color-accent);
-      animation: progress 5s infinite ease-in;
+      animation: 5s ease-out infinite progress;
 
       @keyframes progress {
         0%,
