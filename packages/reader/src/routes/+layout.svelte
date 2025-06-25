@@ -23,7 +23,6 @@
 
   let { data, children }: Props = $props();
 
-  let headerBack = $derived(page.data.headerBack);
   let headerNotification = $derived(page.data.headerNotification);
   let notificationHref = $derived(
     headerNotification?.channelID
@@ -43,21 +42,17 @@
     }
   });
 
-  const back = setupBack();
+  setupBack();
 </script>
 
 <div class="container">
   <header>
-    {#if headerBack}
-      <a class="back" href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
-    {:else}
-      <button
-        class="small back"
-        onclick={() => {
-          location.reload();
-        }}>reload</button
-      >
-    {/if}
+    <button
+      class="small back"
+      onclick={() => {
+        location.reload();
+      }}>reload</button
+    >
 
     <a class="button small notification-btn" href={notificationHref}>
       {#if headerNotification}

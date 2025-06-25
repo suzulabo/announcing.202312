@@ -1,4 +1,6 @@
 <script lang="ts">
+  import '../app.scss';
+
   import { navigating, page } from '$app/state';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import { setupBack } from '@announcing/components/actions/back';
@@ -6,7 +8,6 @@
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
-  import '../app.scss';
   import type { LayoutData } from './$types';
 
   interface Props {

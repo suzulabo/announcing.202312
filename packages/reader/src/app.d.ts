@@ -3,8 +3,6 @@
 import type { createDB } from '@announcing/db';
 import type { PutTokenEntrypoint, PutTokenParams } from '@announcing/notification';
 
-type BackLabelKeys = 'back';
-
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
@@ -15,7 +13,6 @@ declare global {
       putToken: (params: PutTokenParams) => Promise<void>;
     }
     interface PageData {
-      headerBack?: { href: string; labelKey: BackLabelKeys };
       headerNotification?: {
         channelID: string;
         name: string;
