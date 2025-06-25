@@ -62,37 +62,27 @@
     <div class="images-box">
       {#if announcement.images.length === 1}
         {@const image = announcement.images[0] as string}
-        <div
-          class="image-box"
-          role="button"
-          tabindex="0"
+        <button
+          class="unstyled image-box"
           onclick={() => {
             if (image) {
               showImageModal(image);
             }
           }}
-          onkeydown={() => {
-            // TODO
-          }}
         >
           <img class="single-image" src={image} alt="" {...parseImageSize(image)} />
-        </div>
+        </button>
       {:else}
         <div class="images-grid">
           {#each announcement.images as image (image)}
-            <div
-              role="button"
-              tabindex="0"
-              class="image-box"
+            <button
+              class="unstyled image-box"
               onclick={() => {
                 showImageModal(image);
               }}
-              onkeydown={() => {
-                // TODO
-              }}
             >
               <img src={image} alt="" {...parseImageSize(image)} />
-            </div>
+            </button>
           {/each}
         </div>
       {/if}
@@ -156,8 +146,8 @@
         margin: 0 auto;
         object-fit: contain;
         max-height: 90vh;
-        width: fit-content;
-        height: fit-content;
+        width: auto;
+        height: auto;
       }
 
       .images-grid {
@@ -166,15 +156,14 @@
         gap: 4px;
 
         .image-box {
+          display: block;
           aspect-ratio: 1;
-          display: flex;
-        }
-
-        img {
-          aspect-ratio: 1;
-          object-fit: cover;
-          border-radius: 4px;
-          margin: auto;
+          img {
+            object-fit: cover;
+            border-radius: 4px;
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }
@@ -185,7 +174,7 @@
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    width: fit-content;
-    height: fit-content;
+    width: auto;
+    height: auto;
   }
 </style>
