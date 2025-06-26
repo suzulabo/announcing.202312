@@ -60,7 +60,7 @@
       max-height: 30dvh;
       object-fit: cover;
       border: none;
-      border-radius: 4px;
+      border-radius: 16px;
       margin: 0 auto 16px;
       &.portrait {
         object-fit: contain;
@@ -94,7 +94,7 @@
     }
 
     .first-image {
-      border-radius: 4px;
+      border-radius: 16px;
       object-fit: contain;
       width: fit-content;
       height: fit-content;

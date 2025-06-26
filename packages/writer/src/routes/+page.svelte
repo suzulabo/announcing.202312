@@ -95,7 +95,7 @@
         img {
           width: 64px;
           height: 64px;
-          border-radius: 8px;
+          border-radius: 16px;
           object-fit: contain;
         }
       }

@@ -60,7 +60,7 @@ textarea {
   width: 100%;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: 16px;
   padding: 16px;
 
   &:focus {
@@ -156,12 +156,6 @@ i {
 
 div {
   overflow-wrap: anywhere;
-}
-
-div.info {
-  border-radius: 4px;
-  background-color: var(--color-background-light);
-  padding: 8px 16px;
 }
 
 .error {

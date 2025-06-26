@@ -36,7 +36,7 @@
     .icon {
       width: 48px;
       height: 48px;
-      border-radius: 8px;
+      border-radius: 12px;
       object-fit: contain;
     }
   }

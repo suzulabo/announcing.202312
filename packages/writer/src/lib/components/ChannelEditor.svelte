@@ -152,7 +152,7 @@
 <style lang="scss">
   .modal-body {
     background-color: var(--color-background);
-    border-radius: 8px;
+    border-radius: 16px;
     width: 100%;
     max-width: 600px;
     margin: auto;
@@ -195,7 +195,7 @@
         .icon {
           width: 64px;
           height: 64px;
-          border-radius: 8px;
+          border-radius: 16px;
           object-fit: contain;
         }
       }

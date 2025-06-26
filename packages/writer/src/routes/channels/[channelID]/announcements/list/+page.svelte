@@ -31,7 +31,7 @@
 </script>
 
 <div class="menu">
-  <div class="prompt info">{$LL.announcementListPrompt()}</div>
+  <div class="prompt">{$LL.announcementListPrompt()}</div>
 </div>
 <ChannelView {...channelViewProps} />
 
