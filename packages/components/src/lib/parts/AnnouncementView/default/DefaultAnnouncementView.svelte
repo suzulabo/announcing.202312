@@ -116,6 +116,9 @@
       object-fit: contain;
       width: auto;
       height: auto;
+      @media (min-width: 600px) {
+        border-radius: 16px;
+      }
     }
     .date {
       padding: 0 16px;
@@ -148,6 +151,9 @@
         max-height: 90vh;
         width: auto;
         height: auto;
+        @media (min-width: 600px) {
+          border-radius: 16px;
+        }
       }
 
       .images-grid {

@@ -177,30 +177,23 @@
 </script>
 
 {#if channel && announcement}
-  <div class="container">
-    <AnnouncementView announcement={toAnnouncementViewData(announcement)} />
-    <button class="submit-btn" onclick={addAnnouncement}
-      >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
-    >
-    <a class="button small cancel" href={data.backHref} use:back>{$LL.cancel()}</a>
-  </div>
+  <AnnouncementView announcement={toAnnouncementViewData(announcement)} />
+  <button class="submit-btn" onclick={addAnnouncement}
+    >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
+  >
+  <a class="button small cancel" href={data.backHref} use:back>{$LL.cancel()}</a>
 {/if}
 
 <Loading show={loading} />
 
 <style lang="scss">
-  .container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 0 16px;
+  .submit-btn {
+    margin-top: 32px;
+    align-self: center;
+  }
 
-    .submit-btn {
-      align-self: center;
-    }
-
-    .cancel {
-      align-self: center;
-    }
+  .cancel {
+    margin-top: 32px;
+    align-self: center;
   }
 </style>
