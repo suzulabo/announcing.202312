@@ -82,7 +82,6 @@
     <span>{$LL.settings()}</span></button
   >
 </header>
-<hr />
 {@render children?.()}
 
 <footer>
