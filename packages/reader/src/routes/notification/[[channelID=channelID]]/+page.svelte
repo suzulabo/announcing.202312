@@ -9,6 +9,7 @@
   import { fetchChannel } from '$lib/fetch/fetchChannel';
   import { dev } from '$app/environment';
   import { LL } from '@announcing/i18n';
+  import { back } from '@announcing/components/actions/back';
 
   interface Props {
     data: PageData;
@@ -179,6 +180,10 @@
 
 {@render pageSnippet()}
 
+{#if data.channelID}
+  <a class="button small back" href={`/${data.channelID}`} use:back>{$LL.back()}</a>
+{/if}
+
 <Loading show={loading} />
 
 <style lang="scss">
@@ -243,5 +248,9 @@
   .update-btn {
     display: block;
     margin: 16px auto;
+  }
+
+  .back {
+    margin: 32px auto;
   }
 </style>
