@@ -51,6 +51,10 @@ const en = {
     'You are about to delete the channel "{name}". This action cannot be undone.',
   deleteChannelConfirmation: 'Are you sure you want to delete the channel?',
   notification: 'Notification',
+  unsupportedNotification: 'Notifications are not available on this device.',
+  unsupportedNotificationIOS:
+    'On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the link below.',
+  iOSNotificationSetupLink: 'Steps to enable notifications',
   setupNotification: {
     description:
       'Prepare to receive notifications when new notices are posted. \nPress the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.',

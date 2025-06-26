@@ -50,6 +50,10 @@ const ja = {
   deleteChannelDescription: 'チャンネル「{name}」を削除します。この操作は元に戻せません。',
   deleteChannelConfirmation: 'チャンネルを削除します。よろしいですか？',
   notification: '通知',
+  unsupportedNotification: 'この端末では通知をご利用になれません',
+  unsupportedNotificationIOS:
+    'iPhone、iPadをご利用の方は、通知を使えるようにするために一手間必要です。\n以下のリンクから手順をご確認ください。',
+  iOSNotificationSetupLink: '通知を有効にする手順',
   setupNotification: {
     description:
       '新しいお知らせが投稿されたときに、通知を受け取る準備を行います。\n「通知を設定」ボタンを押すと、通知の許可を確認するメッセージが表示されるので、許可設定を行ってください。',

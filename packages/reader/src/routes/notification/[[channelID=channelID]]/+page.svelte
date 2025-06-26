@@ -8,6 +8,7 @@
   import { isIOS, isStandalone } from '$lib/platform/platform';
   import { fetchChannel } from '$lib/fetch/fetchChannel';
   import { dev } from '$app/environment';
+  import { LL } from '@announcing/i18n';
 
   interface Props {
     data: PageData;
@@ -39,6 +40,18 @@
     return;
   });
   let channelNotFound = $state(false);
+
+  let pageSnippet = $derived.by(() => {
+    if (!notificationStatus.supported) {
+      if (isIOS()) {
+        return unsupportedIOS;
+      } else {
+        return unsupported;
+      }
+    }
+
+    return supported;
+  });
 
   onMount(() => {
     if (data.notificationStatus.supported) {
@@ -100,60 +113,87 @@
   };
 </script>
 
-{#if !notificationStatus.supported}
-  not supported
-{:else}
-  {#if isPWA}
-    <div class="search-box">
-      <div class="info">Input Channel URL or number</div>
-      <div class="input-box">
-        <input bind:value={searchText} /><button
-          onclick={searchClickHandler}
-          disabled={!searchChannelID}>Search</button
-        >
-      </div>
-      {#if channelNotFound}
-        <div class="error">Channel not found.</div>
-      {/if}
-    </div>
-  {/if}
-
-  {#if channels.length === 0}
-    no notification
-  {/if}
-
-  <div class="channels">
-    {#each channels as channel (channel.channelID)}
-      <label class="channel">
-        {#if channel.status === 'deleted'}
-          <input type="checkbox" disabled /><span class="name">{channel.name}</span><span
-            >(deleted)</span
-          >
-        {:else}
-          <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
-          <!-- svelte-ignore binding_property_non_reactive -->
-          <input type="checkbox" value={channel.channelID} bind:checked={channel.status} />
-          <span class="name">{channel.name}</span>
-          {#if channel.icon}
-            <img src={channel.icon} alt="icon" />
-          {/if}
-          <a href={`/${channel.channelID}`} class="button small" target="_blank">表示</a>
-        {/if}
-      </label>
-    {/each}
+{#snippet unsupported()}
+  <div class="unsupported">
+    <div class="icon">🥺</div>
+    <div>{$LL.unsupportedNotification()}</div>
   </div>
+{/snippet}
 
-  <button class="update-btn" onclick={updateClickHandler}>Update</button>
-  {#if permission === 'default'}
-    Prompt warning
-  {:else if permission === 'denied'}
-    Permission error
-  {/if}
-{/if}
+{#snippet unsupportedIOS()}
+  <div class="unsupported-ios">
+    <div>{$LL.unsupportedNotificationIOS()}</div>
+  </div>
+{/snippet}
+
+{#snippet supported()}
+  <div class="supported">
+    {#if isPWA}
+      <div class="search-box">
+        <div class="info">Input Channel URL or number</div>
+        <div class="input-box">
+          <input bind:value={searchText} /><button
+            onclick={searchClickHandler}
+            disabled={!searchChannelID}>Search</button
+          >
+        </div>
+        {#if channelNotFound}
+          <div class="error">Channel not found.</div>
+        {/if}
+      </div>
+    {/if}
+
+    {#if channels.length === 0}
+      no notification
+    {/if}
+
+    <div class="channels">
+      {#each channels as channel (channel.channelID)}
+        <label class="channel">
+          {#if channel.status === 'deleted'}
+            <input type="checkbox" disabled /><span class="name">{channel.name}</span><span
+              >(deleted)</span
+            >
+          {:else}
+            <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
+            <!-- svelte-ignore binding_property_non_reactive -->
+            <input type="checkbox" value={channel.channelID} bind:checked={channel.status} />
+            <span class="name">{channel.name}</span>
+            {#if channel.icon}
+              <img src={channel.icon} alt="icon" />
+            {/if}
+            <a href={`/${channel.channelID}`} class="button small" target="_blank">表示</a>
+          {/if}
+        </label>
+      {/each}
+    </div>
+
+    <button class="update-btn" onclick={updateClickHandler}>Update</button>
+    {#if permission === 'default'}
+      Prompt warning
+    {:else if permission === 'denied'}
+      Permission error
+    {/if}
+  </div>
+{/snippet}
+
+{@render pageSnippet()}
 
 <Loading show={loading} />
 
 <style lang="scss">
+  .unsupported {
+    margin: 32px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+
+    .icon {
+      font-size: 32px;
+    }
+  }
+
   .search-box {
     padding: 16px 8px 8px;
 

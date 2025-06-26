@@ -213,6 +213,18 @@ type RootTranslation = {
 	 * N​o​t​i​f​i​c​a​t​i​o​n
 	 */
 	notification: string
+	/**
+	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​i​s​ ​d​e​v​i​c​e​.
+	 */
+	unsupportedNotification: string
+	/**
+	 * O​n​ ​i​P​h​o​n​e​ ​a​n​d​ ​i​P​a​d​,​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​t​a​k​e​ ​a​n​ ​e​x​t​r​a​ ​s​t​e​p​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​P​l​e​a​s​e​ ​c​h​e​c​k​ ​t​h​e​ ​s​t​e​p​s​ ​a​t​ ​t​h​e​ ​l​i​n​k​ ​b​e​l​o​w​.
+	 */
+	unsupportedNotificationIOS: string
+	/**
+	 * S​t​e​p​s​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+	 */
+	iOSNotificationSetupLink: string
 	setupNotification: {
 		/**
 		 * P​r​e​p​a​r​e​ ​t​o​ ​r​e​c​e​i​v​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​w​h​e​n​ ​n​e​w​ ​n​o​t​i​c​e​s​ ​a​r​e​ ​p​o​s​t​e​d​.​ ​
@@ -452,6 +464,18 @@ export type TranslationFunctions = {
 	 * Notification
 	 */
 	notification: () => LocalizedString
+	/**
+	 * Notifications are not available on this device.
+	 */
+	unsupportedNotification: () => LocalizedString
+	/**
+	 * On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the link below.
+	 */
+	unsupportedNotificationIOS: () => LocalizedString
+	/**
+	 * Steps to enable notifications
+	 */
+	iOSNotificationSetupLink: () => LocalizedString
 	setupNotification: {
 		/**
 		 * Prepare to receive notifications when new notices are posted. 
