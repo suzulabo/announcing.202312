@@ -218,7 +218,7 @@ type RootTranslation = {
 	 */
 	unsupportedNotification: string
 	/**
-	 * O​n​ ​i​P​h​o​n​e​ ​a​n​d​ ​i​P​a​d​,​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​t​a​k​e​ ​a​n​ ​e​x​t​r​a​ ​s​t​e​p​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​P​l​e​a​s​e​ ​c​h​e​c​k​ ​t​h​e​ ​s​t​e​p​s​ ​a​t​ ​t​h​e​ ​l​i​n​k​ ​b​e​l​o​w​.
+	 * O​n​ ​i​P​h​o​n​e​ ​a​n​d​ ​i​P​a​d​,​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​t​a​k​e​ ​a​n​ ​e​x​t​r​a​ ​s​t​e​p​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​P​l​e​a​s​e​ ​c​h​e​c​k​ ​t​h​e​ ​s​t​e​p​s​ ​a​t​ ​t​h​e​ ​b​u​t​t​o​n​ ​b​e​l​o​w​.
 	 */
 	unsupportedNotificationIOS: string
 	/**
@@ -469,7 +469,7 @@ export type TranslationFunctions = {
 	 */
 	unsupportedNotification: () => LocalizedString
 	/**
-	 * On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the link below.
+	 * On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the button below.
 	 */
 	unsupportedNotificationIOS: () => LocalizedString
 	/**

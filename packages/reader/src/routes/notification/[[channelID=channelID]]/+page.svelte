@@ -124,6 +124,7 @@
 {#snippet unsupportedIOS()}
   <div class="unsupported-ios">
     <div>{$LL.unsupportedNotificationIOS()}</div>
+    <a class="button" href="/notification" target="_blank">{$LL.iOSNotificationSetupLink()}</a>
   </div>
 {/snippet}
 
@@ -188,7 +189,7 @@
 
 <style lang="scss">
   .unsupported {
-    margin: 32px 0 0;
+    margin: 32px 16px 0;
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -197,6 +198,14 @@
     .icon {
       font-size: 32px;
     }
+  }
+
+  .unsupported-ios {
+    margin: 32px 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
   }
 
   .search-box {

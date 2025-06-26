@@ -53,7 +53,7 @@ const en = {
   notification: 'Notification',
   unsupportedNotification: 'Notifications are not available on this device.',
   unsupportedNotificationIOS:
-    'On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the link below.',
+    'On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the button below.',
   iOSNotificationSetupLink: 'Steps to enable notifications',
   setupNotification: {
     description:

@@ -202,8 +202,8 @@ export const messages = {
     ja: 'この端末では通知をご利用になれません',
   },
   unsupportedNotificationIOS: {
-    en: 'On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the link below.',
-    ja: 'iPhone、iPadをご利用の方は、通知を使えるようにするために一手間必要です。\n以下のリンクから手順をご確認ください。',
+    en: 'On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the button below.',
+    ja: 'iPhone、iPadをご利用の方は、通知を使えるようにするための設定が必要です。以下のボタンから手順をご確認ください。',
   },
   iOSNotificationSetupLink: {
     en: 'Steps to enable notifications',

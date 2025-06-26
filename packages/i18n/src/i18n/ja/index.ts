@@ -52,7 +52,7 @@ const ja = {
   notification: '通知',
   unsupportedNotification: 'この端末では通知をご利用になれません',
   unsupportedNotificationIOS:
-    'iPhone、iPadをご利用の方は、通知を使えるようにするために一手間必要です。\n以下のリンクから手順をご確認ください。',
+    'iPhone、iPadをご利用の方は、通知を使えるようにするための設定が必要です。以下のボタンから手順をご確認ください。',
   iOSNotificationSetupLink: '通知を有効にする手順',
   setupNotification: {
     description:
