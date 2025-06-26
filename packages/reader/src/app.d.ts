@@ -15,8 +15,6 @@ declare global {
     interface PageData {
       headerNotification?: {
         channelID: string;
-        name: string;
-        icon?: string;
       };
     }
     interface PageState {

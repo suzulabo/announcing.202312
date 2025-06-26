@@ -6,17 +6,15 @@
   import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
   import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import {
-    getNotificationChannels,
-    type NotificationLocalStorageValue,
-  } from '$lib/notification/localStorage';
+  import MdiReload from '$lib/components/icon/MdiReload.svelte';
+  import { getNotificationChannels } from '$lib/notification/localStorage';
   import { setupBack } from '@announcing/components/actions/back';
-  import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import Navigating from '@announcing/components/Navigating.svelte';
+  import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
-  import MdiReload from '$lib/components/icon/MdiReload.svelte';
+  import { browser } from '$app/environment';
 
   interface Props {
     data: LayoutData;
@@ -26,22 +24,27 @@
   let { data, children }: Props = $props();
 
   let headerNotification = $derived(page.data.headerNotification);
-  let notificationHref = $derived(
-    headerNotification?.channelID
-      ? `/notification/${headerNotification.channelID}`
-      : '/notification',
-  );
-  let notificationPermission = $state<NotificationPermission>('default');
-  let notificationChannels = $state<NotificationLocalStorageValue>({});
+  let notificationStatus = $derived.by(() => {
+    if (!headerNotification || !browser) {
+      return;
+    }
+
+    const enabled = headerNotification.channelID in getNotificationChannels();
+
+    if (enabled) {
+      if (Notification.permission !== 'granted') {
+        return 'alert';
+      }
+      return 'enabled';
+    }
+
+    return 'disabled';
+  });
 
   let settingsModal: SettingsModal;
 
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
-    if ('Notification' in window) {
-      notificationPermission = Notification.permission;
-      notificationChannels = getNotificationChannels();
-    }
   });
 
   setupBack();
@@ -55,22 +58,19 @@
     }}><MdiReload /></button
   >
 
-  <a class="button small notification-btn" href={notificationHref}>
-    {#if headerNotification}
-      {#if notificationPermission === 'granted'}
-        {#if headerNotification.channelID in notificationChannels}
-          <MaterialSymbolsNotificationsRounded />
-        {:else}
-          <MaterialSymbolsNotificationsOutlineRounded />
-        {/if}
-      {:else if notificationPermission === 'default'}
+  {#if headerNotification}
+    <a class="button small notification-btn" href={`/notification/${headerNotification.channelID}`}>
+      {#if notificationStatus === 'enabled'}
+        <MaterialSymbolsNotificationsRounded />
+      {:else if notificationStatus === 'disabled'}
         <MaterialSymbolsNotificationsOutlineRounded />
-      {:else}
+      {:else if notificationStatus === 'alert'}
         <MaterialSymbolsNotificationImportantOutlineRounded />
       {/if}
-    {/if}
-    <span>{$LL.notification()}</span></a
-  >
+
+      <span>{$LL.notification()}</span></a
+    >
+  {/if}
 
   <button
     class="small settings-btn"

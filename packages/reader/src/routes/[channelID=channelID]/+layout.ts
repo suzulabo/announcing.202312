@@ -16,8 +16,6 @@ export const load: LayoutLoad = async ({ params, fetch }) => {
     channelID,
     headerNotification: {
       channelID,
-      name: channel.name,
-      icon: channel.icon,
     },
   };
 };
