@@ -7,7 +7,7 @@
   import type { PageData } from './$types';
   import { isIOS, isStandalone } from '$lib/platform/platform';
   import { fetchChannel } from '$lib/fetch/fetchChannel';
-  import { dev } from '$app/environment';
+  import { browser, dev } from '$app/environment';
   import { LL } from '@announcing/i18n';
   import { back } from '@announcing/components/actions/back';
 
@@ -43,6 +43,9 @@
   let channelNotFound = $state(false);
 
   let pageSnippet = $derived.by(() => {
+    if (!browser) {
+      return;
+    }
     if (!notificationStatus.supported) {
       if (isIOS()) {
         return unsupportedIOS;
@@ -179,7 +182,9 @@
   </div>
 {/snippet}
 
-{@render pageSnippet()}
+{#if pageSnippet}
+  {@render pageSnippet()}
+{/if}
 
 {#if data.channelID}
   <a class="button small back" href={`/${data.channelID}`} use:back>{$LL.back()}</a>
