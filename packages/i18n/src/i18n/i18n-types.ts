@@ -225,6 +225,10 @@ type RootTranslation = {
 	 * S​t​e​p​s​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
 	 */
 	iOSNotificationSetupLink: string
+	/**
+	 * C​h​a​n​n​e​l​ ​n​u​m​b​e​r
+	 */
+	channelNumber: string
 	setupNotification: {
 		/**
 		 * P​r​e​p​a​r​e​ ​t​o​ ​r​e​c​e​i​v​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​w​h​e​n​ ​n​e​w​ ​n​o​t​i​c​e​s​ ​a​r​e​ ​p​o​s​t​e​d​.​ ​
@@ -476,6 +480,10 @@ export type TranslationFunctions = {
 	 * Steps to enable notifications
 	 */
 	iOSNotificationSetupLink: () => LocalizedString
+	/**
+	 * Channel number
+	 */
+	channelNumber: () => LocalizedString
 	setupNotification: {
 		/**
 		 * Prepare to receive notifications when new notices are posted. 

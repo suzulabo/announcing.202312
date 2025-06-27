@@ -1,15 +1,16 @@
 <script lang="ts">
+  import { dev } from '$app/environment';
+  import { fetchChannel } from '$lib/fetch/fetchChannel';
   import { postNotification } from '$lib/fetch/postNotification';
   import { getNotificationToken } from '$lib/notification/firebase';
   import { saveNotificationChannels } from '$lib/notification/localStorage';
+  import { isIOS, isStandalone } from '$lib/platform/platform';
+  import { back } from '@announcing/components/actions/back';
   import Loading from '@announcing/components/Loading.svelte';
+  import { LL } from '@announcing/i18n';
   import { onMount } from 'svelte';
   import type { PageData } from './$types';
-  import { isIOS, isStandalone } from '$lib/platform/platform';
-  import { fetchChannel } from '$lib/fetch/fetchChannel';
-  import { browser, dev } from '$app/environment';
-  import { LL } from '@announcing/i18n';
-  import { back } from '@announcing/components/actions/back';
+  import UnsupportedView from './UnsupportedView.svelte';
 
   interface Props {
     data: PageData;
@@ -41,21 +42,6 @@
     return;
   });
   let channelNotFound = $state(false);
-
-  let pageSnippet = $derived.by(() => {
-    if (!browser) {
-      return;
-    }
-    if (!notificationStatus.supported) {
-      if (isIOS()) {
-        return unsupportedIOS;
-      } else {
-        return unsupported;
-      }
-    }
-
-    return supported;
-  });
 
   onMount(() => {
     if (data.notificationStatus.supported) {
@@ -117,21 +103,9 @@
   };
 </script>
 
-{#snippet unsupported()}
-  <div class="unsupported">
-    <div class="icon">🥺</div>
-    <div>{$LL.unsupportedNotification()}</div>
-  </div>
-{/snippet}
-
-{#snippet unsupportedIOS()}
-  <div class="unsupported-ios">
-    <div>{$LL.unsupportedNotificationIOS()}</div>
-    <a class="button" href="/notification" target="_blank">{$LL.iOSNotificationSetupLink()}</a>
-  </div>
-{/snippet}
-
-{#snippet supported()}
+{#if !notificationStatus.supported}
+  <UnsupportedView channel={notificationStatus.channel} />
+{:else}
   <div class="supported">
     {#if isPWA}
       <div class="search-box">
@@ -180,10 +154,6 @@
       Permission error
     {/if}
   </div>
-{/snippet}
-
-{#if pageSnippet}
-  {@render pageSnippet()}
 {/if}
 
 {#if data.channelID}
@@ -193,26 +163,6 @@
 <Loading show={loading} />
 
 <style lang="scss">
-  .unsupported {
-    margin: 32px 16px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    align-items: center;
-
-    .icon {
-      font-size: 32px;
-    }
-  }
-
-  .unsupported-ios {
-    margin: 32px 16px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    align-items: center;
-  }
-
   .search-box {
     padding: 16px 8px 8px;
 

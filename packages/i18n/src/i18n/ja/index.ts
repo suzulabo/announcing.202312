@@ -54,6 +54,7 @@ const ja = {
   unsupportedNotificationIOS:
     'iPhone、iPadをご利用の方は、通知を使えるようにするための設定が必要です。以下のボタンから手順をご確認ください。',
   iOSNotificationSetupLink: '通知を有効にする手順',
+  channelNumber: 'チャンネル番号',
   setupNotification: {
     description:
       '新しいお知らせが投稿されたときに、通知を受け取る準備を行います。\n「通知を設定」ボタンを押すと、通知の許可を確認するメッセージが表示されるので、許可設定を行ってください。',

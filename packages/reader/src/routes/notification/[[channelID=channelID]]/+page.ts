@@ -2,6 +2,7 @@ import { browser } from '$app/environment';
 import { fetchChannel } from '$lib/fetch/fetchChannel';
 import { getNotificationChannels } from '$lib/notification/localStorage';
 import type { GetChannelResult } from '@announcing/db/types';
+import { redirect } from '@sveltejs/kit';
 import { isSupported } from 'firebase/messaging';
 import type { PageLoad } from './$types';
 
@@ -12,22 +13,29 @@ type Channel =
 type NotificationStatus =
   | {
       supported: false;
+      channel?: GetChannelResult;
     }
   | {
       supported: true;
       channels: Channel[];
-      focusChannelID: string | undefined;
     };
 
 const loadNotificationStatus = async (
   fetch_: typeof fetch,
   focusChannelID: string | undefined,
 ): Promise<NotificationStatus> => {
-  if (!browser) {
-    return { supported: false };
-  }
+  if (!browser || !(await isSupported())) {
+    if (focusChannelID) {
+      const channel = await fetchChannel(focusChannelID, fetch_);
+      if (!channel) {
+        redirect(303, '/notification');
+      }
+      return {
+        supported: false,
+        channel,
+      };
+    }
 
-  if (!(await isSupported())) {
     return { supported: false };
   }
 
@@ -70,7 +78,6 @@ const loadNotificationStatus = async (
   return {
     supported: true,
     channels,
-    focusChannelID,
   };
 };
 
