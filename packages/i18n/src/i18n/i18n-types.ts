@@ -229,6 +229,26 @@ type RootTranslation = {
 	 * C​h​a​n​n​e​l​ ​n​u​m​b​e​r
 	 */
 	channelNumber: string
+	/**
+	 * S​e​l​e​c​t​ ​t​h​e​ ​c​h​a​n​n​e​l​s​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​r​e​c​e​i​v​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​f​o​r​ ​a​n​d​ ​p​r​e​s​s​ ​t​h​e​ ​r​e​g​i​s​t​e​r​ ​b​u​t​t​o​n​.
+	 */
+	updateNotificationDesc: string
+	/**
+	 * V​i​e​w
+	 */
+	view: string
+	/**
+	 * R​e​g​i​s​t​e​r​ ​n​o​t​i​f​i​c​a​t​i​o​n
+	 */
+	registerNotification: string
+	/**
+	 * R​e​g​i​s​t​e​r​e​d
+	 */
+	registered: string
+	/**
+	 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​l​l​o​w​e​d​ ​t​o​ ​u​s​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​b​r​o​w​s​e​r​ ​s​e​t​t​i​n​g​s​.
+	 */
+	notificationDenied: string
 	setupNotification: {
 		/**
 		 * P​r​e​p​a​r​e​ ​t​o​ ​r​e​c​e​i​v​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​w​h​e​n​ ​n​e​w​ ​n​o​t​i​c​e​s​ ​a​r​e​ ​p​o​s​t​e​d​.​ ​
@@ -484,6 +504,26 @@ export type TranslationFunctions = {
 	 * Channel number
 	 */
 	channelNumber: () => LocalizedString
+	/**
+	 * Select the channels you want to receive notifications for and press the register button.
+	 */
+	updateNotificationDesc: () => LocalizedString
+	/**
+	 * View
+	 */
+	view: () => LocalizedString
+	/**
+	 * Register notification
+	 */
+	registerNotification: () => LocalizedString
+	/**
+	 * Registered
+	 */
+	registered: () => LocalizedString
+	/**
+	 * You are not allowed to use notifications. Please change your browser settings.
+	 */
+	notificationDenied: () => LocalizedString
 	setupNotification: {
 		/**
 		 * Prepare to receive notifications when new notices are posted. 

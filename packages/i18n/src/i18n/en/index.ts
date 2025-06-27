@@ -56,6 +56,13 @@ const en = {
     'On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the button below.',
   iOSNotificationSetupLink: 'Steps to enable notifications',
   channelNumber: 'Channel number',
+  updateNotificationDesc:
+    'Select the channels you want to receive notifications for and press the register button.',
+  view: 'View',
+  registerNotification: 'Register notification',
+  registered: 'Registered',
+  notificationDenied:
+    'You are not allowed to use notifications. Please change your browser settings.',
   setupNotification: {
     description:
       'Prepare to receive notifications when new notices are posted. \nPress the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.',

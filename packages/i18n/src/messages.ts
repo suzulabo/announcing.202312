@@ -213,6 +213,26 @@ export const messages = {
     en: 'Channel number',
     ja: 'チャンネル番号',
   },
+  updateNotificationDesc: {
+    en: 'Select the channels you want to receive notifications for and press the register button.',
+    ja: '新しいお知らせの通知を受け取りたいチャンネルを選択し、登録ボタンを押してください',
+  },
+  view: {
+    en: 'View',
+    ja: '表示',
+  },
+  registerNotification: {
+    en: 'Register notification',
+    ja: '通知を登録',
+  },
+  registered: {
+    en: 'Registered',
+    ja: '登録しました',
+  },
+  notificationDenied: {
+    en: 'You are not allowed to use notifications. Please change your browser settings.',
+    ja: '通知の利用が許可されていません。ブラウザの設定を変更してください。',
+  },
 
   // -------------------------------------------------
   setupNotification: {
