@@ -108,24 +108,27 @@
   <div class="container">
     {#if !data.channelID}
       <div class="search-box">
-        <div class="info">Input Channel URL or number</div>
+        <div class="info">{$LL.channelNumberOrURL()}</div>
         <div class="input-box">
           <input bind:value={searchText} /><button
             onclick={searchClickHandler}
-            disabled={!searchChannelID}>Search</button
+            disabled={!searchChannelID}>{$LL.search()}</button
           >
         </div>
         {#if channelNotFound}
-          <div class="error">Channel not found.</div>
+          <div
+            class="error"
+            onanimationend={() => {
+              channelNotFound = false;
+            }}
+          >
+            {$LL.channelNotFound()}
+          </div>
         {/if}
       </div>
     {/if}
 
     <div class="desc">{$LL.updateNotificationDesc()}</div>
-
-    {#if channels.length === 0}
-      no notification
-    {/if}
 
     <div class="channels">
       {#each channels as channel (channel.channelID)}
@@ -181,13 +184,37 @@
     gap: 24px;
 
     .search-box {
-      .info {
-        text-align: center;
-      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
       .input-box {
         margin-top: 8px;
         display: flex;
+        width: 100%;
+        max-width: 400px;
+        input {
+          flex-grow: 1;
+          text-align: center;
+          border-radius: 16px 0 0 16px;
+        }
+        button {
+          border-radius: 0 16px 16px 0;
+          padding: 0 16px;
+        }
+      }
+
+      .error {
+        margin: 8px 0 0;
+        animation: 1s showDelay;
+      }
+      @keyframes showDelay {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
       }
     }
 

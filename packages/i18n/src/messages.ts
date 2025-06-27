@@ -233,6 +233,18 @@ export const messages = {
     en: 'You are not allowed to use notifications. Please change your browser settings.',
     ja: '通知の利用が許可されていません。ブラウザの設定を変更してください。',
   },
+  channelNumberOrURL: {
+    en: 'Channel number or URL',
+    ja: 'チャンネル番号またはURL',
+  },
+  channelNotFound: {
+    en: 'Channel not found.',
+    ja: 'チャンネルが見つかりません',
+  },
+  search: {
+    en: 'Search',
+    ja: '検索',
+  },
 
   // -------------------------------------------------
   setupNotification: {

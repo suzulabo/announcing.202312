@@ -61,6 +61,9 @@ const ja = {
   registerNotification: '通知を登録',
   registered: '登録しました',
   notificationDenied: '通知の利用が許可されていません。ブラウザの設定を変更してください。',
+  channelNumberOrURL: 'チャンネル番号またはURL',
+  channelNotFound: 'チャンネルが見つかりません',
+  search: '検索',
   setupNotification: {
     description:
       '新しいお知らせが投稿されたときに、通知を受け取る準備を行います。\n「通知を設定」ボタンを押すと、通知の許可を確認するメッセージが表示されるので、許可設定を行ってください。',

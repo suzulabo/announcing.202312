@@ -249,6 +249,18 @@ type RootTranslation = {
 	 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​l​l​o​w​e​d​ ​t​o​ ​u​s​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​b​r​o​w​s​e​r​ ​s​e​t​t​i​n​g​s​.
 	 */
 	notificationDenied: string
+	/**
+	 * C​h​a​n​n​e​l​ ​n​u​m​b​e​r​ ​o​r​ ​U​R​L
+	 */
+	channelNumberOrURL: string
+	/**
+	 * C​h​a​n​n​e​l​ ​n​o​t​ ​f​o​u​n​d​.
+	 */
+	channelNotFound: string
+	/**
+	 * S​e​a​r​c​h
+	 */
+	search: string
 	setupNotification: {
 		/**
 		 * P​r​e​p​a​r​e​ ​t​o​ ​r​e​c​e​i​v​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​w​h​e​n​ ​n​e​w​ ​n​o​t​i​c​e​s​ ​a​r​e​ ​p​o​s​t​e​d​.​ ​
@@ -524,6 +536,18 @@ export type TranslationFunctions = {
 	 * You are not allowed to use notifications. Please change your browser settings.
 	 */
 	notificationDenied: () => LocalizedString
+	/**
+	 * Channel number or URL
+	 */
+	channelNumberOrURL: () => LocalizedString
+	/**
+	 * Channel not found.
+	 */
+	channelNotFound: () => LocalizedString
+	/**
+	 * Search
+	 */
+	search: () => LocalizedString
 	setupNotification: {
 		/**
 		 * Prepare to receive notifications when new notices are posted. 

@@ -63,6 +63,9 @@ const en = {
   registered: 'Registered',
   notificationDenied:
     'You are not allowed to use notifications. Please change your browser settings.',
+  channelNumberOrURL: 'Channel number or URL',
+  channelNotFound: 'Channel not found.',
+  search: 'Search',
   setupNotification: {
     description:
       'Prepare to receive notifications when new notices are posted. \nPress the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.',
