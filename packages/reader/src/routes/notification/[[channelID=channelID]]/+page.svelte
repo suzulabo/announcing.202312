@@ -129,7 +129,7 @@
 
     <div class="channels">
       {#each channels as channel (channel.channelID)}
-        <label class="channel">
+        <label class="channel card">
           {#if channel.status === 'deleted'}
             <input type="checkbox" disabled /><span class="name">{channel.name}</span><span
               >(deleted)</span
@@ -204,8 +204,6 @@
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
       .channel {
-        border: 1px solid var(--color-border);
-        border-radius: 8px;
         padding: 8px;
         min-height: 82px;
 
@@ -223,7 +221,7 @@
         img {
           width: 64px;
           height: 64px;
-          border-radius: 8px;
+          border-radius: 16px;
           object-fit: contain;
         }
         .view {
