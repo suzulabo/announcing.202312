@@ -1,8 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import { setupBack } from '$lib/actions/back';
-
-  const back = setupBack();
+  import { back } from '$lib/actions/back';
 
   let id = $derived(+(page.params['id'] ?? '0'));
 </script>

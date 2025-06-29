@@ -14,6 +14,7 @@
   <li><a href="./atoms/FileInput/multiple">FileInput - multiple</a></li>
   <li><a href="./atoms/Modal">Modal</a></li>
   <li><a href="./atoms/Loading">Loading</a></li>
+  <li><a href="./atoms/Navigating">Navigating</a></li>
   <li><a href="./atoms/Logo">Logo</a></li>
   <li><a href="./atoms/VirtualScrollList">VirtualScrollList</a></li>
   <li><a href="./atoms/VirtualScrollList/text">VirtualScrollList - text</a></li>

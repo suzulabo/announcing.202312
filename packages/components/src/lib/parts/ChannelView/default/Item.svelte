@@ -60,8 +60,8 @@
       max-height: 30dvh;
       object-fit: cover;
       border: none;
-      border-radius: 4px;
-      margin: 0 auto;
+      border-radius: 16px;
+      margin: 0 auto 16px;
       &.portrait {
         object-fit: contain;
         width: fit-content;
@@ -80,7 +80,7 @@
     }
 
     .date {
-      color: var(--color-text-light);
+      color: var(--color-text-subtle);
       font-size: 15px;
     }
 
@@ -94,12 +94,11 @@
     }
 
     .first-image {
-      border: none;
-      border-radius: 4px;
+      border-radius: 16px;
       object-fit: contain;
       width: fit-content;
       height: fit-content;
-      margin: 0 auto;
+      margin: 8px auto 0;
     }
   }
 </style>

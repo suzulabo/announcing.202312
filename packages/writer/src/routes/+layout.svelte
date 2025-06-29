@@ -1,12 +1,12 @@
 <script lang="ts">
   import '../app.scss';
 
-  import { page } from '$app/state';
+  import { navigating, page } from '$app/state';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import { setupBack } from '@announcing/components/actions/back';
+  import Navigating from '@announcing/components/Navigating.svelte';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
-  import { signOut } from '@auth/sveltekit/client';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
 
@@ -17,7 +17,6 @@
 
   let { data, children }: Props = $props();
 
-  let headerBack = $derived(page.data.headerBack);
   let siteNameElementAttrs = $derived(
     data.userID && page.url.pathname !== '/' ? { this: 'a', href: '/' } : { this: 'div' },
   );
@@ -28,26 +27,21 @@
     document.documentElement.setAttribute('hydrated', '');
   });
 
-  const back = setupBack();
+  setupBack();
 </script>
 
 <svelte:head>
-  <title>Announcing - {$LL.writer.subTitle()}</title>
+  <title>Announcing</title>
 </svelte:head>
 
 <header>
-  {#if headerBack}
-    <a href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
-  {:else}
-    <svelte:element
-      this={siteNameElementAttrs.this}
-      class="site-name-box unstyled"
-      {...siteNameElementAttrs}
-    >
-      <span class="site-name">Announcing</span>
-      <span class="sub-title">{$LL.writer.subTitle()}</span>
-    </svelte:element>
-  {/if}
+  <svelte:element
+    this={siteNameElementAttrs.this}
+    class="site-name-box unstyled"
+    {...siteNameElementAttrs}
+  >
+    <span class="site-name">Announcing</span>
+  </svelte:element>
 
   <button
     class="small settings-btn"
@@ -68,15 +62,12 @@
   </div>
 </footer>
 
+<Navigating show={!!navigating.from} />
+
 <SettingsModal
   bind:this={settingsModal}
   requestLocale={data.requestLocale}
   requestTheme={data.requestTheme}
-  onSignOut={data.userID
-    ? () => {
-        void signOut();
-      }
-    : undefined}
 />
 
 <style lang="scss">
@@ -84,19 +75,11 @@
     padding: 16px 8px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--color-border);
     margin-bottom: 16px;
 
     .site-name-box {
       .site-name {
         font-size: 20px;
-      }
-      .sub-title {
-        background-color: var(--color-background-highlight);
-        padding: 4px;
-        border-radius: 4px;
-        font-size: 14px;
-        font-weight: 500;
       }
     }
 
@@ -113,7 +96,6 @@
 
     div {
       margin: 16px 0 0;
-      border-top: 1px solid var(--color-border);
       padding: 16px;
       display: flex;
 

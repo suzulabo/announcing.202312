@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { clearChannelCache } from '$lib/fetch/channelCache';
+  import { back } from '@announcing/components/actions/back';
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
   import { LL } from '@announcing/i18n';
   import type { PageData } from './$types';
@@ -33,6 +34,8 @@
   };
 </script>
 
+<AnnouncementView announcement={data.announcement} />
+
 <div class="buttons">
   <a class="button" href={`/channels/${data.channelID}/announcements/${data.announcementID}`}
     >{$LL.edit()}</a
@@ -44,18 +47,21 @@
   >
 </div>
 
-<AnnouncementView announcement={data.announcement} />
+<a class="button small back" href="../list" use:back>{$LL.back()}</a>
 
 <DeleteModal bind:this={deleteModal} onSubmit={deleteAnnouncement} />
 
 <style lang="scss">
   .buttons {
     display: flex;
-    justify-content: center;
     gap: 24px;
-    align-items: center;
-    padding: 16px 8px;
-    border-bottom: 1px solid var(--color-border-light);
-    margin-bottom: 16px;
+    padding: 0 8px;
+    margin: 32px auto;
+    * {
+      width: 120px;
+    }
+  }
+  .back {
+    margin: 0 auto;
   }
 </style>

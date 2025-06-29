@@ -22,7 +22,7 @@ const r2 = {
 const services = [
   {
     binding: 'WK_PUT_TOKEN',
-    service: 'announcing-notification',
+    service: localEnv.NOTIFICATION_PROJECT_NAME,
     entrypoint: 'PutTokenEntrypoint',
   },
 ];

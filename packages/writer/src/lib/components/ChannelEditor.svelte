@@ -108,7 +108,7 @@
             class="icon-remove"
             onclick={() => {
               form.icon = undefined;
-            }}>{$LL.removeIcon()}</button
+            }}>{$LL.remove()}</button
           >
         {:else}
           <button
@@ -152,7 +152,7 @@
 <style lang="scss">
   .modal-body {
     background-color: var(--color-background);
-    border-radius: 8px;
+    border-radius: 16px;
     width: 100%;
     max-width: 600px;
     margin: auto;
@@ -179,8 +179,9 @@
           width: 64px;
           height: 64px;
           white-space: normal;
+          font-size: 12px;
           :global(:has(#settings[data-locale='ja'])) & {
-            font-size: 12px;
+            font-size: 10px;
           }
         }
         button.icon-remove {
@@ -194,7 +195,7 @@
         .icon {
           width: 64px;
           height: 64px;
-          border-radius: 8px;
+          border-radius: 16px;
           object-fit: contain;
         }
       }

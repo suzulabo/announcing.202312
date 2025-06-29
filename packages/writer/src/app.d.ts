@@ -5,8 +5,6 @@ import type { SendNotificationEntrypoint, SendNotificationParams } from '@announ
 import type { AnnouncementPreviewData } from './routes/channels/[channelID]/announcements/[[announcementID]]/preview/+page.svelte';
 import type { StorePostLogParams, StorePostLogWorkflow } from './workers/storePostLogWorkflow';
 
-type BackLabelKeys = 'back';
-
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
@@ -18,9 +16,7 @@ declare global {
       sendNotification: (params: SendNotificationParams) => Promise<void>;
       waitUntil: (promise: Promise<unknown>) => void;
     }
-    interface PageData {
-      headerBack?: { href: string; labelKey: BackLabelKeys };
-    }
+    // interface PageData {}
     interface PageState {
       fromPage?: string;
       announcementPreviewData?: AnnouncementPreviewData;

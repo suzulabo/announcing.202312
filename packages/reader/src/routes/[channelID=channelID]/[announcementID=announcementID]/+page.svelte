@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { back } from '@announcing/components/actions/back';
   import AnnouncementView from '@announcing/components/AnnouncementView.svelte';
+  import { LL } from '@announcing/i18n';
   import type { PageData } from './$types';
 
   interface Props {
@@ -13,12 +15,12 @@
   <title>{data.announcement.title ?? data.announcement.body}</title>
 </svelte:head>
 
-<div class="container">
-  <AnnouncementView announcement={data.announcement} />
-</div>
+<AnnouncementView announcement={data.announcement} />
+
+<a class="button small" href={`/${data.channelID}`} use:back>{$LL.back()}</a>
 
 <style lang="scss">
-  .container {
-    margin: 16px 0;
+  a {
+    margin: 32px auto 0;
   }
 </style>

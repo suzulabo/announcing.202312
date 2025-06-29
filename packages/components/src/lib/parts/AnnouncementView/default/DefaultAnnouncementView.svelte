@@ -46,8 +46,8 @@
     {#if announcement.createdAt === announcement.updatedAt}
       <div>{formatDate(announcement.createdAt)}</div>
     {:else}
-      <div>{$LL.announcementView.created()}{formatDate(announcement.createdAt)}</div>
-      <div>{$LL.announcementView.updated()}{formatDate(announcement.updatedAt)}</div>
+      <div>{$LL.createdAtPrefix()}{formatDate(announcement.createdAt)}</div>
+      <div>{$LL.updatedAtPrefix()}{formatDate(announcement.updatedAt)}</div>
     {/if}
   </div>
   {#if announcement.title}
@@ -62,37 +62,27 @@
     <div class="images-box">
       {#if announcement.images.length === 1}
         {@const image = announcement.images[0] as string}
-        <div
-          class="image-box"
-          role="button"
-          tabindex="0"
+        <button
+          class="unstyled image-box"
           onclick={() => {
             if (image) {
               showImageModal(image);
             }
           }}
-          onkeydown={() => {
-            // TODO
-          }}
         >
           <img class="single-image" src={image} alt="" {...parseImageSize(image)} />
-        </div>
+        </button>
       {:else}
         <div class="images-grid">
           {#each announcement.images as image (image)}
-            <div
-              role="button"
-              tabindex="0"
-              class="image-box"
+            <button
+              class="unstyled image-box"
               onclick={() => {
                 showImageModal(image);
               }}
-              onkeydown={() => {
-                // TODO
-              }}
             >
               <img src={image} alt="" {...parseImageSize(image)} />
-            </div>
+            </button>
           {/each}
         </div>
       {/if}
@@ -117,24 +107,28 @@
   .container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 
     .header-image {
       max-height: 50vh;
       align-self: center;
       margin: 0 0 8px 0;
       object-fit: contain;
-      width: fit-content;
-      height: fit-content;
+      width: auto;
+      height: auto;
+      @media (min-width: 600px) {
+        border-radius: 16px;
+      }
     }
     .date {
-      padding: 0 8px;
-      color: var(--color-text-light);
-      font-size: 14px;
+      padding: 0 16px;
+      color: var(--color-text-subtle);
+      font-size: 15px;
     }
     .title {
       font-size: 24px;
-      padding: 0 8px;
+      font-weight: bold;
+      padding: 0 16px;
     }
     .body {
       padding: 0 16px;
@@ -143,7 +137,7 @@
     }
 
     .images-box {
-      margin: 8px 4px;
+      margin: 8px 4px 0;
       display: flex;
 
       .image-box {
@@ -155,25 +149,31 @@
         margin: 0 auto;
         object-fit: contain;
         max-height: 90vh;
-        width: fit-content;
-        height: fit-content;
+        width: auto;
+        height: auto;
+        @media (min-width: 600px) {
+          border-radius: 16px;
+        }
       }
 
       .images-grid {
         display: grid;
-        grid-template-columns: auto auto;
+        width: 100%;
+        // https://ishadeed.com/article/min-content-size-css-grid/
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         gap: 4px;
 
         .image-box {
-          aspect-ratio: 1;
           display: flex;
-        }
-
-        img {
           aspect-ratio: 1;
-          object-fit: cover;
-          border-radius: 4px;
-          margin: auto;
+          img {
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 16px;
+            margin: auto;
+            width: fit-content;
+            height: fit-content;
+          }
         }
       }
     }
@@ -184,7 +184,7 @@
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    width: fit-content;
-    height: fit-content;
+    width: auto;
+    height: auto;
   }
 </style>

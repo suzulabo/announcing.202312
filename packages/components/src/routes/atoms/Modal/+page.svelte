@@ -47,12 +47,13 @@
 
   .modal-body {
     background-color: var(--color-background);
-    border-radius: 8px;
+    border-radius: 16px;
     margin: auto;
-    padding: 8px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    max-width: 600px;
   }
 </style>

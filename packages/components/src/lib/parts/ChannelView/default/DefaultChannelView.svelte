@@ -37,6 +37,7 @@
   {:else}
     <VirtualScrollList keys={announcementKeys} itemMinHeight={200} gap={8}>
       {#snippet itemSnippet(key)}
+        <hr />
         <a class="item unstyled" href={`${announcementHrefPrefix}/${key}`}>
           {#await announcementLoader(key)}
             <div class="loading">
@@ -57,12 +58,13 @@
 
 <style lang="scss">
   .channel-box {
-    padding: 0 16px 8px;
+    padding: 0 16px 16px;
   }
 
   .name-line {
     display: flex;
     align-items: center;
+    gap: 8px;
     .name {
       font-weight: bold;
       font-size: 20px;
@@ -71,7 +73,7 @@
     .icon {
       width: 64px;
       height: 64px;
-      border-radius: 8px;
+      border-radius: 16px;
       object-fit: contain;
     }
   }
@@ -85,15 +87,17 @@
     text-align: center;
   }
 
+  hr {
+    border-top: 1px solid var(--color-border);
+    margin-bottom: 16px;
+  }
+
   .item {
-    margin: 0 8px;
-    padding: 0 0 8px;
-    border: 1px solid var(--color-border-light);
-    border-radius: 4px;
+    padding: 0 16px 8px;
     display: flex;
     flex-direction: column;
     min-height: 200px;
-    max-height: 50dvh;
+    max-height: 50svh;
     cursor: pointer;
     position: relative;
     overflow: hidden;

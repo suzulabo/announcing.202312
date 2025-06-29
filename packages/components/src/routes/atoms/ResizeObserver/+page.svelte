@@ -43,7 +43,7 @@
     .wrapper {
       padding: 8px;
       border: 2px solid silver;
-      border-radius: 8px;
+      border-radius: 16px;
 
       &.small {
         max-width: 400px;

@@ -3,6 +3,7 @@
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
   import { clearChannelCache } from '$lib/fetch/channelCache';
   import { LL } from '@announcing/i18n';
+  import { signOut } from '@auth/sveltekit/client';
   import type { PageData } from './$types';
 
   interface Props {
@@ -34,7 +35,7 @@
   {#if data.channels}
     <div class="channels">
       {#each data.channels as channel (channel.channelID)}
-        <a href={`/channels/${channel.channelID}`} class="channel">
+        <a href={`/channels/${channel.channelID}`} class="card channel">
           <span class="name">
             {channel.name}
           </span>
@@ -55,6 +56,15 @@
     >{$LL.createChannel()}
   </button>
   <span class="create-btn-desc">{$LL.channelsCanBeCreated()}</span>
+
+  <button
+    class="small"
+    onclick={() => {
+      void signOut();
+    }}
+  >
+    {$LL.signOut()}
+  </button>
 </div>
 
 <ChannelEditor bind:this={editor} onSubmit={submitHandler} />
@@ -63,18 +73,16 @@
   .container {
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     .channels {
-      margin: 16px 16px 0;
+      margin: 0 16px;
       display: grid;
       gap: 16px;
       justify-content: center;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
       .channel {
-        border: 1px solid var(--color-border);
-        border-radius: 8px;
-        padding: 8px;
         min-height: 82px;
 
         display: flex;
@@ -87,7 +95,7 @@
         img {
           width: 64px;
           height: 64px;
-          border-radius: 8px;
+          border-radius: 16px;
           object-fit: contain;
         }
       }
@@ -97,9 +105,9 @@
       margin: 16px auto 0;
     }
     .create-btn-desc {
-      margin: 8px auto;
-      font-size: 13px;
-      font-style: italic;
+      margin: 8px auto 32px;
+      color: var(--color-text-subtle);
+      font-size: 15px;
     }
   }
 </style>

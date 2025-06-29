@@ -15,37 +15,29 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
-	 * E​d​i​t
+	 * (​R​e​q​u​i​r​e​d​)
 	 */
-	edit: string
+	required: string
 	/**
-	 * D​e​l​e​t​e
+	 * Y​o​u​r​ ​i​n​p​u​t​ ​e​x​c​e​e​d​s​ ​t​h​e​ ​c​h​a​r​a​c​t​e​r​ ​l​i​m​i​t​.
 	 */
-	'delete': string
+	textTooLong: string
 	/**
-	 * C​a​n​c​e​l
+	 * C​r​e​a​t​e​d​:​ 
 	 */
-	cancel: string
+	createdAtPrefix: string
 	/**
-	 * C​l​o​s​e
+	 * U​p​d​a​t​e​d​:​ 
 	 */
-	close: string
+	updatedAtPrefix: string
 	/**
-	 * R​e​m​o​v​e
+	 * N​o​ ​a​n​n​o​u​n​c​e​m​e​n​t​s​ ​y​e​t​.
 	 */
-	remove: string
+	noAnnouncements: string
 	/**
-	 * B​a​c​k
+	 * F​a​i​l​e​d​ ​t​o​ ​d​a​t​a​ ​l​o​a​d
 	 */
-	back: string
-	/**
-	 * P​r​e​v​i​e​w
-	 */
-	preview: string
-	/**
-	 * S​e​t​t​i​n​g​s
-	 */
-	settings: string
+	failedToDataLoad: string
 	/**
 	 * T​h​e​m​e
 	 */
@@ -59,65 +51,19 @@ type RootTranslation = {
 	 */
 	darkMode: string
 	/**
-	 * C​o​p​y
+	 * C​l​o​s​e
 	 */
-	copy: string
+	close: string
 	/**
-	 * C​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d​.
+	 * S​e​t​t​i​n​g​s
 	 */
-	copied: string
-	/**
-	 * U​n​a​b​l​e​ ​t​o​ ​c​o​p​y​ ​t​o​ ​c​l​i​p​b​o​a​r​d​.
-	 */
-	copyError: string
-	/**
-	 * (​R​e​q​u​i​r​e​d​)
-	 */
-	required: string
-	/**
-	 * S​i​g​n​ ​O​u​t
-	 */
-	signOut: string
-	/**
-	 * I​ ​u​n​d​e​r​s​t​a​n​d​.
-	 */
-	understand: string
-	/**
-	 * C​h​a​n​n​e​l​ ​n​a​m​e
-	 */
-	channelName: string
-	/**
-	 * D​e​s​c​r​i​p​t​i​o​n
-	 */
-	desc: string
-	/**
-	 * T​i​t​l​e
-	 */
-	title: string
-	/**
-	 * B​o​d​y
-	 */
-	body: string
-	/**
-	 * S​e​l​e​c​t​ ​i​c​o​n
-	 */
-	selectIcon: string
-	/**
-	 * R​e​m​o​v​e
-	 */
-	removeIcon: string
-	/**
-	 * Y​o​u​r​ ​i​n​p​u​t​ ​e​x​c​e​e​d​s​ ​t​h​e​ ​c​h​a​r​a​c​t​e​r​ ​l​i​m​i​t​.
-	 */
-	textTooLong: string
-	/**
-	 * N​o​ ​a​n​n​o​u​n​c​e​m​e​n​t​s​ ​y​e​t​.
-	 */
-	noAnnouncements: string
-	/**
-	 * F​a​i​l​e​d​ ​t​o​ ​d​a​t​a​ ​l​o​a​d
-	 */
-	failedToDataLoad: string
+	settings: string
+	signIn: {
+		/**
+		 * S​i​g​n​ ​i​n​ ​w​i​t​h​ ​G​o​o​g​l​e
+		 */
+		google: string
+	}
 	/**
 	 * C​r​e​a​t​e​ ​C​h​a​n​n​e​l
 	 */
@@ -130,36 +76,130 @@ type RootTranslation = {
 	 * U​p​ ​t​o​ ​f​i​v​e​ ​c​h​a​n​n​e​l​s​ ​c​a​n​ ​b​e​ ​c​r​e​a​t​e​d​.
 	 */
 	channelsCanBeCreated: string
-	channelActions: {
-		/**
-		 * V​i​e​w​ ​t​h​i​s​ ​c​h​a​n​n​e​l
-		 */
-		viewChannel: string
-		/**
-		 * C​o​p​y​ ​c​h​a​n​n​e​l​ ​U​R​L
-		 */
-		copyURL: string
-		/**
-		 * C​r​e​a​t​e​ ​a​ ​n​e​w​ ​a​n​n​o​u​n​c​e​m​e​n​t
-		 */
-		createAnnouncement: string
-		/**
-		 * E​d​i​t​ ​o​r​ ​d​e​l​e​t​e​ ​p​a​s​t​ ​a​n​n​o​u​n​c​e​m​e​n​t​s
-		 */
-		editAnnouncement: string
-		/**
-		 * E​d​i​t​ ​c​h​a​n​n​e​l​ ​n​a​m​e​,​ ​e​t​c​.
-		 */
-		editChannel: string
-		/**
-		 * D​e​l​e​t​e​ ​t​h​i​s​ ​c​h​a​n​n​e​l
-		 */
-		deleteChannel: string
-	}
+	/**
+	 * S​i​g​n​ ​O​u​t
+	 */
+	signOut: string
+	/**
+	 * C​h​a​n​n​e​l​ ​n​a​m​e
+	 */
+	channelName: string
+	/**
+	 * D​e​s​c​r​i​p​t​i​o​n
+	 */
+	desc: string
+	/**
+	 * S​e​l​e​c​t​ ​i​c​o​n
+	 */
+	selectIcon: string
+	/**
+	 * C​a​n​c​e​l
+	 */
+	cancel: string
+	/**
+	 * C​r​e​a​t​e​ ​a​ ​n​e​w​ ​a​n​n​o​u​n​c​e​m​e​n​t
+	 */
+	createAnnouncement: string
+	/**
+	 * E​d​i​t​ ​o​r​ ​d​e​l​e​t​e​ ​p​a​s​t​ ​a​n​n​o​u​n​c​e​m​e​n​t​s
+	 */
+	editAnnouncement: string
+	/**
+	 * V​i​e​w​ ​t​h​i​s​ ​c​h​a​n​n​e​l
+	 */
+	viewChannel: string
+	/**
+	 * C​o​p​y​ ​c​h​a​n​n​e​l​ ​U​R​L
+	 */
+	copyChannelURL: string
+	/**
+	 * E​d​i​t​ ​c​h​a​n​n​e​l​ ​n​a​m​e​,​ ​e​t​c​.
+	 */
+	editChannel: string
+	/**
+	 * D​e​l​e​t​e​ ​t​h​i​s​ ​c​h​a​n​n​e​l
+	 */
+	deleteChannel: string
+	/**
+	 * I​ ​u​n​d​e​r​s​t​a​n​d​.
+	 */
+	understand: string
+	/**
+	 * B​a​c​k
+	 */
+	back: string
+	/**
+	 * C​h​o​o​s​e​ ​H​e​a​d​e​r​ ​I​m​a​g​e
+	 */
+	chooseHeaderImage: string
+	/**
+	 * A​d​d​ ​I​m​a​g​e
+	 */
+	addImage: string
+	/**
+	 * Y​o​u​ ​c​a​n​ ​a​d​d​ ​u​p​ ​t​o​ ​4​ ​i​m​a​g​e​s​.
+	 */
+	addImageDescription: string
+	/**
+	 * R​e​m​o​v​e
+	 */
+	remove: string
+	/**
+	 * T​i​t​l​e
+	 */
+	title: string
+	/**
+	 * B​o​d​y
+	 */
+	body: string
+	/**
+	 * P​r​e​v​i​e​w
+	 */
+	preview: string
+	/**
+	 * P​o​s​t​ ​a​n​n​o​u​n​c​e​m​e​n​t
+	 */
+	postAnnouncement: string
+	/**
+	 * U​p​d​a​t​e​ ​a​n​n​o​u​n​c​e​m​e​n​t
+	 */
+	updateAnnouncement: string
+	/**
+	 * O​p​e​n​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​e​d​i​t​ ​o​r​ ​d​e​l​e​t​e​.
+	 */
+	announcementListPrompt: string
+	/**
+	 * E​d​i​t
+	 */
+	edit: string
+	/**
+	 * D​e​l​e​t​e
+	 */
+	'delete': string
+	/**
+	 * D​e​l​e​t​e​ ​A​n​n​o​u​n​c​e​m​e​n​t
+	 */
+	deleteAnnouncement: string
+	/**
+	 * Y​o​u​ ​a​r​e​ ​a​b​o​u​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​.​ ​T​h​i​s​ ​a​c​t​i​o​n​ ​c​a​n​n​o​t​ ​b​e​ ​u​n​d​o​n​e​.
+	 */
+	deleteAnnouncementDesc: string
+	/**
+	 * C​o​p​y
+	 */
+	copy: string
+	/**
+	 * C​o​p​i​e​d​ ​t​o​ ​c​l​i​p​b​o​a​r​d​.
+	 */
+	copied: string
+	/**
+	 * U​n​a​b​l​e​ ​t​o​ ​c​o​p​y​ ​t​o​ ​c​l​i​p​b​o​a​r​d​.
+	 */
+	copyError: string
 	/**
 	 * D​e​l​e​t​e​ ​C​h​a​n​n​e​l
 	 */
-	deleteChannel: string
+	deleteChannelTitle: string
 	/**
 	 * Y​o​u​ ​a​r​e​ ​a​b​o​u​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​c​h​a​n​n​e​l​ ​"​{​n​a​m​e​}​"​.​ ​T​h​i​s​ ​a​c​t​i​o​n​ ​c​a​n​n​o​t​ ​b​e​ ​u​n​d​o​n​e​.
 	 * @param {unknown} name
@@ -170,67 +210,57 @@ type RootTranslation = {
 	 */
 	deleteChannelConfirmation: string
 	/**
-	 * P​o​s​t​ ​a​n​n​o​u​n​c​e​m​e​n​t
-	 */
-	postAnnouncement: string
-	/**
-	 * E​d​i​t​ ​a​n​n​o​u​n​c​e​m​e​n​t
-	 */
-	updateAnnouncement: string
-	/**
-	 * C​h​o​o​s​e​ ​H​e​a​d​e​r​ ​I​m​a​g​e
-	 */
-	chooseHeaderImage: string
-	/**
-	 * R​e​m​o​v​e
-	 */
-	removeHeaderImage: string
-	/**
-	 * A​d​d​ ​I​m​a​g​e
-	 */
-	addImage: string
-	/**
-	 * Y​o​u​ ​c​a​n​ ​a​d​d​ ​u​p​ ​t​o​ ​4​ ​i​m​a​g​e​s​.
-	 */
-	addImageDescription: string
-	announcementView: {
-		/**
-		 * C​r​e​a​t​e​d​:​ 
-		 */
-		created: string
-		/**
-		 * U​p​d​a​t​e​d​:​ 
-		 */
-		updated: string
-	}
-	writer: {
-		/**
-		 * A​u​t​h​o​r​ ​S​i​t​e
-		 */
-		subTitle: string
-	}
-	deleteAnnouncement: {
-		/**
-		 * D​e​l​e​t​e​ ​A​n​n​o​u​n​c​e​m​e​n​t
-		 */
-		title: string
-		/**
-		 * Y​o​u​ ​a​r​e​ ​a​b​o​u​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​.​ ​T​h​i​s​ ​a​c​t​i​o​n​ ​c​a​n​n​o​t​ ​b​e​ ​u​n​d​o​n​e​.
-		 */
-		description: string
-		/**
-		 * A​r​e​ ​y​o​u​ ​s​u​r​e​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​d​e​l​e​t​e​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​?
-		 */
-		confirmation: string
-	}
-	/**
-	 * O​p​e​n​ ​t​h​e​ ​a​n​n​o​u​n​c​e​m​e​n​t​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​e​d​i​t​ ​o​r​ ​d​e​l​e​t​e​.
-	 */
-	announcementListPrompt: string
-	/**
 	 * N​o​t​i​f​i​c​a​t​i​o​n
 	 */
 	notification: string
+	/**
+	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​i​s​ ​d​e​v​i​c​e​.
+	 */
+	unsupportedNotification: string
+	/**
+	 * O​n​ ​i​P​h​o​n​e​ ​a​n​d​ ​i​P​a​d​,​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​t​a​k​e​ ​a​n​ ​e​x​t​r​a​ ​s​t​e​p​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​P​l​e​a​s​e​ ​c​h​e​c​k​ ​t​h​e​ ​s​t​e​p​s​ ​a​t​ ​t​h​e​ ​b​u​t​t​o​n​ ​b​e​l​o​w​.
+	 */
+	unsupportedNotificationIOS: string
+	/**
+	 * S​t​e​p​s​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+	 */
+	iOSNotificationSetupLink: string
+	/**
+	 * C​h​a​n​n​e​l​ ​n​u​m​b​e​r
+	 */
+	channelNumber: string
+	/**
+	 * S​e​l​e​c​t​ ​t​h​e​ ​c​h​a​n​n​e​l​s​ ​y​o​u​ ​w​a​n​t​ ​t​o​ ​r​e​c​e​i​v​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​f​o​r​ ​a​n​d​ ​p​r​e​s​s​ ​t​h​e​ ​r​e​g​i​s​t​e​r​ ​b​u​t​t​o​n​.
+	 */
+	updateNotificationDesc: string
+	/**
+	 * V​i​e​w
+	 */
+	view: string
+	/**
+	 * R​e​g​i​s​t​e​r​ ​n​o​t​i​f​i​c​a​t​i​o​n
+	 */
+	registerNotification: string
+	/**
+	 * R​e​g​i​s​t​e​r​e​d
+	 */
+	registered: string
+	/**
+	 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​l​l​o​w​e​d​ ​t​o​ ​u​s​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​b​r​o​w​s​e​r​ ​s​e​t​t​i​n​g​s​.
+	 */
+	notificationDenied: string
+	/**
+	 * C​h​a​n​n​e​l​ ​n​u​m​b​e​r​ ​o​r​ ​U​R​L
+	 */
+	channelNumberOrURL: string
+	/**
+	 * C​h​a​n​n​e​l​ ​n​o​t​ ​f​o​u​n​d​.
+	 */
+	channelNotFound: string
+	/**
+	 * S​e​a​r​c​h
+	 */
+	search: string
 	setupNotification: {
 		/**
 		 * P​r​e​p​a​r​e​ ​t​o​ ​r​e​c​e​i​v​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​w​h​e​n​ ​n​e​w​ ​n​o​t​i​c​e​s​ ​a​r​e​ ​p​o​s​t​e​d​.​ ​
@@ -273,37 +303,29 @@ type RootTranslation = {
 
 export type TranslationFunctions = {
 	/**
-	 * Edit
+	 * (Required)
 	 */
-	edit: () => LocalizedString
+	required: () => LocalizedString
 	/**
-	 * Delete
+	 * Your input exceeds the character limit.
 	 */
-	'delete': () => LocalizedString
+	textTooLong: () => LocalizedString
 	/**
-	 * Cancel
+	 * Created: 
 	 */
-	cancel: () => LocalizedString
+	createdAtPrefix: () => LocalizedString
 	/**
-	 * Close
+	 * Updated: 
 	 */
-	close: () => LocalizedString
+	updatedAtPrefix: () => LocalizedString
 	/**
-	 * Remove
+	 * No announcements yet.
 	 */
-	remove: () => LocalizedString
+	noAnnouncements: () => LocalizedString
 	/**
-	 * Back
+	 * Failed to data load
 	 */
-	back: () => LocalizedString
-	/**
-	 * Preview
-	 */
-	preview: () => LocalizedString
-	/**
-	 * Settings
-	 */
-	settings: () => LocalizedString
+	failedToDataLoad: () => LocalizedString
 	/**
 	 * Theme
 	 */
@@ -317,65 +339,19 @@ export type TranslationFunctions = {
 	 */
 	darkMode: () => LocalizedString
 	/**
-	 * Copy
+	 * Close
 	 */
-	copy: () => LocalizedString
+	close: () => LocalizedString
 	/**
-	 * Copied to clipboard.
+	 * Settings
 	 */
-	copied: () => LocalizedString
-	/**
-	 * Unable to copy to clipboard.
-	 */
-	copyError: () => LocalizedString
-	/**
-	 * (Required)
-	 */
-	required: () => LocalizedString
-	/**
-	 * Sign Out
-	 */
-	signOut: () => LocalizedString
-	/**
-	 * I understand.
-	 */
-	understand: () => LocalizedString
-	/**
-	 * Channel name
-	 */
-	channelName: () => LocalizedString
-	/**
-	 * Description
-	 */
-	desc: () => LocalizedString
-	/**
-	 * Title
-	 */
-	title: () => LocalizedString
-	/**
-	 * Body
-	 */
-	body: () => LocalizedString
-	/**
-	 * Select icon
-	 */
-	selectIcon: () => LocalizedString
-	/**
-	 * Remove
-	 */
-	removeIcon: () => LocalizedString
-	/**
-	 * Your input exceeds the character limit.
-	 */
-	textTooLong: () => LocalizedString
-	/**
-	 * No announcements yet.
-	 */
-	noAnnouncements: () => LocalizedString
-	/**
-	 * Failed to data load
-	 */
-	failedToDataLoad: () => LocalizedString
+	settings: () => LocalizedString
+	signIn: {
+		/**
+		 * Sign in with Google
+		 */
+		google: () => LocalizedString
+	}
 	/**
 	 * Create Channel
 	 */
@@ -388,36 +364,130 @@ export type TranslationFunctions = {
 	 * Up to five channels can be created.
 	 */
 	channelsCanBeCreated: () => LocalizedString
-	channelActions: {
-		/**
-		 * View this channel
-		 */
-		viewChannel: () => LocalizedString
-		/**
-		 * Copy channel URL
-		 */
-		copyURL: () => LocalizedString
-		/**
-		 * Create a new announcement
-		 */
-		createAnnouncement: () => LocalizedString
-		/**
-		 * Edit or delete past announcements
-		 */
-		editAnnouncement: () => LocalizedString
-		/**
-		 * Edit channel name, etc.
-		 */
-		editChannel: () => LocalizedString
-		/**
-		 * Delete this channel
-		 */
-		deleteChannel: () => LocalizedString
-	}
+	/**
+	 * Sign Out
+	 */
+	signOut: () => LocalizedString
+	/**
+	 * Channel name
+	 */
+	channelName: () => LocalizedString
+	/**
+	 * Description
+	 */
+	desc: () => LocalizedString
+	/**
+	 * Select icon
+	 */
+	selectIcon: () => LocalizedString
+	/**
+	 * Cancel
+	 */
+	cancel: () => LocalizedString
+	/**
+	 * Create a new announcement
+	 */
+	createAnnouncement: () => LocalizedString
+	/**
+	 * Edit or delete past announcements
+	 */
+	editAnnouncement: () => LocalizedString
+	/**
+	 * View this channel
+	 */
+	viewChannel: () => LocalizedString
+	/**
+	 * Copy channel URL
+	 */
+	copyChannelURL: () => LocalizedString
+	/**
+	 * Edit channel name, etc.
+	 */
+	editChannel: () => LocalizedString
+	/**
+	 * Delete this channel
+	 */
+	deleteChannel: () => LocalizedString
+	/**
+	 * I understand.
+	 */
+	understand: () => LocalizedString
+	/**
+	 * Back
+	 */
+	back: () => LocalizedString
+	/**
+	 * Choose Header Image
+	 */
+	chooseHeaderImage: () => LocalizedString
+	/**
+	 * Add Image
+	 */
+	addImage: () => LocalizedString
+	/**
+	 * You can add up to 4 images.
+	 */
+	addImageDescription: () => LocalizedString
+	/**
+	 * Remove
+	 */
+	remove: () => LocalizedString
+	/**
+	 * Title
+	 */
+	title: () => LocalizedString
+	/**
+	 * Body
+	 */
+	body: () => LocalizedString
+	/**
+	 * Preview
+	 */
+	preview: () => LocalizedString
+	/**
+	 * Post announcement
+	 */
+	postAnnouncement: () => LocalizedString
+	/**
+	 * Update announcement
+	 */
+	updateAnnouncement: () => LocalizedString
+	/**
+	 * Open the announcement you want to edit or delete.
+	 */
+	announcementListPrompt: () => LocalizedString
+	/**
+	 * Edit
+	 */
+	edit: () => LocalizedString
+	/**
+	 * Delete
+	 */
+	'delete': () => LocalizedString
+	/**
+	 * Delete Announcement
+	 */
+	deleteAnnouncement: () => LocalizedString
+	/**
+	 * You are about to delete the announcement. This action cannot be undone.
+	 */
+	deleteAnnouncementDesc: () => LocalizedString
+	/**
+	 * Copy
+	 */
+	copy: () => LocalizedString
+	/**
+	 * Copied to clipboard.
+	 */
+	copied: () => LocalizedString
+	/**
+	 * Unable to copy to clipboard.
+	 */
+	copyError: () => LocalizedString
 	/**
 	 * Delete Channel
 	 */
-	deleteChannel: () => LocalizedString
+	deleteChannelTitle: () => LocalizedString
 	/**
 	 * You are about to delete the channel "{name}". This action cannot be undone.
 	 */
@@ -427,67 +497,57 @@ export type TranslationFunctions = {
 	 */
 	deleteChannelConfirmation: () => LocalizedString
 	/**
-	 * Post announcement
-	 */
-	postAnnouncement: () => LocalizedString
-	/**
-	 * Edit announcement
-	 */
-	updateAnnouncement: () => LocalizedString
-	/**
-	 * Choose Header Image
-	 */
-	chooseHeaderImage: () => LocalizedString
-	/**
-	 * Remove
-	 */
-	removeHeaderImage: () => LocalizedString
-	/**
-	 * Add Image
-	 */
-	addImage: () => LocalizedString
-	/**
-	 * You can add up to 4 images.
-	 */
-	addImageDescription: () => LocalizedString
-	announcementView: {
-		/**
-		 * Created: 
-		 */
-		created: () => LocalizedString
-		/**
-		 * Updated: 
-		 */
-		updated: () => LocalizedString
-	}
-	writer: {
-		/**
-		 * Author Site
-		 */
-		subTitle: () => LocalizedString
-	}
-	deleteAnnouncement: {
-		/**
-		 * Delete Announcement
-		 */
-		title: () => LocalizedString
-		/**
-		 * You are about to delete the announcement. This action cannot be undone.
-		 */
-		description: () => LocalizedString
-		/**
-		 * Are you sure you want to delete the announcement?
-		 */
-		confirmation: () => LocalizedString
-	}
-	/**
-	 * Open the announcement you want to edit or delete.
-	 */
-	announcementListPrompt: () => LocalizedString
-	/**
 	 * Notification
 	 */
 	notification: () => LocalizedString
+	/**
+	 * Notifications are not available on this device.
+	 */
+	unsupportedNotification: () => LocalizedString
+	/**
+	 * On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the button below.
+	 */
+	unsupportedNotificationIOS: () => LocalizedString
+	/**
+	 * Steps to enable notifications
+	 */
+	iOSNotificationSetupLink: () => LocalizedString
+	/**
+	 * Channel number
+	 */
+	channelNumber: () => LocalizedString
+	/**
+	 * Select the channels you want to receive notifications for and press the register button.
+	 */
+	updateNotificationDesc: () => LocalizedString
+	/**
+	 * View
+	 */
+	view: () => LocalizedString
+	/**
+	 * Register notification
+	 */
+	registerNotification: () => LocalizedString
+	/**
+	 * Registered
+	 */
+	registered: () => LocalizedString
+	/**
+	 * You are not allowed to use notifications. Please change your browser settings.
+	 */
+	notificationDenied: () => LocalizedString
+	/**
+	 * Channel number or URL
+	 */
+	channelNumberOrURL: () => LocalizedString
+	/**
+	 * Channel not found.
+	 */
+	channelNotFound: () => LocalizedString
+	/**
+	 * Search
+	 */
+	search: () => LocalizedString
 	setupNotification: {
 		/**
 		 * Prepare to receive notifications when new notices are posted. 

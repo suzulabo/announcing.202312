@@ -2,7 +2,6 @@
   import Loading from '$lib/atoms/Loading.svelte';
   import Modal from '$lib/atoms/Modal.svelte';
   import MaterialSymbolsLanguage from '$lib/icons/MaterialSymbolsLanguage.svelte';
-  import MaterialSymbolsLogout from '$lib/icons/MaterialSymbolsLogout.svelte';
   import MdiThemeLightDark from '$lib/icons/MdiThemeLightDark.svelte';
   import { getTheme, initTheme, setLocale, setTheme, type Themes } from '$lib/utils/settings';
   import { LL, type Locales } from '@announcing/i18n';
@@ -16,10 +15,9 @@
   interface Props {
     requestLocale: Locales;
     requestTheme: Themes | undefined;
-    onSignOut?: (() => void) | undefined;
   }
 
-  let { requestLocale, requestTheme, onSignOut }: Props = $props();
+  let { requestLocale, requestTheme }: Props = $props();
 
   let open = $state(false);
   let loading = $state(false);
@@ -71,8 +69,6 @@
       {/each}
     </div>
 
-    <hr />
-
     <div class="theme-title">
       <MdiThemeLightDark />
       {$LL.theme()}
@@ -86,21 +82,6 @@
         </label>
       {/each}
     </div>
-
-    {#if onSignOut}
-      <hr />
-      <button
-        class="logout-btn small"
-        onclick={() => {
-          onSignOut();
-        }}
-      >
-        <MaterialSymbolsLogout />
-        {$LL.signOut()}
-      </button>
-    {/if}
-
-    <hr />
 
     <button
       class="close-btn small filled"
@@ -120,15 +101,11 @@
 
   .modal-body {
     background-color: var(--color-background);
-    border-radius: 8px;
+    border-radius: 16px;
     margin: auto;
     padding: 16px;
     width: 100%;
     max-width: 400px;
-
-    hr {
-      margin: 24px 0;
-    }
 
     .language-title,
     .theme-title {
@@ -138,7 +115,7 @@
     }
 
     .language-grid {
-      margin-top: 8px;
+      margin: 16px 0 32px;
       display: grid;
       gap: 16px;
       justify-content: center;
@@ -146,22 +123,15 @@
     }
 
     .theme-buttons {
-      margin-top: 8px;
+      margin: 16px 0 32px;
       display: flex;
       justify-content: center;
       gap: 16px;
     }
 
-    .logout-btn {
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 2px;
-    }
-
     .close-btn {
       display: block;
-      margin: 16px auto 0;
+      margin: 0 auto;
     }
 
     @keyframes showDelay {

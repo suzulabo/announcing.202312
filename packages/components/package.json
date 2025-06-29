@@ -61,6 +61,10 @@
       "types": "./dist/atoms/Modal.svelte.d.ts",
       "svelte": "./dist/atoms/Modal.svelte"
     },
+    "./Navigating.svelte": {
+      "types": "./dist/atoms/Navigating.svelte.d.ts",
+      "svelte": "./dist/atoms/Navigating.svelte"
+    },
     "./ResizeObserver.svelte": {
       "types": "./dist/atoms/ResizeObserver.svelte.d.ts",
       "svelte": "./dist/atoms/ResizeObserver.svelte"
@@ -84,7 +88,8 @@
     "!dist/**/*.spec.*"
   ],
   "peerDependencies": {
-    "svelte": "4.0.0"
+    "@sveltejs/kit": "2",
+    "svelte": "5"
   },
   "devDependencies": {
     "@announcing/db": "workspace:^",

@@ -16,6 +16,7 @@
 
   import { putBlob, stripPrefix } from '$lib/cacheStorage/cacheStorage';
   import { resolveStoragePath } from '$lib/db/resolver';
+  import { back } from '@announcing/components/actions/back';
   import { genAnnouncementID, genStorageKey } from '@announcing/db/utils';
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
@@ -124,7 +125,7 @@
         class="small filled"
         onclick={() => {
           form.headerImage = undefined;
-        }}>{$LL.removeHeaderImage()}</button
+        }}>{$LL.remove()}</button
       >
     {:else}
       <button
@@ -161,8 +162,8 @@
     bind:error={bodyError}
   />
   <div class="images-box">
-    <div class="images">
-      {#if form.images}
+    {#if form.images}
+      <div class="images">
         {#each form.images as image (image)}
           <div class="img-box">
             <img alt="" src={resolveStoragePath(image)} />
@@ -176,8 +177,8 @@
             >
           </div>
         {/each}
-      {/if}
-    </div>
+      </div>
+    {/if}
     <button
       class="small"
       onclick={() => {
@@ -210,16 +211,16 @@
     />
   </div>
 
-  <hr />
-
   <button disabled={!validated} class="preview-btn" onclick={previewClickHandler}
     >{$LL.preview()}</button
   >
+
+  <a class="button small back-btn" href={data.backHref} use:back>{$LL.cancel()}</a>
 </div>
 
 <style lang="scss">
   .container {
-    padding: 16px 8px;
+    padding: 0 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -259,14 +260,15 @@
       }
 
       .desc {
-        font-size: 13px;
+        font-size: 14px;
         font-style: italic;
         margin: 8px 0 0 0;
       }
     }
 
-    .preview-btn {
-      align-self: center;
+    .preview-btn,
+    .back-btn {
+      margin: 16px auto 0;
     }
   }
 </style>

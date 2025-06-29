@@ -65,7 +65,14 @@
   import { APP_CACHES_PREFIX, getBlobOrThrow } from '$lib/cacheStorage/cacheStorage';
   import { resolveStoragePath, stripStoragePath } from '$lib/db/resolver';
   import { clearChannelCache } from '$lib/fetch/channelCache';
-  import type { Snapshot } from './$types';
+  import { back } from '@announcing/components/actions/back';
+  import type { PageData, Snapshot } from './$types';
+
+  interface Props {
+    data: PageData;
+  }
+
+  let { data }: Props = $props();
 
   let loading = $state(false);
   let channelID = $derived(page.params['channelID'] as string);
@@ -170,26 +177,23 @@
 </script>
 
 {#if channel && announcement}
-  <div class="container">
-    <AnnouncementView announcement={toAnnouncementViewData(announcement)} />
-    <hr />
-    <button class="submit-btn" onclick={addAnnouncement}
-      >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
-    >
-  </div>
+  <AnnouncementView announcement={toAnnouncementViewData(announcement)} />
+  <button class="submit-btn" onclick={addAnnouncement}
+    >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
+  >
+  <a class="button small cancel" href={data.backHref} use:back>{$LL.cancel()}</a>
 {/if}
 
 <Loading show={loading} />
 
 <style lang="scss">
-  .container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 8px 0 16px;
+  .submit-btn {
+    margin-top: 32px;
+    align-self: center;
+  }
 
-    .submit-btn {
-      align-self: center;
-    }
+  .cancel {
+    margin-top: 32px;
+    align-self: center;
   }
 </style>

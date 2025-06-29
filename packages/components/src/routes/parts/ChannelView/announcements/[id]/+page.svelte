@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { LL } from '@announcing/i18n';
-  import { setupBack } from '$lib/actions/back';
-  import AnnouncementView from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
   import { page } from '$app/state';
-  import { channelData } from '../../channelData';
+  import { back } from '$lib/actions/back';
+  import AnnouncementView from '$lib/parts/AnnouncementView/AnnouncementView.svelte';
+  import { LL } from '@announcing/i18n';
   import { error } from '@sveltejs/kit';
+  import { channelData } from '../../channelData';
 
   let id = $state(page.params['id']);
 
@@ -15,8 +15,6 @@
     }
     return a;
   });
-
-  const back = setupBack();
 </script>
 
 <div class="wrapper">

@@ -31,20 +31,19 @@
     {:else}
       <div class="copy-box">
         <input value={url} readonly onfocus={onFocus} />
-        {#if navigator.clipboard}
-          <button
-            onclick={() => {
-              navigator.clipboard
-                .writeText(url)
-                .then(() => {
-                  copied = 'copied';
-                })
-                .catch(() => {
-                  copied = 'error';
-                });
-            }}>{$LL.copy()}</button
-          >
-        {/if}
+        <button
+          class="small"
+          onclick={() => {
+            navigator.clipboard
+              .writeText(url)
+              .then(() => {
+                copied = 'copied';
+              })
+              .catch(() => {
+                copied = 'error';
+              });
+          }}>{$LL.copy()}</button
+        >
       </div>
       <button
         class="close-btn filled small"
@@ -59,16 +58,22 @@
 <style lang="scss">
   .modal-body {
     background-color: var(--color-background);
-    border-radius: 8px;
+    border-radius: 16px;
     margin: auto;
-    padding: 16px;
+    padding: 32px 16px;
     width: 100%;
     max-width: 400px;
 
     .copy-box {
       display: flex;
       input {
+        width: auto;
+        flex-grow: 1;
         text-align: center;
+        border-radius: 16px 0 0 16px;
+      }
+      button {
+        border-radius: 0 16px 16px 0;
       }
     }
     .msg-box {
@@ -77,7 +82,7 @@
     }
     .close-btn {
       display: block;
-      margin: 16px auto 0;
+      margin: 32px auto 0;
     }
 
     @keyframes showDelay {

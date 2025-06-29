@@ -1,18 +1,20 @@
 <script lang="ts">
-  import { page } from '$app/state';
+  import '../app.scss';
+
+  import { navigating, page } from '$app/state';
   import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
   import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
   import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
-  import {
-    getNotificationChannels,
-    type NotificationLocalStorageValue,
-  } from '$lib/notification/localStorage';
+  import MdiReload from '$lib/components/icon/MdiReload.svelte';
+  import { getNotificationChannels } from '$lib/notification/localStorage';
   import { setupBack } from '@announcing/components/actions/back';
+  import Navigating from '@announcing/components/Navigating.svelte';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
+  import { browser } from '$app/environment';
 
   interface Props {
     data: LayoutData;
@@ -21,72 +23,72 @@
 
   let { data, children }: Props = $props();
 
-  let headerBack = $derived(page.data.headerBack);
   let headerNotification = $derived(page.data.headerNotification);
-  let notificationHref = $derived(
-    headerNotification?.channelID
-      ? `/notification/${headerNotification.channelID}`
-      : '/notification',
-  );
-  let notificationPermission = $state<NotificationPermission>('default');
-  let notificationChannels = $state<NotificationLocalStorageValue>({});
+  let notificationStatus = $derived.by(() => {
+    if (!headerNotification || !browser) {
+      return;
+    }
+
+    const enabled = headerNotification.channelID in getNotificationChannels();
+
+    if (enabled) {
+      if (Notification.permission !== 'granted') {
+        return 'alert';
+      }
+      return 'enabled';
+    }
+
+    return 'disabled';
+  });
 
   let settingsModal: SettingsModal;
 
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
-    if ('Notification' in window) {
-      notificationPermission = Notification.permission;
-      notificationChannels = getNotificationChannels();
-    }
   });
 
-  const back = setupBack();
+  setupBack();
 </script>
 
-<div class="container">
-  <header>
-    {#if headerBack}
-      <a class="back" href={headerBack.href} use:back>{$LL[headerBack.labelKey]()}</a>
-    {:else}
-      <button
-        class="small back"
-        onclick={() => {
-          location.reload();
-        }}>reload</button
-      >
-    {/if}
+<header>
+  <button
+    class="unstyled reload"
+    onclick={() => {
+      location.reload();
+    }}><MdiReload /></button
+  >
 
-    <a class="button small notification-btn" href={notificationHref}>
-      {#if headerNotification}
-        {#if notificationPermission === 'granted'}
-          {#if headerNotification.channelID in notificationChannels}
-            <MaterialSymbolsNotificationsRounded />
-          {:else}
-            <MaterialSymbolsNotificationsOutlineRounded />
-          {/if}
-        {:else if notificationPermission === 'default'}
-          <MaterialSymbolsNotificationsOutlineRounded />
-        {:else}
-          <MaterialSymbolsNotificationImportantOutlineRounded />
-        {/if}
+  {#if headerNotification}
+    <a class="button small notification-btn" href={`/notification/${headerNotification.channelID}`}>
+      {#if notificationStatus === 'enabled'}
+        <MaterialSymbolsNotificationsRounded />
+      {:else if notificationStatus === 'disabled'}
+        <MaterialSymbolsNotificationsOutlineRounded />
+      {:else if notificationStatus === 'alert'}
+        <MaterialSymbolsNotificationImportantOutlineRounded />
       {/if}
+
       <span>{$LL.notification()}</span></a
     >
+  {/if}
 
-    <button
-      class="small settings-btn"
-      onclick={() => {
-        settingsModal.openModal();
-      }}
-    >
-      <MaterialSymbolsSettingsOutline />
-      <span>{$LL.settings()}</span></button
-    >
-  </header>
-  <hr />
-  {@render children?.()}
-</div>
+  <button
+    class="small settings-btn"
+    onclick={() => {
+      settingsModal.openModal();
+    }}
+  >
+    <MaterialSymbolsSettingsOutline />
+    <span>{$LL.settings()}</span></button
+  >
+</header>
+{@render children?.()}
+
+<footer>
+  <div>
+    <span class="copyright">&copy;Announcing</span>
+  </div>
+</footer>
 
 <SettingsModal
   bind:this={settingsModal}
@@ -94,27 +96,47 @@
   requestTheme={data.requestTheme}
 />
 
-<style lang="scss">
-  .container {
-    max-width: 600px;
-    margin: 0 auto 100px;
+<Navigating show={!!navigating.from} />
 
-    header {
-      padding: 0 8px;
+<style lang="scss">
+  header {
+    padding: 16px 8px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 8px;
+
+    .reload {
+      display: none;
+    }
+
+    @media (display-mode: standalone) {
+      .reload {
+        display: flex;
+        margin: 0 auto 0 4px;
+        font-size: 18px;
+        color: var(--color-text-subtle);
+      }
+    }
+
+    .settings-btn,
+    .notification-btn {
       display: flex;
       align-items: center;
-      gap: 4px;
-      height: 60px;
+      gap: 2px;
+    }
+  }
 
-      .back {
-        margin-right: auto;
-      }
+  footer {
+    margin-top: auto;
 
-      .settings-btn,
-      .notification-btn {
-        display: flex;
-        align-items: center;
-        gap: 2px;
+    div {
+      margin: 16px 0 0;
+      padding: 16px;
+      display: flex;
+
+      .copyright {
+        margin: auto;
       }
     }
   }

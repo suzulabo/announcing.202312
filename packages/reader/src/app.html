@@ -6,28 +6,23 @@
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link id="ios-manifest" rel="manifest" href="/ios.webmanifest" />
-    <script type="module">
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-      if (!isIOS) {
-        const link = document.getElementById('ios-manifest');
-        if (link) {
-          link.remove();
+    <script>
+      {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        if (!isIOS) {
+          const link = document.getElementById('ios-manifest');
+          if (link) {
+            link.remove();
+          }
         }
       }
     </script>
-    <style>
-      .contents {
-        display: none;
-      }
 
-      html[hydrated] .contents {
-        display: contents;
-      }
-    </style>
     %sveltekit.head%
   </head>
 
   <body data-sveltekit-preload-data="hover">
     <div class="contents">%sveltekit.body%</div>
+    <div class="splash"><div class="loader">Announcing</div></div>
   </body>
 </html>
