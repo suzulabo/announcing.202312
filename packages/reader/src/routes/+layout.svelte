@@ -1,6 +1,7 @@
 <script lang="ts">
   import '../app.scss';
 
+  import { browser } from '$app/environment';
   import { navigating, page } from '$app/state';
   import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
   import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
@@ -13,8 +14,8 @@
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
+  import { fade } from 'svelte/transition';
   import type { LayoutData } from './$types';
-  import { browser } from '$app/environment';
 
   interface Props {
     data: LayoutData;
@@ -82,7 +83,12 @@
     <span>{$LL.settings()}</span></button
   >
 </header>
-{@render children?.()}
+
+{#key page.url.pathname}
+  <main in:fade>
+    {@render children?.()}
+  </main>
+{/key}
 
 <footer>
   <div>
@@ -99,6 +105,11 @@
 <Navigating show={!!navigating.from} />
 
 <style lang="scss">
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+
   header {
     padding: 16px 8px 24px;
     display: flex;
