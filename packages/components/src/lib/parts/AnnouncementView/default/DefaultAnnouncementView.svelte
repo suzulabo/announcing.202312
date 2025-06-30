@@ -126,6 +126,7 @@
     gap: 8px;
     background-color: var(--color-background);
     padding: 8px 16px;
+    margin: 0 0 16px;
 
     .name {
       font-weight: bold;
