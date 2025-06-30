@@ -44,14 +44,19 @@
         <img class="icon" alt={channel.name} src={channel.icon} {...parseImageSize(channel.icon)} />
       {/if}
     </div>
-    <div class="small">
+    <button
+      class="unstyled small"
+      onclick={() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }}
+    >
       <div class="name">
         {channel.name}
       </div>
       {#if channel.icon}
         <img class="icon" alt={channel.name} src={channel.icon} {...parseImageSize(channel.icon)} />
       {/if}
-    </div>
+    </button>
   </div>
   {#if channel.desc}
     <div class="channel-desc">
