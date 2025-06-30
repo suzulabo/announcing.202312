@@ -64,17 +64,9 @@ const ja = {
   channelNumberOrURL: 'チャンネル番号またはURL',
   channelNotFound: 'チャンネルが見つかりません',
   search: '検索',
-  setupNotification: {
-    description:
-      '新しいお知らせが投稿されたときに、通知を受け取る準備を行います。\n「通知を設定」ボタンを押すと、通知の許可を確認するメッセージが表示されるので、許可設定を行ってください。',
-    button: '通知を設定',
-    notSupported: 'このブラウザでは通知が利用できません',
-    denied: '通知の利用が許可されていません。\nブラウザの設定を変更してください。',
-    grantedDisabled: '<i><b>{name}</b></i> の新着通知は<b>オフ</b>です',
-    grantedEnabled: '<i><b>{name}</b></i> の新着通知は<b>オン</b>です',
-    toEnabled: '通知を受け取る',
-    toDisabled: '通知を受け取らない',
-  },
+  addFavorites: 'お気に入りに追加',
+  favorites: 'お気に入り',
+  reload: '更新',
 } satisfies Translation;
 
 export default ja;

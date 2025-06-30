@@ -245,40 +245,16 @@ export const messages = {
     en: 'Search',
     ja: '検索',
   },
-
-  // -------------------------------------------------
-  setupNotification: {
-    description: {
-      en: 'Prepare to receive notifications when new notices are posted. \nPress the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.',
-      ja: '新しいお知らせが投稿されたときに、通知を受け取る準備を行います。\n「通知を設定」ボタンを押すと、通知の許可を確認するメッセージが表示されるので、許可設定を行ってください。',
-    },
-    button: {
-      en: 'Set Notifications',
-      ja: '通知を設定',
-    },
-    notSupported: {
-      en: 'Notifications are not available in this browser.',
-      ja: 'このブラウザでは通知が利用できません',
-    },
-    denied: {
-      en: 'You are not allowed to use notifications. \nPlease change your browser settings.',
-      ja: '通知の利用が許可されていません。\nブラウザの設定を変更してください。',
-    },
-    grantedDisabled: {
-      en: '<i><b>{name}</b></i> notifications are now <b>off</b>.',
-      ja: '<i><b>{name}</b></i> の新着通知は<b>オフ</b>です',
-    },
-    grantedEnabled: {
-      en: '<i><b>{name}</b></i> notifications are now <b>on</b>.',
-      ja: '<i><b>{name}</b></i> の新着通知は<b>オン</b>です',
-    },
-    toEnabled: {
-      en: 'Turn on notifications',
-      ja: '通知を受け取る',
-    },
-    toDisabled: {
-      en: 'Turn off notifications',
-      ja: '通知を受け取らない',
-    },
+  addFavorites: {
+    en: 'Add to favorites',
+    ja: 'お気に入りに追加',
+  },
+  favorites: {
+    en: 'Favorites',
+    ja: 'お気に入り',
+  },
+  reload: {
+    en: 'Reload',
+    ja: '更新',
   },
 };

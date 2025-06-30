@@ -66,17 +66,9 @@ const en = {
   channelNumberOrURL: 'Channel number or URL',
   channelNotFound: 'Channel not found.',
   search: 'Search',
-  setupNotification: {
-    description:
-      'Prepare to receive notifications when new notices are posted. \nPress the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.',
-    button: 'Set Notifications',
-    notSupported: 'Notifications are not available in this browser.',
-    denied: 'You are not allowed to use notifications. \nPlease change your browser settings.',
-    grantedDisabled: '<i><b>{name}</b></i> notifications are now <b>off</b>.',
-    grantedEnabled: '<i><b>{name}</b></i> notifications are now <b>on</b>.',
-    toEnabled: 'Turn on notifications',
-    toDisabled: 'Turn off notifications',
-  },
+  addFavorites: 'Add to favorites',
+  favorites: 'Favorites',
+  reload: 'Reload',
 } satisfies BaseTranslation;
 
 export default en;

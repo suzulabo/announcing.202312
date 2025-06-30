@@ -3,9 +3,13 @@
 
   import { afterNavigate } from '$app/navigation';
   import { navigating, page } from '$app/state';
+  import F7SquareFavorites from '$lib/components/icon/F7SquareFavorites.svelte';
+  import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
+  import MdiReload from '$lib/components/icon/MdiReload.svelte';
   import { setupBack } from '@announcing/components/actions/back';
   import Navigating from '@announcing/components/Navigating.svelte';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
+  import { LL } from '@announcing/i18n';
   import { onMount, tick, type Snippet } from 'svelte';
   import { fade } from 'svelte/transition';
   import type { LayoutData } from './$types';
@@ -17,7 +21,7 @@
 
   let { data, children }: Props = $props();
 
-  let menubarHidden = $state(false);
+  let toolbarHidden = $state(false);
   let previousScrollY = $state(-1);
 
   let settingsModal: SettingsModal;
@@ -33,7 +37,7 @@
          VirtualScrollList used in ChanelView restores scrollY, so reset it.
         */
         previousScrollY = -1;
-        menubarHidden = false;
+        toolbarHidden = false;
       })
       .catch(() => {
         //
@@ -41,10 +45,8 @@
   });
 
   setupBack();
-</script>
 
-<svelte:window
-  onscroll={() => {
+  const onScrollHandler = () => {
     if (previousScrollY < 0) {
       previousScrollY = window.screenY;
       return;
@@ -53,18 +55,20 @@
     const currentY = window.scrollY;
 
     /**
-     Hide the menubar when scrolling down, and restore it when scrolling up.
+     Hide the toolbar when scrolling down, and restore it when scrolling up.
      Make it slightly insensitive when hiding.
     */
     if (currentY > previousScrollY && currentY - previousScrollY > 10) {
-      menubarHidden = true;
+      toolbarHidden = true;
     } else if (currentY < previousScrollY && previousScrollY - currentY) {
-      menubarHidden = false;
+      toolbarHidden = false;
     }
 
     previousScrollY = currentY;
-  }}
-/>
+  };
+</script>
+
+<svelte:window onscroll={onScrollHandler} />
 
 {#key page.url.pathname}
   <main in:fade>
@@ -78,13 +82,19 @@
   </div>
 </footer>
 
-<div class="menu-bar" class:hidden={menubarHidden}>
-  <button class="unstyled">履歴</button>
+<div class="toolbar" class:hidden={toolbarHidden}>
+  <button class="unstyled"><F7SquareFavorites /><span>{$LL.favorites()}</span></button>
+  <button
+    class="unstyled"
+    onclick={() => {
+      location.reload();
+    }}><MdiReload /><span>{$LL.reload()}</span></button
+  >
   <button
     class="unstyled"
     onclick={() => {
       settingsModal.openModal();
-    }}>設定</button
+    }}><MaterialSymbolsSettingsOutline /><span>{$LL.settings()}</span></button
   >
 </div>
 
@@ -116,21 +126,34 @@
     }
   }
 
-  .menu-bar {
+  .toolbar {
     margin-top: auto;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 50px;
+
     background-color: var(--color-background);
     border-top: 1px solid var(--color-border);
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 
     &.hidden {
       transform: translateY(100%);
+    }
+
+    button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 24px;
+
+      span {
+        font-size: 14px;
+      }
     }
   }
 </style>
