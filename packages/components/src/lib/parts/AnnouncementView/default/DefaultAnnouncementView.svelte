@@ -128,6 +128,7 @@
     padding: 8px 16px;
 
     .name {
+      font-weight: bold;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
