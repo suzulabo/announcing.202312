@@ -136,6 +136,12 @@
       background-color: var(--color-background);
       padding: 8px 16px;
 
+      .name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
       .icon {
         width: 32px;
         height: 32px;
