@@ -33,4 +33,14 @@
   <title>{data.channel.name}</title>
 </svelte:head>
 
+<div class="favorite">
+  <button class="small">お気に入りに追加</button>
+</div>
 <ChannelView {...channelViewProps} />
+
+<style lang="scss">
+  .favorite {
+    margin: 16px;
+    text-align: end;
+  }
+</style>

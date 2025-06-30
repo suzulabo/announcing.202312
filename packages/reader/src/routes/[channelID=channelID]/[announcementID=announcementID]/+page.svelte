@@ -15,7 +15,7 @@
   <title>{data.announcement.title ?? data.announcement.body}</title>
 </svelte:head>
 
-<AnnouncementView announcement={data.announcement} />
+<AnnouncementView channel={data.channel} announcement={data.announcement} />
 
 <a class="button small" href={`/${data.channelID}`} use:back>{$LL.back()}</a>
 

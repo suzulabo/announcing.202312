@@ -1,3 +1,9 @@
+type Channel = {
+  name: string;
+  desc: string | undefined;
+  icon: string | undefined;
+};
+
 type Announcement = {
   headerImage?: string | undefined;
   title?: string | undefined;
@@ -8,5 +14,6 @@ type Announcement = {
 };
 
 export interface AnnouncementViewProps {
+  channel?: Channel;
   announcement: Announcement;
 }

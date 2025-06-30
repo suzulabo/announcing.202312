@@ -2,7 +2,7 @@
   import DefaultAnnouncementView from './default/DefaultAnnouncementView.svelte';
   import type { AnnouncementViewProps } from './types';
 
-  let { announcement }: AnnouncementViewProps = $props();
+  let props: AnnouncementViewProps = $props();
 </script>
 
-<DefaultAnnouncementView {announcement} />
+<DefaultAnnouncementView {...props} />
