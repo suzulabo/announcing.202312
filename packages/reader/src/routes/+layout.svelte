@@ -21,7 +21,6 @@
 
   let { data, children }: Props = $props();
 
-  let toolbarTop = $state(false);
   let toolbarHidden = $state(false);
   let previousScrollY = $state(-1);
 
@@ -83,7 +82,7 @@
   </div>
 </footer>
 
-<div class="toolbar" class:top={toolbarTop} class:hidden={toolbarHidden}>
+<div class="toolbar" class:hidden={toolbarHidden}>
   <button class="unstyled"><F7SquareFavorites /><span>{$LL.favorites()}</span></button>
   <button
     class="unstyled"
@@ -128,31 +127,21 @@
   }
 
   .toolbar {
-    position: sticky;
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
     left: 0;
     right: 0;
-    z-index: 100;
 
     background-color: var(--color-background);
+    border-top: 1px solid var(--color-border);
     transition: transform 0.2s ease;
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 
-    &:not(.top) {
-      bottom: 0;
-      border-top: 1px solid var(--color-border);
-      margin-top: auto;
-
-      &.hidden {
-        transform: translateY(100%);
-      }
-    }
-    &.top {
-      top: 0;
-      order: -1;
-      border-bottom: 1px solid var(--color-border);
-      height: 60px;
+    &.hidden {
+      transform: translateY(100%);
     }
 
     button {
