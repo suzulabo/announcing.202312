@@ -34,3 +34,11 @@ export const setLocale = async (locale: Locales) => {
   jsCookies.set('locale', locale);
   await setupLocale(locale);
 };
+
+export const getToolbarSize = () => {
+  return localStorage.getItem('toolbarSize') ?? 'normal';
+};
+
+export const setToolbarSize = (v: string) => {
+  return localStorage.setItem('toolbarSize', v);
+};

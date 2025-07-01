@@ -55,6 +55,18 @@ type RootTranslation = {
 	 */
 	close: string
 	/**
+	 * B​o​t​t​o​m​ ​b​u​t​t​o​n​ ​s​i​z​e
+	 */
+	toolbarSize: string
+	/**
+	 * N​o​r​m​a​l
+	 */
+	normal: string
+	/**
+	 * C​o​m​p​a​c​t
+	 */
+	compact: string
+	/**
 	 * S​e​t​t​i​n​g​s
 	 */
 	settings: string
@@ -316,6 +328,18 @@ export type TranslationFunctions = {
 	 * Close
 	 */
 	close: () => LocalizedString
+	/**
+	 * Bottom button size
+	 */
+	toolbarSize: () => LocalizedString
+	/**
+	 * Normal
+	 */
+	normal: () => LocalizedString
+	/**
+	 * Compact
+	 */
+	compact: () => LocalizedString
 	/**
 	 * Settings
 	 */

@@ -21,6 +21,8 @@
 
   let { data, children }: Props = $props();
 
+  let toolbarSize = $state('');
+
   let toolbarHidden = $state(false);
   let previousScrollY = $state(-1);
 
@@ -82,7 +84,7 @@
   </div>
 </footer>
 
-<div class="toolbar" class:hidden={toolbarHidden}>
+<div class="toolbar" class:hidden={toolbarHidden} class:small={toolbarSize === 'compact'}>
   <button class="unstyled"><F7SquareFavorites /><span>{$LL.favorites()}</span></button>
   <button
     class="unstyled"
@@ -102,6 +104,7 @@
   bind:this={settingsModal}
   requestLocale={data.requestLocale}
   requestTheme={data.requestTheme}
+  bind:toolbarSize
 />
 
 <Navigating show={!!navigating.from} />
@@ -152,7 +155,16 @@
       font-size: 24px;
 
       span {
-        font-size: 14px;
+        font-size: 13px;
+      }
+    }
+
+    &.small {
+      button {
+        font-size: 28px;
+        span {
+          display: none;
+        }
       }
     }
   }
