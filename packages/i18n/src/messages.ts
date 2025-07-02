@@ -261,6 +261,10 @@ export const messages = {
     en: 'Add to favorites',
     ja: 'お気に入りに追加',
   },
+  inFavorites: {
+    en: 'In favorites',
+    ja: 'お気に入りに追加済',
+  },
   favorites: {
     en: 'Favorites',
     ja: 'お気に入り',

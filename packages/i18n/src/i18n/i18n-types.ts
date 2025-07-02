@@ -278,6 +278,10 @@ type RootTranslation = {
 	 */
 	addFavorites: string
 	/**
+	 * I​n​ ​f​a​v​o​r​i​t​e​s
+	 */
+	inFavorites: string
+	/**
 	 * F​a​v​o​r​i​t​e​s
 	 */
 	favorites: string
@@ -550,6 +554,10 @@ export type TranslationFunctions = {
 	 * Add to favorites
 	 */
 	addFavorites: () => LocalizedString
+	/**
+	 * In favorites
+	 */
+	inFavorites: () => LocalizedString
 	/**
 	 * Favorites
 	 */

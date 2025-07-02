@@ -68,6 +68,7 @@ const ja = {
   channelNotFound: 'チャンネルが見つかりません',
   search: '検索',
   addFavorites: 'お気に入りに追加',
+  inFavorites: 'お気に入りに追加済',
   favorites: 'お気に入り',
   reload: '更新',
 } satisfies Translation;

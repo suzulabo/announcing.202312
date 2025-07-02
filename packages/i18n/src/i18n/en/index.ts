@@ -70,6 +70,7 @@ const en = {
   channelNotFound: 'Channel not found.',
   search: 'Search',
   addFavorites: 'Add to favorites',
+  inFavorites: 'In favorites',
   favorites: 'Favorites',
   reload: 'Reload',
 } satisfies BaseTranslation;
