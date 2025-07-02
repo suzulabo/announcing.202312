@@ -85,7 +85,9 @@
 </footer>
 
 <div class="toolbar" class:hidden={toolbarHidden} class:small={toolbarSize === 'compact'}>
-  <button class="unstyled"><F7SquareFavorites /><span>{$LL.favorites()}</span></button>
+  <a class="button unstyled" href="/favorites"
+    ><F7SquareFavorites /><span>{$LL.favorites()}</span></a
+  >
   <button
     class="unstyled"
     onclick={() => {
