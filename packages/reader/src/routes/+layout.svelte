@@ -85,9 +85,7 @@
 </footer>
 
 <div class="toolbar" class:hidden={toolbarHidden} class:small={toolbarSize === 'compact'}>
-  <a class="button unstyled" href="/favorites"
-    ><F7SquareFavorites /><span>{$LL.favorites()}</span></a
-  >
+  <a href="/favorites"><F7SquareFavorites /><span>{$LL.favorites()}</span></a>
   <button
     class="unstyled"
     onclick={() => {
@@ -149,6 +147,7 @@
       transform: translateY(100%);
     }
 
+    a,
     button {
       display: flex;
       flex-direction: column;
