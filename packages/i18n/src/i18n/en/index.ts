@@ -73,6 +73,9 @@ const en = {
   inFavorites: 'In favorites',
   favorites: 'Favorites',
   reload: 'Reload',
+  favoritesList: 'Favorites List',
+  update: 'Update',
+  editFavoritesDesc: 'Choose channels to get notifications from, then press the update button.',
 } satisfies BaseTranslation;
 
 export default en;

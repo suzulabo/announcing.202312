@@ -71,6 +71,9 @@ const ja = {
   inFavorites: 'お気に入りに追加済',
   favorites: 'お気に入り',
   reload: '更新',
+  favoritesList: 'お気に入り一覧',
+  update: '更新',
+  editFavoritesDesc: '通知を受け取りたいチャンネルを選んで、更新ボタンを押してください',
 } satisfies Translation;
 
 export default ja;

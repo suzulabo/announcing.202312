@@ -273,4 +273,16 @@ export const messages = {
     en: 'Reload',
     ja: '更新',
   },
+  favoritesList: {
+    en: 'Favorites List',
+    ja: 'お気に入り一覧',
+  },
+  update: {
+    en: 'Update',
+    ja: '更新',
+  },
+  editFavoritesDesc: {
+    en: 'Choose channels to get notifications from, then press the update button.',
+    ja: '通知を受け取りたいチャンネルを選んで、更新ボタンを押してください',
+  },
 };

@@ -289,6 +289,18 @@ type RootTranslation = {
 	 * R​e​l​o​a​d
 	 */
 	reload: string
+	/**
+	 * F​a​v​o​r​i​t​e​s​ ​L​i​s​t
+	 */
+	favoritesList: string
+	/**
+	 * U​p​d​a​t​e
+	 */
+	update: string
+	/**
+	 * C​h​o​o​s​e​ ​c​h​a​n​n​e​l​s​ ​t​o​ ​g​e​t​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​f​r​o​m​,​ ​t​h​e​n​ ​p​r​e​s​s​ ​t​h​e​ ​u​p​d​a​t​e​ ​b​u​t​t​o​n​.
+	 */
+	editFavoritesDesc: string
 }
 
 export type TranslationFunctions = {
@@ -566,6 +578,18 @@ export type TranslationFunctions = {
 	 * Reload
 	 */
 	reload: () => LocalizedString
+	/**
+	 * Favorites List
+	 */
+	favoritesList: () => LocalizedString
+	/**
+	 * Update
+	 */
+	update: () => LocalizedString
+	/**
+	 * Choose channels to get notifications from, then press the update button.
+	 */
+	editFavoritesDesc: () => LocalizedString
 }
 
 export type Formatters = {}
