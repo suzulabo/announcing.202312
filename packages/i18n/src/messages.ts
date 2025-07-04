@@ -285,4 +285,9 @@ export const messages = {
     en: 'Choose channels to get notifications from, then press the update button.',
     ja: '通知を受け取りたいチャンネルを選んで、更新ボタンを押してください',
   },
+  // TODO: Make reset permission manual
+  notificationPermissionError: {
+    en: 'Notifications are not allowed.',
+    ja: '通知が許可されていません',
+  },
 };

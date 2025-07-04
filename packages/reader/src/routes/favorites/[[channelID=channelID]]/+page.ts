@@ -11,7 +11,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
     Object.entries(favorites).map(async ([channelID, values]) => {
       const channel = await fetchChannel(channelID, fetch);
       if (channel) {
-        return { ...channel, status: true };
+        return { ...channel, status: true, notification: favorites[channelID]?.notification };
       } else {
         return { channelID, ...values, status: 'deleted' } as const;
       }

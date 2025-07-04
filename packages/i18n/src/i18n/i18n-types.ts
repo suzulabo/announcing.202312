@@ -301,6 +301,10 @@ type RootTranslation = {
 	 * C​h​o​o​s​e​ ​c​h​a​n​n​e​l​s​ ​t​o​ ​g​e​t​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​f​r​o​m​,​ ​t​h​e​n​ ​p​r​e​s​s​ ​t​h​e​ ​u​p​d​a​t​e​ ​b​u​t​t​o​n​.
 	 */
 	editFavoritesDesc: string
+	/**
+	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​l​l​o​w​e​d​.
+	 */
+	notificationPermissionError: string
 }
 
 export type TranslationFunctions = {
@@ -590,6 +594,10 @@ export type TranslationFunctions = {
 	 * Choose channels to get notifications from, then press the update button.
 	 */
 	editFavoritesDesc: () => LocalizedString
+	/**
+	 * Notifications are not allowed.
+	 */
+	notificationPermissionError: () => LocalizedString
 }
 
 export type Formatters = {}

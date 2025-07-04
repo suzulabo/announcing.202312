@@ -1,7 +1,11 @@
 <script lang="ts">
+  import { updateFavorites } from '$lib/favorites/favorites';
   import { LL } from '@announcing/i18n';
   import { scale } from 'svelte/transition';
   import type { PageData } from './$types';
+  import { getNotificationToken } from '$lib/notification/firebase';
+  import Loading from '@announcing/components/Loading.svelte';
+  import { postNotification } from '$lib/fetch/postNotification';
 
   interface Props {
     data: PageData;
@@ -11,18 +15,37 @@
   let channels = $derived(data.channels);
   let channelsSaved: typeof channels;
   let editing = $state(false);
+  let loading = $state(false);
+  let notificationDenied = $state(false);
+
+  const updateClickHandler = async () => {
+    notificationDenied = false;
+    loading = true;
+    try {
+      const notificationChannels = channels.filter((v) => v.notification).map((v) => v.channelID);
+      if (notificationChannels.length > 0) {
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+          notificationDenied = true;
+          return;
+        }
+
+        const token = await getNotificationToken();
+
+        await postNotification({ token, tags: notificationChannels });
+      }
+      updateFavorites(channels);
+      editing = false;
+    } finally {
+      loading = false;
+    }
+  };
 </script>
 
 <div class="header">
   <div class="title">{$LL.favoritesList()}</div>
   {#if editing}
-    <button
-      class="small"
-      in:scale
-      onclick={() => {
-        editing = false;
-      }}>{$LL.update()}</button
-    >
+    <button class="small" in:scale onclick={updateClickHandler}>{$LL.update()}</button>
     <button
       class="unstyled cancel"
       in:scale
@@ -36,16 +59,17 @@
       class="small"
       in:scale
       onclick={() => {
-        channelsSaved = [...channels];
+        channelsSaved = $state.snapshot(channels);
         editing = true;
+        notificationDenied = false;
       }}>{$LL.edit()}</button
     >
   {/if}
 </div>
 
 {#if editing}
-  <div class="desc">
-    {$LL.editFavoritesDesc()}
+  <div class="desc" class:error={notificationDenied}>
+    {notificationDenied ? $LL.notificationPermissionError() : $LL.editFavoritesDesc()}
   </div>
 {/if}
 
@@ -53,7 +77,7 @@
   {#each channels as channel (channel.channelID)}
     {#if editing}
       <label class="channel card">
-        <input type="checkbox" in:scale />
+        <input type="checkbox" in:scale bind:checked={channel.notification} />
         <span class="name">{channel.name}</span>
         {#if channel.icon}
           <img src={channel.icon} alt="icon" />
@@ -79,6 +103,8 @@
   {/each}
 </div>
 
+<Loading show={loading} />
+
 <style lang="scss">
   .header {
     color: var(--color-text-subtle);
@@ -102,7 +128,10 @@
   .desc {
     padding: 32px 32px 0;
     font-size: 14px;
-    color: var(--color-text-subtle);
+    margin: 0 auto;
+    &:not(.error) {
+      color: var(--color-text-subtle);
+    }
   }
 
   .channels {

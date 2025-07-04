@@ -39,3 +39,21 @@ export const addFavorites = (value: Favorite & { channelID: string }) => {
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 };
+
+export const updateFavorites = (channels: (Favorite & { channelID: string })[]) => {
+  const favorites: Favorites = {};
+  for (const channel of channels) {
+    const favorite: Favorite = {
+      name: channel.name,
+    };
+    if (channel.icon) {
+      favorite.icon = channel.icon;
+    }
+    if (channel.notification) {
+      favorite.notification = true;
+    }
+    favorites[channel.channelID] = favorite;
+  }
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+};

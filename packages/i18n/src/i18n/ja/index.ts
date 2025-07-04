@@ -74,6 +74,7 @@ const ja = {
   favoritesList: 'お気に入り一覧',
   update: '更新',
   editFavoritesDesc: '通知を受け取りたいチャンネルを選んで、更新ボタンを押してください',
+  notificationPermissionError: '通知が許可されていません',
 } satisfies Translation;
 
 export default ja;

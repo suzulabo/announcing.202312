@@ -76,6 +76,7 @@ const en = {
   favoritesList: 'Favorites List',
   update: 'Update',
   editFavoritesDesc: 'Choose channels to get notifications from, then press the update button.',
+  notificationPermissionError: 'Notifications are not allowed.',
 } satisfies BaseTranslation;
 
 export default en;
