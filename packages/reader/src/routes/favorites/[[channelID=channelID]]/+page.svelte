@@ -23,7 +23,8 @@
     loading = true;
     try {
       const notificationChannels = channels.filter((v) => v.notification).map((v) => v.channelID);
-      if (notificationChannels.length > 0) {
+      const notificationActive = !!channelsSaved.find((v) => v.notification);
+      if (notificationActive || notificationChannels.length > 0) {
         const permission = await Notification.requestPermission();
         if (permission !== 'granted') {
           notificationDenied = true;
