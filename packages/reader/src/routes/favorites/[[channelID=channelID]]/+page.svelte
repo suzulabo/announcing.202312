@@ -1,11 +1,11 @@
 <script lang="ts">
   import { updateFavorites } from '$lib/favorites/favorites';
+  import { postNotification } from '$lib/fetch/postNotification';
+  import { getNotificationToken } from '$lib/notification/firebase';
+  import Loading from '@announcing/components/Loading.svelte';
   import { LL } from '@announcing/i18n';
   import { scale } from 'svelte/transition';
   import type { PageData } from './$types';
-  import { getNotificationToken } from '$lib/notification/firebase';
-  import Loading from '@announcing/components/Loading.svelte';
-  import { postNotification } from '$lib/fetch/postNotification';
 
   interface Props {
     data: PageData;
