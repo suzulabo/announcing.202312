@@ -157,11 +157,10 @@
       right: unset;
       bottom: 0;
       width: 60px;
-      margin: auto 0;
+      margin: 64px 0 0;
       border-top: unset;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       gap: 32px;
       &.hidden {
         transform: unset;
