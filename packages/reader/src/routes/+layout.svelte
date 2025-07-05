@@ -156,7 +156,7 @@
       left: calc((100dvw - 600px) / 2 - 80px);
       right: unset;
       bottom: 0;
-      width: 60px;
+      width: 70px;
       margin: 64px 0 0;
       border-top: unset;
       display: flex;
