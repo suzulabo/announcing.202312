@@ -78,12 +78,6 @@
   </main>
 {/key}
 
-<footer>
-  <div>
-    <span class="copyright">&copy;Announcing</span>
-  </div>
-</footer>
-
 <div class="toolbar" class:hidden={toolbarHidden} class:small={toolbarSize === 'compact'}>
   <a href="/favorites"><F7SquareFavorites /><span>{$LL.favorites()}</span></a>
   <button
@@ -115,23 +109,9 @@
     flex-direction: column;
   }
 
-  footer {
-    margin-top: auto;
-
-    div {
-      margin: 16px 0 0;
-      padding: 16px;
-      display: flex;
-
-      .copyright {
-        margin: auto;
-      }
-    }
-  }
-
   .toolbar {
     margin-top: auto;
-    position: fixed;
+    position: sticky;
     bottom: 0;
     left: 0;
     right: 0;
@@ -161,11 +141,30 @@
     }
 
     &.small {
+      a,
       button {
         font-size: 28px;
         span {
           display: none;
         }
+      }
+    }
+
+    @media (min-width: 800px) {
+      position: fixed;
+      top: 0;
+      left: calc((100dvw - 600px) / 2 - 80px);
+      right: unset;
+      bottom: 0;
+      width: 60px;
+      margin: auto 0;
+      border-top: unset;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 32px;
+      &.hidden {
+        transform: unset;
       }
     }
   }
