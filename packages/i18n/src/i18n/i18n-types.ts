@@ -226,18 +226,6 @@ type RootTranslation = {
 	 */
 	notification: string
 	/**
-	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​i​s​ ​d​e​v​i​c​e​.
-	 */
-	unsupportedNotification: string
-	/**
-	 * O​n​ ​i​P​h​o​n​e​ ​a​n​d​ ​i​P​a​d​,​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​t​a​k​e​ ​a​n​ ​e​x​t​r​a​ ​s​t​e​p​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​P​l​e​a​s​e​ ​c​h​e​c​k​ ​t​h​e​ ​s​t​e​p​s​ ​a​t​ ​t​h​e​ ​b​u​t​t​o​n​ ​b​e​l​o​w​.
-	 */
-	unsupportedNotificationIOS: string
-	/**
-	 * S​t​e​p​s​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
-	 */
-	iOSNotificationSetupLink: string
-	/**
 	 * C​h​a​n​n​e​l​ ​n​u​m​b​e​r
 	 */
 	channelNumber: string
@@ -305,6 +293,18 @@ type RootTranslation = {
 	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​l​l​o​w​e​d​.
 	 */
 	notificationPermissionError: string
+	/**
+	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​i​s​ ​d​e​v​i​c​e​.
+	 */
+	unsupportedNotification: string
+	/**
+	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​o​n​ ​i​P​h​o​n​e​ ​a​n​d​ ​i​P​a​d
+	 */
+	unsupportedNotificationIOS: string
+	/**
+	 * S​t​e​p​s​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+	 */
+	iOSNotificationSetupLink: string
 }
 
 export type TranslationFunctions = {
@@ -519,18 +519,6 @@ export type TranslationFunctions = {
 	 */
 	notification: () => LocalizedString
 	/**
-	 * Notifications are not available on this device.
-	 */
-	unsupportedNotification: () => LocalizedString
-	/**
-	 * On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the button below.
-	 */
-	unsupportedNotificationIOS: () => LocalizedString
-	/**
-	 * Steps to enable notifications
-	 */
-	iOSNotificationSetupLink: () => LocalizedString
-	/**
 	 * Channel number
 	 */
 	channelNumber: () => LocalizedString
@@ -598,6 +586,18 @@ export type TranslationFunctions = {
 	 * Notifications are not allowed.
 	 */
 	notificationPermissionError: () => LocalizedString
+	/**
+	 * Notifications are not available on this device.
+	 */
+	unsupportedNotification: () => LocalizedString
+	/**
+	 * Notifications on iPhone and iPad
+	 */
+	unsupportedNotificationIOS: () => LocalizedString
+	/**
+	 * Steps to enable notifications
+	 */
+	iOSNotificationSetupLink: () => LocalizedString
 }
 
 export type Formatters = {}

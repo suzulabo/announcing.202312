@@ -209,18 +209,6 @@ export const messages = {
     en: 'Notification',
     ja: '通知',
   },
-  unsupportedNotification: {
-    en: 'Notifications are not available on this device.',
-    ja: 'この端末では通知をご利用になれません',
-  },
-  unsupportedNotificationIOS: {
-    en: 'On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the button below.',
-    ja: 'iPhone、iPadをご利用の方は、通知を使えるようにするための設定が必要です。以下のボタンから手順をご確認ください。',
-  },
-  iOSNotificationSetupLink: {
-    en: 'Steps to enable notifications',
-    ja: '通知を有効にする手順',
-  },
   channelNumber: {
     en: 'Channel number',
     ja: 'チャンネル番号',
@@ -289,5 +277,17 @@ export const messages = {
   notificationPermissionError: {
     en: 'Notifications are not allowed.',
     ja: '通知が許可されていません',
+  },
+  unsupportedNotification: {
+    en: 'Notifications are not available on this device.',
+    ja: 'この端末で通知はご利用になれません',
+  },
+  unsupportedNotificationIOS: {
+    en: 'Notifications on iPhone and iPad',
+    ja: 'iPhone、iPadの通知について',
+  },
+  iOSNotificationSetupLink: {
+    en: 'Steps to enable notifications',
+    ja: '通知を有効にする手順',
   },
 };

@@ -53,10 +53,6 @@ const ja = {
   deleteChannelDescription: 'チャンネル「{name}」を削除します。この操作は元に戻せません。',
   deleteChannelConfirmation: 'チャンネルを削除します。よろしいですか？',
   notification: '通知',
-  unsupportedNotification: 'この端末では通知をご利用になれません',
-  unsupportedNotificationIOS:
-    'iPhone、iPadをご利用の方は、通知を使えるようにするための設定が必要です。以下のボタンから手順をご確認ください。',
-  iOSNotificationSetupLink: '通知を有効にする手順',
   channelNumber: 'チャンネル番号',
   updateNotificationDesc:
     '新しいお知らせの通知を受け取りたいチャンネルを選択し、登録ボタンを押してください',
@@ -75,6 +71,9 @@ const ja = {
   update: '更新',
   editFavoritesDesc: '通知を受け取りたいチャンネルを選んで、更新ボタンを押してください',
   notificationPermissionError: '通知が許可されていません',
+  unsupportedNotification: 'この端末で通知はご利用になれません',
+  unsupportedNotificationIOS: 'iPhone、iPadの通知について',
+  iOSNotificationSetupLink: '通知を有効にする手順',
 } satisfies Translation;
 
 export default ja;

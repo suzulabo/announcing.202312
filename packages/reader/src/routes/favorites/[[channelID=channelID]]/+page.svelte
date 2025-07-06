@@ -6,6 +6,7 @@
   import { LL } from '@announcing/i18n';
   import { scale } from 'svelte/transition';
   import type { PageData } from './$types';
+  import { isIOS } from '$lib/platform/platform';
 
   interface Props {
     data: PageData;
@@ -26,14 +27,15 @@
       const notificationActive = !!channelsSaved.find((v) => v.notification);
       if (notificationActive || notificationChannels.length > 0) {
         const permission = await Notification.requestPermission();
-        if (permission !== 'granted') {
+        if (permission !== 'granted' && notificationChannels.length > 0) {
           notificationDenied = true;
           return;
         }
 
-        const token = await getNotificationToken();
-
-        await postNotification({ token, tags: notificationChannels });
+        if (permission === 'granted') {
+          const token = await getNotificationToken();
+          await postNotification({ token, tags: notificationChannels });
+        }
       }
       updateFavorites(channels);
       editing = false;
@@ -69,16 +71,33 @@
 </div>
 
 {#if editing}
-  <div class="desc" class:error={notificationDenied}>
-    {notificationDenied ? $LL.notificationPermissionError() : $LL.editFavoritesDesc()}
-  </div>
+  {#if data.supported}
+    <div class="desc" class:error={notificationDenied}>
+      {notificationDenied ? $LL.notificationPermissionError() : $LL.editFavoritesDesc()}
+    </div>
+  {:else if isIOS()}
+    <div class="desc ios">
+      <!-- TODO: set link -->
+      <a class="link" href="https://github.com" rel="noreferrer"
+        >{$LL.unsupportedNotificationIOS()}</a
+      >
+    </div>
+  {:else}
+    <div class="desc error">
+      {$LL.unsupportedNotification()}
+    </div>
+  {/if}
 {/if}
 
 <div class="channels">
   {#each channels as channel (channel.channelID)}
     {#if editing}
       <label class="channel card">
-        <input type="checkbox" in:scale bind:checked={channel.notification} />
+        {#if data.supported}
+          <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
+          <!-- svelte-ignore binding_property_non_reactive -->
+          <input type="checkbox" in:scale bind:checked={channel.notification} />
+        {/if}
         <span class="name">{channel.name}</span>
         {#if channel.icon}
           <img src={channel.icon} alt="icon" />

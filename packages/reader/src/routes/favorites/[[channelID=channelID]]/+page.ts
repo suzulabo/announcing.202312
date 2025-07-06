@@ -1,5 +1,6 @@
 import { getFavorites } from '$lib/favorites/favorites';
 import { fetchChannel } from '$lib/fetch/fetchChannel';
+import { isSupported } from 'firebase/messaging';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ params, fetch }) => {
@@ -32,7 +33,10 @@ export const load: PageLoad = async ({ params, fetch }) => {
     return compareValue(a) - compareValue(b);
   });
 
+  const supported = await isSupported();
+
   return {
     channels,
+    supported,
   };
 };

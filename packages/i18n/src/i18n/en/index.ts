@@ -54,10 +54,6 @@ const en = {
     'You are about to delete the channel "{name}". This action cannot be undone.',
   deleteChannelConfirmation: 'Are you sure you want to delete the channel?',
   notification: 'Notification',
-  unsupportedNotification: 'Notifications are not available on this device.',
-  unsupportedNotificationIOS:
-    'On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the button below.',
-  iOSNotificationSetupLink: 'Steps to enable notifications',
   channelNumber: 'Channel number',
   updateNotificationDesc:
     'Select the channels you want to receive notifications for and press the register button.',
@@ -77,6 +73,9 @@ const en = {
   update: 'Update',
   editFavoritesDesc: 'Choose channels to get notifications from, then press the update button.',
   notificationPermissionError: 'Notifications are not allowed.',
+  unsupportedNotification: 'Notifications are not available on this device.',
+  unsupportedNotificationIOS: 'Notifications on iPhone and iPad',
+  iOSNotificationSetupLink: 'Steps to enable notifications',
 } satisfies BaseTranslation;
 
 export default en;
