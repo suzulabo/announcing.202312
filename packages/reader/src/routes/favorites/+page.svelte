@@ -2,11 +2,11 @@
   import { updateFavorites } from '$lib/favorites/favorites';
   import { postNotification } from '$lib/fetch/postNotification';
   import { getNotificationToken } from '$lib/notification/firebase';
+  import { isIOS } from '$lib/platform/platform';
   import Loading from '@announcing/components/Loading.svelte';
   import { LL } from '@announcing/i18n';
-  import { scale } from 'svelte/transition';
+  import { fade, scale } from 'svelte/transition';
   import type { PageData } from './$types';
-  import { isIOS } from '$lib/platform/platform';
 
   interface Props {
     data: PageData;
@@ -72,18 +72,18 @@
 
 {#if editing}
   {#if data.supported}
-    <div class="desc" class:error={notificationDenied}>
+    <div class="desc" in:fade|global class:error={notificationDenied}>
       {notificationDenied ? $LL.notificationPermissionError() : $LL.editFavoritesDesc()}
     </div>
   {:else if isIOS()}
-    <div class="desc ios">
+    <div in:fade|global class="desc ios">
       <!-- TODO: set link -->
       <a class="link" href="https://github.com" rel="noreferrer"
         >{$LL.unsupportedNotificationIOS()}</a
       >
     </div>
   {:else}
-    <div class="desc error">
+    <div in:fade|global class="desc error">
       {$LL.unsupportedNotification()}
     </div>
   {/if}
@@ -100,7 +100,7 @@
         {#if data.supported}
           <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
           <!-- svelte-ignore binding_property_non_reactive -->
-          <input type="checkbox" in:scale bind:checked={channel.notification} />
+          <input type="checkbox" in:scale|global bind:checked={channel.notification} />
         {/if}
         <span class="name">{channel.name}</span>
         {#if channel.icon}
