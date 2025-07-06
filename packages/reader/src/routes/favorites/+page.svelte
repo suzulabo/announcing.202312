@@ -23,11 +23,17 @@
     notificationDenied = false;
     loading = true;
     try {
-      const notificationChannels = channels.filter((v) => v.notification).map((v) => v.channelID);
-      const notificationActive = !!channelsSaved.find((v) => v.notification);
-      if (notificationActive || notificationChannels.length > 0) {
-        const permission = await Notification.requestPermission();
-        if (permission !== 'granted' && notificationChannels.length > 0) {
+      if (data.supported) {
+        const notificationChannels = channels.filter((v) => v.notification).map((v) => v.channelID);
+        let permission = Notification.permission;
+        if (permission === 'default') {
+          const notificationActive = !!channelsSaved.find((v) => v.notification);
+          if (notificationActive || notificationChannels.length > 0) {
+            permission = await Notification.requestPermission();
+          }
+        }
+
+        if (permission === 'denied') {
           notificationDenied = true;
           return;
         }
