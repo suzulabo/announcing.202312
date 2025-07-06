@@ -28,7 +28,7 @@ export const getFavorites = (): Favorites => {
   }
 };
 
-export const addFavorites = (value: Favorite & { channelID: string }) => {
+export const addFavorite = (value: Favorite & { channelID: string }) => {
   const data = getFavorites();
   const current = data[value.channelID];
   data[value.channelID] = {
@@ -38,6 +38,15 @@ export const addFavorites = (value: Favorite & { channelID: string }) => {
   };
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+};
+
+export const deleteFavorite = (channelID: string) => {
+  const data = getFavorites();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { [channelID]: _, deleted } = data;
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(deleted));
 };
 
 export const updateFavorites = (channels: (Favorite & { channelID: string })[]) => {
