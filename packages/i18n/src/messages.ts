@@ -290,4 +290,8 @@ export const messages = {
     en: 'Steps to enable notifications',
     ja: '通知を有効にする手順',
   },
+  noFavorites: {
+    en: 'No favorites',
+    ja: 'お気に入りはありません',
+  },
 };

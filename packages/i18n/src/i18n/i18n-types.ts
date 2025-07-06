@@ -305,6 +305,10 @@ type RootTranslation = {
 	 * S​t​e​p​s​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
 	 */
 	iOSNotificationSetupLink: string
+	/**
+	 * N​o​ ​f​a​v​o​r​i​t​e​s
+	 */
+	noFavorites: string
 }
 
 export type TranslationFunctions = {
@@ -598,6 +602,10 @@ export type TranslationFunctions = {
 	 * Steps to enable notifications
 	 */
 	iOSNotificationSetupLink: () => LocalizedString
+	/**
+	 * No favorites
+	 */
+	noFavorites: () => LocalizedString
 }
 
 export type Formatters = {}

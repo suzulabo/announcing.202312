@@ -90,6 +90,10 @@
 {/if}
 
 <div class="channels">
+  {#if channels.length === 0}
+    <div class="no-favorites">{$LL.noFavorites()}</div>
+  {/if}
+
   {#each channels as channel (channel.channelID)}
     {#if editing}
       <label class="channel card">
@@ -152,6 +156,11 @@
     &:not(.error) {
       color: var(--color-text-subtle);
     }
+  }
+
+  .no-favorites {
+    margin: 32px auto;
+    color: var(--color-text-subtle);
   }
 
   .channels {

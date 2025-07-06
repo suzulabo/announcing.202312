@@ -74,6 +74,7 @@ const ja = {
   unsupportedNotification: 'この端末で通知はご利用になれません',
   unsupportedNotificationIOS: 'iPhone、iPadの通知について',
   iOSNotificationSetupLink: '通知を有効にする手順',
+  noFavorites: 'お気に入りはありません',
 } satisfies Translation;
 
 export default ja;

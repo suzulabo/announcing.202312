@@ -76,6 +76,7 @@ const en = {
   unsupportedNotification: 'Notifications are not available on this device.',
   unsupportedNotificationIOS: 'Notifications on iPhone and iPad',
   iOSNotificationSetupLink: 'Steps to enable notifications',
+  noFavorites: 'No favorites',
 } satisfies BaseTranslation;
 
 export default en;
