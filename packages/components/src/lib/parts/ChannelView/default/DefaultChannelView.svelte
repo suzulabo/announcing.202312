@@ -97,6 +97,7 @@
     position: sticky;
     top: -1px;
     z-index: 999;
+    margin-bottom: 16px;
 
     padding: 0 16px;
 
@@ -159,7 +160,7 @@
   }
 
   .channel-desc {
-    margin: 16px 8px 24px;
+    margin: 0 8px 16px;
     white-space: pre-line;
   }
 
