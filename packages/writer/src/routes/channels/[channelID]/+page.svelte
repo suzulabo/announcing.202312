@@ -15,7 +15,7 @@
   import { clearChannelCache } from '$lib/fetch/channelCache';
   import type { PageData } from './$types';
   import DeleteModal from './DeleteModal.svelte';
-  import UrlCopyModal from './UrlCopyModal.svelte';
+  import CopyModal from '@announcing/components/CopyModal.svelte';
   import { back } from '@announcing/components/actions/back';
 
   interface Props {
@@ -24,7 +24,7 @@
 
   let { data }: Props = $props();
 
-  let urlCopyModal: ReturnType<typeof UrlCopyModal>;
+  let urlCopyModal: ReturnType<typeof CopyModal>;
   let deleteModal: ReturnType<typeof DeleteModal>;
   let channelEditor: ReturnType<typeof ChannelEditor>;
 
@@ -117,7 +117,7 @@
   </div>
 </div>
 
-<UrlCopyModal bind:this={urlCopyModal} />
+<CopyModal bind:this={urlCopyModal} />
 <DeleteModal bind:this={deleteModal} name={channel.name} onSubmit={deleteChannel} />
 <ChannelEditor bind:this={channelEditor} onSubmit={updateChannel} />
 
