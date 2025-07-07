@@ -294,4 +294,8 @@ export const messages = {
     en: 'No favorites',
     ja: 'お気に入りはありません',
   },
+  copyID: {
+    en: 'Copy ID',
+    ja: 'IDをコピー',
+  },
 };

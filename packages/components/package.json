@@ -37,6 +37,10 @@
       "types": "./dist/parts/ChannelView/ChannelView.svelte.d.ts",
       "svelte": "./dist/parts/ChannelView/ChannelView.svelte"
     },
+    "./CopyModal.svelte": {
+      "types": "./dist/parts/CopyModal/CopyModal.svelte.d.ts",
+      "svelte": "./dist/parts/CopyModal/CopyModal.svelte"
+    },
     "./SettingsModal.svelte": {
       "types": "./dist/parts/SettingsModal/SettingsModal.svelte.d.ts",
       "svelte": "./dist/parts/SettingsModal/SettingsModal.svelte"

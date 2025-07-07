@@ -309,6 +309,10 @@ type RootTranslation = {
 	 * N​o​ ​f​a​v​o​r​i​t​e​s
 	 */
 	noFavorites: string
+	/**
+	 * C​o​p​y​ ​I​D
+	 */
+	copyID: string
 }
 
 export type TranslationFunctions = {
@@ -606,6 +610,10 @@ export type TranslationFunctions = {
 	 * No favorites
 	 */
 	noFavorites: () => LocalizedString
+	/**
+	 * Copy ID
+	 */
+	copyID: () => LocalizedString
 }
 
 export type Formatters = {}
