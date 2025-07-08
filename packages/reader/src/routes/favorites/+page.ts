@@ -3,26 +3,28 @@ import { fetchChannel } from '$lib/fetch/fetchChannel';
 import { isSupported } from 'firebase/messaging';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ params, fetch }) => {
-  const { channelID } = params;
-
+export const load: PageLoad = async ({ fetch }) => {
   const favorites = getFavorites();
 
   const channels = await Promise.all(
-    Object.entries(favorites).map(async ([channelID, values]) => {
-      const channel = await fetchChannel(channelID, fetch);
+    favorites.map(async (favorite) => {
+      const channel = await fetchChannel(favorite.channelID, fetch);
       if (channel) {
-        return { ...channel, status: true, notification: favorites[channelID]?.notification };
+        return {
+          ...channel,
+          status: true,
+          notification: favorite.notification,
+        };
       } else {
-        return { channelID, ...values, status: 'deleted' } as const;
+        return {
+          ...favorite,
+          status: 'deleted',
+        } as const;
       }
     }),
   );
 
   const compareValue = (v: (typeof channels)[number]) => {
-    if (v.channelID === channelID) {
-      return -1;
-    }
     if (v.status === 'deleted') {
       return Number.MAX_SAFE_INTEGER;
     }
