@@ -51,6 +51,10 @@
   };
 </script>
 
+<svelte:head>
+  <title>{$LL.favoritesList()}</title>
+</svelte:head>
+
 <div class="header">
   <div class="title">{$LL.favoritesList()}</div>
   {#if editing}
