@@ -2,18 +2,23 @@
   import { page } from '$app/state';
   import SolarStarBold from '$lib/components/icon/SolarStarBold.svelte';
   import SolarStarLinear from '$lib/components/icon/SolarStarLinear.svelte';
-  import { addFavorite, deleteFavorite, getFavorites } from '$lib/favorites/favorites';
+  import {
+    addFavorite,
+    deleteFavorite,
+    getFavorites,
+    type Favorite,
+  } from '$lib/favorites/favorites';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
   import { isIOS } from '$lib/platform/platform';
   import ChannelView from '@announcing/components/ChannelView.svelte';
   import ConfirmModal from '@announcing/components/ConfirmModal.svelte';
   import CopyModal from '@announcing/components/CopyModal.svelte';
+  import Loading from '@announcing/components/Loading.svelte';
   import { createSnapshotContext } from '@announcing/components/snapshotContext';
   import { LL } from '@announcing/i18n';
   import { onMount, type ComponentProps } from 'svelte';
   import { fade } from 'svelte/transition';
   import type { PageData } from './$types';
-  import Loading from '@announcing/components/Loading.svelte';
 
   interface Props {
     data: PageData;
@@ -21,7 +26,7 @@
 
   let { data }: Props = $props();
 
-  let inFavorites = $state(false);
+  let favorite = $state<Favorite>();
   let loading = $state(false);
 
   let copyModal: CopyModal;
@@ -43,7 +48,7 @@
 
   const checkFavorites = () => {
     const favorites = getFavorites();
-    inFavorites = data.channelID in favorites;
+    favorite = favorites.find((v) => v.channelID === data.channelID);
   };
 
   onMount(() => {
@@ -54,14 +59,29 @@
     addFavorite(data.channel);
     checkFavorites();
   };
-  const inFavoriteClickHandler = () => {
-    confirmModal.openModal({
-      message: $LL.removeFavoriteConfirm(),
-      onOK: () => {
-        deleteFavorite(data.channelID);
+  const inFavoriteClickHandler = async () => {
+    if (!favorite?.notification) {
+      loading = true;
+      try {
+        await deleteFavorite(data.channelID);
         checkFavorites();
-      },
-    });
+      } finally {
+        loading = false;
+      }
+    } else {
+      confirmModal.openModal({
+        message: $LL.removeFavoriteConfirm(),
+        onOK: async () => {
+          loading = true;
+          try {
+            await deleteFavorite(data.channelID);
+            checkFavorites();
+          } finally {
+            loading = false;
+          }
+        },
+      });
+    }
   };
 </script>
 
@@ -78,7 +98,7 @@
       }}>{$LL.copyID()}</button
     >
   {/if}
-  {#if inFavorites}
+  {#if favorite}
     <button class="small in-favorites" in:fade onclick={inFavoriteClickHandler}>
       <SolarStarBold />
       <span>{$LL.inFavorites()}</span></button

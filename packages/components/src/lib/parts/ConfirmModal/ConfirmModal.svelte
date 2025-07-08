@@ -3,7 +3,7 @@
   import { LL } from '@announcing/i18n';
 
   type OpenParams = {
-    onOK: () => void;
+    onOK: (() => void) | (() => Promise<void>);
     message: string;
   };
 
@@ -24,8 +24,9 @@
     <div class="buttons">
       <button
         class="small"
-        onclick={() => {
-          params?.onOK();
+        onclick={async () => {
+          await params?.onOK();
+          open = false;
         }}>{$LL.yes()}</button
       >
       <button

@@ -14,8 +14,8 @@ const favoritesSchema = v.array(
   }),
 );
 
-type Favorites = v.InferInput<typeof favoritesSchema>;
-type Favorite = Favorites[number];
+export type Favorites = v.InferInput<typeof favoritesSchema>;
+export type Favorite = Favorites[number];
 
 const toMap = (favorites: Favorites) => {
   return new Map(favorites.map((v) => [v.channelID, v]));
@@ -49,7 +49,15 @@ export const addFavorite = (value: Favorite) => {
 };
 
 export const updateFavorites = (favorites: Favorites) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+  const striped = favorites.map((v) => {
+    return {
+      channelID: v.channelID,
+      name: v.name,
+      ...(v.icon && { icon: v.icon }),
+      ...(v.notification && { notification: v.notification }),
+    };
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(striped));
 };
 
 export const deleteFavorite = async (channelID: string) => {
