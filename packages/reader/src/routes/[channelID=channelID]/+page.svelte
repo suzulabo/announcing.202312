@@ -1,17 +1,19 @@
 <script lang="ts">
+  import { page } from '$app/state';
   import SolarStarBold from '$lib/components/icon/SolarStarBold.svelte';
   import SolarStarLinear from '$lib/components/icon/SolarStarLinear.svelte';
   import { addFavorite, deleteFavorite, getFavorites } from '$lib/favorites/favorites';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
+  import { isIOS } from '$lib/platform/platform';
   import ChannelView from '@announcing/components/ChannelView.svelte';
+  import ConfirmModal from '@announcing/components/ConfirmModal.svelte';
   import CopyModal from '@announcing/components/CopyModal.svelte';
   import { createSnapshotContext } from '@announcing/components/snapshotContext';
   import { LL } from '@announcing/i18n';
   import { onMount, type ComponentProps } from 'svelte';
   import { fade } from 'svelte/transition';
   import type { PageData } from './$types';
-  import { page } from '$app/state';
-  import { isIOS } from '$lib/platform/platform';
+  import Loading from '@announcing/components/Loading.svelte';
 
   interface Props {
     data: PageData;
@@ -20,8 +22,10 @@
   let { data }: Props = $props();
 
   let inFavorites = $state(false);
+  let loading = $state(false);
 
   let copyModal: CopyModal;
+  let confirmModal: ConfirmModal;
 
   export const snapshot = createSnapshotContext();
 
@@ -51,8 +55,13 @@
     checkFavorites();
   };
   const inFavoriteClickHandler = () => {
-    deleteFavorite(data.channelID);
-    checkFavorites();
+    confirmModal.openModal({
+      message: $LL.removeFavoriteConfirm(),
+      onOK: () => {
+        deleteFavorite(data.channelID);
+        checkFavorites();
+      },
+    });
   };
 </script>
 
@@ -85,6 +94,10 @@
 <ChannelView {...channelViewProps} />
 
 <CopyModal bind:this={copyModal} />
+
+<ConfirmModal bind:this={confirmModal} />
+
+<Loading show={loading} />
 
 <style lang="scss">
   .buttons {

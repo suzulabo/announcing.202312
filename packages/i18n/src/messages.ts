@@ -298,4 +298,16 @@ export const messages = {
     en: 'Copy ID',
     ja: 'IDをコピー',
   },
+  removeFavoriteConfirm: {
+    en: 'Removing this from your favorites will also stop notifications. Are you sure?',
+    ja: 'お気に入りから削除すると通知も停止されます。よろしいですか？',
+  },
+  yes: {
+    en: 'Yes',
+    ja: 'はい',
+  },
+  no: {
+    en: 'No',
+    ja: 'いいえ',
+  },
 };

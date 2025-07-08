@@ -78,6 +78,10 @@ const en = {
   iOSNotificationSetupLink: 'Steps to enable notifications',
   noFavorites: 'No favorites',
   copyID: 'Copy ID',
+  removeFavoriteConfirm:
+    'Removing this from your favorites will also stop notifications. Are you sure?',
+  yes: 'Yes',
+  no: 'No',
 } satisfies BaseTranslation;
 
 export default en;

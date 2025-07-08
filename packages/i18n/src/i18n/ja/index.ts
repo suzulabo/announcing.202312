@@ -76,6 +76,9 @@ const ja = {
   iOSNotificationSetupLink: '通知を有効にする手順',
   noFavorites: 'お気に入りはありません',
   copyID: 'IDをコピー',
+  removeFavoriteConfirm: 'お気に入りから削除すると通知も停止されます。よろしいですか？',
+  yes: 'はい',
+  no: 'いいえ',
 } satisfies Translation;
 
 export default ja;

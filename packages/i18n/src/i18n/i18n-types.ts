@@ -313,6 +313,18 @@ type RootTranslation = {
 	 * C​o​p​y​ ​I​D
 	 */
 	copyID: string
+	/**
+	 * R​e​m​o​v​i​n​g​ ​t​h​i​s​ ​f​r​o​m​ ​y​o​u​r​ ​f​a​v​o​r​i​t​e​s​ ​w​i​l​l​ ​a​l​s​o​ ​s​t​o​p​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​?
+	 */
+	removeFavoriteConfirm: string
+	/**
+	 * Y​e​s
+	 */
+	yes: string
+	/**
+	 * N​o
+	 */
+	no: string
 }
 
 export type TranslationFunctions = {
@@ -614,6 +626,18 @@ export type TranslationFunctions = {
 	 * Copy ID
 	 */
 	copyID: () => LocalizedString
+	/**
+	 * Removing this from your favorites will also stop notifications. Are you sure?
+	 */
+	removeFavoriteConfirm: () => LocalizedString
+	/**
+	 * Yes
+	 */
+	yes: () => LocalizedString
+	/**
+	 * No
+	 */
+	no: () => LocalizedString
 }
 
 export type Formatters = {}
