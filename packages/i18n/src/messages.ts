@@ -310,6 +310,10 @@ export const messages = {
     en: 'No',
     ja: 'いいえ',
   },
+  iosNotification: {
+    en: 'iPhone / iPad notification settings',
+    ja: 'iPhone / iPad 通知設定',
+  },
   enterID: {
     en: 'Input ID',
     ja: 'IDを入力',

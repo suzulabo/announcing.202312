@@ -82,6 +82,7 @@ const en = {
     'Removing this from your favorites will also stop notifications. Are you sure?',
   yes: 'Yes',
   no: 'No',
+  iosNotification: 'iPhone / iPad notification settings',
   enterID: 'Input ID',
 } satisfies BaseTranslation;
 
