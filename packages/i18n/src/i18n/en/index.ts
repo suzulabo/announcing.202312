@@ -82,6 +82,7 @@ const en = {
     'Removing this from your favorites will also stop notifications. Are you sure?',
   yes: 'Yes',
   no: 'No',
+  enterID: 'Input ID',
 } satisfies BaseTranslation;
 
 export default en;

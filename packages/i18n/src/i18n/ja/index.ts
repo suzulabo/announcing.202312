@@ -79,6 +79,7 @@ const ja = {
   removeFavoriteConfirm: 'お気に入りから削除すると通知も停止されます。よろしいですか？',
   yes: 'はい',
   no: 'いいえ',
+  enterID: 'IDを入力',
 } satisfies Translation;
 
 export default ja;

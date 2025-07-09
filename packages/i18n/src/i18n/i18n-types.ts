@@ -325,6 +325,10 @@ type RootTranslation = {
 	 * N​o
 	 */
 	no: string
+	/**
+	 * I​n​p​u​t​ ​I​D
+	 */
+	enterID: string
 }
 
 export type TranslationFunctions = {
@@ -638,6 +642,10 @@ export type TranslationFunctions = {
 	 * No
 	 */
 	no: () => LocalizedString
+	/**
+	 * Input ID
+	 */
+	enterID: () => LocalizedString
 }
 
 export type Formatters = {}

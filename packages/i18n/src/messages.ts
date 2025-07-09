@@ -310,4 +310,8 @@ export const messages = {
     en: 'No',
     ja: 'いいえ',
   },
+  enterID: {
+    en: 'Input ID',
+    ja: 'IDを入力',
+  },
 };
