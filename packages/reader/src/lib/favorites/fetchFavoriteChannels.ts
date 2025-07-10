@@ -20,14 +20,14 @@ export const fetchFavoriteChannels = (callback: (channels: FavoriteChannel[]) =>
       case 'NOT_FOUND':
         return -1;
       default:
-        return Number.MAX_SAFE_INTEGER - v.channel.updatedAt;
+        return v.channel.updatedAt;
     }
   };
 
   const updateFavoriteChannels = () => {
     const favoriteChannels = [...map.values()];
     favoriteChannels.sort((a, b) => {
-      return compareValue(a) - compareValue(b);
+      return compareValue(b) - compareValue(a);
     });
     callback(favoriteChannels);
   };

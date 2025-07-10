@@ -8,6 +8,7 @@
   import { postNotification } from '$lib/fetch/postNotification';
   import { getNotificationToken } from '$lib/notification/firebase';
   import Loading from '@announcing/components/Loading.svelte';
+  import Spinner from '@announcing/components/Spinner.svelte';
   import { LL } from '@announcing/i18n';
   import { onMount } from 'svelte';
   import { backOut } from 'svelte/easing';
@@ -134,6 +135,7 @@
       <a
         class="card channel"
         class:editing
+        class:deleted={channel.status === 'NOT_FOUND'}
         href={`x-safari-https://${location.host}/${channel.channelID}`}
       >
         <span class="name">{channel.name}</span>
@@ -148,6 +150,9 @@
               channels = channels.filter((v) => v !== channel);
             }}>{$LL.remove()}</button
           >
+        {/if}
+        {#if channel.status === 'LOADING'}
+          <Spinner size={9} />
         {/if}
       </a>
     {/each}
@@ -224,6 +229,13 @@
           pointer-events: none;
         }
 
+        &.deleted {
+          .name,
+          img {
+            opacity: 0.5;
+          }
+        }
+
         .name {
           text-overflow: ellipsis;
           overflow: hidden;
@@ -239,6 +251,7 @@
           font-size: 13px;
           display: inline-block;
           margin: 0 0 0 8px;
+          opacity: 1;
         }
       }
     }
