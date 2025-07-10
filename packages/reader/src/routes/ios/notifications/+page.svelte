@@ -161,11 +161,15 @@
 
     .title {
       color: var(--color-text-subtle);
-      flex-grow: 1;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      margin-right: auto;
     }
 
     .cancel {
       display: inline-block;
+      white-space: nowrap;
       font-weight: normal;
       font-size: 14px;
       color: var(--color-text-subtle);
@@ -179,7 +183,7 @@
     gap: 16px;
 
     .input-box {
-      margin: 0 auto;
+      margin: 16px auto;
       display: flex;
       width: 100%;
       max-width: 400px;

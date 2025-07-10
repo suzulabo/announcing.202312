@@ -79,7 +79,7 @@ const ja = {
   removeFavoriteConfirm: 'お気に入りから削除すると通知も停止されます。よろしいですか？',
   yes: 'はい',
   no: 'いいえ',
-  iosNotification: 'iPhone / iPad 通知設定',
+  iosNotification: 'iPhone/iPadの通知設定',
   enterID: 'IDを入力',
   noChannelsAreRegistered: '登録されたチャンネルはありません',
   add: '追加',

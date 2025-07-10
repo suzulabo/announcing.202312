@@ -326,7 +326,7 @@ type RootTranslation = {
 	 */
 	no: string
 	/**
-	 * i​P​h​o​n​e​ ​/​ ​i​P​a​d​ ​n​o​t​i​f​i​c​a​t​i​o​n​ ​s​e​t​t​i​n​g​s
+	 * i​P​h​o​n​e​/​i​P​a​d​ ​n​o​t​i​f​i​c​a​t​i​o​n​ ​s​e​t​t​i​n​g​s
 	 */
 	iosNotification: string
 	/**
@@ -655,7 +655,7 @@ export type TranslationFunctions = {
 	 */
 	no: () => LocalizedString
 	/**
-	 * iPhone / iPad notification settings
+	 * iPhone/iPad notification settings
 	 */
 	iosNotification: () => LocalizedString
 	/**

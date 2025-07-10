@@ -311,8 +311,8 @@ export const messages = {
     ja: 'いいえ',
   },
   iosNotification: {
-    en: 'iPhone / iPad notification settings',
-    ja: 'iPhone / iPad 通知設定',
+    en: 'iPhone/iPad notification settings',
+    ja: 'iPhone/iPadの通知設定',
   },
   enterID: {
     en: 'Input ID',
