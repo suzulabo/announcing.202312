@@ -169,7 +169,7 @@
   }
 
   .no-favorites {
-    margin: 32px auto;
+    margin: 48px auto;
     color: var(--color-text-subtle);
   }
 
