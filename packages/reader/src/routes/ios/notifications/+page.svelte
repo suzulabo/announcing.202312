@@ -114,7 +114,7 @@
     </div>
     {#if channelNotFound}
       <div
-        class="error"
+        class="error not-found"
         in:fade={{ duration: 1000, easing: backOut }}
         onintroend={() => {
           channelNotFound = false;
@@ -131,7 +131,11 @@
 
   <div class="channels">
     {#each channels as channel (channel.channelID)}
-      <div class="card channel">
+      <a
+        class="card channel"
+        class:editing
+        href={`x-safari-https://${location.host}/${channel.channelID}`}
+      >
         <span class="name">{channel.name}</span>
         {#if channel.icon}
           <img src={channel.icon} alt="icon" />
@@ -145,7 +149,7 @@
             }}>{$LL.remove()}</button
           >
         {/if}
-      </div>
+      </a>
     {/each}
   </div>
 </div>
@@ -182,8 +186,13 @@
     margin: 16px 16px 0;
     gap: 16px;
 
+    .no-channels {
+      margin: 32px auto 0;
+      color: var(--color-text-subtle);
+    }
+
     .input-box {
-      margin: 16px auto;
+      margin: 16px auto 0;
       display: flex;
       width: 100%;
       max-width: 400px;
@@ -198,9 +207,8 @@
       }
     }
 
-    .no-channels {
-      margin: 32px auto 0;
-      color: var(--color-text-subtle);
+    .not-found {
+      margin: 0 auto;
     }
 
     .channels {
@@ -211,6 +219,10 @@
         display: flex;
         align-items: center;
         gap: 8px;
+
+        &.editing {
+          pointer-events: none;
+        }
 
         .name {
           text-overflow: ellipsis;
