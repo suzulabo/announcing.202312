@@ -1,8 +1,8 @@
 {
   "name": "Announcing",
   "short_name": "Announcing",
-  "start_url": "/ios_notification",
-  "scope": "/ios_notification",
+  "start_url": "/ios/notifications",
+  "scope": "/ios",
   "display": "standalone",
   "icons": [
     {
