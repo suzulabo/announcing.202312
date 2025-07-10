@@ -20,7 +20,7 @@ export const fetchFavoriteChannels = (callback: (channels: FavoriteChannel[]) =>
       case 'NOT_FOUND':
         return -1;
       default:
-        return v.channel.updatedAt;
+        return Number.MAX_SAFE_INTEGER - v.channel.updatedAt;
     }
   };
 
@@ -40,7 +40,7 @@ export const fetchFavoriteChannels = (callback: (channels: FavoriteChannel[]) =>
     try {
       const channel = await fetchChannel(channelID, fetch, abortController.signal);
       if (channel) {
-        map.set(channelID, { ...favorite, status: 'LOADED', channel });
+        map.set(channelID, { ...favorite, ...channel, status: 'LOADED', channel });
       } else {
         map.set(channelID, { ...favorite, status: 'NOT_FOUND' });
       }
