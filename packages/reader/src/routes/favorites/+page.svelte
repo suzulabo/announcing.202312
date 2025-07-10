@@ -99,11 +99,11 @@
   {/if}
 {/if}
 
-<div class="channels">
-  {#if channels.length === 0}
-    <div class="no-favorites">{$LL.noFavorites()}</div>
-  {/if}
+{#if channels.length === 0}
+  <div class="no-favorites">{$LL.noFavorites()}</div>
+{/if}
 
+<div class="channels">
   {#each channels as channel (channel.channelID)}
     {#if editing}
       <label class="channel card">
@@ -141,13 +141,13 @@
 
 <style lang="scss">
   .header {
-    color: var(--color-text-subtle);
     margin: 16px 16px 0;
     display: flex;
     align-items: center;
     gap: 8px;
 
     .title {
+      color: var(--color-text-subtle);
       flex-grow: 1;
     }
 

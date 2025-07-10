@@ -10,13 +10,15 @@
   import Loading from '@announcing/components/Loading.svelte';
   import { LL } from '@announcing/i18n';
   import { onMount } from 'svelte';
-  import { fade } from 'svelte/transition';
+  import { backOut } from 'svelte/easing';
+  import { fade, scale } from 'svelte/transition';
 
   let loading = $state(false);
+  let editing = $state(false);
   let searchChannelID = $state('');
   let channels = $state<FavoriteChannel[]>([]);
+  let channelsSaved: typeof channels;
   let channelNotFound = $state(false);
-  let registered = $state(false);
   let permission = $state<NotificationPermission>('granted');
 
   onMount(() => {
@@ -66,77 +68,163 @@
 
       await postNotification({ token, tags });
       updateFavorites(channels);
-      registered = true;
+      editing = false;
     } finally {
       loading = false;
     }
   };
 </script>
 
-<div class="title">
-  {$LL.iosNotification()}
-</div>
-<div class="input-box">
-  <input bind:value={searchChannelID} /><button
-    onclick={searchClickHandler}
-    disabled={!searchChannelID}>{$LL.search()}</button
-  >
-</div>
-{#if channelNotFound}
-  <div
-    class="error"
-    transition:fade={{ duration: 1000 }}
-    onintroend={() => {
-      channelNotFound = false;
-    }}
-  >
-    {$LL.channelNotFound()}
-  </div>
-{/if}
+<svelte:head>
+  <title>{$LL.iosNotification()}</title>
+</svelte:head>
 
-{#each channels as channel (channel.channelID)}
-  <div class="card">
-    {channel.name}
-    {channel.status}
+<div class="header">
+  <div class="title">
+    {$LL.iosNotification()}
+  </div>
+  {#if editing}
+    <button class="small" in:scale onclick={updateClickHandler}>{$LL.update()}</button>
     <button
-      class="unstyled error"
+      class="unstyled cancel"
+      in:scale
       onclick={() => {
-        channels = channels.filter((v) => v !== channel);
-      }}>{$LL.remove()}</button
+        channels = channelsSaved;
+        editing = false;
+      }}>{$LL.cancel()}</button
     >
-  </div>
-{/each}
+  {:else}
+    <button
+      class="small"
+      in:scale
+      onclick={() => {
+        channelsSaved = $state.snapshot(channels);
+        editing = true;
+      }}>{$LL.edit()}</button
+    >
+  {/if}
+</div>
+<div class="container">
+  {#if editing}
+    <div class="input-box" in:fade>
+      <input bind:value={searchChannelID} /><button
+        onclick={searchClickHandler}
+        disabled={!searchChannelID}>{$LL.add()}</button
+      >
+    </div>
+    {#if channelNotFound}
+      <div
+        class="error"
+        in:fade={{ duration: 1000, easing: backOut }}
+        onintroend={() => {
+          channelNotFound = false;
+        }}
+      >
+        {$LL.channelNotFound()}
+      </div>
+    {/if}
+  {/if}
 
-{#if registered}
-  <button
-    in:fade={{ duration: 2000 }}
-    onintroend={() => {
-      registered = false;
-    }}>{$LL.registered()}</button
-  >
-{:else}
-  <button onclick={updateClickHandler}>{$LL.registerNotification()}</button>
-{/if}
+  {#if !editing && channels.length === 0}
+    <div class="no-channels">{$LL.noChannelsAreRegistered()}</div>
+  {/if}
+
+  <div class="channels">
+    {#each channels as channel (channel.channelID)}
+      <div class="card channel">
+        <span class="name">{channel.name}</span>
+        {#if channel.icon}
+          <img src={channel.icon} alt="icon" />
+        {/if}
+        {#if editing}
+          <button
+            class="unstyled error delete"
+            in:scale
+            onclick={() => {
+              channels = channels.filter((v) => v !== channel);
+            }}>{$LL.remove()}</button
+          >
+        {/if}
+      </div>
+    {/each}
+  </div>
+</div>
 
 <Loading show={loading} />
 
 <style lang="scss">
-  .title {
-    color: var(--color-text-subtle);
-  }
-  .input-box {
-    margin-top: 8px;
+  .header {
+    margin: 16px 16px 0;
     display: flex;
-    width: 100%;
-    max-width: 400px;
-    input {
+    align-items: center;
+    gap: 8px;
+
+    .title {
+      color: var(--color-text-subtle);
       flex-grow: 1;
-      text-align: center;
-      border-radius: 16px 0 0 16px;
     }
-    button {
-      border-radius: 0 16px 16px 0;
-      padding: 0 16px;
+
+    .cancel {
+      display: inline-block;
+      font-weight: normal;
+      font-size: 14px;
+      color: var(--color-text-subtle);
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin: 16px 16px 0;
+    gap: 16px;
+
+    .input-box {
+      margin: 0 auto;
+      display: flex;
+      width: 100%;
+      max-width: 400px;
+      input {
+        flex-grow: 1;
+        text-align: center;
+        border-radius: 16px 0 0 16px;
+      }
+      button {
+        border-radius: 0 16px 16px 0;
+        padding: 0 16px;
+      }
+    }
+
+    .no-channels {
+      margin: 32px auto 0;
+      color: var(--color-text-subtle);
+    }
+
+    .channels {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      .channel {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .name {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          flex: 1;
+        }
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 8px;
+        }
+        .delete {
+          font-size: 13px;
+          display: inline-block;
+          margin: 0 0 0 8px;
+        }
+      }
     }
   }
 </style>

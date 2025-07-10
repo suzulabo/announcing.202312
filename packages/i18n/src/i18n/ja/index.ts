@@ -81,6 +81,8 @@ const ja = {
   no: 'いいえ',
   iosNotification: 'iPhone / iPad 通知設定',
   enterID: 'IDを入力',
+  noChannelsAreRegistered: '登録されたチャンネルはありません',
+  add: '追加',
 } satisfies Translation;
 
 export default ja;

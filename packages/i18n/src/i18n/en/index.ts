@@ -84,6 +84,8 @@ const en = {
   no: 'No',
   iosNotification: 'iPhone / iPad notification settings',
   enterID: 'Input ID',
+  noChannelsAreRegistered: 'No channels are registered.',
+  add: 'Add',
 } satisfies BaseTranslation;
 
 export default en;

@@ -333,6 +333,14 @@ type RootTranslation = {
 	 * I​n​p​u​t​ ​I​D
 	 */
 	enterID: string
+	/**
+	 * N​o​ ​c​h​a​n​n​e​l​s​ ​a​r​e​ ​r​e​g​i​s​t​e​r​e​d​.
+	 */
+	noChannelsAreRegistered: string
+	/**
+	 * A​d​d
+	 */
+	add: string
 }
 
 export type TranslationFunctions = {
@@ -654,6 +662,14 @@ export type TranslationFunctions = {
 	 * Input ID
 	 */
 	enterID: () => LocalizedString
+	/**
+	 * No channels are registered.
+	 */
+	noChannelsAreRegistered: () => LocalizedString
+	/**
+	 * Add
+	 */
+	add: () => LocalizedString
 }
 
 export type Formatters = {}

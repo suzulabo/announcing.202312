@@ -318,4 +318,12 @@ export const messages = {
     en: 'Input ID',
     ja: 'IDを入力',
   },
+  noChannelsAreRegistered: {
+    en: 'No channels are registered.',
+    ja: '登録されたチャンネルはありません',
+  },
+  add: {
+    en: 'Add',
+    ja: '追加',
+  },
 };
