@@ -6,6 +6,7 @@
   import F7SquareFavorites from '$lib/components/icon/F7SquareFavorites.svelte';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import MdiReload from '$lib/components/icon/MdiReload.svelte';
+  import { isPWA } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
   import Navigating from '@announcing/components/Navigating.svelte';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
@@ -79,7 +80,9 @@
 {/key}
 
 <div class="toolbar" class:hidden={toolbarHidden} class:small={toolbarSize === 'compact'}>
-  <a href="/favorites"><F7SquareFavorites /><span>{$LL.favorites()}</span></a>
+  {#if !isPWA()}
+    <a href="/favorites"><F7SquareFavorites /><span>{$LL.favorites()}</span></a>
+  {/if}
   <button
     class="unstyled"
     onclick={() => {
@@ -121,7 +124,7 @@
     transition: transform 0.2s ease;
 
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
 
     &.hidden {
       transform: translateY(100%);
@@ -133,6 +136,7 @@
       flex-direction: column;
       align-items: center;
       padding: 8px 0;
+      margin: 0 auto;
       font-size: 24px;
 
       span {
