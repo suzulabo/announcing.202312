@@ -1,29 +1,37 @@
-import { xxHash32 } from 'js-xxhash';
-import { encodeBase64Url } from './encodeBase64Url';
-import { genDatePrefix } from './genDatePrefix';
+const BASE_DATE = Date.UTC(2025, 0, 1, 0, 0, 0, 0);
+const CHARACTERS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_';
+const CHARACTERS_LENGTH = CHARACTERS.length;
 
-const toBase64 = (n: number) => {
-  const a = new Uint8Array(4);
-  const view = new DataView(a.buffer);
-  view.setUint32(0, n, false);
-  return encodeBase64Url(a);
+const toID = (n: number) => {
+  let s = '';
+
+  while (n > 0) {
+    s = `${CHARACTERS[n % CHARACTERS_LENGTH]}${s}`;
+    n = Math.trunc(n / CHARACTERS_LENGTH);
+  }
+
+  return s;
 };
 
-export const genAnnouncementID = ({
-  headerImage,
-  title,
-  body,
-  images,
-  createdAt,
-}: {
-  headerImage?: string | null | undefined;
-  title?: string | null | undefined;
-  body: string;
-  images?: string[] | null | undefined;
-  createdAt: number;
-}) => {
-  const list = [headerImage, title, body, ...(images ?? [])];
-  const data = list.map((s) => (typeof s === 'string' ? s : '\0')).join('');
+const idSuffix = /^(.+)\/([0-9]+)$/;
 
-  return `${genDatePrefix(createdAt)}${toBase64(xxHash32(data))}`;
+export const genAnnouncementID = (createdAt: number, prevID = '') => {
+  const id = toID(Math.trunc((createdAt - BASE_DATE) / 1000));
+  if (!prevID) {
+    return id;
+  } else {
+    const m = prevID.match(idSuffix);
+    if (m) {
+      const [, p, s] = m as [string, string, string];
+      if (id !== p) {
+        throw new Error('invalid prevID');
+      }
+      const suffix = parseInt(s);
+      return `${id}/${suffix + 1}`;
+    } else if (id !== prevID) {
+      throw new Error('invalid prevID');
+    } else {
+      return `${id}/1`;
+    }
+  }
 };
