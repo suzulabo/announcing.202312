@@ -26,11 +26,13 @@
 
   let toolbarHidden = $state(false);
   let previousScrollY = $state(-1);
+  let pwa = $state(false);
 
   let settingsModal: SettingsModal;
 
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
+    pwa = isPWA();
   });
 
   afterNavigate(() => {
@@ -80,7 +82,7 @@
 {/key}
 
 <div class="toolbar" class:hidden={toolbarHidden} class:small={toolbarSize === 'compact'}>
-  {#if !isPWA()}
+  {#if !pwa}
     <a href="/favorites"><F7SquareFavorites /><span>{$LL.favorites()}</span></a>
   {/if}
   <button
