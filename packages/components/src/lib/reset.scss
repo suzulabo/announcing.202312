@@ -55,6 +55,12 @@ a.button {
   }
 }
 
+a.link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 input:not([type='checkbox'], [type='radio']),
 textarea {
   width: 100%;

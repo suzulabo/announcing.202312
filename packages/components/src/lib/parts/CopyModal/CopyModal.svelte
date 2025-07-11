@@ -1,14 +1,15 @@
 <script lang="ts">
   import Modal from '@announcing/components/Modal.svelte';
   import { LL } from '@announcing/i18n';
+  import { fade } from 'svelte/transition';
 
   let open = $state(false);
   let copied: undefined | 'copied' | 'error' = $state(undefined);
-  let url = $state('');
+  let value = $state('');
 
-  export const openModal = (url_: string) => {
+  export const openModal = (v: string) => {
     open = true;
-    url = url_;
+    value = v;
     copied = undefined;
   };
 
@@ -22,7 +23,8 @@
     {#if copied}
       <div
         class="msg-box"
-        onanimationend={() => {
+        in:fade={{ duration: 1000 }}
+        onintroend={() => {
           open = false;
         }}
       >
@@ -30,12 +32,12 @@
       </div>
     {:else}
       <div class="copy-box">
-        <input value={url} readonly onfocus={onFocus} />
+        <input {value} readonly onfocus={onFocus} />
         <button
           class="small"
           onclick={() => {
             navigator.clipboard
-              .writeText(url)
+              .writeText(value)
               .then(() => {
                 copied = 'copied';
               })
@@ -78,20 +80,10 @@
     }
     .msg-box {
       text-align: center;
-      animation: showDelay 1s;
     }
     .close-btn {
       display: block;
       margin: 32px auto 0;
-    }
-
-    @keyframes showDelay {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
     }
   }
 </style>

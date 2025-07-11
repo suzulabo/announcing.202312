@@ -55,6 +55,18 @@ type RootTranslation = {
 	 */
 	close: string
 	/**
+	 * B​o​t​t​o​m​ ​b​u​t​t​o​n​ ​s​i​z​e
+	 */
+	toolbarSize: string
+	/**
+	 * N​o​r​m​a​l
+	 */
+	normal: string
+	/**
+	 * C​o​m​p​a​c​t
+	 */
+	compact: string
+	/**
 	 * S​e​t​t​i​n​g​s
 	 */
 	settings: string
@@ -214,18 +226,6 @@ type RootTranslation = {
 	 */
 	notification: string
 	/**
-	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​i​s​ ​d​e​v​i​c​e​.
-	 */
-	unsupportedNotification: string
-	/**
-	 * O​n​ ​i​P​h​o​n​e​ ​a​n​d​ ​i​P​a​d​,​ ​y​o​u​ ​n​e​e​d​ ​t​o​ ​t​a​k​e​ ​a​n​ ​e​x​t​r​a​ ​s​t​e​p​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​P​l​e​a​s​e​ ​c​h​e​c​k​ ​t​h​e​ ​s​t​e​p​s​ ​a​t​ ​t​h​e​ ​b​u​t​t​o​n​ ​b​e​l​o​w​.
-	 */
-	unsupportedNotificationIOS: string
-	/**
-	 * S​t​e​p​s​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
-	 */
-	iOSNotificationSetupLink: string
-	/**
 	 * C​h​a​n​n​e​l​ ​n​u​m​b​e​r
 	 */
 	channelNumber: string
@@ -261,44 +261,86 @@ type RootTranslation = {
 	 * S​e​a​r​c​h
 	 */
 	search: string
-	setupNotification: {
-		/**
-		 * P​r​e​p​a​r​e​ ​t​o​ ​r​e​c​e​i​v​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​w​h​e​n​ ​n​e​w​ ​n​o​t​i​c​e​s​ ​a​r​e​ ​p​o​s​t​e​d​.​ ​
-	​P​r​e​s​s​ ​t​h​e​ ​"​S​e​t​ ​N​o​t​i​f​i​c​a​t​i​o​n​s​"​ ​b​u​t​t​o​n​ ​t​o​ ​s​e​t​ ​t​h​e​ ​p​e​r​m​i​s​s​i​o​n​ ​s​e​t​t​i​n​g​s​,​ ​a​s​ ​a​ ​m​e​s​s​a​g​e​ ​w​i​l​l​ ​a​p​p​e​a​r​ ​a​s​k​i​n​g​ ​y​o​u​ ​t​o​ ​c​o​n​f​i​r​m​ ​p​e​r​m​i​s​s​i​o​n​ ​f​o​r​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.
-		 */
-		description: string
-		/**
-		 * S​e​t​ ​N​o​t​i​f​i​c​a​t​i​o​n​s
-		 */
-		button: string
-		/**
-		 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e​ ​i​n​ ​t​h​i​s​ ​b​r​o​w​s​e​r​.
-		 */
-		notSupported: string
-		/**
-		 * Y​o​u​ ​a​r​e​ ​n​o​t​ ​a​l​l​o​w​e​d​ ​t​o​ ​u​s​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​
-	​P​l​e​a​s​e​ ​c​h​a​n​g​e​ ​y​o​u​r​ ​b​r​o​w​s​e​r​ ​s​e​t​t​i​n​g​s​.
-		 */
-		denied: string
-		/**
-		 * <​i​>​<​b​>​{​n​a​m​e​}​<​/​b​>​<​/​i​>​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​w​ ​<​b​>​o​f​f​<​/​b​>​.
-		 * @param {unknown} name
-		 */
-		grantedDisabled: RequiredParams<'name'>
-		/**
-		 * <​i​>​<​b​>​{​n​a​m​e​}​<​/​b​>​<​/​i​>​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​w​ ​<​b​>​o​n​<​/​b​>​.
-		 * @param {unknown} name
-		 */
-		grantedEnabled: RequiredParams<'name'>
-		/**
-		 * T​u​r​n​ ​o​n​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
-		 */
-		toEnabled: string
-		/**
-		 * T​u​r​n​ ​o​f​f​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
-		 */
-		toDisabled: string
-	}
+	/**
+	 * A​d​d​ ​t​o​ ​f​a​v​o​r​i​t​e​s
+	 */
+	addFavorites: string
+	/**
+	 * I​n​ ​f​a​v​o​r​i​t​e​s
+	 */
+	inFavorites: string
+	/**
+	 * F​a​v​o​r​i​t​e​s
+	 */
+	favorites: string
+	/**
+	 * R​e​l​o​a​d
+	 */
+	reload: string
+	/**
+	 * F​a​v​o​r​i​t​e​s​ ​L​i​s​t
+	 */
+	favoritesList: string
+	/**
+	 * U​p​d​a​t​e
+	 */
+	update: string
+	/**
+	 * C​h​o​o​s​e​ ​c​h​a​n​n​e​l​s​ ​t​o​ ​g​e​t​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​ ​f​r​o​m​,​ ​t​h​e​n​ ​p​r​e​s​s​ ​t​h​e​ ​u​p​d​a​t​e​ ​b​u​t​t​o​n​.
+	 */
+	editFavoritesDesc: string
+	/**
+	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​l​l​o​w​e​d​.
+	 */
+	notificationPermissionError: string
+	/**
+	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​a​r​e​ ​n​o​t​ ​a​v​a​i​l​a​b​l​e​ ​o​n​ ​t​h​i​s​ ​d​e​v​i​c​e​.
+	 */
+	unsupportedNotification: string
+	/**
+	 * N​o​t​i​f​i​c​a​t​i​o​n​s​ ​o​n​ ​i​P​h​o​n​e​ ​a​n​d​ ​i​P​a​d
+	 */
+	unsupportedNotificationIOS: string
+	/**
+	 * S​t​e​p​s​ ​t​o​ ​e​n​a​b​l​e​ ​n​o​t​i​f​i​c​a​t​i​o​n​s
+	 */
+	iOSNotificationSetupLink: string
+	/**
+	 * N​o​ ​f​a​v​o​r​i​t​e​s
+	 */
+	noFavorites: string
+	/**
+	 * C​o​p​y​ ​I​D
+	 */
+	copyID: string
+	/**
+	 * R​e​m​o​v​i​n​g​ ​t​h​i​s​ ​f​r​o​m​ ​y​o​u​r​ ​f​a​v​o​r​i​t​e​s​ ​w​i​l​l​ ​a​l​s​o​ ​s​t​o​p​ ​n​o​t​i​f​i​c​a​t​i​o​n​s​.​ ​A​r​e​ ​y​o​u​ ​s​u​r​e​?
+	 */
+	removeFavoriteConfirm: string
+	/**
+	 * Y​e​s
+	 */
+	yes: string
+	/**
+	 * N​o
+	 */
+	no: string
+	/**
+	 * i​P​h​o​n​e​/​i​P​a​d​ ​n​o​t​i​f​i​c​a​t​i​o​n​ ​s​e​t​t​i​n​g​s
+	 */
+	iosNotification: string
+	/**
+	 * I​n​p​u​t​ ​I​D
+	 */
+	enterID: string
+	/**
+	 * N​o​ ​c​h​a​n​n​e​l​s​ ​a​r​e​ ​r​e​g​i​s​t​e​r​e​d​.
+	 */
+	noChannelsAreRegistered: string
+	/**
+	 * A​d​d
+	 */
+	add: string
 }
 
 export type TranslationFunctions = {
@@ -342,6 +384,18 @@ export type TranslationFunctions = {
 	 * Close
 	 */
 	close: () => LocalizedString
+	/**
+	 * Bottom button size
+	 */
+	toolbarSize: () => LocalizedString
+	/**
+	 * Normal
+	 */
+	normal: () => LocalizedString
+	/**
+	 * Compact
+	 */
+	compact: () => LocalizedString
 	/**
 	 * Settings
 	 */
@@ -501,18 +555,6 @@ export type TranslationFunctions = {
 	 */
 	notification: () => LocalizedString
 	/**
-	 * Notifications are not available on this device.
-	 */
-	unsupportedNotification: () => LocalizedString
-	/**
-	 * On iPhone and iPad, you need to take an extra step to enable notifications. Please check the steps at the button below.
-	 */
-	unsupportedNotificationIOS: () => LocalizedString
-	/**
-	 * Steps to enable notifications
-	 */
-	iOSNotificationSetupLink: () => LocalizedString
-	/**
 	 * Channel number
 	 */
 	channelNumber: () => LocalizedString
@@ -548,42 +590,86 @@ export type TranslationFunctions = {
 	 * Search
 	 */
 	search: () => LocalizedString
-	setupNotification: {
-		/**
-		 * Prepare to receive notifications when new notices are posted. 
-	Press the "Set Notifications" button to set the permission settings, as a message will appear asking you to confirm permission for notifications.
-		 */
-		description: () => LocalizedString
-		/**
-		 * Set Notifications
-		 */
-		button: () => LocalizedString
-		/**
-		 * Notifications are not available in this browser.
-		 */
-		notSupported: () => LocalizedString
-		/**
-		 * You are not allowed to use notifications. 
-	Please change your browser settings.
-		 */
-		denied: () => LocalizedString
-		/**
-		 * <i><b>{name}</b></i> notifications are now <b>off</b>.
-		 */
-		grantedDisabled: (arg: { name: unknown }) => LocalizedString
-		/**
-		 * <i><b>{name}</b></i> notifications are now <b>on</b>.
-		 */
-		grantedEnabled: (arg: { name: unknown }) => LocalizedString
-		/**
-		 * Turn on notifications
-		 */
-		toEnabled: () => LocalizedString
-		/**
-		 * Turn off notifications
-		 */
-		toDisabled: () => LocalizedString
-	}
+	/**
+	 * Add to favorites
+	 */
+	addFavorites: () => LocalizedString
+	/**
+	 * In favorites
+	 */
+	inFavorites: () => LocalizedString
+	/**
+	 * Favorites
+	 */
+	favorites: () => LocalizedString
+	/**
+	 * Reload
+	 */
+	reload: () => LocalizedString
+	/**
+	 * Favorites List
+	 */
+	favoritesList: () => LocalizedString
+	/**
+	 * Update
+	 */
+	update: () => LocalizedString
+	/**
+	 * Choose channels to get notifications from, then press the update button.
+	 */
+	editFavoritesDesc: () => LocalizedString
+	/**
+	 * Notifications are not allowed.
+	 */
+	notificationPermissionError: () => LocalizedString
+	/**
+	 * Notifications are not available on this device.
+	 */
+	unsupportedNotification: () => LocalizedString
+	/**
+	 * Notifications on iPhone and iPad
+	 */
+	unsupportedNotificationIOS: () => LocalizedString
+	/**
+	 * Steps to enable notifications
+	 */
+	iOSNotificationSetupLink: () => LocalizedString
+	/**
+	 * No favorites
+	 */
+	noFavorites: () => LocalizedString
+	/**
+	 * Copy ID
+	 */
+	copyID: () => LocalizedString
+	/**
+	 * Removing this from your favorites will also stop notifications. Are you sure?
+	 */
+	removeFavoriteConfirm: () => LocalizedString
+	/**
+	 * Yes
+	 */
+	yes: () => LocalizedString
+	/**
+	 * No
+	 */
+	no: () => LocalizedString
+	/**
+	 * iPhone/iPad notification settings
+	 */
+	iosNotification: () => LocalizedString
+	/**
+	 * Input ID
+	 */
+	enterID: () => LocalizedString
+	/**
+	 * No channels are registered.
+	 */
+	noChannelsAreRegistered: () => LocalizedString
+	/**
+	 * Add
+	 */
+	add: () => LocalizedString
 }
 
 export type Formatters = {}

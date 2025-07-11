@@ -9,13 +9,9 @@
   import AnnouncementView from '../AnnouncementView.svelte';
   import { parseImageSize } from '$lib/utils/parseImageSize';
 
-  type Announcement = ComponentProps<typeof AnnouncementView>['announcement'];
+  type Props = ComponentProps<typeof AnnouncementView>;
 
-  interface Props {
-    announcement: Announcement;
-  }
-
-  let { announcement }: Props = $props();
+  let { channel, announcement }: Props = $props();
 
   let imageModalSrc: string | undefined = $derived(page.state.announcementViewZoomImage?.src);
 
@@ -24,7 +20,23 @@
   };
 </script>
 
-<div class="container">
+{#if channel}
+  <button
+    class="unstyled channel"
+    onclick={() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }}
+  >
+    <div class="name">
+      {channel.name}
+    </div>
+    {#if channel.icon}
+      <img class="icon" alt={channel.name} src={channel.icon} {...parseImageSize(channel.icon)} />
+    {/if}
+  </button>
+{/if}
+
+<div class="announcement">
   {#if announcement.headerImage}
     <button
       class="unstyled"
@@ -104,7 +116,33 @@
 </Modal>
 
 <style lang="scss">
-  .container {
+  .channel {
+    position: sticky;
+    top: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--color-background);
+    padding: 8px 16px;
+    margin: 0 0 16px;
+
+    .name {
+      font-weight: bold;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
+    }
+  }
+
+  .announcement {
     display: flex;
     flex-direction: column;
     gap: 12px;

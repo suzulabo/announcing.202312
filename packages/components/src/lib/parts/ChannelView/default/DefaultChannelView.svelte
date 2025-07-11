@@ -4,16 +4,39 @@
   import { parseImageSize } from '$lib/utils/parseImageSize';
   import { toHtml } from '$lib/utils/toHtml';
   import { LL } from '@announcing/i18n';
+  import { onMount } from 'svelte';
   import type { ChannelViewProps } from '../types';
   import Item from './Item.svelte';
 
   let { channel, announcementHrefPrefix, announcementKeys, announcementLoader }: ChannelViewProps =
     $props();
+
+  let stuck = $state(false);
+
+  onMount(() => {
+    const ob = new IntersectionObserver(
+      ([entry]) => {
+        if (entry) {
+          stuck = entry.intersectionRatio < 1;
+        }
+      },
+      { threshold: [1] },
+    );
+
+    const el = document.querySelector('.channel-name');
+    if (el) {
+      ob.observe(el);
+    }
+
+    return () => {
+      ob.disconnect();
+    };
+  });
 </script>
 
 {#if channel}
-  <div class="channel-box">
-    <div class="name-line">
+  <div class="channel-name" class:stuck>
+    <div class="normal">
       <div class="name">
         {channel.name}
       </div>
@@ -21,12 +44,25 @@
         <img class="icon" alt={channel.name} src={channel.icon} {...parseImageSize(channel.icon)} />
       {/if}
     </div>
-    {#if channel.desc}
-      <div class="desc">
-        {@html toHtml(channel.desc)}
+    <button
+      class="unstyled small"
+      onclick={() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }}
+    >
+      <div class="name">
+        {channel.name}
       </div>
-    {/if}
+      {#if channel.icon}
+        <img class="icon" alt={channel.name} src={channel.icon} {...parseImageSize(channel.icon)} />
+      {/if}
+    </button>
   </div>
+  {#if channel.desc}
+    <div class="channel-desc">
+      {@html toHtml(channel.desc)}
+    </div>
+  {/if}
 {/if}
 
 {#if announcementKeys && announcementLoader}
@@ -57,29 +93,74 @@
 {/if}
 
 <style lang="scss">
-  .channel-box {
-    padding: 0 16px 16px;
-  }
+  .channel-name {
+    position: sticky;
+    top: -1px;
+    z-index: 999;
+    margin-bottom: 16px;
 
-  .name-line {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    padding: 0 16px;
+
     .name {
       font-weight: bold;
-      font-size: 20px;
-      flex-grow: 1;
     }
     .icon {
-      width: 64px;
-      height: 64px;
       border-radius: 16px;
       object-fit: contain;
     }
+
+    .normal {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      .name {
+        font-size: 20px;
+        flex-grow: 1;
+      }
+      .icon {
+        width: 64px;
+        height: 64px;
+      }
+    }
+
+    .small {
+      visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--color-background);
+      padding: 8px 16px;
+
+      .name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .icon {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    &.stuck {
+      .normal {
+        visibility: hidden;
+      }
+      .small {
+        visibility: visible;
+      }
+    }
   }
 
-  .desc {
-    margin: 10px 5px 0;
+  .channel-desc {
+    margin: 0 8px 16px;
     white-space: pre-line;
   }
 

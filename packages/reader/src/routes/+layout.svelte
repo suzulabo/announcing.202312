@@ -1,20 +1,19 @@
 <script lang="ts">
   import '../app.scss';
 
+  import { afterNavigate } from '$app/navigation';
   import { navigating, page } from '$app/state';
-  import MaterialSymbolsNotificationImportantOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationImportantOutlineRounded.svelte';
-  import MaterialSymbolsNotificationsOutlineRounded from '$lib/components/icon/MaterialSymbolsNotificationsOutlineRounded.svelte';
-  import MaterialSymbolsNotificationsRounded from '$lib/components/icon/MaterialSymbolsNotificationsRounded.svelte';
+  import F7SquareFavorites from '$lib/components/icon/F7SquareFavorites.svelte';
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import MdiReload from '$lib/components/icon/MdiReload.svelte';
-  import { getNotificationChannels } from '$lib/notification/localStorage';
+  import { isPWA } from '$lib/platform/platform';
   import { setupBack } from '@announcing/components/actions/back';
   import Navigating from '@announcing/components/Navigating.svelte';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
-  import { onMount, type Snippet } from 'svelte';
+  import { onMount, tick, type Snippet } from 'svelte';
+  import { fade } from 'svelte/transition';
   import type { LayoutData } from './$types';
-  import { browser } from '$app/environment';
 
   interface Props {
     data: LayoutData;
@@ -23,120 +22,154 @@
 
   let { data, children }: Props = $props();
 
-  let headerNotification = $derived(page.data.headerNotification);
-  let notificationStatus = $derived.by(() => {
-    if (!headerNotification || !browser) {
-      return;
-    }
+  let toolbarSize = $state('');
 
-    const enabled = headerNotification.channelID in getNotificationChannels();
-
-    if (enabled) {
-      if (Notification.permission !== 'granted') {
-        return 'alert';
-      }
-      return 'enabled';
-    }
-
-    return 'disabled';
-  });
+  let toolbarHidden = $state(false);
+  let previousScrollY = $state(-1);
+  let pwa = $state(false);
 
   let settingsModal: SettingsModal;
 
   onMount(() => {
     document.documentElement.setAttribute('hydrated', '');
+    pwa = isPWA();
+  });
+
+  afterNavigate(() => {
+    tick()
+      .then(() => {
+        /**
+         VirtualScrollList used in ChanelView restores scrollY, so reset it.
+        */
+        previousScrollY = -1;
+        toolbarHidden = false;
+      })
+      .catch(() => {
+        //
+      });
   });
 
   setupBack();
+
+  const onScrollHandler = () => {
+    if (previousScrollY < 0) {
+      previousScrollY = window.screenY;
+      return;
+    }
+
+    const currentY = window.scrollY;
+
+    /**
+     Hide the toolbar when scrolling down, and restore it when scrolling up.
+     Make it slightly insensitive when hiding.
+    */
+    if (currentY > previousScrollY && currentY - previousScrollY > 10) {
+      toolbarHidden = true;
+    } else if (currentY < previousScrollY && previousScrollY - currentY) {
+      toolbarHidden = false;
+    }
+
+    previousScrollY = currentY;
+  };
 </script>
 
-<header>
+<svelte:window onscroll={onScrollHandler} />
+
+{#key page.url.pathname}
+  <main in:fade>
+    {@render children?.()}
+  </main>
+{/key}
+
+<div class="toolbar" class:hidden={toolbarHidden} class:small={toolbarSize === 'compact'}>
+  {#if !pwa}
+    <a href="/favorites"><F7SquareFavorites /><span>{$LL.favorites()}</span></a>
+  {/if}
   <button
-    class="unstyled reload"
+    class="unstyled"
     onclick={() => {
       location.reload();
-    }}><MdiReload /></button
+    }}><MdiReload /><span>{$LL.reload()}</span></button
   >
-
-  {#if headerNotification}
-    <a class="button small notification-btn" href={`/notification/${headerNotification.channelID}`}>
-      {#if notificationStatus === 'enabled'}
-        <MaterialSymbolsNotificationsRounded />
-      {:else if notificationStatus === 'disabled'}
-        <MaterialSymbolsNotificationsOutlineRounded />
-      {:else if notificationStatus === 'alert'}
-        <MaterialSymbolsNotificationImportantOutlineRounded />
-      {/if}
-
-      <span>{$LL.notification()}</span></a
-    >
-  {/if}
-
   <button
-    class="small settings-btn"
+    class="unstyled"
     onclick={() => {
       settingsModal.openModal();
-    }}
+    }}><MaterialSymbolsSettingsOutline /><span>{$LL.settings()}</span></button
   >
-    <MaterialSymbolsSettingsOutline />
-    <span>{$LL.settings()}</span></button
-  >
-</header>
-{@render children?.()}
-
-<footer>
-  <div>
-    <span class="copyright">&copy;Announcing</span>
-  </div>
-</footer>
+</div>
 
 <SettingsModal
   bind:this={settingsModal}
   requestLocale={data.requestLocale}
   requestTheme={data.requestTheme}
+  bind:toolbarSize
 />
 
 <Navigating show={!!navigating.from} />
 
 <style lang="scss">
-  header {
-    padding: 16px 8px 24px;
+  main {
     display: flex;
-    align-items: center;
-    justify-content: end;
-    gap: 8px;
+    flex-direction: column;
+  }
 
-    .reload {
-      display: none;
+  .toolbar {
+    margin-top: auto;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background-color: var(--color-background);
+    border-top: 1px solid var(--color-border);
+    transition: transform 0.2s ease;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+
+    &.hidden {
+      transform: translateY(100%);
     }
 
-    @media (display-mode: standalone) {
-      .reload {
-        display: flex;
-        margin: 0 auto 0 4px;
-        font-size: 18px;
-        color: var(--color-text-subtle);
+    a,
+    button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 0;
+      margin: 0 auto;
+      font-size: 24px;
+
+      span {
+        font-size: 13px;
       }
     }
 
-    .settings-btn,
-    .notification-btn {
-      display: flex;
-      align-items: center;
-      gap: 2px;
+    &.small {
+      a,
+      button {
+        font-size: 28px;
+        span {
+          display: none;
+        }
+      }
     }
-  }
 
-  footer {
-    margin-top: auto;
-
-    div {
-      margin: 16px 0 0;
-      padding: 16px;
+    @media (min-width: 800px) {
+      position: fixed;
+      top: 0;
+      left: calc((100dvw - 600px) / 2 - 80px);
+      right: unset;
+      bottom: 0;
+      width: 70px;
+      margin: 64px 0 0;
+      border-top: unset;
       display: flex;
-
-      .copyright {
-        margin: auto;
+      flex-direction: column;
+      gap: 32px;
+      &.hidden {
+        transform: unset;
       }
     }
   }

@@ -2,7 +2,7 @@ export const isIOS = () => {
   return /iphone|ipad|ipod/i.test(navigator.userAgent);
 };
 
-export const isStandalone = () => {
+export const isPWA = () => {
   interface NavigatorStandalone extends Navigator {
     standalone?: unknown;
   }
