@@ -23,7 +23,7 @@
   interface Props {
     requestLocale: Locales;
     requestTheme: Themes | undefined;
-    toolbarSize: string;
+    toolbarSize?: string | undefined;
   }
 
   let { requestLocale, requestTheme, toolbarSize = $bindable() }: Props = $props();
@@ -65,7 +65,9 @@
   });
 
   $effect(() => {
-    setToolbarSize(toolbarSize);
+    if (toolbarSize) {
+      setToolbarSize(toolbarSize);
+    }
   });
 
   export const openModal = () => {
