@@ -116,7 +116,7 @@ export const updateAnnouncement = async (
 
   await Promise.all(storagePuts);
 
-  const announcementID = genAnnouncementID(values);
+  const announcementID = genAnnouncementID(values.createdAt, targetAnnouncementID);
 
   announcementIDs[index] = announcementID;
 
