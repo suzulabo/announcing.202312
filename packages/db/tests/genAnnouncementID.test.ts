@@ -11,11 +11,11 @@ test('normal', () => {
 });
 
 test('suffix', () => {
-  expect(genAnnouncementID(new Date('2025-01-01T00:00:01+00:00').getTime(), '1')).toEqual('1/1');
-  expect(genAnnouncementID(new Date('2025-01-01T00:00:01+00:00').getTime(), '1/1')).toEqual('1/2');
+  expect(genAnnouncementID(new Date('2025-01-01T00:00:01+00:00').getTime(), '1')).toEqual('1.1');
+  expect(genAnnouncementID(new Date('2025-01-01T00:00:01+00:00').getTime(), '1.1')).toEqual('1.2');
 });
 
 test('invalid ID', () => {
   expect(() => genAnnouncementID(new Date('2025-01-01T00:00:01+00:00').getTime(), '2')).toThrow();
-  expect(() => genAnnouncementID(new Date('2025-01-01T00:00:01+00:00').getTime(), '2/1')).toThrow();
+  expect(() => genAnnouncementID(new Date('2025-01-01T00:00:01+00:00').getTime(), '2.1')).toThrow();
 });

@@ -13,7 +13,7 @@ const toID = (n: number) => {
   return s;
 };
 
-const idSuffix = /^(.+)\/([0-9]+)$/;
+const idSuffix = /^(.+)\.([0-9]+)$/;
 
 export const genAnnouncementID = (createdAt: number, prevID = '') => {
   const id = toID(Math.trunc((createdAt - BASE_DATE) / 1000));
@@ -27,11 +27,11 @@ export const genAnnouncementID = (createdAt: number, prevID = '') => {
         throw new Error('invalid prevID');
       }
       const suffix = parseInt(s);
-      return `${id}/${suffix + 1}`;
+      return `${id}.${suffix + 1}`;
     } else if (id !== prevID) {
       throw new Error('invalid prevID');
     } else {
-      return `${id}/1`;
+      return `${id}.1`;
     }
   }
 };
