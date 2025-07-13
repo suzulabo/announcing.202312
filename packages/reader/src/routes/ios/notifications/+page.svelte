@@ -53,7 +53,6 @@
         {
           notification: true,
           lastReadID: channel.announcementIDs?.[0] ?? '',
-          channel,
           ...channel,
           status: 'LOADED',
           unread: 0,

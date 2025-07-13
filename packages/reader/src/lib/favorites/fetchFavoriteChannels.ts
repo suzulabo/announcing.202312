@@ -6,7 +6,7 @@ import { getFavorites, type Favorite } from './favorites';
 export type FavoriteChannel = Favorite &
   (
     | { status: 'LOADING' | 'NOT_FOUND' | 'ERROR' }
-    | { status: 'LOADED'; channel: GetChannelResult; unread: number }
+    | { status: 'LOADED'; updatedAt: number; unread: number }
   );
 
 const countUnread = (channel: GetChannelResult, lastReadID: string) => {
@@ -39,7 +39,7 @@ export const fetchFavoriteChannels = (callback: (channels: FavoriteChannel[]) =>
       case 'NOT_FOUND':
         return -1;
       default:
-        return v.channel.updatedAt;
+        return v.updatedAt;
     }
   };
 
@@ -63,7 +63,6 @@ export const fetchFavoriteChannels = (callback: (channels: FavoriteChannel[]) =>
           ...favorite,
           ...channel,
           status: 'LOADED',
-          channel,
           unread: countUnread(channel, favorite.lastReadID),
         });
       } else {
