@@ -49,7 +49,16 @@
         channelNotFound = true;
         return;
       }
-      channels = [{ notification: true, channel, ...channel, status: 'LOADED' }, ...channels];
+      channels = [
+        {
+          notification: true,
+          lastReadID: channel.announcementIDs?.[0] ?? '',
+          channel,
+          ...channel,
+          status: 'LOADED',
+        },
+        ...channels,
+      ];
     } finally {
       searchChannelID = '';
       loading = false;
