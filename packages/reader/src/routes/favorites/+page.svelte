@@ -121,9 +121,9 @@
 
 <div class="channels">
   {#each channels as channel (channel.channelID)}
-    <a
+    <svelte:element
+      this={editing ? 'div' : 'a'}
       class="card channel"
-      class:editing
       class:deleted={channel.status === 'NOT_FOUND'}
       href={`/${channel.channelID}`}
     >
@@ -150,7 +150,7 @@
           }}>{$LL.delete()}</button
         >
       {/if}
-    </a>
+    </svelte:element>
   {/each}
 </div>
 
@@ -200,10 +200,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-
-      &.editing {
-        pointer-events: none;
-      }
 
       &.deleted {
         .name,

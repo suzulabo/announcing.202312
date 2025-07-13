@@ -141,9 +141,9 @@
 
   <div class="channels">
     {#each channels as channel (channel.channelID)}
-      <a
+      <svelte:element
+        this={editing ? 'div' : 'a'}
         class="card channel"
-        class:editing
         class:deleted={channel.status === 'NOT_FOUND'}
         href={`x-safari-https://${location.host}/${channel.channelID}`}
       >
@@ -163,7 +163,7 @@
         {#if channel.status === 'LOADING'}
           <Spinner size={9} />
         {/if}
-      </a>
+      </svelte:element>
     {/each}
   </div>
 </div>
@@ -233,10 +233,6 @@
         display: flex;
         align-items: center;
         gap: 8px;
-
-        &.editing {
-          pointer-events: none;
-        }
 
         &.deleted {
           .name,
