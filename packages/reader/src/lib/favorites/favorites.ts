@@ -1,5 +1,6 @@
 import { postNotification } from '$lib/fetch/postNotification';
 import { getNotificationToken } from '$lib/notification/firebase';
+import type { GetChannelResult } from '@announcing/db/types';
 import { isSupported } from 'firebase/messaging';
 import * as v from 'valibot';
 
@@ -11,6 +12,7 @@ const favoritesSchema = v.array(
     name: v.pipe(v.string(), v.nonEmpty()),
     icon: v.optional(v.pipe(v.string(), v.nonEmpty())),
     notification: v.optional(v.boolean()),
+    lastReadID: v.pipe(v.string(), v.nonEmpty()),
   }),
 );
 
@@ -35,14 +37,15 @@ export const getFavorites = (): Favorites => {
   }
 };
 
-export const addFavorite = (value: Favorite) => {
+export const addFavorite = (channel: GetChannelResult) => {
   const favoritesMap = toMap(getFavorites());
-  const current = favoritesMap.get(value.channelID);
-  favoritesMap.set(value.channelID, {
-    channelID: value.channelID,
-    name: value.name,
-    ...(value.icon && { icon: value.icon }),
+  const current = favoritesMap.get(channel.channelID);
+  favoritesMap.set(channel.channelID, {
+    channelID: channel.channelID,
+    name: channel.name,
+    ...(channel.icon && { icon: channel.icon }),
     ...(current?.notification && { notification: current.notification }),
+    lastReadID: channel.announcementIDs?.[0] ?? '',
   });
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify([...favoritesMap.values()]));
@@ -58,6 +61,17 @@ export const updateFavorites = (favorites: Favorites) => {
     };
   });
   localStorage.setItem(STORAGE_KEY, JSON.stringify(striped));
+};
+
+export const updateLastReadID = (channelID: string, lastReadID: string) => {
+  const favorites = getFavorites();
+  const favoritesMap = toMap(favorites);
+  const favorite = favoritesMap.get(channelID);
+  if (!favorite) {
+    return;
+  }
+  favorite.lastReadID = lastReadID;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify([...favoritesMap.values()]));
 };
 
 export const deleteFavorite = async (channelID: string) => {

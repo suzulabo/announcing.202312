@@ -1,4 +1,4 @@
-const regex = /^[0-9A-Za-z]{3}[A-Za-z0-9\-_]{6}$/;
+const regex = /^[-_0-9A-Za-z.]{1,10}$/;
 
 export const match = (param: string) => {
   return param.match(regex) !== null;

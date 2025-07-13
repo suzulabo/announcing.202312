@@ -6,6 +6,7 @@
     addFavorite,
     deleteFavorite,
     getFavorites,
+    updateLastReadID,
     type Favorite,
   } from '$lib/favorites/favorites';
   import { fetchAnnouncement } from '$lib/fetch/fetchAnnouncement';
@@ -28,6 +29,7 @@
 
   let favorite = $state<Favorite>();
   let loading = $state(false);
+  let saveLastRead = false;
 
   let copyModal: CopyModal;
   let confirmModal: ConfirmModal;
@@ -38,11 +40,18 @@
     channel: data.channel,
     announcementHrefPrefix: page.url.pathname,
     announcementKeys: data.channel.announcementIDs ?? [],
-    announcementLoader: (key: string) => {
-      return fetchAnnouncement({
+    announcementLoader: async (key: string) => {
+      const res = await fetchAnnouncement({
         channelID: data.channelID,
         announcementID: key,
       });
+      if (!saveLastRead) {
+        const lastID = data.channel.announcementIDs?.[0];
+        if (lastID) {
+          updateLastReadID(data.channelID, lastID);
+        }
+      }
+      return res;
     },
   } satisfies ComponentProps<typeof ChannelView>);
 
@@ -53,6 +62,7 @@
 
   onMount(() => {
     checkFavorites();
+    saveLastRead = false;
   });
 
   const AddFavoriteCLickHandler = () => {
