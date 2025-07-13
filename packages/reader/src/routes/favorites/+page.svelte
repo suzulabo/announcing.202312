@@ -139,6 +139,9 @@
       {#if channel.status === 'LOADING'}
         <Spinner size={9} />
       {/if}
+      {#if channel.status === 'LOADED' && channel.unread > 0}
+        <div class="unread">{channel.unread}</div>
+      {/if}
       {#if editing}
         <button
           class="unstyled error delete"

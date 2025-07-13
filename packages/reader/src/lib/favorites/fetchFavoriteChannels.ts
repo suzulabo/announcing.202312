@@ -1,9 +1,28 @@
 import { fetchChannel } from '$lib/fetch/fetchChannel';
 import type { GetChannelResult } from '@announcing/db/types';
+import { decodeAnnouncementID } from '@announcing/db/utils';
 import { getFavorites, type Favorite } from './favorites';
 
 export type FavoriteChannel = Favorite &
-  ({ status: 'LOADING' | 'NOT_FOUND' | 'ERROR' } | { status: 'LOADED'; channel: GetChannelResult });
+  (
+    | { status: 'LOADING' | 'NOT_FOUND' | 'ERROR' }
+    | { status: 'LOADED'; channel: GetChannelResult; unread: number }
+  );
+
+const countUnread = (channel: GetChannelResult, lastReadID: string) => {
+  const ids = channel.announcementIDs;
+  if (!ids || ids.length === 0) {
+    return 0;
+  }
+
+  const last = decodeAnnouncementID(lastReadID);
+  return ids.reduce((p, c) => {
+    if (decodeAnnouncementID(c) > last) {
+      return p + 1;
+    }
+    return p;
+  }, 0);
+};
 
 export const fetchFavoriteChannels = (callback: (channels: FavoriteChannel[]) => void) => {
   const favorites = getFavorites();
@@ -40,7 +59,13 @@ export const fetchFavoriteChannels = (callback: (channels: FavoriteChannel[]) =>
     try {
       const channel = await fetchChannel(channelID, fetch, abortController.signal);
       if (channel) {
-        map.set(channelID, { ...favorite, ...channel, status: 'LOADED', channel });
+        map.set(channelID, {
+          ...favorite,
+          ...channel,
+          status: 'LOADED',
+          channel,
+          unread: countUnread(channel, favorite.lastReadID),
+        });
       } else {
         map.set(channelID, { ...favorite, status: 'NOT_FOUND' });
       }

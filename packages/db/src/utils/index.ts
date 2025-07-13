@@ -1,2 +1,2 @@
-export { genAnnouncementID } from './genAnnouncementID';
+export { decodeAnnouncementID, genAnnouncementID } from './genAnnouncementID';
 export { genStorageKey } from './genStorageKey';

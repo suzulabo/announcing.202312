@@ -56,6 +56,7 @@
           channel,
           ...channel,
           status: 'LOADED',
+          unread: 0,
         },
         ...channels,
       ];
