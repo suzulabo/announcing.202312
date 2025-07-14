@@ -121,6 +121,7 @@
 
 <div class="channels">
   {#each channels as channel (channel.channelID)}
+    {@const unread = channel.status === 'LOADED' && channel.unread > 0}
     <svelte:element
       this={editing ? 'div' : 'a'}
       class="card channel"
@@ -132,15 +133,12 @@
         <!-- svelte-ignore binding_property_non_reactive -->
         <input type="checkbox" in:scale|global bind:checked={channel.notification} />
       {/if}
-      <span class="name">{channel.name}</span>
+      <span class="name" class:unread>{channel.name}</span>
       {#if channel.icon}
         <img src={channel.icon} alt="icon" />
       {/if}
       {#if channel.status === 'LOADING'}
         <Spinner size={9} />
-      {/if}
-      {#if channel.status === 'LOADED' && channel.unread > 0}
-        <div class="unread">{channel.unread}</div>
       {/if}
       {#if editing}
         <button
@@ -216,6 +214,10 @@
         overflow: hidden;
         white-space: nowrap;
         flex: 1;
+
+        &.unread {
+          font-weight: bold;
+        }
       }
       img {
         width: 32px;
