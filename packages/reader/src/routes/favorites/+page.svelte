@@ -1,10 +1,16 @@
 <script lang="ts">
   import { updateFavorites } from '$lib/favorites/favorites';
+  import {
+    fetchFavoriteChannels,
+    type FavoriteChannel,
+  } from '$lib/favorites/fetchFavoriteChannels';
   import { postNotification } from '$lib/fetch/postNotification';
   import { getNotificationToken } from '$lib/notification/firebase';
   import { isIOS } from '$lib/platform/platform';
   import Loading from '@announcing/components/Loading.svelte';
+  import Spinner from '@announcing/components/Spinner.svelte';
   import { LL } from '@announcing/i18n';
+  import { onMount } from 'svelte';
   import { fade, scale } from 'svelte/transition';
   import type { PageData } from './$types';
 
@@ -13,11 +19,21 @@
   }
 
   let { data }: Props = $props();
-  let channels = $derived(data.channels);
+  let channels = $state<FavoriteChannel[]>([]);
   let channelsSaved: typeof channels;
   let editing = $state(false);
   let loading = $state(false);
   let notificationDenied = $state(false);
+
+  onMount(() => {
+    const abort = fetchFavoriteChannels((v) => {
+      channels = v;
+    });
+
+    return () => {
+      abort();
+    };
+  });
 
   const updateClickHandler = async () => {
     notificationDenied = false;
@@ -105,17 +121,26 @@
 
 <div class="channels">
   {#each channels as channel (channel.channelID)}
-    {#if editing}
-      <label class="channel card">
-        {#if data.supported}
-          <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
-          <!-- svelte-ignore binding_property_non_reactive -->
-          <input type="checkbox" in:scale|global bind:checked={channel.notification} />
-        {/if}
-        <span class="name">{channel.name}</span>
-        {#if channel.icon}
-          <img src={channel.icon} alt="icon" />
-        {/if}
+    {@const unread = channel.status === 'LOADED' && channel.unread > 0}
+    <svelte:element
+      this={editing ? 'div' : 'a'}
+      class="card channel"
+      class:deleted={channel.status === 'NOT_FOUND'}
+      href={`/${channel.channelID}`}
+    >
+      {#if editing && data.supported}
+        <!-- eslint-disable-next-line svelte/no-unused-svelte-ignore -->
+        <!-- svelte-ignore binding_property_non_reactive -->
+        <input type="checkbox" in:scale|global bind:checked={channel.notification} />
+      {/if}
+      <span class="name" class:unread>{channel.name}</span>
+      {#if channel.icon}
+        <img src={channel.icon} alt="icon" />
+      {/if}
+      {#if channel.status === 'LOADING'}
+        <Spinner size={9} />
+      {/if}
+      {#if editing}
         <button
           class="unstyled error delete"
           in:scale
@@ -125,15 +150,8 @@
             });
           }}>{$LL.delete()}</button
         >
-      </label>
-    {:else}
-      <a class="channel card" href={`/${channel.channelID}`}>
-        <span class="name">{channel.name}</span>
-        {#if channel.icon}
-          <img src={channel.icon} alt="icon" />
-        {/if}
-      </a>
-    {/if}
+      {/if}
+    </svelte:element>
   {/each}
 </div>
 
@@ -184,11 +202,22 @@
       align-items: center;
       gap: 8px;
 
+      &.deleted {
+        .name,
+        img {
+          opacity: 0.5;
+        }
+      }
+
       .name {
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
         flex: 1;
+
+        &.unread {
+          font-weight: bold;
+        }
       }
       img {
         width: 32px;

@@ -17,7 +17,7 @@
   import { putBlob, stripPrefix } from '$lib/cacheStorage/cacheStorage';
   import { resolveStoragePath } from '$lib/db/resolver';
   import { back } from '@announcing/components/actions/back';
-  import { genAnnouncementID, genStorageKey } from '@announcing/db/utils';
+  import { genStorageKey } from '@announcing/db/utils';
   import type { PageData, Snapshot } from './$types';
   import type { AnnouncementPreviewData } from './preview/+page.svelte';
 
@@ -59,12 +59,6 @@
     }
     if (data.images) {
       data.images = data.images.map((v) => stripPrefix(v));
-    }
-
-    const id = genAnnouncementID(data);
-
-    if (channel.announcementIDs && channel.announcementIDs.indexOf(id) >= 0) {
-      return false;
     }
 
     return true;

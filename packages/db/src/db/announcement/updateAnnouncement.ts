@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 
-import { genAnnouncementID } from '../../utils/genAnnouncementID';
+import { incAnnouncementID } from '../../utils/genAnnouncementID';
 import { getChannel } from '../channel/getChannel';
 import type { DBContext } from '../db';
 import { announcementsTable, channelsTable } from '../schema';
@@ -116,7 +116,7 @@ export const updateAnnouncement = async (
 
   await Promise.all(storagePuts);
 
-  const announcementID = genAnnouncementID(values);
+  const announcementID = incAnnouncementID(targetAnnouncementID);
 
   announcementIDs[index] = announcementID;
 
