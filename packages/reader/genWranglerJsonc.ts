@@ -19,13 +19,11 @@ const r2 = {
   bucket_name: localEnv.R2_BUCKET_NAME,
 };
 
-const services = [
-  {
-    binding: 'WK_PUT_TOKEN',
-    service: localEnv.NOTIFICATION_PROJECT_NAME,
-    entrypoint: 'PutTokenEntrypoint',
-  },
-];
+const putTokenService = {
+  binding: 'WK_PUT_TOKEN',
+  service: localEnv.NOTIFICATION_PROJECT_NAME,
+  entrypoint: 'PutTokenEntrypoint',
+};
 
 const config: Unstable_RawConfig = {
   name: localEnv.READER_PROJECT_NAME,
@@ -46,7 +44,7 @@ const config: Unstable_RawConfig = {
 
   d1_databases: [d1],
   r2_buckets: [r2],
-  services,
+  services: [putTokenService],
 };
 
 await writeFile('wrangler.local.jsonc', JSON.stringify(config, undefined, 2));
@@ -56,6 +54,7 @@ const remoteConfig: Unstable_RawConfig = {
   name: remoteEnv.READER_PROJECT_NAME,
   d1_databases: [{ ...d1, database_id: remoteEnv.D1_ID }],
   r2_buckets: [{ ...r2, bucket_name: remoteEnv.R2_BUCKET_NAME }],
+  services: [{ ...putTokenService, service: remoteEnv.NOTIFICATION_PROJECT_NAME }],
 };
 
 await writeFile('wrangler.remote.jsonc', JSON.stringify(remoteConfig, undefined, 2));
