@@ -244,6 +244,9 @@ importers:
       vitest:
         specifier: 'catalog:'
         version: 3.2.4(@types/node@24.0.14)(jiti@2.4.2)(jsdom@24.1.1)(sass@1.89.2)(terser@5.36.0)(tsx@4.20.3)(yaml@2.8.0)
+      wrangler:
+        specifier: 'catalog:'
+        version: 4.24.4(@cloudflare/workers-types@4.20250715.0)
 
   packages/components:
     devDependencies:
