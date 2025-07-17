@@ -4,7 +4,7 @@ packages:
 catalog:
   '@auth/core': 0.40.0
   '@auth/sveltekit': 1.10.0
-  '@cloudflare/workers-types': 4.20250628.0
+  '@cloudflare/workers-types': 4.20250715.0
   '@eslint/js': 9.30.0
   '@faker-js/faker': 9.8.0
   '@playwright/test': 1.53.1
@@ -37,7 +37,7 @@ catalog:
   js-xxhash: 4.0.0
   linkify-html: 4.3.1
   lru-cache: 11.1.0
-  miniflare: 4.20250617.4
+  miniflare: 4.20250712.0
   mockdate: 3.0.5
   prettier: 3.6.2
   prettier-plugin-organize-imports: 4.1.0
@@ -58,6 +58,6 @@ catalog:
   workbox-precaching: 7.3.0
   workbox-routing: 7.3.0
   workbox-strategies: 7.3.0
-  wrangler: 4.22.0
+  wrangler: 4.24.4
 
 catalogMode: strict
