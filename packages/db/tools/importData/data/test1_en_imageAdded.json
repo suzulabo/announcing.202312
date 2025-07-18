@@ -1,0 +1,149 @@
+{
+  "channel": {
+    "name": "Sample Channel",
+    "desc": "This is a sample channel for display confirmation. Notifications are generated using AI and scripts. Images are obtained from https://pixabay.com/."
+  },
+  "announcements": [
+    {
+      "body": "Want to add some green to your room? 🌿 How about trying houseplants?\nThey not only purify the air but also make lovely interior decor!\nWe have many varieties perfect for beginners!",
+      "tags": [
+        "houseplants",
+        "interior",
+        "air purification",
+        "beginner"
+      ],
+      "createdAt": "2025-01-20T14:30:00",
+      "images": [
+        "https://pixabay.com/get/ga7e575fef0e08858a9332e1cf749be0c0da821374bf57fb959fd11c00cdc5866c62af1261002d285cf100f6bdb04425bc505824226fe2ed442251a8ebc426fcf_1280.jpg"
+      ]
+    },
+    {
+      "body": "We're rearranging the store today! 🛠️ New products are arriving one after another.\nWe apologize for any inconvenience this may cause during your visit. 🙇‍♀️",
+      "tags": [
+        "rearrangement",
+        "new products",
+        "announcement",
+        "store"
+      ],
+      "createdAt": "2025-02-18T16:00:00",
+      "headerImage": "https://pixabay.com/get/g4792020380ea15b4fa05555ffbd785bd273396dae06be4acaf4683526b3cafbdef19876e27b4766938521923d1425ff210c7c797d65b54bc167b32b1d0b16d5b_1280.jpg"
+    },
+    {
+      "title": "🌸 Spring Has Arrived! Pansy and Viola Seedlings Are In Stock",
+      "body": "A wide variety of colorful pansy and viola seedlings have arrived! ✨\nWhy not brighten up your garden or balcony this spring?\nWe're happy to offer advice on how to grow them, so feel free to ask us! 😊",
+      "tags": [
+        "pansy",
+        "viola",
+        "seedlings",
+        "spring",
+        "gardening",
+        "flowers"
+      ],
+      "createdAt": "2025-03-05T10:00:00",
+      "headerImage": "https://pixabay.com/get/g809f5f4b6fffbcf7b86d32f5d00ba9f2e7b405697cd6983d3e44507e08fb3e1a0d08a189cdd58df085436cf1b982732ede6e64b5b8bb7e5251d0039d81f6d3ff_1280.jpg"
+    },
+    {
+      "body": "We've started a free coffee tasting service in the store! ☕\nPlease feel free to relax and enjoy the flowers.\nYou can also consult us about your garden! 🗣️",
+      "tags": [
+        "coffee",
+        "free tasting",
+        "break",
+        "consultation",
+        "store"
+      ],
+      "createdAt": "2025-03-10T11:30:00"
+    },
+    {
+      "title": "🍳 Easy-to-Start Herb Growing Kits",
+      "body": "Herb growing kits for your kitchen are now in stock! 🌱\nWe have popular herbs like mint, basil, and rosemary that you can use in your cooking.\nWhy not add fresh herbs to your meals?",
+      "tags": [
+        "herbs",
+        "growing kit",
+        "kitchen garden",
+        "cooking",
+        "mint",
+        "basil",
+        "rosemary"
+      ],
+      "createdAt": "2025-04-10T11:00:00",
+      "images": [
+        "https://pixabay.com/get/ge37632629a2be39d07072da3ecf974a1b4d02df587f6b457d00c3e18de4a931b35527d0f280aebd60c762fa7bdd5df59bbb3d5ebf0e2e5646ef7729d8de06588_1280.jpg",
+        "https://pixabay.com/get/g3e41743ee0f992a40114b0db4b89abe9f89d57cb8c09758b0f1daa6a86981fe13cbea49146180ce9715f94dfaaa73ca5256294b8224ee7ac3c58ada4005a596c_1280.jpg",
+        "https://pixabay.com/get/gfc3ae4c843220fcda2623d4abd16ad0c359d134f5a2bf8aa398615745923df61edb4b91dfc80a9161ac3e1a594ffc085c018f6e512823a90a78bb0d5ce880816_1280.jpg",
+        "https://pixabay.com/get/gd9fe7cb018be17118677f01b4fb02efd62dfedb4521d6aedadd1fb56247fcffd03af233e6e15bced6c903958410b95e14ecef441f95a2810b9d8664ba72124cb_1280.jpg"
+      ]
+    },
+    {
+      "title": "🌵 Popular Succulent Festa Now On!",
+      "body": "From rare varieties to classic succulents, we have a large selection!\nWhether you're a collector or a beginner, you're sure to find your favorite pot!\nPeriod: April 20th - April 30th, 2025 🎉",
+      "tags": [
+        "succulents",
+        "festa",
+        "event",
+        "rare varieties",
+        "gardening"
+      ],
+      "createdAt": "2025-04-22T10:30:00",
+      "headerImage": "https://pixabay.com/get/g15ae50ff50a7ede1aeff3e08d7c255fc6a191d97875b5bd0d386728bfcb4f52a0a757f3673497ac5fa6ca44bec1645fee436aebd5c1ed4fbdec47c0dac3eb8ae_1280.jpg",
+      "images": [
+        "https://pixabay.com/get/g1fc0e90ceb0efcdef145fe4b18c611ae59adf711e888a27624315f482fa158658f4ef398e68e4a173f71c8b152e217cf8ec7e20d6322c39335228ce919c966f7_1280.jpg",
+        "https://pixabay.com/get/g6f4eb1f6cd92f07f79cd926750f52088c383839ba7b586c290afbc95cdacb2fa481d547cd5c53503542d17616dc98799a8d70c38a263a9d89347f8d43a876774_1280.jpg",
+        "https://pixabay.com/get/g7c7cc7a9ba0a3788bac87b3797ba7a534f278814a2bc7ccfacbfd5f812ab9cc412d5190ddbe26d3f6f8e2b8ccb85a5760ab2acb0911dc7d794a0cedefc058687_1280.jpg",
+        "https://pixabay.com/get/g6774c91ffd21b8f6feb4d03f93cef048d828e5f5f5cd7b59921cd421dfd8f4e0f555ac53b51c294cd901ff2ee41a3da668f008b1726dd411c9fdd0c28cd59d37_1280.jpg"
+      ]
+    },
+    {
+      "title": "🪴 Gardening Supplies, Fully Stocked!",
+      "body": "We have a wide range of items to make gardening more enjoyable, from stylish watering cans to easy-to-use pruning shears.\nWhether you're a beginner or an experienced gardener, please take a look!",
+      "tags": [
+        "gardening",
+        "supplies",
+        "watering can",
+        "pruning shears",
+        "gardening tools"
+      ],
+      "createdAt": "2025-05-01T13:00:00",
+      "images": [
+        "https://pixabay.com/get/gfdbfa89abd22ead1ba9e53a00baf98fb76d772eb08dda1a09826270028bc3032401c50cb1e6a6097fc1faef4e9a7228e06e4af4f2fa0651333ba5846880d3e8f_1280.jpg"
+      ]
+    },
+    {
+      "title": "👨‍👧‍👦 How About a Gift for Father's Day?",
+      "body": "Looking for a Father's Day gift to show your appreciation? 🌻\nWe have a wide selection of flowers that men will love, including popular sunflowers and refreshing anthuriums.\nShow your dad how much you care!",
+      "tags": [
+        "Father's Day",
+        "gift",
+        "sunflower",
+        "anthurium",
+        "bouquet"
+      ],
+      "createdAt": "2025-06-01T15:00:00",
+      "images": [
+        "https://pixabay.com/get/g39592e46cca57563650b0069c949a5d535791a82721a6eb81d0181081009bb90d2d4ffc110ca68c02cad048cd17abd5a0eff7298779708c2d1aa38cd6a0f9a0e_1280.jpg"
+      ]
+    },
+    {
+      "body": "Don't let the summer heat get you down! ☀️ We're holding a succulent growing workshop next month.\nLearn tips on watering, choosing sunny spots, and other secrets to keeping your succulents healthy! 🌵",
+      "tags": [
+        "succulents",
+        "growing workshop",
+        "summer",
+        "gardening",
+        "event"
+      ],
+      "createdAt": "2025-06-15T09:00:00",
+      "headerImage": "https://pixabay.com/get/g5cb2f3a6701120d783a0f83bf9621a94e055e50654234b13e05f280767f355214ba4bf60ea8298ec48d38b287b89d261db0fceef653859bdce22f8336c763702_1280.jpg"
+    },
+    {
+      "body": "Thank you for visiting today! 😊\nThe hot days continue, so please take care of yourselves.\nWe look forward to seeing you all tomorrow! ☀️",
+      "tags": [
+        "greeting",
+        "gratitude",
+        "announcement",
+        "daily"
+      ],
+      "createdAt": "2025-07-17T17:00:00",
+      "headerImage": "https://pixabay.com/get/gc62ecf62233623e84414e3e9b3bfa7752646a8b16f0ca3c88c4b909736cc6eb8162f4fe4c0ca6ba25826e94ad3977be49b52fc842970b42b07d7fa4cde1152a5_1280.jpg"
+    }
+  ]
+}
