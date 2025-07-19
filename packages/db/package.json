@@ -33,8 +33,7 @@
     "generate": "drizzle-kit generate",
     "migrate:remote": "wrangler d1 migrations apply D1 -c wrangler.remote.jsonc --remote",
     "migrate:local": "wrangler d1 migrations apply D1  -c wrangler.local.jsonc --local --persist-to ../db-local",
-    "genTestData": "jiti tools/genTestData.ts",
-    "importData:addImage": "jiti tools/importData/addImage.ts"
+    "genTestData": "jiti tools/genTestData.ts"
   },
   "devDependencies": {
     "@announcing/cloudflare-support": "workspace:*",
@@ -48,7 +47,6 @@
     "js-xxhash": "catalog:",
     "miniflare": "catalog:",
     "mockdate": "catalog:",
-    "node-fetch-cache": "catalog:",
     "vitest": "catalog:",
     "wrangler": "catalog:"
   }
