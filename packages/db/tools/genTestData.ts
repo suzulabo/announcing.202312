@@ -1,4 +1,5 @@
 import { createLocalBindings } from '@announcing/cloudflare-support/localBindings';
+import { createRemoteBindings } from '@announcing/cloudflare-support/remoteBindings';
 import { faker } from '@faker-js/faker';
 import { addDays } from 'date-fns';
 import MockDate from 'mockdate';
@@ -25,8 +26,8 @@ const genDate = (n: number) => {
   return addDays('2026-02-01T00:11:22', n).getTime();
 };
 
-const generate = async (userID: string, channelID: string) => {
-  const b = await createLocalBindings();
+const generate = async (userID: string, channelID: string, remote: boolean) => {
+  const b = remote ? await createRemoteBindings() : await createLocalBindings();
   const db = createDB(b);
 
   try {
@@ -120,17 +121,16 @@ const generate = async (userID: string, channelID: string) => {
 
     for (const [index, a] of [...data.values()].reverse().entries()) {
       await db.addAnnouncement({ userID, channelID, createdAt: genDate(index), ...a });
+      console.log(`[${index + 1}/${data.size}] done.`);
     }
+
+    console.log('Finished.');
   } finally {
-    await b.mf.dispose();
+    await b.dispose();
   }
 };
 
 const main = async () => {
-  const printUsage = () => {
-    console.log('pnpm run genTestData');
-  };
-
   const parsed = parseArgs({
     options: {
       userID: {
@@ -141,17 +141,16 @@ const main = async () => {
         type: 'string',
         default: '9901',
       },
+      remote: {
+        type: 'boolean',
+        default: false,
+      },
     },
   });
 
-  const { userID, channelID } = parsed.values;
+  const { userID, channelID, remote } = parsed.values;
 
-  if (!userID || !channelID) {
-    printUsage();
-    return;
-  }
-
-  await generate(userID, channelID);
+  await generate(userID, channelID, remote);
 };
 
 await main();

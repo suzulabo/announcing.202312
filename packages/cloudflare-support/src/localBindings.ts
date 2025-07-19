@@ -28,5 +28,10 @@ export const createLocalBindings = async () => {
     KV_NOTIFICATION: KVNamespace;
   }>();
 
-  return { ...bindings, mf };
+  return {
+    ...bindings,
+    dispose: () => {
+      return mf.dispose();
+    },
+  };
 };
