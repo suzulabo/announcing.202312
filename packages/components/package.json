@@ -49,6 +49,10 @@
       "types": "./dist/parts/SettingsModal/SettingsModal.svelte.d.ts",
       "svelte": "./dist/parts/SettingsModal/SettingsModal.svelte"
     },
+    "./Toolbar.svelte": {
+      "types": "./dist/parts/Toolbar/Toolbar.svelte.d.ts",
+      "svelte": "./dist/parts/Toolbar/Toolbar.svelte"
+    },
     "./FileInput.svelte": {
       "types": "./dist/atoms/FileInput.svelte.d.ts",
       "svelte": "./dist/atoms/FileInput.svelte"
