@@ -5,6 +5,8 @@
   import MaterialSymbolsSettingsOutline from '$lib/components/icon/MaterialSymbolsSettingsOutline.svelte';
   import { setupBack } from '@announcing/components/actions/back';
   import Navigating from '@announcing/components/Navigating.svelte';
+  import Toolbar from '@announcing/components/Toolbar.svelte';
+  import { MaterialSymbolsHomeOutlineRounded } from '@announcing/components/icons';
   import SettingsModal from '@announcing/components/SettingsModal.svelte';
   import { LL } from '@announcing/i18n';
   import { onMount, type Snippet } from 'svelte';
@@ -61,6 +63,15 @@
     <span class="copyright">&copy;Announcing</span>
   </div>
 </footer>
+
+<Toolbar
+  requestLocale={data.requestLocale}
+  requestTheme={data.requestTheme}
+  items={[
+    { type: 'link', label: 'home', icon: MaterialSymbolsHomeOutlineRounded, href: '/' },
+    { type: 'settings' },
+  ]}
+/>
 
 <Navigating show={!!navigating.from} />
 
