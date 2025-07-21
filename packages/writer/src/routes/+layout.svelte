@@ -4,6 +4,7 @@
   import Toolbar from '@announcing/components/Toolbar.svelte';
   import { type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
+  import { LL } from '@announcing/i18n';
 
   interface Props {
     data: LayoutData;
@@ -25,7 +26,7 @@
   requestLocale={data.requestLocale}
   requestTheme={data.requestTheme}
   items={[
-    { type: 'link', label: 'home', icon: MaterialSymbolsHomeOutlineRounded, href: '/' },
+    { type: 'link', label: $LL.home(), icon: MaterialSymbolsHomeOutlineRounded, href: '/' },
     { type: 'settings' },
   ]}
 />

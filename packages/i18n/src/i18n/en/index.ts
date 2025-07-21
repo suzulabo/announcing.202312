@@ -86,6 +86,7 @@ const en = {
   enterID: 'Input ID',
   noChannelsAreRegistered: 'No channels are registered.',
   add: 'Add',
+  home: 'Home',
 } satisfies BaseTranslation;
 
 export default en;

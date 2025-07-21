@@ -83,6 +83,7 @@ const ja = {
   enterID: 'IDを入力',
   noChannelsAreRegistered: '登録されたチャンネルはありません',
   add: '追加',
+  home: 'ホーム',
 } satisfies Translation;
 
 export default ja;

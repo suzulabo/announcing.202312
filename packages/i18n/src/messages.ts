@@ -326,4 +326,8 @@ export const messages = {
     en: 'Add',
     ja: '追加',
   },
+  home: {
+    en: 'Home',
+    ja: 'ホーム',
+  },
 };
