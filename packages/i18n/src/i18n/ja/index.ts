@@ -84,6 +84,7 @@ const ja = {
   noChannelsAreRegistered: '登録されたチャンネルはありません',
   add: '追加',
   home: 'ホーム',
+  writerTitle: 'Announcing 投稿者サイト',
 } satisfies Translation;
 
 export default ja;

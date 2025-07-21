@@ -32,7 +32,7 @@
 </script>
 
 <header>
-  <span>Announcing for Writer</span><span class="subtitle"></span>
+  <span>{$LL.writerTitle()}</span>
   <button
     class="small"
     onclick={() => {

@@ -330,4 +330,8 @@ export const messages = {
     en: 'Home',
     ja: 'ホーム',
   },
+  writerTitle: {
+    en: 'Announcing for Writer',
+    ja: 'Announcing 投稿者サイト',
+  },
 };

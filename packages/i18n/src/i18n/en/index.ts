@@ -87,6 +87,7 @@ const en = {
   noChannelsAreRegistered: 'No channels are registered.',
   add: 'Add',
   home: 'Home',
+  writerTitle: 'Announcing for Writer',
 } satisfies BaseTranslation;
 
 export default en;
