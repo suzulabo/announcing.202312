@@ -18,6 +18,7 @@
     <img class="icon" alt="channel icon" src={channel.icon} />
   {/if}
 </a>
+
 {@render children?.()}
 
 <style lang="scss">
@@ -25,19 +26,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    min-height: 64px;
-    padding: 0 16px;
-    margin: 0 auto 32px;
+    gap: 8px;
+    background-color: var(--color-background);
+    padding: 8px 16px;
+    margin: 0 0 16px;
 
     .name {
-      font-size: 20px;
+      font-weight: bold;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
+
     .icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      object-fit: contain;
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
     }
   }
 </style>
