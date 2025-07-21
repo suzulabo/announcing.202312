@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { signIn } from '@auth/sveltekit/client';
   import { PUBLIC_AUTH_CARDINALS } from '$env/static/public';
-  import GoogleIcon from '$lib/components/icon/GoogleIcon.svelte';
+  import { GoogleIcon } from '@announcing/components/icons';
   import { LL } from '@announcing/i18n';
+  import { signIn } from '@auth/sveltekit/client';
 </script>
 
 <div class="buttons">
