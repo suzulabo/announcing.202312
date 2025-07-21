@@ -16,6 +16,7 @@
   },
   "type": "module",
   "exports": {
+    "./base.scss": "./dist/base.scss",
     "./settings.server": {
       "types": "./dist/utils/settings.server.d.ts",
       "import": "./dist/utils/settings.server.js"
@@ -28,7 +29,10 @@
       "types": "./dist/actions/back.d.ts",
       "import": "./dist/actions/back.js"
     },
-    "./base.scss": "./dist/base.scss",
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "import": "./dist/icons/index.js"
+    },
     "./AnnouncementView.svelte": {
       "types": "./dist/parts/AnnouncementView/AnnouncementView.svelte.d.ts",
       "svelte": "./dist/parts/AnnouncementView/AnnouncementView.svelte"
@@ -48,6 +52,14 @@
     "./SettingsModal.svelte": {
       "types": "./dist/parts/SettingsModal/SettingsModal.svelte.d.ts",
       "svelte": "./dist/parts/SettingsModal/SettingsModal.svelte"
+    },
+    "./RootLayout.svelte": {
+      "types": "./dist/parts/RootLayout/RootLayout.svelte.d.ts",
+      "svelte": "./dist/parts/RootLayout/RootLayout.svelte"
+    },
+    "./Toolbar.svelte": {
+      "types": "./dist/parts/Toolbar/Toolbar.svelte.d.ts",
+      "svelte": "./dist/parts/Toolbar/Toolbar.svelte"
     },
     "./FileInput.svelte": {
       "types": "./dist/atoms/FileInput.svelte.d.ts",

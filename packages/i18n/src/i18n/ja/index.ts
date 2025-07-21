@@ -11,7 +11,7 @@ const ja = {
   lightMode: '明るい',
   darkMode: '暗い',
   close: '閉じる',
-  toolbarSize: '画面下のボタンの大きさ',
+  toolbarSize: 'ツールバーの大きさ',
   normal: '標準',
   compact: '小さめ',
   settings: '設定',
@@ -83,6 +83,8 @@ const ja = {
   enterID: 'IDを入力',
   noChannelsAreRegistered: '登録されたチャンネルはありません',
   add: '追加',
+  home: 'ホーム',
+  writerTitle: 'Announcing 投稿者サイト',
 } satisfies Translation;
 
 export default ja;

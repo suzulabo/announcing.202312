@@ -40,8 +40,8 @@ export const messages = {
     ja: '閉じる',
   },
   toolbarSize: {
-    en: 'Bottom button size',
-    ja: '画面下のボタンの大きさ',
+    en: 'Toolbar size',
+    ja: 'ツールバーの大きさ',
   },
   normal: {
     en: 'Normal',
@@ -325,5 +325,13 @@ export const messages = {
   add: {
     en: 'Add',
     ja: '追加',
+  },
+  home: {
+    en: 'Home',
+    ja: 'ホーム',
+  },
+  writerTitle: {
+    en: 'Announcing for Writer',
+    ja: 'Announcing 投稿者サイト',
   },
 };

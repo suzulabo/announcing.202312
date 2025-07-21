@@ -1,7 +1,5 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import SolarStarBold from '$lib/components/icon/SolarStarBold.svelte';
-  import SolarStarLinear from '$lib/components/icon/SolarStarLinear.svelte';
   import {
     addFavorite,
     deleteFavorite,
@@ -14,6 +12,7 @@
   import ChannelView from '@announcing/components/ChannelView.svelte';
   import ConfirmModal from '@announcing/components/ConfirmModal.svelte';
   import CopyModal from '@announcing/components/CopyModal.svelte';
+  import { SolarStarBold, SolarStarLinear } from '@announcing/components/icons';
   import Loading from '@announcing/components/Loading.svelte';
   import { createSnapshotContext } from '@announcing/components/snapshotContext';
   import { LL } from '@announcing/i18n';

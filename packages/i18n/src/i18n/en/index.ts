@@ -11,7 +11,7 @@ const en = {
   lightMode: 'Light',
   darkMode: 'Dark',
   close: 'Close',
-  toolbarSize: 'Bottom button size',
+  toolbarSize: 'Toolbar size',
   normal: 'Normal',
   compact: 'Compact',
   settings: 'Settings',
@@ -86,6 +86,8 @@ const en = {
   enterID: 'Input ID',
   noChannelsAreRegistered: 'No channels are registered.',
   add: 'Add',
+  home: 'Home',
+  writerTitle: 'Announcing for Writer',
 } satisfies BaseTranslation;
 
 export default en;

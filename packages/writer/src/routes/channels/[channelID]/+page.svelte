@@ -6,17 +6,18 @@
   import { PUBLIC_READER_PREFIX } from '$env/static/public';
   import ChannelEditor from '$lib/components/ChannelEditor.svelte';
 
-  import MaterialSymbolsBoxEditOutline from '$lib/components/icon/MaterialSymbolsBoxEditOutline.svelte';
-  import MaterialSymbolsContentCopyOutline from '$lib/components/icon/MaterialSymbolsContentCopyOutline.svelte';
-  import MaterialSymbolsDangerous from '$lib/components/icon/MaterialSymbolsDangerous.svelte';
-  import MaterialSymbolsEditDocumentOutline from '$lib/components/icon/MaterialSymbolsEditDocumentOutline.svelte';
-  import MaterialSymbolsPostAdd from '$lib/components/icon/MaterialSymbolsPostAdd.svelte';
-  import MdiExternalLink from '$lib/components/icon/MdiExternalLink.svelte';
   import { clearChannelCache } from '$lib/fetch/channelCache';
+  import CopyModal from '@announcing/components/CopyModal.svelte';
+  import {
+    MaterialSymbolsBoxEditOutline,
+    MaterialSymbolsContentCopyOutline,
+    MaterialSymbolsDangerous,
+    MaterialSymbolsEditDocumentOutline,
+    MaterialSymbolsPostAdd,
+    MdiExternalLink,
+  } from '@announcing/components/icons';
   import type { PageData } from './$types';
   import DeleteModal from './DeleteModal.svelte';
-  import CopyModal from '@announcing/components/CopyModal.svelte';
-  import { back } from '@announcing/components/actions/back';
 
   interface Props {
     data: PageData;
@@ -113,7 +114,6 @@
       <MaterialSymbolsDangerous {...iconProps} />
       {$LL.deleteChannel()}</button
     >
-    <a class="button small back" href="/" use:back>{$LL.back()}</a>
   </div>
 </div>
 
@@ -137,10 +137,6 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-      }
-
-      .back {
-        margin: 0 auto;
       }
     }
   }

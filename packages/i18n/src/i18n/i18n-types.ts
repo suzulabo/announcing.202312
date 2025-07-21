@@ -55,7 +55,7 @@ type RootTranslation = {
 	 */
 	close: string
 	/**
-	 * B​o​t​t​o​m​ ​b​u​t​t​o​n​ ​s​i​z​e
+	 * T​o​o​l​b​a​r​ ​s​i​z​e
 	 */
 	toolbarSize: string
 	/**
@@ -341,6 +341,14 @@ type RootTranslation = {
 	 * A​d​d
 	 */
 	add: string
+	/**
+	 * H​o​m​e
+	 */
+	home: string
+	/**
+	 * A​n​n​o​u​n​c​i​n​g​ ​f​o​r​ ​W​r​i​t​e​r
+	 */
+	writerTitle: string
 }
 
 export type TranslationFunctions = {
@@ -385,7 +393,7 @@ export type TranslationFunctions = {
 	 */
 	close: () => LocalizedString
 	/**
-	 * Bottom button size
+	 * Toolbar size
 	 */
 	toolbarSize: () => LocalizedString
 	/**
@@ -670,6 +678,14 @@ export type TranslationFunctions = {
 	 * Add
 	 */
 	add: () => LocalizedString
+	/**
+	 * Home
+	 */
+	home: () => LocalizedString
+	/**
+	 * Announcing for Writer
+	 */
+	writerTitle: () => LocalizedString
 }
 
 export type Formatters = {}

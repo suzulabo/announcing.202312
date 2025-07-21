@@ -31,6 +31,18 @@
   };
 </script>
 
+<header>
+  <span>{$LL.writerTitle()}</span>
+  <button
+    class="small"
+    onclick={() => {
+      void signOut();
+    }}
+  >
+    {$LL.signOut()}
+  </button>
+</header>
+
 <div class="container">
   {#if data.channels}
     <div class="channels">
@@ -56,20 +68,24 @@
     >{$LL.createChannel()}
   </button>
   <span class="create-btn-desc">{$LL.channelsCanBeCreated()}</span>
-
-  <button
-    class="small"
-    onclick={() => {
-      void signOut();
-    }}
-  >
-    {$LL.signOut()}
-  </button>
 </div>
 
 <ChannelEditor bind:this={editor} onSubmit={submitHandler} />
 
 <style lang="scss">
+  header {
+    margin: 16px 16px 32px;
+    display: flex;
+    align-items: center;
+    color: var(--color-text-subtle);
+    button.small {
+      margin-left: auto;
+      font-size: 13px;
+      padding: 4px 8px;
+      border-radius: 12px;
+    }
+  }
+
   .container {
     display: flex;
     flex-direction: column;
@@ -102,7 +118,7 @@
     }
 
     .create-btn {
-      margin: 16px auto 0;
+      margin: 32px auto 0;
     }
     .create-btn-desc {
       margin: 8px auto 32px;
