@@ -1,7 +1,6 @@
 <script lang="ts">
-  import F7SquareFavorites from '$lib/components/icon/F7SquareFavorites.svelte';
-  import MdiReload from '$lib/components/icon/MdiReload.svelte';
   import { isPWA } from '$lib/platform/platform';
+  import { F7SquareFavorites, MdiReload } from '@announcing/components/icons';
   import RootLayout from '@announcing/components/RootLayout.svelte';
   import Toolbar from '@announcing/components/Toolbar.svelte';
   import { LL } from '@announcing/i18n';
