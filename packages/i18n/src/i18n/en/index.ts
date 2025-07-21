@@ -11,7 +11,7 @@ const en = {
   lightMode: 'Light',
   darkMode: 'Dark',
   close: 'Close',
-  toolbarSize: 'Bottom button size',
+  toolbarSize: 'Toolbar size',
   normal: 'Normal',
   compact: 'Compact',
   settings: 'Settings',

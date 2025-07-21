@@ -40,8 +40,8 @@ export const messages = {
     ja: '閉じる',
   },
   toolbarSize: {
-    en: 'Bottom button size',
-    ja: '画面下のボタンの大きさ',
+    en: 'Toolbar size',
+    ja: 'ツールバーの大きさ',
   },
   normal: {
     en: 'Normal',

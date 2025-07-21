@@ -11,7 +11,7 @@ const ja = {
   lightMode: '明るい',
   darkMode: '暗い',
   close: '閉じる',
-  toolbarSize: '画面下のボタンの大きさ',
+  toolbarSize: 'ツールバーの大きさ',
   normal: '標準',
   compact: '小さめ',
   settings: '設定',
