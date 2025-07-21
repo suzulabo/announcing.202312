@@ -53,6 +53,10 @@
       "types": "./dist/parts/SettingsModal/SettingsModal.svelte.d.ts",
       "svelte": "./dist/parts/SettingsModal/SettingsModal.svelte"
     },
+    "./RootLayout.svelte": {
+      "types": "./dist/parts/RootLayout/RootLayout.svelte.d.ts",
+      "svelte": "./dist/parts/RootLayout/RootLayout.svelte"
+    },
     "./Toolbar.svelte": {
       "types": "./dist/parts/Toolbar/Toolbar.svelte.d.ts",
       "svelte": "./dist/parts/Toolbar/Toolbar.svelte"
