@@ -5,6 +5,8 @@
   import { signIn } from '@auth/sveltekit/client';
 </script>
 
+<header><span>{$LL.writerTitle()}</span></header>
+
 <div class="buttons">
   {#if PUBLIC_AUTH_CARDINALS}
     <button
@@ -24,6 +26,12 @@
 </div>
 
 <style lang="scss">
+  header {
+    margin: 16px 16px 64px;
+    color: var(--color-text-subtle);
+    text-align: center;
+  }
+
   .buttons {
     display: flex;
     flex-direction: column;
