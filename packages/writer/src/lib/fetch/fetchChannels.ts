@@ -24,5 +24,9 @@ export const fetchChannels = async (fetch_ = fetch) => {
     return result;
   }
 
+  if (res.status === 400) {
+    return;
+  }
+
   throw new Error(`Fetch Channels Error`);
 };
