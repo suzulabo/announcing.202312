@@ -8,7 +8,7 @@ import {
   sentryHandle,
   init as sentryInit,
 } from '@sentry/sveltekit';
-import { type Handle, redirect } from '@sveltejs/kit';
+import { error, type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { handle as authenticationHandle } from './auth';
 
@@ -36,7 +36,11 @@ const authorizationHandle: Handle = async ({ resolve, event }) => {
     const session = await event.locals.auth();
 
     if (!session?.user?.id) {
-      redirect(303, '/signin');
+      if (event.url.pathname.startsWith('/api')) {
+        error(400);
+      } else {
+        redirect(303, '/signin');
+      }
     }
   }
 

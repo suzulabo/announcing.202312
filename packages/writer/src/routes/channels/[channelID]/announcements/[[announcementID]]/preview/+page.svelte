@@ -181,7 +181,7 @@
   <button class="submit-btn" onclick={addAnnouncement}
     >{announcementID ? $LL.updateAnnouncement() : $LL.postAnnouncement()}</button
   >
-  <a class="button small cancel" href={data.backHref} use:back>{$LL.cancel()}</a>
+  <a class="button small cancel" href={data.backHref} use:back>{$LL.back()}</a>
 {/if}
 
 <Loading show={loading} />
