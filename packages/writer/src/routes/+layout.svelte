@@ -1,10 +1,11 @@
 <script lang="ts">
+  import { page } from '$app/state';
   import { MaterialSymbolsHomeOutlineRounded } from '@announcing/components/icons';
   import RootLayout from '@announcing/components/RootLayout.svelte';
   import Toolbar from '@announcing/components/Toolbar.svelte';
-  import { type Snippet } from 'svelte';
-  import type { LayoutData } from './$types';
   import { LL } from '@announcing/i18n';
+  import { type ComponentProps, type Snippet } from 'svelte';
+  import type { LayoutData } from './$types';
 
   interface Props {
     data: LayoutData;
@@ -12,6 +13,20 @@
   }
 
   let { data, children }: Props = $props();
+
+  let toolbarItems = $derived.by(() => {
+    const items: ComponentProps<typeof Toolbar>['items'] = [];
+    if (!page.url.pathname.startsWith('/signin')) {
+      items.push({
+        type: 'link',
+        label: $LL.home(),
+        icon: MaterialSymbolsHomeOutlineRounded,
+        href: '/',
+      });
+    }
+    items.push({ type: 'settings' });
+    return items;
+  });
 </script>
 
 <svelte:head>
@@ -24,14 +39,7 @@
 
 <div class="bottom"></div>
 
-<Toolbar
-  requestLocale={data.requestLocale}
-  requestTheme={data.requestTheme}
-  items={[
-    { type: 'link', label: $LL.home(), icon: MaterialSymbolsHomeOutlineRounded, href: '/' },
-    { type: 'settings' },
-  ]}
-/>
+<Toolbar requestLocale={data.requestLocale} requestTheme={data.requestTheme} items={toolbarItems} />
 
 <style lang="scss">
   .bottom {
