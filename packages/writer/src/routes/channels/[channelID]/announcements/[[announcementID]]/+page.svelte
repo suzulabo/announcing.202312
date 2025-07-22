@@ -209,7 +209,7 @@
     >{$LL.preview()}</button
   >
 
-  <a class="button small back-btn" href={data.backHref} use:back>{$LL.cancel()}</a>
+  <a class="button small back-btn" href={data.backHref} use:back>{$LL.back()}</a>
 </div>
 
 <style lang="scss">
