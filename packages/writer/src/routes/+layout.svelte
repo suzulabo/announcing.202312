@@ -30,7 +30,7 @@
 </script>
 
 <svelte:head>
-  <title>Announcing Writer</title>
+  <title>{$LL.writerTitle()}</title>
 </svelte:head>
 
 <RootLayout>
