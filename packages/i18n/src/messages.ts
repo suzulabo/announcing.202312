@@ -334,4 +334,8 @@ export const messages = {
     en: 'Announcing for Writer',
     ja: 'Announcing 投稿者サイト',
   },
+  help: {
+    en: 'Help',
+    ja: 'ヘルプ',
+  },
 };

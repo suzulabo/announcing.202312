@@ -85,6 +85,7 @@ const ja = {
   add: '追加',
   home: 'ホーム',
   writerTitle: 'Announcing 投稿者サイト',
+  help: 'ヘルプ',
 } satisfies Translation;
 
 export default ja;

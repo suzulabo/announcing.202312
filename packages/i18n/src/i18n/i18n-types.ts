@@ -349,6 +349,10 @@ type RootTranslation = {
 	 * A​n​n​o​u​n​c​i​n​g​ ​f​o​r​ ​W​r​i​t​e​r
 	 */
 	writerTitle: string
+	/**
+	 * H​e​l​p
+	 */
+	help: string
 }
 
 export type TranslationFunctions = {
@@ -686,6 +690,10 @@ export type TranslationFunctions = {
 	 * Announcing for Writer
 	 */
 	writerTitle: () => LocalizedString
+	/**
+	 * Help
+	 */
+	help: () => LocalizedString
 }
 
 export type Formatters = {}

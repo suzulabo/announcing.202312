@@ -1,4 +1,4 @@
-import { LL, setLocale } from './i18n/i18n-svelte';
+import { LL, locale, setLocale } from './i18n/i18n-svelte';
 import type { Locales } from './i18n/i18n-types';
 import { loadLocaleAsync } from './i18n/i18n-util.async';
 
@@ -40,5 +40,5 @@ export const setupLocale = async (locale: Locales) => {
   setLocale(locale);
 };
 
-export { LL };
+export { LL, locale };
 export type { Locales };

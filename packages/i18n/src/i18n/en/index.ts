@@ -88,6 +88,7 @@ const en = {
   add: 'Add',
   home: 'Home',
   writerTitle: 'Announcing for Writer',
+  help: 'Help',
 } satisfies BaseTranslation;
 
 export default en;
