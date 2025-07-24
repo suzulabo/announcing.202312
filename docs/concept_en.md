@@ -23,6 +23,7 @@ No need for common exchanges like “Please follow me!” or “Sorry, I don’t
 
 Readers can only read channels they know.  
 There are no features that monitor your actions, show you ads, or try to steer your behavior.
+
 Announcing isn't a service that replaces social media.  
 Social media is powerful—it lets you spread information, get feedback, and communicate.  
 Announcing complements social media for people who feel it doesn’t suit them.  
