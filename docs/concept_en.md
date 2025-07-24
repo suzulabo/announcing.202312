@@ -4,8 +4,8 @@ Probably the most boring web service in the world
 
 ## Concept
 
-Announcing is a web service that allows anyone to easily publish announcements with a feel similar to social media.  
-Unfortunately, it doesn't have the following features:
+Announcing is a web service that lets anyone publish announcements in a way similar to social media.  
+Unfortunately, it doesn’t include the following features:
 
 - Like buttons
 - Reposts or quote posts
@@ -16,18 +16,17 @@ You can’t go viral (or get canceled) after spending all night on the perfect p
 You also can’t keep checking likes or impressions every 10 minutes.  
 And you can't be disappointed by a complete lack of reactions.
 
-Once you have created a channel, share the URL with everyone.  
-For example, it would be a good idea to put a QR code on the wall of your store.  
-No app or membership registration is required to read the announcements.  
-There is no need for standard conversations such as “Please follow me!” or “Sorry, I don't do that app.”
+Once you’ve created a channel, just share the URL.  
+For example, printing a QR code and posting it at your store might be a good idea.  
+No app or account is required to read announcements.  
+No need for common exchanges like “Please follow me!” or “Sorry, I don’t use that app.”
 
 Readers can only read channels they know.  
-There is no feature that monitors your actions and automatically shows you impactful ads, nor is there any feature that tries to steer you toward anything.
-
-Announcing is not a service that replaces social media.  
-Social media is a powerful tool for spreading information. It allows you to get direct feedback and communicate directly with others.  
-Announcing is a service that complements social media for people who are not covered by social media.  
-However, if you don't see the benefits of the above features of social media, Announcing alone may be sufficient.
+There are no features that monitor your actions, show you ads, or try to steer your behavior.
+Announcing isn't a service that replaces social media.  
+Social media is powerful—it lets you spread information, get feedback, and communicate.  
+Announcing complements social media for people who feel it doesn’t suit them.  
+But if you don’t see value in those social features, Announcing might be enough on its own.
 
 Announcing is completely free to use.  
 In the future, we aim to operate on a donation-based model.
