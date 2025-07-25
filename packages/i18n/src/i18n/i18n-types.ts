@@ -349,6 +349,18 @@ type RootTranslation = {
 	 * A​n​n​o​u​n​c​i​n​g​ ​f​o​r​ ​W​r​i​t​e​r
 	 */
 	writerTitle: string
+	/**
+	 * H​e​l​p
+	 */
+	help: string
+	/**
+	 * T​h​e​ ​m​o​s​t​ ​b​o​r​i​n​g​ ​w​e​b​ ​s​e​r​v​i​c​e
+	 */
+	subtitle: string
+	/**
+	 * S​h​o​w​ ​S​e​r​v​i​c​e​ ​D​e​t​a​i​l​s
+	 */
+	serviceDetails: string
 }
 
 export type TranslationFunctions = {
@@ -686,6 +698,18 @@ export type TranslationFunctions = {
 	 * Announcing for Writer
 	 */
 	writerTitle: () => LocalizedString
+	/**
+	 * Help
+	 */
+	help: () => LocalizedString
+	/**
+	 * The most boring web service
+	 */
+	subtitle: () => LocalizedString
+	/**
+	 * Show Service Details
+	 */
+	serviceDetails: () => LocalizedString
 }
 
 export type Formatters = {}

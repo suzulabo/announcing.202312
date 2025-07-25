@@ -334,4 +334,16 @@ export const messages = {
     en: 'Announcing for Writer',
     ja: 'Announcing 投稿者サイト',
   },
+  help: {
+    en: 'Help',
+    ja: 'ヘルプ',
+  },
+  subtitle: {
+    en: 'The most boring web service',
+    ja: '一番退屈なWebサービス',
+  },
+  serviceDetails: {
+    en: 'Show Service Details',
+    ja: 'サービスの詳細はこちら',
+  },
 };

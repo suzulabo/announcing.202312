@@ -1,9 +1,12 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import { MaterialSymbolsHomeOutlineRounded } from '@announcing/components/icons';
+  import {
+    MaterialSymbolsHelpOutlineRounded,
+    MaterialSymbolsHomeOutlineRounded,
+  } from '@announcing/components/icons';
   import RootLayout from '@announcing/components/RootLayout.svelte';
   import Toolbar from '@announcing/components/Toolbar.svelte';
-  import { LL } from '@announcing/i18n';
+  import { LL, locale } from '@announcing/i18n';
   import { type ComponentProps, type Snippet } from 'svelte';
   import type { LayoutData } from './$types';
 
@@ -24,7 +27,15 @@
         href: '/',
       });
     }
-    items.push({ type: 'settings' });
+    items.push(
+      { type: 'settings' },
+      {
+        type: 'link',
+        href: `https://github.com/suzulabo/announcing.202312/tree/main/docs/help/index_${$locale}.md`,
+        icon: MaterialSymbolsHelpOutlineRounded,
+        label: $LL.help(),
+      },
+    );
     return items;
   });
 </script>

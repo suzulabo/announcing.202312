@@ -4,6 +4,7 @@ export { default as MaterialSymbolsBoxEditOutline } from './MaterialSymbolsBoxEd
 export { default as MaterialSymbolsContentCopyOutline } from './MaterialSymbolsContentCopyOutline.svelte';
 export { default as MaterialSymbolsDangerous } from './MaterialSymbolsDangerous.svelte';
 export { default as MaterialSymbolsEditDocumentOutline } from './MaterialSymbolsEditDocumentOutline.svelte';
+export { default as MaterialSymbolsHelpOutlineRounded } from './MaterialSymbolsHelpOutlineRounded.svelte';
 export { default as MaterialSymbolsHomeOutlineRounded } from './MaterialSymbolsHomeOutlineRounded.svelte';
 export { default as MaterialSymbolsLanguage } from './MaterialSymbolsLanguage.svelte';
 export { default as MaterialSymbolsLogout } from './MaterialSymbolsLogout.svelte';
