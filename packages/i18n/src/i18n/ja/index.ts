@@ -86,6 +86,8 @@ const ja = {
   home: 'ホーム',
   writerTitle: 'Announcing 投稿者サイト',
   help: 'ヘルプ',
+  subtitle: '一番退屈なWebサービス',
+  serviceDetails: 'サービスの詳細はこちら',
 } satisfies Translation;
 
 export default ja;

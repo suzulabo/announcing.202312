@@ -89,6 +89,8 @@ const en = {
   home: 'Home',
   writerTitle: 'Announcing for Writer',
   help: 'Help',
+  subtitle: 'The most boring web service',
+  serviceDetails: 'Show Service Details',
 } satisfies BaseTranslation;
 
 export default en;

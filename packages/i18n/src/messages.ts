@@ -338,4 +338,12 @@ export const messages = {
     en: 'Help',
     ja: 'ヘルプ',
   },
+  subtitle: {
+    en: 'The most boring web service',
+    ja: '一番退屈なWebサービス',
+  },
+  serviceDetails: {
+    en: 'Show Service Details',
+    ja: 'サービスの詳細はこちら',
+  },
 };

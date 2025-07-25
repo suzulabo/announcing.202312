@@ -353,6 +353,14 @@ type RootTranslation = {
 	 * H​e​l​p
 	 */
 	help: string
+	/**
+	 * T​h​e​ ​m​o​s​t​ ​b​o​r​i​n​g​ ​w​e​b​ ​s​e​r​v​i​c​e
+	 */
+	subtitle: string
+	/**
+	 * S​h​o​w​ ​S​e​r​v​i​c​e​ ​D​e​t​a​i​l​s
+	 */
+	serviceDetails: string
 }
 
 export type TranslationFunctions = {
@@ -694,6 +702,14 @@ export type TranslationFunctions = {
 	 * Help
 	 */
 	help: () => LocalizedString
+	/**
+	 * The most boring web service
+	 */
+	subtitle: () => LocalizedString
+	/**
+	 * Show Service Details
+	 */
+	serviceDetails: () => LocalizedString
 }
 
 export type Formatters = {}
